@@ -2,51 +2,94 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Liturgia Diária</title>
+
   <style>
-    body { font-family: Arial, sans-serif; padding: 20px; }
-    .leitura { margin-bottom: 1.6rem; }
-    h2 { color: #007BFF; }
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      line-height: 1.6;
+    }
+
+    nav a {
+      margin-right: 15px;
+      text-decoration: none;
+      font-weight: bold;
+      color: #003366;
+    }
+
+    h1 {
+      margin-top: 20px;
+    }
+
+    .leitura {
+      margin-bottom: 40px;
+    }
+
+    .referencia {
+      font-style: italic;
+      color: #555;
+    }
   </style>
 </head>
 <body>
 
+  <!-- MENU DO SEU SITE -->
+  <nav>
+    <a href="index.html">Início</a>
+    <a href="liturgia.html">Liturgia Diária</a>
+  </nav>
+
   <h1>Liturgia Diária</h1>
-  <div id="liturgia">Carregando...</div>
+
+  <div id="liturgia">Carregando liturgia...</div>
 
   <script>
     async function carregarLiturgia() {
-      const hoje = new Date();
-      const ano = hoje.getFullYear();
-      const mm = String(hoje.getMonth()+1).padStart(2, '0');
-      const dd = String(hoje.getDate()).padStart(2, '0');
+      // REFERÊNCIAS DE EXEMPLO (depois automatizamos)
+      const leituras = {
+        primeira: "1 Samuel 8:4-7,10-22",
+        salmo: "Psalm 89:16-17,18-19",
+        evangelho: "Mark 2:1-12"
+      };
 
-      const url = `https://cpbjr.github.io/catholic-readings-api/readings/${ano}/${mm}-${dd}.json`;
+      let html = "";
+
+      html += await carregarLeitura("Primeira Leitura", leituras.primeira);
+      html += await carregarLeitura("Salmo", leituras.salmo);
+      html += await carregarLeitura("Evangelho", leituras.evangelho);
+
+      document.getElementById("liturgia").innerHTML = html;
+    }
+
+    async function carregarLeitura(titulo, referencia) {
+      const refApi = referencia.replace(/ /g, "%20");
+      const url = `https://bible-api.com/${refApi}?translation=web`;
 
       try {
-        const resp = await fetch(url);
-        if (!resp.ok) throw new Error('Liturgia não encontrada');
+        const resposta = await fetch(url);
+        const dados = await resposta.json();
 
-        const data = await resp.json();
+        let texto = "";
+        dados.verses.forEach(v => {
+          texto += `<p><strong>${v.verse}</strong> ${v.text}</p>`;
+        });
 
-        document.getElementById('liturgia').innerHTML = `
+        return `
           <div class="leitura">
-            <h2>Primeira Leitura</h2>
-            <p>${data.readings.firstReading}</p>
-          </div>
-          <div class="leitura">
-            <h2>Salmo</h2>
-            <p>${data.readings.psalm}</p>
-          </div>
-          <div class="leitura">
-            <h2>Evangelho</h2>
-            <p>${data.readings.gospel}</p>
+            <h2>${titulo}</h2>
+            <p class="referencia">${referencia}</p>
+            ${texto}
           </div>
         `;
-      } catch (err) {
-        document.getElementById('liturgia').innerText = 'Erro ao carregar a liturgia.';
-        console.error(err);
+      } catch {
+        return `
+          <div class="leitura">
+            <h2>${titulo}</h2>
+            <p>Erro ao carregar a leitura.</p>
+          </div>
+        `;
       }
     }
 
@@ -55,9 +98,3 @@
 
 </body>
 </html>
-<nav>
-  <a href="index.html">Início</a> |
-  <a href="liturgia.html">liturgia diária</a> |
-  <a href="contato.html">Contato</a> |
-  <a href="outra.html">Outra coisa</a>
-</nav>
