@@ -1,72 +1,55 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <meta charset="UTF-8">
-  <title>Liturgia Diária</title>
+<div class="foto-liturgia">
+  <div class="bloqueio"></div>
 
-  <style>
-    /* =====================
-       ESTILO GERAL (PC)
-       ===================== */
+  <iframe
+    src="https://liturgia.cancaonova.com/pb/"
+    loading="lazy">
+  </iframe>
+</div>
+<style>
+.foto-liturgia {
+  position: relative;
+  width: 70%;
+  height: 420px;
+  margin: 0 auto;
+  overflow: hidden;
+  background: #fff;
+}
 
-    body {
-      margin: 0;
-      padding: 40px 0;
-      background: #f2f2f2;
-      font-family: Arial, sans-serif;
-    }
+/* camada que bloqueia toque */
+.bloqueio {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: transparent;
+  touch-action: none;   /* 🔥 bloqueia gesto */
+}
 
-    .foto-liturgia {
-      width: 70%;
-      height: 640px;          /* ⬅️ TERMINA em “Graças a Deus” */
-      margin: 0 auto;
-      overflow: hidden;       /* ❌ sem rolagem */
-      pointer-events: none;   /* ❌ não clicável */
-      background: #fff;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-    }
+/* iframe */
+.foto-liturgia iframe {
+  position: relative;
+  z-index: 1;
+  width: 120%;
+  height: 1200px;
+  border: none;
+  display: block;
+  transform: translate(-10%, -430px);
+}
 
-    .foto-liturgia iframe {
-      width: 120%;            /* corta laterais */
-      height: 1200px;         /* maior que o container */
-      border: none;
-      display: block;
-      transform: translate(-10%, -430px); /* COMEÇA em “Primeira Leitura” */
-    }
+/* =====================
+   CELULAR
+   ===================== */
+@media (max-width: 768px) {
 
-    /* =====================
-       VERSÃO CELULAR
-       ===================== */
+  .foto-liturgia {
+    width: 100%;
+    height: 360px;
+  }
 
-    @media (max-width: 768px) {
-
-      body {
-        padding: 20px 0;
-      }
-
-      .foto-liturgia {
-        width: 100%;
-        height: 360px;        /* menor no celular */
-        box-shadow: none;
-      }
-
-      .foto-liturgia iframe {
-        width: 140%;          /* corta mais as bordas */
-        height: 1300px;
-        transform: translate(-20%, -480px);
-      }
-    }
-  </style>
-</head>
-
-<body>
-
-  <div class="foto-liturgia">
-    <iframe
-      src="https://liturgia.cancaonova.com/pb/"
-      loading="lazy">
-    </iframe>
-  </div>
-
-</body>
-</html>
+  .foto-liturgia iframe {
+    width: 140%;
+    height: 1300px;
+    transform: translate(-20%, -480px);
+  }
+}
+</style>
