@@ -14,6 +14,10 @@
     margin: auto;
   }
 
+  nav {
+    margin-bottom: 20px;
+  }
+
   nav a {
     margin-right: 15px;
     text-decoration: none;
@@ -34,14 +38,22 @@
     color: #555;
   }
 
-  /* Banner Google Translate escondido */
+  /* Banner Google Translate reduzido */
   .goog-te-banner-frame.skiptranslate {
-    display: none !important;
+    height: 20px !important;
+    min-height: 0px !important;
+    overflow: hidden !important;
+    font-size: 10px !important;
+  }
+
+  body {
+    top: 20px !important;
   }
 </style>
 </head>
 <body>
 
+<!-- Menu do site -->
 <nav>
   <a href="index.html">Início</a>
   <a href="liturgia.html">Liturgia Diária</a>
@@ -49,12 +61,13 @@
 
 <h1>Liturgia Diária</h1>
 
+<!-- Tradutor Google oculto -->
 <div id="google_translate_element" style="display:none;"></div>
 
 <div id="liturgia">Carregando leituras...</div>
 
 <script>
-  // Força tradução automática
+  // Força tradução automática para português
   document.cookie = "googtrans=/en/pt; path=/";
 
   function googleTranslateElementInit() {
@@ -64,14 +77,21 @@
     );
   }
 
-  // Remove banner se aparecer
-  function removerBanner() {
+  // Remove o banner rapidamente
+  function esconderBannerRapido() {
     const banner = document.querySelector('.goog-te-banner-frame.skiptranslate');
-    if(banner) banner.remove();
+    if (banner) banner.style.display = 'none';
     document.body.style.top = '0px';
   }
-  setInterval(removerBanner, 500);
+  // Executa várias vezes para garantir que desapareça
+  let tentativas = 0;
+  const intervalo = setInterval(() => {
+    esconderBannerRapido();
+    tentativas++;
+    if(tentativas > 15) clearInterval(intervalo);
+  }, 150);
 
+  // Função para carregar leituras
   async function carregarLiturgia() {
     const leituras = {
       primeira: "1 Samuel 8:4-7,10-22",
@@ -109,18 +129,4 @@
       `;
     } catch {
       return `
-        <div class="leitura">
-          <h2>${titulo}</h2>
-          <p>Erro ao carregar esta leitura.</p>
-        </div>
-      `;
-    }
-  }
-
-  carregarLiturgia();
-</script>
-
-<script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-
-</body>
-</html>
+        <div
