@@ -130,40 +130,30 @@
 
   const url = `https://liturgia.up.railway.app/v2/?date=${dataHoje()}`;
 
-  fetch(url)
-    .then(response => {
-      if (!response.ok) {
-        throw new Error("Erro na API");
-      }
-      return response.json();
-    })
-    .then(data => {
-      const salmo = data.leituras.find(l => l.tipo === "salmo");
-      const evangelho = data.leituras.find(l => l.tipo === "evangelho");
+  <script>
+fetch('liturgia.php')
+  .then(res => res.json())
+  .then(data => {
+    const salmo = data.leituras.find(l => l.tipo === "salmo");
+    const evangelho = data.leituras.find(l => l.tipo === "evangelho");
 
-      if (!salmo || !evangelho) {
-        throw new Error("Leituras não encontradas");
-      }
+    document.getElementById('salmo').innerHTML = `
+      <h3>${salmo.titulo}</h3>
+      <p>${salmo.texto}</p>
+    `;
 
-      document.getElementById('salmo').innerHTML = `
-        <h3>${salmo.titulo}</h3>
-        <p>${salmo.texto}</p>
-      `;
+    document.getElementById('evangelho').innerHTML = `
+      <h3>${evangelho.titulo}</h3>
+      <p>${evangelho.texto}</p>
+    `;
 
-      document.getElementById('evangelho').innerHTML = `
-        <h3>${evangelho.titulo}</h3>
-        <p>${evangelho.texto}</p>
-      `;
-
-      document.getElementById('loading').style.display = 'none';
-      document.getElementById('conteudo').style.display = 'block';
-    })
-    .catch(err => {
-      console.error(err);
-      document.getElementById('loading').innerText =
-        'Não foi possível carregar a liturgia do dia.';
-    });
-</script>
+    document.getElementById('loading').style.display = 'none';
+    document.getElementById('conteudo').style.display = 'block';
+  })
+  .catch(() => {
+    document.getElementById('loading').innerText =
+      'Não foi possível carregar a liturgia do dia.';
+  });
 
 </script>
 
