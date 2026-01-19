@@ -1,41 +1,54 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Como Ser Católico - Liturgia Diária</title>
-  <style>
-    /* =====================
-       RESET E GERAL
-       ===================== */
- c
-  <!-- =====================
-       HEADER / MENU
-       ===================== -->
-  <header>
-    <h1>Como Ser Católico</h1>
-    <nav>
-      <ul>
-        <li><a href="index.html">Início</a></li>
-        <li><a href="lirtugia diaria.html">liturgia diaria</a></li>
-        <li><a href="contato.html">Contato</a></li>
-        <li><a href="lirtugia.html">Liturgia</a></li>
-      </ul>
-    </nav>
-  </header>
+<div class="foto-liturgia">
+  <div class="bloqueio"></div>
+<style>
+  <iframe
+    src="https://liturgia.cancaonova.com/pb/"
+    loading="lazy">
+  </iframe>
+</div>
+.foto-liturgia {
+  position: relative;
+  width: 70%;
+  height: 420px;
+  margin: 0 auto;
+  overflow: hidden;
+  background: #fff;
+}
 
-  <!-- =====================
-       CONTEÚDO LITURGIA
-       ===================== -->
-  <div class="foto-liturgia">
-    <div class="bloqueio"></div>
+/* camada que bloqueia toque */
+.bloqueio {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: transparent;
+  touch-action: none;   /* 🔥 bloqueia gesto */
+}
 
-    <iframe
-      src="c"
-      loading="lazy">
-    </iframe>
-  </div>
+/* iframe */
+.foto-liturgia iframe {
+  position: relative;
+  z-index: 1;
+  width: 120%;
+  height: 1200px;
+  border: none;
+  display: block;
+  transform: translate(-10%, -430px);
+}
 
-</body>
-</html>
-  
+/* =====================
+   CELULAR
+   ===================== */
+@media (max-width: 768px) {
+
+  .foto-liturgia {
+    width: 100%;
+    height: 360px;
+  }
+
+  .foto-liturgia iframe {
+    width: 140%;
+    height: 1300px;
+    transform: translate(-20%, -480px);
+  }
+}
+</style>
