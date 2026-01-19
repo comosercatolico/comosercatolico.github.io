@@ -1,97 +1,97 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Como Ser Católico - Liturgia Diária</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Como Ser Católico - Liturgia Diária</title>
 
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: Arial, sans-serif;
-    }
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
 
-    body {
-      background: #f5f5f5;
-      color: #333;
-    }
+body {
+  background: #f5f5f5;
+  color: #333;
+}
 
-    header {
-      background-color: #8B0000;
-      color: #fff;
-      padding: 15px 0;
-      text-align: center;
-    }
+/* HEADER */
+header {
+  background: #8B0000;
+  color: #fff;
+  padding: 15px 0;
+  text-align: center;
+}
 
-    header h1 {
-      margin-bottom: 10px;
-    }
+nav ul {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+}
 
-    nav ul {
-      list-style: none;
-      display: flex;
-      justify-content: center;
-      gap: 30px;
-    }
+nav a {
+  color: #fff;
+  font-weight: bold;
+  text-decoration: none;
+}
 
-    nav ul li a {
-      color: #fff;
-      font-weight: bold;
-      text-decoration: none;
-    }
+nav a:hover {
+  color: #FFD700;
+}
 
-    nav ul li a:hover {
-      color: #FFD700;
-    }
+/* CONTEÚDO */
+main {
+  max-width: 900px;
+  margin: 30px auto;
+  padding: 20px;
+}
 
-    main {
-      max-width: 900px;
-      margin: 30px auto;
-      padding: 20px;
-    }
+.card {
+  background: #fff;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
 
-    .liturgia {
-      background: #fff;
-      padding: 25px;
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    }
+.card h2 {
+  text-align: center;
+  color: #8B0000;
+  margin-bottom: 20px;
+}
 
-    .liturgia h2 {
-      color: #8B0000;
-      margin-bottom: 15px;
-      text-align: center;
-    }
+.bloco {
+  margin-top: 25px;
+}
 
-    .bloco {
-      margin-top: 25px;
-    }
+.bloco h3 {
+  color: #8B0000;
+  margin-bottom: 10px;
+}
 
-    .bloco h3 {
-      color: #8B0000;
-      margin-bottom: 10px;
-    }
+.bloco p {
+  line-height: 1.6;
+  white-space: pre-line;
+}
 
-    .bloco p {
-      line-height: 1.6;
-      white-space: pre-line;
-    }
+.loading {
+  text-align: center;
+  font-style: italic;
+}
 
-    .loading {
-      text-align: center;
-      font-style: italic;
-    }
-
-    @media (max-width: 768px) {
-      nav ul {
-        flex-direction: column;
-        gap: 15px;
-      }
-    }
-  </style>
+/* MOBILE */
+@media (max-width: 768px) {
+  nav ul {
+    flex-direction: column;
+    gap: 15px;
+  }
+}
+</style>
 </head>
+
 <body>
 
 <header>
@@ -107,7 +107,7 @@
 </header>
 
 <main>
-  <section class="liturgia">
+  <div class="card">
     <h2>Liturgia Diária</h2>
     <p class="loading" id="loading">Carregando liturgia do dia...</p>
 
@@ -115,46 +115,31 @@
       <div class="bloco" id="salmo"></div>
       <div class="bloco" id="evangelho"></div>
     </div>
-  </section>
+  </div>
 </main>
 
-
- <script>
-  function dataHoje() {
-    const hoje = new Date();
-    const ano = hoje.getFullYear();
-    const mes = String(hoje.getMonth() + 1).padStart(2, '0');
-    const dia = String(hoje.getDate()).padStart(2, '0');
-    return `${ano}-${mes}-${dia}`;
-  }
-
-  const url = `https://liturgia.up.railway.app/v2/?date=${dataHoje()}`;
-
-  <script>
-fetch('liturgia.php')
+<script>
+fetch("https://api-liturgia-diaria.vercel.app/")
   .then(res => res.json())
   .then(data => {
-    const salmo = data.leituras.find(l => l.tipo === "salmo");
-    const evangelho = data.leituras.find(l => l.tipo === "evangelho");
 
-    document.getElementById('salmo').innerHTML = `
-      <h3>${salmo.titulo}</h3>
-      <p>${salmo.texto}</p>
+    document.getElementById("salmo").innerHTML = `
+      <h3>${data.salmo.referencia}</h3>
+      <p>${data.salmo.texto}</p>
     `;
 
-    document.getElementById('evangelho').innerHTML = `
-      <h3>${evangelho.titulo}</h3>
-      <p>${evangelho.texto}</p>
+    document.getElementById("evangelho").innerHTML = `
+      <h3>${data.evangelho.referencia}</h3>
+      <p>${data.evangelho.texto}</p>
     `;
 
-    document.getElementById('loading').style.display = 'none';
-    document.getElementById('conteudo').style.display = 'block';
+    document.getElementById("loading").style.display = "none";
+    document.getElementById("conteudo").style.display = "block";
   })
   .catch(() => {
-    document.getElementById('loading').innerText =
-      'Não foi possível carregar a liturgia do dia.';
+    document.getElementById("loading").innerText =
+      "Não foi possível carregar a liturgia.";
   });
-
 </script>
 
 </body>
