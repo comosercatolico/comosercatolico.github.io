@@ -118,12 +118,32 @@
   </section>
 </main>
 
-<script>
-  fetch('https://liturgia.up.railway.app/v2/')
-    .then(response => response.json())
+
+ <script>
+  function dataHoje() {
+    const hoje = new Date();
+    const ano = hoje.getFullYear();
+    const mes = String(hoje.getMonth() + 1).padStart(2, '0');
+    const dia = String(hoje.getDate()).padStart(2, '0');
+    return `${ano}-${mes}-${dia}`;
+  }
+
+  const url = `https://liturgia.up.railway.app/v2/?date=${dataHoje()}`;
+
+  fetch(url)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error("Erro na API");
+      }
+      return response.json();
+    })
     .then(data => {
       const salmo = data.leituras.find(l => l.tipo === "salmo");
       const evangelho = data.leituras.find(l => l.tipo === "evangelho");
+
+      if (!salmo || !evangelho) {
+        throw new Error("Leituras não encontradas");
+      }
 
       document.getElementById('salmo').innerHTML = `
         <h3>${salmo.titulo}</h3>
@@ -138,10 +158,13 @@
       document.getElementById('loading').style.display = 'none';
       document.getElementById('conteudo').style.display = 'block';
     })
-    .catch(() => {
+    .catch(err => {
+      console.error(err);
       document.getElementById('loading').innerText =
-        'Não foi possível carregar a liturgia no momento.';
+        'Não foi possível carregar a liturgia do dia.';
     });
+</script>
+
 </script>
 
 </body>
