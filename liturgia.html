@@ -4,10 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Como Ser Católico - Liturgia Diária</title>
+
   <style>
-    /* =====================
-       RESET E GERAL
-       ===================== */
     * {
       margin: 0;
       padding: 0;
@@ -20,23 +18,14 @@
       color: #333;
     }
 
-    a {
-      text-decoration: none;
-      color: inherit;
-    }
-
-    /* =====================
-       HEADER / MENU
-       ===================== */
     header {
-      background-color: #8B0000; /* cor do menu do index */
+      background-color: #8B0000;
       color: #fff;
       padding: 15px 0;
       text-align: center;
     }
 
     header h1 {
-      font-size: 2em;
       margin-bottom: 10px;
     }
 
@@ -50,101 +39,111 @@
     nav ul li a {
       color: #fff;
       font-weight: bold;
-      transition: color 0.3s;
+      text-decoration: none;
     }
 
     nav ul li a:hover {
       color: #FFD700;
     }
 
-    /* =====================
-       CONTEÚDO LITURGIA
-       ===================== */
-    .foto-liturgia {
-      position: relative;
-      width: 70%;
-      height: 420px;
+    main {
+      max-width: 900px;
       margin: 30px auto;
-      overflow: hidden;
+      padding: 20px;
+    }
+
+    .liturgia {
       background: #fff;
+      padding: 25px;
       border-radius: 10px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     }
 
-    /* camada que bloqueia toque */
-    .bloqueio {
-      position: absolute;
-      inset: 0;
-      z-index: 2;
-      background: transparent;
-      touch-action: none;   /* bloqueia gesto */
+    .liturgia h2 {
+      color: #8B0000;
+      margin-bottom: 15px;
+      text-align: center;
     }
 
-    /* iframe */
-    .foto-liturgia iframe {
-      position: relative;
-      z-index: 1;
-      width: 120%;
-      height: 1200px;
-      border: none;
-      display: block;
-      transform: translate(-10%, -430px);
+    .bloco {
+      margin-top: 25px;
     }
 
-    /* =====================
-       CELULAR
-       ===================== */
+    .bloco h3 {
+      color: #8B0000;
+      margin-bottom: 10px;
+    }
+
+    .bloco p {
+      line-height: 1.6;
+      white-space: pre-line;
+    }
+
+    .loading {
+      text-align: center;
+      font-style: italic;
+    }
+
     @media (max-width: 768px) {
-      .foto-liturgia {
-        width: 95%;
-        height: 360px;
-      }
-
-      .foto-liturgia iframe {
-        width: 140%;
-        height: 1300px;
-        transform: translate(-20%, -480px);
-      }
-
       nav ul {
         flex-direction: column;
         gap: 15px;
-      }
-
-      header h1 {
-        font-size: 1.5em;
       }
     }
   </style>
 </head>
 <body>
 
-  <!-- =====================
-       HEADER / MENU
-       ===================== -->
-  <header>
-    <h1>Como Ser Católico</h1>
-    <nav>
-      <ul>
-        <li><a href="index.html">Início</a></li>
-        <li><a href="agenda.html">Agenda</a></li>
-        <li><a href="contato.html">Contato</a></li>
-        <li><a href="lirtugia.html">Liturgia</a></li>
-      </ul>
-    </nav>
-  </header>
+<header>
+  <h1>Como Ser Católico</h1>
+  <nav>
+    <ul>
+      <li><a href="index.html">Início</a></li>
+      <li><a href="agenda.html">Agenda</a></li>
+      <li><a href="contato.html">Contato</a></li>
+      <li><a href="liturgia.html">Liturgia</a></li>
+    </ul>
+  </nav>
+</header>
 
-  <!-- =====================
-       CONTEÚDO LITURGIA
-       ===================== -->
-  <div class="foto-liturgia">
-    <div class="bloqueio"></div>
+<main>
+  <section class="liturgia">
+    <h2>Liturgia Diária</h2>
+    <p class="loading" id="loading">Carregando liturgia do dia...</p>
 
-    <iframe
-      src="https://www.paulus.com.br/portal/liturgia-diaria/"
-      loading="lazy">
-    </iframe>
-  </div>
+    <div id="conteudo" style="display:none;">
+      <div class="bloco" id="salmo"></div>
+      <div class="bloco" id="evangelho"></div>
+    </div>
+  </section>
+</main>
+
+<script>
+  fetch('https://liturgia.up.railway.app/v2/')
+    .then(response => response.json())
+    .then(data => {
+      const salmo = data.leituras.find(l => l.tipo === "salmo");
+      const evangelho = data.leituras.find(l => l.tipo === "evangelho");
+
+      document.getElementById('salmo').innerHTML = `
+        <h3>${salmo.titulo}</h3>
+        <p>${salmo.texto}</p>
+      `;
+
+      document.getElementById('evangelho').innerHTML = `
+        <h3>${evangelho.titulo}</h3>
+        <p>${evangelho.texto}</p>
+      `;
+
+      document.getElementById('loading').style.display = 'none';
+      document.getElementById('conteudo').style.display = 'block';
+    })
+    .catch(() => {
+      document.getElementById('loading').innerText =
+        'Não foi possível carregar a liturgia no momento.';
+    });
+</script>
 
 </body>
 </html>
+
