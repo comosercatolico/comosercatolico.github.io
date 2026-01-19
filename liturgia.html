@@ -6,44 +6,26 @@
 <title>Como Ser Católico - Liturgia Diária</title>
 
 <style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: Arial, sans-serif;
-}
-
 body {
+  margin: 0;
+  font-family: Arial, sans-serif;
   background: #f5f5f5;
-  color: #333;
 }
 
-/* HEADER */
 header {
   background: #8B0000;
   color: #fff;
-  padding: 15px 0;
+  padding: 15px;
   text-align: center;
-}
-
-nav ul {
-  list-style: none;
-  display: flex;
-  justify-content: center;
-  gap: 30px;
 }
 
 nav a {
   color: #fff;
+  margin: 0 15px;
   font-weight: bold;
   text-decoration: none;
 }
 
-nav a:hover {
-  color: #FFD700;
-}
-
-/* CONTEÚDO */
 main {
   max-width: 900px;
   margin: 30px auto;
@@ -57,37 +39,13 @@ main {
   box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
-.card h2 {
-  text-align: center;
+h2, h3 {
   color: #8B0000;
-  margin-bottom: 20px;
 }
 
-.bloco {
-  margin-top: 25px;
-}
-
-.bloco h3 {
-  color: #8B0000;
-  margin-bottom: 10px;
-}
-
-.bloco p {
+p {
   line-height: 1.6;
   white-space: pre-line;
-}
-
-.loading {
-  text-align: center;
-  font-style: italic;
-}
-
-/* MOBILE */
-@media (max-width: 768px) {
-  nav ul {
-    flex-direction: column;
-    gap: 15px;
-  }
 }
 </style>
 </head>
@@ -97,51 +55,37 @@ main {
 <header>
   <h1>Como Ser Católico</h1>
   <nav>
-    <ul>
-      <li><a href="index.html">Início</a></li>
-      <li><a href="agenda.html">Agenda</a></li>
-      <li><a href="contato.html">Contato</a></li>
-      <li><a href="liturgia.html">Liturgia</a></li>
-    </ul>
+    <a href="index.html">Início</a>
+    <a href="agenda.html">Agenda</a>
+    <a href="contato.html">Contato</a>
+    <a href="liturgia.html">Liturgia</a>
   </nav>
 </header>
 
 <main>
   <div class="card">
     <h2>Liturgia Diária</h2>
-    <p class="loading" id="loading">Carregando liturgia do dia...</p>
 
-    <div id="conteudo" style="display:none;">
-      <div class="bloco" id="salmo"></div>
-      <div class="bloco" id="evangelho"></div>
-    </div>
+    <h3>Salmo</h3>
+    <p id="salmo">Carregando...</p>
+
+    <h3>Evangelho</h3>
+    <p id="evangelho">Carregando...</p>
   </div>
 </main>
 
 <script>
-fetch("https://api-liturgia-diaria.vercel.app/")
-  .then(res => res.json())
-  .then(data => {
-
-    document.getElementById("salmo").innerHTML = `
-      <h3>${data.salmo.referencia}</h3>
-      <p>${data.salmo.texto}</p>
-    `;
-
-    document.getElementById("evangelho").innerHTML = `
-      <h3>${data.evangelho.referencia}</h3>
-      <p>${data.evangelho.texto}</p>
-    `;
-
-    document.getElementById("loading").style.display = "none";
-    document.getElementById("conteudo").style.display = "block";
+fetch("liturgia.php")
+  .then(r => r.json())
+  .then(d => {
+    document.getElementById("salmo").innerText = d.salmo;
+    document.getElementById("evangelho").innerText = d.evangelho;
   })
   .catch(() => {
-    document.getElementById("loading").innerText =
-      "Não foi possível carregar a liturgia.";
+    document.getElementById("salmo").innerText = "Erro ao carregar.";
+    document.getElementById("evangelho").innerText = "Erro ao carregar.";
   });
 </script>
 
 </body>
 </html>
-
