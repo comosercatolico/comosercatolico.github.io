@@ -7,60 +7,108 @@
 
   <style>
     body {
-      font-family: Arial, sans-serif;
-      max-width: 800px;
-      margin: auto;
-      padding: 20px;
-      line-height: 1.6;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f7f7f7;
+      margin: 0;
+      padding: 0;
     }
-    h1 {
+
+    header {
+      background: #5b2d8b;
+      color: #fff;
+      padding: 16px;
       text-align: center;
     }
+
+    main {
+      max-width: 900px;
+      margin: auto;
+      padding: 20px;
+      background: #ffffff;
+    }
+
     .secao {
       margin-top: 30px;
     }
-    .referencia {
+
+    .titulo {
+      font-size: 20px;
       font-weight: bold;
       margin-bottom: 8px;
+      color: #333;
+    }
+
+    .texto {
+      white-space: pre-line;
+      line-height: 1.7;
+      color: #222;
+    }
+
+    .erro {
+      color: red;
+      text-align: center;
+    }
+
+    footer {
+      text-align: center;
+      font-size: 13px;
+      color: #666;
+      margin: 20px 0;
     }
   </style>
 </head>
+
 <body>
 
-<h1>📖 Liturgia Diária</h1>
-<p id="data"></p>
+<header>
+  <h1>📖 Liturgia Diária</h1>
+  <p id="data">Carregando...</p>
+</header>
 
-<div id="conteudo">Carregando...</div>
+<main id="conteudo">
+  <p>Carregando leituras...</p>
+</main>
+
+<footer>
+  © Liturgia Diária
+</footer>
 
 <script>
 async function carregarLiturgia() {
   try {
     const hoje = new Date().toISOString().split("T")[0];
-    const resposta = await fetch(`https://liturgia.up.railway.app/v2/${hoje}`);
+
+    const api = "https://liturgia.up.railway.app/v2/" + hoje;
+    const proxy = "https://api.allorigins.win/raw?url=";
+    const resposta = await fetch(proxy + api);
+
+    if (!resposta.ok) throw new Error("Erro na requisição");
+
     const dados = await resposta.json();
 
     document.getElementById("data").innerText = dados.liturgia;
 
     document.getElementById("conteudo").innerHTML = `
       <div class="secao">
-        <div class="referencia">1ª Leitura – ${dados.primeiraLeitura.referencia}</div>
-        <p>${dados.primeiraLeitura.texto}</p>
+        <div class="titulo">1ª Leitura — ${dados.primeiraLeitura.referencia}</div>
+        <div class="texto">${dados.primeiraLeitura.texto}</div>
       </div>
 
       <div class="secao">
-        <div class="referencia">Salmo – ${dados.salmo.referencia}</div>
-        <p><strong>Refrão:</strong> ${dados.salmo.refrao}</p>
-        <p>${dados.salmo.texto}</p>
+        <div class="titulo">Salmo — ${dados.salmo.referencia}</div>
+        <div class="texto"><strong>Refrão:</strong> ${dados.salmo.refrao}</div>
+        <div class="texto">${dados.salmo.texto}</div>
       </div>
 
       <div class="secao">
-        <div class="referencia">Evangelho – ${dados.evangelho.referencia}</div>
-        <p>${dados.evangelho.texto}</p>
+        <div class="titulo">Evangelho — ${dados.evangelho.referencia}</div>
+        <div class="texto">${dados.evangelho.texto}</div>
       </div>
     `;
-  } catch (e) {
-    document.getElementById("conteudo").innerText =
-      "Erro ao carregar a liturgia.";
+  } catch (erro) {
+    document.getElementById("conteudo").innerHTML =
+      "<p class='erro'>❌ Não foi possível carregar a Liturgia Diária.</p>";
+    console.error(erro);
   }
 }
 
