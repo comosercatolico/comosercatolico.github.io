@@ -3,22 +3,81 @@
 <head>
   <meta charset="UTF-8">
   <title>Liturgia Diária</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f2f2f2;
+    }
+
+    header {
+      background: #5b2d8b;
+      color: #fff;
+      padding: 16px;
+      text-align: center;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: auto;
+      background: #fff;
+      padding: 10px;
+    }
+
+    /* Wrapper do iframe */
+    .iframe-box {
+      position: relative;
+      width: 100%;
+      height: 1800px;
+      overflow: hidden;
+    }
+
+    /* Iframe em si */
+    iframe {
+      width: 100%;
+      height: 2400px;
+      border: none;
+      transform: translateY(-260px);
+    }
+
+    footer {
+      text-align: center;
+      font-size: 13px;
+      color: #666;
+      padding: 15px 5px;
+    }
+
+    @media (max-width: 768px) {
+      iframe {
+        transform: translateY(-300px);
+        height: 2600px;
+      }
+    }
+  </style>
 </head>
+
 <body>
 
-<h1>Liturgia Diária</h1>
-<div id="liturgia">Carregando...</div>
+<header>
+  <h1>📖 Liturgia Diária</h1>
+  <p>Primeira Leitura • Salmo • Evangelho</p>
+</header>
 
-<script>
-fetch("liturgia.php")
-  .then(r => r.json())
-  .then(d => {
-    document.getElementById("liturgia").innerHTML = d.conteudo;
-  })
-  .catch(() => {
-    document.getElementById("liturgia").innerText = "Erro ao carregar.";
-  });
-</script>
+<div class="container">
+  <div class="iframe-box">
+    <iframe
+      src="https://liturgia.cancaonova.com/pb/"
+      loading="lazy"
+      referrerpolicy="no-referrer">
+    </iframe>
+  </div>
+</div>
+
+<footer>
+  Leituras oficiais — Canção Nova / CNBB  
+</footer>
 
 </body>
 </html>
