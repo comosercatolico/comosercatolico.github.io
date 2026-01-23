@@ -44,4 +44,28 @@ async function carregarLiturgia() {
     document.getElementById("conteudo").innerHTML = `
       <div class="secao">
         <div class="referencia">1ª Leitura – ${dados.primeiraLeitura.referencia}</div>
-        <p>${dados.primeiraLeitura
+        <p>${dados.primeiraLeitura.texto}</p>
+      </div>
+
+      <div class="secao">
+        <div class="referencia">Salmo – ${dados.salmo.referencia}</div>
+        <p><strong>Refrão:</strong> ${dados.salmo.refrao}</p>
+        <p>${dados.salmo.texto}</p>
+      </div>
+
+      <div class="secao">
+        <div class="referencia">Evangelho – ${dados.evangelho.referencia}</div>
+        <p>${dados.evangelho.texto}</p>
+      </div>
+    `;
+  } catch (e) {
+    document.getElementById("conteudo").innerText =
+      "Erro ao carregar a liturgia.";
+  }
+}
+
+carregarLiturgia();
+</script>
+
+</body>
+</html>
