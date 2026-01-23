@@ -26,30 +26,36 @@
       padding: 10px;
     }
 
-    /* Área do iframe */
+    /* Área visível */
     .iframe-wrapper {
       position: relative;
       width: 100%;
-      height: 1500px; /* corta mais embaixo */
+      height: 1200px;   /* CORTA MUITO MAIS EMBAIXO */
       overflow: hidden;
     }
 
     iframe {
       width: 100%;
-      height: 2200px;
+      height: 2600px;   /* iframe maior */
       border: none;
-      transform: translateY(-260px); /* sobe o conteúdo */
+      transform: translateY(-340px); /* SOBE MAIS */
+      pointer-events: auto;
     }
 
-    /* BLOQUEIO DO TEXTO (vira "imagem") */
+    /* BLOQUEIO TOTAL DO TEXTO */
     .overlay {
       position: absolute;
-      top: 160px; /* altura do menu da Canção Nova */
+      top: 210px; /* menu livre */
       left: 0;
       width: 100%;
-      height: calc(100% - 160px);
-      background: transparent;
-      z-index: 10;
+      height: calc(100% - 210px);
+      background: rgba(255,255,255,0.01); /* invisível mas ativa */
+      z-index: 999;
+      pointer-events: all;
+      user-select: none;
+      -webkit-user-select: none;
+      -ms-user-select: none;
+      touch-action: none;
     }
 
     footer {
@@ -61,12 +67,12 @@
 
     @media (max-width: 768px) {
       iframe {
-        transform: translateY(-300px);
-        height: 2500px;
+        transform: translateY(-380px);
+        height: 3000px;
       }
 
       .overlay {
-        top: 190px;
+        top: 240px;
       }
     }
   </style>
@@ -76,7 +82,7 @@
 
 <header>
   <h1>📖 Liturgia Diária</h1>
-  <p>1ª Leitura • Salmo • 2ª Leitura (quando houver) • Evangelho</p>
+  <p>1ª Leitura • Salmo • 2ª Leitura (se houver) • Evangelho</p>
 </header>
 
 <div class="container">
@@ -88,7 +94,7 @@
       referrerpolicy="no-referrer">
     </iframe>
 
-    <!-- Camada que bloqueia cliques no texto -->
+    <!-- Camada que transforma texto em "imagem" -->
     <div class="overlay"></div>
 
   </div>
