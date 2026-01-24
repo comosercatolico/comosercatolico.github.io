@@ -37,36 +37,41 @@
     iframe {
       position: relative;
       width: 120%;
-      height: 3200px; /* 🔥 MAIS ALTO */
+      height: 3000px;
       border: none;
       left: -10%;
-      transform: translateY(-300px);
+      transform: translateY(-320px);
+      background: white; /* aparência limpa */
     }
 
-    /* 🔒 BLOQUEIO SUPERIOR (abaixo do menu) */
+    /* 🔒 BLOQUEIO SUPERIOR (menu livre) */
     .overlay-top {
       position: absolute;
       top: 225px;
       left: 0;
       width: 100%;
       height: calc(100% - 225px);
-      background: rgba(255,255,255,0.01);
-      z-index: 999;
       pointer-events: all;
       user-select: none;
-      touch-action: none;
+      z-index: 10;
     }
 
-    /* 🔒 BLOQUEIO INFERIOR FORTE (ESSENCIAL) */
-    .overlay-bottom {
+    /* 🎨 MÁSCARA BRANCA INFERIOR (SOLUÇÃO REAL) */
+    .fade-bottom {
       position: absolute;
       bottom: 0;
       left: 0;
       width: 100%;
-      height: 520px; /* 🔥 COBRE DOAÇÃO + RODAPÉ */
-      background: #ffffff;
-      z-index: 1000;
+      height: 420px;
+      background: linear-gradient(
+        to bottom,
+        rgba(255,255,255,0) 0%,
+        rgba(255,255,255,0.6) 30%,
+        rgba(255,255,255,0.9) 60%,
+        #ffffff 100%
+      );
       pointer-events: none;
+      z-index: 20;
     }
 
     footer {
@@ -89,8 +94,8 @@
         top: 255px;
       }
 
-      .overlay-bottom {
-        height: 620px; /* 🔥 ainda maior no celular */
+      .fade-bottom {
+        height: 520px;
       }
 
       .iframe-wrapper {
@@ -116,11 +121,11 @@
       referrerpolicy="no-referrer">
     </iframe>
 
-    <!-- Bloqueio superior -->
+    <!-- Área não clicável -->
     <div class="overlay-top"></div>
 
-    <!-- Bloqueio inferior -->
-    <div class="overlay-bottom"></div>
+    <!-- Fade branco que esconde tudo abaixo -->
+    <div class="fade-bottom"></div>
 
   </div>
 </div>
