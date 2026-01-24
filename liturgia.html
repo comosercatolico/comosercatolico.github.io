@@ -1,42 +1,131 @@
-<div id="liturgia">
-  <p>Carregando liturgia…</p>
-</div>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Liturgia Diária</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<script>
-async function carregarLiturgia() {
-  const hoje = new Date().toISOString().split("T")[0];
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f4f4f4;
+      margin: 0;
+      padding: 20px;
+      color: #222;
+    }
 
-  const url =
-    "https://api.allorigins.win/raw?url=" +
-    encodeURIComponent(
-      "https://cpbjr.github.io/catholic-readings-api/readings/" + hoje
-    );
+    .container {
+      max-width: 800px;
+      margin: auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
 
-  try {
-    const res = await fetch(url);
-    const data = await res.json();
+    h1 {
+      text-align: center;
+      margin-bottom: 10px;
+    }
 
-    document.getElementById("liturgia").innerHTML = `
-      <h2>Liturgia de ${data.date}</h2>
+    h2 {
+      margin-top: 30px;
+      color: #8b0000;
+    }
 
-      <h3>Primeira Leitura</h3>
-      <p><strong>${data.first_reading.reference}</strong></p>
-      <p>${data.first_reading.text}</p>
+    h3 {
+      margin-top: 25px;
+      color: #444;
+    }
 
-      <h3>Salmo</h3>
-      <p><strong>${data.psalm.reference}</strong></p>
-      <p>${data.psalm.text}</p>
+    .referencia {
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
 
-      <h3>Evangelho</h3>
-      <p><strong>${data.gospel.reference}</strong></p>
-      <p>${data.gospel.text}</p>
-    `;
-  } catch (e) {
-    document.getElementById("liturgia").innerHTML =
-      "<p>Erro ao carregar a liturgia.</p>";
-    console.error(e);
-  }
-}
+    .texto {
+      white-space: pre-line;
+      line-height: 1.6;
+    }
 
-carregarLiturgia();
-</script>
+    .erro {
+      color: red;
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .loading {
+      text-align: center;
+      font-style: italic;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>📖 Liturgia Diária</h1>
+    <div id="conteudo" class="loading">Carregando liturgia...</div>
+  </div>
+
+  <script>
+    async function carregarLiturgia() {
+      const container = document.getElementById("conteudo");
+
+      const hoje = new Date().toISOString().split("T")[0];
+      const api = "https://cpbjr.github.io/catholic-readings-api/readings/" + hoje;
+      const proxy = "https://api.allorigins.win/raw?url=" + encodeURIComponent(api);
+
+      try {
+        const resposta = await fetch(proxy);
+        const texto = await resposta.text();
+
+        // Se vier HTML, aborta
+        if (texto.trim().startsWith("<")) {
+          throw new Error("Resposta inválida (HTML em vez de JSON)");
+        }
+
+        const data = JSON.parse(texto);
+
+        let html = `
+          <h2>${data.date}</h2>
+
+          <h3>Primeira Leitura</h3>
+          <div class="referencia">${data.first_reading.reference}</div>
+          <div class="texto">${data.first_reading.text}</div>
+
+          <h3>Salmo</h3>
+          <div class="referencia">${data.psalm.reference}</div>
+          <div class="texto">${data.psalm.text}</div>
+        `;
+
+        if (data.second_reading) {
+          html += `
+            <h3>Segunda Leitura</h3>
+            <div class="referencia">${data.second_reading.reference}</div>
+            <div class="texto">${data.second_reading.text}</div>
+          `;
+        }
+
+        html += `
+          <h3>Evangelho</h3>
+          <div class="referencia">${data.gospel.reference}</div>
+          <div class="texto">${data.gospel.text}</div>
+        `;
+
+        container.innerHTML = html;
+
+      } catch (erro) {
+        console.error(erro);
+        container.innerHTML = `
+          <div class="erro">
+            Não foi possível carregar a liturgia de hoje.<br>
+            Tente novamente mais tarde.
+          </div>
+        `;
+      }
+    }
+
+    carregarLiturgia();
+  </script>
+</body>
+</html>
