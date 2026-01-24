@@ -2,37 +2,126 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>Liturgia Diária API</title>
+<title>Liturgia Diária</title>
+
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background: #f4f4f4;
+  margin: 0;
+  padding: 0;
+}
+
+.liturgia-box {
+  max-width: 900px;
+  margin: 30px auto;
+  background: #fff;
+  border-radius: 12px;
+  padding: 25px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.liturgia-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.liturgia-header h1 {
+  margin: 0;
+  font-size: 26px;
+}
+
+.liturgia-header p {
+  margin: 6px 0 0;
+  color: #666;
+}
+
+.section {
+  margin-top: 25px;
+}
+
+.section h2 {
+  font-size: 20px;
+  margin-bottom: 10px;
+  border-left: 5px solid #c9a227;
+  padding-left: 10px;
+}
+
+.section p {
+  line-height: 1.6;
+  white-space: pre-line;
+}
+.loading {
+  text-align: center;
+  font-size: 18px;
+  padding: 40px;
+}
+.error {
+  color: red;
+  text-align: center;
+  padding: 30px;
+}
+</style>
 </head>
+
 <body>
 
-<div id="liturgia">Carregando…</div>
+<div class="liturgia-box" id="liturgia">
+  <div class="loading">Carregando Liturgia Diária…</div>
+</div>
 
 <script>
-async function loadLiturgia() {
-  const hoje = new Date().toISOString().split("T")[0];
-  const apiUrl = `https://liturgia.up.railway.app/v2/readings/${hoje}`;
-  const proxyUrl = "https://api.allorigins.win/raw?url=" + encodeURIComponent(apiUrl);
+async function carregarLiturgia() {
+  const container = document.getElementById("liturgia");
 
   try {
-    const res = await fetch(proxyUrl);
-    const text = await res.text();
-    // se veio HTML → problema
-    if (text.trim().startsWith("<")) {
-      throw new Error("Resposta inválida (HTML em vez de JSON)");
-    }
-    const data = JSON.parse(text);
+    const hoje = new Date();
+    const dia = String(hoje.getDate()).padStart(2, "0");
+    const mes = String(hoje.getMonth() + 1).padStart(2, "0");
 
-    document.getElementById("liturgia").innerHTML =
-      `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+    const url = `https://liturgia.up.railway.app/${dia}-${mes}`;
 
-  } catch (err) {
-    document.getElementById("liturgia").innerText =
-      "Erro ao carregar API: " + err.message;
+    const resposta = await fetch(url);
+    if (!resposta.ok) throw new Error("Erro na API");
+
+    const data = await resposta.json();
+
+    container.innerHTML = `
+      <div class="liturgia-header">
+        <h1>Liturgia Diária</h1>
+        <p>${data.data} • ${data.cor}</p>
+      </div>
+
+      <div class="section">
+        <h2>Primeira Leitura</h2>
+        <p><strong>${data.primeiraLeitura.referencia}</strong></p>
+        <p>${data.primeiraLeitura.texto}</p>
+      </div>
+
+      <div class="section">
+        <h2>Salmo</h2>
+        <p><strong>${data.salmo.referencia}</strong></p>
+        <p>${data.salmo.texto}</p>
+      </div>
+
+      <div class="section">
+        <h2>Evangelho</h2>
+        <p><strong>${data.evangelho.referencia}</strong></p>
+        <p>${data.evangelho.texto}</p>
+      </div>
+    `;
+  } catch (erro) {
+    container.innerHTML = `
+      <div class="error">
+        Não foi possível carregar a Liturgia Diária.<br>
+        Tente novamente mais tarde.
+      </div>
+    `;
+    console.error(erro);
   }
 }
 
-loadLiturgia();
+carregarLiturgia();
 </script>
 
 </body>
