@@ -8,131 +8,110 @@
   <style>
     body {
       margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      background: #f2f2f2;
+      padding: 0;
+      background: #f4f1ec;
+      font-family: Georgia, "Times New Roman", serif;
     }
 
-    header {
-      background: #5b2d8b;
-      color: #fff;
-      padding: 16px;
+    h1 {
       text-align: center;
+      margin: 20px 10px;
+      font-weight: normal;
+      color: #5b3a29;
     }
 
-    .container {
-      max-width: 1100px;
-      margin: auto;
+    /* MOLDURA */
+    .moldura-liturgia {
+      width: 95%;
+      max-width: 820px;
+      margin: 0 auto 40px;
+      padding: 50px;
+      background: url("borda-liturgia.png") no-repeat center;
+      background-size: contain;
+    }
+
+    /* ÁREA INTERNA */
+    .conteudo-liturgia {
+      position: relative;
       background: #ffffff;
-      padding: 10px;
-    }
-
-    .iframe-wrapper {
-      position: relative;
-      width: 100%;
-      height: 1150px;
+      height: 540px;
       overflow: hidden;
-      background: #fff;
+      border-radius: 6px;
     }
 
-    iframe {
-      position: relative;
-      width: 120%;
-      height: 3000px;
+    /* IFRAME */
+    .conteudo-liturgia iframe {
+      width: 100%;
+      height: 100%;
       border: none;
-      left: -10%;
-      transform: translateY(-320px);
-      background: white; /* aparência limpa */
     }
 
-    /* 🔒 BLOQUEIO SUPERIOR (menu livre) */
-    .overlay-top {
+    /* BLOQUEIO DA LEITURA */
+    .bloqueio {
       position: absolute;
-      top: 225px;
       left: 0;
-      width: 100%;
-      height: calc(100% - 225px);
-      pointer-events: all;
-      user-select: none;
-      z-index: 10;
-    }
-
-    /* 🎨 MÁSCARA BRANCA INFERIOR (SOLUÇÃO REAL) */
-    .fade-bottom {
-      position: absolute;
+      right: 0;
+      top: 120px;   /* 👈 menu fica livre */
       bottom: 0;
-      left: 0;
-      width: 100%;
-      height: 420px;
-      background: linear-gradient(
-        to bottom,
-        rgba(255,255,255,0) 0%,
-        rgba(255,255,255,0.6) 30%,
-        rgba(255,255,255,0.9) 60%,
-        #ffffff 100%
-      );
+      background: white;
+      pointer-events: auto;
+    }
+
+    /* SOMBRA E ACABAMENTO */
+    .conteudo-liturgia::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      box-shadow: inset 0 0 25px rgba(0,0,0,0.08);
       pointer-events: none;
-      z-index: 20;
+    }
+
+    /* MOBILE */
+    @media (max-width: 600px) {
+      .moldura-liturgia {
+        padding: 25px;
+        background-size: cover;
+      }
+
+      .conteudo-liturgia {
+        height: 480px;
+      }
+
+      .bloqueio {
+        top: 110px;
+      }
     }
 
     footer {
       text-align: center;
-      font-size: 13px;
-      color: #666;
-      padding: 15px 5px;
-    }
-
-    /* Mobile */
-    @media (max-width: 768px) {
-      iframe {
-        width: 140%;
-        left: -20%;
-        transform: translateY(-360px);
-        height: 3600px;
-      }
-
-      .overlay-top {
-        top: 255px;
-      }
-
-      .fade-bottom {
-        height: 520px;
-      }
-
-      .iframe-wrapper {
-        height: 1200px;
-      }
+      font-size: 14px;
+      color: #777;
+      margin-bottom: 20px;
     }
   </style>
 </head>
 
 <body>
 
-<header>
-  <h1>📖 Liturgia Diária</h1>
-  <p>1ª Leitura • Salmo • 2ª Leitura • Evangelho</p>
-</header>
+  <h1>Liturgia Diária</h1>
 
-<div class="container">
-  <div class="iframe-wrapper">
+  <div class="moldura-liturgia">
+    <div class="conteudo-liturgia">
 
-    <iframe
-      src="https://liturgia.cancaonova.com/pb/"
-      loading="lazy"
-      referrerpolicy="no-referrer">
-    </iframe>
+      <iframe
+        src="https://liturgia.cancaonova.com/pb/"
+        loading="lazy">
+      </iframe>
 
-    <!-- Área não clicável -->
-    <div class="overlay-top"></div>
+      <!-- camada que bloqueia a leitura -->
+      <div class="bloqueio"></div>
 
-    <!-- Fade branco que esconde tudo abaixo -->
-    <div class="fade-bottom"></div>
-
+    </div>
   </div>
-</div>
 
-<footer>
-  Leituras oficiais — Canção Nova / CNBB
-</footer>
+  <footer>
+    Liturgia diária • Fonte: Canção Nova
+  </footer>
 
 </body>
 </html>
