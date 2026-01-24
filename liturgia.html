@@ -1,97 +1,42 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-<meta charset="UTF-8">
-<title>Liturgia Diária</title>
-
-<style>
-body {
-  margin: 0;
-  background: #f2eee6;
-  font-family: Georgia, serif;
-}
-
-.container {
-  max-width: 800px;
-  margin: 40px auto;
-  background: #fff;
-  padding: 30px;
-  border-radius: 12px;
-  box-shadow: 0 8px 25px rgba(0,0,0,.15);
-}
-
-h1 {
-  text-align: center;
-  margin-bottom: 30px;
-}
-
-.leitura {
-  margin-bottom: 25px;
-}
-
-.leitura h2 {
-  font-size: 18px;
-  color: #6b4e2e;
-  border-bottom: 1px solid #ddd;
-  padding-bottom: 5px;
-}
-
-.erro {
-  color: red;
-  text-align: center;
-}
-</style>
-</head>
-
-<body>
-
-<div class="container">
-  <h1>Liturgia Diária</h1>
-  <div id="conteudo">Carregando liturgia…</div>
+<div id="liturgia">
+  <p>Carregando liturgia…</p>
 </div>
 
 <script>
-(async function carregarLiturgia() {
-  const hoje = new Date();
-  const ano = hoje.getFullYear();
-  const mes = String(hoje.getMonth() + 1).padStart(2, "0");
-  const dia = String(hoje.getDate()).padStart(2, "0");
+async function carregarLiturgia() {
+  const hoje = new Date().toISOString().split("T")[0];
 
-  const urlApi =
+  const url =
     "https://api.allorigins.win/raw?url=" +
     encodeURIComponent(
-      `https://cpbjr.github.io/catholic-readings-api/readings/${ano}/${mes}-${dia}.json`
+      "https://cpbjr.github.io/catholic-readings-api/readings/" + hoje
     );
 
   try {
-    const resposta = await fetch(urlApi);
+    const res = await fetch(url);
+    const data = await res.json();
 
-    if (!resposta.ok) {
-      throw new Error("Erro ao acessar a API");
-    }
+    document.getElementById("liturgia").innerHTML = `
+      <h2>Liturgia de ${data.date}</h2>
 
-    const dados = await resposta.json();
+      <h3>Primeira Leitura</h3>
+      <p><strong>${data.first_reading.reference}</strong></p>
+      <p>${data.first_reading.text}</p>
 
-    let html = "";
+      <h3>Salmo</h3>
+      <p><strong>${data.psalm.reference}</strong></p>
+      <p>${data.psalm.text}</p>
 
-    dados.readings.forEach(leitura => {
-      html += `
-        <div class="leitura">
-          <h2>${leitura.title}</h2>
-          <p>${leitura.text.replace(/\n/g, "<br>")}</p>
-        </div>
-      `;
-    });
-
-    document.getElementById("conteudo").innerHTML = html;
-
+      <h3>Evangelho</h3>
+      <p><strong>${data.gospel.reference}</strong></p>
+      <p>${data.gospel.text}</p>
+    `;
   } catch (e) {
-    document.getElementById("conteudo").innerHTML =
-      "<p class='erro'>Erro ao carregar a liturgia.</p>";
+    document.getElementById("liturgia").innerHTML =
+      "<p>Erro ao carregar a liturgia.</p>";
     console.error(e);
   }
-})();
-</script>
+}
 
-</body>
-</html>
+carregarLiturgia();
+</script>
