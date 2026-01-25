@@ -10,42 +10,37 @@ async function carregarLiturgia() {
   const c = document.getElementById("liturgia-conteudo");
   c.innerHTML = "";
 
-  // Primeira Leitura
   c.innerHTML += criarLeitura(
     "Primeira Leitura",
     dados.primeiraLeitura.referencia,
     dados.primeiraLeitura.texto
   );
 
-  // Salmo
   c.innerHTML += `
     <div class="liturgia-card salmo">
       <h2>Salmo Responsorial</h2>
       <p class="referencia">${dados.salmo.referencia}</p>
-      <div class="refrao">${dados.salmo.refrao}</div>
       <div class="texto-liturgico">${dados.salmo.texto}</div>
     </div>
   `;
 
-  // Segunda Leitura
   if (dados.segundaLeitura) {
     c.innerHTML += criarLeitura(
       "Segunda Leitura",
       dados.segundaLeitura.referencia,
       dados.segundaLeitura.texto
-      
-      html += `
-  <div class="liturgia-bloco evangelho">
-    <h2 class="liturgia-subtitulo">✝️ Evangelho</h2>
-    <p class="liturgia-ref"><strong>${data.evangelho.referencia}</strong></p>
-    <p class="liturgia-titulo">${data.evangelho.titulo}</p>
-    <p class="liturgia-texto">${data.evangelho.texto}</p>
-  </div>
-`;
     );
   }
-}
 
+  c.innerHTML += `
+    <div class="liturgia-card evangelho">
+      <h2>✝️ Evangelho</h2>
+      <p class="referencia"><strong>${dados.evangelho.referencia}</strong></p>
+      <p><em>${dados.evangelho.titulo}</em></p>
+      <div class="texto-liturgico">${dados.evangelho.texto}</div>
+    </div>
+  `;
+}
 
 function criarLeitura(titulo, referencia, texto) {
   return `
@@ -56,5 +51,3 @@ function criarLeitura(titulo, referencia, texto) {
     </div>
   `;
 }
-
-carregarLiturgia();
