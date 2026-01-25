@@ -1,0 +1,113 @@
+<!DOCTYPE html><html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Santa Teresinha Idle</title><style>
+body {
+  margin: 0;
+  font-family: 'Arial', sans-serif;
+  background: linear-gradient(#cce7ff, #fdf6e3);
+  overflow: hidden;
+}
+
+#hud {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: rgba(255,255,255,0.9);
+  padding: 10px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  z-index: 10;
+}
+
+#game {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#santa {
+  width: 220px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.hand {
+  position: absolute;
+  width: 60px;
+  pointer-events: none;
+  animation: tap 0.6s ease-out forwards;
+}
+
+@keyframes tap {
+  0% { transform: scale(1); opacity: 1; }
+  100% { transform: scale(1.4) translateY(20px); opacity: 0; }
+}
+
+#upgrade {
+  padding: 10px 16px;
+  background: #d81b60;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+#upgrade:disabled {
+  background: #aaa;
+}
+</style></head><body><div id="hud">
+  <div>🌸 Flores: <span id="flores">0</span></div>
+  <div>✨ Por clique: <span id="porClique">1</span></div>
+  <button id="upgrade">Upar (custo: <span id="custo">10</span>)</button>
+</div><div id="game">
+  <img src="santa.png" id="santa" alt="Santa Teresinha" />
+</div><script>
+let flores = 0;
+let porClique = 1;
+let custo = 10;
+
+const floresEl = document.getElementById('flores');
+const porCliqueEl = document.getElementById('porClique');
+const custoEl = document.getElementById('custo');
+const upgradeBtn = document.getElementById('upgrade');
+const santa = document.getElementById('santa');
+
+function atualizarHUD() {
+  floresEl.textContent = flores;
+  porCliqueEl.textContent = porClique;
+  custoEl.textContent = custo;
+  upgradeBtn.disabled = flores < custo;
+}
+
+santa.addEventListener('click', (e) => {
+  flores += porClique;
+  atualizarHUD();
+
+  const hand = document.createElement('img');
+  hand.src = 'mao.png';
+  hand.className = 'hand';
+  hand.style.left = e.clientX - 30 + 'px';
+  hand.style.top = e.clientY - 30 + 'px';
+  document.body.appendChild(hand);
+
+  setTimeout(() => hand.remove(), 600);
+});
+
+upgradeBtn.addEventListener('click', () => {
+  if (flores >= custo) {
+    flores -= custo;
+    porClique++;
+    custo = Math.floor(custo * 1.6);
+    atualizarHUD();
+  }
+});
+
+atualizarHUD();
+</script></body>
+</html>
