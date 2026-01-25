@@ -1,37 +1,50 @@
-function mostrarLiturgia() {
-  const conteudo = document.getElementById("conteudo");
+async function carregarLiturgia() {
+  const res = await fetch("https://liturgia.up.railway.app/12-04");
+  const dados = await res.json();
 
-  conteudo.innerHTML = `
-    <div class="liturgia-box">
-      <p>📖 Carregando Liturgia Diária…</p>
+  document.getElementById("liturgia-titulo").innerText =
+    dados.liturgia + " — " + dados.cor;
+
+  document.getElementById("liturgia-data").innerText = dados.data;
+
+  const c = document.getElementById("liturgia-conteudo");
+  c.innerHTML = "";
+
+  // Primeira Leitura
+  c.innerHTML += criarLeitura(
+    "Primeira Leitura",
+    dados.primeiraLeitura.referencia,
+    dados.primeiraLeitura.texto
+  );
+
+  // Salmo
+  c.innerHTML += `
+    <div class="liturgia-card salmo">
+      <h2>Salmo Responsorial</h2>
+      <p class="referencia">${dados.salmo.referencia}</p>
+      <div class="refrao">${dados.salmo.refrao}</div>
+      <div class="texto-liturgico">${dados.salmo.texto}</div>
     </div>
   `;
 
-  const hoje = new Date();
-  const dia = String(hoje.getDate()).padStart(2, "0");
-  const mes = String(hoje.getMonth() + 1).padStart(2, "0");
-
-  const url = `https://liturgia.up.railway.app/${dia}-${mes}`;
-
-  fetch(url)
-    .then(res => res.text())
-    .then(html => {
-      // limpeza leve (opcional)
-      const limpo = html
-        .replace(/<script[\s\S]*?<\/script>/gi, "")
-        .replace(/style="[^"]*"/gi, "");
-
-      conteudo.innerHTML = `
-        <div class="liturgia-box">
-          ${limpo}
-        </div>
-      `;
-    })
-    .catch(() => {
-      conteudo.innerHTML = `
-        <div class="liturgia-box">
-          <p style="color:red">Erro ao carregar a liturgia.</p>
-        </div>
-      `;
-    });
+  // Segunda Leitura
+  if (dados.segundaLeitura) {
+    c.innerHTML += criarLeitura(
+      "Segunda Leitura",
+      dados.segundaLeitura.referencia,
+      dados.segundaLeitura.texto
+    );
+  }
 }
+
+function criarLeitura(titulo, referencia, texto) {
+  return `
+    <div class="liturgia-card">
+      <h2>${titulo}</h2>
+      <p class="referencia">${referencia}</p>
+      <div class="texto-liturgico">${texto}</div>
+    </div>
+  `;
+}
+
+carregarLiturgia();
