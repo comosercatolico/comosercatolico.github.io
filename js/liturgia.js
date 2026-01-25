@@ -33,9 +33,19 @@ async function carregarLiturgia() {
       "Segunda Leitura",
       dados.segundaLeitura.referencia,
       dados.segundaLeitura.texto
+      
+      html += `
+  <div class="liturgia-bloco evangelho">
+    <h2 class="liturgia-subtitulo">✝️ Evangelho</h2>
+    <p class="liturgia-ref"><strong>${data.evangelho.referencia}</strong></p>
+    <p class="liturgia-titulo">${data.evangelho.titulo}</p>
+    <p class="liturgia-texto">${data.evangelho.texto}</p>
+  </div>
+`;
     );
   }
 }
+
 
 function criarLeitura(titulo, referencia, texto) {
   return `
