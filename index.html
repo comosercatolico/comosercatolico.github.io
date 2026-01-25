@@ -2,38 +2,51 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>COMO SER UM BOM CATOLICO</title>
-  <meta name="viewport" content="google-site-verification=hmFqrAy8ouiHkXi9VvYKZmuvQadiQr-4AIMZZmVvli8, initial-scale=1.0">
+  <title>Como ser um bom católico</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <style>
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background-image: url("padre.png");
-      background-size: cover;       /* cobre a tela */
-  background-position: center;  /* centraliza */
-  background-repeat: no-repeat; /* não repete */
-  background-attachment: fixed; /* opcional */
-}
       text-align: center;
+      background-image: url("padre.png");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
     }
 
     header {
       background-image: url("santos.png");
-      color: white;
       padding: 20px;
+      color: white;
+    }
+
+    nav {
+      padding: 12px;
+      background: rgba(0, 0, 0, 0.6);
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      padding: 8px 14px;
+      margin: 0 5px;
+      border-radius: 5px;
+      font-weight: bold;
+    }
+
+    nav a:hover {
+      background-color: #005fa3;
     }
 
     main {
       padding: 40px 20px;
-    }
-
-    footer {
-      color: white;
-      padding: 10px;
-      position: fixed;
-      bottom: 0;
-      width: 100%;
+      min-height: 60vh;
+      background: rgba(255, 255, 255, 0.85);
+      margin: 20px;
+      border-radius: 10px;
     }
 
     button {
@@ -44,68 +57,58 @@
       cursor: pointer;
       background: #007bff;
       color: white;
+      margin: 10px;
     }
 
     button:hover {
       background: #0056b3;
     }
+
+    footer {
+      color: white;
+      padding: 10px;
+      background: rgba(0,0,0,0.6);
+    }
   </style>
 </head>
+
 <body>
-  <header class="topo">
-    <h1>catequese católica</h1>
-    </header>
-  
+
+  <header>
+    <h1>Catequese Católica</h1>
+  </header>
+
+  <!-- MENU ÚNICO -->
   <nav>
-  <a href="index.html">Início</a> |
-  <a href="liturgia.html">liturgia diária</a> |
-  <a href="contato.html">Contato</a> |
-  <a href="outra.html">Outra coisa</a>
-</nav>
-<body>
-  
+    <a href="#" onclick="mostrarInicio()">Início</a>
+    <a href="#" onclick="mostrarLiturgia()">Liturgia diária</a>
+    <a href="#" onclick="mostrarJogo()">Jogo</a>
+    <a href="#">Contato</a>
+  </nav>
+
+  <!-- CONTEÚDO DINÂMICO -->
+  <main id="conteudo">
+    <h2>Bem-vindo</h2>
+    <p>Escolha uma opção no menu.</p>
+
+    <img src="pig.png" alt="imagem decorativa" width="120">
+  </main>
+
   <footer>
     © 2026 - Meu site
   </footer>
 
+  <!-- SCRIPTS -->
+  <script src="js/liturgia.js"></script>
+  <script src="js/jogo.js"></script>
+  <script>
+    function mostrarInicio() {
+      document.getElementById("conteudo").innerHTML = `
+        <h2>Bem-vindo</h2>
+        <p>Escolha uma opção no menu.</p>
+      `;
+    }
+  </script>
+
 </body>
-  <body>
-
-<nav>
-  <button onclick="mostrarLiturgia()">Liturgia</button>
-  <button onclick="mostrarJogo()">Jogo</button>
-</nav>
-
-<main id="conteudo">
-  <h1>Bem-vindo</h1>
-  <p>Selecione uma opção no menu.</p>
-</main>
-
-<script src="js/liturgia.js"></script>
-<script src="js/jogo.js"></script>
-</body>
-  
-<img src="pig.png" alt="minha foto">
-
-<style>
-  nav {
-    padding: 10px;
-    text-align: center;
-  }
-
-  nav a {
-    color: white;                 /* cor do texto */
-    background-color:   /* cor do botão */
-    font-family: Arial, sans-serif; /* fonte */
-    text-decoration: none;        /* tira sublinhado */
-    padding: 8px 15px;
-    margin: 0 5px;
-    border-radius: 5px;
-    display: inline-block;
-  }
-
-  nav a:hover {
-    background-color: #005fa3;    /* cor ao passar o mouse */
-  }
-</style>
-      
+</html>
