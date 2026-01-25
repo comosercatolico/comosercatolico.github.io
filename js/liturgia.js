@@ -3,7 +3,7 @@ function mostrarLiturgia() {
 
   conteudo.innerHTML = `
     <div class="liturgia-box">
-      <p>Carregando Liturgia Diária…</p>
+      <p>📖 Carregando Liturgia Diária…</p>
     </div>
   `;
 
@@ -14,20 +14,24 @@ function mostrarLiturgia() {
   const url = `https://liturgia.up.railway.app/${dia}-${mes}`;
 
   fetch(url)
-    .then(res => res.text()) // ⚠️ HTML
+    .then(res => res.text())
     .then(html => {
+      // limpeza leve (opcional)
+      const limpo = html
+        .replace(/<script[\s\S]*?<\/script>/gi, "")
+        .replace(/style="[^"]*"/gi, "");
+
       conteudo.innerHTML = `
         <div class="liturgia-box">
-          ${html}
+          ${limpo}
         </div>
       `;
     })
-    .catch(err => {
+    .catch(() => {
       conteudo.innerHTML = `
         <div class="liturgia-box">
           <p style="color:red">Erro ao carregar a liturgia.</p>
         </div>
       `;
-      console.error(err);
     });
 }
