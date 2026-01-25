@@ -1,45 +1,61 @@
 async function carregarLiturgia() {
-  const res = await fetch("https://liturgia.up.railway.app/12-04");
-  const dados = await res.json();
+  try {
+    const hoje = new Date();
+    const dia = String(hoje.getDate()).padStart(2, "0");
+    const mes = String(hoje.getMonth() + 1).padStart(2, "0");
 
-  document.getElementById("liturgia-titulo").innerText =
-    dados.liturgia + " — " + dados.cor;
+    const res = await fetch(`https://liturgia.up.railway.app/${dia}-${mes}`);
+    const dados = await res.json();
 
-  document.getElementById("liturgia-data").innerText = dados.data;
+    document.getElementById("liturgia-titulo").innerText =
+      `${dados.liturgia} — ${dados.cor}`;
 
-  const c = document.getElementById("liturgia-conteudo");
-  c.innerHTML = "";
+    document.getElementById("liturgia-data").innerText = dados.data;
 
-  c.innerHTML += criarLeitura(
-    "Primeira Leitura",
-    dados.primeiraLeitura.referencia,
-    dados.primeiraLeitura.texto
-  );
+    const c = document.getElementById("liturgia-conteudo");
+    c.innerHTML = "";
 
-  c.innerHTML += `
-    <div class="liturgia-card salmo">
-      <h2>Salmo Responsorial</h2>
-      <p class="referencia">${dados.salmo.referencia}</p>
-      <div class="texto-liturgico">${dados.salmo.texto}</div>
-    </div>
-  `;
-
-  if (dados.segundaLeitura) {
+    // Primeira Leitura
     c.innerHTML += criarLeitura(
-      "Segunda Leitura",
-      dados.segundaLeitura.referencia,
-      dados.segundaLeitura.texto
+      "Primeira Leitura",
+      dados.primeiraLeitura.referencia,
+      dados.primeiraLeitura.texto
     );
-  }
 
-  c.innerHTML += `
-    <div class="liturgia-card evangelho">
-      <h2>✝️ Evangelho</h2>
-      <p class="referencia"><strong>${dados.evangelho.referencia}</strong></p>
-      <p><em>${dados.evangelho.titulo}</em></p>
-      <div class="texto-liturgico">${dados.evangelho.texto}</div>
-    </div>
-  `;
+    // Salmo
+    c.innerHTML += `
+      <div class="liturgia-card salmo">
+        <h2>Salmo Responsorial</h2>
+        <p class="referencia">${dados.salmo.referencia}</p>
+        <p><strong>${dados.salmo.refrao}</strong></p>
+        <div class="texto-liturgico">${dados.salmo.texto}</div>
+      </div>
+    `;
+
+    // Segunda Leitura (se existir)
+    if (dados.segundaLeitura) {
+      c.innerHTML += criarLeitura(
+        "Segunda Leitura",
+        dados.segundaLeitura.referencia,
+        dados.segundaLeitura.texto
+      );
+    }
+
+    // Evangelho
+    c.innerHTML += `
+      <div class="liturgia-card evangelho">
+        <h2>✝️ Evangelho</h2>
+        <p class="referencia">${dados.evangelho.referencia}</p>
+        <p><strong>${dados.evangelho.titulo}</strong></p>
+        <div class="texto-liturgico">${dados.evangelho.texto}</div>
+      </div>
+    `;
+
+  } catch (erro) {
+    document.getElementById("liturgia-conteudo").innerHTML =
+      "<p>Erro ao carregar a liturgia.</p>";
+    console.error(erro);
+  }
 }
 
 function criarLeitura(titulo, referencia, texto) {
