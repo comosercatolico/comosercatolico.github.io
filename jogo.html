@@ -10,55 +10,49 @@ body {
   margin: 0;
   font-family: Arial, sans-serif;
   background: linear-gradient(#cce7ff, #fdf6e3);
-  overflow: hidden;
 }
 
-/* HUD */
 #hud {
   position: fixed;
   top: 0;
   width: 100%;
-  background: rgba(255,255,255,0.95);
+  background: white;
   padding: 10px;
   display: flex;
   justify-content: space-around;
   align-items: center;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  box-shadow: 0 2px 6px rgba(0,0,0,.2);
   z-index: 10;
 }
 
-/* Área do jogo */
+#hud button {
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: none;
+  background: #d81b60;
+  color: white;
+  cursor: pointer;
+}
+
+#hud button:disabled {
+  background: #aaa;
+}
+
 #game {
   height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  position: relative;
   cursor: pointer;
 }
 
-/* Santa */
 #santa {
   width: 240px;
-  user-select: none;
-  transition: transform 0.15s;
+  transition: transform .1s;
 }
 
 #santa.cutucada {
   transform: scale(0.96);
-}
-
-/* Mão */
-.mao {
-  position: absolute;
-  width: 70px;
-  pointer-events: none;
-  opacity: 0;
-  transition: transform 0.4s ease, opacity 0.15s;
-}
-
-.mao.ativa {
-  opacity: 1;
 }
 </style>
 </head>
@@ -67,77 +61,85 @@ body {
 
 <div id="hud">
   <div>🌸 Flores: <span id="flores">0</span></div>
-  <div>✨ Por clique: <span id="porClique">1</span></div>
-  <button id="upgrade">Upar (custo: <span id="custo">10</span>)</button>
+  <div>🌼 /s: <span id="auto">0</span></div>
+  <button id="upgradeAuto">
+    Upar auto (custo <span id="custo">10</span>)
+  </button>
 </div>
 
 <div id="game">
-  <img src="santa.png" id="santa" alt="Santa Teresinha">
-  <img src="mao.png" id="mao" class="mao">
+  <img src="santa.png" id="santa">
 </div>
 
 <script>
+/* ===== VARIÁVEIS ===== */
 let flores = 0;
-let porClique = 1;
-let custo = 10;
+let floresAuto = 0;
+let custoAuto = 10;
 
+/* ===== ELEMENTOS ===== */
 const floresEl = document.getElementById("flores");
-const porCliqueEl = document.getElementById("porClique");
+const autoEl = document.getElementById("auto");
 const custoEl = document.getElementById("custo");
-const upgradeBtn = document.getElementById("upgrade");
-
-const game = document.getElementById("game");
 const santa = document.getElementById("santa");
-const mao = document.getElementById("mao");
+const upgradeBtn = document.getElementById("upgradeAuto");
 
+/* ===== HUD ===== */
 function atualizarHUD() {
-  floresEl.textContent = flores;
-  porCliqueEl.textContent = porClique;
-  custoEl.textContent = custo;
-  upgradeBtn.disabled = flores < custo;
+  floresEl.textContent = Math.floor(flores);
+  autoEl.textContent = floresAuto;
+  custoEl.textContent = custoAuto;
+  upgradeBtn.disabled = flores < custoAuto;
 }
 
-game.addEventListener("click", (e) => {
-  const rect = game.getBoundingClientRect();
+/* ===== SALVAR ===== */
+function salvar() {
+  localStorage.setItem("saveSanta", JSON.stringify({
+    flores,
+    floresAuto,
+    custoAuto
+  }));
+}
 
-  const x = e.clientX - rect.left;
-  const y = e.clientY - rect.top;
+/* ===== CARREGAR ===== */
+function carregar() {
+  const save = localStorage.getItem("saveSanta");
+  if (!save) return;
+  const data = JSON.parse(save);
+  flores = data.flores || 0;
+  floresAuto = data.floresAuto || 0;
+  custoAuto = data.custoAuto || 10;
+}
 
-  flores += porClique;
+/* ===== CLIQUE ===== */
+document.getElementById("game").addEventListener("click", () => {
+  flores++;
+  santa.classList.add("cutucada");
+  setTimeout(() => santa.classList.remove("cutucada"), 100);
   atualizarHUD();
-
-  // posição inicial da mão (fora da tela)
-  mao.style.left = rect.width + "px";
-  mao.style.top = rect.height + "px";
-  mao.style.transform = "translate(0,0)";
-  mao.classList.add("ativa");
-
-  // força o repaint
-  mao.getBoundingClientRect();
-
-  // move a mão até o ponto clicado
-  mao.style.transform = `translate(${x - rect.width - 35}px, ${y - rect.height - 35}px)`;
-
-  // reação da santa
-  setTimeout(() => {
-    santa.classList.add("cutucada");
-  }, 250);
-
-  setTimeout(() => {
-    santa.classList.remove("cutucada");
-    mao.classList.remove("ativa");
-  }, 450);
+  salvar();
 });
 
+/* ===== AUTO GERADOR (1x por segundo) ===== */
+setInterval(() => {
+  flores += floresAuto;
+  atualizarHUD();
+  salvar();
+}, 1000);
+
+/* ===== UPGRADE ===== */
 upgradeBtn.addEventListener("click", () => {
-  if (flores >= custo) {
-    flores -= custo;
-    porClique++;
-    custo = Math.floor(custo * 1.6);
+  if (flores >= custoAuto) {
+    flores -= custoAuto;
+    floresAuto++;
+    custoAuto = Math.floor(custoAuto * 1.6);
     atualizarHUD();
+    salvar();
   }
 });
 
+/* ===== INICIAR ===== */
+carregar();
 atualizarHUD();
 </script>
 
