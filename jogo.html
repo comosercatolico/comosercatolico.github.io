@@ -1,82 +1,94 @@
-<!DOCTYPE html><html lang="pt-BR">
+<!DOCTYPE html>
+<html lang="pt-BR">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Santa Teresinha Idle</title><style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Santa Teresinha Idle</title>
+
+<style>
 body {
   margin: 0;
-  font-family: 'Arial', sans-serif;
+  font-family: Arial, sans-serif;
   background: linear-gradient(#cce7ff, #fdf6e3);
   overflow: hidden;
 }
 
+/* HUD */
 #hud {
   position: fixed;
   top: 0;
   width: 100%;
-  background: rgba(255,255,255,0.9);
+  background: rgba(255,255,255,0.95);
   padding: 10px;
   display: flex;
   justify-content: space-around;
   align-items: center;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
   z-index: 10;
 }
 
+/* Área do jogo */
 #game {
   height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
+  cursor: pointer;
 }
 
+/* Santa */
 #santa {
-  width: 220px;
-  cursor: pointer;
+  width: 240px;
   user-select: none;
+  transition: transform 0.15s;
 }
 
-.hand {
+#santa.cutucada {
+  transform: scale(0.96);
+}
+
+/* Mão */
+.mao {
   position: absolute;
-  width: 60px;
+  width: 70px;
   pointer-events: none;
-  animation: tap 0.6s ease-out forwards;
+  opacity: 0;
+  transition: transform 0.4s ease, opacity 0.15s;
 }
 
-@keyframes tap {
-  0% { transform: scale(1); opacity: 1; }
-  100% { transform: scale(1.4) translateY(20px); opacity: 0; }
+.mao.ativa {
+  opacity: 1;
 }
+</style>
+</head>
 
-#upgrade {
-  padding: 10px 16px;
-  background: #d81b60;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-size: 14px;
-  cursor: pointer;
-}
+<body>
 
-#upgrade:disabled {
-  background: #aaa;
-}
-</style></head><body><div id="hud">
+<div id="hud">
   <div>🌸 Flores: <span id="flores">0</span></div>
   <div>✨ Por clique: <span id="porClique">1</span></div>
   <button id="upgrade">Upar (custo: <span id="custo">10</span>)</button>
-</div><div id="game">
-  <img src="santa.png" id="santa" alt="Santa Teresinha" />
-</div><script>
+</div>
+
+<div id="game">
+  <img src="santa.png" id="santa" alt="Santa Teresinha">
+  <img src="mao.png" id="mao" class="mao">
+</div>
+
+<script>
 let flores = 0;
 let porClique = 1;
 let custo = 10;
 
-const floresEl = document.getElementById('flores');
-const porCliqueEl = document.getElementById('porClique');
-const custoEl = document.getElementById('custo');
-const upgradeBtn = document.getElementById('upgrade');
-const santa = document.getElementById('santa');
+const floresEl = document.getElementById("flores");
+const porCliqueEl = document.getElementById("porClique");
+const custoEl = document.getElementById("custo");
+const upgradeBtn = document.getElementById("upgrade");
+
+const game = document.getElementById("game");
+const santa = document.getElementById("santa");
+const mao = document.getElementById("mao");
 
 function atualizarHUD() {
   floresEl.textContent = flores;
@@ -85,21 +97,39 @@ function atualizarHUD() {
   upgradeBtn.disabled = flores < custo;
 }
 
-santa.addEventListener('click', (e) => {
+game.addEventListener("click", (e) => {
+  const rect = game.getBoundingClientRect();
+
+  const x = e.clientX - rect.left;
+  const y = e.clientY - rect.top;
+
   flores += porClique;
   atualizarHUD();
 
-  const hand = document.createElement('img');
-  hand.src = 'mao.png';
-  hand.className = 'hand';
-  hand.style.left = e.clientX - 30 + 'px';
-  hand.style.top = e.clientY - 30 + 'px';
-  document.body.appendChild(hand);
+  // posição inicial da mão (fora da tela)
+  mao.style.left = rect.width + "px";
+  mao.style.top = rect.height + "px";
+  mao.style.transform = "translate(0,0)";
+  mao.classList.add("ativa");
 
-  setTimeout(() => hand.remove(), 600);
+  // força o repaint
+  mao.getBoundingClientRect();
+
+  // move a mão até o ponto clicado
+  mao.style.transform = `translate(${x - rect.width - 35}px, ${y - rect.height - 35}px)`;
+
+  // reação da santa
+  setTimeout(() => {
+    santa.classList.add("cutucada");
+  }, 250);
+
+  setTimeout(() => {
+    santa.classList.remove("cutucada");
+    mao.classList.remove("ativa");
+  }, 450);
 });
 
-upgradeBtn.addEventListener('click', () => {
+upgradeBtn.addEventListener("click", () => {
   if (flores >= custo) {
     flores -= custo;
     porClique++;
@@ -109,5 +139,7 @@ upgradeBtn.addEventListener('click', () => {
 });
 
 atualizarHUD();
-</script></body>
+</script>
+
+</body>
 </html>
