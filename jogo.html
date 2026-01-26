@@ -21,8 +21,10 @@ body {
   display: flex;
   justify-content: space-around;
   align-items: center;
+  gap: 6px;
   box-shadow: 0 2px 6px rgba(0,0,0,.2);
   z-index: 10;
+  flex-wrap: wrap;
 }
 
 #hud button {
@@ -32,6 +34,7 @@ body {
   background: #d81b60;
   color: white;
   cursor: pointer;
+  font-size: 13px;
 }
 
 #hud button:disabled {
@@ -61,9 +64,15 @@ body {
 
 <div id="hud">
   <div>🌸 Flores: <span id="flores">0</span></div>
-  <div>🌼 /s: <span id="auto">0</span></div>
+
+  <button id="upgradeClick">
+    Upar clique (+<span id="clickValue">1</span>)<br>
+    Custo: <span id="custoClick">10</span>
+  </button>
+
   <button id="upgradeAuto">
-    Upar auto (custo <span id="custo">10</span>)
+    Upar automático (+1/s)<br>
+    Custo: <span id="custoAuto">15</span>
   </button>
 </div>
 
@@ -74,29 +83,41 @@ body {
 <script>
 /* ===== VARIÁVEIS ===== */
 let flores = 0;
+let porClique = 1;
 let floresAuto = 0;
-let custoAuto = 10;
+
+let custoClick = 10;
+let custoAuto = 15;
 
 /* ===== ELEMENTOS ===== */
 const floresEl = document.getElementById("flores");
-const autoEl = document.getElementById("auto");
-const custoEl = document.getElementById("custo");
 const santa = document.getElementById("santa");
-const upgradeBtn = document.getElementById("upgradeAuto");
+
+const upgradeClickBtn = document.getElementById("upgradeClick");
+const upgradeAutoBtn = document.getElementById("upgradeAuto");
+
+const clickValueEl = document.getElementById("clickValue");
+const custoClickEl = document.getElementById("custoClick");
+const custoAutoEl = document.getElementById("custoAuto");
 
 /* ===== HUD ===== */
 function atualizarHUD() {
   floresEl.textContent = Math.floor(flores);
-  autoEl.textContent = floresAuto;
-  custoEl.textContent = custoAuto;
-  upgradeBtn.disabled = flores < custoAuto;
+  clickValueEl.textContent = porClique;
+  custoClickEl.textContent = custoClick;
+  custoAutoEl.textContent = custoAuto;
+
+  upgradeClickBtn.disabled = flores < custoClick;
+  upgradeAutoBtn.disabled = flores < custoAuto;
 }
 
 /* ===== SALVAR ===== */
 function salvar() {
   localStorage.setItem("saveSanta", JSON.stringify({
     flores,
+    porClique,
     floresAuto,
+    custoClick,
     custoAuto
   }));
 }
@@ -106,33 +127,46 @@ function carregar() {
   const save = localStorage.getItem("saveSanta");
   if (!save) return;
   const data = JSON.parse(save);
-  flores = data.flores || 0;
-  floresAuto = data.floresAuto || 0;
-  custoAuto = data.custoAuto || 10;
+  flores = data.flores ?? 0;
+  porClique = data.porClique ?? 1;
+  floresAuto = data.floresAuto ?? 0;
+  custoClick = data.custoClick ?? 10;
+  custoAuto = data.custoAuto ?? 15;
 }
 
 /* ===== CLIQUE ===== */
 document.getElementById("game").addEventListener("click", () => {
-  flores++;
+  flores += porClique;
   santa.classList.add("cutucada");
   setTimeout(() => santa.classList.remove("cutucada"), 100);
   atualizarHUD();
   salvar();
 });
 
-/* ===== AUTO GERADOR (1x por segundo) ===== */
+/* ===== AUTO GERADOR ===== */
 setInterval(() => {
   flores += floresAuto;
   atualizarHUD();
   salvar();
 }, 1000);
 
-/* ===== UPGRADE ===== */
-upgradeBtn.addEventListener("click", () => {
+/* ===== UPGRADE CLIQUE ===== */
+upgradeClickBtn.addEventListener("click", () => {
+  if (flores >= custoClick) {
+    flores -= custoClick;
+    porClique++;
+    custoClick = Math.floor(custoClick * 1.6);
+    atualizarHUD();
+    salvar();
+  }
+});
+
+/* ===== UPGRADE AUTO ===== */
+upgradeAutoBtn.addEventListener("click", () => {
   if (flores >= custoAuto) {
     flores -= custoAuto;
     floresAuto++;
-    custoAuto = Math.floor(custoAuto * 1.6);
+    custoAuto = Math.floor(custoAuto * 1.7);
     atualizarHUD();
     salvar();
   }
