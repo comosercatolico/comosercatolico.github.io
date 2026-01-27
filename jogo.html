@@ -2,36 +2,18 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>Jardim de Santa Teresinha</title>
+<title>Santa Teresinha – Jardim</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-html, body {
+body {
   margin: 0;
-  padding: 0;
   overflow: hidden;
-  background: #1b1026;
   font-family: Arial, sans-serif;
+  background: #1d1026;
 }
 
-/* ===== CAMERA ===== */
-#camera {
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden;
-  position: relative;
-}
-
-/* ===== MAPA ===== */
-#mapa {
-  position: absolute;
-  width: 3000px;
-  height: 2000px;
-  background: radial-gradient(#3a2352, #12091c);
-  transform-origin: center;
-}
-
-/* ===== HUD ===== */
+/* HUD */
 #hud {
   position: fixed;
   top: 10px;
@@ -39,43 +21,59 @@ html, body {
   background: rgba(0,0,0,0.6);
   color: #fff;
   padding: 10px;
-  border-radius: 10px;
+  border-radius: 8px;
   z-index: 10;
 }
 
-#hud button {
-  margin-top: 5px;
-  width: 100%;
+button {
+  margin-top: 6px;
+  width: 140px;
+  cursor: pointer;
 }
 
-/* ===== PERSONAGENS ===== */
-.npc {
+/* VIEWPORT */
+#viewport {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  cursor: grab;
+}
+
+/* MAPA */
+#mapa {
+  width: 2400px;
+  height: 1600px;
+  background: url("cenario.png") center/cover;
+  position: relative;
+  transform-origin: 0 0;
+}
+
+/* SANTA */
+#santa {
   position: absolute;
-  width: 64px;
-  height: 64px;
-  background: pink;
-  border-radius: 50%;
-  animation: bounce 1s infinite alternate;
+  width: 96px;
+  left: 1200px;
+  top: 800px;
+  cursor: pointer;
 }
 
-@keyframes bounce {
-  from { transform: translateY(0); }
-  to { transform: translateY(4px); }
-}
-
-/* ===== FLORES ===== */
-.flor {
+/* FLOR */
+.flower {
   position: absolute;
-  width: 16px;
-  height: 16px;
-  background: radial-gradient(#ffb7d5, #ff5fa2);
-  border-radius: 50%;
-  animation: aparecer 0.4s ease-out;
+  width: 32px;
+  height: 32px;
+  background: url("flor.png") no-repeat center/contain;
+  opacity: 0.4;
+  transform: scale(0.5);
+  transition: all 0.5s;
+  pointer-events: none;
 }
 
-@keyframes aparecer {
-  from { transform: scale(0); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
+.flower.ready {
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: auto;
+  cursor: pointer;
 }
 </style>
 </head>
@@ -84,149 +82,146 @@ html, body {
 
 <div id="hud">
   🌸 Flores: <span id="flores">0</span><br>
-  🌱 Auto: <span id="auto">1</span>/s
-  <button onclick="upgradeClick()">Upar clique</button>
-  <button onclick="upgradeAuto()">Upar auto</button>
+  Por clique: <span id="porClique">1</span><br>
+  Auto: <span id="auto">0</span>/s<br>
+  <button onclick="uparClique()">Upar clique</button>
+  <button onclick="uparAuto()">Upar auto</button>
 </div>
 
-<div id="camera">
+<div id="viewport">
   <div id="mapa">
-    <div id="personagens"></div>
-    <div id="flores-area"></div>
+    <img src="santa.png" id="santa">
   </div>
 </div>
 
 <script>
-/* ===== VARIÁVEIS ===== */
+/* ===== ESTADO ===== */
 let flores = 0;
-let floresPorClick = 1;
-let floresAuto = 1;
-let zoom = 1;
+let porClique = 1;
+let auto = 0;
+
+const TEMPO_SPAWN = 8000;
+const TEMPO_CRESCER = 5000;
 
 /* ===== ELEMENTOS ===== */
+const floresEl = document.getElementById("flores");
+const porCliqueEl = document.getElementById("porClique");
+const autoEl = document.getElementById("auto");
 const mapa = document.getElementById("mapa");
-const floresSpan = document.getElementById("flores");
-const autoSpan = document.getElementById("auto");
-const floresArea = document.getElementById("flores-area");
-const personagens = document.getElementById("personagens");
-
-/* ===== SALVAR / CARREGAR ===== */
-function salvar() {
-  localStorage.setItem("jogoSanta", JSON.stringify({
-    flores,
-    floresPorClick,
-    floresAuto
-  }));
-}
-
-function carregar() {
-  const save = JSON.parse(localStorage.getItem("jogoSanta"));
-  if (save) {
-    flores = save.flores;
-    floresPorClick = save.floresPorClick;
-    floresAuto = save.floresAuto;
-  }
-}
-carregar();
+const santa = document.getElementById("santa");
 
 /* ===== HUD ===== */
 function atualizarHUD() {
-  floresSpan.textContent = flores;
-  autoSpan.textContent = floresAuto;
-}
-atualizarHUD();
-
-/* ===== GERAR FLORES ===== */
-function criarFlor(x, y) {
-  const flor = document.createElement("div");
-  flor.className = "flor";
-  flor.style.left = x + "px";
-  flor.style.top = y + "px";
-  floresArea.appendChild(flor);
-
-  setTimeout(() => flor.remove(), 5000);
+  floresEl.textContent = flores;
+  porCliqueEl.textContent = porClique;
+  autoEl.textContent = auto;
+  salvar();
 }
 
-/* ===== CLIQUE NO MAPA ===== */
-mapa.addEventListener("click", (e) => {
-  flores += floresPorClick;
-  criarFlor(e.offsetX, e.offsetY);
+/* ===== CLIQUE ===== */
+santa.onclick = () => {
+  flores += porClique;
   atualizarHUD();
-  salvar();
-});
-
-/* ===== FLORES AUTOMÁTICAS ===== */
-setInterval(() => {
-  flores += floresAuto;
-  criarFlor(
-    Math.random() * 3000,
-    Math.random() * 2000
-  );
-  atualizarHUD();
-  salvar();
-}, 1000);
+};
 
 /* ===== UPGRADES ===== */
-function upgradeClick() {
-  const custo = floresPorClick * 10;
-  if (flores >= custo) {
-    flores -= custo;
-    floresPorClick++;
+function uparClique() {
+  if (flores >= 10) {
+    flores -= 10;
+    porClique++;
     atualizarHUD();
-    salvar();
   }
 }
 
-function upgradeAuto() {
-  const custo = floresAuto * 25;
-  if (flores >= custo) {
-    flores -= custo;
-    floresAuto++;
+function uparAuto() {
+  if (flores >= 20) {
+    flores -= 20;
+    auto++;
     atualizarHUD();
-    salvar();
   }
 }
 
-/* ===== SANTA TERESINHA ===== */
-const santa = document.createElement("div");
-santa.className = "npc";
-santa.style.left = "1500px";
-santa.style.top = "1000px";
-personagens.appendChild(santa);
+/* ===== AUTO ===== */
+setInterval(() => {
+  flores += auto;
+  atualizarHUD();
+}, 1000);
 
-function moverSanta() {
-  const x = Math.random() * 2800;
-  const y = Math.random() * 1800;
-  santa.style.transition = "left 3s linear, top 3s linear";
+/* ===== FLORES NO MAPA ===== */
+function spawnFlor() {
+  const flor = document.createElement("div");
+  flor.className = "flower";
+
+  flor.style.left = Math.random() * 2200 + "px";
+  flor.style.top = Math.random() * 1400 + "px";
+
+  mapa.appendChild(flor);
+
+  setTimeout(() => {
+    flor.classList.add("ready");
+    flor.onclick = () => {
+      flores += 5;
+      atualizarHUD();
+      flor.remove();
+    };
+  }, TEMPO_CRESCER);
+}
+
+setInterval(spawnFlor, TEMPO_SPAWN);
+
+/* ===== MOVIMENTO SANTA ===== */
+setInterval(() => {
+  const x = Math.random() * 2200;
+  const y = Math.random() * 1400;
+  santa.style.transition = "2s linear";
   santa.style.left = x + "px";
   santa.style.top = y + "px";
+}, 4000);
+
+/* ===== ZOOM + PAN ===== */
+let scale = 1;
+let isDragging = false;
+let startX, startY, originX = 0, originY = 0;
+
+const viewport = document.getElementById("viewport");
+
+viewport.onwheel = e => {
+  e.preventDefault();
+  scale += e.deltaY * -0.001;
+  scale = Math.min(Math.max(0.5, scale), 2);
+  mapa.style.transform = `translate(${originX}px, ${originY}px) scale(${scale})`;
+};
+
+viewport.onmousedown = e => {
+  isDragging = true;
+  startX = e.clientX - originX;
+  startY = e.clientY - originY;
+};
+
+window.onmouseup = () => isDragging = false;
+
+window.onmousemove = e => {
+  if (!isDragging) return;
+  originX = e.clientX - startX;
+  originY = e.clientY - startY;
+  mapa.style.transform = `translate(${originX}px, ${originY}px) scale(${scale})`;
+};
+
+/* ===== SALVAR ===== */
+function salvar() {
+  localStorage.setItem("save", JSON.stringify({ flores, porClique, auto }));
 }
-setInterval(moverSanta, 4000);
 
-/* ===== ZOOM ===== */
-window.addEventListener("wheel", (e) => {
-  zoom += e.deltaY * -0.001;
-  zoom = Math.min(Math.max(0.5, zoom), 2);
-  mapa.style.transform = `scale(${zoom})`;
-});
+function carregar() {
+  const save = JSON.parse(localStorage.getItem("save"));
+  if (!save) return;
+  flores = save.flores;
+  porClique = save.porClique;
+  auto = save.auto;
+  atualizarHUD();
+}
 
-/* ===== PAN (ARRASTAR MAPA) ===== */
-let arrastando = false;
-let startX, startY;
-
-document.addEventListener("mousedown", e => {
-  arrastando = true;
-  startX = e.clientX - mapa.offsetLeft;
-  startY = e.clientY - mapa.offsetTop;
-});
-
-document.addEventListener("mouseup", () => arrastando = false);
-
-document.addEventListener("mousemove", e => {
-  if (!arrastando) return;
-  mapa.style.left = e.clientX - startX + "px";
-  mapa.style.top = e.clientY - startY + "px";
-});
+carregar();
 </script>
 
 </body>
