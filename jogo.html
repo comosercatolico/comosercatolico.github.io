@@ -10,39 +10,57 @@ body {
   margin: 0;
   overflow: hidden;
   font-family: Arial, sans-serif;
-  background: #1d1026;
+  background: #0f1a2b;
 }
 
-/* HUD */
+/* HUD DIREITA */
 #hud {
   position: fixed;
-  top: 10px;
-  left: 10px;
+  top: 50%;
+  right: 15px;
+  transform: translateY(-50%);
   background: rgba(0,0,0,0.6);
+  padding: 14px;
+  border-radius: 12px;
   color: #fff;
+  width: 180px;
+}
+
+.stat {
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.upgrade {
+  background: linear-gradient(135deg, #b77cff, #7c4dff);
+  border: none;
+  border-radius: 10px;
   padding: 10px;
-  border-radius: 8px;
-  z-index: 10;
-}
-
-button {
-  margin-top: 6px;
-  width: 140px;
+  margin-top: 8px;
+  color: white;
   cursor: pointer;
+  font-size: 13px;
 }
 
-/* VIEWPORT */
+.upgrade:hover {
+  filter: brightness(1.1);
+}
+
+.upgrade:disabled {
+  background: #555;
+  cursor: not-allowed;
+}
+
+/* MAPA */
 #viewport {
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-  cursor: grab;
 }
 
-/* MAPA */
 #mapa {
-  width: 2400px;
-  height: 1600px;
+  width: 2200px;
+  height: 1400px;
   background: url("cenario.png") center/cover;
   position: relative;
   transform-origin: 0 0;
@@ -51,9 +69,10 @@ button {
 /* SANTA */
 #santa {
   position: absolute;
-  width: 96px;
-  left: 1200px;
-  top: 800px;
+  width: 90px;
+  left: 1100px;
+  top: 900px;
+  transition: 2s linear;
   cursor: pointer;
 }
 
@@ -62,9 +81,9 @@ button {
   position: absolute;
   width: 32px;
   height: 32px;
-  background: url("flor.png") no-repeat center/contain;
-  opacity: 0.4;
-  transform: scale(0.5);
+  background: url("flor.png") center/contain no-repeat;
+  opacity: 0.3;
+  transform: scale(0.4);
   transition: all 0.5s;
   pointer-events: none;
 }
@@ -80,14 +99,19 @@ button {
 
 <body>
 
+<!-- HUD -->
 <div id="hud">
-  🌸 Flores: <span id="flores">0</span><br>
-  Por clique: <span id="porClique">1</span><br>
-  Auto: <span id="auto">0</span>/s<br>
-  <button onclick="uparClique()">Upar clique</button>
-  <button onclick="uparAuto()">Upar auto</button>
+  <div class="stat">🌸 Flores: <span id="flores">0</span></div>
+  <div class="stat">👆 Clique: <span id="porClique">1</span></div>
+  <div class="stat">⏱ Auto: <span id="auto">0</span>/s</div>
+  <div class="stat">💐 Valor flor: <span id="valorFlor">5</span></div>
+
+  <button class="upgrade" id="btnClique"></button>
+  <button class="upgrade" id="btnAuto"></button>
+  <button class="upgrade" id="btnFlor"></button>
 </div>
 
+<!-- MAPA -->
 <div id="viewport">
   <div id="mapa">
     <img src="santa.png" id="santa">
@@ -99,125 +123,123 @@ button {
 let flores = 0;
 let porClique = 1;
 let auto = 0;
+let valorFlor = 5;
 
-const TEMPO_SPAWN = 8000;
-const TEMPO_CRESCER = 5000;
+let custoClique = 10;
+let custoAuto = 20;
+let custoFlor = 30;
 
-/* ===== ELEMENTOS ===== */
+/* LIMITES DE MOVIMENTO (CHÃO) */
+const LIMITE_TOPO = 650;
+const LIMITE_BAIXO = 1250;
+
+/* ELEMENTOS */
 const floresEl = document.getElementById("flores");
 const porCliqueEl = document.getElementById("porClique");
 const autoEl = document.getElementById("auto");
+const valorFlorEl = document.getElementById("valorFlor");
+
+const btnClique = document.getElementById("btnClique");
+const btnAuto = document.getElementById("btnAuto");
+const btnFlor = document.getElementById("btnFlor");
+
 const mapa = document.getElementById("mapa");
 const santa = document.getElementById("santa");
 
-/* ===== HUD ===== */
+/* HUD */
 function atualizarHUD() {
   floresEl.textContent = flores;
   porCliqueEl.textContent = porClique;
   autoEl.textContent = auto;
+  valorFlorEl.textContent = valorFlor;
+
+  btnClique.textContent = `Upar clique (${custoClique})`;
+  btnAuto.textContent = `Upar auto (${custoAuto})`;
+  btnFlor.textContent = `Upar flor (${custoFlor})`;
+
+  btnClique.disabled = flores < custoClique;
+  btnAuto.disabled = flores < custoAuto;
+  btnFlor.disabled = flores < custoFlor;
+
   salvar();
 }
 
-/* ===== CLIQUE ===== */
+/* CLIQUE */
 santa.onclick = () => {
   flores += porClique;
   atualizarHUD();
 };
 
-/* ===== UPGRADES ===== */
-function uparClique() {
-  if (flores >= 10) {
-    flores -= 10;
-    porClique++;
-    atualizarHUD();
-  }
-}
+/* UPGRADES */
+btnClique.onclick = () => {
+  flores -= custoClique;
+  porClique++;
+  custoClique = Math.floor(custoClique * 1.5);
+  atualizarHUD();
+};
 
-function uparAuto() {
-  if (flores >= 20) {
-    flores -= 20;
-    auto++;
-    atualizarHUD();
-  }
-}
+btnAuto.onclick = () => {
+  flores -= custoAuto;
+  auto++;
+  custoAuto = Math.floor(custoAuto * 1.6);
+  atualizarHUD();
+};
 
-/* ===== AUTO ===== */
+btnFlor.onclick = () => {
+  flores -= custoFlor;
+  valorFlor += 2;
+  custoFlor = Math.floor(custoFlor * 1.7);
+  atualizarHUD();
+};
+
+/* AUTO */
 setInterval(() => {
   flores += auto;
   atualizarHUD();
 }, 1000);
 
-/* ===== FLORES NO MAPA ===== */
+/* FLORES NO MAPA */
 function spawnFlor() {
   const flor = document.createElement("div");
   flor.className = "flower";
 
-  flor.style.left = Math.random() * 2200 + "px";
-  flor.style.top = Math.random() * 1400 + "px";
+  flor.style.left = Math.random() * 2000 + "px";
+  flor.style.top = (Math.random() * (LIMITE_BAIXO - LIMITE_TOPO) + LIMITE_TOPO) + "px";
 
   mapa.appendChild(flor);
 
   setTimeout(() => {
     flor.classList.add("ready");
     flor.onclick = () => {
-      flores += 5;
+      flores += valorFlor;
       atualizarHUD();
       flor.remove();
     };
-  }, TEMPO_CRESCER);
+  }, 5000);
 }
 
-setInterval(spawnFlor, TEMPO_SPAWN);
+setInterval(spawnFlor, 9000);
 
-/* ===== MOVIMENTO SANTA ===== */
+/* MOVIMENTO DA SANTA (CHÃO APENAS) */
 setInterval(() => {
-  const x = Math.random() * 2200;
-  const y = Math.random() * 1400;
-  santa.style.transition = "2s linear";
+  const x = Math.random() * 2000;
+  const y = Math.random() * (LIMITE_BAIXO - LIMITE_TOPO) + LIMITE_TOPO;
   santa.style.left = x + "px";
   santa.style.top = y + "px";
-}, 4000);
+}, 4500);
 
-/* ===== ZOOM + PAN ===== */
-let scale = 1;
-let isDragging = false;
-let startX, startY, originX = 0, originY = 0;
-
-const viewport = document.getElementById("viewport");
-
-viewport.onwheel = e => {
-  e.preventDefault();
-  scale += e.deltaY * -0.001;
-  scale = Math.min(Math.max(0.5, scale), 2);
-  mapa.style.transform = `translate(${originX}px, ${originY}px) scale(${scale})`;
-};
-
-viewport.onmousedown = e => {
-  isDragging = true;
-  startX = e.clientX - originX;
-  startY = e.clientY - originY;
-};
-
-window.onmouseup = () => isDragging = false;
-
-window.onmousemove = e => {
-  if (!isDragging) return;
-  originX = e.clientX - startX;
-  originY = e.clientY - startY;
-  mapa.style.transform = `translate(${originX}px, ${originY}px) scale(${scale})`;
-};
-
-/* ===== SALVAR ===== */
+/* SALVAR */
 function salvar() {
-  localStorage.setItem("save", JSON.stringify({ flores, porClique, auto }));
+  localStorage.setItem("save", JSON.stringify({
+    flores, porClique, auto, valorFlor,
+    custoClique, custoAuto, custoFlor
+  }));
 }
 
 function carregar() {
-  const save = JSON.parse(localStorage.getItem("save"));
-  if (!save) return;
-  flores = save.flores;
-  porClique = save.porClique;
-  auto = save.auto;
+  const s = JSON.parse(localStorage.getItem("save"));
+  if (!s) return;
+  Object.assign(window, s);
   atualizarHUD();
 }
 
