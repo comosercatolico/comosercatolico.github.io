@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Jardim de Santa Teresinha</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
 body {
@@ -12,48 +13,65 @@ body {
 }
 
 #game {
+  position: relative;
   width: 100vw;
   height: 100vh;
-  position: relative;
+  cursor: pointer;
 }
 
-/* Cenário */
-#background {
-  position: absolute;
-  inset: 0;
-  background: url("cenario.png") center / cover no-repeat;
-  z-index: 1;
+#mapa {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
-/* Santa no meio */
 #santa {
   position: absolute;
+  width: 120px;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  width: 120px;
-  z-index: 3;
   pointer-events: none;
 }
 
-/* Flor */
-.flower {
+.flor {
   position: absolute;
-  width: 36px;
+  width: 40px;
   cursor: pointer;
-  z-index: 2;
 }
 
 /* HUD */
-#counter {
-  position: absolute;
+#hud {
+  position: fixed;
   top: 20px;
   left: 20px;
-  background: rgba(0,0,0,0.5);
-  color: white;
-  padding: 10px 14px;
+  background: rgba(255,255,255,0.9);
+  padding: 12px;
   border-radius: 10px;
-  z-index: 5;
+}
+
+#upgrades {
+  position: fixed;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+button {
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  background: #7b4bb7;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+button:disabled {
+  background: #aaa;
 }
 </style>
 </head>
@@ -61,66 +79,111 @@ body {
 <body>
 
 <div id="game">
-  <div id="background"></div>
+  <img src="mapa.png" id="mapa">
+  <img src="santa.png" id="santa">
+</div>
 
-  <div id="counter">
-    🌹 Flores: <span id="flowers">0</span>
-  </div>
+<div id="hud">
+  🌸 Flores: <span id="flores">0</span><br>
+  👆 Por clique: <span id="porClique">1</span><br>
+  ⏱ Auto/s: <span id="auto">0</span>
+</div>
 
-  <img id="santa" src="santa.png">
+<div id="upgrades">
+  <button onclick="uparClique()">Upar clique (🌸 <span id="c1">10</span>)</button>
+  <button onclick="uparAuto()">Upar auto (🌸 <span id="c2">20</span>)</button>
+  <button onclick="uparFlor()">Upar flor (🌸 <span id="c3">30</span>)</button>
 </div>
 
 <script>
-let totalFlores = 0;
+let flores = Number(localStorage.getItem("flores")) || 0;
+let porClique = Number(localStorage.getItem("porClique")) || 1;
+let auto = Number(localStorage.getItem("auto")) || 0;
+let valorFlor = Number(localStorage.getItem("valorFlor")) || 3;
 
-// Chance de spawn (20%)
-const CHANCE_SPAWN = 0.2;
+let custoClique = 10;
+let custoAuto = 20;
+let custoFlor = 30;
 
-// Quantidade inicial possível
-const MIN_FLORES = 1;
-const MAX_FLORES = 3;
+const floresEl = document.getElementById("flores");
+const porCliqueEl = document.getElementById("porClique");
+const autoEl = document.getElementById("auto");
 
-const game = document.getElementById("game");
-const counter = document.getElementById("flowers");
+function salvar() {
+  localStorage.setItem("flores", flores);
+  localStorage.setItem("porClique", porClique);
+  localStorage.setItem("auto", auto);
+  localStorage.setItem("valorFlor", valorFlor);
+}
 
-game.addEventListener("click", (e) => {
+function atualizar() {
+  floresEl.textContent = flores;
+  porCliqueEl.textContent = porClique;
+  autoEl.textContent = auto;
+  document.getElementById("c1").textContent = custoClique;
+  document.getElementById("c2").textContent = custoAuto;
+  document.getElementById("c3").textContent = custoFlor;
+  salvar();
+}
 
-  // Não gerar flor clicando em flor
-  if (e.target.classList.contains("flower")) return;
-
-  // Sorteio da chance
-  if (Math.random() > CHANCE_SPAWN) return;
-
-  // Quantidade aleatória
-  const quantidade = Math.floor(
-    Math.random() * (MAX_FLORES - MIN_FLORES + 1)
-  ) + MIN_FLORES;
-
-  for (let i = 0; i < quantidade; i++) {
-    criarFlor(e.clientX, e.clientY);
-  }
+document.getElementById("game").addEventListener("click", (e) => {
+  if (e.target.classList.contains("flor")) return;
+  flores += porClique;
+  atualizar();
 });
 
-function criarFlor(x, y) {
+function criarFlor() {
+  if (Math.random() > 0.35) return;
+
   const flor = document.createElement("img");
   flor.src = "flor.png";
-  flor.className = "flower";
-
-  // Pequena variação pra não nascer tudo em cima
-  const offsetX = (Math.random() - 0.5) * 60;
-  const offsetY = (Math.random() - 0.5) * 60;
-
-  flor.style.left = (x + offsetX) + "px";
-  flor.style.top = (y + offsetY) + "px";
+  flor.className = "flor";
+  flor.style.left = Math.random() * 90 + "%";
+  flor.style.top = Math.random() * 90 + "%";
 
   flor.onclick = () => {
-    totalFlores++;
-    counter.textContent = totalFlores;
+    flores += valorFlor;
     flor.remove();
+    atualizar();
   };
 
-  game.appendChild(flor);
+  document.getElementById("game").appendChild(flor);
 }
+
+setInterval(criarFlor, 4000);
+setInterval(() => {
+  flores += auto;
+  atualizar();
+}, 1000);
+
+function uparClique() {
+  if (flores >= custoClique) {
+    flores -= custoClique;
+    porClique++;
+    custoClique *= 2;
+    atualizar();
+  }
+}
+
+function uparAuto() {
+  if (flores >= custoAuto) {
+    flores -= custoAuto;
+    auto++;
+    custoAuto *= 2;
+    atualizar();
+  }
+}
+
+function uparFlor() {
+  if (flores >= custoFlor) {
+    flores -= custoFlor;
+    valorFlor += 2;
+    custoFlor *= 2;
+    atualizar();
+  }
+}
+
+atualizar();
 </script>
 
 </body>
