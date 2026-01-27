@@ -2,88 +2,57 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>Santa Teresinha Idle</title>
+<title>Jardim de Santa Teresinha</title>
 
 <style>
 body {
   margin: 0;
-  background: #111;
   overflow: hidden;
   font-family: Arial, sans-serif;
 }
 
-/* Área do jogo */
 #game {
-  position: relative;
   width: 100vw;
   height: 100vh;
-  overflow: hidden;
+  position: relative;
 }
 
 /* Cenário */
 #background {
   position: absolute;
   inset: 0;
-  background: url("cenario.png") center/cover no-repeat;
+  background: url("cenario.png") center / cover no-repeat;
   z-index: 1;
 }
 
-/* Santa */
+/* Santa no meio */
 #santa {
   position: absolute;
-  bottom: 120px;
   left: 50%;
-  transform: translateX(-50%);
+  top: 50%;
+  transform: translate(-50%, -50%);
   width: 120px;
-  cursor: pointer;
   z-index: 3;
+  pointer-events: none;
 }
 
-/* Flores */
+/* Flor */
 .flower {
   position: absolute;
-  width: 40px;
+  width: 36px;
   cursor: pointer;
   z-index: 2;
 }
 
 /* HUD */
-#hud {
-  position: absolute;
-  top: 50%;
-  right: 20px;
-  transform: translateY(-50%);
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  z-index: 5;
-}
-
-.button {
-  background: linear-gradient(135deg, #ff9acb, #ff6aa2);
-  color: #fff;
-  border: none;
-  border-radius: 12px;
-  padding: 12px;
-  width: 220px;
-  cursor: pointer;
-  text-align: left;
-  box-shadow: 0 4px 8px rgba(0,0,0,.4);
-}
-
-.button span {
-  display: block;
-  font-size: 12px;
-  opacity: .9;
-}
-
-/* Contador */
 #counter {
   position: absolute;
   top: 20px;
   left: 20px;
-  color: #fff;
-  font-size: 20px;
+  background: rgba(0,0,0,0.5);
+  color: white;
+  padding: 10px 14px;
+  border-radius: 10px;
   z-index: 5;
 }
 </style>
@@ -94,107 +63,63 @@ body {
 <div id="game">
   <div id="background"></div>
 
-  <div id="counter">🌹 Flores: <span id="flowers">0</span></div>
-
-  <img id="santa" src="santa_idle.png">
-
-  <div id="hud">
-    <button class="button" onclick="upgradeClick()">
-      ✨ Upar Clique
-      <span>Custo: <span id="costClick">10</span></span>
-    </button>
-
-    <button class="button" onclick="upgradeAuto()">
-      ⏱️ Upar Automático
-      <span>Custo: <span id="costAuto">25</span></span>
-    </button>
-
-    <button class="button" onclick="upgradeFlower()">
-      🌸 Valor da Flor
-      <span>Custo: <span id="costFlower">50</span></span>
-    </button>
+  <div id="counter">
+    🌹 Flores: <span id="flowers">0</span>
   </div>
+
+  <img id="santa" src="santa.png">
 </div>
 
 <script>
-let flowers = 0;
-let clickValue = 1;
-let autoValue = 0;
-let flowerValue = 1;
+let totalFlores = 0;
 
-let costClick = 10;
-let costAuto = 25;
-let costFlower = 50;
+// Chance de spawn (20%)
+const CHANCE_SPAWN = 0.2;
 
-const flowersEl = document.getElementById("flowers");
+// Quantidade inicial possível
+const MIN_FLORES = 1;
+const MAX_FLORES = 3;
 
-document.getElementById("santa").onclick = () => {
-  flowers += clickValue;
-  updateUI();
-};
+const game = document.getElementById("game");
+const counter = document.getElementById("flowers");
 
-function updateUI() {
-  flowersEl.textContent = flowers;
-  costClickEl.textContent = costClick;
-  costAutoEl.textContent = costAuto;
-  costFlowerEl.textContent = costFlower;
-}
+game.addEventListener("click", (e) => {
 
-const costClickEl = document.getElementById("costClick");
-const costAutoEl = document.getElementById("costAuto");
-const costFlowerEl = document.getElementById("costFlower");
+  // Não gerar flor clicando em flor
+  if (e.target.classList.contains("flower")) return;
 
-function upgradeClick() {
-  if (flowers >= costClick) {
-    flowers -= costClick;
-    clickValue++;
-    costClick = Math.floor(costClick * 1.6);
-    updateUI();
+  // Sorteio da chance
+  if (Math.random() > CHANCE_SPAWN) return;
+
+  // Quantidade aleatória
+  const quantidade = Math.floor(
+    Math.random() * (MAX_FLORES - MIN_FLORES + 1)
+  ) + MIN_FLORES;
+
+  for (let i = 0; i < quantidade; i++) {
+    criarFlor(e.clientX, e.clientY);
   }
-}
+});
 
-function upgradeAuto() {
-  if (flowers >= costAuto) {
-    flowers -= costAuto;
-    autoValue++;
-    costAuto = Math.floor(costAuto * 1.8);
-    updateUI();
-  }
-}
+function criarFlor(x, y) {
+  const flor = document.createElement("img");
+  flor.src = "flor.png";
+  flor.className = "flower";
 
-function upgradeFlower() {
-  if (flowers >= costFlower) {
-    flowers -= costFlower;
-    flowerValue++;
-    costFlower = Math.floor(costFlower * 2);
-    updateUI();
-  }
-}
+  // Pequena variação pra não nascer tudo em cima
+  const offsetX = (Math.random() - 0.5) * 60;
+  const offsetY = (Math.random() - 0.5) * 60;
 
-/* Automático */
-setInterval(() => {
-  flowers += autoValue;
-  updateUI();
-}, 1000);
+  flor.style.left = (x + offsetX) + "px";
+  flor.style.top = (y + offsetY) + "px";
 
-/* Spawn lento de flores */
-setInterval(spawnFlower, 7000);
-
-function spawnFlower() {
-  const flower = document.createElement("img");
-  flower.src = "flor.png";
-  flower.className = "flower";
-
-  flower.style.left = Math.random() * 80 + "%";
-  flower.style.bottom = Math.random() * 200 + "px";
-
-  flower.onclick = () => {
-    flowers += flowerValue;
-    flower.remove();
-    updateUI();
+  flor.onclick = () => {
+    totalFlores++;
+    counter.textContent = totalFlores;
+    flor.remove();
   };
 
-  document.getElementById("game").appendChild(flower);
+  game.appendChild(flor);
 }
 </script>
 
