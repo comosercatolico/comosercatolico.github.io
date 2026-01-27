@@ -2,248 +2,200 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>Santa Teresinha – Jardim</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Santa Teresinha Idle</title>
 
 <style>
 body {
   margin: 0;
+  background: #111;
   overflow: hidden;
   font-family: Arial, sans-serif;
-  background: #0f1a2b;
 }
 
-/* HUD DIREITA */
-#hud {
-  position: fixed;
-  top: 50%;
-  right: 15px;
-  transform: translateY(-50%);
-  background: rgba(0,0,0,0.6);
-  padding: 14px;
-  border-radius: 12px;
-  color: #fff;
-  width: 180px;
-}
-
-.stat {
-  margin-bottom: 8px;
-  font-size: 14px;
-}
-
-.upgrade {
-  background: linear-gradient(135deg, #b77cff, #7c4dff);
-  border: none;
-  border-radius: 10px;
-  padding: 10px;
-  margin-top: 8px;
-  color: white;
-  cursor: pointer;
-  font-size: 13px;
-}
-
-.upgrade:hover {
-  filter: brightness(1.1);
-}
-
-.upgrade:disabled {
-  background: #555;
-  cursor: not-allowed;
-}
-
-/* MAPA */
-#viewport {
+/* Área do jogo */
+#game {
+  position: relative;
   width: 100vw;
   height: 100vh;
   overflow: hidden;
 }
 
-#mapa {
-  width: 2200px;
-  height: 1400px;
-  background: url("cenario.png") center/cover;
-  position: relative;
-  transform-origin: 0 0;
+/* Cenário */
+#background {
+  position: absolute;
+  inset: 0;
+  background: url("cenario.png") center/cover no-repeat;
+  z-index: 1;
 }
 
-/* SANTA */
+/* Santa */
 #santa {
   position: absolute;
-  width: 90px;
-  left: 1100px;
-  top: 900px;
-  transition: 2s linear;
+  bottom: 120px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px;
   cursor: pointer;
+  z-index: 3;
 }
 
-/* FLOR */
+/* Flores */
 .flower {
   position: absolute;
-  width: 32px;
-  height: 32px;
-  background: url("flor.png") center/contain no-repeat;
-  opacity: 0.3;
-  transform: scale(0.4);
-  transition: all 0.5s;
-  pointer-events: none;
+  width: 40px;
+  cursor: pointer;
+  z-index: 2;
 }
 
-.flower.ready {
-  opacity: 1;
-  transform: scale(1);
-  pointer-events: auto;
+/* HUD */
+#hud {
+  position: absolute;
+  top: 50%;
+  right: 20px;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  z-index: 5;
+}
+
+.button {
+  background: linear-gradient(135deg, #ff9acb, #ff6aa2);
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  padding: 12px;
+  width: 220px;
   cursor: pointer;
+  text-align: left;
+  box-shadow: 0 4px 8px rgba(0,0,0,.4);
+}
+
+.button span {
+  display: block;
+  font-size: 12px;
+  opacity: .9;
+}
+
+/* Contador */
+#counter {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  color: #fff;
+  font-size: 20px;
+  z-index: 5;
 }
 </style>
 </head>
 
 <body>
 
-<!-- HUD -->
-<div id="hud">
-  <div class="stat">🌸 Flores: <span id="flores">0</span></div>
-  <div class="stat">👆 Clique: <span id="porClique">1</span></div>
-  <div class="stat">⏱ Auto: <span id="auto">0</span>/s</div>
-  <div class="stat">💐 Valor flor: <span id="valorFlor">5</span></div>
+<div id="game">
+  <div id="background"></div>
 
-  <button class="upgrade" id="btnClique"></button>
-  <button class="upgrade" id="btnAuto"></button>
-  <button class="upgrade" id="btnFlor"></button>
-</div>
+  <div id="counter">🌹 Flores: <span id="flowers">0</span></div>
 
-<!-- MAPA -->
-<div id="viewport">
-  <div id="mapa">
-    <img src="santa.png" id="santa">
+  <img id="santa" src="santa_idle.png">
+
+  <div id="hud">
+    <button class="button" onclick="upgradeClick()">
+      ✨ Upar Clique
+      <span>Custo: <span id="costClick">10</span></span>
+    </button>
+
+    <button class="button" onclick="upgradeAuto()">
+      ⏱️ Upar Automático
+      <span>Custo: <span id="costAuto">25</span></span>
+    </button>
+
+    <button class="button" onclick="upgradeFlower()">
+      🌸 Valor da Flor
+      <span>Custo: <span id="costFlower">50</span></span>
+    </button>
   </div>
 </div>
 
 <script>
-/* ===== ESTADO ===== */
-let flores = 0;
-let porClique = 1;
-let auto = 0;
-let valorFlor = 5;
+let flowers = 0;
+let clickValue = 1;
+let autoValue = 0;
+let flowerValue = 1;
 
-let custoClique = 10;
-let custoAuto = 20;
-let custoFlor = 30;
+let costClick = 10;
+let costAuto = 25;
+let costFlower = 50;
 
-/* LIMITES DE MOVIMENTO (CHÃO) */
-const LIMITE_TOPO = 650;
-const LIMITE_BAIXO = 1250;
+const flowersEl = document.getElementById("flowers");
 
-/* ELEMENTOS */
-const floresEl = document.getElementById("flores");
-const porCliqueEl = document.getElementById("porClique");
-const autoEl = document.getElementById("auto");
-const valorFlorEl = document.getElementById("valorFlor");
+document.getElementById("santa").onclick = () => {
+  flowers += clickValue;
+  updateUI();
+};
 
-const btnClique = document.getElementById("btnClique");
-const btnAuto = document.getElementById("btnAuto");
-const btnFlor = document.getElementById("btnFlor");
-
-const mapa = document.getElementById("mapa");
-const santa = document.getElementById("santa");
-
-/* HUD */
-function atualizarHUD() {
-  floresEl.textContent = flores;
-  porCliqueEl.textContent = porClique;
-  autoEl.textContent = auto;
-  valorFlorEl.textContent = valorFlor;
-
-  btnClique.textContent = `Upar clique (${custoClique})`;
-  btnAuto.textContent = `Upar auto (${custoAuto})`;
-  btnFlor.textContent = `Upar flor (${custoFlor})`;
-
-  btnClique.disabled = flores < custoClique;
-  btnAuto.disabled = flores < custoAuto;
-  btnFlor.disabled = flores < custoFlor;
-
-  salvar();
+function updateUI() {
+  flowersEl.textContent = flowers;
+  costClickEl.textContent = costClick;
+  costAutoEl.textContent = costAuto;
+  costFlowerEl.textContent = costFlower;
 }
 
-/* CLIQUE */
-santa.onclick = () => {
-  flores += porClique;
-  atualizarHUD();
-};
+const costClickEl = document.getElementById("costClick");
+const costAutoEl = document.getElementById("costAuto");
+const costFlowerEl = document.getElementById("costFlower");
 
-/* UPGRADES */
-btnClique.onclick = () => {
-  flores -= custoClique;
-  porClique++;
-  custoClique = Math.floor(custoClique * 1.5);
-  atualizarHUD();
-};
+function upgradeClick() {
+  if (flowers >= costClick) {
+    flowers -= costClick;
+    clickValue++;
+    costClick = Math.floor(costClick * 1.6);
+    updateUI();
+  }
+}
 
-btnAuto.onclick = () => {
-  flores -= custoAuto;
-  auto++;
-  custoAuto = Math.floor(custoAuto * 1.6);
-  atualizarHUD();
-};
+function upgradeAuto() {
+  if (flowers >= costAuto) {
+    flowers -= costAuto;
+    autoValue++;
+    costAuto = Math.floor(costAuto * 1.8);
+    updateUI();
+  }
+}
 
-btnFlor.onclick = () => {
-  flores -= custoFlor;
-  valorFlor += 2;
-  custoFlor = Math.floor(custoFlor * 1.7);
-  atualizarHUD();
-};
+function upgradeFlower() {
+  if (flowers >= costFlower) {
+    flowers -= costFlower;
+    flowerValue++;
+    costFlower = Math.floor(costFlower * 2);
+    updateUI();
+  }
+}
 
-/* AUTO */
+/* Automático */
 setInterval(() => {
-  flores += auto;
-  atualizarHUD();
+  flowers += autoValue;
+  updateUI();
 }, 1000);
 
-/* FLORES NO MAPA */
-function spawnFlor() {
-  const flor = document.createElement("div");
-  flor.className = "flower";
+/* Spawn lento de flores */
+setInterval(spawnFlower, 7000);
 
-  flor.style.left = Math.random() * 2000 + "px";
-  flor.style.top = (Math.random() * (LIMITE_BAIXO - LIMITE_TOPO) + LIMITE_TOPO) + "px";
+function spawnFlower() {
+  const flower = document.createElement("img");
+  flower.src = "flor.png";
+  flower.className = "flower";
 
-  mapa.appendChild(flor);
+  flower.style.left = Math.random() * 80 + "%";
+  flower.style.bottom = Math.random() * 200 + "px";
 
-  setTimeout(() => {
-    flor.classList.add("ready");
-    flor.onclick = () => {
-      flores += valorFlor;
-      atualizarHUD();
-      flor.remove();
-    };
-  }, 5000);
+  flower.onclick = () => {
+    flowers += flowerValue;
+    flower.remove();
+    updateUI();
+  };
+
+  document.getElementById("game").appendChild(flower);
 }
-
-setInterval(spawnFlor, 9000);
-
-/* MOVIMENTO DA SANTA (CHÃO APENAS) */
-setInterval(() => {
-  const x = Math.random() * 2000;
-  const y = Math.random() * (LIMITE_BAIXO - LIMITE_TOPO) + LIMITE_TOPO;
-  santa.style.left = x + "px";
-  santa.style.top = y + "px";
-}, 4500);
-
-/* SALVAR */
-function salvar() {
-  localStorage.setItem("save", JSON.stringify({
-    flores, porClique, auto, valorFlor,
-    custoClique, custoAuto, custoFlor
-  }));
-}
-
-function carregar() {
-  const s = JSON.parse(localStorage.getItem("save"));
-  if (!s) return;
-  Object.assign(window, s);
-  atualizarHUD();
-}
-
-carregar();
 </script>
 
 </body>
