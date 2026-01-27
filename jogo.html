@@ -12,28 +12,44 @@ body {
   font-family: Arial, sans-serif;
 }
 
+/* Tela */
 #game {
   position: relative;
   width: 100vw;
   height: 100vh;
-  cursor: pointer;
+  overflow: hidden;
+  background: #7bbf6a; /* campo aberto */
 }
 
+/* Câmera */
+#camera {
+  position: absolute;
+  width: 3000px;
+  height: 3000px;
+  left: 0;
+  top: 0;
+}
+
+/* Mapa grande */
 #mapa {
-  width: 100%;
-  height: 100%;
+  position: absolute;
+  width: 3000px;
+  height: 3000px;
   object-fit: cover;
 }
 
+/* Santa sempre no centro */
 #santa {
-  position: absolute;
+  position: fixed;
   width: 120px;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
   pointer-events: none;
+  z-index: 10;
 }
 
+/* Flor */
 .flor {
   position: absolute;
   width: 40px;
@@ -48,8 +64,10 @@ body {
   background: rgba(255,255,255,0.9);
   padding: 12px;
   border-radius: 10px;
+  z-index: 20;
 }
 
+/* Upgrades */
 #upgrades {
   position: fixed;
   right: 20px;
@@ -58,6 +76,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 10px;
+  z-index: 20;
 }
 
 button {
@@ -79,9 +98,12 @@ button:disabled {
 <body>
 
 <div id="game">
-  <img src="mapa.png" id="mapa">
-  <img src="santa.png" id="santa">
+  <div id="camera">
+    <img src="mapa.png" id="mapa">
+  </div>
 </div>
+
+<img src="santa.png" id="santa">
 
 <div id="hud">
   🌸 Flores: <span id="flores">0</span><br>
@@ -96,6 +118,7 @@ button:disabled {
 </div>
 
 <script>
+/* ===== VARIÁVEIS ===== */
 let flores = Number(localStorage.getItem("flores")) || 0;
 let porClique = Number(localStorage.getItem("porClique")) || 1;
 let auto = Number(localStorage.getItem("auto")) || 0;
@@ -105,10 +128,14 @@ let custoClique = 10;
 let custoAuto = 20;
 let custoFlor = 30;
 
+/* ===== ELEMENTOS ===== */
 const floresEl = document.getElementById("flores");
 const porCliqueEl = document.getElementById("porClique");
 const autoEl = document.getElementById("auto");
+const camera = document.getElementById("camera");
+const game = document.getElementById("game");
 
+/* ===== SALVAR ===== */
 function salvar() {
   localStorage.setItem("flores", flores);
   localStorage.setItem("porClique", porClique);
@@ -116,6 +143,7 @@ function salvar() {
   localStorage.setItem("valorFlor", valorFlor);
 }
 
+/* ===== ATUALIZAR HUD ===== */
 function atualizar() {
   floresEl.textContent = flores;
   porCliqueEl.textContent = porClique;
@@ -126,20 +154,23 @@ function atualizar() {
   salvar();
 }
 
-document.getElementById("game").addEventListener("click", (e) => {
+/* ===== CLIQUE ===== */
+game.addEventListener("click", (e) => {
   if (e.target.classList.contains("flor")) return;
   flores += porClique;
   atualizar();
 });
 
+/* ===== FLORES NO MAPA ===== */
 function criarFlor() {
-  if (Math.random() > 0.35) return;
+  if (Math.random() > 0.4) return;
 
   const flor = document.createElement("img");
   flor.src = "flor.png";
   flor.className = "flor";
-  flor.style.left = Math.random() * 90 + "%";
-  flor.style.top = Math.random() * 90 + "%";
+
+  flor.style.left = Math.random() * 2900 + "px";
+  flor.style.top = Math.random() * 2900 + "px";
 
   flor.onclick = () => {
     flores += valorFlor;
@@ -147,15 +178,18 @@ function criarFlor() {
     atualizar();
   };
 
-  document.getElementById("game").appendChild(flor);
+  camera.appendChild(flor);
 }
 
-setInterval(criarFlor, 4000);
+setInterval(criarFlor, 3500);
+
+/* ===== AUTO ===== */
 setInterval(() => {
   flores += auto;
   atualizar();
 }, 1000);
 
+/* ===== UPGRADES ===== */
 function uparClique() {
   if (flores >= custoClique) {
     flores -= custoClique;
@@ -182,6 +216,23 @@ function uparFlor() {
     atualizar();
   }
 }
+
+/* ===== CÂMERA ESTILO GUARDIAN TALES ===== */
+let camX = 1500;
+let camY = 1500;
+
+game.addEventListener("mousemove", (e) => {
+  const cx = window.innerWidth / 2;
+  const cy = window.innerHeight / 2;
+
+  camX += (e.clientX - cx) * 0.02;
+  camY += (e.clientY - cy) * 0.02;
+
+  camX = Math.max(0, Math.min(3000 - window.innerWidth, camX));
+  camY = Math.max(0, Math.min(3000 - window.innerHeight, camY));
+
+  camera.style.transform = `translate(${-camX}px, ${-camY}px)`;
+});
 
 atualizar();
 </script>
