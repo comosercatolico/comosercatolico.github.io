@@ -12,17 +12,26 @@ body {
   font-family: Arial, sans-serif;
 }
 
-/* Tela */
+/* Janela */
 #game {
-  position: relative;
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-  background: #7bbf6a; /* campo aberto */
+  background: #7bbf6a;
+  position: relative;
+  cursor: grab;
 }
 
-/* Câmera */
+/* Mundo */
 #camera {
+  position: absolute;
+  width: 3000px;
+  height: 3000px;
+  transform-origin: 0 0;
+}
+
+/* Fundo */
+#mapa {
   position: absolute;
   width: 3000px;
   height: 3000px;
@@ -30,67 +39,15 @@ body {
   top: 0;
 }
 
-/* Mapa grande */
-#mapa {
-  position: absolute;
-  width: 3000px;
-  height: 3000px;
-  object-fit: cover;
-}
-
-/* Santa sempre no centro */
+/* Santa fixa NO MAPA */
 #santa {
-  position: fixed;
-  width: 120px;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  pointer-events: none;
-  z-index: 10;
-}
-
-/* Flor */
-.flor {
   position: absolute;
-  width: 40px;
-  cursor: pointer;
-}
-
-/* HUD */
-#hud {
-  position: fixed;
-  top: 20px;
-  left: 20px;
-  background: rgba(255,255,255,0.9);
-  padding: 12px;
-  border-radius: 10px;
-  z-index: 20;
-}
-
-/* Upgrades */
-#upgrades {
-  position: fixed;
-  right: 20px;
-  top: 50%;
-  transform: translateY(-50%);
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  z-index: 20;
-}
-
-button {
-  padding: 10px;
-  border: none;
-  border-radius: 8px;
-  background: #7b4bb7;
-  color: white;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-button:disabled {
-  background: #aaa;
+  width: 120px;
+  left: 1500px; /* ponto fixo */
+  top: 1500px;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  pointer-events: none;
 }
 </style>
 </head>
@@ -100,141 +57,57 @@ button:disabled {
 <div id="game">
   <div id="camera">
     <img src="mapa.png" id="mapa">
+    <img src="santa.png" id="santa">
   </div>
 </div>
 
-<img src="santa.png" id="santa">
-
-<div id="hud">
-  🌸 Flores: <span id="flores">0</span><br>
-  👆 Por clique: <span id="porClique">1</span><br>
-  ⏱ Auto/s: <span id="auto">0</span>
-</div>
-
-<div id="upgrades">
-  <button onclick="uparClique()">Upar clique (🌸 <span id="c1">10</span>)</button>
-  <button onclick="uparAuto()">Upar auto (🌸 <span id="c2">20</span>)</button>
-  <button onclick="uparFlor()">Upar flor (🌸 <span id="c3">30</span>)</button>
-</div>
-
 <script>
-/* ===== VARIÁVEIS ===== */
-let flores = Number(localStorage.getItem("flores")) || 0;
-let porClique = Number(localStorage.getItem("porClique")) || 1;
-let auto = Number(localStorage.getItem("auto")) || 0;
-let valorFlor = Number(localStorage.getItem("valorFlor")) || 3;
+/* ===== ZOOM ===== */
+let scale = 1;
+const minZoom = 0.5;
+const maxZoom = 2;
 
-let custoClique = 10;
-let custoAuto = 20;
-let custoFlor = 30;
-
-/* ===== ELEMENTOS ===== */
-const floresEl = document.getElementById("flores");
-const porCliqueEl = document.getElementById("porClique");
-const autoEl = document.getElementById("auto");
-const camera = document.getElementById("camera");
 const game = document.getElementById("game");
+const camera = document.getElementById("camera");
 
-/* ===== SALVAR ===== */
-function salvar() {
-  localStorage.setItem("flores", flores);
-  localStorage.setItem("porClique", porClique);
-  localStorage.setItem("auto", auto);
-  localStorage.setItem("valorFlor", valorFlor);
-}
-
-/* ===== ATUALIZAR HUD ===== */
-function atualizar() {
-  floresEl.textContent = flores;
-  porCliqueEl.textContent = porClique;
-  autoEl.textContent = auto;
-  document.getElementById("c1").textContent = custoClique;
-  document.getElementById("c2").textContent = custoAuto;
-  document.getElementById("c3").textContent = custoFlor;
-  salvar();
-}
-
-/* ===== CLIQUE ===== */
-game.addEventListener("click", (e) => {
-  if (e.target.classList.contains("flor")) return;
-  flores += porClique;
-  atualizar();
+game.addEventListener("wheel", (e) => {
+  e.preventDefault();
+  scale += e.deltaY * -0.001;
+  scale = Math.min(maxZoom, Math.max(minZoom, scale));
+  updateCamera();
 });
 
-/* ===== FLORES NO MAPA ===== */
-function criarFlor() {
-  if (Math.random() > 0.4) return;
+/* ===== DRAG ===== */
+let isDragging = false;
+let startX, startY;
+let camX = 0, camY = 0;
 
-  const flor = document.createElement("img");
-  flor.src = "flor.png";
-  flor.className = "flor";
-
-  flor.style.left = Math.random() * 2900 + "px";
-  flor.style.top = Math.random() * 2900 + "px";
-
-  flor.onclick = () => {
-    flores += valorFlor;
-    flor.remove();
-    atualizar();
-  };
-
-  camera.appendChild(flor);
-}
-
-setInterval(criarFlor, 3500);
-
-/* ===== AUTO ===== */
-setInterval(() => {
-  flores += auto;
-  atualizar();
-}, 1000);
-
-/* ===== UPGRADES ===== */
-function uparClique() {
-  if (flores >= custoClique) {
-    flores -= custoClique;
-    porClique++;
-    custoClique *= 2;
-    atualizar();
-  }
-}
-
-function uparAuto() {
-  if (flores >= custoAuto) {
-    flores -= custoAuto;
-    auto++;
-    custoAuto *= 2;
-    atualizar();
-  }
-}
-
-function uparFlor() {
-  if (flores >= custoFlor) {
-    flores -= custoFlor;
-    valorFlor += 2;
-    custoFlor *= 2;
-    atualizar();
-  }
-}
-
-/* ===== CÂMERA ESTILO GUARDIAN TALES ===== */
-let camX = 1500;
-let camY = 1500;
-
-game.addEventListener("mousemove", (e) => {
-  const cx = window.innerWidth / 2;
-  const cy = window.innerHeight / 2;
-
-  camX += (e.clientX - cx) * 0.02;
-  camY += (e.clientY - cy) * 0.02;
-
-  camX = Math.max(0, Math.min(3000 - window.innerWidth, camX));
-  camY = Math.max(0, Math.min(3000 - window.innerHeight, camY));
-
-  camera.style.transform = `translate(${-camX}px, ${-camY}px)`;
+game.addEventListener("mousedown", (e) => {
+  isDragging = true;
+  game.style.cursor = "grabbing";
+  startX = e.clientX - camX;
+  startY = e.clientY - camY;
 });
 
-atualizar();
+window.addEventListener("mouseup", () => {
+  isDragging = false;
+  game.style.cursor = "grab";
+});
+
+window.addEventListener("mousemove", (e) => {
+  if (!isDragging) return;
+  camX = e.clientX - startX;
+  camY = e.clientY - startY;
+  updateCamera();
+});
+
+/* ===== ATUALIZA ===== */
+function updateCamera() {
+  camera.style.transform = `
+    translate(${camX}px, ${camY}px)
+    scale(${scale})
+  `;
+}
 </script>
 
 </body>
