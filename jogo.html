@@ -30,19 +30,31 @@ body {
   top: 0;
 }
 
-/* MAPA NÃO É IMAGEM */
+/* ===== MAPA EM TILES ===== */
 #mapa {
   position: absolute;
   width: 3000px;
   height: 3000px;
 
-  background-color: #7bbf6a;
-  background-image:
-    radial-gradient(#6aa84f 20%, transparent 20%);
-  background-size: 120px 120px;
+  display: grid;
+  grid-template-columns: repeat(25, 120px);
+  grid-template-rows: repeat(25, 120px);
 }
 
-/* Santa faz parte do mapa */
+/* Tiles */
+.tile {
+  width: 120px;
+  height: 120px;
+}
+
+.grama {
+  background:
+    radial-gradient(circle at 30% 30%, #6aa84f 20%, transparent 21%),
+    radial-gradient(circle at 70% 60%, #5f9e44 18%, transparent 19%),
+    #7bbf6a;
+}
+
+/* Santa */
 #santa {
   position: absolute;
   width: 120px;
@@ -58,6 +70,7 @@ body {
   position: absolute;
   width: 40px;
   cursor: pointer;
+  z-index: 5;
 }
 
 /* HUD */
@@ -137,6 +150,19 @@ const porCliqueEl = document.getElementById("porClique");
 const autoEl = document.getElementById("auto");
 const camera = document.getElementById("camera");
 const game = document.getElementById("game");
+const mapa = document.getElementById("mapa");
+
+/* ===== MAPA EM TILES ===== */
+const tilesX = 25;
+const tilesY = 25;
+
+for (let y = 0; y < tilesY; y++) {
+  for (let x = 0; x < tilesX; x++) {
+    const tile = document.createElement("div");
+    tile.classList.add("tile", "grama");
+    mapa.appendChild(tile);
+  }
+}
 
 /* ===== SALVAR ===== */
 function salvar() {
@@ -220,7 +246,7 @@ function uparFlor() {
   }
 }
 
-/* ===== CÂMERA (como já estava) ===== */
+/* ===== CÂMERA ===== */
 let camX = 1500;
 let camY = 1500;
 
