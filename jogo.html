@@ -10,69 +10,99 @@ body {
   margin: 0;
   overflow: hidden;
   font-family: Arial, sans-serif;
+  image-rendering: pixelated;
 }
 
 #game {
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-  background: #7bbf6a;
+  background: #000;
   cursor: grab;
 }
-
-#game:active {
-  cursor: grabbing;
-}
+#game:active { cursor: grabbing; }
 
 /* CÂMERA */
 #camera {
   position: absolute;
-  width: 3000px;
-  height: 3000px;
-  transform: translate(0,0);
+  width: 1600px;
+  height: 1600px;
 }
 
-/* MAPA TILE */
+/* MAPA */
 #mapa {
   position: absolute;
-  width: 3000px;
-  height: 3000px;
+  width: 1600px;
+  height: 1600px;
 }
 
 .tile {
   position: absolute;
-  width: 120px;
-  height: 120px;
-  box-sizing: border-box;
+  width: 32px;
+  height: 32px;
 }
 
-.grama {
+/* ===== PIXEL TILES ===== */
+
+/* grama variações */
+.grama0 { background:#4fa64f; }
+.grama1 { background:#4b9f4b; }
+.grama2 { background:#55ad55; }
+
+/* detalhe da grama */
+.grama0::after,
+.grama1::after,
+.grama2::after {
+  content:"";
+  position:absolute;
+  inset:0;
   background:
-    radial-gradient(#6aa84f 25%, transparent 25%);
-  background-size: 40px 40px;
-  background-color: #7bbf6a;
+    repeating-linear-gradient(
+      45deg,
+      rgba(0,0,0,0.05) 0 2px,
+      transparent 2px 4px
+    );
 }
 
-/* CRUZ */
-.cruz {
-  background-color: #5a9c3b;
+/* caminho (cruz) */
+.caminho {
+  background:#c2a36b;
+  box-shadow: inset 0 0 0 1px #9c7b45;
+}
+
+/* ===== BIBLIOTECA PIXEL ===== */
+.bib-parede {
+  background:#8b5a2b;
+}
+.bib-telhado {
+  background:#5a2e14;
+}
+.bib-porta {
+  background:#3b1f0e;
+}
+.bib-janela {
+  background:#d9cfa3;
+  box-shadow: inset 0 0 0 2px #6b4b2a;
 }
 
 /* SANTA */
 #santa {
   position: absolute;
-  width: 120px;
-  left: 1500px;
-  top: 1500px;
-  transform: translate(-50%, -50%);
+  width: 32px;
+  height: 32px;
+  left: 800px;
+  top: 800px;
+  background: #ff77aa;
   z-index: 10;
-  pointer-events: none;
 }
 
 /* FLOR */
 .flor {
   position: absolute;
-  width: 40px;
+  width: 16px;
+  height: 16px;
+  background:#ff4fa3;
+  border-radius: 50%;
   cursor: pointer;
   z-index: 6;
 }
@@ -80,86 +110,36 @@ body {
 /* HUD */
 #hud {
   position: fixed;
-  top: 20px;
-  left: 20px;
+  top: 16px;
+  left: 16px;
   background: rgba(255,255,255,0.9);
-  padding: 12px;
-  border-radius: 10px;
+  padding: 10px;
+  border-radius: 6px;
   z-index: 20;
+  font-size: 14px;
 }
 
 /* UPGRADES */
 #upgrades {
   position: fixed;
-  right: 20px;
+  right: 16px;
   top: 50%;
   transform: translateY(-50%);
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
   z-index: 20;
 }
 
 button {
-  padding: 10px;
+  padding: 8px;
   border: none;
-  border-radius: 8px;
+  border-radius: 6px;
   background: #7b4bb7;
   color: white;
   font-weight: bold;
   cursor: pointer;
 }
-
-button:disabled {
-  background: #aaa;
-}
-
-/* BIBLIOTECA DECORATIVA */
-#biblioteca {
-  position: absolute;
-  width: 360px;
-  height: 360px;
-  left: 0;
-  top: 0;
-  background: linear-gradient(#8b5a2b, #6b3f1d);
-  border: 6px solid #4a2a14;
-  border-radius: 12px;
-  z-index: 8;
-}
-
-#biblioteca::before {
-  content: "";
-  position: absolute;
-  top: -80px;
-  left: -20px;
-  width: 400px;
-  height: 80px;
-  background: #5b2d0c;
-  clip-path: polygon(0 100%, 50% 0, 100% 100%);
-}
-
-.porta {
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  width: 80px;
-  height: 120px;
-  background: #3b1e0b;
-  transform: translateX(-50%);
-  border-radius: 8px 8px 0 0;
-}
-
-.janela {
-  position: absolute;
-  width: 50px;
-  height: 60px;
-  background: #d9c28f;
-  border: 4px solid #5a3a1c;
-  border-radius: 6px;
-}
-
-.j1 { left: 50px; top: 80px; }
-.j2 { right: 50px; top: 80px; }
 </style>
 </head>
 
@@ -168,177 +148,128 @@ button:disabled {
 <div id="game">
   <div id="camera">
     <div id="mapa"></div>
-
-    <div id="biblioteca">
-      <div class="janela j1"></div>
-      <div class="janela j2"></div>
-      <div class="porta"></div>
-    </div>
-
-    <img src="santa.png" id="santa">
+    <div id="santa"></div>
   </div>
 </div>
 
 <div id="hud">
-  🌸 Flores: <span id="flores">0</span><br>
-  👆 Por clique: <span id="porClique">1</span><br>
-  ⏱ Auto/s: <span id="auto">0</span>
+  🌸 <span id="flores">0</span><br>
+  👆 <span id="porClique">1</span><br>
+  ⏱ <span id="auto">0</span>
 </div>
 
 <div id="upgrades">
-  <button onclick="uparClique()">Upar clique (🌸 <span id="c1">10</span>)</button>
-  <button onclick="uparAuto()">Upar auto (🌸 <span id="c2">20</span>)</button>
-  <button onclick="uparFlor()">Upar flor (🌸 <span id="c3">30</span>)</button>
+  <button onclick="uparClique()">Clique 🌸10</button>
+  <button onclick="uparAuto()">Auto 🌸20</button>
+  <button onclick="uparFlor()">Flor 🌸30</button>
 </div>
 
 <script>
-/* ===== MAPA TILES ===== */
-const TILE = 120;
-const MAP_W = 25;
-const MAP_H = 25;
+/* ===== CONFIG ===== */
+const TILE = 32;
+const MAP = 50;
 const mapaEl = document.getElementById("mapa");
 
+/* ===== MAPA PIXEL ===== */
 function renderMapa() {
-  for (let y = 0; y < MAP_H; y++) {
-    for (let x = 0; x < MAP_W; x++) {
-      const tile = document.createElement("div");
-      tile.className = "tile grama";
+  for (let y = 0; y < MAP; y++) {
+    for (let x = 0; x < MAP; x++) {
+      const t = document.createElement("div");
 
-      if (x === Math.floor(MAP_W / 2) || y === Math.floor(MAP_H / 2)) {
-        tile.classList.add("cruz");
+      const g = Math.floor(Math.random()*3);
+      t.className = `tile grama${g}`;
+
+      if (x === Math.floor(MAP/2) || y === Math.floor(MAP/2)) {
+        t.className = "tile caminho";
       }
 
-      tile.style.left = x * TILE + "px";
-      tile.style.top = y * TILE + "px";
-      mapaEl.appendChild(tile);
+      t.style.left = x*TILE+"px";
+      t.style.top = y*TILE+"px";
+      mapaEl.appendChild(t);
     }
   }
 }
 renderMapa();
 
-/* ===== VARIÁVEIS JOGO ===== */
-let flores = Number(localStorage.getItem("flores")) || 0;
-let porClique = Number(localStorage.getItem("porClique")) || 1;
-let auto = Number(localStorage.getItem("auto")) || 0;
-let valorFlor = Number(localStorage.getItem("valorFlor")) || 3;
+/* ===== BIBLIOTECA (TILES) ===== */
+function biblioteca(x,y) {
+  const layout = [
+    " TTT ",
+    " PPP ",
+    " PJJP",
+    " PPP "
+  ];
 
-let custoClique = 10;
-let custoAuto = 20;
-let custoFlor = 30;
+  layout.forEach((row, ry) => {
+    [...row].forEach((c, rx) => {
+      if (c === " ") return;
+      const t = document.createElement("div");
+      t.classList.add("tile");
 
-const floresEl = document.getElementById("flores");
-const porCliqueEl = document.getElementById("porClique");
-const autoEl = document.getElementById("auto");
+      if (c==="T") t.classList.add("bib-telhado");
+      if (c==="P") t.classList.add("bib-parede");
+      if (c==="J") t.classList.add("bib-janela");
 
-/* ===== SALVAR ===== */
-function salvar() {
-  localStorage.setItem("flores", flores);
-  localStorage.setItem("porClique", porClique);
-  localStorage.setItem("auto", auto);
-  localStorage.setItem("valorFlor", valorFlor);
+      t.style.left = (x+rx)*TILE+"px";
+      t.style.top = (y+ry)*TILE+"px";
+      mapaEl.appendChild(t);
+    });
+  });
 }
+biblioteca(1,1);
 
-/* ===== ATUALIZAR ===== */
-function atualizar() {
-  floresEl.textContent = flores;
-  porCliqueEl.textContent = porClique;
-  autoEl.textContent = auto;
-  document.getElementById("c1").textContent = custoClique;
-  document.getElementById("c2").textContent = custoAuto;
-  document.getElementById("c3").textContent = custoFlor;
-  salvar();
+/* ===== FLORES / CLICKER ===== */
+let flores=0, porClique=1, auto=0, valorFlor=3;
+
+const fEl = document.getElementById("flores");
+const pEl = document.getElementById("porClique");
+const aEl = document.getElementById("auto");
+
+function atualizar(){
+  fEl.textContent=flores;
+  pEl.textContent=porClique;
+  aEl.textContent=auto;
 }
 atualizar();
 
-/* ===== CLIQUE ===== */
-game.onclick = e => {
-  if (e.target.classList.contains("flor")) return;
-  flores += porClique;
-  atualizar();
+game.onclick = e=>{
+  if(e.target.classList.contains("flor")) return;
+  flores+=porClique; atualizar();
 };
 
-/* ===== FLORES ===== */
-function criarFlor() {
-  if (Math.random() > 0.4) return;
-
-  const flor = document.createElement("img");
-  flor.src = "flor.png";
-  flor.className = "flor";
-  flor.style.left = Math.random() * 2900 + "px";
-  flor.style.top = Math.random() * 2900 + "px";
-
-  flor.onclick = e => {
+function criarFlor(){
+  if(Math.random()>0.4)return;
+  const f=document.createElement("div");
+  f.className="flor";
+  f.style.left=Math.random()*1600+"px";
+  f.style.top=Math.random()*1600+"px";
+  f.onclick=e=>{
     e.stopPropagation();
-    flores += valorFlor;
-    flor.remove();
-    atualizar();
+    flores+=valorFlor;
+    f.remove(); atualizar();
   };
+  camera.appendChild(f);
+}
+setInterval(criarFlor,3500);
 
-  camera.appendChild(flor);
-}
-setInterval(criarFlor, 3500);
+setInterval(()=>{ flores+=auto; atualizar(); },1000);
 
-/* ===== AUTO ===== */
-setInterval(() => {
-  flores += auto;
-  atualizar();
-}, 1000);
-
-/* ===== UPGRADES ===== */
-function uparClique() {
-  if (flores >= custoClique) {
-    flores -= custoClique;
-    porClique++;
-    custoClique *= 2;
-    atualizar();
-  }
-}
-function uparAuto() {
-  if (flores >= custoAuto) {
-    flores -= custoAuto;
-    auto++;
-    custoAuto *= 2;
-    atualizar();
-  }
-}
-function uparFlor() {
-  if (flores >= custoFlor) {
-    flores -= custoFlor;
-    valorFlor += 2;
-    custoFlor *= 2;
-    atualizar();
-  }
-}
+function uparClique(){ if(flores>=10){flores-=10;porClique++;atualizar();}}
+function uparAuto(){ if(flores>=20){flores-=20;auto++;atualizar();}}
+function uparFlor(){ if(flores>=30){flores-=30;valorFlor+=2;atualizar();}}
 
 /* ===== CÂMERA ARRASTÁVEL ===== */
-let camX = 1500;
-let camY = 1500;
-let dragging = false;
-let lastX = 0;
-let lastY = 0;
+let camX=800, camY=800, drag=false, lx, ly;
 
-game.addEventListener("mousedown", e => {
-  dragging = true;
-  lastX = e.clientX;
-  lastY = e.clientY;
-});
-
-window.addEventListener("mouseup", () => dragging = false);
-
-window.addEventListener("mousemove", e => {
-  if (!dragging) return;
-
-  camX -= (e.clientX - lastX);
-  camY -= (e.clientY - lastY);
-
-  lastX = e.clientX;
-  lastY = e.clientY;
-
-  camX = Math.max(0, Math.min(3000 - window.innerWidth, camX));
-  camY = Math.max(0, Math.min(3000 - window.innerHeight, camY));
-
-  camera.style.transform = `translate(${-camX}px, ${-camY}px)`;
-});
+game.onmousedown=e=>{drag=true;lx=e.clientX;ly=e.clientY;};
+onmouseup=()=>drag=false;
+onmousemove=e=>{
+  if(!drag)return;
+  camX-=(e.clientX-lx);
+  camY-=(e.clientY-ly);
+  lx=e.clientX; ly=e.clientY;
+  camera.style.transform=`translate(${-camX}px,${-camY}px)`;
+};
 </script>
 
 </body>
