@@ -10,6 +10,7 @@ body {
   margin: 0;
   overflow: hidden;
   font-family: Arial, sans-serif;
+  user-select: none;
 }
 
 /* Tela */
@@ -19,6 +20,11 @@ body {
   height: 100vh;
   overflow: hidden;
   background: #7bbf6a;
+  cursor: grab;
+}
+
+#game:active {
+  cursor: grabbing;
 }
 
 /* Câmera */
@@ -35,13 +41,11 @@ body {
   position: absolute;
   width: 3000px;
   height: 3000px;
-
   display: grid;
   grid-template-columns: repeat(25, 120px);
   grid-template-rows: repeat(25, 120px);
 }
 
-/* Tiles */
 .tile {
   width: 120px;
   height: 120px;
@@ -105,10 +109,6 @@ button {
   font-weight: bold;
   cursor: pointer;
 }
-
-button:disabled {
-  background: #aaa;
-}
 </style>
 </head>
 
@@ -134,63 +134,110 @@ button:disabled {
 </div>
 
 <script>
-/* ===== VARIÁVEIS ===== */
-let flores = Number(localStorage.getItem("flores")) || 0;
-let porClique = Number(localStorage.getItem("porClique")) || 1;
-let auto = Number(localStorage.getItem("auto")) || 0;
-let valorFlor = Number(localStorage.getItem("valorFlor")) || 3;
+/* =====================================================
+   📦 BIBLIOTECA: DragCamera
+===================================================== */
+class DragCamera {
+  constructor(gameEl, cameraEl, worldWidth, worldHeight) {
+    this.game = gameEl;
+    this.camera = cameraEl;
+    this.worldWidth = worldWidth;
+    this.worldHeight = worldHeight;
+
+    this.x = 1500;
+    this.y = 1500;
+
+    this.dragging = false;
+    this.startX = 0;
+    this.startY = 0;
+
+    this.init();
+  }
+
+  init() {
+    this.game.addEventListener("mousedown", e => this.startDrag(e));
+    window.addEventListener("mouseup", () => this.stopDrag());
+    window.addEventListener("mousemove", e => this.drag(e));
+    this.update();
+  }
+
+  startDrag(e) {
+    this.dragging = true;
+    this.startX = e.clientX;
+    this.startY = e.clientY;
+  }
+
+  stopDrag() {
+    this.dragging = false;
+  }
+
+  drag(e) {
+    if (!this.dragging) return;
+
+    const dx = e.clientX - this.startX;
+    const dy = e.clientY - this.startY;
+
+    this.startX = e.clientX;
+    this.startY = e.clientY;
+
+    this.x -= dx;
+    this.y -= dy;
+
+    this.clamp();
+    this.update();
+  }
+
+  clamp() {
+    const maxX = this.worldWidth - window.innerWidth;
+    const maxY = this.worldHeight - window.innerHeight;
+
+    this.x = Math.max(0, Math.min(maxX, this.x));
+    this.y = Math.max(0, Math.min(maxY, this.y));
+  }
+
+  update() {
+    this.camera.style.transform =
+      `translate(${-this.x}px, ${-this.y}px)`;
+  }
+}
+
+/* =====================================================
+   🌱 MAPA EM TILES
+===================================================== */
+const mapa = document.getElementById("mapa");
+
+for (let i = 0; i < 25 * 25; i++) {
+  const tile = document.createElement("div");
+  tile.className = "tile grama";
+  mapa.appendChild(tile);
+}
+
+/* =====================================================
+   🎮 VARIÁVEIS DO JOGO
+===================================================== */
+let flores = 0;
+let porClique = 1;
+let auto = 0;
+let valorFlor = 3;
 
 let custoClique = 10;
 let custoAuto = 20;
 let custoFlor = 30;
 
-/* ===== ELEMENTOS ===== */
 const floresEl = document.getElementById("flores");
 const porCliqueEl = document.getElementById("porClique");
 const autoEl = document.getElementById("auto");
-const camera = document.getElementById("camera");
-const game = document.getElementById("game");
-const mapa = document.getElementById("mapa");
+const cameraEl = document.getElementById("camera");
+const gameEl = document.getElementById("game");
 
-/* ===== MAPA EM TILES ===== */
-const tilesX = 25;
-const tilesY = 25;
+/* =====================================================
+   📷 INICIALIZA CÂMERA POR ARRASTE
+===================================================== */
+const cam = new DragCamera(gameEl, cameraEl, 3000, 3000);
 
-for (let y = 0; y < tilesY; y++) {
-  for (let x = 0; x < tilesX; x++) {
-    const tile = document.createElement("div");
-    tile.classList.add("tile", "grama");
-    mapa.appendChild(tile);
-  }
-}
-
-/* ===== SALVAR ===== */
-function salvar() {
-  localStorage.setItem("flores", flores);
-  localStorage.setItem("porClique", porClique);
-  localStorage.setItem("auto", auto);
-  localStorage.setItem("valorFlor", valorFlor);
-}
-
-/* ===== ATUALIZAR HUD ===== */
-function atualizar() {
-  floresEl.textContent = flores;
-  porCliqueEl.textContent = porClique;
-  autoEl.textContent = auto;
-  document.getElementById("c1").textContent = custoClique;
-  document.getElementById("c2").textContent = custoAuto;
-  document.getElementById("c3").textContent = custoFlor;
-  salvar();
-}
-
-/* ===== CLIQUE ===== */
-game.addEventListener("click", (e) => {
-  if (e.target.classList.contains("flor")) return;
-  flores += porClique;
-  atualizar();
-});
-
-/* ===== FLORES NO MAPA ===== */
+/* =====================================================
+   🌸 FLORES
+===================================================== */
 function criarFlor() {
   if (Math.random() > 0.4) return;
 
@@ -207,18 +254,34 @@ function criarFlor() {
     atualizar();
   };
 
-  camera.appendChild(flor);
+  cameraEl.appendChild(flor);
 }
 
 setInterval(criarFlor, 3500);
 
-/* ===== AUTO ===== */
+/* =====================================================
+   HUD / UPGRADES
+===================================================== */
+gameEl.addEventListener("click", e => {
+  if (e.target.classList.contains("flor")) return;
+  flores += porClique;
+  atualizar();
+});
+
 setInterval(() => {
   flores += auto;
   atualizar();
 }, 1000);
 
-/* ===== UPGRADES ===== */
+function atualizar() {
+  floresEl.textContent = flores;
+  porCliqueEl.textContent = porClique;
+  autoEl.textContent = auto;
+  document.getElementById("c1").textContent = custoClique;
+  document.getElementById("c2").textContent = custoAuto;
+  document.getElementById("c3").textContent = custoFlor;
+}
+
 function uparClique() {
   if (flores >= custoClique) {
     flores -= custoClique;
@@ -245,23 +308,6 @@ function uparFlor() {
     atualizar();
   }
 }
-
-/* ===== CÂMERA ===== */
-let camX = 1500;
-let camY = 1500;
-
-game.addEventListener("mousemove", (e) => {
-  const cx = window.innerWidth / 2;
-  const cy = window.innerHeight / 2;
-
-  camX += (e.clientX - cx) * 0.02;
-  camY += (e.clientY - cy) * 0.02;
-
-  camX = Math.max(0, Math.min(3000 - window.innerWidth, camX));
-  camY = Math.max(0, Math.min(3000 - window.innerHeight, camY));
-
-  camera.style.transform = `translate(${-camX}px, ${-camY}px)`;
-});
 
 atualizar();
 </script>
