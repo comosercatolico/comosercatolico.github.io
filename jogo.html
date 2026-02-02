@@ -31,11 +31,9 @@ body {
   position: absolute;
   width: 3000px;
   height: 3000px;
-  left: 0;
-  top: 0;
 }
 
-/* ===== MAPA ===== */
+/* MAPA */
 #mapa {
   position: absolute;
   width: 3000px;
@@ -49,11 +47,21 @@ body {
   height: 120px;
 }
 
+/* Grama */
 .grama {
   background:
     radial-gradient(circle at 30% 30%, #6aa84f 20%, transparent 21%),
     radial-gradient(circle at 70% 60%, #5f9e44 18%, transparent 19%),
     #7bbf6a;
+}
+
+/* Caminho */
+.caminho {
+  background:
+    linear-gradient(45deg, #c9b27c 25%, transparent 25%),
+    linear-gradient(-45deg, #c9b27c 25%, transparent 25%),
+    #d8c58a;
+  background-size: 20px 20px;
 }
 
 /* Santa */
@@ -67,14 +75,6 @@ body {
   z-index: 10;
 }
 
-/* Flor */
-.flor {
-  position: absolute;
-  width: 40px;
-  cursor: pointer;
-  z-index: 5;
-}
-
 /* HUD */
 #hud {
   position: fixed;
@@ -84,28 +84,6 @@ body {
   padding: 12px;
   border-radius: 10px;
   z-index: 20;
-}
-
-/* Upgrades */
-#upgrades {
-  position: fixed;
-  right: 20px;
-  top: 50%;
-  transform: translateY(-50%);
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  z-index: 20;
-}
-
-button {
-  padding: 10px;
-  border: none;
-  border-radius: 8px;
-  background: #7b4bb7;
-  color: white;
-  font-weight: bold;
-  cursor: pointer;
 }
 </style>
 </head>
@@ -120,35 +98,44 @@ button {
 </div>
 
 <div id="hud">
-  🌸 Flores: <span id="flores">0</span><br>
-  👆 Por clique: <span id="porClique">1</span><br>
-  ⏱ Auto/s: <span id="auto">0</span>
-</div>
-
-<div id="upgrades">
-  <button onclick="uparClique()">Upar clique (🌸 <span id="c1">10</span>)</button>
-  <button onclick="uparAuto()">Upar auto (🌸 <span id="c2">20</span>)</button>
-  <button onclick="uparFlor()">Upar flor (🌸 <span id="c3">30</span>)</button>
+  🧱 Tile system em teste<br>
+  📷 Arraste para mover
 </div>
 
 <script>
 /* =====================================================
-   ⚙️ CONSTANTES DO TILE SYSTEM
+   ⚙️ CONSTANTES
 ===================================================== */
 const TILE_SIZE = 120;
 const MAP_W = 25;
 const MAP_H = 25;
 
 /* =====================================================
-   🧠 MAPA COMO DADOS (TILEMAP REAL)
+   🧠 MAPA COMO DADOS
+   0 = grama
+   1 = caminho
 ===================================================== */
 const mapaDados = [];
 
 for (let y = 0; y < MAP_H; y++) {
   mapaDados[y] = [];
   for (let x = 0; x < MAP_W; x++) {
-    mapaDados[y][x] = 0; // 0 = grama
+    mapaDados[y][x] = 0;
   }
+}
+
+/* =====================================================
+   ➕ DESENHA UMA CRUZ NO MAPA (PROVA)
+===================================================== */
+const meioX = Math.floor(MAP_W / 2);
+const meioY = Math.floor(MAP_H / 2);
+
+for (let x = 0; x < MAP_W; x++) {
+  mapaDados[meioY][x] = 1; // horizontal
+}
+
+for (let y = 0; y < MAP_H; y++) {
+  mapaDados[y][meioX] = 1; // vertical
 }
 
 /* =====================================================
@@ -164,9 +151,8 @@ function renderMapa() {
       const tile = document.createElement("div");
       tile.classList.add("tile");
 
-      if (mapaDados[y][x] === 0) {
-        tile.classList.add("grama");
-      }
+      if (mapaDados[y][x] === 0) tile.classList.add("grama");
+      if (mapaDados[y][x] === 1) tile.classList.add("caminho");
 
       tile.style.left = x * TILE_SIZE + "px";
       tile.style.top = y * TILE_SIZE + "px";
@@ -237,104 +223,14 @@ class DragCamera {
 }
 
 /* =====================================================
-   🎮 JOGO
+   📷 INICIALIZA CÂMERA
 ===================================================== */
-let flores = 0;
-let porClique = 1;
-let auto = 0;
-let valorFlor = 3;
-
-let custoClique = 10;
-let custoAuto = 20;
-let custoFlor = 30;
-
-const floresEl = document.getElementById("flores");
-const porCliqueEl = document.getElementById("porClique");
-const autoEl = document.getElementById("auto");
-const gameEl = document.getElementById("game");
-const cameraEl = document.getElementById("camera");
-
-/* Inicializa câmera */
-new DragCamera(gameEl, cameraEl, 3000, 3000);
-
-/* =====================================================
-   🌸 FLORES BASEADAS EM TILE
-===================================================== */
-function criarFlor() {
-  if (Math.random() > 0.4) return;
-
-  const tx = Math.floor(Math.random() * MAP_W);
-  const ty = Math.floor(Math.random() * MAP_H);
-
-  const flor = document.createElement("img");
-  flor.src = "flor.png";
-  flor.className = "flor";
-
-  flor.style.left = tx * TILE_SIZE + 40 + "px";
-  flor.style.top = ty * TILE_SIZE + 40 + "px";
-
-  flor.onclick = () => {
-    flores += valorFlor;
-    flor.remove();
-    atualizar();
-  };
-
-  cameraEl.appendChild(flor);
-}
-
-setInterval(criarFlor, 3500);
-
-/* =====================================================
-   HUD / UPGRADES
-===================================================== */
-gameEl.addEventListener("click", e => {
-  if (e.target.classList.contains("flor")) return;
-  flores += porClique;
-  atualizar();
-});
-
-setInterval(() => {
-  flores += auto;
-  atualizar();
-}, 1000);
-
-function atualizar() {
-  floresEl.textContent = flores;
-  porCliqueEl.textContent = porClique;
-  autoEl.textContent = auto;
-  document.getElementById("c1").textContent = custoClique;
-  document.getElementById("c2").textContent = custoAuto;
-  document.getElementById("c3").textContent = custoFlor;
-}
-
-function uparClique() {
-  if (flores >= custoClique) {
-    flores -= custoClique;
-    porClique++;
-    custoClique *= 2;
-    atualizar();
-  }
-}
-
-function uparAuto() {
-  if (flores >= custoAuto) {
-    flores -= custoAuto;
-    auto++;
-    custoAuto *= 2;
-    atualizar();
-  }
-}
-
-function uparFlor() {
-  if (flores >= custoFlor) {
-    flores -= custoFlor;
-    valorFlor += 2;
-    custoFlor *= 2;
-    atualizar();
-  }
-}
-
-atualizar();
+new DragCamera(
+  document.getElementById("game"),
+  document.getElementById("camera"),
+  3000,
+  3000
+);
 </script>
 
 </body>
