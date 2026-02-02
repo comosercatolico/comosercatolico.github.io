@@ -22,7 +22,6 @@ body {
   background: #7bbf6a;
   cursor: grab;
 }
-
 #game:active {
   cursor: grabbing;
 }
@@ -36,17 +35,16 @@ body {
   top: 0;
 }
 
-/* ===== MAPA EM TILES ===== */
+/* ===== MAPA ===== */
 #mapa {
   position: absolute;
   width: 3000px;
   height: 3000px;
-  display: grid;
-  grid-template-columns: repeat(25, 120px);
-  grid-template-rows: repeat(25, 120px);
 }
 
+/* Tiles */
 .tile {
+  position: absolute;
   width: 120px;
   height: 120px;
 }
@@ -135,64 +133,101 @@ button {
 
 <script>
 /* =====================================================
+   ⚙️ CONSTANTES DO TILE SYSTEM
+===================================================== */
+const TILE_SIZE = 120;
+const MAP_W = 25;
+const MAP_H = 25;
+
+/* =====================================================
+   🧠 MAPA COMO DADOS (TILEMAP REAL)
+===================================================== */
+const mapaDados = [];
+
+for (let y = 0; y < MAP_H; y++) {
+  mapaDados[y] = [];
+  for (let x = 0; x < MAP_W; x++) {
+    mapaDados[y][x] = 0; // 0 = grama
+  }
+}
+
+/* =====================================================
+   🧱 RENDERIZA MAPA
+===================================================== */
+const mapaEl = document.getElementById("mapa");
+
+function renderMapa() {
+  mapaEl.innerHTML = "";
+
+  for (let y = 0; y < MAP_H; y++) {
+    for (let x = 0; x < MAP_W; x++) {
+      const tile = document.createElement("div");
+      tile.classList.add("tile");
+
+      if (mapaDados[y][x] === 0) {
+        tile.classList.add("grama");
+      }
+
+      tile.style.left = x * TILE_SIZE + "px";
+      tile.style.top = y * TILE_SIZE + "px";
+
+      mapaEl.appendChild(tile);
+    }
+  }
+}
+
+renderMapa();
+
+/* =====================================================
    📦 BIBLIOTECA: DragCamera
 ===================================================== */
 class DragCamera {
-  constructor(gameEl, cameraEl, worldWidth, worldHeight) {
-    this.game = gameEl;
-    this.camera = cameraEl;
-    this.worldWidth = worldWidth;
-    this.worldHeight = worldHeight;
+  constructor(game, camera, worldW, worldH) {
+    this.game = game;
+    this.camera = camera;
+    this.worldW = worldW;
+    this.worldH = worldH;
 
     this.x = 1500;
     this.y = 1500;
-
-    this.dragging = false;
-    this.startX = 0;
-    this.startY = 0;
+    this.drag = false;
+    this.sx = 0;
+    this.sy = 0;
 
     this.init();
   }
 
   init() {
-    this.game.addEventListener("mousedown", e => this.startDrag(e));
-    window.addEventListener("mouseup", () => this.stopDrag());
-    window.addEventListener("mousemove", e => this.drag(e));
-    this.update();
-  }
+    this.game.addEventListener("mousedown", e => {
+      this.drag = true;
+      this.sx = e.clientX;
+      this.sy = e.clientY;
+    });
 
-  startDrag(e) {
-    this.dragging = true;
-    this.startX = e.clientX;
-    this.startY = e.clientY;
-  }
+    window.addEventListener("mouseup", () => this.drag = false);
 
-  stopDrag() {
-    this.dragging = false;
-  }
+    window.addEventListener("mousemove", e => {
+      if (!this.drag) return;
 
-  drag(e) {
-    if (!this.dragging) return;
+      const dx = e.clientX - this.sx;
+      const dy = e.clientY - this.sy;
 
-    const dx = e.clientX - this.startX;
-    const dy = e.clientY - this.startY;
+      this.sx = e.clientX;
+      this.sy = e.clientY;
 
-    this.startX = e.clientX;
-    this.startY = e.clientY;
+      this.x -= dx;
+      this.y -= dy;
 
-    this.x -= dx;
-    this.y -= dy;
+      this.clamp();
+      this.update();
+    });
 
-    this.clamp();
     this.update();
   }
 
   clamp() {
-    const maxX = this.worldWidth - window.innerWidth;
-    const maxY = this.worldHeight - window.innerHeight;
-
-    this.x = Math.max(0, Math.min(maxX, this.x));
-    this.y = Math.max(0, Math.min(maxY, this.y));
+    this.x = Math.max(0, Math.min(this.worldW - window.innerWidth, this.x));
+    this.y = Math.max(0, Math.min(this.worldH - window.innerHeight, this.y));
   }
 
   update() {
@@ -202,18 +237,7 @@ class DragCamera {
 }
 
 /* =====================================================
-   🌱 MAPA EM TILES
-===================================================== */
-const mapa = document.getElementById("mapa");
-
-for (let i = 0; i < 25 * 25; i++) {
-  const tile = document.createElement("div");
-  tile.className = "tile grama";
-  mapa.appendChild(tile);
-}
-
-/* =====================================================
-   🎮 VARIÁVEIS DO JOGO
+   🎮 JOGO
 ===================================================== */
 let flores = 0;
 let porClique = 1;
@@ -227,26 +251,27 @@ let custoFlor = 30;
 const floresEl = document.getElementById("flores");
 const porCliqueEl = document.getElementById("porClique");
 const autoEl = document.getElementById("auto");
-const cameraEl = document.getElementById("camera");
 const gameEl = document.getElementById("game");
+const cameraEl = document.getElementById("camera");
+
+/* Inicializa câmera */
+new DragCamera(gameEl, cameraEl, 3000, 3000);
 
 /* =====================================================
-   📷 INICIALIZA CÂMERA POR ARRASTE
-===================================================== */
-const cam = new DragCamera(gameEl, cameraEl, 3000, 3000);
-
-/* =====================================================
-   🌸 FLORES
+   🌸 FLORES BASEADAS EM TILE
 ===================================================== */
 function criarFlor() {
   if (Math.random() > 0.4) return;
+
+  const tx = Math.floor(Math.random() * MAP_W);
+  const ty = Math.floor(Math.random() * MAP_H);
 
   const flor = document.createElement("img");
   flor.src = "flor.png";
   flor.className = "flor";
 
-  flor.style.left = Math.random() * 2900 + "px";
-  flor.style.top = Math.random() * 2900 + "px";
+  flor.style.left = tx * TILE_SIZE + 40 + "px";
+  flor.style.top = ty * TILE_SIZE + 40 + "px";
 
   flor.onclick = () => {
     flores += valorFlor;
