@@ -22,9 +22,7 @@ body {
   background: #7bbf6a;
   cursor: grab;
 }
-#game:active {
-  cursor: grabbing;
-}
+#game:active { cursor: grabbing; }
 
 /* Câmera */
 #camera {
@@ -33,7 +31,7 @@ body {
   height: 3000px;
 }
 
-/* MAPA */
+/* Mapa */
 #mapa {
   position: absolute;
   width: 3000px;
@@ -55,7 +53,7 @@ body {
     #7bbf6a;
 }
 
-/* Caminho */
+/* Caminho (cruz) */
 .caminho {
   background:
     linear-gradient(45deg, #c9b27c 25%, transparent 25%),
@@ -75,6 +73,14 @@ body {
   z-index: 10;
 }
 
+/* Flor */
+.flor {
+  position: absolute;
+  width: 40px;
+  cursor: pointer;
+  z-index: 5;
+}
+
 /* HUD */
 #hud {
   position: fixed;
@@ -84,6 +90,28 @@ body {
   padding: 12px;
   border-radius: 10px;
   z-index: 20;
+}
+
+/* Upgrades */
+#upgrades {
+  position: fixed;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 20;
+}
+
+button {
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  background: #7b4bb7;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
 }
 </style>
 </head>
@@ -98,20 +126,27 @@ body {
 </div>
 
 <div id="hud">
-  🧱 Tile system em teste<br>
-  📷 Arraste para mover
+  🌸 Flores: <span id="flores">0</span><br>
+  👆 Por clique: <span id="porClique">1</span><br>
+  ⏱ Auto/s: <span id="auto">0</span>
+</div>
+
+<div id="upgrades">
+  <button onclick="uparClique()">Upar clique (🌸 <span id="c1">10</span>)</button>
+  <button onclick="uparAuto()">Upar auto (🌸 <span id="c2">20</span>)</button>
+  <button onclick="uparFlor()">Upar flor (🌸 <span id="c3">30</span>)</button>
 </div>
 
 <script>
 /* =====================================================
-   ⚙️ CONSTANTES
+   CONSTANTES DO TILE SYSTEM
 ===================================================== */
 const TILE_SIZE = 120;
 const MAP_W = 25;
 const MAP_H = 25;
 
 /* =====================================================
-   🧠 MAPA COMO DADOS
+   MAPA COMO DADOS
    0 = grama
    1 = caminho
 ===================================================== */
@@ -124,22 +159,15 @@ for (let y = 0; y < MAP_H; y++) {
   }
 }
 
-/* =====================================================
-   ➕ DESENHA UMA CRUZ NO MAPA (PROVA)
-===================================================== */
+/* CRUZ DE CAMINHO (PROVA DO TILE SYSTEM) */
 const meioX = Math.floor(MAP_W / 2);
 const meioY = Math.floor(MAP_H / 2);
 
-for (let x = 0; x < MAP_W; x++) {
-  mapaDados[meioY][x] = 1; // horizontal
-}
-
-for (let y = 0; y < MAP_H; y++) {
-  mapaDados[y][meioX] = 1; // vertical
-}
+for (let x = 0; x < MAP_W; x++) mapaDados[meioY][x] = 1;
+for (let y = 0; y < MAP_H; y++) mapaDados[y][meioX] = 1;
 
 /* =====================================================
-   🧱 RENDERIZA MAPA
+   RENDERIZA MAPA
 ===================================================== */
 const mapaEl = document.getElementById("mapa");
 
@@ -150,9 +178,7 @@ function renderMapa() {
     for (let x = 0; x < MAP_W; x++) {
       const tile = document.createElement("div");
       tile.classList.add("tile");
-
-      if (mapaDados[y][x] === 0) tile.classList.add("grama");
-      if (mapaDados[y][x] === 1) tile.classList.add("caminho");
+      tile.classList.add(mapaDados[y][x] === 0 ? "grama" : "caminho");
 
       tile.style.left = x * TILE_SIZE + "px";
       tile.style.top = y * TILE_SIZE + "px";
@@ -165,26 +191,21 @@ function renderMapa() {
 renderMapa();
 
 /* =====================================================
-   📦 BIBLIOTECA: DragCamera
+   BIBLIOTECA: CÂMERA POR ARRASTE
 ===================================================== */
 class DragCamera {
-  constructor(game, camera, worldW, worldH) {
+  constructor(game, camera, w, h) {
     this.game = game;
     this.camera = camera;
-    this.worldW = worldW;
-    this.worldH = worldH;
-
+    this.w = w;
+    this.h = h;
     this.x = 1500;
     this.y = 1500;
     this.drag = false;
     this.sx = 0;
     this.sy = 0;
 
-    this.init();
-  }
-
-  init() {
-    this.game.addEventListener("mousedown", e => {
+    game.addEventListener("mousedown", e => {
       this.drag = true;
       this.sx = e.clientX;
       this.sy = e.clientY;
@@ -194,16 +215,10 @@ class DragCamera {
 
     window.addEventListener("mousemove", e => {
       if (!this.drag) return;
-
-      const dx = e.clientX - this.sx;
-      const dy = e.clientY - this.sy;
-
+      this.x -= e.clientX - this.sx;
+      this.y -= e.clientY - this.sy;
       this.sx = e.clientX;
       this.sy = e.clientY;
-
-      this.x -= dx;
-      this.y -= dy;
-
       this.clamp();
       this.update();
     });
@@ -212,8 +227,8 @@ class DragCamera {
   }
 
   clamp() {
-    this.x = Math.max(0, Math.min(this.worldW - window.innerWidth, this.x));
-    this.y = Math.max(0, Math.min(this.worldH - window.innerHeight, this.y));
+    this.x = Math.max(0, Math.min(this.w - window.innerWidth, this.x));
+    this.y = Math.max(0, Math.min(this.h - window.innerHeight, this.y));
   }
 
   update() {
@@ -222,15 +237,95 @@ class DragCamera {
   }
 }
 
+new DragCamera(game, camera, 3000, 3000);
+
 /* =====================================================
-   📷 INICIALIZA CÂMERA
+   JOGO (IGUAL AO SEU)
 ===================================================== */
-new DragCamera(
-  document.getElementById("game"),
-  document.getElementById("camera"),
-  3000,
-  3000
-);
+let flores = 0;
+let porClique = 1;
+let auto = 0;
+let valorFlor = 3;
+
+let custoClique = 10;
+let custoAuto = 20;
+let custoFlor = 30;
+
+const floresEl = document.getElementById("flores");
+const porCliqueEl = document.getElementById("porClique");
+const autoEl = document.getElementById("auto");
+
+function atualizar() {
+  floresEl.textContent = flores;
+  porCliqueEl.textContent = porClique;
+  autoEl.textContent = auto;
+  c1.textContent = custoClique;
+  c2.textContent = custoAuto;
+  c3.textContent = custoFlor;
+}
+
+game.addEventListener("click", e => {
+  if (e.target.classList.contains("flor")) return;
+  flores += porClique;
+  atualizar();
+});
+
+setInterval(() => {
+  flores += auto;
+  atualizar();
+}, 1000);
+
+/* FLORES PRESAS A TILES */
+function criarFlor() {
+  if (Math.random() > 0.4) return;
+
+  const tx = Math.floor(Math.random() * MAP_W);
+  const ty = Math.floor(Math.random() * MAP_H);
+
+  const flor = document.createElement("img");
+  flor.src = "flor.png";
+  flor.className = "flor";
+  flor.style.left = tx * TILE_SIZE + 40 + "px";
+  flor.style.top = ty * TILE_SIZE + 40 + "px";
+
+  flor.onclick = () => {
+    flores += valorFlor;
+    flor.remove();
+    atualizar();
+  };
+
+  camera.appendChild(flor);
+}
+
+setInterval(criarFlor, 3500);
+
+/* UPGRADES */
+function uparClique() {
+  if (flores >= custoClique) {
+    flores -= custoClique;
+    porClique++;
+    custoClique *= 2;
+    atualizar();
+  }
+}
+function uparAuto() {
+  if (flores >= custoAuto) {
+    flores -= custoAuto;
+    auto++;
+    custoAuto *= 2;
+    atualizar();
+  }
+}
+function uparFlor() {
+  if (flores >= custoFlor) {
+    flores -= custoFlor;
+    valorFlor += 2;
+    custoFlor *= 2;
+    atualizar();
+  }
+}
+
+atualizar();
 </script>
 
 </body>
