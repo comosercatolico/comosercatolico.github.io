@@ -2,141 +2,395 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>Como ser um bom católico</title>
+<title>Jardim de Santa Teresinha</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: url("padre.png") center / cover fixed no-repeat;
+
+body{
+margin:0;
+overflow:hidden;
+font-family:Arial,sans-serif;
 }
 
-header {
-  background: url("santos.png") center / cover;
-  padding: 20px;
-  color: white;
-  text-align: center;
+#game{
+position:relative;
+width:100vw;
+height:100vh;
+overflow:hidden;
+background:black;
 }
 
-nav {
-  background: rgba(0,0,0,0.65);
-  text-align: center;
-  padding: 12px;
+#camera{
+position:absolute;
+width:3000px;
+height:3000px;
+transform:translate(0px,0px);
 }
 
-nav a {
-  color: white;
-  text-decoration: none;
-  margin: 0 8px;
-  padding: 8px 14px;
-  border-radius: 6px;
-  font-weight: bold;
+#mapCanvas{
+position:absolute;
+image-rendering:pixelated;
 }
 
-nav a:hover {
-  background: #005fa3;
+#santa{
+position:absolute;
+width:120px;
+left:1500px;
+top:1500px;
+transform:translate(-50%,-50%);
+pointer-events:none;
+z-index:10;
 }
 
-main, section {
-  max-width: 900px;
-  margin: 30px auto;
-  background: rgba(255,255,255,0.92);
-  border-radius: 14px;
-  padding: 30px;
+.flor{
+position:absolute;
+width:40px;
+cursor:pointer;
+z-index:15;
 }
 
-footer {
-  background: rgba(0,0,0,0.65);
-  color: white;
-  text-align: center;
-  padding: 10px;
+#hud{
+position:fixed;
+top:20px;
+left:20px;
+background:white;
+padding:14px;
+border-radius:12px;
+z-index:50;
 }
 
-/* ===== LITURGIA ===== */
-.liturgia-card {
-  background: #fff;
-  border-radius: 12px;
-  padding: 22px;
-  margin-bottom: 25px;
-  box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+#upgrades{
+position:fixed;
+right:20px;
+top:50%;
+transform:translateY(-50%);
+display:flex;
+flex-direction:column;
+gap:12px;
+z-index:50;
 }
 
-.liturgia-card h2 {
-  margin-top: 0;
-  color: #5a3e1b;
+button{
+padding:12px;
+border:none;
+border-radius:10px;
+background:#7b4bb7;
+color:white;
+font-weight:bold;
+cursor:pointer;
 }
 
-.referencia {
-  font-style: italic;
-  color: #666;
-  margin-bottom: 12px;
+button:hover{
+background:#5d3494;
 }
 
-.texto-liturgico {
-  line-height: 1.7;
-  white-space: pre-line;
-}
-
-.salmo {
-  background: linear-gradient(135deg,#f5fbe7,#e8f5c8);
-  border-left: 6px solid #6a9c3b;
-}
-
-.evangelho {
-  border-left: 6px solid #c62828;
-  background: #fff5f5;
-}
 </style>
 </head>
 
 <body>
 
-<header>
-  <h1>Catequese Católica</h1>
-</header>
+<div id="game">
 
-<nav>
-  <a href="#" onclick="mostrarInicio()">Início</a>
-  <a href="#" onclick="mostrarLiturgia()">Liturgia diária</a>
-  <a href="jogo.html">Jogo</a>
-</nav>
+<div id="camera">
 
-<!-- INÍCIO -->
-<main id="inicio">
-  <h2>Bem-vindo</h2>
-  <p>Escolha uma opção no menu.</p>
-  <img src="pig.png" width="120">
-</main>
+<canvas id="mapCanvas" width="3000" height="3000"></canvas>
 
-<!-- LITURGIA -->
-<section id="liturgia" style="display:none;">
-  <h1 id="liturgia-titulo"></h1>
-  <p id="liturgia-data"></p>
-  <div id="liturgia-conteudo"></div>
-</section>
+<img src="santa.png" id="santa">
 
-<footer>
-  © 2026 – Meu site
-</footer>
+</div>
 
-<script src="js/liturgia.js"></script>
+</div>
+
+<div id="hud">
+
+🌸 Flores: <span id="flores">0</span><br><br>
+
+👆 Por clique: <span id="porClique">1</span><br>
+
+⏱ Auto/s: <span id="auto">0</span><br>
+
+💎 Valor flor: <span id="valorFlor">3</span>
+
+</div>
+
+<div id="upgrades">
+
+<button onclick="uparClique()">
+Upar Clique (🌸 <span id="c1">10</span>)
+</button>
+
+<button onclick="uparAuto()">
+Upar Auto (🌸 <span id="c2">20</span>)
+</button>
+
+<button onclick="uparFlor()">
+Upar Flor (🌸 <span id="c3">30</span>)
+</button>
+
+</div>
 
 <script>
-function mostrarInicio() {
-  document.getElementById("inicio").style.display = "block";
-  document.getElementById("liturgia").style.display = "none";
+
+/* VARIÁVEIS */
+
+let flores=Number(localStorage.getItem("flores"))||0;
+let porClique=Number(localStorage.getItem("porClique"))||1;
+let auto=Number(localStorage.getItem("auto"))||0;
+let valorFlor=Number(localStorage.getItem("valorFlor"))||3;
+
+let custoClique=10;
+let custoAuto=20;
+let custoFlor=30;
+
+/* HUD */
+
+let floresEl=document.getElementById("flores");
+let porCliqueEl=document.getElementById("porClique");
+let autoEl=document.getElementById("auto");
+let valorFlorEl=document.getElementById("valorFlor");
+
+function salvar(){
+
+localStorage.setItem("flores",flores);
+localStorage.setItem("porClique",porClique);
+localStorage.setItem("auto",auto);
+localStorage.setItem("valorFlor",valorFlor);
+
 }
 
-function mostrarLiturgia() {
-  document.getElementById("inicio").style.display = "none";
-  document.getElementById("liturgia").style.display = "block";
-  carregarLiturgia();
+function atualizarHUD(){
+
+floresEl.textContent=flores;
+porCliqueEl.textContent=porClique;
+autoEl.textContent=auto;
+valorFlorEl.textContent=valorFlor;
+
+document.getElementById("c1").textContent=custoClique;
+document.getElementById("c2").textContent=custoAuto;
+document.getElementById("c3").textContent=custoFlor;
+
+salvar();
+
 }
 
-function mostrarJogo() {
-  alert("Jogo em desenvolvimento 🎮");
+/* CANVAS */
+
+let canvas=document.getElementById("mapCanvas");
+let ctx=canvas.getContext("2d");
+
+/* IMAGENS */
+
+let grass=new Image();
+grass.src="grass.png";
+
+let biblioteca=new Image();
+biblioteca.src="bibi.png";
+
+/* LOAD */
+
+let carregadas=0;
+
+function carregou(){
+
+carregadas++;
+
+if(carregadas==2){
+
+desenharMapa();
+
 }
+
+}
+
+grass.onload=carregou;
+biblioteca.onload=carregou;
+
+/* MAPA */
+
+function desenharGrama(){
+
+for(let y=0;y<3000;y+=32){
+
+for(let x=0;x<3000;x+=32){
+
+ctx.drawImage(grass,x,y,32,32);
+
+}
+
+}
+
+}
+
+function desenharBiblioteca(){
+
+ctx.drawImage(
+
+biblioteca,
+150,
+150,
+256,
+256
+
+);
+
+}
+
+function desenharMapa(){
+
+ctx.clearRect(0,0,3000,3000);
+
+desenharGrama();
+
+desenharBiblioteca();
+
+}
+
+/* FLORES */
+
+let camera=document.getElementById("camera");
+
+function criarFlor(){
+
+if(Math.random()>0.5)return;
+
+let flor=document.createElement("img");
+
+flor.src="flor.png";
+
+flor.className="flor";
+
+flor.style.left=Math.random()*2900+"px";
+flor.style.top=Math.random()*2900+"px";
+
+flor.onclick=function(){
+
+flores+=valorFlor;
+
+flor.remove();
+
+atualizarHUD();
+
+};
+
+camera.appendChild(flor);
+
+}
+
+setInterval(criarFlor,2500);
+
+/* CLICK */
+
+document.getElementById("game").addEventListener("click",(e)=>{
+
+if(e.target.classList.contains("flor"))return;
+
+flores+=porClique;
+
+atualizarHUD();
+
+});
+
+/* AUTO */
+
+setInterval(()=>{
+
+flores+=auto;
+
+atualizarHUD();
+
+},1000);
+
+/* UPGRADES */
+
+function uparClique(){
+
+if(flores>=custoClique){
+
+flores-=custoClique;
+porClique++;
+custoClique*=2;
+atualizarHUD();
+
+}
+
+}
+
+function uparAuto(){
+
+if(flores>=custoAuto){
+
+flores-=custoAuto;
+auto++;
+custoAuto*=2;
+atualizarHUD();
+
+}
+
+}
+
+function uparFlor(){
+
+if(flores>=custoFlor){
+
+flores-=custoFlor;
+valorFlor+=2;
+custoFlor*=2;
+atualizarHUD();
+
+}
+
+}
+
+/* CAMERA */
+
+let camX=1200;
+let camY=1200;
+
+let dragging=false;
+let lastX=0;
+let lastY=0;
+
+let game=document.getElementById("game");
+
+game.addEventListener("mousedown",(e)=>{
+
+dragging=true;
+lastX=e.clientX;
+lastY=e.clientY;
+
+});
+
+document.addEventListener("mouseup",()=>{
+
+dragging=false;
+
+});
+
+document.addEventListener("mousemove",(e)=>{
+
+if(!dragging)return;
+
+let dx=e.clientX-lastX;
+let dy=e.clientY-lastY;
+
+camX-=dx;
+camY-=dy;
+
+camX=Math.max(0,Math.min(3000-window.innerWidth,camX));
+camY=Math.max(0,Math.min(3000-window.innerHeight,camY));
+
+camera.style.transform=`translate(${-camX}px,${-camY}px)`;
+
+lastX=e.clientX;
+lastY=e.clientY;
+
+});
+
+/* START */
+
+atualizarHUD();
+
 </script>
 
 </body>
