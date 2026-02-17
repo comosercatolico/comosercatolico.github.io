@@ -2,188 +2,352 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>Mapa em Tiles – Biblioteca Detalhada</title>
+<title>Jardim de Santa Teresinha</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
 body {
   margin: 0;
   overflow: hidden;
-  background: #1f1f1f;
+  font-family: Arial, sans-serif;
 }
 
 #game {
   width: 100vw;
   height: 100vh;
   overflow: hidden;
+  background: #7bbf6a;
   cursor: grab;
 }
 #game:active { cursor: grabbing; }
 
+/* ===== CÂMERA ===== */
 #camera {
   position: absolute;
   width: 3000px;
   height: 3000px;
 }
 
+/* ===== CAMADAS DO MAPA ===== */
+.layer {
+  position: absolute;
+  width: 3000px;
+  height: 3000px;
+}
+
+#chao       { z-index: 1; }
+#decoracao  { z-index: 2; }
+#objetos    { z-index: 3; }
+#personagens{ z-index: 4; }
+#efeitos    { z-index: 5; }
+
 /* ===== TILE BASE ===== */
 .tile {
   position: absolute;
-  width: 32px;
-  height: 32px;
-  image-rendering: pixelated;
+  width: 120px;
+  height: 120px;
 }
 
-/* ===== MAPA ===== */
-.grass {
-  background: #6dbb63;
+/* ===== CHÃO ===== */
+.grama {
+  background:
+    radial-gradient(#6aa84f 20%, transparent 20%);
+  background-size: 40px 40px;
+  background-color: #7bbf6a;
 }
 
-/* ===== BIBLIOTECA ===== */
-
-/* Pedra base */
-.stone {
-  background: #9a9a9a;
-  box-shadow: inset 0 0 0 1px #7a7a7a;
+/* Cruz teste */
+.cruz {
+  background-color: #6fbf5f;
+  box-shadow: inset 0 0 0 4px #4a8f3a;
 }
 
-/* Degrau */
-.step {
-  background: linear-gradient(#8a8a8a, #6f6f6f);
+/* ===== FLORES ===== */
+.flor {
+  position: absolute;
+  width: 40px;
+  cursor: pointer;
+  z-index: 10;
 }
 
-/* Parede */
-.wall {
+/* ===== SANTA ===== */
+#santa {
+  position: absolute;
+  width: 120px;
+  left: 1500px;
+  top: 1500px;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+/* ===== HUD ===== */
+#hud {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  background: rgba(255,255,255,0.9);
+  padding: 12px;
+  border-radius: 10px;
+  z-index: 100;
+}
+
+/* ===== UPGRADES ===== */
+#upgrades {
+  position: fixed;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 100;
+}
+
+button {
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  background: #7b4bb7;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* ===== BIBLIOTECA EM TILES ===== */
+.bib-parede {
+  background: #f0c27b;
+  box-shadow: inset 0 0 0 4px #c89b5a;
+}
+.bib-telhado {
+  background: #e38b2d;
+  box-shadow: inset 0 0 0 4px #b86a1f;
+}
+.bib-porta {
+  background: #8b5a2b;
+  box-shadow: inset 0 0 0 4px #5a381a;
+}
+.bib-janela {
+  background: #eaf4ff;
+  box-shadow:
+    inset 0 0 0 4px #6b6b6b,
+    inset 0 0 0 10px white;
+}
+.bib-coluna {
   background: #e6d8b5;
-  box-shadow: inset 0 0 0 1px #c4b28c;
+  box-shadow: inset 0 0 0 4px #bfa97a;
 }
-
-/* Coluna */
-.column {
-  background: linear-gradient(
-    to right,
-    #bfa97a,
-    #f1e4c1,
-    #bfa97a
-  );
-}
-
-/* Porta */
-.door {
-  background: linear-gradient(#5a3a1a, #3e2612);
-  box-shadow: inset 0 0 0 2px #2a190c;
-}
-
-/* Telhado */
-.roof {
-  background: #b25538;
-  box-shadow: inset 0 0 0 1px #8a3b26;
-}
-
-/* Beiral */
-.roofEdge {
-  background: #8a3b26;
-}
-
-/* Sombra */
-.shadow {
-  background: rgba(0,0,0,0.28);
+.bib-base {
+  background: #9a9a9a;
+  box-shadow: inset 0 0 0 4px #6f6f6f;
 }
 </style>
 </head>
 
 <body>
+
 <div id="game">
-  <div id="camera"></div>
+  <div id="camera">
+
+    <!-- CAMADAS -->
+    <div id="chao" class="layer"></div>
+    <div id="decoracao" class="layer"></div>
+    <div id="objetos" class="layer"></div>
+    <div id="personagens" class="layer"></div>
+    <div id="efeitos" class="layer"></div>
+
+    <!-- Santa -->
+    <img src="santa.png" id="santa">
+
+  </div>
+</div>
+
+<!-- HUD -->
+<div id="hud">
+  🌸 Flores: <span id="flores">0</span><br>
+  👆 Por clique: <span id="porClique">1</span><br>
+  ⏱ Auto/s: <span id="auto">0</span>
+</div>
+
+<!-- Upgrades -->
+<div id="upgrades">
+  <button onclick="uparClique()">Upar clique (🌸 <span id="c1">10</span>)</button>
+  <button onclick="uparAuto()">Upar auto (🌸 <span id="c2">20</span>)</button>
+  <button onclick="uparFlor()">Upar flor (🌸 <span id="c3">30</span>)</button>
 </div>
 
 <script>
-const camera = document.getElementById("camera");
-const TILE = 32;
+/* ===== VARIÁVEIS ===== */
+const TILE = 120;
+const MAP_W = 25;
+const MAP_H = 25;
 
-/* ===== MAPA BASE ===== */
-for (let y = 0; y < 80; y++) {
-  for (let x = 0; x < 80; x++) {
-    tile(x, y, "grass");
+const chao = document.getElementById("chao");
+const decoracao = document.getElementById("decoracao");
+const objetos = document.getElementById("objetos");
+
+/* ===== MAPA CHÃO ===== */
+function renderChao() {
+  for (let y = 0; y < MAP_H; y++) {
+    for (let x = 0; x < MAP_W; x++) {
+      const t = document.createElement("div");
+      t.className = "tile grama";
+
+      if (x === Math.floor(MAP_W/2) || y === Math.floor(MAP_H/2)) {
+        t.classList.add("cruz");
+      }
+
+      t.style.left = x*TILE+"px";
+      t.style.top = y*TILE+"px";
+      chao.appendChild(t);
+    }
   }
 }
-
-/* ===== FUNÇÃO TILE ===== */
-function tile(x, y, type) {
-  const t = document.createElement("div");
-  t.className = "tile " + type;
-  t.style.left = x * TILE + "px";
-  t.style.top = y * TILE + "px";
-  camera.appendChild(t);
-}
+renderChao();
 
 /* ===== BIBLIOTECA DETALHADA ===== */
-const bx = 5;
-const by = 5;
+function construirBiblioteca(tx, ty) {
+  const layout = [
+    "   TTTTTTT   ",
+    "  TTTTTTTTT  ",
+    " BBBBBBBBBBB ",
+    " BCCJDJJCCCB ",
+    " BCCCCCCCCCB ",
+    " BBBBBBBBBBB ",
+    "   UUUUUUU   "
+  ];
 
-/* Base de pedra */
-for (let y = 12; y < 17; y++)
-  for (let x = 0; x < 18; x++)
-    tile(bx + x, by + y, "stone");
+  layout.forEach((linha, y) => {
+    [...linha].forEach((c, x) => {
+      if (c === " ") return;
 
-/* Escadaria */
-for (let x = 6; x < 12; x++)
-  tile(bx + x, by + 17, "step");
+      const tile = document.createElement("div");
+      tile.classList.add("tile");
 
-/* Fachada */
-for (let x = 2; x < 16; x++)
-  tile(bx + x, by + 11, "wall");
+      if (c==="T") tile.classList.add("bib-telhado");
+      if (c==="B") tile.classList.add("bib-parede");
+      if (c==="J") tile.classList.add("bib-janela");
+      if (c==="D") tile.classList.add("bib-porta");
+      if (c==="C") tile.classList.add("bib-coluna");
+      if (c==="U") tile.classList.add("bib-base");
 
-for (let y = 12; y < 15; y++) {
-  tile(bx + 2, by + y, "wall");
-  tile(bx + 15, by + y, "wall");
+      tile.style.left = (tx+x)*TILE+"px";
+      tile.style.top = (ty+y)*TILE+"px";
+
+      objetos.appendChild(tile);
+    });
+  });
 }
+construirBiblioteca(1,1);
 
-/* Porta */
-tile(bx + 8, by + 14, "door");
-tile(bx + 9, by + 14, "door");
+/* ===== SISTEMA CLICKER ===== */
+let flores = 0;
+let porClique = 1;
+let auto = 0;
+let valorFlor = 3;
 
-/* Colunas duplas */
-tile(bx + 4, by + 12, "column");
-tile(bx + 4, by + 13, "column");
-tile(bx + 13, by + 12, "column");
-tile(bx + 13, by + 13, "column");
+let custoClique = 10;
+let custoAuto = 20;
+let custoFlor = 30;
 
-/* Telhado com beiral */
-for (let y = 0; y < 6; y++) {
-  for (let x = y; x < 18 - y; x++) {
-    tile(
-      bx + x,
-      by + y,
-      y === 0 ? "roofEdge" : "roof"
-    );
+const floresEl = document.getElementById("flores");
+const porCliqueEl = document.getElementById("porClique");
+const autoEl = document.getElementById("auto");
+
+function atualizarHUD() {
+  floresEl.textContent = flores;
+  porCliqueEl.textContent = porClique;
+  autoEl.textContent = auto;
+  document.getElementById("c1").textContent = custoClique;
+  document.getElementById("c2").textContent = custoAuto;
+  document.getElementById("c3").textContent = custoFlor;
+}
+atualizarHUD();
+
+/* Clique no mapa */
+game.onclick = e => {
+  if (e.target.classList.contains("flor")) return;
+  flores += porClique;
+  atualizarHUD();
+};
+
+/* Flores spawn */
+function criarFlor() {
+  if (Math.random() > 0.5) return;
+
+  const flor = document.createElement("img");
+  flor.src = "flor.png";
+  flor.className = "flor";
+
+  flor.style.left = Math.random()*2900+"px";
+  flor.style.top = Math.random()*2900+"px";
+
+  flor.onclick = e => {
+    e.stopPropagation();
+    flores += valorFlor;
+    flor.remove();
+    atualizarHUD();
+  };
+
+  decoracao.appendChild(flor);
+}
+setInterval(criarFlor, 3000);
+
+/* Auto */
+setInterval(()=>{
+  flores += auto;
+  atualizarHUD();
+},1000);
+
+/* Upgrades */
+function uparClique() {
+  if (flores >= custoClique) {
+    flores -= custoClique;
+    porClique++;
+    custoClique *= 2;
+    atualizarHUD();
+  }
+}
+function uparAuto() {
+  if (flores >= custoAuto) {
+    flores -= custoAuto;
+    auto++;
+    custoAuto *= 2;
+    atualizarHUD();
+  }
+}
+function uparFlor() {
+  if (flores >= custoFlor) {
+    flores -= custoFlor;
+    valorFlor += 2;
+    custoFlor *= 2;
+    atualizarHUD();
   }
 }
 
-/* Sombra frontal */
-for (let x = 3; x < 15; x++)
-  tile(bx + x, by + 17, "shadow");
+/* ===== CÂMERA ARRASTÁVEL ===== */
+let camX = 1500, camY = 1500;
+let dragging = false, lastX=0, lastY=0;
 
-/* ===== ARRASTAR CÂMERA ===== */
-let drag = false;
-let sx = 0, sy = 0;
-let cx = 0, cy = 0;
-
-game.addEventListener("mousedown", e => {
-  drag = true;
-  sx = e.clientX;
-  sy = e.clientY;
+game.addEventListener("mousedown", e=>{
+  dragging = true;
+  lastX = e.clientX;
+  lastY = e.clientY;
 });
+window.addEventListener("mouseup", ()=>dragging=false);
 
-window.addEventListener("mouseup", () => drag = false);
+window.addEventListener("mousemove", e=>{
+  if(!dragging) return;
 
-window.addEventListener("mousemove", e => {
-  if (!drag) return;
-  cx += e.clientX - sx;
-  cy += e.clientY - sy;
-  sx = e.clientX;
-  sy = e.clientY;
-  camera.style.transform = `translate(${cx}px, ${cy}px)`;
+  camX -= (e.clientX-lastX);
+  camY -= (e.clientY-lastY);
+
+  lastX=e.clientX;
+  lastY=e.clientY;
+
+  camera.style.transform =
+    `translate(${-camX}px, ${-camY}px)`;
 });
 </script>
+
 </body>
 </html>
