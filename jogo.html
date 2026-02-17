@@ -1,131 +1,420 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <title>Meu jogo</title>
+<meta charset="UTF-8">
+<title>Jardim de Santa Teresinha</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    body {
-      margin: 0;
-      overflow: hidden;
-      background: black;
-    }
+<style>
+/* ======================================================
+   ESTILO GERAL
+====================================================== */
+body {
+  margin: 0;
+  overflow: hidden;
+  font-family: Arial, sans-serif;
+}
 
-    canvas {
-      display: block;
-      image-rendering: pixelated;
-    }
-  </style>
+/* ======================================================
+   TELA DO JOGO
+====================================================== */
+#game {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background: #000;
+}
+
+/* ======================================================
+   CAMERA (MAPA ARRASTÁVEL)
+====================================================== */
+#camera {
+  position: absolute;
+  width: 3000px;
+  height: 3000px;
+  left: 0;
+  top: 0;
+  transform: translate(0px, 0px);
+}
+
+/* ======================================================
+   CANVAS DO MAPA (TILES)
+====================================================== */
+#mapCanvas {
+  position: absolute;
+  left: 0;
+  top: 0;
+  image-rendering: pixelated;
+}
+
+/* ======================================================
+   SANTA NO CENTRO
+====================================================== */
+#santa {
+  position: absolute;
+  width: 120px;
+  left: 1500px;
+  top: 1500px;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* ======================================================
+   FLORES COLETÁVEIS
+====================================================== */
+.flor {
+  position: absolute;
+  width: 40px;
+  cursor: pointer;
+  z-index: 15;
+}
+
+/* ======================================================
+   HUD
+====================================================== */
+#hud {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  background: rgba(255,255,255,0.92);
+  padding: 14px;
+  border-radius: 12px;
+  z-index: 50;
+  min-width: 180px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+}
+
+/* ======================================================
+   UPGRADES
+====================================================== */
+#upgrades {
+  position: fixed;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  z-index: 50;
+}
+
+button {
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  background: #7b4bb7;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+button:hover {
+  background: #5d3494;
+}
+
+button:disabled {
+  background: #aaa;
+  cursor: not-allowed;
+}
+</style>
 </head>
 
 <body>
 
-<canvas id="gameCanvas"></canvas>
+<!-- ======================================================
+     JOGO
+====================================================== -->
+<div id="game">
+  <div id="camera">
+
+    <!-- MAPA EM CANVAS -->
+    <canvas id="mapCanvas" width="3000" height="3000"></canvas>
+
+    <!-- SANTA -->
+    <img src="santa.png" id="santa">
+
+  </div>
+</div>
+
+<!-- ======================================================
+     HUD
+====================================================== -->
+<div id="hud">
+  🌸 Flores: <span id="flores">0</span><br><br>
+  👆 Por clique: <span id="porClique">1</span><br>
+  ⏱ Auto/s: <span id="auto">0</span><br>
+  💎 Valor flor: <span id="valorFlor">3</span>
+</div>
+
+<!-- ======================================================
+     UPGRADES
+====================================================== -->
+<div id="upgrades">
+  <button onclick="uparClique()">
+    Upar Clique (🌸 <span id="c1">10</span>)
+  </button>
+
+  <button onclick="uparAuto()">
+    Upar Auto (🌸 <span id="c2">20</span>)
+  </button>
+
+  <button onclick="uparFlor()">
+    Upar Flor (🌸 <span id="c3">30</span>)
+  </button>
+</div>
 
 <script>
 /* ======================================================
-   CONFIG
+   VARIÁVEIS DO JOGO (SALVAS)
 ====================================================== */
-const canvas = document.getElementById("gameCanvas");
+let flores     = Number(localStorage.getItem("flores")) || 0;
+let porClique  = Number(localStorage.getItem("porClique")) || 1;
+let auto       = Number(localStorage.getItem("auto")) || 0;
+let valorFlor  = Number(localStorage.getItem("valorFlor")) || 3;
+
+let custoClique = 10;
+let custoAuto   = 20;
+let custoFlor   = 30;
+
+/* ======================================================
+   ELEMENTOS HUD
+====================================================== */
+const floresEl     = document.getElementById("flores");
+const porCliqueEl  = document.getElementById("porClique");
+const autoEl       = document.getElementById("auto");
+const valorFlorEl  = document.getElementById("valorFlor");
+
+/* ======================================================
+   CANVAS + TILEMAP
+====================================================== */
+const canvas = document.getElementById("mapCanvas");
 const ctx = canvas.getContext("2d");
 
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-
 const TILE_SIZE = 32;
+const LIB_TILE  = 64;
 
 /* ======================================================
    IMAGENS
 ====================================================== */
-const grass = new Image();
-grass.src = "tiles/ground/grass.png";
+const grassTile = new Image();
+grassTile.src = "tiles/ground/grass.png";
 
-const library = new Image();
-library.src = "tiles/library_tileset.png";
-
-const player = new Image();
-player.src = "personagem.png"; // troque se tiver outro nome
+const libraryTileset = new Image();
+libraryTileset.src = "tiles/library_tileset.png";
 
 /* ======================================================
-   PLAYER
+   FUNÇÃO: SALVAR
 ====================================================== */
-let playerX = 300;
-let playerY = 300;
-let speed = 4;
+function salvar() {
+  localStorage.setItem("flores", flores);
+  localStorage.setItem("porClique", porClique);
+  localStorage.setItem("auto", auto);
+  localStorage.setItem("valorFlor", valorFlor);
+}
 
 /* ======================================================
-   TECLAS
+   ATUALIZAR HUD
 ====================================================== */
-const keys = {};
+function atualizarHUD() {
+  floresEl.textContent = flores;
+  porCliqueEl.textContent = porClique;
+  autoEl.textContent = auto;
+  valorFlorEl.textContent = valorFlor;
 
-window.addEventListener("keydown", (e) => {
-  keys[e.key] = true;
-});
+  document.getElementById("c1").textContent = custoClique;
+  document.getElementById("c2").textContent = custoAuto;
+  document.getElementById("c3").textContent = custoFlor;
 
-window.addEventListener("keyup", (e) => {
-  keys[e.key] = false;
-});
+  salvar();
+}
 
 /* ======================================================
-   MAPA
+   DESENHAR TILE DE GRAMA
 ====================================================== */
-function drawGrass() {
-  for (let y = 0; y < canvas.height; y += TILE_SIZE) {
-    for (let x = 0; x < canvas.width; x += TILE_SIZE) {
-      ctx.drawImage(grass, x, y, TILE_SIZE, TILE_SIZE);
+function desenharGrama() {
+  for (let y = 0; y < 3000; y += TILE_SIZE) {
+    for (let x = 0; x < 3000; x += TILE_SIZE) {
+      ctx.drawImage(grassTile, x, y, TILE_SIZE, TILE_SIZE);
     }
   }
 }
 
 /* ======================================================
-   DESENHAR BIBLIOTECA
+   DESENHAR TILE DA BIBLIOTECA
 ====================================================== */
-function drawLibrary() {
+function drawLibTile(tileX, tileY, mapX, mapY) {
   ctx.drawImage(
-    library,
-    400, 200,     // posição no mapa
-    256, 256      // tamanho na tela
+    libraryTileset,
+    tileX * LIB_TILE,
+    tileY * LIB_TILE,
+    LIB_TILE,
+    LIB_TILE,
+    mapX,
+    mapY,
+    LIB_TILE,
+    LIB_TILE
   );
 }
 
 /* ======================================================
-   PLAYER
+   MONTAR BIBLIOTECA NO CANTO SUPERIOR ESQUERDO
 ====================================================== */
-function drawPlayer() {
-  ctx.drawImage(player, playerX, playerY, 48, 48);
+function desenharBiblioteca() {
+
+  // posição inicial
+  let startX = 150;
+  let startY = 150;
+
+  // telhado
+  drawLibTile(0,0, startX, startY);
+  drawLibTile(1,0, startX+64, startY);
+  drawLibTile(2,0, startX+128, startY);
+
+  // parede
+  drawLibTile(0,2, startX, startY+64);
+  drawLibTile(1,2, startX+64, startY+64);
+  drawLibTile(2,2, startX+128, startY+64);
+
+  // porta central
+  drawLibTile(1,1, startX+64, startY+128);
 }
 
 /* ======================================================
-   UPDATE MOVIMENTO
+   DESENHAR MAPA COMPLETO
 ====================================================== */
-function updatePlayer() {
-  if (keys["ArrowUp"]) playerY -= speed;
-  if (keys["ArrowDown"]) playerY += speed;
-  if (keys["ArrowLeft"]) playerX -= speed;
-  if (keys["ArrowRight"]) playerX += speed;
+function desenharMapa() {
+  ctx.clearRect(0, 0, 3000, 3000);
+
+  desenharGrama();
+  desenharBiblioteca();
 }
 
 /* ======================================================
-   LOOP PRINCIPAL
+   FLORES NO MAPA (SPAWN)
 ====================================================== */
-function gameLoop() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
+const camera = document.getElementById("camera");
 
-  drawGrass();
-  drawLibrary();
+function criarFlor() {
+  if (Math.random() > 0.5) return;
 
-  updatePlayer();
-  drawPlayer();
+  const flor = document.createElement("img");
+  flor.src = "flor.png";
+  flor.className = "flor";
 
-  requestAnimationFrame(gameLoop);
+  flor.style.left = Math.random() * 2900 + "px";
+  flor.style.top  = Math.random() * 2900 + "px";
+
+  flor.onclick = () => {
+    flores += valorFlor;
+    flor.remove();
+    atualizarHUD();
+  };
+
+  camera.appendChild(flor);
+}
+
+setInterval(criarFlor, 2500);
+
+/* ======================================================
+   CLIQUE NO MAPA = GANHA FLORES
+====================================================== */
+document.getElementById("game").addEventListener("click", (e) => {
+  if (e.target.classList.contains("flor")) return;
+  flores += porClique;
+  atualizarHUD();
+});
+
+/* ======================================================
+   AUTO GANHO
+====================================================== */
+setInterval(() => {
+  flores += auto;
+  atualizarHUD();
+}, 1000);
+
+/* ======================================================
+   UPGRADES
+====================================================== */
+function uparClique() {
+  if (flores >= custoClique) {
+    flores -= custoClique;
+    porClique++;
+    custoClique *= 2;
+    atualizarHUD();
+  }
+}
+
+function uparAuto() {
+  if (flores >= custoAuto) {
+    flores -= custoAuto;
+    auto++;
+    custoAuto *= 2;
+    atualizarHUD();
+  }
+}
+
+function uparFlor() {
+  if (flores >= custoFlor) {
+    flores -= custoFlor;
+    valorFlor += 2;
+    custoFlor *= 2;
+    atualizarHUD();
+  }
 }
 
 /* ======================================================
-   INICIAR QUANDO CARREGAR
+   CAMERA ARRASTÁVEL COM MOUSE
 ====================================================== */
-grass.onload = () => {
-  gameLoop();
+let camX = 1200;
+let camY = 1200;
+
+let dragging = false;
+let lastX = 0;
+let lastY = 0;
+
+document.getElementById("game").addEventListener("mousedown", (e) => {
+  dragging = true;
+  lastX = e.clientX;
+  lastY = e.clientY;
+});
+
+document.addEventListener("mouseup", () => {
+  dragging = false;
+});
+
+document.addEventListener("mousemove", (e) => {
+  if (!dragging) return;
+
+  let dx = e.clientX - lastX;
+  let dy = e.clientY - lastY;
+
+  camX -= dx;
+  camY -= dy;
+
+  camX = Math.max(0, Math.min(3000 - window.innerWidth, camX));
+  camY = Math.max(0, Math.min(3000 - window.innerHeight, camY));
+
+  camera.style.transform = `translate(${-camX}px, ${-camY}px)`;
+
+  lastX = e.clientX;
+  lastY = e.clientY;
+});
+
+/* ======================================================
+   INICIAR JOGO
+====================================================== */
+grassTile.onload = () => {
+  desenharMapa();
 };
+
+libraryTileset.onload = () => {
+  desenharMapa();
+};
+
+atualizarHUD();
 </script>
 
 </body>
