@@ -12,38 +12,28 @@ body {
   font-family: Arial, sans-serif;
 }
 
-/* Tela */
 #game {
+  position: relative;
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-  background: #000;
-  position: relative;
+  background: black;
 }
 
-/* Câmera */
 #camera {
   position: absolute;
   width: 3000px;
   height: 3000px;
+  left: 0;
+  top: 0;
 }
 
-/* Camadas */
-.layer {
+canvas {
   position: absolute;
-  width: 3000px;
-  height: 3000px;
+  left: 0;
+  top: 0;
 }
 
-/* Tile */
-.tile {
-  position: absolute;
-  width: 32px;
-  height: 32px;
-  image-rendering: pixelated;
-}
-
-/* Santa */
 #santa {
   position: absolute;
   width: 120px;
@@ -54,26 +44,17 @@ body {
   z-index: 10;
 }
 
-/* Flor */
-.flor {
-  position: absolute;
-  width: 40px;
-  cursor: pointer;
-  z-index: 9;
-}
-
 /* HUD */
 #hud {
   position: fixed;
   top: 20px;
   left: 20px;
-  background: rgba(255,255,255,0.95);
+  background: rgba(255,255,255,0.9);
   padding: 12px;
   border-radius: 10px;
-  z-index: 30;
+  z-index: 20;
 }
 
-/* Upgrades */
 #upgrades {
   position: fixed;
   right: 20px;
@@ -82,7 +63,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  z-index: 30;
+  z-index: 20;
 }
 
 button {
@@ -94,6 +75,10 @@ button {
   font-weight: bold;
   cursor: pointer;
 }
+
+button:disabled {
+  background: #aaa;
+}
 </style>
 </head>
 
@@ -102,29 +87,20 @@ button {
 <div id="game">
   <div id="camera">
 
-    <!-- CHÃO -->
-    <div id="layerChao" class="layer"></div>
+    <!-- Canvas do mapa -->
+    <canvas id="mapCanvas" width="3000" height="3000"></canvas>
 
-    <!-- OBJETOS -->
-    <div id="layerObjetos" class="layer"></div>
-
-    <!-- FLORES -->
-    <div id="layerFlores" class="layer"></div>
-
-    <!-- SANTA -->
+    <!-- Santa -->
     <img src="santa.png" id="santa">
-
   </div>
 </div>
 
-<!-- HUD -->
 <div id="hud">
   🌸 Flores: <span id="flores">0</span><br>
   👆 Por clique: <span id="porClique">1</span><br>
   ⏱ Auto/s: <span id="auto">0</span>
 </div>
 
-<!-- UPGRADES -->
 <div id="upgrades">
   <button onclick="uparClique()">Upar clique (🌸 <span id="c1">10</span>)</button>
   <button onclick="uparAuto()">Upar auto (🌸 <span id="c2">20</span>)</button>
@@ -133,110 +109,112 @@ button {
 
 <script>
 /* ===== VARIÁVEIS ===== */
-let flores = 0;
-let porClique = 1;
-let auto = 0;
-let valorFlor = 3;
+let flores = Number(localStorage.getItem("flores")) || 0;
+let porClique = Number(localStorage.getItem("porClique")) || 1;
+let auto = Number(localStorage.getItem("auto")) || 0;
+let valorFlor = Number(localStorage.getItem("valorFlor")) || 3;
 
 let custoClique = 10;
 let custoAuto = 20;
 let custoFlor = 30;
 
-/* ===== ELEMENTOS ===== */
+/* ===== HUD ===== */
 const floresEl = document.getElementById("flores");
 const porCliqueEl = document.getElementById("porClique");
 const autoEl = document.getElementById("auto");
 
-const game = document.getElementById("game");
-const camera = document.getElementById("camera");
+/* ===== CANVAS ===== */
+const canvas = document.getElementById("mapCanvas");
+const ctx = canvas.getContext("2d");
 
-const layerChao = document.getElementById("layerChao");
-const layerObjetos = document.getElementById("layerObjetos");
-const layerFlores = document.getElementById("layerFlores");
+/* TILE SIZE */
+const TILE = 64;
 
-/* ===== HUD ===== */
+/* ===== IMAGEM DO TILESET ===== */
+const libraryTileset = new Image();
+libraryTileset.src = "tiles/library_tileset.png";
+
+/* ===== DESENHAR TILE ===== */
+function drawTile(tileX, tileY, mapX, mapY) {
+  ctx.drawImage(
+    libraryTileset,
+    tileX * TILE,
+    tileY * TILE,
+    TILE,
+    TILE,
+    mapX * TILE,
+    mapY * TILE,
+    TILE,
+    TILE
+  );
+}
+
+/* ===== DESENHAR MAPA ===== */
+function desenharMapa() {
+  ctx.clearRect(0, 0, 3000, 3000);
+
+  /* FUNDO GRAMA */
+  ctx.fillStyle = "#4fa84f";
+  ctx.fillRect(0, 0, 3000, 3000);
+
+  /* ===== BIBLIOTECA (canto superior esquerdo) ===== */
+
+  // telhado
+  drawTile(0,0, 2,1);
+  drawTile(1,0, 3,1);
+  drawTile(2,0, 4,1);
+
+  // parede esquerda e direita
+  drawTile(0,2, 2,2);
+  drawTile(1,2, 3,2);
+  drawTile(2,2, 4,2);
+
+  // entrada principal (tile central)
+  drawTile(1,1, 3,3);
+
+  // base com grama decorativa
+  drawTile(0,4, 2,4);
+  drawTile(1,4, 3,4);
+  drawTile(2,4, 4,4);
+}
+
+/* Quando carregar imagem, desenha */
+libraryTileset.onload = () => {
+  desenharMapa();
+};
+
+/* ===== SALVAR ===== */
+function salvar() {
+  localStorage.setItem("flores", flores);
+  localStorage.setItem("porClique", porClique);
+  localStorage.setItem("auto", auto);
+  localStorage.setItem("valorFlor", valorFlor);
+}
+
+/* ===== ATUALIZAR HUD ===== */
 function atualizar() {
   floresEl.textContent = flores;
   porCliqueEl.textContent = porClique;
   autoEl.textContent = auto;
-
   document.getElementById("c1").textContent = custoClique;
   document.getElementById("c2").textContent = custoAuto;
   document.getElementById("c3").textContent = custoFlor;
+  salvar();
 }
 
-/* ================================================= */
-/* =============== TILEMAP SIMPLES ================== */
-/* ================================================= */
-
-const tileSize = 32;
-
-/* Criar tile com imagem separada */
-function criarTile(layer, x, y, arquivo) {
-  const tile = document.createElement("img");
-  tile.src = arquivo;
-  tile.className = "tile";
-
-  tile.style.left = x * tileSize + "px";
-  tile.style.top  = y * tileSize + "px";
-
-  layer.appendChild(tile);
-}
-
-/* Gerar mapa inteiro de grama */
-function gerarChao() {
-  const largura = 90;
-  const altura = 90;
-
-  for (let y = 0; y < altura; y++) {
-    for (let x = 0; x < largura; x++) {
-      criarTile(layerChao, x, y, "tiles/ground/grass.png");
-    }
-  }
-}
-
-/* ================================================= */
-/* ================= FLORES ========================= */
-/* ================================================= */
-
-game.addEventListener("click", (e) => {
-  if (e.target.classList.contains("flor")) return;
+/* ===== CLIQUE ===== */
+document.getElementById("game").addEventListener("click", () => {
   flores += porClique;
   atualizar();
 });
 
-/* Criar flor */
-function criarFlor() {
-  if (Math.random() > 0.4) return;
-
-  const flor = document.createElement("img");
-  flor.src = "flor.png";
-  flor.className = "flor";
-
-  flor.style.left = Math.random() * 2800 + "px";
-  flor.style.top = Math.random() * 2800 + "px";
-
-  flor.onclick = () => {
-    flores += valorFlor;
-    flor.remove();
-    atualizar();
-  };
-
-  layerFlores.appendChild(flor);
-}
-
-setInterval(criarFlor, 3000);
-
-/* Auto */
+/* ===== AUTO ===== */
 setInterval(() => {
   flores += auto;
   atualizar();
 }, 1000);
 
-/* ================================================= */
-/* ================= UPGRADES ======================= */
-/* ================================================= */
-
+/* ===== UPGRADES ===== */
 function uparClique() {
   if (flores >= custoClique) {
     flores -= custoClique;
@@ -264,49 +242,42 @@ function uparFlor() {
   }
 }
 
-/* ================================================= */
-/* ================= CAMERA ARRASTAR ================ */
-/* ================================================= */
-
-let camX = 1200;
-let camY = 1200;
+/* ===== CÂMERA ARRASTÁVEL ===== */
+const camera = document.getElementById("camera");
+let camX = 1200, camY = 1200;
 
 let dragging = false;
-let lastX = 0;
-let lastY = 0;
+let lastMouseX = 0;
+let lastMouseY = 0;
 
-game.addEventListener("mousedown", (e) => {
+document.getElementById("game").addEventListener("mousedown", (e) => {
   dragging = true;
-  lastX = e.clientX;
-  lastY = e.clientY;
+  lastMouseX = e.clientX;
+  lastMouseY = e.clientY;
 });
 
-game.addEventListener("mouseup", () => dragging = false);
-game.addEventListener("mouseleave", () => dragging = false);
+document.addEventListener("mouseup", () => {
+  dragging = false;
+});
 
-game.addEventListener("mousemove", (e) => {
+document.addEventListener("mousemove", (e) => {
   if (!dragging) return;
 
-  let dx = e.clientX - lastX;
-  let dy = e.clientY - lastY;
+  let dx = e.clientX - lastMouseX;
+  let dy = e.clientY - lastMouseY;
 
   camX -= dx;
   camY -= dy;
-
-  lastX = e.clientX;
-  lastY = e.clientY;
 
   camX = Math.max(0, Math.min(3000 - window.innerWidth, camX));
   camY = Math.max(0, Math.min(3000 - window.innerHeight, camY));
 
   camera.style.transform = `translate(${-camX}px, ${-camY}px)`;
+
+  lastMouseX = e.clientX;
+  lastMouseY = e.clientY;
 });
 
-/* ================================================= */
-/* ================= START ========================== */
-/* ================================================= */
-
-gerarChao();
 atualizar();
 </script>
 
