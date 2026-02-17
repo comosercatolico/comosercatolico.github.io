@@ -1,284 +1,131 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
-<meta charset="UTF-8">
-<title>Jardim de Santa Teresinha</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <title>Meu jogo</title>
 
-<style>
-body {
-  margin: 0;
-  overflow: hidden;
-  font-family: Arial, sans-serif;
-}
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background: black;
+    }
 
-#game {
-  position: relative;
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden;
-  background: black;
-}
-
-#camera {
-  position: absolute;
-  width: 3000px;
-  height: 3000px;
-  left: 0;
-  top: 0;
-}
-
-canvas {
-  position: absolute;
-  left: 0;
-  top: 0;
-}
-
-#santa {
-  position: absolute;
-  width: 120px;
-  left: 1500px;
-  top: 1500px;
-  transform: translate(-50%, -50%);
-  pointer-events: none;
-  z-index: 10;
-}
-
-/* HUD */
-#hud {
-  position: fixed;
-  top: 20px;
-  left: 20px;
-  background: rgba(255,255,255,0.9);
-  padding: 12px;
-  border-radius: 10px;
-  z-index: 20;
-}
-
-#upgrades {
-  position: fixed;
-  right: 20px;
-  top: 50%;
-  transform: translateY(-50%);
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  z-index: 20;
-}
-
-button {
-  padding: 10px;
-  border: none;
-  border-radius: 8px;
-  background: #7b4bb7;
-  color: white;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-button:disabled {
-  background: #aaa;
-}
-</style>
+    canvas {
+      display: block;
+      image-rendering: pixelated;
+    }
+  </style>
 </head>
 
 <body>
 
-<div id="game">
-  <div id="camera">
-
-    <!-- Canvas do mapa -->
-    <canvas id="mapCanvas" width="3000" height="3000"></canvas>
-
-    <!-- Santa -->
-    <img src="santa.png" id="santa">
-  </div>
-</div>
-
-<div id="hud">
-  🌸 Flores: <span id="flores">0</span><br>
-  👆 Por clique: <span id="porClique">1</span><br>
-  ⏱ Auto/s: <span id="auto">0</span>
-</div>
-
-<div id="upgrades">
-  <button onclick="uparClique()">Upar clique (🌸 <span id="c1">10</span>)</button>
-  <button onclick="uparAuto()">Upar auto (🌸 <span id="c2">20</span>)</button>
-  <button onclick="uparFlor()">Upar flor (🌸 <span id="c3">30</span>)</button>
-</div>
+<canvas id="gameCanvas"></canvas>
 
 <script>
-/* ===== VARIÁVEIS ===== */
-let flores = Number(localStorage.getItem("flores")) || 0;
-let porClique = Number(localStorage.getItem("porClique")) || 1;
-let auto = Number(localStorage.getItem("auto")) || 0;
-let valorFlor = Number(localStorage.getItem("valorFlor")) || 3;
-
-let custoClique = 10;
-let custoAuto = 20;
-let custoFlor = 30;
-
-/* ===== HUD ===== */
-const floresEl = document.getElementById("flores");
-const porCliqueEl = document.getElementById("porClique");
-const autoEl = document.getElementById("auto");
-
-/* ===== CANVAS ===== */
-const canvas = document.getElementById("mapCanvas");
+/* ======================================================
+   CONFIG
+====================================================== */
+const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
-/* TILE SIZE */
-const TILE = 64;
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
 
-/* ===== IMAGEM DO TILESET ===== */
-const libraryTileset = new Image();
-libraryTileset.src = "tiles/library_tileset.png";
+const TILE_SIZE = 32;
 
-/* ===== DESENHAR TILE ===== */
-function drawTile(tileX, tileY, mapX, mapY) {
+/* ======================================================
+   IMAGENS
+====================================================== */
+const grass = new Image();
+grass.src = "tiles/ground/grass.png";
+
+const library = new Image();
+library.src = "tiles/library_tileset.png";
+
+const player = new Image();
+player.src = "personagem.png"; // troque se tiver outro nome
+
+/* ======================================================
+   PLAYER
+====================================================== */
+let playerX = 300;
+let playerY = 300;
+let speed = 4;
+
+/* ======================================================
+   TECLAS
+====================================================== */
+const keys = {};
+
+window.addEventListener("keydown", (e) => {
+  keys[e.key] = true;
+});
+
+window.addEventListener("keyup", (e) => {
+  keys[e.key] = false;
+});
+
+/* ======================================================
+   MAPA
+====================================================== */
+function drawGrass() {
+  for (let y = 0; y < canvas.height; y += TILE_SIZE) {
+    for (let x = 0; x < canvas.width; x += TILE_SIZE) {
+      ctx.drawImage(grass, x, y, TILE_SIZE, TILE_SIZE);
+    }
+  }
+}
+
+/* ======================================================
+   DESENHAR BIBLIOTECA
+====================================================== */
+function drawLibrary() {
   ctx.drawImage(
-    libraryTileset,
-    tileX * TILE,
-    tileY * TILE,
-    TILE,
-    TILE,
-    mapX * TILE,
-    mapY * TILE,
-    TILE,
-    TILE
+    library,
+    400, 200,     // posição no mapa
+    256, 256      // tamanho na tela
   );
 }
 
-/* ===== DESENHAR MAPA ===== */
-function desenharMapa() {
-  ctx.clearRect(0, 0, 3000, 3000);
-
-  /* FUNDO GRAMA */
-  ctx.fillStyle = "#4fa84f";
-  ctx.fillRect(0, 0, 3000, 3000);
-
-  /* ===== BIBLIOTECA (canto superior esquerdo) ===== */
-
-  // telhado
-  drawTile(0,0, 2,1);
-  drawTile(1,0, 3,1);
-  drawTile(2,0, 4,1);
-
-  // parede esquerda e direita
-  drawTile(0,2, 2,2);
-  drawTile(1,2, 3,2);
-  drawTile(2,2, 4,2);
-
-  // entrada principal (tile central)
-  drawTile(1,1, 3,3);
-
-  // base com grama decorativa
-  drawTile(0,4, 2,4);
-  drawTile(1,4, 3,4);
-  drawTile(2,4, 4,4);
+/* ======================================================
+   PLAYER
+====================================================== */
+function drawPlayer() {
+  ctx.drawImage(player, playerX, playerY, 48, 48);
 }
 
-/* Quando carregar imagem, desenha */
-libraryTileset.onload = () => {
-  desenharMapa();
+/* ======================================================
+   UPDATE MOVIMENTO
+====================================================== */
+function updatePlayer() {
+  if (keys["ArrowUp"]) playerY -= speed;
+  if (keys["ArrowDown"]) playerY += speed;
+  if (keys["ArrowLeft"]) playerX -= speed;
+  if (keys["ArrowRight"]) playerX += speed;
+}
+
+/* ======================================================
+   LOOP PRINCIPAL
+====================================================== */
+function gameLoop() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  drawGrass();
+  drawLibrary();
+
+  updatePlayer();
+  drawPlayer();
+
+  requestAnimationFrame(gameLoop);
+}
+
+/* ======================================================
+   INICIAR QUANDO CARREGAR
+====================================================== */
+grass.onload = () => {
+  gameLoop();
 };
-
-/* ===== SALVAR ===== */
-function salvar() {
-  localStorage.setItem("flores", flores);
-  localStorage.setItem("porClique", porClique);
-  localStorage.setItem("auto", auto);
-  localStorage.setItem("valorFlor", valorFlor);
-}
-
-/* ===== ATUALIZAR HUD ===== */
-function atualizar() {
-  floresEl.textContent = flores;
-  porCliqueEl.textContent = porClique;
-  autoEl.textContent = auto;
-  document.getElementById("c1").textContent = custoClique;
-  document.getElementById("c2").textContent = custoAuto;
-  document.getElementById("c3").textContent = custoFlor;
-  salvar();
-}
-
-/* ===== CLIQUE ===== */
-document.getElementById("game").addEventListener("click", () => {
-  flores += porClique;
-  atualizar();
-});
-
-/* ===== AUTO ===== */
-setInterval(() => {
-  flores += auto;
-  atualizar();
-}, 1000);
-
-/* ===== UPGRADES ===== */
-function uparClique() {
-  if (flores >= custoClique) {
-    flores -= custoClique;
-    porClique++;
-    custoClique *= 2;
-    atualizar();
-  }
-}
-
-function uparAuto() {
-  if (flores >= custoAuto) {
-    flores -= custoAuto;
-    auto++;
-    custoAuto *= 2;
-    atualizar();
-  }
-}
-
-function uparFlor() {
-  if (flores >= custoFlor) {
-    flores -= custoFlor;
-    valorFlor += 2;
-    custoFlor *= 2;
-    atualizar();
-  }
-}
-
-/* ===== CÂMERA ARRASTÁVEL ===== */
-const camera = document.getElementById("camera");
-let camX = 1200, camY = 1200;
-
-let dragging = false;
-let lastMouseX = 0;
-let lastMouseY = 0;
-
-document.getElementById("game").addEventListener("mousedown", (e) => {
-  dragging = true;
-  lastMouseX = e.clientX;
-  lastMouseY = e.clientY;
-});
-
-document.addEventListener("mouseup", () => {
-  dragging = false;
-});
-
-document.addEventListener("mousemove", (e) => {
-  if (!dragging) return;
-
-  let dx = e.clientX - lastMouseX;
-  let dy = e.clientY - lastMouseY;
-
-  camX -= dx;
-  camY -= dy;
-
-  camX = Math.max(0, Math.min(3000 - window.innerWidth, camX));
-  camY = Math.max(0, Math.min(3000 - window.innerHeight, camY));
-
-  camera.style.transform = `translate(${-camX}px, ${-camY}px)`;
-
-  lastMouseX = e.clientX;
-  lastMouseY = e.clientY;
-});
-
-atualizar();
 </script>
 
 </body>
