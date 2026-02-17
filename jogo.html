@@ -2,103 +2,31 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>Jardim de Santa Teresinha</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jardim Zelda Style</title>
 
 <style>
-body {
-  margin: 0;
-  overflow: hidden;
-  font-family: Arial, sans-serif;
-}
+body { margin:0; overflow:hidden; }
 
 #game {
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden;
-  cursor: grab;
+  width:100vw;
+  height:100vh;
+  overflow:hidden;
+  cursor:grab;
+  background:#69b34c;
 }
-#game:active { cursor: grabbing; }
+#game:active { cursor:grabbing; }
 
-/* ===== CAMERA ===== */
 #camera {
-  position: absolute;
-  width: 3000px;
-  height: 3000px;
+  position:absolute;
+  width:4000px;
+  height:4000px;
 }
 
-/* ===== CAMADAS ===== */
-.layer {
-  position: absolute;
-  width: 3000px;
-  height: 3000px;
-}
-
-#chao        { z-index: 1; }
-#decoracao   { z-index: 2; }
-#objetos     { z-index: 3; }
-#personagens { z-index: 4; }
-#efeitos     { z-index: 5; }
-
-/* ===== TILE SPRITE ===== */
-.tile {
-  position: absolute;
-  width: 32px;
-  height: 32px;
-
-  background-image: url("tileset.png");
-  image-rendering: pixelated;
-}
-
-/* ===== FLORES ===== */
-.flor {
-  position: absolute;
-  width: 24px;
-  cursor: pointer;
-}
-
-/* ===== SANTA ===== */
-#santa {
-  position: absolute;
-  width: 64px;
-  left: 1500px;
-  top: 1500px;
-  transform: translate(-50%, -50%);
-  pointer-events: none;
-  z-index: 10;
-}
-
-/* ===== HUD ===== */
-#hud {
-  position: fixed;
-  top: 20px;
-  left: 20px;
-  background: rgba(255,255,255,0.92);
-  padding: 12px;
-  border-radius: 10px;
-  z-index: 100;
-}
-
-/* ===== UPGRADES ===== */
-#upgrades {
-  position: fixed;
-  right: 20px;
-  top: 50%;
-  transform: translateY(-50%);
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  z-index: 100;
-}
-
-button {
-  padding: 10px;
-  border: none;
-  border-radius: 8px;
-  background: #7b4bb7;
-  color: white;
-  font-weight: bold;
-  cursor: pointer;
+/* ===== OBJETOS ===== */
+.sprite {
+  position:absolute;
+  background-image:url("tileset.png");
+  image-rendering:pixelated;
 }
 </style>
 </head>
@@ -106,220 +34,71 @@ button {
 <body>
 
 <div id="game">
-  <div id="camera">
-
-    <!-- CAMADAS -->
-    <div id="chao" class="layer"></div>
-    <div id="decoracao" class="layer"></div>
-    <div id="objetos" class="layer"></div>
-    <div id="personagens" class="layer"></div>
-    <div id="efeitos" class="layer"></div>
-
-    <!-- PERSONAGEM -->
-    <img src="santa.png" id="santa">
-
-  </div>
-</div>
-
-<!-- HUD -->
-<div id="hud">
-  🌸 Flores: <span id="flores">0</span><br>
-  👆 Por clique: <span id="porClique">1</span><br>
-  ⏱ Auto/s: <span id="auto">0</span>
-</div>
-
-<!-- UPGRADES -->
-<div id="upgrades">
-  <button onclick="uparClique()">Upar clique (🌸 <span id="c1">10</span>)</button>
-  <button onclick="uparAuto()">Upar auto (🌸 <span id="c2">20</span>)</button>
-  <button onclick="uparFlor()">Upar flor (🌸 <span id="c3">30</span>)</button>
+  <div id="camera"></div>
 </div>
 
 <script>
-/* =======================================================
-   CONFIG TILESET
-======================================================= */
-const TILE = 32;
-const MAP_W = 90;
-const MAP_H = 90;
+const camera = document.getElementById("camera");
 
-const chao = document.getElementById("chao");
-const decoracao = document.getElementById("decoracao");
-const objetos = document.getElementById("objetos");
+/* ===== FUNÇÃO SPRITE ===== */
+function criarSprite(x, y, sx, sy, w, h) {
+  const obj = document.createElement("div");
+  obj.className = "sprite";
 
-/* =======================================================
-   FUNÇÃO TILE SPRITE
-======================================================= */
-function criarTile(x, y, tileX, tileY, layer) {
-  const tile = document.createElement("div");
-  tile.className = "tile";
+  obj.style.left = x + "px";
+  obj.style.top  = y + "px";
 
-  tile.style.left = x * TILE + "px";
-  tile.style.top  = y * TILE + "px";
+  obj.style.width  = w + "px";
+  obj.style.height = h + "px";
 
-  tile.style.backgroundPosition =
-    `-${tileX * TILE}px -${tileY * TILE}px`;
+  obj.style.backgroundPosition = `-${sx}px -${sy}px`;
 
-  layer.appendChild(tile);
+  camera.appendChild(obj);
 }
 
-/* =======================================================
-   MAPA CHÃO (GRAMA REAL)
-======================================================= */
-function renderChao() {
-  for (let y = 0; y < MAP_H; y++) {
-    for (let x = 0; x < MAP_W; x++) {
+/* ===== ADICIONANDO OBJETOS ===== */
 
-      // Tile grama (0,0)
-      criarTile(x, y, 0, 0, chao);
+/* Casa/Biblioteca grande */
+criarSprite(
+  1400, 1200,
+  250, 250,
+  520, 280
+);
 
-    }
-  }
-}
-renderChao();
+/* Árvore grande */
+criarSprite(
+  600, 900,
+  760, 560,
+  250, 250
+);
 
-/* =======================================================
-   BIBLIOTECA SPRITE ZELDA (CANTO SUPERIOR)
-======================================================= */
-function construirBiblioteca(tx, ty) {
+/* Lago */
+criarSprite(
+  900, 1600,
+  0, 860,
+  280, 180
+);
 
-  // Layout simples mas detalhado
-  const layout = [
-    [6,4],[7,4],[8,4],[9,4],[10,4],
-    [6,5],[7,5],[8,5],[9,5],[10,5],
-    [6,6],[7,6],[8,6],[9,6],[10,6],
-  ];
+/* ===== CÂMERA ARRASTÁVEL ===== */
+let camX=1200, camY=1200;
+let dragging=false, lastX=0, lastY=0;
 
-  // Telhado
-  criarTile(tx+1, ty, 6, 2, objetos);
-  criarTile(tx+2, ty, 7, 2, objetos);
-  criarTile(tx+3, ty, 8, 2, objetos);
-
-  // Parede
-  criarTile(tx+1, ty+1, 6, 3, objetos);
-  criarTile(tx+2, ty+1, 7, 3, objetos);
-  criarTile(tx+3, ty+1, 8, 3, objetos);
-
-  // Janelas
-  criarTile(tx+1, ty+2, 5, 5, objetos);
-  criarTile(tx+3, ty+2, 5, 5, objetos);
-
-  // Porta
-  criarTile(tx+2, ty+3, 6, 6, objetos);
-}
-
-construirBiblioteca(2, 2);
-
-/* =======================================================
-   SISTEMA CLICKER ORIGINAL
-======================================================= */
-let flores = 0;
-let porClique = 1;
-let auto = 0;
-let valorFlor = 3;
-
-let custoClique = 10;
-let custoAuto = 20;
-let custoFlor = 30;
-
-const floresEl = document.getElementById("flores");
-const porCliqueEl = document.getElementById("porClique");
-const autoEl = document.getElementById("auto");
-
-function atualizarHUD() {
-  floresEl.textContent = flores;
-  porCliqueEl.textContent = porClique;
-  autoEl.textContent = auto;
-  document.getElementById("c1").textContent = custoClique;
-  document.getElementById("c2").textContent = custoAuto;
-  document.getElementById("c3").textContent = custoFlor;
-}
-atualizarHUD();
-
-/* Clique no mapa */
-game.onclick = e => {
-  if (e.target.classList.contains("flor")) return;
-  flores += porClique;
-  atualizarHUD();
-};
-
-/* Flores spawn */
-function criarFlor() {
-  if (Math.random() > 0.55) return;
-
-  const flor = document.createElement("img");
-  flor.src = "flor.png";
-  flor.className = "flor";
-
-  flor.style.left = Math.random() * 2800 + "px";
-  flor.style.top  = Math.random() * 2800 + "px";
-
-  flor.onclick = e => {
-    e.stopPropagation();
-    flores += valorFlor;
-    flor.remove();
-    atualizarHUD();
-  };
-
-  decoracao.appendChild(flor);
-}
-setInterval(criarFlor, 2500);
-
-/* Auto */
-setInterval(() => {
-  flores += auto;
-  atualizarHUD();
-}, 1000);
-
-/* Upgrades */
-function uparClique() {
-  if (flores >= custoClique) {
-    flores -= custoClique;
-    porClique++;
-    custoClique *= 2;
-    atualizarHUD();
-  }
-}
-function uparAuto() {
-  if (flores >= custoAuto) {
-    flores -= custoAuto;
-    auto++;
-    custoAuto *= 2;
-    atualizarHUD();
-  }
-}
-function uparFlor() {
-  if (flores >= custoFlor) {
-    flores -= custoFlor;
-    valorFlor += 2;
-    custoFlor *= 2;
-    atualizarHUD();
-  }
-}
-
-/* =======================================================
-   CÂMERA ARRASTÁVEL
-======================================================= */
-let camX = 1400, camY = 1400;
-let dragging = false;
-let lastX = 0, lastY = 0;
-
-game.addEventListener("mousedown", e => {
-  dragging = true;
-  lastX = e.clientX;
-  lastY = e.clientY;
+game.addEventListener("mousedown", e=>{
+  dragging=true;
+  lastX=e.clientX;
+  lastY=e.clientY;
 });
 
-window.addEventListener("mouseup", () => dragging = false);
+window.addEventListener("mouseup", ()=>dragging=false);
 
-window.addEventListener("mousemove", e => {
-  if (!dragging) return;
+window.addEventListener("mousemove", e=>{
+  if(!dragging) return;
 
-  camX -= (e.clientX - lastX);
-  camY -= (e.clientY - lastY);
+  camX -= (e.clientX-lastX);
+  camY -= (e.clientY-lastY);
 
-  lastX = e.clientX;
-  lastY = e.clientY;
+  lastX=e.clientX;
+  lastY=e.clientY;
 
   camera.style.transform =
     `translate(${-camX}px, ${-camY}px)`;
