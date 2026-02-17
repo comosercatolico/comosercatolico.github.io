@@ -17,7 +17,7 @@ body {
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-  background: black;
+  background: #000;
   position: relative;
 }
 
@@ -26,8 +26,6 @@ body {
   position: absolute;
   width: 3000px;
   height: 3000px;
-  left: 0;
-  top: 0;
 }
 
 /* Camadas */
@@ -37,7 +35,7 @@ body {
   height: 3000px;
 }
 
-/* Tiles */
+/* Tile */
 .tile {
   position: absolute;
   width: 32px;
@@ -96,10 +94,6 @@ button {
   font-weight: bold;
   cursor: pointer;
 }
-
-button:disabled {
-  background: #aaa;
-}
 </style>
 </head>
 
@@ -110,9 +104,6 @@ button:disabled {
 
     <!-- CHÃO -->
     <div id="layerChao" class="layer"></div>
-
-    <!-- DECORAÇÃO -->
-    <div id="layerDecor" class="layer"></div>
 
     <!-- OBJETOS -->
     <div id="layerObjetos" class="layer"></div>
@@ -142,10 +133,10 @@ button:disabled {
 
 <script>
 /* ===== VARIÁVEIS ===== */
-let flores = Number(localStorage.getItem("flores")) || 0;
-let porClique = Number(localStorage.getItem("porClique")) || 1;
-let auto = Number(localStorage.getItem("auto")) || 0;
-let valorFlor = Number(localStorage.getItem("valorFlor")) || 3;
+let flores = 0;
+let porClique = 1;
+let auto = 0;
+let valorFlor = 3;
 
 let custoClique = 10;
 let custoAuto = 20;
@@ -163,90 +154,49 @@ const layerChao = document.getElementById("layerChao");
 const layerObjetos = document.getElementById("layerObjetos");
 const layerFlores = document.getElementById("layerFlores");
 
-/* ===== SALVAR ===== */
-function salvar() {
-  localStorage.setItem("flores", flores);
-  localStorage.setItem("porClique", porClique);
-  localStorage.setItem("auto", auto);
-  localStorage.setItem("valorFlor", valorFlor);
-}
-
 /* ===== HUD ===== */
 function atualizar() {
   floresEl.textContent = flores;
   porCliqueEl.textContent = porClique;
   autoEl.textContent = auto;
+
   document.getElementById("c1").textContent = custoClique;
   document.getElementById("c2").textContent = custoAuto;
   document.getElementById("c3").textContent = custoFlor;
-  salvar();
 }
 
 /* ================================================= */
-/* =============== TILE ENGINE REAL ================= */
+/* =============== TILEMAP SIMPLES ================== */
 /* ================================================= */
 
 const tileSize = 32;
 
-/* Criar tile */
-function criarTile(layer, tileX, tileY, sheet, sx, sy) {
-  const tile = document.createElement("div");
+/* Criar tile com imagem separada */
+function criarTile(layer, x, y, arquivo) {
+  const tile = document.createElement("img");
+  tile.src = arquivo;
   tile.className = "tile";
 
-  tile.style.left = tileX * tileSize + "px";
-  tile.style.top = tileY * tileSize + "px";
-
-  tile.style.backgroundImage = `url(${sheet})`;
-  tile.style.backgroundPosition = `-${sx}px -${sy}px`;
-  tile.style.backgroundSize = "256px 256px";
+  tile.style.left = x * tileSize + "px";
+  tile.style.top  = y * tileSize + "px";
 
   layer.appendChild(tile);
 }
 
-/* MAPA GRAMA */
+/* Gerar mapa inteiro de grama */
 function gerarChao() {
-  const largura = 80;
-  const altura = 80;
+  const largura = 90;
+  const altura = 90;
 
   for (let y = 0; y < altura; y++) {
     for (let x = 0; x < largura; x++) {
-
-      // Tile grama (posição 0,0)
-      criarTile(layerChao, x, y,
-        "tiles/ground_tiles.png",
-        0, 0
-      );
+      criarTile(layerChao, x, y, "tiles/ground/grass.png");
     }
   }
 }
 
-/* Biblioteca decorativa */
-function colocarBiblioteca() {
-
-  // Biblioteca grande (tile exemplo)
-  criarTile(layerObjetos, 3, 3,
-    "tiles/objects_tiles.png",
-    0, 0
-  );
-
-  criarTile(layerObjetos, 4, 3,
-    "tiles/objects_tiles.png",
-    32, 0
-  );
-
-  criarTile(layerObjetos, 3, 4,
-    "tiles/objects_tiles.png",
-    0, 32
-  );
-
-  criarTile(layerObjetos, 4, 4,
-    "tiles/objects_tiles.png",
-    32, 32
-  );
-}
-
 /* ================================================= */
-/* =============== FLORES CLICK ===================== */
+/* ================= FLORES ========================= */
 /* ================================================= */
 
 game.addEventListener("click", (e) => {
@@ -315,7 +265,7 @@ function uparFlor() {
 }
 
 /* ================================================= */
-/* ================= CAMERA DRAG ==================== */
+/* ================= CAMERA ARRASTAR ================ */
 /* ================================================= */
 
 let camX = 1200;
@@ -357,7 +307,6 @@ game.addEventListener("mousemove", (e) => {
 /* ================================================= */
 
 gerarChao();
-colocarBiblioteca();
 atualizar();
 </script>
 
