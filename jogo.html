@@ -12,60 +12,51 @@ body {
   font-family: Arial, sans-serif;
 }
 
-/* ===== TELA ===== */
+/* Tela */
 #game {
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-  cursor: grab;
+  background: black;
+  position: relative;
 }
 
-#game:active {
-  cursor: grabbing;
-}
-
-/* ===== CÂMERA ===== */
+/* Câmera */
 #camera {
   position: absolute;
-  width: 4000px;
-  height: 4000px;
+  width: 3000px;
+  height: 3000px;
+  left: 0;
+  top: 0;
 }
 
-/* ===== CAMADAS ===== */
+/* Camadas */
 .layer {
   position: absolute;
-  width: 4000px;
-  height: 4000px;
+  width: 3000px;
+  height: 3000px;
 }
 
-/* ===== TILE ===== */
+/* Tiles */
 .tile {
   position: absolute;
   width: 32px;
   height: 32px;
-  background-image: url("ground_tiles.png");
   image-rendering: pixelated;
 }
 
-/* ===== OBJETOS GRANDES ===== */
-.objeto {
-  position: absolute;
-  background-image: url("objects_tiles.png");
-  image-rendering: pixelated;
-}
-
-/* ===== PERSONAGEM ===== */
+/* Santa */
 #santa {
   position: absolute;
   width: 120px;
-  left: 2000px;
-  top: 2000px;
+  left: 1500px;
+  top: 1500px;
   transform: translate(-50%, -50%);
-  z-index: 10;
   pointer-events: none;
+  z-index: 10;
 }
 
-/* ===== FLOR ===== */
+/* Flor */
 .flor {
   position: absolute;
   width: 40px;
@@ -73,18 +64,18 @@ body {
   z-index: 9;
 }
 
-/* ===== HUD ===== */
+/* HUD */
 #hud {
   position: fixed;
   top: 20px;
   left: 20px;
-  background: rgba(255,255,255,0.9);
+  background: rgba(255,255,255,0.95);
   padding: 12px;
   border-radius: 10px;
   z-index: 30;
 }
 
-/* ===== UPGRADES ===== */
+/* Upgrades */
 #upgrades {
   position: fixed;
   right: 20px;
@@ -114,29 +105,35 @@ button:disabled {
 
 <body>
 
-<!-- ===== JOGO ===== -->
 <div id="game">
   <div id="camera">
 
-    <!-- Camadas -->
-    <div id="chao" class="layer"></div>
-    <div id="decoracao" class="layer"></div>
-    <div id="objetos" class="layer"></div>
+    <!-- CHÃO -->
+    <div id="layerChao" class="layer"></div>
 
-    <!-- Santa -->
+    <!-- DECORAÇÃO -->
+    <div id="layerDecor" class="layer"></div>
+
+    <!-- OBJETOS -->
+    <div id="layerObjetos" class="layer"></div>
+
+    <!-- FLORES -->
+    <div id="layerFlores" class="layer"></div>
+
+    <!-- SANTA -->
     <img src="santa.png" id="santa">
 
   </div>
 </div>
 
-<!-- ===== HUD ===== -->
+<!-- HUD -->
 <div id="hud">
   🌸 Flores: <span id="flores">0</span><br>
   👆 Por clique: <span id="porClique">1</span><br>
   ⏱ Auto/s: <span id="auto">0</span>
 </div>
 
-<!-- ===== UPGRADES ===== -->
+<!-- UPGRADES -->
 <div id="upgrades">
   <button onclick="uparClique()">Upar clique (🌸 <span id="c1">10</span>)</button>
   <button onclick="uparAuto()">Upar auto (🌸 <span id="c2">20</span>)</button>
@@ -144,91 +141,7 @@ button:disabled {
 </div>
 
 <script>
-/* ============================= */
-/* ===== CONFIG TILEMAP ======== */
-/* ============================= */
-
-const TILE = 32;
-const MAP_W = 80;
-const MAP_H = 80;
-
-/* Camadas */
-const chao = document.getElementById("chao");
-const decoracao = document.getElementById("decoracao");
-const objetos = document.getElementById("objetos");
-
-/* ============================= */
-/* ===== FUNÇÕES TILE ========= */
-/* ============================= */
-
-function criarTile(x, y, tileX, tileY) {
-  const tile = document.createElement("div");
-  tile.className = "tile";
-
-  tile.style.left = x * TILE + "px";
-  tile.style.top  = y * TILE + "px";
-
-  tile.style.backgroundPosition =
-    `-${tileX * TILE}px -${tileY * TILE}px`;
-
-  chao.appendChild(tile);
-}
-
-/* Caminho em cruz */
-function criarCaminhoCruz() {
-  for (let i = 20; i < 60; i++) {
-    criarTile(i, 40, 1, 0);
-    criarTile(40, i, 1, 0);
-  }
-}
-
-/* Gerar grama */
-function gerarMapa() {
-  for (let y = 0; y < MAP_H; y++) {
-    for (let x = 0; x < MAP_W; x++) {
-
-      // Tile (0,0) = grama centro
-      criarTile(x, y, 0, 0);
-
-    }
-  }
-
-  criarCaminhoCruz();
-}
-
-gerarMapa();
-
-/* ============================= */
-/* ===== OBJETOS GRANDES ======= */
-/* ============================= */
-
-function criarObjeto(px, py, sx, sy, w, h) {
-  const obj = document.createElement("div");
-  obj.className = "objeto";
-
-  obj.style.left = px + "px";
-  obj.style.top  = py + "px";
-
-  obj.style.width  = w + "px";
-  obj.style.height = h + "px";
-
-  obj.style.backgroundPosition =
-    `-${sx}px -${sy}px`;
-
-  objetos.appendChild(obj);
-}
-
-/* Biblioteca decorativa */
-criarObjeto(
-  200, 100,
-  0, 0,
-  320, 220
-);
-
-/* ============================= */
-/* ===== CLICKER / FLORES ====== */
-/* ============================= */
-
+/* ===== VARIÁVEIS ===== */
 let flores = Number(localStorage.getItem("flores")) || 0;
 let porClique = Number(localStorage.getItem("porClique")) || 1;
 let auto = Number(localStorage.getItem("auto")) || 0;
@@ -238,10 +151,19 @@ let custoClique = 10;
 let custoAuto = 20;
 let custoFlor = 30;
 
+/* ===== ELEMENTOS ===== */
 const floresEl = document.getElementById("flores");
 const porCliqueEl = document.getElementById("porClique");
 const autoEl = document.getElementById("auto");
 
+const game = document.getElementById("game");
+const camera = document.getElementById("camera");
+
+const layerChao = document.getElementById("layerChao");
+const layerObjetos = document.getElementById("layerObjetos");
+const layerFlores = document.getElementById("layerFlores");
+
+/* ===== SALVAR ===== */
 function salvar() {
   localStorage.setItem("flores", flores);
   localStorage.setItem("porClique", porClique);
@@ -249,26 +171,91 @@ function salvar() {
   localStorage.setItem("valorFlor", valorFlor);
 }
 
+/* ===== HUD ===== */
 function atualizar() {
   floresEl.textContent = flores;
   porCliqueEl.textContent = porClique;
   autoEl.textContent = auto;
-
   document.getElementById("c1").textContent = custoClique;
   document.getElementById("c2").textContent = custoAuto;
   document.getElementById("c3").textContent = custoFlor;
-
   salvar();
 }
 
-/* Clique normal */
+/* ================================================= */
+/* =============== TILE ENGINE REAL ================= */
+/* ================================================= */
+
+const tileSize = 32;
+
+/* Criar tile */
+function criarTile(layer, tileX, tileY, sheet, sx, sy) {
+  const tile = document.createElement("div");
+  tile.className = "tile";
+
+  tile.style.left = tileX * tileSize + "px";
+  tile.style.top = tileY * tileSize + "px";
+
+  tile.style.backgroundImage = `url(${sheet})`;
+  tile.style.backgroundPosition = `-${sx}px -${sy}px`;
+  tile.style.backgroundSize = "256px 256px";
+
+  layer.appendChild(tile);
+}
+
+/* MAPA GRAMA */
+function gerarChao() {
+  const largura = 80;
+  const altura = 80;
+
+  for (let y = 0; y < altura; y++) {
+    for (let x = 0; x < largura; x++) {
+
+      // Tile grama (posição 0,0)
+      criarTile(layerChao, x, y,
+        "tiles/ground_tiles.png",
+        0, 0
+      );
+    }
+  }
+}
+
+/* Biblioteca decorativa */
+function colocarBiblioteca() {
+
+  // Biblioteca grande (tile exemplo)
+  criarTile(layerObjetos, 3, 3,
+    "tiles/objects_tiles.png",
+    0, 0
+  );
+
+  criarTile(layerObjetos, 4, 3,
+    "tiles/objects_tiles.png",
+    32, 0
+  );
+
+  criarTile(layerObjetos, 3, 4,
+    "tiles/objects_tiles.png",
+    0, 32
+  );
+
+  criarTile(layerObjetos, 4, 4,
+    "tiles/objects_tiles.png",
+    32, 32
+  );
+}
+
+/* ================================================= */
+/* =============== FLORES CLICK ===================== */
+/* ================================================= */
+
 game.addEventListener("click", (e) => {
   if (e.target.classList.contains("flor")) return;
   flores += porClique;
   atualizar();
 });
 
-/* Criar flores no mapa */
+/* Criar flor */
 function criarFlor() {
   if (Math.random() > 0.4) return;
 
@@ -276,8 +263,8 @@ function criarFlor() {
   flor.src = "flor.png";
   flor.className = "flor";
 
-  flor.style.left = Math.random() * 3800 + "px";
-  flor.style.top = Math.random() * 3800 + "px";
+  flor.style.left = Math.random() * 2800 + "px";
+  flor.style.top = Math.random() * 2800 + "px";
 
   flor.onclick = () => {
     flores += valorFlor;
@@ -285,10 +272,10 @@ function criarFlor() {
     atualizar();
   };
 
-  decoracao.appendChild(flor);
+  layerFlores.appendChild(flor);
 }
 
-setInterval(criarFlor, 2500);
+setInterval(criarFlor, 3000);
 
 /* Auto */
 setInterval(() => {
@@ -296,7 +283,10 @@ setInterval(() => {
   atualizar();
 }, 1000);
 
-/* Upgrades */
+/* ================================================= */
+/* ================= UPGRADES ======================= */
+/* ================================================= */
+
 function uparClique() {
   if (flores >= custoClique) {
     flores -= custoClique;
@@ -324,12 +314,12 @@ function uparFlor() {
   }
 }
 
-/* ============================= */
-/* ===== CÂMERA ARRASTÁVEL ===== */
-/* ============================= */
+/* ================================================= */
+/* ================= CAMERA DRAG ==================== */
+/* ================================================= */
 
-let camX = 1500;
-let camY = 1500;
+let camX = 1200;
+let camY = 1200;
 
 let dragging = false;
 let lastX = 0;
@@ -341,23 +331,33 @@ game.addEventListener("mousedown", (e) => {
   lastY = e.clientY;
 });
 
-window.addEventListener("mouseup", () => {
-  dragging = false;
-});
+game.addEventListener("mouseup", () => dragging = false);
+game.addEventListener("mouseleave", () => dragging = false);
 
-window.addEventListener("mousemove", (e) => {
+game.addEventListener("mousemove", (e) => {
   if (!dragging) return;
 
-  camX -= (e.clientX - lastX);
-  camY -= (e.clientY - lastY);
+  let dx = e.clientX - lastX;
+  let dy = e.clientY - lastY;
+
+  camX -= dx;
+  camY -= dy;
 
   lastX = e.clientX;
   lastY = e.clientY;
 
-  camera.style.transform =
-    `translate(${-camX}px, ${-camY}px)`;
+  camX = Math.max(0, Math.min(3000 - window.innerWidth, camX));
+  camY = Math.max(0, Math.min(3000 - window.innerHeight, camY));
+
+  camera.style.transform = `translate(${-camX}px, ${-camY}px)`;
 });
 
+/* ================================================= */
+/* ================= START ========================== */
+/* ================================================= */
+
+gerarChao();
+colocarBiblioteca();
 atualizar();
 </script>
 
