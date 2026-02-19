@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
 <meta charset="UTF-8">
-<title>Santa Teresinha Idle</title>
+<title>Jogo Santa Terezinha</title>
 
 <style>
 
@@ -15,152 +15,125 @@ body{
 canvas{
     display:block;
     margin:auto;
-    background:black;
-    image-rendering:pixelated;
+    image-rendering: pixelated;
+}
+
+#ui{
+    position:absolute;
+    top:10px;
+    left:10px;
+    color:white;
+    font-size:24px;
+    font-family:Arial;
 }
 
 </style>
+
 </head>
 <body>
 
-<canvas id="game"></canvas>
+<div id="ui">
+Pontos: <span id="pontos">0</span>
+</div>
+
+<canvas id="gameCanvas" width="960" height="540"></canvas>
 
 <script>
 
-// ==============================
-// CONFIGURAÇÃO
-// ==============================
+// =============================
+// CONFIG
+// =============================
 
-const TILE = 32;
-
-const MAP_WIDTH = 40;
-const MAP_HEIGHT = 25;
-
-const canvas = document.getElementById("game");
+const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
-
-canvas.width = MAP_WIDTH * TILE;
-canvas.height = MAP_HEIGHT * TILE;
 
 ctx.imageSmoothingEnabled = false;
 
+const TILE = 64;
 
-// ==============================
+
+// =============================
+// PONTOS
+// =============================
+
+let pontos = 0;
+
+function atualizarUI(){
+    document.getElementById("pontos").innerText =
+        Math.floor(pontos);
+}
+
+
+// pontos automáticos (idle)
+setInterval(()=>{
+    pontos += 1;
+    atualizarUI();
+},1000);
+
+
+// =============================
 // IMAGENS
-// ==============================
+// =============================
 
-const imagens = {
+const grama = new Image();
+grama.src = "grama.png";
 
-    grama: new Image(),
-    biblioteca: new Image(),
-    mesa: new Image(),
-    cadeira: new Image(),
-    flor: new Image()
-
-};
-
-imagens.grama.src = "grama.png";
-imagens.biblioteca.src = "biblioteca.png";
-imagens.mesa.src = "mesa.png";
-imagens.cadeira.src = "cadeira.png";
-imagens.flor.src = "flor.png";
+const biblioteca = new Image();
+biblioteca.src = "biblioteca.png";
 
 
-// ==============================
-// OBJETOS DO MAPA
-// ==============================
+// =============================
+// POSIÇÕES
+// =============================
 
-const objetos = [
+let bibliotecaX = canvas.width/2 - 128;
+let bibliotecaY = canvas.height/2 - 128;
 
-    // biblioteca
-    {
-        tipo:"biblioteca",
-        x:5,
-        y:3,
-        largura:6,
-        altura:6
-    },
-
-    // mesa
-    {
-        tipo:"mesa",
-        x:18,
-        y:10,
-        largura:2,
-        altura:2
-    },
-
-    // cadeiras
-    {
-        tipo:"cadeira",
-        x:17,
-        y:11,
-        largura:1,
-        altura:1
-    },
-
-    {
-        tipo:"cadeira",
-        x:20,
-        y:11,
-        largura:1,
-        altura:1
-    },
-
-];
+let bibliotecaW = 256;
+let bibliotecaH = 256;
 
 
-// flores (jardim)
+// =============================
+// CLIQUE
+// =============================
 
-for(let i=0;i<30;i++){
+canvas.onclick = function(e){
 
-    objetos.push({
+    const rect = canvas.getBoundingClientRect();
 
-        tipo:"flor",
-        x: Math.floor(Math.random()*MAP_WIDTH),
-        y: Math.floor(Math.random()*MAP_HEIGHT),
-        largura:1,
-        altura:1
+    const mouseX = e.clientX - rect.left;
+    const mouseY = e.clientY - rect.top;
 
-    });
+    if(
+        mouseX >= bibliotecaX &&
+        mouseX <= bibliotecaX + bibliotecaW &&
+        mouseY >= bibliotecaY &&
+        mouseY <= bibliotecaY + bibliotecaH
+    ){
+        pontos += 10;
+        atualizarUI();
+    }
 
 }
 
 
-// ==============================
-// DESENHAR CHÃO
-// ==============================
+// =============================
+// DESENHO
+// =============================
 
-function desenharChao(){
+function desenharGrama(){
 
-    for(let y=0;y<MAP_HEIGHT;y++){
+    for(let x=0; x<canvas.width; x+=TILE){
 
-        for(let x=0;x<MAP_WIDTH;x++){
+        for(let y=0; y<canvas.height; y+=TILE){
 
-            if(imagens.grama.complete){
-
-                ctx.drawImage(
-                    imagens.grama,
-                    x*TILE,
-                    y*TILE,
-                    TILE,
-                    TILE
-                );
-
-            }
-            else{
-
-                // placeholder verde
-
-                ctx.fillStyle="#2ecc71";
-                ctx.fillRect(
-                    x*TILE,
-                    y*TILE,
-                    TILE,
-                    TILE
-                );
-
-            }
+            ctx.drawImage(
+                grama,
+                x,
+                y,
+                TILE,
+                TILE
+            );
 
         }
 
@@ -169,77 +142,34 @@ function desenharChao(){
 }
 
 
-// ==============================
-// DESENHAR OBJETOS
-// ==============================
+function desenharBiblioteca(){
 
-function desenharObjetos(){
-
-    objetos.forEach(obj => {
-
-        const img = imagens[obj.tipo];
-
-        if(img && img.complete){
-
-            ctx.drawImage(
-                img,
-                obj.x*TILE,
-                obj.y*TILE,
-                obj.largura*TILE,
-                obj.altura*TILE
-            );
-
-        }
-        else{
-
-            // placeholders coloridos
-
-            if(obj.tipo=="biblioteca")
-                ctx.fillStyle="#3498db";
-
-            else if(obj.tipo=="mesa")
-                ctx.fillStyle="#9b59b6";
-
-            else if(obj.tipo=="cadeira")
-                ctx.fillStyle="#e67e22";
-
-            else if(obj.tipo=="flor")
-                ctx.fillStyle="#f1c40f";
-
-            ctx.fillRect(
-                obj.x*TILE,
-                obj.y*TILE,
-                obj.largura*TILE,
-                obj.altura*TILE
-            );
-
-        }
-
-    });
+    ctx.drawImage(
+        biblioteca,
+        bibliotecaX,
+        bibliotecaY,
+        bibliotecaW,
+        bibliotecaH
+    );
 
 }
 
 
-// ==============================
+// =============================
 // LOOP
-// ==============================
+// =============================
 
 function loop(){
 
     ctx.clearRect(0,0,canvas.width,canvas.height);
 
-    desenharChao();
+    desenharGrama();
 
-    desenharObjetos();
+    desenharBiblioteca();
 
     requestAnimationFrame(loop);
 
 }
-
-
-// ==============================
-// INICIAR
-// ==============================
 
 loop();
 
