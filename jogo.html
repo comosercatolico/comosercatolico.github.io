@@ -1,10 +1,24 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>Jogo</title>
+<title>Santa Teresinha Idle</title>
+
 <style>
-body { margin:0; overflow:hidden; }
+
+body{
+    margin:0;
+    background:black;
+    overflow:hidden;
+}
+
+canvas{
+    display:block;
+    margin:auto;
+    background:black;
+    image-rendering:pixelated;
+}
+
 </style>
 </head>
 <body>
@@ -12,42 +26,223 @@ body { margin:0; overflow:hidden; }
 <canvas id="game"></canvas>
 
 <script>
+
+// ==============================
+// CONFIGURAÇÃO
+// ==============================
+
+const TILE = 32;
+
+const MAP_WIDTH = 40;
+const MAP_HEIGHT = 25;
+
 const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d");
 
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+canvas.width = MAP_WIDTH * TILE;
+canvas.height = MAP_HEIGHT * TILE;
 
-const grama = new Image();
-const bibi = new Image();
+ctx.imageSmoothingEnabled = false;
 
-grama.src = "grama.png";
-bibi.src = "bibi.png";
 
-let carregado = 0;
+// ==============================
+// IMAGENS
+// ==============================
 
-function carregou(){
-    carregado++;
-    if(carregado == 2){
-        desenhar();
-    }
+const imagens = {
+
+    grama: new Image(),
+    biblioteca: new Image(),
+    mesa: new Image(),
+    cadeira: new Image(),
+    flor: new Image()
+
+};
+
+imagens.grama.src = "grama.png";
+imagens.biblioteca.src = "biblioteca.png";
+imagens.mesa.src = "mesa.png";
+imagens.cadeira.src = "cadeira.png";
+imagens.flor.src = "flor.png";
+
+
+// ==============================
+// OBJETOS DO MAPA
+// ==============================
+
+const objetos = [
+
+    // biblioteca
+    {
+        tipo:"biblioteca",
+        x:5,
+        y:3,
+        largura:3,
+        altura:3
+    },
+
+    // mesa
+    {
+        tipo:"mesa",
+        x:18,
+        y:10,
+        largura:2,
+        altura:2
+    },
+
+    // cadeiras
+    {
+        tipo:"cadeira",
+        x:17,
+        y:11,
+        largura:1,
+        altura:1
+    },
+
+    {
+        tipo:"cadeira",
+        x:20,
+        y:11,
+        largura:1,
+        altura:1
+    },
+
+];
+
+
+// flores (jardim)
+
+for(let i=0;i<30;i++){
+
+    objetos.push({
+
+        tipo:"flor",
+        x: Math.floor(Math.random()*MAP_WIDTH),
+        y: Math.floor(Math.random()*MAP_HEIGHT),
+        largura:1,
+        altura:1
+
+    });
+
 }
 
-grama.onload = carregou;
-bibi.onload = carregou;
 
-let x = 200;
-let y = 200;
+// ==============================
+// DESENHAR CHÃO
+// ==============================
 
-function desenhar(){
+function desenharChao(){
+
+    for(let y=0;y<MAP_HEIGHT;y++){
+
+        for(let x=0;x<MAP_WIDTH;x++){
+
+            if(imagens.grama.complete){
+
+                ctx.drawImage(
+                    imagens.grama,
+                    x*TILE,
+                    y*TILE,
+                    TILE,
+                    TILE
+                );
+
+            }
+            else{
+
+                // placeholder verde
+
+                ctx.fillStyle="#2ecc71";
+                ctx.fillRect(
+                    x*TILE,
+                    y*TILE,
+                    TILE,
+                    TILE
+                );
+
+            }
+
+        }
+
+    }
+
+}
+
+
+// ==============================
+// DESENHAR OBJETOS
+// ==============================
+
+function desenharObjetos(){
+
+    objetos.forEach(obj => {
+
+        const img = imagens[obj.tipo];
+
+        if(img && img.complete){
+
+            ctx.drawImage(
+                img,
+                obj.x*TILE,
+                obj.y*TILE,
+                obj.largura*TILE,
+                obj.altura*TILE
+            );
+
+        }
+        else{
+
+            // placeholders coloridos
+
+            if(obj.tipo=="biblioteca")
+                ctx.fillStyle="#3498db";
+
+            else if(obj.tipo=="mesa")
+                ctx.fillStyle="#9b59b6";
+
+            else if(obj.tipo=="cadeira")
+                ctx.fillStyle="#e67e22";
+
+            else if(obj.tipo=="flor")
+                ctx.fillStyle="#f1c40f";
+
+            ctx.fillRect(
+                obj.x*TILE,
+                obj.y*TILE,
+                obj.largura*TILE,
+                obj.altura*TILE
+            );
+
+        }
+
+    });
+
+}
+
+
+// ==============================
+// LOOP
+// ==============================
+
+function loop(){
 
     ctx.clearRect(0,0,canvas.width,canvas.height);
 
-    ctx.drawImage(grama, 0, 0, canvas.width, canvas.height);
-    ctx.drawImage(bibi, x, y, 150, 150);
+    desenharChao();
 
-    requestAnimationFrame(desenhar);
+    desenharObjetos();
+
+    requestAnimationFrame(loop);
+
 }
+
+
+// ==============================
+// INICIAR
+// ==============================
+
+loop();
+
 </script>
 
 </body>
