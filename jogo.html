@@ -3,36 +3,28 @@
 <head>
 <meta charset="UTF-8">
 <title>Santa Teresinha Idle</title>
-
 <style>
-
 body{
     margin:0;
     background:black;
     overflow:hidden;
 }
-
 canvas{
     display:block;
     margin:auto;
     background:black;
     image-rendering:pixelated;
 }
-
 </style>
 </head>
 <body>
-
 <canvas id="game"></canvas>
 
 <script>
-
 // ==============================
 // CONFIGURAÇÃO
 // ==============================
-
 const TILE = 32;
-
 const MAP_WIDTH = 40;
 const MAP_HEIGHT = 25;
 
@@ -50,20 +42,39 @@ ctx.imageSmoothingEnabled = false;
 // ==============================
 
 const imagens = {
-
-    grama: new Image(),
+    gramas: [],
     biblioteca: new Image(),
     mesa: new Image(),
     cadeira: new Image(),
     flor: new Image()
-
 };
 
-imagens.grama.src = "grama.png";
+// carregar 5 variações de grama
+for(let i = 1; i <= 5; i++){
+    let img = new Image();
+    img.src = `grama${i}.jpg`;
+    imagens.gramas.push(img);
+}
+
 imagens.biblioteca.src = "biblioteca.png";
 imagens.mesa.src = "mesa.png";
 imagens.cadeira.src = "cadeira.png";
 imagens.flor.src = "flor.png";
+
+
+// ==============================
+// GERAR MAPA DE GRAMA ALEATÓRIO
+// ==============================
+
+const mapaGrama = [];
+
+for(let y = 0; y < MAP_HEIGHT; y++){
+    mapaGrama[y] = [];
+    for(let x = 0; x < MAP_WIDTH; x++){
+        // sorteia qual das 5 gramas será usada nesse tile
+        mapaGrama[y][x] = Math.floor(Math.random() * 5);
+    }
+}
 
 
 // ==============================
@@ -72,58 +83,26 @@ imagens.flor.src = "flor.png";
 
 const objetos = [
 
-    // biblioteca
-    {
-        tipo:"biblioteca",
-        x:5,
-        y:3,
-        largura:3,
-        altura:3
-    },
+    // Biblioteca
+    { tipo:"biblioteca", x:5, y:3, largura:3, altura:3 },
 
-    // mesa
-    {
-        tipo:"mesa",
-        x:18,
-        y:10,
-        largura:2,
-        altura:2
-    },
+    // Mesa
+    { tipo:"mesa", x:18, y:10, largura:2, altura:2 },
 
-    // cadeiras
-    {
-        tipo:"cadeira",
-        x:17,
-        y:11,
-        largura:1,
-        altura:1
-    },
-
-    {
-        tipo:"cadeira",
-        x:20,
-        y:11,
-        largura:1,
-        altura:1
-    },
-
+    // Cadeiras
+    { tipo:"cadeira", x:17, y:11, largura:1, altura:1 },
+    { tipo:"cadeira", x:20, y:11, largura:1, altura:1 },
 ];
 
-
-// flores (jardim)
-
-for(let i=0;i<30;i++){
-
+// Flores aleatórias
+for(let i=0;i<40;i++){
     objetos.push({
-
         tipo:"flor",
         x: Math.floor(Math.random()*MAP_WIDTH),
         y: Math.floor(Math.random()*MAP_HEIGHT),
         largura:1,
         altura:1
-
     });
-
 }
 
 
@@ -132,40 +111,31 @@ for(let i=0;i<30;i++){
 // ==============================
 
 function desenharChao(){
-
     for(let y=0;y<MAP_HEIGHT;y++){
-
         for(let x=0;x<MAP_WIDTH;x++){
 
-            if(imagens.grama.complete){
+            const tipoGrama = mapaGrama[y][x];
+            const img = imagens.gramas[tipoGrama];
 
+            if(img.complete){
                 ctx.drawImage(
-                    imagens.grama,
+                    img,
                     x*TILE,
                     y*TILE,
                     TILE,
                     TILE
                 );
-
-            }
-            else{
-
-                // placeholder verde
-
-                ctx.fillStyle="#2ecc71";
+            } else {
+                ctx.fillStyle = "#2ecc71";
                 ctx.fillRect(
                     x*TILE,
                     y*TILE,
                     TILE,
                     TILE
                 );
-
             }
-
         }
-
     }
-
 }
 
 
@@ -175,12 +145,23 @@ function desenharChao(){
 
 function desenharObjetos(){
 
+    // ordena por Y para dar sensação de profundidade
+    objetos.sort((a,b)=> a.y - b.y);
+
     objetos.forEach(obj => {
 
         const img = imagens[obj.tipo];
 
-        if(img && img.complete){
+        // sombra simples
+        ctx.fillStyle = "rgba(0,0,0,0.2)";
+        ctx.fillRect(
+            obj.x*TILE,
+            obj.y*TILE + obj.altura*TILE - 6,
+            obj.largura*TILE,
+            6
+        );
 
+        if(img && img.complete){
             ctx.drawImage(
                 img,
                 obj.x*TILE,
@@ -188,23 +169,12 @@ function desenharObjetos(){
                 obj.largura*TILE,
                 obj.altura*TILE
             );
+        } else {
 
-        }
-        else{
-
-            // placeholders coloridos
-
-            if(obj.tipo=="biblioteca")
-                ctx.fillStyle="#3498db";
-
-            else if(obj.tipo=="mesa")
-                ctx.fillStyle="#9b59b6";
-
-            else if(obj.tipo=="cadeira")
-                ctx.fillStyle="#e67e22";
-
-            else if(obj.tipo=="flor")
-                ctx.fillStyle="#f1c40f";
+            if(obj.tipo=="biblioteca") ctx.fillStyle="#3498db";
+            else if(obj.tipo=="mesa") ctx.fillStyle="#9b59b6";
+            else if(obj.tipo=="cadeira") ctx.fillStyle="#e67e22";
+            else if(obj.tipo=="flor") ctx.fillStyle="#f1c40f";
 
             ctx.fillRect(
                 obj.x*TILE,
@@ -212,11 +182,9 @@ function desenharObjetos(){
                 obj.largura*TILE,
                 obj.altura*TILE
             );
-
         }
 
     });
-
 }
 
 
@@ -225,15 +193,12 @@ function desenharObjetos(){
 // ==============================
 
 function loop(){
-
     ctx.clearRect(0,0,canvas.width,canvas.height);
 
     desenharChao();
-
     desenharObjetos();
 
     requestAnimationFrame(loop);
-
 }
 
 
@@ -244,6 +209,5 @@ function loop(){
 loop();
 
 </script>
-
 </body>
 </html>
