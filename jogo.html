@@ -34,7 +34,8 @@ const MAP_WIDTH = 100;
 const MAP_HEIGHT = 100;
 
 // ✅ escala dos objetos (ADICIONADO)
-const ESCALA_OBJ = 0.45;
+const ESCALA_MESA = 0.42;
+const ESCALA_CADEIRA = 0.34;
 
 const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d");
@@ -168,25 +169,25 @@ const centroTileY = 50;
 
 const objetos = [
 
-    // cadeira esquerda
     {
         tipo:"cadeiraEsq",
-        tileX: centroTileX - 1.2,
-        tileY: centroTileY + 1
+        tileX: centroTileX - 1.8,
+        tileY: centroTileY + 0.6,
+        escala: ESCALA_CADEIRA
     },
 
-    // mesa
+    {
+        tipo:"cadeiraDir",
+        tileX: centroTileX + 1.8,
+        tileY: centroTileY + 0.6,
+        escala: ESCALA_CADEIRA
+    },
+
     {
         tipo:"mesa",
         tileX: centroTileX,
-        tileY: centroTileY
-    },
-
-    // cadeira direita
-    {
-        tipo:"cadeiraDir",
-        tileX: centroTileX + 1.2,
-        tileY: centroTileY + 1
+        tileY: centroTileY,
+        escala: ESCALA_MESA
     }
 
 ];
@@ -242,30 +243,38 @@ function desenharChao(){
 
 function desenharObjetos(){
 
-    objetos.sort((a,b)=> a.tileY - b.tileY);
+    // ordem correta por profundidade
+    objetos.sort((a,b)=> {
+
+        const ay = (a.tileY + 1) * TILE;
+        const by = (b.tileY + 1) * TILE;
+
+        return ay - by;
+    });
 
     objetos.forEach(obj=>{
 
         const img = imagens[obj.tipo];
         if(!img.complete) return;
 
-        const largura = img.width * ESCALA_OBJ;
-        const altura = img.height * ESCALA_OBJ;
+        const escala = obj.escala;
 
-        // ancora pelo pé (centro inferior)
+        const largura = img.width * escala;
+        const altura = img.height * escala;
+
         const baseX = obj.tileX * TILE + TILE/2;
         const baseY = obj.tileY * TILE + TILE;
 
         const drawX = baseX - largura/2 - camera.x;
         const drawY = baseY - altura - camera.y;
 
-        // sombra corrigida
+        // sombra
         ctx.fillStyle = "rgba(0,0,0,0.25)";
         ctx.fillRect(
             baseX - largura/4 - camera.x,
-            baseY - camera.y - 4,
+            baseY - camera.y - 3,
             largura/2,
-            6
+            5
         );
 
         ctx.drawImage(
@@ -278,7 +287,6 @@ function desenharObjetos(){
 
     });
 }
-
 
 // =====================================
 // LOOP
