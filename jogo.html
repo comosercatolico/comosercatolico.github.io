@@ -46,36 +46,46 @@ ctx.imageSmoothingEnabled = false;
 
 
 // =====================================
-// CÂMERA ARRASTÁVEL
+// CÂMERA ARRASTÁVEL (CORRIGIDO)
 // =====================================
 
 let camera = { x: 0, y: 0 };
 let dragging = false;
 let lastMouse = { x:0, y:0 };
 
+function getMousePos(evt){
+    const rect = canvas.getBoundingClientRect();
+    return {
+        x: evt.clientX - rect.left,
+        y: evt.clientY - rect.top
+    };
+}
+
 canvas.addEventListener("mousedown", e=>{
     dragging = true;
-    lastMouse.x = e.clientX;
-    lastMouse.y = e.clientY;
+    lastMouse = getMousePos(e);
 });
 
-canvas.addEventListener("mouseup", ()=> dragging=false);
-canvas.addEventListener("mouseleave", ()=> dragging=false);
+window.addEventListener("mouseup", ()=>{
+    dragging = false;
+});
 
-canvas.addEventListener("mousemove", e=>{
+window.addEventListener("mousemove", e=>{
     if(!dragging) return;
 
-    let dx = e.clientX - lastMouse.x;
-    let dy = e.clientY - lastMouse.y;
+    const mouse = getMousePos(e);
+
+    let dx = mouse.x - lastMouse.x;
+    let dy = mouse.y - lastMouse.y;
 
     camera.x -= dx;
     camera.y -= dy;
 
+    // limites
     camera.x = Math.max(0, Math.min(camera.x, MAP_WIDTH*TILE - canvas.width));
     camera.y = Math.max(0, Math.min(camera.y, MAP_HEIGHT*TILE - canvas.height));
 
-    lastMouse.x = e.clientX;
-    lastMouse.y = e.clientY;
+    lastMouse = mouse;
 });
 
 
@@ -102,7 +112,7 @@ imagens.cadeiraDir.src = "cadeira_direita.png";
 
 
 // =====================================
-// MAPA ORGÂNICO
+// MAPA
 // =====================================
 
 const mapaGrama = [];
@@ -129,28 +139,16 @@ for(let y=0;y<MAP_HEIGHT;y++){
 
 
 // =====================================
-// OBJETOS NO CENTRO (PIXEL REAL)
+// OBJETOS
 // =====================================
 
 const centroX = 50 * TILE;
 const centroY = 50 * TILE;
 
 const objetos = [
-    {
-        tipo:"cadeiraEsq",
-        x: centroX - 140,
-        y: centroY + 40
-    },
-    {
-        tipo:"mesa",
-        x: centroX - 64,
-        y: centroY - 40
-    },
-    {
-        tipo:"cadeiraDir",
-        x: centroX + 100,
-        y: centroY + 40
-    }
+    { tipo:"cadeiraEsq", x: centroX - 140, y: centroY + 40 },
+    { tipo:"mesa", x: centroX - 64, y: centroY - 40 },
+    { tipo:"cadeiraDir", x: centroX + 100, y: centroY + 40 }
 ];
 
 
@@ -179,11 +177,9 @@ function desenharChao(){
 
             if(img.complete && img.naturalWidth !== 0){
                 ctx.drawImage(img, drawX, drawY, TILE, TILE);
-
                 ctx.fillStyle = `rgba(0,0,0,${tile.sombra})`;
                 ctx.fillRect(drawX, drawY, TILE, TILE);
-            }
-            else{
+            } else {
                 ctx.fillStyle = "#2ecc71";
                 ctx.fillRect(drawX, drawY, TILE, TILE);
             }
@@ -193,7 +189,7 @@ function desenharChao(){
 
 
 // =====================================
-// DESENHAR OBJETOS (PROFUNDIDADE REAL)
+// DESENHAR OBJETOS
 // =====================================
 
 function desenharObjetos(){
@@ -201,21 +197,14 @@ function desenharObjetos(){
     objetos.sort((a,b)=> a.y - b.y);
 
     objetos.forEach(obj=>{
-
         const img = imagens[obj.tipo];
         if(!img.complete || img.naturalWidth === 0) return;
 
         const drawX = obj.x - camera.x;
         const drawY = obj.y - camera.y;
 
-        // sombra baseada no tamanho real
         ctx.fillStyle = "rgba(0,0,0,0.25)";
-        ctx.fillRect(
-            drawX,
-            drawY + img.height - 10,
-            img.width,
-            10
-        );
+        ctx.fillRect(drawX, drawY + img.height - 10, img.width, 10);
 
         ctx.drawImage(img, drawX, drawY);
     });
