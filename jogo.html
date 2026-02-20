@@ -6,7 +6,7 @@
 <style>
 body{
     margin:0;
-    background:black;
+    background:#111;
     overflow:hidden;
 }
 canvas{
@@ -14,6 +14,10 @@ canvas{
     margin:auto;
     background:black;
     image-rendering:pixelated;
+    cursor:grab;
+}
+canvas:active{
+    cursor:grabbing;
 }
 </style>
 </head>
@@ -21,190 +25,209 @@ canvas{
 <canvas id="game"></canvas>
 
 <script>
-// ==============================
+
+// ===============================
 // CONFIGURAÇÃO
-// ==============================
+// ===============================
+
 const TILE = 32;
-const MAP_WIDTH = 40;
-const MAP_HEIGHT = 25;
+const MAP_WIDTH = 100;   // mapa maior
+const MAP_HEIGHT = 100;
+
+const VIEW_WIDTH = 40;   // tamanho da tela
+const VIEW_HEIGHT = 25;
 
 const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d");
 
-canvas.width = MAP_WIDTH * TILE;
-canvas.height = MAP_HEIGHT * TILE;
+canvas.width = VIEW_WIDTH * TILE;
+canvas.height = VIEW_HEIGHT * TILE;
 
 ctx.imageSmoothingEnabled = false;
 
 
-// ==============================
+// ===============================
+// CÂMERA (ARRASTAR MAPA)
+// ===============================
+
+let camera = {
+    x: 0,
+    y: 0
+};
+
+let dragging = false;
+let lastMouse = {x:0,y:0};
+
+canvas.addEventListener("mousedown", (e)=>{
+    dragging = true;
+    lastMouse.x = e.clientX;
+    lastMouse.y = e.clientY;
+});
+
+canvas.addEventListener("mouseup", ()=> dragging = false);
+canvas.addEventListener("mouseleave", ()=> dragging = false);
+
+canvas.addEventListener("mousemove", (e)=>{
+    if(!dragging) return;
+
+    let dx = e.clientX - lastMouse.x;
+    let dy = e.clientY - lastMouse.y;
+
+    camera.x -= dx;
+    camera.y -= dy;
+
+    // limites do mapa
+    camera.x = Math.max(0, Math.min(camera.x, MAP_WIDTH*TILE - canvas.width));
+    camera.y = Math.max(0, Math.min(camera.y, MAP_HEIGHT*TILE - canvas.height));
+
+    lastMouse.x = e.clientX;
+    lastMouse.y = e.clientY;
+});
+
+
+// ===============================
 // IMAGENS
-// ==============================
+// ===============================
 
 const imagens = {
     gramas: [],
-    biblioteca: new Image(),
-    mesa: new Image(),
-    cadeira: new Image(),
-    flor: new Image()
+    biblioteca: new Image()
 };
 
-// carregar 5 variações de grama
-for(let i = 1; i <= 5; i++){
+// 5 gramas
+for(let i=1;i<=5;i++){
     let img = new Image();
     img.src = `grama${i}.jpg`;
     imagens.gramas.push(img);
 }
 
 imagens.biblioteca.src = "biblioteca.png";
-imagens.mesa.src = "mesa.png";
-imagens.cadeira.src = "cadeira.png";
-imagens.flor.src = "flor.png";
 
 
-// ==============================
-// GERAR MAPA DE GRAMA ALEATÓRIO
-// ==============================
+// ===============================
+// MAPA ORGÂNICO
+// ===============================
 
 const mapaGrama = [];
 
-for(let y = 0; y < MAP_HEIGHT; y++){
+for(let y=0;y<MAP_HEIGHT;y++){
     mapaGrama[y] = [];
-    for(let x = 0; x < MAP_WIDTH; x++){
-        // sorteia qual das 5 gramas será usada nesse tile
-        mapaGrama[y][x] = Math.floor(Math.random() * 5);
+    for(let x=0;x<MAP_WIDTH;x++){
+
+        let r = Math.random();
+        let tipo = 0;
+
+        if(r < 0.6) tipo = 0;
+        else if(r < 0.75) tipo = 1;
+        else if(r < 0.85) tipo = 2;
+        else if(r < 0.93) tipo = 3;
+        else tipo = 4;
+
+        mapaGrama[y][x] = {
+            tipo: tipo,
+            sombra: Math.random()*0.07
+        };
     }
 }
 
 
-// ==============================
-// OBJETOS DO MAPA
-// ==============================
+// ===============================
+// OBJETOS
+// ===============================
 
 const objetos = [
-
-    // Biblioteca
-    { tipo:"biblioteca", x:5, y:3, largura:3, altura:3 },
-
-    // Mesa
-    { tipo:"mesa", x:18, y:10, largura:2, altura:2 },
-
-    // Cadeiras
-    { tipo:"cadeira", x:17, y:11, largura:1, altura:1 },
-    { tipo:"cadeira", x:20, y:11, largura:1, altura:1 },
+    { tipo:"biblioteca", x:50, y:50, largura:4, altura:4 }
 ];
 
-// Flores aleatórias
-for(let i=0;i<40;i++){
-    objetos.push({
-        tipo:"flor",
-        x: Math.floor(Math.random()*MAP_WIDTH),
-        y: Math.floor(Math.random()*MAP_HEIGHT),
-        largura:1,
-        altura:1
-    });
-}
 
-
-// ==============================
+// ===============================
 // DESENHAR CHÃO
-// ==============================
+// ===============================
 
 function desenharChao(){
-    for(let y=0;y<MAP_HEIGHT;y++){
-        for(let x=0;x<MAP_WIDTH;x++){
 
-            const tipoGrama = mapaGrama[y][x];
-            const img = imagens.gramas[tipoGrama];
+    const startX = Math.floor(camera.x / TILE);
+    const startY = Math.floor(camera.y / TILE);
 
-            if(img.complete){
-                ctx.drawImage(
-                    img,
-                    x*TILE,
-                    y*TILE,
-                    TILE,
-                    TILE
-                );
-            } else {
+    const endX = startX + VIEW_WIDTH + 1;
+    const endY = startY + VIEW_HEIGHT + 1;
+
+    for(let y=startY;y<endY;y++){
+        for(let x=startX;x<endX;x++){
+
+            if(x<0 || y<0 || x>=MAP_WIDTH || y>=MAP_HEIGHT) continue;
+
+            const tile = mapaGrama[y][x];
+            const img = imagens.gramas[tile.tipo];
+
+            const drawX = x*TILE - camera.x;
+            const drawY = y*TILE - camera.y;
+
+            if(img.complete && img.naturalWidth !== 0){
+                ctx.drawImage(img, drawX, drawY, TILE, TILE);
+
+                ctx.fillStyle = `rgba(0,0,0,${tile.sombra})`;
+                ctx.fillRect(drawX, drawY, TILE, TILE);
+            }
+            else{
                 ctx.fillStyle = "#2ecc71";
-                ctx.fillRect(
-                    x*TILE,
-                    y*TILE,
-                    TILE,
-                    TILE
-                );
+                ctx.fillRect(drawX, drawY, TILE, TILE);
             }
         }
     }
 }
 
 
-// ==============================
+// ===============================
 // DESENHAR OBJETOS
-// ==============================
+// ===============================
 
 function desenharObjetos(){
 
-    // ordena por Y para dar sensação de profundidade
-    objetos.sort((a,b)=> a.y - b.y);
+    objetos.forEach(obj=>{
 
-    objetos.forEach(obj => {
+        const drawX = obj.x*TILE - camera.x;
+        const drawY = obj.y*TILE - camera.y;
 
-        const img = imagens[obj.tipo];
-
-        // sombra simples
-        ctx.fillStyle = "rgba(0,0,0,0.2)";
+        ctx.fillStyle = "rgba(0,0,0,0.25)";
         ctx.fillRect(
-            obj.x*TILE,
-            obj.y*TILE + obj.altura*TILE - 6,
+            drawX,
+            drawY + obj.altura*TILE - 8,
             obj.largura*TILE,
-            6
+            8
         );
 
-        if(img && img.complete){
+        if(obj.tipo==="biblioteca" &&
+           imagens.biblioteca.complete &&
+           imagens.biblioteca.naturalWidth !== 0){
+
             ctx.drawImage(
-                img,
-                obj.x*TILE,
-                obj.y*TILE,
+                imagens.biblioteca,
+                drawX,
+                drawY,
                 obj.largura*TILE,
                 obj.altura*TILE
             );
-        } else {
-
-            if(obj.tipo=="biblioteca") ctx.fillStyle="#3498db";
-            else if(obj.tipo=="mesa") ctx.fillStyle="#9b59b6";
-            else if(obj.tipo=="cadeira") ctx.fillStyle="#e67e22";
-            else if(obj.tipo=="flor") ctx.fillStyle="#f1c40f";
-
-            ctx.fillRect(
-                obj.x*TILE,
-                obj.y*TILE,
-                obj.largura*TILE,
-                obj.altura*TILE
-            );
+        }
+        else{
+            ctx.fillStyle="#3498db";
+            ctx.fillRect(drawX,drawY,obj.largura*TILE,obj.altura*TILE);
         }
 
     });
 }
 
 
-// ==============================
+// ===============================
 // LOOP
-// ==============================
+// ===============================
 
 function loop(){
     ctx.clearRect(0,0,canvas.width,canvas.height);
-
     desenharChao();
     desenharObjetos();
-
     requestAnimationFrame(loop);
 }
-
-
-// ==============================
-// INICIAR
-// ==============================
 
 loop();
 
