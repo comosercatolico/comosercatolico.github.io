@@ -11,7 +11,6 @@ body{
 }
 canvas{
     display:block;
-    margin:auto;
     background:black;
     image-rendering:pixelated;
     cursor:grab;
@@ -34,15 +33,20 @@ const TILE = 32;
 const MAP_WIDTH = 100;
 const MAP_HEIGHT = 100;
 
-const VIEW_WIDTH = 40;
-const VIEW_HEIGHT = 25;
-
 const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d");
-
-canvas.width = VIEW_WIDTH * TILE;
-canvas.height = VIEW_HEIGHT * TILE;
 ctx.imageSmoothingEnabled = false;
+
+// =====================================
+// CANVAS RESPONSIVO (PREENCHE TELA)
+// =====================================
+
+function resizeCanvas(){
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+}
+resizeCanvas();
+window.addEventListener("resize", resizeCanvas);
 
 
 // =====================================
@@ -59,10 +63,9 @@ canvas.addEventListener("mousedown", e=>{
     lastMouse.y = e.clientY;
 });
 
-canvas.addEventListener("mouseup", ()=> dragging=false);
-canvas.addEventListener("mouseleave", ()=> dragging=false);
+window.addEventListener("mouseup", ()=> dragging=false);
 
-canvas.addEventListener("mousemove", e=>{
+window.addEventListener("mousemove", e=>{
     if(!dragging) return;
 
     let dx = e.clientX - lastMouse.x;
@@ -96,7 +99,7 @@ let imagensCarregadas = 0;
 function imagemCarregada(){
     imagensCarregadas++;
     if(imagensCarregadas === imagensParaCarregar){
-        loop(); // só inicia quando tudo carregar
+        loop();
     }
 }
 
@@ -151,27 +154,27 @@ for(let y=0;y<MAP_HEIGHT;y++){
 
 
 // =====================================
-// OBJETOS NO CENTRO
+// OBJETOS ALINHADOS EM TILE (ESTILO ZELDA)
 // =====================================
 
-const centroX = 50 * TILE;
-const centroY = 50 * TILE;
+const centroTileX = 50;
+const centroTileY = 50;
 
 const objetos = [
     {
         tipo:"cadeiraEsq",
-        x: centroX - 140,
-        y: centroY + 40
+        x: (centroTileX - 2) * TILE,
+        y: (centroTileY + 1) * TILE
     },
     {
         tipo:"mesa",
-        x: centroX - 64,
-        y: centroY - 40
+        x: (centroTileX) * TILE,
+        y: (centroTileY) * TILE
     },
     {
         tipo:"cadeiraDir",
-        x: centroX + 100,
-        y: centroY + 40
+        x: (centroTileX + 2) * TILE,
+        y: (centroTileY + 1) * TILE
     }
 ];
 
@@ -185,8 +188,11 @@ function desenharChao(){
     const startX = Math.floor(camera.x / TILE);
     const startY = Math.floor(camera.y / TILE);
 
-    const endX = startX + VIEW_WIDTH + 2;
-    const endY = startY + VIEW_HEIGHT + 2;
+    const viewWidth = Math.ceil(canvas.width / TILE);
+    const viewHeight = Math.ceil(canvas.height / TILE);
+
+    const endX = startX + viewWidth + 2;
+    const endY = startY + viewHeight + 2;
 
     for(let y=startY;y<endY;y++){
         for(let x=startX;x<endX;x++){
@@ -231,12 +237,7 @@ function desenharObjetos(){
         const drawY = obj.y - camera.y;
 
         ctx.fillStyle = "rgba(0,0,0,0.25)";
-        ctx.fillRect(
-            drawX,
-            drawY + img.height - 10,
-            img.width,
-            10
-        );
+        ctx.fillRect(drawX, drawY + img.height - 10, img.width, 10);
 
         ctx.drawImage(img, drawX, drawY);
     });
@@ -253,9 +254,6 @@ function loop(){
     desenharObjetos();
     requestAnimationFrame(loop);
 }
-
-// ⚠️ NÃO chamamos loop() aqui.
-// Ele inicia automaticamente quando todas imagens carregarem.
 
 </script>
 </body>
