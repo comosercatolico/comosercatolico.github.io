@@ -27,14 +27,14 @@ canvas:active{
 <script>
 
 // ===============================
-// CONFIGURAÇÃO
+// CONFIG
 // ===============================
 
 const TILE = 32;
-const MAP_WIDTH = 100;   // mapa maior
+const MAP_WIDTH = 100;
 const MAP_HEIGHT = 100;
 
-const VIEW_WIDTH = 40;   // tamanho da tela
+const VIEW_WIDTH = 40;
 const VIEW_HEIGHT = 25;
 
 const canvas = document.getElementById("game");
@@ -47,27 +47,23 @@ ctx.imageSmoothingEnabled = false;
 
 
 // ===============================
-// CÂMERA (ARRASTAR MAPA)
+// CÂMERA ARRASTÁVEL
 // ===============================
 
-let camera = {
-    x: 0,
-    y: 0
-};
-
+let camera = { x: 0, y: 0 };
 let dragging = false;
 let lastMouse = {x:0,y:0};
 
-canvas.addEventListener("mousedown", (e)=>{
+canvas.addEventListener("mousedown", e=>{
     dragging = true;
     lastMouse.x = e.clientX;
     lastMouse.y = e.clientY;
 });
 
-canvas.addEventListener("mouseup", ()=> dragging = false);
-canvas.addEventListener("mouseleave", ()=> dragging = false);
+canvas.addEventListener("mouseup", ()=> dragging=false);
+canvas.addEventListener("mouseleave", ()=> dragging=false);
 
-canvas.addEventListener("mousemove", (e)=>{
+canvas.addEventListener("mousemove", e=>{
     if(!dragging) return;
 
     let dx = e.clientX - lastMouse.x;
@@ -76,7 +72,6 @@ canvas.addEventListener("mousemove", (e)=>{
     camera.x -= dx;
     camera.y -= dy;
 
-    // limites do mapa
     camera.x = Math.max(0, Math.min(camera.x, MAP_WIDTH*TILE - canvas.width));
     camera.y = Math.max(0, Math.min(camera.y, MAP_HEIGHT*TILE - canvas.height));
 
@@ -91,17 +86,20 @@ canvas.addEventListener("mousemove", (e)=>{
 
 const imagens = {
     gramas: [],
-    biblioteca: new Image()
+    mesa: new Image(),
+    cadeiraEsq: new Image(),
+    cadeiraDir: new Image()
 };
 
-// 5 gramas
 for(let i=1;i<=5;i++){
     let img = new Image();
     img.src = `grama${i}.jpg`;
     imagens.gramas.push(img);
 }
 
-imagens.biblioteca.src = "biblioteca.png";
+imagens.mesa.src = "mesa.png";
+imagens.cadeiraEsq.src = "cadeira_esquerda.png";
+imagens.cadeiraDir.src = "cadeira_direita.png";
 
 
 // ===============================
@@ -125,18 +123,47 @@ for(let y=0;y<MAP_HEIGHT;y++){
 
         mapaGrama[y][x] = {
             tipo: tipo,
-            sombra: Math.random()*0.07
+            sombra: Math.random()*0.06
         };
     }
 }
 
 
 // ===============================
-// OBJETOS
+// OBJETOS (CENTRO)
 // ===============================
 
+const centroX = 50;
+const centroY = 50;
+
 const objetos = [
-    { tipo:"biblioteca", x:50, y:50, largura:4, altura:4 }
+
+    // Cadeira esquerda
+    {
+        tipo:"cadeiraEsq",
+        x: centroX - 3,
+        y: centroY,
+        largura:2,
+        altura:2
+    },
+
+    // Mesa
+    {
+        tipo:"mesa",
+        x: centroX,
+        y: centroY,
+        largura:3,
+        altura:3
+    },
+
+    // Cadeira direita
+    {
+        tipo:"cadeiraDir",
+        x: centroX + 4,
+        y: centroY,
+        largura:2,
+        altura:2
+    }
 ];
 
 
@@ -149,8 +176,8 @@ function desenharChao(){
     const startX = Math.floor(camera.x / TILE);
     const startY = Math.floor(camera.y / TILE);
 
-    const endX = startX + VIEW_WIDTH + 1;
-    const endY = startY + VIEW_HEIGHT + 1;
+    const endX = startX + VIEW_WIDTH + 2;
+    const endY = startY + VIEW_HEIGHT + 2;
 
     for(let y=startY;y<endY;y++){
         for(let x=startX;x<endX;x++){
@@ -163,13 +190,12 @@ function desenharChao(){
             const drawX = x*TILE - camera.x;
             const drawY = y*TILE - camera.y;
 
-            if(img.complete && img.naturalWidth !== 0){
+            if(img.complete){
                 ctx.drawImage(img, drawX, drawY, TILE, TILE);
 
                 ctx.fillStyle = `rgba(0,0,0,${tile.sombra})`;
                 ctx.fillRect(drawX, drawY, TILE, TILE);
-            }
-            else{
+            } else {
                 ctx.fillStyle = "#2ecc71";
                 ctx.fillRect(drawX, drawY, TILE, TILE);
             }
@@ -179,10 +205,13 @@ function desenharChao(){
 
 
 // ===============================
-// DESENHAR OBJETOS
+// DESENHAR OBJETOS (COM PROFUNDIDADE)
 // ===============================
 
 function desenharObjetos(){
+
+    // ordenar por Y para profundidade correta
+    objetos.sort((a,b)=> a.y - b.y);
 
     objetos.forEach(obj=>{
 
@@ -197,23 +226,17 @@ function desenharObjetos(){
             8
         );
 
-        if(obj.tipo==="biblioteca" &&
-           imagens.biblioteca.complete &&
-           imagens.biblioteca.naturalWidth !== 0){
+        const img = imagens[obj.tipo];
 
+        if(img && img.complete){
             ctx.drawImage(
-                imagens.biblioteca,
+                img,
                 drawX,
                 drawY,
                 obj.largura*TILE,
                 obj.altura*TILE
             );
         }
-        else{
-            ctx.fillStyle="#3498db";
-            ctx.fillRect(drawX,drawY,obj.largura*TILE,obj.altura*TILE);
-        }
-
     });
 }
 
@@ -224,8 +247,8 @@ function desenharObjetos(){
 
 function loop(){
     ctx.clearRect(0,0,canvas.width,canvas.height);
-    desenharChao();
-    desenharObjetos();
+    desenharChao();      // SEMPRE primeiro
+    desenharObjetos();   // depois móveis
     requestAnimationFrame(loop);
 }
 
