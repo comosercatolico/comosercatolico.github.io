@@ -26,9 +26,9 @@ canvas:active{
 
 <script>
 
-// ===============================
+// =====================================
 // CONFIG
-// ===============================
+// =====================================
 
 const TILE = 32;
 const MAP_WIDTH = 100;
@@ -42,17 +42,16 @@ const ctx = canvas.getContext("2d");
 
 canvas.width = VIEW_WIDTH * TILE;
 canvas.height = VIEW_HEIGHT * TILE;
-
 ctx.imageSmoothingEnabled = false;
 
 
-// ===============================
+// =====================================
 // CÂMERA ARRASTÁVEL
-// ===============================
+// =====================================
 
 let camera = { x: 0, y: 0 };
 let dragging = false;
-let lastMouse = {x:0,y:0};
+let lastMouse = { x:0, y:0 };
 
 canvas.addEventListener("mousedown", e=>{
     dragging = true;
@@ -80,9 +79,9 @@ canvas.addEventListener("mousemove", e=>{
 });
 
 
-// ===============================
+// =====================================
 // IMAGENS
-// ===============================
+// =====================================
 
 const imagens = {
     gramas: [],
@@ -102,9 +101,9 @@ imagens.cadeiraEsq.src = "cadeira_esquerda.png";
 imagens.cadeiraDir.src = "cadeira_direita.png";
 
 
-// ===============================
+// =====================================
 // MAPA ORGÂNICO
-// ===============================
+// =====================================
 
 const mapaGrama = [];
 
@@ -127,27 +126,26 @@ for(let y=0;y<MAP_HEIGHT;y++){
         };
     }
 }
-// ===============================
-// OBJETOS CENTRALIZADOS
-// ===============================
+
+
+// =====================================
+// OBJETOS NO CENTRO (PIXEL REAL)
+// =====================================
 
 const centroX = 50 * TILE;
 const centroY = 50 * TILE;
 
 const objetos = [
-
     {
         tipo:"cadeiraEsq",
         x: centroX - 140,
         y: centroY + 40
     },
-
     {
         tipo:"mesa",
         x: centroX - 64,
         y: centroY - 40
     },
-
     {
         tipo:"cadeiraDir",
         x: centroX + 100,
@@ -155,9 +153,10 @@ const objetos = [
     }
 ];
 
-// ===============================
+
+// =====================================
 // DESENHAR CHÃO
-// ===============================
+// =====================================
 
 function desenharChao(){
 
@@ -178,32 +177,38 @@ function desenharChao(){
             const drawX = x*TILE - camera.x;
             const drawY = y*TILE - camera.y;
 
-            if(img.complete){
+            if(img.complete && img.naturalWidth !== 0){
                 ctx.drawImage(img, drawX, drawY, TILE, TILE);
 
                 ctx.fillStyle = `rgba(0,0,0,${tile.sombra})`;
                 ctx.fillRect(drawX, drawY, TILE, TILE);
-            } else {
+            }
+            else{
                 ctx.fillStyle = "#2ecc71";
                 ctx.fillRect(drawX, drawY, TILE, TILE);
             }
         }
     }
 }
+
+
+// =====================================
+// DESENHAR OBJETOS (PROFUNDIDADE REAL)
+// =====================================
+
 function desenharObjetos(){
 
-    // profundidade pelo Y real
     objetos.sort((a,b)=> a.y - b.y);
 
     objetos.forEach(obj=>{
 
         const img = imagens[obj.tipo];
-        if(!img.complete) return;
+        if(!img.complete || img.naturalWidth === 0) return;
 
         const drawX = obj.x - camera.x;
         const drawY = obj.y - camera.y;
 
-        // sombra real baseada na largura da imagem
+        // sombra baseada no tamanho real
         ctx.fillStyle = "rgba(0,0,0,0.25)";
         ctx.fillRect(
             drawX,
@@ -212,24 +217,19 @@ function desenharObjetos(){
             10
         );
 
-        ctx.drawImage(
-            img,
-            drawX,
-            drawY
-        );
+        ctx.drawImage(img, drawX, drawY);
     });
 }
 
 
-
-// ===============================
+// =====================================
 // LOOP
-// ===============================
+// =====================================
 
 function loop(){
     ctx.clearRect(0,0,canvas.width,canvas.height);
-    desenharChao();      // SEMPRE primeiro
-    desenharObjetos();   // depois móveis
+    desenharChao();
+    desenharObjetos();
     requestAnimationFrame(loop);
 }
 
