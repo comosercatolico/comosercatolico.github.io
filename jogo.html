@@ -172,7 +172,7 @@ const objetos = [
     {
         tipo:"cadeiraEsq",
         tileX: centroTileX - 2.0, // mais afastado
-        tileY: centroTileY + 0.6,
+        tileY: centroTileY + 0.39,
         escala: 0.26, // menor
         offsety: 0
     },
@@ -180,7 +180,7 @@ const objetos = [
     {
         tipo:"cadeiraDir",
         tileX: centroTileX + 2.0, // mais afastado
-        tileY: centroTileY + 0.6,
+        tileY: centroTileY + 0.39,
         escala: 0.26, // menor
          offsety: 0
     },
@@ -246,13 +246,13 @@ function desenharChao(){
 function desenharObjetos(){
 
     // ordem correta por profundidade
-    objetos.sort((a,b)=> {
+   objetos.sort((a,b)=> {
 
-        const ay = (a.tileY + 1) * TILE;
-        const by = (b.tileY + 1) * TILE;
+    const ay = (a.tileY * TILE) + (a.offsetY || 0);
+    const by = (b.tileY * TILE) + (b.offsetY || 0);
 
-        return ay - by;
-    });
+    return ay - by;
+});
 
     objetos.forEach(obj=>{
 
