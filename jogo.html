@@ -171,18 +171,18 @@ const objetos = [
 
     {
         tipo:"cadeiraEsq",
-        tileX: centroTileX - 1.9, // mais afastado
-        tileY: centroTileY + 0.05,//subir e descer
+        tileX: centroTileX - 1.84, // mais afastado
+        tileY: centroTileY - 0.02,//subir e descer
         escala: 0.26, // menor
-        offsety: 0
+        layer: 0
     },
 
     {
         tipo:"cadeiraDir",
-        tileX: centroTileX + 1.9, // mais afastado
-        tileY: centroTileY + 0.05 ,//subir e descer
+        tileX: centroTileX + 1.84, // mais afastado
+        tileY: centroTileY - 0.02 ,//subir e descer
         escala: 0.26, // menor
-         offsety: 0
+          layer: 0
     },
 
     {
@@ -190,7 +190,7 @@ const objetos = [
         tileX: centroTileX,
         tileY: centroTileY,
         escala: 0.42, // NÃO ALTERADO
-         offsety: 20
+          layer: 1
     }
 
 ];
@@ -248,10 +248,15 @@ function desenharObjetos(){
     // ordem correta por profundidade
    objetos.sort((a,b)=> {
 
-    const ay = (a.tileY * TILE) + (a.offsetY || 0);
-    const by = (b.tileY * TILE) + (b.offsetY || 0);
+    if(a.layer !== b.layer){
+        return a.layer - b.layer;
+    }
+
+    const ay = (a.tileY + 1) * TILE;
+    const by = (b.tileY + 1) * TILE;
 
     return ay - by;
+});
 });
 
     objetos.forEach(obj=>{
