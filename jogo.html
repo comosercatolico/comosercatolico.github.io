@@ -33,17 +33,13 @@ const TILE = 32;
 const MAP_WIDTH = 100;
 const MAP_HEIGHT = 100;
 
-// ✅ escala dos objetos (ADICIONADO)
-const ESCALA_MESA = 0.42;
-const ESCALA_CADEIRA = 0.34;
-
 const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d");
 ctx.imageSmoothingEnabled = false;
 
 
 // =====================================
-// CANVAS RESPONSIVO (PREENCHE TELA)
+// CANVAS RESPONSIVO
 // =====================================
 
 function resizeCanvas(){
@@ -95,7 +91,8 @@ const imagens = {
     gramas: [],
     mesa: new Image(),
     cadeiraEsq: new Image(),
-    cadeiraDir: new Image()
+    cadeiraDir: new Image(),
+    biblioteca: new Image() // ✅ NOVA
 };
 
 let imagensParaCarregar = 0;
@@ -122,15 +119,16 @@ for(let i=1;i<=5;i++){
     imagens.gramas.push(img);
 }
 
-
 // objetos
 registrarImagem(imagens.mesa);
 registrarImagem(imagens.cadeiraEsq);
 registrarImagem(imagens.cadeiraDir);
+registrarImagem(imagens.biblioteca);
 
 imagens.mesa.src = "mesa.png";
 imagens.cadeiraEsq.src = "cadeira_esquerda.png";
 imagens.cadeiraDir.src = "cadeira_direita.png";
+imagens.biblioteca.src = "bb.png"; // ✅ BIBLIOTECA
 
 
 // =====================================
@@ -169,31 +167,41 @@ const centroTileY = 50;
 
 const objetos = [
 
+    // ✅ BIBLIOTECA NO CANTO SUPERIOR ESQUERDO
+    {
+        tipo:"biblioteca",
+        tileX: 2,
+        tileY: 2,
+        escala: 1.0, // ajuste se quiser maior ou menor
+        layer: 0
+    },
+
     {
         tipo:"cadeiraEsq",
-        tileX: centroTileX - 1.77, // mais afastado
-        tileY: centroTileY - 0.20,//subir e descer
-        escala: 0.22, // menor
+        tileX: centroTileX - 1.77,
+        tileY: centroTileY - 0.20,
+        escala: 0.22,
         layer: 0
     },
 
     {
         tipo:"cadeiraDir",
-        tileX: centroTileX + 1.77, // mais afastado
-        tileY: centroTileY - 0.20 ,//subir e descer
-        escala: 0.22, // menor
-          layer: 0
+        tileX: centroTileX + 1.77,
+        tileY: centroTileY - 0.20,
+        escala: 0.22,
+        layer: 0
     },
 
     {
         tipo:"mesa",
         tileX: centroTileX,
         tileY: centroTileY,
-        escala: 0.42, // NÃO ALTERADO
-          layer: 1
+        escala: 0.42,
+        layer: 1
     }
 
 ];
+
 
 // =====================================
 // DESENHAR CHÃO
@@ -240,23 +248,22 @@ function desenharChao(){
 
 
 // =====================================
-// DESENHAR OBJETOS (CORRIGIDO)
+// DESENHAR OBJETOS
 // =====================================
 
 function desenharObjetos(){
 
-    // ordem correta por profundidade
-   objetos.sort((a,b)=> {
+    objetos.sort((a,b)=> {
 
-    if(a.layer !== b.layer){
-        return a.layer - b.layer;
-    }
+        if(a.layer !== b.layer){
+            return a.layer - b.layer;
+        }
 
-    const ay = (a.tileY + 1) * TILE;
-    const by = (b.tileY + 1) * TILE;
+        const ay = (a.tileY + 1) * TILE;
+        const by = (b.tileY + 1) * TILE;
 
-    return ay - by;
-});
+        return ay - by;
+    });
 
     objetos.forEach(obj=>{
 
@@ -294,6 +301,7 @@ function desenharObjetos(){
     });
 }
 
+
 // =====================================
 // LOOP
 // =====================================
@@ -306,7 +314,6 @@ function loop(){
     desenharObjetos();
 
     requestAnimationFrame(loop);
-
 }
 
 </script>
