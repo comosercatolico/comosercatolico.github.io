@@ -1,24 +1,43 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+
 <meta charset="UTF-8">
 <title>Como ser um bom católico</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<!-- SCRIPT DO ADSENSE -->
+<script async
+src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXX"
+crossorigin="anonymous"></script>
+
 <style>
+
 body {
   margin: 0;
   font-family: Arial, sans-serif;
   background: url("padre.png") center / cover fixed no-repeat;
 }
 
+/* HEADER */
 header {
   background: url("santos.png") center / cover;
   padding: 20px;
   color: white;
   text-align: center;
+  position: relative;
 }
 
+/* ANUNCIO NO CANTO SUPERIOR DIREITO */
+.ad-top {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 160px;
+  height: 90px;
+}
+
+/* MENU */
 nav {
   background: rgba(0,0,0,0.65);
   text-align: center;
@@ -38,14 +57,17 @@ nav a:hover {
   background: #005fa3;
 }
 
+/* REMOVE QUADRO BRANCO */
 main, section {
   max-width: 900px;
   margin: 30px auto;
-  background: rgba(255,255,255,0.92);
+  background: transparent;
   border-radius: 14px;
   padding: 30px;
+  color: white;
 }
 
+/* FOOTER */
 footer {
   background: rgba(0,0,0,0.65);
   color: white;
@@ -54,22 +76,22 @@ footer {
 }
 
 /* ===== LITURGIA ===== */
+
 .liturgia-card {
-  background: #fff;
+  background: rgba(0,0,0,0.6);
   border-radius: 12px;
   padding: 22px;
   margin-bottom: 25px;
-  box-shadow: 0 6px 15px rgba(0,0,0,0.1);
 }
 
 .liturgia-card h2 {
   margin-top: 0;
-  color: #5a3e1b;
+  color: #ffd700;
 }
 
 .referencia {
   font-style: italic;
-  color: #666;
+  color: #ccc;
   margin-bottom: 12px;
 }
 
@@ -79,64 +101,102 @@ footer {
 }
 
 .salmo {
-  background: linear-gradient(135deg,#f5fbe7,#e8f5c8);
   border-left: 6px solid #6a9c3b;
 }
 
 .evangelho {
   border-left: 6px solid #c62828;
-  background: #fff5f5;
 }
+
 </style>
+
 </head>
 
 <body>
 
 <header>
-  <h1>Catequese Católica</h1>
+
+<h1>Catequese Católica</h1>
+
+<!-- AREA DO ANUNCIO -->
+<div class="ad-top">
+
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-XXXXXXXXXXXX"
+     data-ad-slot="XXXXXXXXXX"
+     data-ad-format="auto"></ins>
+
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+</div>
+
 </header>
 
 <nav>
-  <a href="#" onclick="mostrarInicio()">Início</a>
-  <a href="#" onclick="mostrarLiturgia()">Liturgia diária</a>
-  <a href="jogo.html">Jogo</a>
+
+<a href="#" onclick="mostrarInicio()">Início</a>
+
+<a href="#" onclick="mostrarLiturgia()">Liturgia diária</a>
+
+<a href="jogo.html">Jogo</a>
+
 </nav>
 
-<!-- INÍCIO -->
+<!-- INICIO -->
+
 <main id="inicio">
-  <h2>Bem-vindo</h2>
-  <p>Escolha uma opção no menu.</p>
-  <img src="pig.png" width="120">
+
+<h2>Bem-vindo</h2>
+
+<p>Escolha uma opção no menu.</p>
+
+<img src="pig.png" width="120">
+
 </main>
 
 <!-- LITURGIA -->
+
 <section id="liturgia" style="display:none;">
-  <h1 id="liturgia-titulo"></h1>
-  <p id="liturgia-data"></p>
-  <div id="liturgia-conteudo"></div>
+
+<h1 id="liturgia-titulo"></h1>
+
+<p id="liturgia-data"></p>
+
+<div id="liturgia-conteudo"></div>
+
 </section>
 
 <footer>
-  © 2026 – Meu site
+
+© 2026 – Meu site
+
 </footer>
 
 <script src="js/liturgia.js"></script>
 
 <script>
+
 function mostrarInicio() {
-  document.getElementById("inicio").style.display = "block";
-  document.getElementById("liturgia").style.display = "none";
+
+document.getElementById("inicio").style.display = "block";
+
+document.getElementById("liturgia").style.display = "none";
+
 }
 
 function mostrarLiturgia() {
-  document.getElementById("inicio").style.display = "none";
-  document.getElementById("liturgia").style.display = "block";
-  carregarLiturgia();
+
+document.getElementById("inicio").style.display = "none";
+
+document.getElementById("liturgia").style.display = "block";
+
+carregarLiturgia();
+
 }
 
-function mostrarJogo() {
-  alert("Jogo em desenvolvimento 🎮");
-}
 </script>
 
 </body>
