@@ -6,19 +6,60 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
+
 body {
   margin: 0;
   font-family: Arial, sans-serif;
   background: url("padre.png") center / cover fixed no-repeat;
 }
 
+/* HEADER */
 header {
   background: url("santos.png") center / cover;
   padding: 20px;
   color: white;
   text-align: center;
+  position: relative;
 }
 
+/* BOTÃO HAMBURGUER */
+.menu-btn {
+  position: absolute;
+  left: 15px;
+  top: 20px;
+  font-size: 28px;
+  cursor: pointer;
+  background: rgba(0,0,0,0.6);
+  padding: 5px 12px;
+  border-radius: 6px;
+}
+
+/* MENU LATERAL */
+.sidebar {
+  position: fixed;
+  left: -250px;
+  top: 0;
+  width: 250px;
+  height: 100%;
+  background: rgba(0,0,0,0.95);
+  padding-top: 60px;
+  transition: 0.3s;
+  z-index: 1000;
+}
+
+.sidebar a {
+  display: block;
+  color: white;
+  padding: 15px;
+  text-decoration: none;
+  font-size: 18px;
+}
+
+.sidebar a:hover {
+  background: #005fa3;
+}
+
+/* MENU NORMAL */
 nav {
   background: rgba(0,0,0,0.65);
   text-align: center;
@@ -38,6 +79,7 @@ nav a:hover {
   background: #005fa3;
 }
 
+/* CONTEUDO */
 main, section {
   max-width: 900px;
   margin: 30px auto;
@@ -46,6 +88,7 @@ main, section {
   padding: 30px;
 }
 
+/* FOOTER */
 footer {
   background: rgba(0,0,0,0.65);
   color: white;
@@ -54,6 +97,7 @@ footer {
 }
 
 /* ===== LITURGIA ===== */
+
 .liturgia-card {
   background: #fff;
   border-radius: 12px;
@@ -87,49 +131,108 @@ footer {
   border-left: 6px solid #c62828;
   background: #fff5f5;
 }
+
 </style>
 </head>
 
 <body>
 
+<!-- MENU LATERAL -->
+<div class="sidebar" id="sidebar">
+
+<a href="#" onclick="fecharMenu()">✖ Fechar</a>
+
+<a href="#" onclick="mostrarInicio(); fecharMenu()">Início</a>
+
+<a href="#" onclick="mostrarLiturgia(); fecharMenu()">Liturgia diária</a>
+
+<a href="jogo.html">Jogo</a>
+
+<hr>
+
+<a href="sobre.html">Sobre</a>
+
+<a href="privacy.html">Privacidade</a>
+
+</div>
+
 <header>
-  <h1>Catequese Católica</h1>
+
+<span class="menu-btn" onclick="abrirMenu()">☰</span>
+
+<h1>Catequese Católica</h1>
+
 </header>
 
 <nav>
-  <a href="#" onclick="mostrarInicio()">Início</a>
-  <a href="#" onclick="mostrarLiturgia()">Liturgia diária</a>
-  <a href="jogo.html">Jogo</a>
+
+<a href="#" onclick="mostrarInicio()">Início</a>
+
+<a href="#" onclick="mostrarLiturgia()">Liturgia diária</a>
+
+<a href="jogo.html">Jogo</a>
+
 </nav>
-  
+
+<!-- INICIO -->
+<main id="inicio">
+
+<h2>Bem-vindo</h2>
+
+<p>Escolha uma opção no menu ou nas três barrinhas ☰</p>
+
+</main>
+
 <!-- LITURGIA -->
 <section id="liturgia" style="display:none;">
-  <h1 id="liturgia-titulo"></h1>
-  <p id="liturgia-data"></p>
-  <div id="liturgia-conteudo"></div>
+
+<h1 id="liturgia-titulo"></h1>
+
+<p id="liturgia-data"></p>
+
+<div id="liturgia-conteudo"></div>
+
 </section>
 
 <footer>
-  © 2026 – Meu site
+
+© 2026 – Meu site
+
 </footer>
 
 <script src="js/liturgia.js"></script>
 
 <script>
+
+/* MENU */
+function abrirMenu() {
+  document.getElementById("sidebar").style.left = "0";
+}
+
+function fecharMenu() {
+  document.getElementById("sidebar").style.left = "-250px";
+}
+
+/* PAGINAS */
+
 function mostrarInicio() {
-  document.getElementById("inicio").style.display = "block";
-  document.getElementById("liturgia").style.display = "none";
+
+document.getElementById("inicio").style.display = "block";
+
+document.getElementById("liturgia").style.display = "none";
+
 }
 
 function mostrarLiturgia() {
-  document.getElementById("inicio").style.display = "none";
-  document.getElementById("liturgia").style.display = "block";
-  carregarLiturgia();
+
+document.getElementById("inicio").style.display = "none";
+
+document.getElementById("liturgia").style.display = "block";
+
+carregarLiturgia();
+
 }
 
-function mostrarJogo() {
-  alert("Jogo em desenvolvimento 🎮");
-}
 </script>
 
 </body>
