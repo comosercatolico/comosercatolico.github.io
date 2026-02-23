@@ -136,7 +136,7 @@ imagens.biblioteca.src = "bb.png"; // ✅ BIBLIOTECA
 
 
 // =====================================
-// MAPA FIXO COM ESTRADA EM +
+// MAPA FIXO COM ESTRADA LARGURA 3
 // =====================================
 
 const mapaGrama = [];
@@ -149,20 +149,39 @@ for(let y = 0; y < MAP_HEIGHT; y++){
 
     for(let x = 0; x < MAP_WIDTH; x++){
 
-        let tipo = 0; // 🌱 grama fixa
+        let tipo = 0; // grama
+        let rotacao = 0;
 
-        // Linha horizontal da cruz
-        if(y === centroY){
+        // Estrada horizontal (3 de largura)
+        if(
+            y >= centroY - 1 &&
+            y <= centroY + 1
+        ){
             tipo = 5;
+            rotacao = 0;
         }
 
-        // Linha vertical da cruz
-        if(x === centroX){
+        // Estrada vertical (3 de largura)
+        if(
+            x >= centroX - 1 &&
+            x <= centroX + 1
+        ){
             tipo = 5;
+            rotacao = 90; // 🔥 girar
+        }
+
+        // Centro 3x3 especial
+        if(
+            x >= centroX - 1 && x <= centroX + 1 &&
+            y >= centroY - 1 && y <= centroY + 1
+        ){
+            tipo = 5;
+            rotacao = 0; // centro normal
         }
 
         mapaGrama[y][x] = {
             tipo: tipo,
+            rotacao: rotacao,
             sombra: Math.random() * 0.03
         };
     }
@@ -214,7 +233,6 @@ const objetos = [
 // =====================================
 // DESENHAR CHÃO
 // =====================================
-
 function desenharChao(){
 
     const startX = Math.floor(camera.x / TILE);
@@ -235,7 +253,6 @@ function desenharChao(){
 
             let img;
 
-            // ✅ ESCOLHER IMAGEM CORRETA
             if(tile.tipo === 5){
                 img = imagens.estrada;
             }else{
@@ -247,16 +264,26 @@ function desenharChao(){
 
             if(img && img.complete && img.naturalWidth !== 0){
 
-                ctx.drawImage(img, drawX, drawY, TILE, TILE);
+                if(tile.tipo === 5 && tile.rotacao === 90){
+
+                    ctx.save();
+                    ctx.translate(drawX + TILE/2, drawY + TILE/2);
+                    ctx.rotate(Math.PI / 2);
+                    ctx.drawImage(img, -TILE/2, -TILE/2, TILE, TILE);
+                    ctx.restore();
+
+                }else{
+
+                    ctx.drawImage(img, drawX, drawY, TILE, TILE);
+
+                }
 
                 ctx.fillStyle = `rgba(0,0,0,${tile.sombra})`;
                 ctx.fillRect(drawX, drawY, TILE, TILE);
 
             }else{
-
                 ctx.fillStyle = "#2ecc71";
                 ctx.fillRect(drawX, drawY, TILE, TILE);
-
             }
         }
     }
