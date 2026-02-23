@@ -92,7 +92,8 @@ const imagens = {
     mesa: new Image(),
     cadeiraEsq: new Image(),
     cadeiraDir: new Image(),
-    biblioteca: new Image() // ✅ NOVA
+    biblioteca: new Image(),
+    estrada: new Image()
 };
 
 let imagensParaCarregar = 0;
@@ -124,7 +125,10 @@ registrarImagem(imagens.mesa);
 registrarImagem(imagens.cadeiraEsq);
 registrarImagem(imagens.cadeiraDir);
 registrarImagem(imagens.biblioteca);
+registrarImagem(imagens.estrada);
 
+    
+imagens.estrada.src = "tiles/ti.png";
 imagens.mesa.src = "mesa.png";
 imagens.cadeiraEsq.src = "cadeira_esquerda.png";
 imagens.cadeiraDir.src = "cadeira_direita.png";
@@ -148,7 +152,8 @@ for(let y=0;y<MAP_HEIGHT;y++){
         else if(r < 0.75) tipo = 1;
         else if(r < 0.85) tipo = 2;
         else if(r < 0.93) tipo = 3;
-        else tipo = 4;
+        else if(r < 0.98) tipo = 4;
+        else tipo = 5; // ✅ ESTRADA
 
         mapaGrama[y][x] = {
             tipo: tipo,
@@ -156,7 +161,6 @@ for(let y=0;y<MAP_HEIGHT;y++){
         };
     }
 }
-
 
 // =====================================
 // OBJETOS
@@ -202,7 +206,6 @@ const objetos = [
 
 ];
 
-
 // =====================================
 // DESENHAR CHÃO
 // =====================================
@@ -224,12 +227,20 @@ function desenharChao(){
             if(x<0 || y<0 || x>=MAP_WIDTH || y>=MAP_HEIGHT) continue;
 
             const tile = mapaGrama[y][x];
-            const img = imagens.gramas[tile.tipo];
+
+            let img;
+
+            // ✅ ESCOLHER IMAGEM CORRETA
+            if(tile.tipo === 5){
+                img = imagens.estrada;
+            }else{
+                img = imagens.gramas[tile.tipo];
+            }
 
             const drawX = x*TILE - camera.x;
             const drawY = y*TILE - camera.y;
 
-            if(img.complete && img.naturalWidth !== 0){
+            if(img && img.complete && img.naturalWidth !== 0){
 
                 ctx.drawImage(img, drawX, drawY, TILE, TILE);
 
