@@ -255,12 +255,12 @@ function desenharChao(){
             const tile = mapaGrama[y][x];
             let img = tile.tipo === 5 ? imagens.estrada : imagens.gramas[tile.tipo];
 
-            const drawX = x*TILE;
-            const drawY = y*TILE;
+            const drawX = (x*TILE - camera.x) * zoom;
+            const drawY = (y*TILE - camera.y) * zoom;
 
             if(img && img.complete && img.naturalWidth !== 0){
 
-                ctx.drawImage(img, drawX, drawY, TILE, TILE);
+                ctx.drawImage(img, drawX, drawY, TILE * zoom, TILE * zoom);
 
                 ctx.fillStyle = `rgba(0,0,0,${tile.sombra})`;
                 ctx.fillRect(drawX, drawY, TILE, TILE);
@@ -289,44 +289,25 @@ function desenharObjetos(){
         const largura = img.width * obj.escala;
         const altura = img.height * obj.escala;
 
-        const baseX = obj.tileX * TILE + TILE/2;
-        const baseY = obj.tileY * TILE + TILE;
+        const drawX = (baseX - largura/2 - camera.x) * zoom;
+        const drawY = (baseY - altura - camera.y) * zoom;
 
         ctx.fillStyle = "rgba(0,0,0,0.25)";
         ctx.fillRect(baseX-largura/4, baseY-3, largura/2, 5);
 
-        ctx.drawImage(
-            img,
-            baseX-largura/2,
-            baseY-altura,
-            largura,
-            altura
-        );
+       ctx.drawImage(img, drawX, drawY, largura * zoom, altura * zoom);
     });
 }
 
 // =====================================
 // LOOP
 // ====================================
-  function loop(){
+function loop(){
 
     ctx.clearRect(0,0,canvas.width,canvas.height);
 
-    ctx.save();
-
-    ctx.scale(zoom, zoom);
-
     desenharChao();
     desenharObjetos();
-
-    ctx.restore();
-
-    requestAnimationFrame(loop);
-}
-    desenharChao();
-    desenharObjetos();
-
-    ctx.setTransform(1,0,0,1,0,0);
 
     requestAnimationFrame(loop);
 }
