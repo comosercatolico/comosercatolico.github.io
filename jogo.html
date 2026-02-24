@@ -49,6 +49,22 @@ function resizeCanvas(){
 resizeCanvas();
 window.addEventListener("resize", resizeCanvas);
 
+    
+// =====================================
+// ZOOM (APENAS SCROLL)
+// =====================================
+
+let zoom = 1;
+
+canvas.addEventListener("wheel", (e)=>{
+    e.preventDefault();
+
+    const zoomSpeed = 0.0015;
+
+    zoom -= e.deltaY * zoomSpeed;
+
+    zoom = Math.max(0.5, Math.min(3, zoom));
+});
 
 // =====================================
 // CÂMERA ARRASTÁVEL
@@ -58,7 +74,10 @@ let camera = { x: 0, y: 0 };
 let dragging = false;
 let lastMouse = { x:0, y:0 };
 
+canvas.addEventListener("contextmenu", e => e.preventDefault());
+
 canvas.addEventListener("mousedown", e=>{
+    if(e.button !== 2) return;
     dragging = true;
     lastMouse.x = e.clientX;
     lastMouse.y = e.clientY;
@@ -72,8 +91,8 @@ window.addEventListener("mousemove", e=>{
     let dx = e.clientX - lastMouse.x;
     let dy = e.clientY - lastMouse.y;
 
-    camera.x -= dx;
-    camera.y -= dy;
+   camera.x -= dx / zoom;
+camera.y -= dy / zoom;
 
     camera.x = Math.max(0, Math.min(camera.x, MAP_WIDTH*TILE - canvas.width));
     camera.y = Math.max(0, Math.min(camera.y, MAP_HEIGHT*TILE - canvas.height));
@@ -373,10 +392,11 @@ function desenharObjetos(){
 function loop(){
 
     ctx.clearRect(0,0,canvas.width,canvas.height);
-
+    ctx.save();
+    ctx.scale(zoom, zoom);
     desenharChao();
     desenharObjetos();
-
+    ctx.restore();
     requestAnimationFrame(loop);
 }
 
