@@ -392,11 +392,21 @@ function desenharObjetos(){
 function loop(){
 
     ctx.clearRect(0,0,canvas.width,canvas.height);
-    ctx.save();
-    ctx.scale(zoom, zoom);
+
+    // 🔥 Aplicar zoom + câmera corretamente
+    ctx.setTransform(
+        zoom, 0,
+        0, zoom,
+        -camera.x * zoom,
+        -camera.y * zoom
+    );
+
     desenharChao();
     desenharObjetos();
-    ctx.restore();
+
+    // resetar transformação
+    ctx.setTransform(1,0,0,1,0,0);
+
     requestAnimationFrame(loop);
 }
 
