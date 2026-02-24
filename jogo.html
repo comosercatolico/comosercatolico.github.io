@@ -70,7 +70,10 @@ canvas.addEventListener("wheel", (e)=>{
 // CÂMERA ARRASTÁVEL
 // =====================================
 
-let camera = { x: 0, y: 0 };
+let camera = {
+    x: MAP_WIDTH * TILE / 2 - canvas.width / 2,
+    y: MAP_HEIGHT * TILE / 2 - canvas.height / 2
+};
 let dragging = false;
 let lastMouse = { x:0, y:0 };
 
@@ -388,18 +391,24 @@ function desenharObjetos(){
 // =====================================
 // LOOP
 // =====================================
-
 function loop(){
 
     ctx.clearRect(0,0,canvas.width,canvas.height);
 
-    // 🔥 Aplicar zoom + câmera corretamente
     ctx.setTransform(
         zoom, 0,
         0, zoom,
         -camera.x * zoom,
         -camera.y * zoom
     );
+
+    desenharChao();
+    desenharObjetos();
+
+    ctx.setTransform(1,0,0,1,0,0);
+
+    requestAnimationFrame(loop);
+}
 
     desenharChao();
     desenharObjetos();
