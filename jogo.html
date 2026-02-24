@@ -60,9 +60,7 @@ canvas.addEventListener("wheel", (e)=>{
     e.preventDefault();
 
     const zoomSpeed = 0.0015;
-
     zoom -= e.deltaY * zoomSpeed;
-
     zoom = Math.max(0.5, Math.min(3, zoom));
 });
 
@@ -74,6 +72,7 @@ let camera = {
     x: MAP_WIDTH * TILE / 2 - canvas.width / 2,
     y: MAP_HEIGHT * TILE / 2 - canvas.height / 2
 };
+
 let dragging = false;
 let lastMouse = { x:0, y:0 };
 
@@ -94,11 +93,11 @@ window.addEventListener("mousemove", e=>{
     let dx = e.clientX - lastMouse.x;
     let dy = e.clientY - lastMouse.y;
 
-   camera.x -= dx / zoom;
-camera.y -= dy / zoom;
+    camera.x -= dx / zoom;
+    camera.y -= dy / zoom;
 
-   camera.x = Math.max(0, Math.min(camera.x, MAP_WIDTH*TILE - canvas.width/zoom));
-camera.y = Math.max(0, Math.min(camera.y, MAP_HEIGHT*TILE - canvas.height/zoom));
+    camera.x = Math.max(0, Math.min(camera.x, MAP_WIDTH*TILE - canvas.width/zoom));
+    camera.y = Math.max(0, Math.min(camera.y, MAP_HEIGHT*TILE - canvas.height/zoom));
 
     lastMouse.x = e.clientX;
     lastMouse.y = e.clientY;
@@ -133,7 +132,6 @@ function registrarImagem(img){
     img.onload = imagemCarregada;
 }
 
-
 // gramas
 for(let i=1;i<=5;i++){
     let img = new Image();
@@ -149,19 +147,15 @@ registrarImagem(imagens.cadeiraDir);
 registrarImagem(imagens.biblioteca);
 registrarImagem(imagens.estrada);
 
-    
 imagens.estrada.src = "tiles/ti.png";
 imagens.mesa.src = "mesa.png";
 imagens.cadeiraEsq.src = "cadeira_esquerda.png";
 imagens.cadeiraDir.src = "cadeira_direita.png";
-imagens.biblioteca.src = "bb.png"; // ✅ BIBLIOTECA
+imagens.biblioteca.src = "bb.png";
 
 
 // =====================================
-// MAPA FIXO COM ESTRADA LARGURA 3
-// =====================================
-// =====================================
-// MAPA COM CRUZ + ESTRADA NA ESCOLA
+// MAPA
 // =====================================
 
 const mapaGrama = [];
@@ -169,50 +163,20 @@ const mapaGrama = [];
 const centroX = Math.floor(MAP_WIDTH / 2);
 const centroY = Math.floor(MAP_HEIGHT / 2);
 
-const escolaY = 12;   // linha da escola
-const largura = 1;    // largura 3 (1 acima, 1 abaixo)
+const escolaY = 12;
+const largura = 1;
 
 for(let y = 0; y < MAP_HEIGHT; y++){
     mapaGrama[y] = [];
 
     for(let x = 0; x < MAP_WIDTH; x++){
 
-        let tipo = 0; // grama
+        let tipo = 0;
 
-        // =========================
-        // CRUZ CENTRAL (largura 3)
-        // =========================
+        if(y >= centroY - largura && y <= centroY + largura) tipo = 5;
+        if(x >= centroX - largura && x <= centroX + largura) tipo = 5;
 
-        // Horizontal
-        if(
-            y >= centroY - largura &&
-            y <= centroY + largura
-        ){
-            tipo = 5;
-        }
-
-        // Vertical
-        if(
-            x >= centroX - largura &&
-            x <= centroX + largura
-        ){
-            tipo = 5;
-        }
-
-        // =========================
-        // ESTRADA NA FRENTE DA ESCOLA
-        // =========================
-
-        if(
-            y >= escolaY - largura &&
-            y <= escolaY + largura
-        ){
-            tipo = 5;
-        }
-
-        // =========================
-        // CONEXÃO DA ESCOLA ATÉ A CRUZ
-        // =========================
+        if(y >= escolaY - largura && y <= escolaY + largura) tipo = 5;
 
         if(
             x >= centroX - largura &&
@@ -229,6 +193,7 @@ for(let y = 0; y < MAP_HEIGHT; y++){
         };
     }
 }
+
 // =====================================
 // OBJETOS
 // =====================================
@@ -237,16 +202,13 @@ const centroTileX = 50;
 const centroTileY = 50;
 
 const objetos = [
-
-    // ✅ BIBLIOTECA NO CANTO SUPERIOR ESQUERDO
     {
-    tipo:"biblioteca",
-    tileX: 7,
-    tileY: 12,   // 🔽 mais para baixo
-    escala: 0.9,
-    layer: 0
+        tipo:"biblioteca",
+        tileX: 7,
+        tileY: 12,
+        escala: 0.9,
+        layer: 0
     },
-
     {
         tipo:"cadeiraEsq",
         tileX: centroTileX - 1.77,
@@ -254,7 +216,6 @@ const objetos = [
         escala: 0.22,
         layer: 0
     },
-
     {
         tipo:"cadeiraDir",
         tileX: centroTileX + 1.77,
@@ -262,7 +223,6 @@ const objetos = [
         escala: 0.22,
         layer: 0
     },
-
     {
         tipo:"mesa",
         tileX: centroTileX,
@@ -270,12 +230,12 @@ const objetos = [
         escala: 0.42,
         layer: 1
     }
-
 ];
 
 // =====================================
 // DESENHAR CHÃO
 // =====================================
+
 function desenharChao(){
 
     const startX = Math.floor(camera.x / TILE);
@@ -293,45 +253,22 @@ function desenharChao(){
             if(x<0 || y<0 || x>=MAP_WIDTH || y>=MAP_HEIGHT) continue;
 
             const tile = mapaGrama[y][x];
+            let img = tile.tipo === 5 ? imagens.estrada : imagens.gramas[tile.tipo];
 
-            let img;
-
-            if(tile.tipo === 5){
-                img = imagens.estrada;
-            }else{
-                img = imagens.gramas[tile.tipo];
-            }
-
-            const drawX = x*TILE - camera.x;
-            const drawY = y*TILE - camera.y;
+            const drawX = x*TILE;
+            const drawY = y*TILE;
 
             if(img && img.complete && img.naturalWidth !== 0){
 
-                if(tile.tipo === 5 && tile.rotacao === 90){
-
-                    ctx.save();
-                    ctx.translate(drawX + TILE/2, drawY + TILE/2);
-                    ctx.rotate(Math.PI / 2);
-                    ctx.drawImage(img, -TILE/2, -TILE/2, TILE, TILE);
-                    ctx.restore();
-
-                }else{
-
-                    ctx.drawImage(img, drawX, drawY, TILE, TILE);
-
-                }
+                ctx.drawImage(img, drawX, drawY, TILE, TILE);
 
                 ctx.fillStyle = `rgba(0,0,0,${tile.sombra})`;
                 ctx.fillRect(drawX, drawY, TILE, TILE);
 
-            }else{
-                ctx.fillStyle = "#2ecc71";
-                ctx.fillRect(drawX, drawY, TILE, TILE);
             }
         }
     }
 }
-
 
 // =====================================
 // DESENHAR OBJETOS
@@ -339,16 +276,9 @@ function desenharChao(){
 
 function desenharObjetos(){
 
-    objetos.sort((a,b)=> {
-
-        if(a.layer !== b.layer){
-            return a.layer - b.layer;
-        }
-
-        const ay = (a.tileY + 1) * TILE;
-        const by = (b.tileY + 1) * TILE;
-
-        return ay - by;
+    objetos.sort((a,b)=>{
+        if(a.layer !== b.layer) return a.layer - b.layer;
+        return (a.tileY - b.tileY);
     });
 
     objetos.forEach(obj=>{
@@ -356,41 +286,29 @@ function desenharObjetos(){
         const img = imagens[obj.tipo];
         if(!img.complete) return;
 
-        const escala = obj.escala;
-
-        const largura = img.width * escala;
-        const altura = img.height * escala;
+        const largura = img.width * obj.escala;
+        const altura = img.height * obj.escala;
 
         const baseX = obj.tileX * TILE + TILE/2;
         const baseY = obj.tileY * TILE + TILE;
 
-        const drawX = baseX - largura/2 - camera.x;
-        const drawY = baseY - altura - camera.y;
-
-        // sombra
         ctx.fillStyle = "rgba(0,0,0,0.25)";
-        ctx.fillRect(
-            baseX - largura/4 - camera.x,
-            baseY - camera.y - 3,
-            largura/2,
-            5
-        );
+        ctx.fillRect(baseX-largura/4, baseY-3, largura/2, 5);
 
         ctx.drawImage(
             img,
-            drawX,
-            drawY,
+            baseX-largura/2,
+            baseY-altura,
             largura,
             altura
         );
-
     });
 }
-
 
 // =====================================
 // LOOP
 // =====================================
+
 function loop(){
 
     ctx.clearRect(0,0,canvas.width,canvas.height);
@@ -405,15 +323,6 @@ function loop(){
     desenharChao();
     desenharObjetos();
 
-    ctx.setTransform(1,0,0,1,0,0);
-
-    requestAnimationFrame(loop);
-}
-
-    desenharChao();
-    desenharObjetos();
-
-    // resetar transformação
     ctx.setTransform(1,0,0,1,0,0);
 
     requestAnimationFrame(loop);
