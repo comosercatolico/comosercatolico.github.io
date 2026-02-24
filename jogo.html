@@ -94,8 +94,8 @@ window.addEventListener("mousemove", e=>{
    camera.x -= dx / zoom;
 camera.y -= dy / zoom;
 
-    camera.x = Math.max(0, Math.min(camera.x, MAP_WIDTH*TILE - canvas.width));
-    camera.y = Math.max(0, Math.min(camera.y, MAP_HEIGHT*TILE - canvas.height));
+   camera.x = Math.max(0, Math.min(camera.x, MAP_WIDTH*TILE - canvas.width/zoom));
+camera.y = Math.max(0, Math.min(camera.y, MAP_HEIGHT*TILE - canvas.height/zoom));
 
     lastMouse.x = e.clientX;
     lastMouse.y = e.clientY;
