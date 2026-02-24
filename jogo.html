@@ -138,15 +138,17 @@ imagens.biblioteca.src = "bb.png"; // ✅ BIBLIOTECA
 // =====================================
 // MAPA FIXO COM ESTRADA LARGURA 3
 // =====================================
-
 // =====================================
-// MAPA FIXO COM ESTRADA NA FRENTE DA ESCOLA
+// MAPA COM CRUZ + ESTRADA NA ESCOLA
 // =====================================
 
 const mapaGrama = [];
 
-const estradaY = 12; // 🔥 mesma linha da escola
-const largura = 1;   // metade da largura (1 pra dar 3 total)
+const centroX = Math.floor(MAP_WIDTH / 2);
+const centroY = Math.floor(MAP_HEIGHT / 2);
+
+const escolaY = 12;   // linha da escola
+const largura = 1;    // largura 3 (1 acima, 1 abaixo)
 
 for(let y = 0; y < MAP_HEIGHT; y++){
     mapaGrama[y] = [];
@@ -155,10 +157,46 @@ for(let y = 0; y < MAP_HEIGHT; y++){
 
         let tipo = 0; // grama
 
-        // Estrada horizontal 3 de largura
+        // =========================
+        // CRUZ CENTRAL (largura 3)
+        // =========================
+
+        // Horizontal
         if(
-            y >= estradaY - largura &&
-            y <= estradaY + largura
+            y >= centroY - largura &&
+            y <= centroY + largura
+        ){
+            tipo = 5;
+        }
+
+        // Vertical
+        if(
+            x >= centroX - largura &&
+            x <= centroX + largura
+        ){
+            tipo = 5;
+        }
+
+        // =========================
+        // ESTRADA NA FRENTE DA ESCOLA
+        // =========================
+
+        if(
+            y >= escolaY - largura &&
+            y <= escolaY + largura
+        ){
+            tipo = 5;
+        }
+
+        // =========================
+        // CONEXÃO DA ESCOLA ATÉ A CRUZ
+        // =========================
+
+        if(
+            x >= centroX - largura &&
+            x <= centroX + largura &&
+            y >= Math.min(escolaY, centroY) &&
+            y <= Math.max(escolaY, centroY)
         ){
             tipo = 5;
         }
