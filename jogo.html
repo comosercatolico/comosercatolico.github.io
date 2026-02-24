@@ -139,10 +139,14 @@ imagens.biblioteca.src = "bb.png"; // ✅ BIBLIOTECA
 // MAPA FIXO COM ESTRADA LARGURA 3
 // =====================================
 
+// =====================================
+// MAPA FIXO COM ESTRADA NA FRENTE DA ESCOLA
+// =====================================
+
 const mapaGrama = [];
 
-const centroX = Math.floor(MAP_WIDTH / 2);
-const centroY = Math.floor(MAP_HEIGHT / 2);
+const estradaY = 12; // 🔥 mesma linha da escola
+const largura = 1;   // metade da largura (1 pra dar 3 total)
 
 for(let y = 0; y < MAP_HEIGHT; y++){
     mapaGrama[y] = [];
@@ -150,38 +154,17 @@ for(let y = 0; y < MAP_HEIGHT; y++){
     for(let x = 0; x < MAP_WIDTH; x++){
 
         let tipo = 0; // grama
-        let rotacao = 0;
 
-        // Estrada horizontal (3 de largura)
+        // Estrada horizontal 3 de largura
         if(
-            y >= centroY - 1 &&
-            y <= centroY + 1
+            y >= estradaY - largura &&
+            y <= estradaY + largura
         ){
             tipo = 5;
-            rotacao = 0;
-        }
-
-        // Estrada vertical (3 de largura)
-        if(
-            x >= centroX - 1 &&
-            x <= centroX + 1
-        ){
-            tipo = 5;
-            rotacao = 90; // 🔥 girar
-        }
-
-        // Centro 3x3 especial
-        if(
-            x >= centroX - 1 && x <= centroX + 1 &&
-            y >= centroY - 1 && y <= centroY + 1
-        ){
-            tipo = 5;
-            rotacao = 0; // centro normal
         }
 
         mapaGrama[y][x] = {
             tipo: tipo,
-            rotacao: rotacao,
             sombra: Math.random() * 0.03
         };
     }
