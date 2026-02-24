@@ -307,19 +307,22 @@ function desenharObjetos(){
 
 // =====================================
 // LOOP
-// =====================================
-
-function loop(){
+// ====================================
+  function loop(){
 
     ctx.clearRect(0,0,canvas.width,canvas.height);
 
-    ctx.setTransform(
-        zoom, 0,
-        0, zoom,
-        -camera.x * zoom,
-        -camera.y * zoom
-    );
+    ctx.save();
 
+    ctx.scale(zoom, zoom);
+
+    desenharChao();
+    desenharObjetos();
+
+    ctx.restore();
+
+    requestAnimationFrame(loop);
+}
     desenharChao();
     desenharObjetos();
 
