@@ -49,37 +49,16 @@ function resizeCanvas(){
 resizeCanvas();
 window.addEventListener("resize", resizeCanvas);
 
-    
-// =====================================
-// ZOOM (APENAS SCROLL)
-// =====================================
-
-let zoom = 1;
-
-canvas.addEventListener("wheel", (e)=>{
-    e.preventDefault();
-
-    const zoomSpeed = 0.0015;
-    zoom -= e.deltaY * zoomSpeed;
-    zoom = Math.max(0.5, Math.min(3, zoom));
-});
 
 // =====================================
 // CÂMERA ARRASTÁVEL
 // =====================================
 
-let camera = {
-    x: MAP_WIDTH * TILE / 2 - canvas.width / 2,
-    y: MAP_HEIGHT * TILE / 2 - canvas.height / 2
-};
-
+let camera = { x: 0, y: 0 };
 let dragging = false;
 let lastMouse = { x:0, y:0 };
 
-canvas.addEventListener("contextmenu", e => e.preventDefault());
-
 canvas.addEventListener("mousedown", e=>{
-    if(e.button !== 2) return;
     dragging = true;
     lastMouse.x = e.clientX;
     lastMouse.y = e.clientY;
@@ -93,11 +72,11 @@ window.addEventListener("mousemove", e=>{
     let dx = e.clientX - lastMouse.x;
     let dy = e.clientY - lastMouse.y;
 
-    camera.x -= dx / zoom;
-    camera.y -= dy / zoom;
+    camera.x -= dx;
+    camera.y -= dy;
 
-    camera.x = Math.max(0, Math.min(camera.x, MAP_WIDTH*TILE - canvas.width/zoom));
-    camera.y = Math.max(0, Math.min(camera.y, MAP_HEIGHT*TILE - canvas.height/zoom));
+    camera.x = Math.max(0, Math.min(camera.x, MAP_WIDTH*TILE - canvas.width));
+    camera.y = Math.max(0, Math.min(camera.y, MAP_HEIGHT*TILE - canvas.height));
 
     lastMouse.x = e.clientX;
     lastMouse.y = e.clientY;
@@ -131,6 +110,7 @@ function registrarImagem(img){
     imagensParaCarregar++;
     img.onload = imagemCarregada;
 }
+
 
 // gramas
 for(let i=1;i<=5;i++){
@@ -173,10 +153,17 @@ for(let y = 0; y < MAP_HEIGHT; y++){
 
         let tipo = 0;
 
-        if(y >= centroY - largura && y <= centroY + largura) tipo = 5;
-        if(x >= centroX - largura && x <= centroX + largura) tipo = 5;
+        if(y >= centroY - largura && y <= centroY + largura){
+            tipo = 5;
+        }
 
-        if(y >= escolaY - largura && y <= escolaY + largura) tipo = 5;
+        if(x >= centroX - largura && x <= centroX + largura){
+            tipo = 5;
+        }
+
+        if(y >= escolaY - largura && y <= escolaY + largura){
+            tipo = 5;
+        }
 
         if(
             x >= centroX - largura &&
@@ -194,6 +181,7 @@ for(let y = 0; y < MAP_HEIGHT; y++){
     }
 }
 
+
 // =====================================
 // OBJETOS
 // =====================================
@@ -202,6 +190,7 @@ const centroTileX = 50;
 const centroTileY = 50;
 
 const objetos = [
+
     {
         tipo:"biblioteca",
         tileX: 7,
@@ -209,6 +198,7 @@ const objetos = [
         escala: 0.9,
         layer: 0
     },
+
     {
         tipo:"cadeiraEsq",
         tileX: centroTileX - 1.77,
@@ -216,6 +206,7 @@ const objetos = [
         escala: 0.22,
         layer: 0
     },
+
     {
         tipo:"cadeiraDir",
         tileX: centroTileX + 1.77,
@@ -223,6 +214,7 @@ const objetos = [
         escala: 0.22,
         layer: 0
     },
+
     {
         tipo:"mesa",
         tileX: centroTileX,
@@ -230,7 +222,9 @@ const objetos = [
         escala: 0.42,
         layer: 1
     }
+
 ];
+
 
 // =====================================
 // DESENHAR CHÃO
@@ -253,22 +247,27 @@ function desenharChao(){
             if(x<0 || y<0 || x>=MAP_WIDTH || y>=MAP_HEIGHT) continue;
 
             const tile = mapaGrama[y][x];
-            let img = tile.tipo === 5 ? imagens.estrada : imagens.gramas[tile.tipo];
 
-            const drawX = (x*TILE - camera.x) * zoom;
-            const drawY = (y*TILE - camera.y) * zoom;
+            let img = (tile.tipo === 5) ? imagens.estrada : imagens.gramas[tile.tipo];
+
+            const drawX = x*TILE - camera.x;
+            const drawY = y*TILE - camera.y;
 
             if(img && img.complete && img.naturalWidth !== 0){
 
-                ctx.drawImage(img, drawX, drawY, TILE * zoom, TILE * zoom);
+                ctx.drawImage(img, drawX, drawY, TILE, TILE);
 
                 ctx.fillStyle = `rgba(0,0,0,${tile.sombra})`;
                 ctx.fillRect(drawX, drawY, TILE, TILE);
 
+            }else{
+                ctx.fillStyle = "#2ecc71";
+                ctx.fillRect(drawX, drawY, TILE, TILE);
             }
         }
     }
 }
+
 
 // =====================================
 // DESENHAR OBJETOS
@@ -276,9 +275,12 @@ function desenharChao(){
 
 function desenharObjetos(){
 
-    objetos.sort((a,b)=>{
+    objetos.sort((a,b)=> {
         if(a.layer !== b.layer) return a.layer - b.layer;
-        return (a.tileY - b.tileY);
+
+        const ay = (a.tileY + 1) * TILE;
+        const by = (b.tileY + 1) * TILE;
+        return ay - by;
     });
 
     objetos.forEach(obj=>{
@@ -289,26 +291,34 @@ function desenharObjetos(){
         const largura = img.width * obj.escala;
         const altura = img.height * obj.escala;
 
-        const drawX = (baseX - largura/2 - camera.x) * zoom;
-        const drawY = (baseY - altura - camera.y) * zoom;
+        const baseX = obj.tileX * TILE + TILE/2;
+        const baseY = obj.tileY * TILE + TILE;
+
+        const drawX = baseX - largura/2 - camera.x;
+        const drawY = baseY - altura - camera.y;
 
         ctx.fillStyle = "rgba(0,0,0,0.25)";
-        ctx.fillRect(baseX-largura/4, baseY-3, largura/2, 5);
+        ctx.fillRect(
+            baseX - largura/4 - camera.x,
+            baseY - camera.y - 3,
+            largura/2,
+            5
+        );
 
-       ctx.drawImage(img, drawX, drawY, largura * zoom, altura * zoom);
+        ctx.drawImage(img, drawX, drawY, largura, altura);
+
     });
 }
 
+
 // =====================================
 // LOOP
-// ====================================
+// =====================================
+
 function loop(){
-
     ctx.clearRect(0,0,canvas.width,canvas.height);
-
     desenharChao();
     desenharObjetos();
-
     requestAnimationFrame(loop);
 }
 
