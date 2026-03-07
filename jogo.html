@@ -53,21 +53,21 @@ window.addEventListener("resize", resizeCanvas);
 // =====================================
 // CÂMERA ARRASTÁVEL
 // =====================================
-let camera = { x: 0, y: 0 };
-let dragging = false;
-let lastMouse = { x:0, y:0 };
 
-canvas.addEventListener("mousedown", e=>{
+let dragging = false;
+let lastMouse = {x:0, y:0};
+
+canvas.addEventListener("pointerdown", e => {
+
     dragging = true;
     lastMouse.x = e.clientX;
     lastMouse.y = e.clientY;
+
+    canvas.setPointerCapture(e.pointerId);
+
 });
 
-window.addEventListener("mouseup", ()=>{
-    dragging = false;
-});
-
-window.addEventListener("mousemove", e=>{
+canvas.addEventListener("pointermove", e => {
 
     if(!dragging) return;
 
@@ -88,6 +88,16 @@ window.addEventListener("mousemove", e=>{
 
 });
 
+canvas.addEventListener("pointerup", e => {
+
+    dragging = false;
+    canvas.releasePointerCapture(e.pointerId);
+
+});
+
+canvas.addEventListener("pointercancel", () => {
+    dragging = false;
+});
 // =====================================
 // IMAGENS
 // =====================================
