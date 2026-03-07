@@ -36,7 +36,14 @@ const MAP_HEIGHT = 100;
 const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d");
 ctx.imageSmoothingEnabled = false;
+// =====================================
+// CÂMERA
+// =====================================
 
+let camera = {
+    x: MAP_WIDTH * TILE / 2 - window.innerWidth / 2,
+    y: MAP_HEIGHT * TILE / 2 - window.innerHeight / 2
+};
 
 // =====================================
 // CANVAS RESPONSIVO
@@ -48,7 +55,8 @@ function resizeCanvas(){
 }
 resizeCanvas();
 window.addEventListener("resize", resizeCanvas);
-
+camera.x = MAP_WIDTH * TILE / 2 - canvas.width / 2;
+camera.y = MAP_HEIGHT * TILE / 2 - canvas.height / 2;
 
 // =====================================
 // CÂMERA ARRASTÁVEL
