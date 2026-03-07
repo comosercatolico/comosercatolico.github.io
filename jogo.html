@@ -274,28 +274,45 @@ function atualizarSanta(){
     const centroTileX = Math.round(santa.tileX);
     const centroTileY = Math.round(santa.tileY);
 
-    if(Math.abs(santa.tileX - centroTileX) < 0.05 &&
-       Math.abs(santa.tileY - centroTileY) < 0.05){
+    if(
+    Math.abs(santa.tileX - centroTileX) < santa.velocidade &&
+    Math.abs(santa.tileY - centroTileY) < santa.velocidade
+    ){
+    santa.tileX = centroTileX;
+    santa.tileY = centroTileY;
+  const direcoes = [
+    {x:1,y:0},
+    {x:-1,y:0},
+    {x:0,y:1},
+    {x:0,y:-1}
+];
 
-        const direcoes = [
-            {x:1,y:0},
-            {x:-1,y:0},
-            {x:0,y:1},
-            {x:0,y:-1}
-        ];
+const possiveis = [];
 
-        const possiveis = [];
+for(let d of direcoes){
 
-        for(let d of direcoes){
+    const nx = centroTileX + d.x;
+    const ny = centroTileY + d.y;
 
-            const nx = centroTileX + d.x;
-            const ny = centroTileY + d.y;
+    if(nx < 0 || ny < 0 || nx >= MAP_WIDTH || ny >= MAP_HEIGHT) continue;
 
-            if(nx < 0 || ny < 0 || nx >= MAP_WIDTH || ny >= MAP_HEIGHT) continue;
+    if(mapaGrama[ny][nx].tipo === 5){
 
-            if(mapaGrama[ny][nx].tipo === 5){
-                possiveis.push(d);
-            }
+        // evitar voltar imediatamente
+        if(d.x === -santa.dirX && d.y === -santa.dirY) continue;
+
+        possiveis.push(d);
+    }
+}
+
+if(possiveis.length > 0){
+
+    const escolha = possiveis[Math.floor(Math.random()*possiveis.length)];
+
+    santa.dirX = escolha.x;
+    santa.dirY = escolha.y;
+
+}
         }
 
         const filtradas = possiveis.filter(d =>
