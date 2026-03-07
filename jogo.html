@@ -394,7 +394,10 @@ function desenharObjetos(){
 function desenharSanta(){
 
     const img = imagens.santaAnda[Math.floor(santa.frame)];
-    if(!img.complete) return;
+
+if(!img || !img.complete || img.naturalWidth === 0){
+    return;
+}
 
     const largura = img.width * santa.escala;
     const altura = img.height * santa.escala;
