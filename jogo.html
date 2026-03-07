@@ -365,7 +365,7 @@ function desenharObjetos(){
     objetos.forEach(obj=>{
 
         const img = imagens[obj.tipo];
-        if(!img.complete) return;
+        if(!img.complete || img.naturalWidth === 0) return;
 
         const largura = img.width * obj.escala;
         const altura = img.height * obj.escala;
