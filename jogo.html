@@ -53,26 +53,22 @@ window.addEventListener("resize", resizeCanvas);
 // =====================================
 // CÂMERA ARRASTÁVEL
 // =====================================
-
 let camera = { x: 0, y: 0 };
 let dragging = false;
 let lastMouse = { x:0, y:0 };
 
-    canvas.addEventListener("mousedown", e=>{
+canvas.addEventListener("mousedown", e=>{
     dragging = true;
     lastMouse.x = e.clientX;
     lastMouse.y = e.clientY;
 });
 
-canvas.addEventListener("mouseup", ()=>{
+window.addEventListener("mouseup", ()=>{
     dragging = false;
 });
 
-canvas.addEventListener("mouseleave", ()=>{
-    dragging = false;
-});
+window.addEventListener("mousemove", e=>{
 
-canvas.addEventListener("mousemove", e=>{
     if(!dragging) return;
 
     const dx = e.clientX - lastMouse.x;
@@ -81,16 +77,16 @@ canvas.addEventListener("mousemove", e=>{
     camera.x -= dx;
     camera.y -= dy;
 
-    const maxX = MAP_WIDTH * TILE - canvas.width;
-    const maxY = MAP_HEIGHT * TILE - canvas.height;
+    const maxX = Math.max(0, MAP_WIDTH * TILE - canvas.width);
+    const maxY = Math.max(0, MAP_HEIGHT * TILE - canvas.height);
 
     camera.x = Math.max(0, Math.min(camera.x, maxX));
     camera.y = Math.max(0, Math.min(camera.y, maxY));
 
     lastMouse.x = e.clientX;
     lastMouse.y = e.clientY;
-});
 
+});
 
 // =====================================
 // IMAGENS
