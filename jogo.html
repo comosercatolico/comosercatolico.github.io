@@ -60,35 +60,41 @@ camera.y = MAP_HEIGHT * TILE / 2 - canvas.height / 2;
 
 
 // =====================================
-// CAMERA RTS (ARRASTAR MAPA)
+// CAMERA ARRASTÁVEL SIMPLES
 // =====================================
 
 let dragging = false;
+let lastX = 0;
+let lastY = 0;
 
-canvas.addEventListener("mousedown", () => {
+canvas.onmousedown = (e)=>{
     dragging = true;
-});
+    lastX = e.clientX;
+    lastY = e.clientY;
+};
 
-window.addEventListener("mouseup", () => {
+canvas.onmouseup = ()=>{
     dragging = false;
-});
+};
 
-canvas.addEventListener("mousemove", (e) => {
+canvas.onmouseleave = ()=>{
+    dragging = false;
+};
+
+canvas.onmousemove = (e)=>{
 
     if(!dragging) return;
 
-    camera.x -= e.movementX;
-    camera.y -= e.movementY;
+    const dx = e.clientX - lastX;
+    const dy = e.clientY - lastY;
 
-    const maxX = Math.max(0, MAP_WIDTH * TILE - canvas.width);
-    const maxY = Math.max(0, MAP_HEIGHT * TILE - canvas.height);
+    camera.x -= dx;
+    camera.y -= dy;
 
-    if(camera.x < 0) camera.x = 0;
-    if(camera.y < 0) camera.y = 0;
-    if(camera.x > maxX) camera.x = maxX;
-    if(camera.y > maxY) camera.y = maxY;
+    lastX = e.clientX;
+    lastY = e.clientY;
 
-});
+};
 // =====================================
 // IMAGENS
 // =====================================
