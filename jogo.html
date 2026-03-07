@@ -95,6 +95,7 @@ const imagens = {
     biblioteca: new Image(),
     estrada: new Image()
 };
+imagens.santaAnda = [];
 
 let imagensParaCarregar = 0;
 let imagensCarregadas = 0;
@@ -111,7 +112,6 @@ function registrarImagem(img){
     img.onload = imagemCarregada;
 }
 
-
 // gramas
 for(let i=1;i<=5;i++){
     let img = new Image();
@@ -119,7 +119,13 @@ for(let i=1;i<=5;i++){
     img.src = `grama${i}.jpg`;
     imagens.gramas.push(img);
 }
-
+// animação santa andando
+for(let i=1;i<=9;i++){
+    let img = new Image();
+    registrarImagem(img);
+    img.src = `anda${i}.png`;
+    imagens.santaAnda.push(img);
+}
 // objetos
 registrarImagem(imagens.mesa);
 registrarImagem(imagens.cadeiraEsq);
@@ -224,8 +230,39 @@ const objetos = [
     }
 
 ];
+    
+// =====================================
+// NPC SANTA
+// =====================================
 
+const santa = {
+    tileX: 7,
+    tileY: 12,
+    frame: 0,
+    tempo: 0,
+    velocidade: 0.02,
+    escala: 0.35
+};
+function atualizarSanta(){
 
+    santa.tempo++;
+
+    if(santa.tempo > 8){
+        santa.tempo = 0;
+        santa.frame++;
+        if(santa.frame >= imagens.santaAnda.length){
+            santa.frame = 0;
+        }
+    }
+
+    // andar para direita na estrada
+    santa.tileX += santa.velocidade;
+
+    if(santa.tileX > MAP_WIDTH-5){
+        santa.tileX = 0;
+    }
+
+}
 // =====================================
 // DESENHAR CHÃO
 // =====================================
@@ -309,7 +346,25 @@ function desenharObjetos(){
 
     });
 }
+///-------------------------------///
+///       DESENHAR SANTA          ///
+///-------------------------------///    
+function desenharSanta(){
 
+    const img = imagens.santaAnda[Math.floor(santa.frame)];
+    if(!img.complete) return;
+
+    const largura = img.width * santa.escala;
+    const altura = img.height * santa.escala;
+
+    const baseX = santa.tileX * TILE + TILE/2;
+    const baseY = santa.tileY * TILE + TILE;
+
+    const drawX = baseX - largura/2 - camera.x;
+    const drawY = baseY - altura - camera.y;
+
+    ctx.drawImage(img, drawX, drawY, largura, altura);
+}
 
 // =====================================
 // LOOP
@@ -317,11 +372,15 @@ function desenharObjetos(){
 
 function loop(){
     ctx.clearRect(0,0,canvas.width,canvas.height);
+
+    atualizarSanta();
+
     desenharChao();
     desenharObjetos();
+    desenharSanta();
+
     requestAnimationFrame(loop);
 }
-
 </script>
 </body>
 </html>
