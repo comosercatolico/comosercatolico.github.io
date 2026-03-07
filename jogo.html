@@ -58,25 +58,34 @@ let camera = { x: 0, y: 0 };
 let dragging = false;
 let lastMouse = { x:0, y:0 };
 
-canvas.addEventListener("mousedown", e=>{
+    canvas.addEventListener("mousedown", e=>{
     dragging = true;
     lastMouse.x = e.clientX;
     lastMouse.y = e.clientY;
 });
 
-window.addEventListener("mouseup", ()=> dragging=false);
+canvas.addEventListener("mouseup", ()=>{
+    dragging = false;
+});
 
-window.addEventListener("mousemove", e=>{
+canvas.addEventListener("mouseleave", ()=>{
+    dragging = false;
+});
+
+canvas.addEventListener("mousemove", e=>{
     if(!dragging) return;
 
-    let dx = e.clientX - lastMouse.x;
-    let dy = e.clientY - lastMouse.y;
+    const dx = e.clientX - lastMouse.x;
+    const dy = e.clientY - lastMouse.y;
 
     camera.x -= dx;
     camera.y -= dy;
 
-    camera.x = Math.max(0, Math.min(camera.x, Math.max(0, MAP_WIDTH*TILE - canvas.width)));
-    camera.y = Math.max(0, Math.min(camera.y, Math.max(0, MAP_HEIGHT*TILE - canvas.height)));
+    const maxX = MAP_WIDTH * TILE - canvas.width;
+    const maxY = MAP_HEIGHT * TILE - canvas.height;
+
+    camera.x = Math.max(0, Math.min(camera.x, maxX));
+    camera.y = Math.max(0, Math.min(camera.y, maxY));
 
     lastMouse.x = e.clientX;
     lastMouse.y = e.clientY;
