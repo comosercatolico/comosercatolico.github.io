@@ -252,7 +252,9 @@ const santa = {
     velocidade: 0.03,
     escala: 0.35,
     dirX: 1,
-    dirY: 0
+    dirY: 0,
+    lastDirX: 0,
+    lastDirY: 0
 };
 function atualizarSanta(){
 
@@ -296,10 +298,16 @@ function atualizarSanta(){
             }
         }
 
-        if(possiveis.length > 0){
-            const escolha = possiveis[Math.floor(Math.random()*possiveis.length)];
-            santa.dirX = escolha.x;
-            santa.dirY = escolha.y;
+        const filtradas = possiveis.filter(d =>
+    !(d.x === -santa.dirX && d.y === -santa.dirY)
+);
+
+const lista = filtradas.length > 0 ? filtradas : possiveis;
+
+const escolha = lista[Math.floor(Math.random()*lista.length)];
+
+santa.dirX = escolha.x;
+santa.dirY = escolha.y;
         }
 
     }
