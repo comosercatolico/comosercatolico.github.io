@@ -9,14 +9,25 @@
      <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 <style>
 body{
+body{
 margin:0;
 font-family:"Inter",sans-serif;
-background:
-linear-gradient(rgba(0,0,0,0.55),rgba(0,0,0,0.55)),
-url("js/fun.png") center / cover fixed no-repeat;
-color:#222;
-}
 
+background:url("js/fun.png") center / cover fixed no-repeat;
+
+}
+body::before{
+content:"";
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+
+background:rgba(0,0,0,0.35);
+
+z-index:-1;
+}
 /* HEADER */
 
 header{
@@ -99,32 +110,28 @@ background:#8b6f3d;
 
 /* CARD CENTRAL */
 
-main,section{
+main{
 
 max-width:850px;
 
 margin:60px auto;
 
-background:rgba(255,255,255,0.96);
+background:rgba(255,255,255,0.95);
 
-border-radius:16px;
+border-radius:18px;
 
-padding:40px;
+padding:45px;
 
-box-shadow:0 15px 40px rgba(0,0,0,0.35);
+box-shadow:0 20px 60px rgba(0,0,0,0.45);
+
+backdrop-filter:blur(3px);
 
 }
 
 main h2{
-
 font-family:"Libre Baskerville",serif;
-
-font-size:30px;
-
-margin-top:0;
-
+font-size:32px;
 }
-
 /* TEXTO */
 
 main p{
