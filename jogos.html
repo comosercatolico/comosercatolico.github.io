@@ -1,128 +1,99 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+
 <meta charset="UTF-8">
-<title>Jogos</title>
+<title>Jogos – Lux Fidei</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<style>
+<link rel="stylesheet" href="style.css">
 
-body{
-margin:0;
-font-family:Arial;
-background:#111;
-color:white;
-}
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 
-header{
-text-align:center;
-padding:30px;
-background:black;
-}
-
-h1{
-margin:0;
-}
-
-.container{
-max-width:1000px;
-margin:auto;
-padding:20px;
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-gap:20px;
-}
-
-.card{
-
-background:#1a1a1a;
-border-radius:10px;
-overflow:hidden;
-transition:0.2s;
-
-}
-
-.card:hover{
-transform:scale(1.03);
-}
-
-.card img{
-width:100%;
-display:block;
-}
-
-.card-content{
-padding:15px;
-}
-
-.card h3{
-margin:0 0 10px 0;
-}
-
-.card p{
-font-size:14px;
-color:#bbb;
-}
-
-.card a{
-display:inline-block;
-margin-top:10px;
-padding:8px 14px;
-background:#8b6f3d;
-color:white;
-text-decoration:none;
-border-radius:6px;
-}
-
-.card a:hover{
-background:#a8874b;
-}
-
-</style>
 </head>
 
 <body>
 
+<!-- MENU LATERAL -->
+<div class="sidebar" id="sidebar">
+
+<a href="#" onclick="fecharMenu()">✖ Fechar</a>
+
+<a href="index.html">Início</a>
+
+<a href="index.html#liturgia">Liturgia diária</a>
+
+<a href="jogos.html">Jogos</a>
+
+<hr>
+
+<a href="sobre.html">Sobre</a>
+
+<a href="privacy.html">Privacidade</a>
+
+</div>
+
 <header>
-<h1>Jogos</h1>
+
+<span class="menu-btn" onclick="abrirMenu()">☰</span>
+
+<h1>Lux Fidei</h1>
+<p style="opacity:0.8">Luz da Fé Católica</p>
+
 </header>
 
-<div class="container">
+<nav>
 
-<!-- JOGO 1 -->
-<div class="card">
+<a href="index.html">Início</a>
 
-<img src="thumb1.png">
+<a href="index.html#liturgia">Liturgia diária</a>
 
-<div class="card-content">
+<a href="jogos.html">Jogos</a>
+
+</nav>
+
+<!-- CONTEÚDO DOS JOGOS -->
+<main id="inicio">
+
+<h2>Jogos</h2>
+
+<p>Aqui você encontrará jogos inspirados na fé católica.</p>
+
+<div class="jogos-grid">
+
+<div class="jogo-card">
+
+<img src="thumb1.png" style="width:100%; border-radius:8px;">
 
 <h3>Santa Teresinha Idle</h3>
 
-<p>Ajude Santa Teresinha a cultivar rosas e crescer espiritualmente.</p>
+<p>Cultive rosas com Santa Teresinha.</p>
 
 <a href="jogo.html">Jogar</a>
 
 </div>
-</div>
-
-
-<!-- JOGO 2 -->
-<div class="card">
-
-<img src="thumb2.png">
-
-<div class="card-content">
-
-<h3>Outro jogo</h3>
-
-<p>Descrição do jogo.</p>
-
-<a href="outrojogo.html">Jogar</a>
 
 </div>
-</div>
 
-</div>
+</main>
+
+<footer>
+
+© 2026 – Lux Fidei
+
+</footer>
+
+<script>
+
+function abrirMenu() {
+document.getElementById("sidebar").style.left = "0";
+}
+
+function fecharMenu() {
+document.getElementById("sidebar").style.left = "-260px";
+}
+
+</script>
 
 </body>
 </html>
