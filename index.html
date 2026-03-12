@@ -153,6 +153,40 @@ document.getElementById("liturgia").style.display = "block";
 carregarLiturgia();
 
 }
+///ANIMAÇÃO MENUUUUUUUUUUUUU///
+
+const indicator = document.querySelector(".menu-indicator");
+const items = document.querySelectorAll(".menu-item");
+
+function updateIndicator(el){
+
+indicator.style.width = el.offsetWidth + "px";
+indicator.style.left = el.offsetLeft + "px";
+
+}
+
+items.forEach(item => {
+
+item.addEventListener("click", function(){
+
+items.forEach(i => i.classList.remove("active"));
+
+this.classList.add("active");
+
+updateIndicator(this);
+
+});
+
+});
+
+window.onload = () => {
+
+const active = document.querySelector(".menu-item.active");
+
+updateIndicator(active);
+
+};
+
 
 </script>
 
