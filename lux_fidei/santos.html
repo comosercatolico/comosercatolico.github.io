@@ -1,1 +1,321 @@
-a
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+
+<meta charset="UTF-8">
+<title>Santos – Lux Fidei</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="../style.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+
+/* CABEÇALHO SANTOS */
+
+.santos-header{
+max-width:900px;
+margin:50px auto 20px;
+padding:0 20px;
+text-align:center;
+}
+
+.santos-header h2{
+font-family:"Libre Baskerville",serif;
+font-size:38px;
+margin-bottom:10px;
+}
+
+.santos-header p{
+color:#555;
+}
+
+/* PESQUISA */
+
+.santos-pesquisa{
+max-width:500px;
+margin:30px auto;
+display:flex;
+}
+
+.santos-pesquisa input{
+
+width:100%;
+padding:12px;
+border-radius:8px;
+border:1px solid #ccc;
+font-size:16px;
+
+}
+
+/* GRID */
+
+.santos-grid{
+
+max-width:1100px;
+margin:40px auto;
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+gap:25px;
+padding:20px;
+
+}
+
+/* CARD */
+
+.santo-card{
+
+background:white;
+border-radius:12px;
+box-shadow:0 6px 15px rgba(0,0,0,0.12);
+overflow:hidden;
+transition:0.3s;
+
+}
+
+.santo-card:hover{
+
+transform:translateY(-6px);
+box-shadow:0 12px 25px rgba(0,0,0,0.18);
+
+}
+
+.santo-card img{
+
+width:100%;
+height:220px;
+object-fit:cover;
+
+}
+
+.santo-card-content{
+
+padding:18px;
+
+}
+
+.santo-card h3{
+
+margin:0 0 8px;
+font-family:"Libre Baskerville",serif;
+
+}
+
+.santo-card p{
+
+font-size:14px;
+color:#555;
+margin-bottom:15px;
+
+}
+
+.santo-card a{
+
+text-decoration:none;
+background:#8b6f3d;
+color:white;
+padding:8px 14px;
+border-radius:6px;
+font-size:14px;
+
+}
+
+.santo-card a:hover{
+
+background:#a0814d;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- MENU LATERAL -->
+<div class="sidebar" id="sidebar">
+
+<a href="#" onclick="fecharMenu()">✖ Fechar</a>
+
+<a href="../index.html">Início</a>
+
+<a href="../index.html#liturgia">Liturgia diária</a>
+
+<a href="santos.html">Santos</a>
+
+<a href="biblioteca.html">Biblioteca</a>
+
+<a href="estudos.html">Estudos</a>
+
+<a href="../jogos.html">Jogos</a>
+
+<hr>
+
+<a href="../sobre.html">Sobre</a>
+
+<a href="../privacy.html">Privacidade</a>
+
+</div>
+
+<header>
+
+<span class="menu-btn" onclick="abrirMenu()">☰</span>
+
+<h1>Lux Fidei</h1>
+<p style="opacity:0.8">Luz da Fé Católica</p>
+
+</header>
+
+<!-- MENU PRINCIPAL -->
+
+<nav class="menu">
+
+<a href="../index.html" class="menu-item">Início</a>
+
+<a href="../index.html#liturgia" class="menu-item">Liturgia</a>
+
+<a href="santos.html" class="menu-item active">Santos</a>
+
+<a href="biblioteca.html" class="menu-item">Biblioteca</a>
+
+<a href="estudos.html" class="menu-item">Estudos</a>
+
+<a href="../jogos.html" class="menu-item">Jogos</a>
+
+<span class="menu-indicator"></span>
+
+</nav>
+
+<!-- CABEÇALHO -->
+
+<section class="santos-header">
+
+<h2>Santos da Igreja</h2>
+
+<p>
+A Igreja Católica reconhece ao longo dos séculos homens e mulheres que viveram
+de maneira heroica a fé cristã. Nesta seção você poderá conhecer a vida,
+os milagres e os ensinamentos de cada santo.
+</p>
+
+</section>
+
+<!-- PESQUISA -->
+
+<div class="santos-pesquisa">
+
+<input type="text" placeholder="Pesquisar santo...">
+
+</div>
+
+<!-- GRID DE SANTOS -->
+
+<section class="santos-grid">
+
+<div class="santo-card">
+
+<img src="../imagens/teresinha.jpg">
+
+<div class="santo-card-content">
+
+<h3>Santa Teresinha</h3>
+
+<p>
+Carmelita francesa conhecida como a “Pequena Flor”. Doutora da Igreja e
+modelo de humildade e confiança em Deus.
+</p>
+
+<a href="#">Ler vida</a>
+
+</div>
+
+</div>
+
+<div class="santo-card">
+
+<img src="../imagens/francisco.jpg">
+
+<div class="santo-card-content">
+
+<h3>São Francisco de Assis</h3>
+
+<p>
+Fundador da Ordem Franciscana. Viveu em extrema pobreza e amor radical
+a Cristo e à criação.
+</p>
+
+<a href="#">Ler vida</a>
+
+</div>
+
+</div>
+
+<div class="santo-card">
+
+<img src="../imagens/agostinho.jpg">
+
+<div class="santo-card-content">
+
+<h3>Santo Agostinho</h3>
+
+<p>
+Grande doutor da Igreja. Sua obra influenciou profundamente a teologia
+cristã ocidental.
+</p>
+
+<a href="#">Ler vida</a>
+
+</div>
+
+</div>
+
+</section>
+
+<footer>
+
+© 2026 – Lux Fidei
+
+</footer>
+
+<script>
+
+/* MENU LATERAL */
+
+function abrirMenu(){
+document.getElementById("sidebar").style.left="0";
+}
+
+function fecharMenu(){
+document.getElementById("sidebar").style.left="-260px";
+}
+
+/* ANIMAÇÃO MENU */
+
+const indicator = document.querySelector(".menu-indicator");
+const items = document.querySelectorAll(".menu-item");
+
+function updateIndicator(el){
+indicator.style.width = el.offsetWidth + "px";
+indicator.style.left = el.offsetLeft + "px";
+}
+
+items.forEach(item=>{
+item.addEventListener("click",function(){
+
+items.forEach(i=>i.classList.remove("active"));
+this.classList.add("active");
+updateIndicator(this);
+
+});
+});
+
+window.onload=()=>{
+const active=document.querySelector(".menu-item.active");
+updateIndicator(active);
+}
+
+</script>
+
+</body>
+</html>
