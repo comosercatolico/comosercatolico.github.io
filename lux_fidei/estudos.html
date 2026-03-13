@@ -1,1 +1,394 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
 
+<meta charset="UTF-8">
+<title>Estudos – Lux Fidei</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="../style.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+
+/* CABEÇALHO */
+
+.estudos-header{
+max-width:900px;
+margin:50px auto 20px;
+text-align:center;
+padding:0 20px;
+}
+
+.estudos-header h2{
+font-family:"Libre Baskerville",serif;
+font-size:40px;
+}
+
+.estudos-header p{
+color:#555;
+line-height:1.6;
+}
+
+/* CATEGORIAS */
+
+.categorias{
+display:flex;
+flex-wrap:wrap;
+gap:10px;
+justify-content:center;
+margin:30px auto;
+max-width:900px;
+}
+
+.categoria-btn{
+background:#111;
+color:white;
+border:none;
+padding:10px 16px;
+border-radius:20px;
+cursor:pointer;
+transition:0.3s;
+}
+
+.categoria-btn:hover{
+background:#8b6f3d;
+}
+
+.categoria-btn.active{
+background:#d4b06a;
+color:black;
+}
+
+/* GRID */
+
+.estudos-grid{
+
+max-width:1100px;
+margin:40px auto;
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+gap:25px;
+padding:20px;
+
+}
+
+/* CARD */
+
+.estudo-card{
+
+background:white;
+border-radius:12px;
+padding:25px;
+box-shadow:0 6px 15px rgba(0,0,0,0.12);
+cursor:pointer;
+transition:0.3s;
+
+}
+
+.estudo-card:hover{
+
+transform:translateY(-6px);
+box-shadow:0 12px 25px rgba(0,0,0,0.18);
+
+}
+
+.estudo-card h3{
+font-family:"Libre Baskerville",serif;
+color:#5a3e1b;
+margin-top:0;
+}
+
+.estudo-card p{
+font-size:14px;
+color:#555;
+}
+
+/* CONTEÚDO */
+
+.estudo-conteudo{
+
+max-width:900px;
+margin:40px auto;
+padding:35px;
+background:white;
+border-radius:12px;
+box-shadow:0 8px 20px rgba(0,0,0,0.15);
+display:none;
+
+}
+
+.estudo-conteudo h2{
+font-family:"Libre Baskerville",serif;
+}
+
+.estudo-conteudo p{
+line-height:1.8;
+}
+
+.voltar{
+margin-top:20px;
+padding:10px 18px;
+border:none;
+background:#8b6f3d;
+color:white;
+border-radius:6px;
+cursor:pointer;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- MENU LATERAL -->
+
+<div class="sidebar" id="sidebar">
+
+<a href="#" onclick="fecharMenu()">✖ Fechar</a>
+
+<a href="../index.html">Início</a>
+
+<a href="../index.html#liturgia">Liturgia diária</a>
+
+<a href="santos.html">Santos</a>
+
+<a href="biblioteca.html">Biblioteca</a>
+
+<a href="estudos.html">Estudos</a>
+
+<a href="../jogos.html">Jogos</a>
+
+<hr>
+
+<a href="../sobre.html">Sobre</a>
+
+<a href="../privacy.html">Privacidade</a>
+
+</div>
+
+<header>
+
+<span class="menu-btn" onclick="abrirMenu()">☰</span>
+
+<h1>Lux Fidei</h1>
+<p style="opacity:0.8">Luz da Fé Católica</p>
+
+</header>
+
+<nav class="menu">
+
+<a href="../index.html" class="menu-item">Início</a>
+
+<a href="../index.html#liturgia" class="menu-item">Liturgia</a>
+
+<a href="santos.html" class="menu-item">Santos</a>
+
+<a href="biblioteca.html" class="menu-item">Biblioteca</a>
+
+<a href="estudos.html" class="menu-item active">Estudos</a>
+
+<a href="../jogos.html" class="menu-item">Jogos</a>
+
+<span class="menu-indicator"></span>
+
+</nav>
+
+<section class="estudos-header">
+
+<h2>Centro de Estudos da Fé Católica</h2>
+
+<p>
+Aqui estão organizados ensinamentos fundamentais da fé católica,
+desde a catequese básica até temas profundos de teologia.
+</p>
+
+</section>
+
+<!-- CATEGORIAS -->
+
+<div class="categorias">
+
+<button class="categoria-btn active" onclick="filtrar('todos')">Todos</button>
+
+<button class="categoria-btn" onclick="filtrar('catequese')">Catequese</button>
+
+<button class="categoria-btn" onclick="filtrar('sacramentos')">Sacramentos</button>
+
+<button class="categoria-btn" onclick="filtrar('moral')">Moral Cristã</button>
+
+<button class="categoria-btn" onclick="filtrar('igreja')">Igreja</button>
+
+<button class="categoria-btn" onclick="filtrar('teologia')">Teologia</button>
+
+</div>
+
+<!-- GRID -->
+
+<section class="estudos-grid">
+
+<div class="estudo-card" data-cat="catequese" onclick="abrirEstudo('deus')">
+<h3>Quem é Deus</h3>
+<p>Introdução ao conhecimento de Deus.</p>
+</div>
+
+<div class="estudo-card" data-cat="catequese" onclick="abrirEstudo('jesus')">
+<h3>Quem é Jesus Cristo</h3>
+<p>A pessoa de Cristo e sua missão.</p>
+</div>
+
+<div class="estudo-card" data-cat="catequese" onclick="abrirEstudo('biblia')">
+<h3>A Bíblia</h3>
+<p>O que é a Sagrada Escritura.</p>
+</div>
+
+<div class="estudo-card" data-cat="igreja" onclick="abrirEstudo('igreja')">
+<h3>A Igreja Católica</h3>
+<p>Fundação e missão da Igreja.</p>
+</div>
+
+<div class="estudo-card" data-cat="sacramentos">
+<h3>O Batismo</h3>
+<p>O sacramento que inicia a vida cristã.</p>
+</div>
+
+<div class="estudo-card" data-cat="sacramentos">
+<h3>A Eucaristia</h3>
+<p>O sacramento do Corpo e Sangue de Cristo.</p>
+</div>
+
+<div class="estudo-card" data-cat="moral">
+<h3>Os Dez Mandamentos</h3>
+<p>Base moral da vida cristã.</p>
+</div>
+
+<div class="estudo-card" data-cat="teologia">
+<h3>A Santíssima Trindade</h3>
+<p>O mistério central da fé cristã.</p>
+</div>
+
+<div class="estudo-card" data-cat="teologia">
+<h3>Graça Santificante</h3>
+<p>A vida divina na alma.</p>
+</div>
+
+</section>
+
+<!-- CONTEÚDO -->
+
+<div id="deus" class="estudo-conteudo">
+
+<h2>Quem é Deus</h2>
+
+<p>
+Deus é o Criador de todas as coisas, visíveis e invisíveis.
+Ele é eterno, infinito, onipotente e perfeitamente bom.
+</p>
+
+<p>
+Toda a criação depende dele para existir.
+Deus não foi criado e não tem princípio nem fim.
+</p>
+
+<button class="voltar" onclick="fecharEstudo()">Voltar</button>
+
+</div>
+
+<div id="jesus" class="estudo-conteudo">
+
+<h2>Quem é Jesus Cristo</h2>
+
+<p>
+Jesus Cristo é o Filho eterno de Deus que se fez homem
+para salvar a humanidade do pecado.
+</p>
+
+<p>
+Ele nasceu da Virgem Maria, pregou o Reino de Deus,
+morreu na cruz e ressuscitou ao terceiro dia.
+</p>
+
+<button class="voltar" onclick="fecharEstudo()">Voltar</button>
+
+</div>
+
+<footer>
+
+© 2026 – Lux Fidei
+
+</footer>
+
+<script>
+
+function abrirMenu(){
+document.getElementById("sidebar").style.left="0";
+}
+
+function fecharMenu(){
+document.getElementById("sidebar").style.left="-260px";
+}
+
+function filtrar(cat){
+
+const cards=document.querySelectorAll(".estudo-card");
+
+cards.forEach(card=>{
+
+if(cat==="todos" || card.dataset.cat===cat){
+card.style.display="block";
+}else{
+card.style.display="none";
+}
+
+});
+
+}
+
+function abrirEstudo(id){
+
+document.querySelector(".estudos-grid").style.display="none";
+document.getElementById(id).style.display="block";
+
+}
+
+function fecharEstudo(){
+
+document.querySelector(".estudos-grid").style.display="grid";
+
+document.querySelectorAll(".estudo-conteudo").forEach(c=>{
+c.style.display="none";
+});
+
+}
+
+/* MENU ANIMATION */
+
+const indicator=document.querySelector(".menu-indicator");
+const items=document.querySelectorAll(".menu-item");
+
+function updateIndicator(el){
+indicator.style.width=el.offsetWidth+"px";
+indicator.style.left=el.offsetLeft+"px";
+}
+
+items.forEach(item=>{
+item.addEventListener("click",function(){
+
+items.forEach(i=>i.classList.remove("active"));
+this.classList.add("active");
+
+updateIndicator(this);
+
+});
+});
+
+window.onload=()=>{
+updateIndicator(document.querySelector(".menu-item.active"));
+}
+
+</script>
+
+</body>
+</html>
