@@ -1,26 +1,25 @@
-<main id="inicio">
-  <h2>Jogos</h2>
-  <p>Aqui você encontrará jogos inspirados na fé católica.</p>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Jogos – Lux Fidei</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <div class="jogos-grid">
-
-    <!-- Jogo Tap Lisieux -->
-    <div class="jogo-card">
-      <div class="jogo-thumb">
-        <img src="capas/jogoimg/capaterezinha.png" alt="Tap Lisieux">
-      </div>
-      <div class="jogo-info">
-        <h3>Tap Lisieux</h3>
-        <p>Cultive rosas e lute contra os pecados com Santa Teresinha em um divertido jogo de clique.</p>
-        <a href="jogo.html" class="btn-jogar">Jogar</a>
-      </div>
-    </div>
-
-  </div>
-</main>
+<link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 
 <style>
-/* Seção de Jogos */
+/* =============================
+   ESTILO DA PÁGINA DE JOGOS
+============================= */
+body {
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    background: #f5f5f5;
+    color: #333;
+}
+
+/* Seção principal */
 main#inicio {
     padding: 40px 20px;
     max-width: 1200px;
@@ -36,21 +35,20 @@ main#inicio h2 {
 }
 
 main#inicio p {
-    font-family: 'Inter', sans-serif;
     font-size: 1.1rem;
     color: #555;
     text-align: center;
     margin-bottom: 40px;
 }
 
-/* Grid dos Jogos */
+/* Grid de Jogos */
 .jogos-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 30px;
 }
 
-/* Card do Jogo */
+/* Card de Jogo */
 .jogo-card {
     background: linear-gradient(145deg, #fff, #f0f0f0);
     border-radius: 16px;
@@ -91,7 +89,6 @@ main#inicio p {
 }
 
 .jogo-info p {
-    font-family: 'Inter', sans-serif;
     font-size: 0.95rem;
     color: #555;
     margin-bottom: 20px;
@@ -102,7 +99,6 @@ main#inicio p {
 .btn-jogar {
     display: inline-block;
     text-decoration: none;
-    font-family: 'Inter', sans-serif;
     font-weight: 600;
     background: #f44336;
     color: white;
@@ -127,3 +123,105 @@ main#inicio p {
     }
 }
 </style>
+</head>
+
+<body>
+<!-- MENU LATERAL -->
+<div class="sidebar" id="sidebar">
+  <a href="#" onclick="fecharMenu()">✖ Fechar</a>
+  <a href="index.html">Início</a>
+  <a href="index.html" class="menu-item">Liturgia</a>
+  <a href="jogos.html">Jogos</a>
+  <hr>
+  <a href="sobre.html">Sobre</a>
+  <a href="privacy.html">Privacidade</a>
+</div>
+
+<header>
+  <span class="menu-btn" onclick="abrirMenu()">☰</span>
+  <h1>Lux Fidei</h1>
+  <p style="opacity:0.8">Luz da Fé Católica</p>
+</header>
+
+<nav class="menu">
+  <a href="index.html" class="menu-item">Início</a>
+  <a href="index.html#liturgia" class="menu-item">Liturgia</a>
+  <a href="lux_fidei/santos.html" class="menu-item">Santos</a>
+  <a href="lux_fidei/biblioteca.html" class="menu-item">Biblioteca</a>
+  <a href="lux_fidei/estudos.html" class="menu-item">Estudos</a>
+  <a href="jogos.html" class="menu-item active">Jogos</a>
+  <span class="menu-indicator"></span>
+</nav>
+
+<!-- CONTEÚDO DOS JOGOS -->
+<main id="inicio">
+  <h2>Jogos</h2>
+  <p>Explore nossos jogos inspirados na fé católica. Clique para jogar!</p>
+
+  <div class="jogos-grid">
+
+    <!-- Jogo 1 -->
+    <div class="jogo-card">
+      <div class="jogo-thumb">
+        <img src="capas/jogoimg/capaterezinha.png" alt="Tap Lisieux">
+      </div>
+      <div class="jogo-info">
+        <h3>Tap Lisieux</h3>
+        <p>Cultive rosas e lute contra os pecados com Santa Teresinha em um divertido jogo de clique.</p>
+        <a href="jogo.html" class="btn-jogar">Jogar</a>
+      </div>
+    </div>
+
+    <!-- Exemplo de outro jogo futuramente -->
+    <div class="jogo-card">
+      <div class="jogo-thumb">
+        <img src="capas/jogoimg/placeholder.png" alt="Outro Jogo">
+      </div>
+      <div class="jogo-info">
+        <h3>Outro Jogo</h3>
+        <p>Breve descrição do próximo jogo católico que será adicionado.</p>
+        <a href="#" class="btn-jogar">Em breve</a>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<footer>
+© 2026 – Lux Fidei
+</footer>
+
+<script>
+function abrirMenu() {
+  document.getElementById("sidebar").style.left = "0";
+}
+function fecharMenu() {
+  document.getElementById("sidebar").style.left = "-260px";
+}
+
+const indicator = document.querySelector(".menu-indicator");
+const items = document.querySelectorAll(".menu-item");
+
+function updateIndicator(el){
+  indicator.style.width = el.offsetWidth + "px";
+  indicator.style.left = el.offsetLeft + "px";
+}
+
+items.forEach(item => {
+  item.addEventListener("click", function(){
+    items.forEach(i => i.classList.remove("active"));
+    this.classList.add("active");
+    updateIndicator(this);
+  });
+});
+
+window.onload = () => {
+  const active = document.querySelector(".menu-item.active");
+  if(active){
+    updateIndicator(active);
+  }
+};
+</script>
+
+</body>
+</html>
