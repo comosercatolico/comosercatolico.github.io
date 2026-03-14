@@ -9,14 +9,6 @@ async function carregarLiturgia() {
 
     document.getElementById("liturgia-titulo").innerText =
       `${dados.liturgia} — ${dados.cor}`;
-let cor = dados.cor.toLowerCase();
-
-let corCSS = "#5b2c83";
-
-if(cor.includes("roxo")) corCSS = "#4a2c6d";      // quaresma
-if(cor.includes("verde")) corCSS = "#2e7d32";     // tempo comum
-if(cor.includes("vermelho")) corCSS = "#b71c1c";  // mártires
-if(cor.includes("branco")) corCSS = "#c7b46a";    // solenidades
 
 document.documentElement.style.setProperty("--cor-liturgica", corCSS);;
 
