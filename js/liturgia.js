@@ -1,67 +1,92 @@
 async function carregarLiturgia() {
   try {
+
     const hoje = new Date();
     const dia = String(hoje.getDate()).padStart(2, "0");
     const mes = String(hoje.getMonth() + 1).padStart(2, "0");
 
     const res = await fetch(`https://liturgia.up.railway.app/${dia}-${mes}`);
+
+    if (!res.ok) {
+      throw new Error("API não respondeu");
+    }
+
     const dados = await res.json();
 
+    // TITULO
     document.getElementById("liturgia-titulo").innerText =
       `${dados.liturgia} — ${dados.cor}`;
 
-document.documentElement.style.setProperty("--cor-liturgica", corCSS);;
-
-document.documentElement.style.setProperty("--cor-liturgica", corCSS);
+    // DATA
     document.getElementById("liturgia-data").innerText = dados.data;
+
+    // COR LITÚRGICA
+    let cor = dados.cor.toLowerCase();
+    let corCSS = "#5b2c83";
+
+    if (cor.includes("roxo")) corCSS = "#5b2c83";
+    if (cor.includes("verde")) corCSS = "#2e7d32";
+    if (cor.includes("vermelho")) corCSS = "#b71c1c";
+    if (cor.includes("branco")) corCSS = "#c7a25a";
+
+    document.documentElement.style.setProperty("--cor-liturgica", corCSS);
 
     const c = document.getElementById("liturgia-conteudo");
     c.innerHTML = "";
 
-    // Primeira Leitura
-    c.innerHTML += criarLeitura(
-      "Primeira Leitura",
-      dados.primeiraLeitura.referencia,
-      dados.primeiraLeitura.texto
-    );
+    // PRIMEIRA LEITURA
+    if (dados.primeiraLeitura) {
+      c.innerHTML += criarLeitura(
+        "Primeira Leitura",
+        dados.primeiraLeitura.referencia,
+        dados.primeiraLeitura.texto
+      );
+    }
 
-    // Salmo
-    c.innerHTML += `
-      <div class="liturgia-card salmo">
-        <h2>Salmo Responsorial</h2>
-        <p class="referencia">${dados.salmo.referencia}</p>
-        <p><strong>${dados.salmo.refrao}</strong></p>
-        <div class="texto-liturgico">${dados.salmo.texto}</div>
-      </div>
-    `;
+    // SALMO
+    if (dados.salmo) {
+      c.innerHTML += `
+        <div class="liturgia-card salmo">
+          <h2>Salmo Responsorial</h2>
+          <p class="referencia">${dados.salmo.referencia}</p>
+          <p><strong>${dados.salmo.refrao}</strong></p>
+          <div class="texto-liturgico">${dados.salmo.texto}</div>
+        </div>
+      `;
+    }
 
-   // Segunda Leitura (somente se existir de verdade)
-if (
-  dados.segundaLeitura &&
-  dados.segundaLeitura.texto &&
-  dados.segundaLeitura.texto.trim() !== ""
-) {
-  c.innerHTML += criarLeitura(
-    "Segunda Leitura",
-    dados.segundaLeitura.referencia,
-    dados.segundaLeitura.texto
-  );
-}
+    // SEGUNDA LEITURA (só se existir)
+    if (
+      dados.segundaLeitura &&
+      dados.segundaLeitura.texto &&
+      dados.segundaLeitura.texto.trim() !== ""
+    ) {
+      c.innerHTML += criarLeitura(
+        "Segunda Leitura",
+        dados.segundaLeitura.referencia,
+        dados.segundaLeitura.texto
+      );
+    }
 
-    // Evangelho
-    c.innerHTML += `
-      <div class="liturgia-card evangelho">
-        <h2>✝️ Evangelho</h2>
-        <p class="referencia">${dados.evangelho.referencia}</p>
-        <p><strong>${dados.evangelho.titulo}</strong></p>
-        <div class="texto-liturgico">${dados.evangelho.texto}</div>
-      </div>
-    `;
+    // EVANGELHO
+    if (dados.evangelho) {
+      c.innerHTML += `
+        <div class="liturgia-card evangelho">
+          <h2>✝️ Evangelho</h2>
+          <p class="referencia">${dados.evangelho.referencia}</p>
+          <p><strong>${dados.evangelho.titulo}</strong></p>
+          <div class="texto-liturgico">${dados.evangelho.texto}</div>
+        </div>
+      `;
+    }
 
   } catch (erro) {
+
     document.getElementById("liturgia-conteudo").innerHTML =
-      "<p>Erro ao carregar a liturgia.</p>";
+      "<p style='text-align:center;font-size:18px;color:#666'>⚠️ Não foi possível carregar a liturgia.</p>";
+
     console.error(erro);
+
   }
 }
 
