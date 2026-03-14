@@ -193,3 +193,39 @@ border-left:6px solid #6a9c3b;
 border-left:6px solid #b71c1c;
 background:#fff4f4;
 }
+.faixa-liturgica{
+
+position:fixed;
+top:0;
+left:-50%;
+
+width:200%;
+height:100%;
+
+pointer-events:none;
+
+background:linear-gradient(
+120deg,
+transparent 40%,
+var(--cor-liturgica) 50%,
+transparent 60%
+);
+
+opacity:0.25;
+filter:blur(60px);
+
+animation:faixaMover 10s linear infinite;
+
+}
+
+@keyframes faixaMover{
+
+0%{
+transform:translateX(-100%);
+}
+
+100%{
+transform:translateX(100%);
+}
+
+}
