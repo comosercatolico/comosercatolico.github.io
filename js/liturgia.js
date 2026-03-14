@@ -32,14 +32,18 @@ async function carregarLiturgia() {
       </div>
     `;
 
-    // Segunda Leitura (se existir)
-    if (dados.segundaLeitura) {
-      c.innerHTML += criarLeitura(
-        "Segunda Leitura",
-        dados.segundaLeitura.referencia,
-        dados.segundaLeitura.texto
-      );
-    }
+   // Segunda Leitura (somente se existir de verdade)
+if (
+  dados.segundaLeitura &&
+  dados.segundaLeitura.texto &&
+  dados.segundaLeitura.texto.trim() !== ""
+) {
+  c.innerHTML += criarLeitura(
+    "Segunda Leitura",
+    dados.segundaLeitura.referencia,
+    dados.segundaLeitura.texto
+  );
+}
 
     // Evangelho
     c.innerHTML += `
