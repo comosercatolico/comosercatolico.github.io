@@ -9,7 +9,16 @@ async function carregarLiturgia() {
 
     document.getElementById("liturgia-titulo").innerText =
       `${dados.liturgia} — ${dados.cor}`;
+let cor = dados.cor.toLowerCase();
 
+let corCSS = "#cccccc";
+
+if(cor.includes("roxo")) corCSS = "#5b2c83";
+if(cor.includes("verde")) corCSS = "#2e7d32";
+if(cor.includes("vermelho")) corCSS = "#c62828";
+if(cor.includes("branco")) corCSS = "#e0d7a3";
+
+document.documentElement.style.setProperty("--cor-liturgica", corCSS);
     document.getElementById("liturgia-data").innerText = dados.data;
 
     const c = document.getElementById("liturgia-conteudo");
