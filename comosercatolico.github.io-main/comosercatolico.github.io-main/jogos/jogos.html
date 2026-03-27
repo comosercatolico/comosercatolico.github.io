@@ -1,0 +1,343 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Jogos – Lux Fidei</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+/* =============================
+   ESTILO DA PÁGINA DE JOGOS
+============================= */
+body {
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    background: #f5f5f5;
+    color: #333;
+}
+
+/* Cabeçalho */
+header {
+    background: #fff;
+    padding: 20px 30px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+header h1 {
+    font-family: 'Libre Baskerville', serif;
+    margin: 0;
+    font-size: 1.8rem;
+}
+
+header p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #555;
+}
+
+/* Menu lateral */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: -260px;
+    width: 260px;
+    height: 100%;
+    background: #fff;
+    box-shadow: 2px 0 12px rgba(0,0,0,0.1);
+    padding: 20px;
+    transition: left 0.3s;
+    z-index: 1000;
+}
+
+.sidebar a {
+    display: block;
+    text-decoration: none;
+    color: #333;
+    margin-bottom: 15px;
+    font-weight: 500;
+}
+
+.sidebar hr {
+    margin: 20px 0;
+    border: none;
+    border-top: 1px solid #ddd;
+}
+
+/* Menu superior */
+.menu {
+    display: flex;
+    gap: 20px;
+    background: #fff;
+    padding: 10px 30px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    position: relative;
+}
+
+.menu a {
+    text-decoration: none;
+    color: #333;
+    padding: 5px 0;
+    font-weight: 500;
+    position: relative;
+}
+
+.menu a.active {
+    color: #f44336;
+}
+
+.menu-indicator {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 3px;
+    width: 0;
+    background: #f44336;
+    transition: left 0.3s, width 0.3s;
+}
+
+/* Botão de abrir menu */
+.menu-btn {
+    cursor: pointer;
+    font-size: 1.5rem;
+    display: none;
+}
+
+/* Conteúdo principal */
+main#inicio {
+    padding: 40px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+main#inicio h2 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    color: #3a2e2b;
+    text-align: center;
+}
+
+main#inicio p {
+    font-size: 1.1rem;
+    color: #555;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+/* Lista de jogos horizontal */
+.jogos-list {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+/* Card horizontal */
+.jogo-card-horizontal {
+    display: flex;
+    flex-direction: row;
+    background: linear-gradient(145deg, #fff, #f7f7f7);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.jogo-card-horizontal:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.25);
+}
+
+/* Capa do jogo */
+.jogo-card-horizontal .jogo-thumb {
+    flex: 0 0 180px;
+}
+
+.jogo-card-horizontal .jogo-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Info do jogo */
+.jogo-card-horizontal .jogo-info {
+    padding: 20px 25px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.jogo-card-horizontal .jogo-info h3 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.6rem;
+    margin-bottom: 8px;
+    color: #2c1f17;
+}
+
+.jogo-card-horizontal .jogo-info p {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 20px;
+    line-height: 1.4;
+}
+
+/* Botão jogar */
+.jogo-card-horizontal .btn-jogar {
+    align-self: flex-start;
+    display: inline-block;
+    text-decoration: none;
+    font-weight: 600;
+    background: #f44336;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    transition: background 0.3s, transform 0.2s;
+}
+
+.jogo-card-horizontal .btn-jogar:hover {
+    background: #d32f2f;
+    transform: translateY(-2px);
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .jogo-card-horizontal {
+        flex-direction: column;
+    }
+    .jogo-card-horizontal .jogo-thumb {
+        width: 100%;
+        height: 200px;
+    }
+    .jogo-card-horizontal .jogo-info {
+        padding: 15px 20px;
+    }
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 20px;
+    background: #fff;
+    margin-top: 40px;
+    font-size: 0.9rem;
+    color: #555;
+}
+
+/* Menu botão mobile */
+@media (max-width: 768px) {
+    .menu-btn {
+        display: block;
+    }
+    .menu {
+        display: none;
+    }
+}
+</style>
+</head>
+
+<body>
+<!-- MENU LATERAL -->
+<div class="sidebar" id="sidebar">
+  <a href="#" onclick="fecharMenu()">✖ Fechar</a>
+  <a href="index.html">Início</a>
+  <a href="liturgiadiaria.html">Liturgia diária</a>
+  <a href="jogos.html" class="menu-item active">Jogos</a>
+  <hr>
+  <a href="sobre.html">Sobre</a>
+  <a href="privacy.html">Privacidade</a>
+</div>
+
+<header>
+  <span class="menu-btn" onclick="abrirMenu()">☰</span>
+  <h1>Lux Fidei</h1>
+  <p style="opacity:0.8">Luz da Fé Católica</p>
+</header>
+
+<nav class="menu">
+  <a href="index.html" class="menu-item">Início</a>
+  <a href="index.html#liturgia" class="menu-item">Liturgia</a>
+  <a href="lux_fidei/santos.html" class="menu-item">Santos</a>
+  <a href="lux_fidei/biblioteca.html" class="menu-item">Biblioteca</a>
+  <a href="lux_fidei/estudos.html" class="menu-item">Estudos</a>
+  <a href="lux_fidei/jogos.html" class="menu-item active">Jogos</a>
+  <span class="menu-indicator"></span>
+</nav>
+
+<!-- CONTEÚDO DOS JOGOS -->
+<main id="inicio">
+  <h2>Jogos</h2>
+  <p>Explore nossos jogos inspirados na fé católica. Clique para jogar!</p>
+
+  <div class="jogos-list">
+
+    <!-- Jogo 1: Tap Lisieux -->
+    <div class="jogo-card-horizontal">
+      <div class="jogo-thumb">
+        <img src="capas/jogoimg/capaterezinha.png" alt="Tap Lisieux">
+      </div>
+      <div class="jogo-info">
+        <h3>Tap Lisieux</h3>
+        <p>Cultive rosas e lute contra os pecados com Santa Teresinha em um divertido jogo de clique.</p>
+        <a href="jogo.html" class="btn-jogar">Jogar</a>
+      </div>
+    </div>
+
+    <!-- Jogo 2: Outro exemplo -->
+    <div class="jogo-card-horizontal">
+      <div class="jogo-thumb">
+        <img src="capas/jogoimg/placeholder.png" alt="Outro Jogo">
+      </div>
+      <div class="jogo-info">
+        <h3>Outro Jogo</h3>
+        <p>Breve descrição do próximo jogo católico que será adicionado.</p>
+        <a href="#" class="btn-jogar">Em breve</a>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<footer>
+© 2026 – Lux Fidei
+</footer>
+
+<script>
+function abrirMenu() {
+  document.getElementById("sidebar").style.left = "0";
+}
+function fecharMenu() {
+  document.getElementById("sidebar").style.left = "-260px";
+}
+
+const indicator = document.querySelector(".menu-indicator");
+const items = document.querySelectorAll(".menu-item");
+
+function updateIndicator(el){
+  indicator.style.width = el.offsetWidth + "px";
+  indicator.style.left = el.offsetLeft + "px";
+}
+
+items.forEach(item => {
+  item.addEventListener("click", function(){
+    items.forEach(i => i.classList.remove("active"));
+    this.classList.add("active");
+    updateIndicator(this);
+  });
+});
+
+window.onload = () => {
+  const active = document.querySelector(".menu-item.active");
+  if(active){
+    updateIndicator(active);
+  }
+};
+</script>
+</body>
+</html>
