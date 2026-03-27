@@ -69,14 +69,22 @@
 
 <!-- SCRIPT LITURGIA -->
 
-<script src="/js/liturgia.js"></script>
+<script src="js/liturgia.js"></script>
 
 
 <script>
 
 /* carregar liturgia */
 
-carregarLiturgia();
+window.onload = () => {
+  carregarLiturgia();
+
+  const active = document.querySelector(".menu-item.active");
+
+  if(active){
+    updateIndicator(active);
+  }
+};
 
 
 /* ANIMAÇÃO DO MENU */
