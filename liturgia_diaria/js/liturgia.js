@@ -100,8 +100,8 @@ function criarLeitura(titulo, referencia, texto) {
   `;
 }
 function formatarVersiculos(texto) {
-  return texto.replace(/\b(\d+)(?=[A-ZÁÉÍÓÚÂÊÔÃÕ])/g, (match) => {
-    return `<sup>${numeroParaSup(match)}</sup> `;
+  return texto.replace(/(^|\s)(\d+)(?=[A-Za-zÁÉÍÓÚÂÊÔÃÕáéíóúâêôãõ])/g, (match, espaco, numero) => {
+    return espaco + "<sup>" + numeroParaSup(numero) + "</sup> ";
   });
 }
 
