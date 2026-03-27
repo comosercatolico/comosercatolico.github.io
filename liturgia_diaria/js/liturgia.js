@@ -50,12 +50,14 @@ async function carregarLiturgia() {
           <h2>Salmo Responsorial</h2>
           <p class="referencia">${dados.salmo.referencia}</p>
           <p><strong>${dados.salmo.refrao}</strong></p>
-          <div class="texto-liturgico">${dados.salmo.texto}</div>
+          <div class="texto-liturgico">
+            ${formatarVersiculos(dados.salmo.texto)}
+          </div>
         </div>
       `;
     }
 
-    // SEGUNDA LEITURA (só se existir)
+    // SEGUNDA LEITURA
     if (
       dados.segundaLeitura &&
       dados.segundaLeitura.texto &&
@@ -75,7 +77,9 @@ async function carregarLiturgia() {
           <h2>✝️ Evangelho</h2>
           <p class="referencia">${dados.evangelho.referencia}</p>
           <p><strong>${dados.evangelho.titulo}</strong></p>
-          <div class="texto-liturgico">${dados.evangelho.texto}</div>
+          <div class="texto-liturgico">
+            ${formatarVersiculos(dados.evangelho.texto)}
+          </div>
         </div>
       `;
     }
@@ -90,21 +94,31 @@ async function carregarLiturgia() {
   }
 }
 
+// 🔥 LEITURAS (já com formatação aplicada)
 function criarLeitura(titulo, referencia, texto) {
   return `
     <div class="liturgia-card">
       <h2>${titulo}</h2>
       <p class="referencia">${referencia}</p>
-      <div class="texto-liturgico">${texto}</div>
+      <div class="texto-liturgico">
+        ${formatarVersiculos(texto)}
+      </div>
     </div>
   `;
 }
+
+// 🧠 FORMATAÇÃO INTELIGENTE
 function formatarVersiculos(texto) {
-  return texto.replace(/(^|\s)(\d+)(?=[A-Za-zÁÉÍÓÚÂÊÔÃÕáéíóúâêôãõ])/g, (match, espaco, numero) => {
-    return espaco + "<sup>" + numeroParaSup(numero) + "</sup> ";
-  });
+
+  // evita quebrar referências tipo 20,10-13
+  return texto.replace(/(^|\s)(\d+)(?!,\d)(?=[A-Za-zÁÉÍÓÚÂÊÔÃÕáéíóúâêôãõ])/g,
+    (match, espaco, numero) => {
+      return espaco + "<sup>" + numeroParaSup(numero) + "</sup> ";
+    }
+  );
 }
 
+// 🔢 CONVERTE PARA SOBRESCRITO
 function numeroParaSup(num) {
   const mapa = {
     "0":"⁰","1":"¹","2":"²","3":"³","4":"⁴",
