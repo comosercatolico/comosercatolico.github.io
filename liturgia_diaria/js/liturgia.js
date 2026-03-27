@@ -99,3 +99,17 @@ function criarLeitura(titulo, referencia, texto) {
     </div>
   `;
 }
+function formatarVersiculos(texto) {
+  return texto.replace(/\b(\d+)(?=[A-ZÁÉÍÓÚÂÊÔÃÕ])/g, (match) => {
+    return `<sup>${numeroParaSup(match)}</sup> `;
+  });
+}
+
+function numeroParaSup(num) {
+  const mapa = {
+    "0":"⁰","1":"¹","2":"²","3":"³","4":"⁴",
+    "5":"⁵","6":"⁶","7":"⁷","8":"⁸","9":"⁹"
+  };
+
+  return num.split("").map(n => mapa[n]).join("");
+}
