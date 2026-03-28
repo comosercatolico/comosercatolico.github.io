@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Biblioteca – Lux Fidei</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- CSS global -->
+<link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+/* =============================
+   ESTILO DA PÁGINA DE BIBLIOTECA
+============================= */
+
+/* Cards de livros */
+.biblioteca-list {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.livro-card {
+    display: flex;
+    flex-direction: row;
+    background: linear-gradient(145deg, #fff, #f7f7f7);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.livro-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.25);
+}
+
+.livro-card .livro-thumb {
+    flex: 0 0 140px;
+}
+
+.livro-card .livro-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.livro-card .livro-info {
+    padding: 20px 25px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.livro-card .livro-info h3 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.5rem;
+    margin-bottom: 8px;
+    color: #2c1f17;
+}
+
+.livro-card .livro-info p {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 20px;
+    line-height: 1.4;
+}
+
+.livro-card .btn-leitura {
+    align-self: flex-start;
+    display: inline-block;
+    text-decoration: none;
+    font-weight: 600;
+    background: #5b2c83;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    transition: background 0.3s, transform 0.2s;
+}
+
+.livro-card .btn-leitura:hover {
+    background: #4a246a;
+    transform: translateY(-2px);
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .livro-card {
+        flex-direction: column;
+    }
+    .livro-card .livro-thumb {
+        width: 100%;
+        height: 200px;
+    }
+    .livro-card .livro-info {
+        padding: 15px 20px;
+    }
+}
+</style>
+</head>
+
+<body>
+<!-- MENU LATERAL -->
+<div class="sidebar" id="sidebar">
+  <a href="#" onclick="fecharMenu()">✖ Fechar</a>
+  <a href="index.html">Início</a>
+  <a href="liturgiadiaria.html">Liturgia diária</a>
+  <a href="jogos.html">Jogos</a>
+  <a href="biblioteca.html" class="menu-item active">Biblioteca</a>
+  <hr>
+  <a href="sobre.html">Sobre</a>
+  <a href="privacy.html">Privacidade</a>
+</div>
+
+<header>
+  <span class="menu-btn" onclick="abrirMenu()">☰</span>
+  <h1>Lux Fidei</h1>
+  <p style="opacity:0.8">Luz da Fé Católica</p>
+</header>
+
+<nav class="menu">
+  <a href="index.html" class="menu-item">Início</a>
+  <a href="liturgiadiaria.html" class="menu-item">Liturgia Diária</a>
+  <a href="santos.html" class="menu-item">Santos</a>
+  <a href="biblioteca.html" class="menu-item active">Biblioteca</a>
+  <a href="estudos.html" class="menu-item">Estudos</a>
+  <span class="menu-indicator"></span>
+</nav>
+
+<main id="inicio">
+  <h2>Biblioteca</h2>
+  <p>Explore nossa seleção de livros e materiais inspirados na fé católica. Clique para ler ou baixar!</p>
+
+  <div class="biblioteca-list">
+    <!-- Livro 1 -->
+    <div class="livro-card">
+      <div class="livro-thumb">
+        <img src="capas/livros/teresinha.jpg" alt="História de Santa Teresinha">
+      </div>
+      <div class="livro-info">
+        <h3>História de Santa Teresinha</h3>
+        <p>Conheça a vida e os ensinamentos de Santa Teresinha do Menino Jesus, a pequena flor de Deus.</p>
+        <a href="livros/teresinha.html" class="btn-leitura">Ler</a>
+      </div>
+    </div>
+
+    <!-- Livro 2 -->
+    <div class="livro-card">
+      <div class="livro-thumb">
+        <img src="capas/livros/biblia.jpg" alt="Bíblia Sagrada">
+      </div>
+      <div class="livro-info">
+        <h3>Bíblia Sagrada</h3>
+        <p>Leia a Palavra de Deus em uma versão interativa e comentada, acessível a todos os fiéis.</p>
+        <a href="livros/biblia.html" class="btn-leitura">Ler</a>
+      </div>
+    </div>
+
+    <!-- Livro 3 -->
+    <div class="livro-card">
+      <div class="livro-thumb">
+        <img src="capas/livros/catecismo.jpg" alt="Catecismo da Igreja Católica">
+      </div>
+      <div class="livro-info">
+        <h3>Catecismo da Igreja Católica</h3>
+        <p>Aprenda os fundamentos da fé católica com explicações claras e referências bíblicas.</p>
+        <a href="livros/catecismo.html" class="btn-leitura">Ler</a>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<footer>
+© 2026 – Lux Fidei
+</footer>
+
+<script>
+function abrirMenu() {
+  document.getElementById("sidebar").style.left = "0";
+}
+function fecharMenu() {
+  document.getElementById("sidebar").style.left = "-260px";
+}
+
+const indicator = document.querySelector(".menu-indicator");
+const items = document.querySelectorAll(".menu-item");
+
+function updateIndicator(el){
+  indicator.style.width = el.offsetWidth + "px";
+  indicator.style.left = el.offsetLeft + "px";
+}
+
+items.forEach(item => {
+  item.addEventListener("click", function(){
+    items.forEach(i => i.classList.remove("active"));
+    this.classList.add("active");
+    updateIndicator(this);
+  });
+});
+
+window.onload = () => {
+  const active = document.querySelector(".menu-item.active");
+  if(active){
+    updateIndicator(active);
+  }
+};
+</script>
+
+</body>
+</html>
