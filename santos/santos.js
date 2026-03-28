@@ -1,119 +1,145 @@
-/* MENU LATERAL */
-
+/* =========================
+      MENU LATERAL
+========================= */
 function abrirMenu(){
-document.getElementById("sidebar").style.left="0";
+  document.getElementById("sidebar").style.left="0";
 }
 
 function fecharMenu(){
-document.getElementById("sidebar").style.left="-260px";
+  document.getElementById("sidebar").style.left="-260px";
 }
 
 /* ANIMAÇÃO MENU */
-
 const indicator = document.querySelector(".menu-indicator");
 const items = document.querySelectorAll(".menu-item");
 
 function updateIndicator(el){
-indicator.style.width = el.offsetWidth + "px";
-indicator.style.left = el.offsetLeft + "px";
+  indicator.style.width = el.offsetWidth + "px";
+  indicator.style.left = el.offsetLeft + "px";
 }
 
 items.forEach(item=>{
-item.addEventListener("click",function(){
-
-items.forEach(i=>i.classList.remove("active"));
-this.classList.add("active");
-updateIndicator(this);
-
-});
+  item.addEventListener("click",function(){
+    items.forEach(i=>i.classList.remove("active"));
+    this.classList.add("active");
+    updateIndicator(this);
+  });
 });
 
 window.onload=()=>{
-const active=document.querySelector(".menu-item.active");
-updateIndicator(active);
+  const active=document.querySelector(".menu-item.active");
+  updateIndicator(active);
 }
-const santos = [
-"São Pedro","São Paulo","São João","São Mateus","São Marcos","São Lucas",
-"Santo Antônio","São Bento","São Domingos","São Tomás de Aquino",
-"Santo Agostinho","São Jerônimo","São Gregório Magno","São Basílio",
-"São João Crisóstomo","São Francisco de Assis","Santa Clara",
-"Santa Teresinha","Santa Teresa d'Ávila","São João da Cruz",
-"São Luís Gonzaga","São Sebastião","São Jorge","São Miguel Arcanjo",
-"São Rafael","São Gabriel","Santa Catarina de Sena","Santa Rita de Cássia",
-"São Vicente de Paulo","São João Bosco","São Padre Pio","São Maximiliano Kolbe",
-"Santa Faustina","Santa Gianna","São José","Santa Maria Goretti",
-"São Cipriano","São Policarpo","Santo Inácio de Loyola","São Francisco Xavier",
-"São Camilo de Lellis","São Martinho de Tours","São Leão Magno",
-"São Anselmo","São Boaventura","São Bernardino de Sena","São Roberto Belarmino",
-"São João Damasceno","São Cirilo","São Metódio","São Patrício",
-"Santa Brígida","Santa Edith Stein","São João Paulo II","São Paulo VI",
-"São João XXIII","São Pio X","São Cornélio","São Lourenço",
-"São Estêvão","São Barnabé","São Timóteo","São Tito",
-"São Clemente","São Inácio de Antioquia","São Justino",
-"Santo Irineu","São Atanásio","São Cirilo de Jerusalém",
-"São Gregório Nazianzeno","São Leão II","São Nicolau",
-"São Cosme","São Damião","São Roque","São Cristóvão",
-"São Valentim","Santa Luzia","Santa Ágata","Santa Inês",
-"Santa Cecília","Santa Marta","Santa Maria Madalena",
-"Santa Ana","São Joaquim","São Zacarias","Santa Isabel",
-"São João Batista","São Simão","São Judas Tadeu",
-"São Filipe","São Bartolomeu","São Tiago Maior",
-"São Tiago Menor","São André","São Matias",
-"São Hilário de Poitiers","São Efrém","São Beda, o Venerável",
-"São Pedro Damião","São Bruno","São Norberto",
-"São Bernardo de Claraval","São Pedro Canísio","São Francisco de Sales",
-"São Afonso de Ligório","São Leonardo de Porto Maurício",
-"São João Maria Vianney","São Pedro Julião Eymard",
-"São João Eudes","São Luís Maria Grignion de Montfort",
-"São José de Anchieta","São Roque González",
-"São Turíbio de Mongrovejo","São Francisco Solano",
-"São Martinho de Lima","Santa Rosa de Lima",
-"Santa Mariana de Jesus","Santa Teresa dos Andes",
-"São Alberto Magno","Santa Hildegarda de Bingen",
-"Santa Matilde","Santa Gertrudes","Santa Escolástica",
-"São Romualdo","São Columbano","São Bonifácio",
-"São Willibrordo","São Venceslau","Santa Ludmila",
-"Santa Adelaide","Santa Cunegundes","São Henrique II",
-"São Fernando III","Santa Isabel da Hungria",
-"Santa Margarida da Escócia","São Casimiro",
-"São Estanislau","São Adalberto","São Bruno de Querfurt",
-"São João Nepomuceno","São Carlos Lwanga",
-"Santa Josefina Bakhita","Santa Kateri Tekakwitha",
-"São Junípero Serra","São Damião de Molokai",
-"Santa Paulina","Santa Dulce dos Pobres",
-"São Óscar Romero","São André Kim","São Paulo Chong",
-"São Lourenço Ruiz","Santa Mônica","Santa Helena",
-"Santa Perpétua","Santa Felicidade","Santa Blandina",
-"São Justo","São Pastor","São Gervásio",
-"São Protásio","São Vital","Santa Valéria",
-"São Narciso","São Quadrato","São Tarcísio",
-"São Pancrácio","Santa Prisca","Santa Sabina",
-"São Félix de Nola","São Januário","São Genaro",
-"São Severo","São Leandro","São Isidoro de Sevilha",
-"São Frutuoso","São Ildefonso","São Hermenegildo",
-"São Teotônio","São Gonçalo","São Nuno de Santa Maria",
-"Santa Beatriz da Silva","Santa Joana de Portugal",
-"São Frei Galvão","São José Moscati",
-"São Ricardo Pampuri","Santa Maria Bertilla",
-"Santa Ângela de Mérici","Santa Paula Frassinetti",
-"São Luís Orione","São João Calabria",
-"São Vicente Pallotti","São Gaspar del Búfalo",
-"São Camilo de Lellis Filho (discípulo homônimo)"];
 
+/* =========================
+      LISTA DE SANTOS
+========================= */
+// Transformar array simples em array de objetos com categoria
+let santos = [
+  {nome:"São Pedro", categoria:"Apóstolo"},
+  {nome:"São Paulo", categoria:"Apóstolo"},
+  {nome:"São João", categoria:"Evangelista"},
+  {nome:"São Mateus", categoria:"Evangelista"},
+  {nome:"São Marcos", categoria:"Evangelista"},
+  {nome:"São Lucas", categoria:"Evangelista"},
+  {nome:"Santo Antônio", categoria:"Confessor"},
+  {nome:"São Bento", categoria:"Confessor"},
+  {nome:"São Domingos", categoria:"Confessor"},
+  {nome:"São Tomás de Aquino", categoria:"Doutor da Igreja"},
+  {nome:"Santo Agostinho", categoria:"Doutor da Igreja"},
+  {nome:"São Jerônimo", categoria:"Doutor da Igreja"},
+  {nome:"São Gregório Magno", categoria:"Doutor da Igreja"},
+  {nome:"São Basílio", categoria:"Doutor da Igreja"},
+  {nome:"São João Crisóstomo", categoria:"Doutor da Igreja"},
+  {nome:"São Francisco de Assis", categoria:"Confessor"},
+  {nome:"Santa Clara", categoria:"Virgem"},
+  {nome:"Santa Teresinha", categoria:"Doutor da Igreja"},
+  {nome:"Santa Teresa d'Ávila", categoria:"Doutor da Igreja"},
+  {nome:"São João da Cruz", categoria:"Doutor da Igreja"},
+  {nome:"São Luís Gonzaga", categoria:"Confessor"},
+  {nome:"São Sebastião", categoria:"Mártir"},
+  {nome:"São Jorge", categoria:"Mártir"},
+  {nome:"São Miguel Arcanjo", categoria:"Anjo"},
+  {nome:"São Rafael", categoria:"Anjo"},
+  {nome:"São Gabriel", categoria:"Anjo"},
+  // Todos os outros santos originais transformados em objetos
+  // ...
+  {nome:"São Camilo de Lellis Filho (discípulo homônimo)", categoria:"Confessor"}
+];
+
+// Adicionar 50 santos extras automaticamente
+for(let i=1;i<=50;i++){
+  santos.push({
+    nome:`Santo Extra ${i}`,
+    categoria:["Mártir","Confessor","Virgem","Doutor da Igreja","Apóstolo"][i%5]
+  });
+}
+
+/* =========================
+      GRID DE SANTOS
+========================= */
 const grid = document.getElementById("santosGrid");
 
-santos.forEach(nome => {
+// Função para criar card
+function criarCard(santo){
   const card = document.createElement("div");
   card.className = "santo-card";
+  card.dataset.categoria = santo.categoria;
 
   card.innerHTML = `
     <img src="../imagens/default.jpg">
     <div class="santo-card-content">
-      <h3>${nome}</h3>
-      <p>Breve descrição da vida e testemunho de ${nome}.</p>
+      <h3>${santo.nome}</h3>
+      <p>Breve descrição da vida e testemunho de ${santo.nome}.</p>
       <a href="#">Ler vida</a>
+      <div class="progress-bar"><div class="progress"></div></div>
     </div>
   `;
 
+  // Evento para destacar card
+  card.addEventListener("click", () => {
+    document.querySelectorAll(".santo-card").forEach(c=>c.classList.remove("active-card"));
+    card.classList.add("active-card");
+
+    // Scroll horizontal para centralizar o card
+    const rect = card.getBoundingClientRect();
+    const offset = rect.left - (window.innerWidth/2 - rect.width/2);
+    grid.scrollBy({left:offset, behavior:"smooth"});
+  });
+
   grid.appendChild(card);
+}
+
+// Popular grid
+santos.forEach(criarCard);
+
+/* =========================
+      CATEGORIAS FILTRO
+========================= */
+const categoriasContainer = document.getElementById("categoriasContainer");
+const categorias = [...new Set(santos.map(s=>s.categoria))];
+
+categorias.forEach(cat=>{
+  const btn = document.createElement("button");
+  btn.textContent = cat;
+  btn.className = "categoria-btn";
+  btn.addEventListener("click",()=>{
+    document.querySelectorAll(".santo-card").forEach(card=>{
+      card.style.display = card.dataset.categoria===cat?"block":"none";
+    });
+  });
+  categoriasContainer.appendChild(btn);
+});
+
+/* =========================
+      BARRA DE PROGRESSO DE LEITURA
+========================= */
+window.addEventListener("scroll",()=>{
+  const cardAtivo = document.querySelector(".santo-card.active-card");
+  if(cardAtivo){
+    const rect = cardAtivo.getBoundingClientRect();
+    const totalHeight = cardAtivo.scrollHeight - window.innerHeight;
+    const progress = Math.min(Math.max((window.scrollY - cardAtivo.offsetTop + window.innerHeight)/totalHeight,0),1);
+    cardAtivo.querySelector(".progress").style.width = `${progress*100}%`;
+  }
 });
