@@ -126,13 +126,11 @@ async function carregarLiturgia(forceRefresh = false) {
 }
 
 /* =========================
-   🔄 ADAPTADORES
+   🔄 ADAPTADORES SEGUROS
 ========================= */
 function adaptarLuxFidei(api) {
-  if (!api || !api.today) {
-    console.error("❌ LuxFidei inválida:", api);
-    return null;
-  }
+  if (!api || !api.today) return null;
+
   const t = api.today;
   return {
     liturgia: t.entry_title || "Liturgia do Dia",
@@ -146,10 +144,8 @@ function adaptarLuxFidei(api) {
 }
 
 function adaptarVercel(api) {
-  if (!api) {
-    console.error("❌ Vercel inválida:", api);
-    return null;
-  }
+  if (!api) return null;
+
   return {
     liturgia: api.titulo || "Liturgia do Dia",
     data: api.data || "",
@@ -162,12 +158,14 @@ function adaptarVercel(api) {
 }
 
 /* =========================
-   🎨 USAR DADOS (SUPORTE DUPLO)
+   🎯 USAR DADOS SEGUROS
 ========================= */
 function usarDados(dados) {
   console.log("🎯 Renderizando:", dados);
 
-  const titulo = document.getElementById("liturgia-titulo");
+  if (!dados) return;
+
+  const tituloEl = document.getElementById("liturgia-titulo");
   const dataEl = document.getElementById("liturgia-data");
   const container = document.getElementById("liturgia-conteudo");
 
@@ -177,127 +175,90 @@ function usarDados(dados) {
   const dias = ["Domingo","Segunda","Terça","Quarta","Quinta","Sexta","Sábado"];
   const hoje = new Date();
 
-  if (titulo) {
-    titulo.innerText = `${dados.liturgia || "Liturgia do Dia"} — ${dados.cor || ""}`;
+  if (tituloEl) {
+    tituloEl.innerText = `${dados.liturgia || "Liturgia do Dia"} — ${dados.cor || ""}`;
   }
-
   if (dataEl) {
     dataEl.innerText = `${dias[hoje.getDay()]} • ${dados.data || ""}`;
   }
 
   // 🎨 COR
-  let cor = (dados.cor || "").toLowerCase();
-  const cores = {
-    roxo: "#6a1b9a",
-    verde: "#2e7d32",
-    vermelho: "#c62828",
-    branco: "#d4af37",
-  };
-  let corCSS = "#5b2c83";
-  for (let nome in cores) {
-    if (cor.includes(nome)) {
-      corCSS = cores[nome];
-    }
-  }
+  const cores = { roxo: "#6a1b9a", verde: "#2e7d32", vermelho: "#c62828", branco: "#d4af37" };
+  let corCSS = cores[(dados.cor || "").toLowerCase()] || "#5b2c83";
   document.documentElement.style.setProperty("--cor-liturgica", corCSS);
 
-  // 🧹 LIMPA
+  // 🧹 LIMPA CONTAINER
   container.innerHTML = "";
 
-  /* =========================
-     🥇 FORMATO COMPLETO
-  ========================= */
-  if (dados.evangelho) {
-    if (dados.primeiraLeitura?.texto) {
-      container.innerHTML += criarLeitura(
-        "Primeira Leitura",
-        dados.primeiraLeitura.referencia,
-        dados.primeiraLeitura.texto
-      );
-    }
-    if (dados.salmo?.texto) {
+  // =========================
+  // Função auxiliar segura
+  function renderLeitura(titulo, leitura) {
+    if (!leitura) return;
+    const referencia = leitura.referencia || "";
+    const texto = leitura.texto || leitura || "";
+    container.innerHTML += `
+      <div class="liturgia-card">
+        <h2>${titulo}</h2>
+        <p class="referencia">${referencia}</p>
+        <div class="texto-liturgico">${formatarVersiculos(texto)}</div>
+      </div>
+    `;
+  }
+
+  // =========================
+  // FORMATO COMPLETO
+  if (dados.evangelho || dados.primeiraLeitura || dados.salmo || dados.segundaLeitura) {
+    renderLeitura("Primeira Leitura", dados.primeiraLeitura);
+
+    if (dados.salmo) {
       container.innerHTML += `
         <div class="liturgia-card salmo">
           <h2>Salmo Responsorial</h2>
           <p class="referencia">${dados.salmo.referencia || ""}</p>
           <p><strong>${dados.salmo.refrao || ""}</strong></p>
-          <div class="texto-liturgico">
-            ${formatarVersiculos(dados.salmo.texto)}
-          </div>
+          <div class="texto-liturgico">${formatarVersiculos(dados.salmo.texto || "")}</div>
         </div>
       `;
     }
-    if (dados.segundaLeitura?.texto) {
-      container.innerHTML += criarLeitura(
-        "Segunda Leitura",
-        dados.segundaLeitura.referencia,
-        dados.segundaLeitura.texto
-      );
-    }
-    if (dados.evangelho?.texto) {
+
+    renderLeitura("Segunda Leitura", dados.segundaLeitura);
+
+    if (dados.evangelho) {
       container.innerHTML += `
         <div class="liturgia-card evangelho">
           <h2>✝️ Evangelho</h2>
           <p class="referencia">${dados.evangelho.referencia || ""}</p>
           <p><strong>${dados.evangelho.titulo || ""}</strong></p>
-          <div class="texto-liturgico">
-            ${formatarVersiculos(dados.evangelho.texto)}
-          </div>
+          <div class="texto-liturgico">${formatarVersiculos(dados.evangelho.texto || "")}</div>
         </div>
       `;
     }
-  }
-
-  /* =========================
-     🥈 FORMATO SIMPLES (RAILWAY)
-  ========================= */
+  } 
+  // =========================
+  // FORMATO SIMPLES (Railway)
   else {
-    console.warn("⚠️ Usando formato simples");
-    if (dados.dia) {
-      container.innerHTML += criarLeitura("Liturgia do Dia", "", dados.dia);
-    }
-    if (dados.oferendas) {
-      container.innerHTML += criarLeitura("Oferendas", "", dados.oferendas);
-    }
-    if (dados.comunhao) {
-      container.innerHTML += criarLeitura("Comunhão", "", dados.comunhao);
-    }
+    renderLeitura("Liturgia do Dia", dados.dia);
+    renderLeitura("Oferendas", dados.oferendas);
+    renderLeitura("Comunhão", dados.comunhao);
+
     if (!dados.dia && !dados.oferendas && !dados.comunhao) {
-      container.innerHTML = `
-        <p style="text-align:center;color:#666">
-          ⚠️ Liturgia indisponível no momento.
-        </p>
-      `;
+      container.innerHTML = `<p style="text-align:center;color:#666">⚠️ Liturgia indisponível no momento.</p>`;
     }
   }
 
-  if (typeof mostrarConteudo === "function") {
-    mostrarConteudo();
-  }
+  if (typeof mostrarConteudo === "function") mostrarConteudo();
 }
 
 /* =========================
-   📖 COMPONENTES
-========================= */
-function criarLeitura(titulo, referencia, texto) {
-  return `
-    <div class="liturgia-card">
-      <h2>${titulo}</h2>
-      <p class="referencia">${referencia || ""}</p>
-      <div class="texto-liturgico">
-        ${formatarVersiculos(texto || "")}
-      </div>
-    </div>
-  `;
-}
-
-/* =========================
-   🧠 FORMATAÇÃO
+   🧠 FORMATAÇÃO DE VERSÍCULOS SEGURO
 ========================= */
 function formatarVersiculos(texto) {
-  return (texto || "").replace(/(^|\s)(\d+)(?!,\d)(?=[A-Za-zÁÉÍÓÚ])/g,
-    (match, espaco, numero) => {
-      return espaco + "<sup>" + numero + "</sup> ";
-    }
+  if (!texto) return "";
+  return texto.replace(/(^|\s)(\d+)(?!,\d)(?=[A-Za-zÁÉÍÓÚ])/g,
+    (match, espaco, numero) => `${espaco}<sup>${numero}</sup> `
   );
 }
+
+
+
+
