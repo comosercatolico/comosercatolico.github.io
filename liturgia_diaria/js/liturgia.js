@@ -36,8 +36,8 @@ async function carregarLiturgia(forceRefresh = false) {
         if (agora - cache.timestamp < 1000 * 60 * 60 * 6) {
           console.log("⚡ Usando cache");
 
-          // 🔥 VALIDA CACHE
-          if (cache.data?.evangelho?.texto) {
+          // 🔥 AGORA ACEITA QUALQUER FORMATO VÁLIDO
+          if (cache.data) {
             usarDados(cache.data);
             return;
           } else {
@@ -64,9 +64,7 @@ async function carregarLiturgia(forceRefresh = false) {
       dados = adaptarLuxFidei(api);
       console.log("📦 ADAPTADO:", dados);
 
-      if (!dados?.evangelho?.texto) {
-        throw new Error("Dados incompletos");
-      }
+      if (!dados) throw new Error("Dados inválidos");
 
     } catch (e1) {
 
@@ -86,9 +84,7 @@ async function carregarLiturgia(forceRefresh = false) {
         dados = adaptarVercel(api);
         console.log("📦 ADAPTADO:", dados);
 
-        if (!dados?.evangelho?.texto) {
-          throw new Error("Dados incompletos");
-        }
+        if (!dados) throw new Error("Dados inválidos");
 
       } catch (e2) {
 
@@ -107,25 +103,21 @@ async function carregarLiturgia(forceRefresh = false) {
 
         dados = await res.json();
         console.log("📦 RAILWAY:", dados);
-
-        if (!dados?.evangelho?.texto) {
-          throw new Error("Railway retornou vazio");
-        }
       }
     }
 
-    // 🛑 VALIDAÇÃO FINAL
-    if (!dados || !dados.evangelho || !dados.evangelho.texto) {
+    // 🛑 VALIDAÇÃO FINAL (MAIS FLEXÍVEL)
+    if (!dados) {
       throw new Error("Nenhum dado válido recebido");
     }
 
-    // 💾 SALVA CACHE (AGORA SEGURO)
+    // 💾 SALVA CACHE
     localStorage.setItem(chaveCache, JSON.stringify({
       timestamp: Date.now(),
       data: dados
     }));
 
-    // 🎨 ANIMAÇÃO SUAVE
+    // 🎨 ANIMAÇÃO
     container.style.opacity = 0;
 
     setTimeout(() => {
@@ -197,7 +189,7 @@ function adaptarVercel(api) {
 
 
 /* =========================
-   🎨 USAR DADOS (CORRIGIDO)
+   🎨 USAR DADOS (SUPORTE DUPLO)
 ========================= */
 
 function usarDados(dados) {
@@ -210,26 +202,16 @@ function usarDados(dados) {
 
   if (!container) return;
 
-  // 🔥 PROTEÇÃO
-  if (!dados?.evangelho?.texto) {
-    container.innerHTML = `
-      <p style="text-align:center;color:#666">
-        ⚠️ Liturgia indisponível no momento.
-      </p>
-    `;
-    return;
-  }
-
   // 📅 DIA
   const dias = ["Domingo","Segunda","Terça","Quarta","Quinta","Sexta","Sábado"];
   const hoje = new Date();
 
   if (titulo) {
-    titulo.innerText = `${dados.liturgia} — ${dados.cor}`;
+    titulo.innerText = `${dados.liturgia || "Liturgia do Dia"} — ${dados.cor || ""}`;
   }
 
   if (dataEl) {
-    dataEl.innerText = `${dias[hoje.getDay()]} • ${dados.data}`;
+    dataEl.innerText = `${dias[hoje.getDay()]} • ${dados.data || ""}`;
   }
 
   // 🎨 COR
@@ -255,50 +237,80 @@ function usarDados(dados) {
   // 🧹 LIMPA
   container.innerHTML = "";
 
-  // 📖 PRIMEIRA
-  if (dados.primeiraLeitura?.texto) {
-    container.innerHTML += criarLeitura(
-      "Primeira Leitura",
-      dados.primeiraLeitura.referencia,
-      dados.primeiraLeitura.texto
-    );
-  }
+  /* =========================
+     🥇 FORMATO COMPLETO
+  ========================= */
+  if (dados.evangelho) {
 
-  // 🎵 SALMO
-  if (dados.salmo?.texto) {
-    container.innerHTML += `
-      <div class="liturgia-card salmo">
-        <h2>Salmo Responsorial</h2>
-        <p class="referencia">${dados.salmo.referencia || ""}</p>
-        <p><strong>${dados.salmo.refrao || ""}</strong></p>
-        <div class="texto-liturgico">
-          ${formatarVersiculos(dados.salmo.texto)}
+    if (dados.primeiraLeitura?.texto) {
+      container.innerHTML += criarLeitura(
+        "Primeira Leitura",
+        dados.primeiraLeitura.referencia,
+        dados.primeiraLeitura.texto
+      );
+    }
+
+    if (dados.salmo?.texto) {
+      container.innerHTML += `
+        <div class="liturgia-card salmo">
+          <h2>Salmo Responsorial</h2>
+          <p class="referencia">${dados.salmo.referencia || ""}</p>
+          <p><strong>${dados.salmo.refrao || ""}</strong></p>
+          <div class="texto-liturgico">
+            ${formatarVersiculos(dados.salmo.texto)}
+          </div>
         </div>
-      </div>
-    `;
-  }
+      `;
+    }
 
-  // 📖 SEGUNDA
-  if (dados.segundaLeitura?.texto) {
-    container.innerHTML += criarLeitura(
-      "Segunda Leitura",
-      dados.segundaLeitura.referencia,
-      dados.segundaLeitura.texto
-    );
-  }
+    if (dados.segundaLeitura?.texto) {
+      container.innerHTML += criarLeitura(
+        "Segunda Leitura",
+        dados.segundaLeitura.referencia,
+        dados.segundaLeitura.texto
+      );
+    }
 
-  // ✝️ EVANGELHO
-  if (dados.evangelho?.texto) {
-    container.innerHTML += `
-      <div class="liturgia-card evangelho">
-        <h2>✝️ Evangelho</h2>
-        <p class="referencia">${dados.evangelho.referencia || ""}</p>
-        <p><strong>${dados.evangelho.titulo || ""}</strong></p>
-        <div class="texto-liturgico">
-          ${formatarVersiculos(dados.evangelho.texto)}
+    if (dados.evangelho?.texto) {
+      container.innerHTML += `
+        <div class="liturgia-card evangelho">
+          <h2>✝️ Evangelho</h2>
+          <p class="referencia">${dados.evangelho.referencia || ""}</p>
+          <p><strong>${dados.evangelho.titulo || ""}</strong></p>
+          <div class="texto-liturgico">
+            ${formatarVersiculos(dados.evangelho.texto)}
+          </div>
         </div>
-      </div>
-    `;
+      `;
+    }
+
+  } 
+  /* =========================
+     🥈 FORMATO SIMPLES (RAILWAY)
+  ========================= */
+  else {
+
+    console.warn("⚠️ Usando formato simples");
+
+    if (dados.dia) {
+      container.innerHTML += criarLeitura("Liturgia do Dia", "", dados.dia);
+    }
+
+    if (dados.oferendas) {
+      container.innerHTML += criarLeitura("Oferendas", "", dados.oferendas);
+    }
+
+    if (dados.comunhao) {
+      container.innerHTML += criarLeitura("Comunhão", "", dados.comunhao);
+    }
+
+    if (!dados.dia && !dados.oferendas && !dados.comunhao) {
+      container.innerHTML = `
+        <p style="text-align:center;color:#666">
+          ⚠️ Liturgia indisponível no momento.
+        </p>
+      `;
+    }
   }
 
   if (typeof mostrarConteudo === "function") {
