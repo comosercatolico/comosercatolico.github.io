@@ -1,48 +1,47 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<title>Santa Teresinha Idle</title>
-<link rel="stylesheet" href="style.css">
-<link rel="stylesheet" href="taplisieux.css">
-<script src="taplisieux.js"></script>
+    <meta charset="UTF-8">
+    <title>Santa Teresinha Idle</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="taplisieux.css">
 </head>
-<div id="menuTopo">
+<body>
 
-<button class="btnTop" onclick="abrirConfig()">
-⚙
-</button>
+    <!-- MENU TOPO -->
+    <div id="menuTopo">
+        <button class="btnTop" onclick="abrirConfig()">⚙</button>
+        <button class="btnTop" onclick="voltarSite()">⬅</button>
+    </div>
 
-<button class="btnTop" onclick="voltarSite()">
-⬅
-</button>
+    <!-- BOTÃO SAIR DA BATALHA -->
+    <button onclick="sairBatalha()" style="position:fixed; top:20px; right:20px;">
+        ❌ Sair
+    </button>
 
-</div>
-<button onclick="sairBatalha()" style="position:fixed; top:20px; right:20px;">
-❌ Sair
-</button>
-</div>
-<div id="janelaConfig">
+    <!-- JANELA DE CONFIGURAÇÕES -->
+    <div id="janelaConfig" style="display:none;">
+        <h2>Configurações</h2>
+        <label>Volume</label>
+        <input type="range" min="0" max="1" step="0.01" id="volumeSlider">
+        <p id="ouroUI"></p>
+        <br><br>
+        <button onclick="fecharConfig()">Fechar</button>
+    </div>
 
-<h2>Configurações</h2>
+    <!-- CANVAS DO JOGO -->
+    <canvas id="game"></canvas>
 
-<label>Volume</label>
-<input type="range" min="0" max="1" step="0.01" id="volumeSlider">
-<p id="ouroUI"></p>
-<br><br>
+    <!-- BOTÃO DE BATALHAR -->
+    <button id="btnBatalhar" onclick="iniciarBatalha()">⚔ Batalhar</button>
 
-<button onclick="fecharConfig()">Fechar</button>
+    <!-- UI DE BATALHA -->
+    <div id="uiBatalha" style="display:none;">
+        <div id="hpInimigo"></div>
+        <p id="nomeInimigo"></p>
+    </div>
 
-</div>
-<canvas id="game"></canvas>
-    
-<button id="btnBatalhar" onclick="iniciarBatalha()">
-⚔ Batalhar
-</button>
-
-<div id="uiBatalha">
-    <div id="hpInimigo"></div>
-    <p id="nomeInimigo"></p>
-</div>
+    <!-- SCRIPT DO JOGO (NO FINAL PARA GARANTIR QUE O DOM EXISTE) -->
+    <script src="taplisieux.js"></script>
 </body>
 </html>
