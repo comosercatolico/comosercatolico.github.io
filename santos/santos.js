@@ -380,7 +380,8 @@ const santos = [
   { "nome": "São Pio de Pietrelcina", "categoria": "Presbítero, Confessor" },
   { "nome": "Santa Teresa Benedita da Cruz", "categoria": "Mártir, Doutor da Igreja" },
   { "nome": "Santa Maria Faustina Kowalska", "categoria": "Religiosa, Mística" }
-]
+];
+
 const grid = document.getElementById("santosGrid");
 const pesquisaInput = document.querySelector(".santos-pesquisa input");
 const categoriasContainer = document.getElementById("categoriasContainer");
