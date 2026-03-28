@@ -1,6 +1,5 @@
 
 const santos = [
-[
   { "nome": "São Pedro", "categoria": "Apóstolo, Papa, Mártir" },
   { "nome": "São Paulo", "categoria": "Apóstolo, Mártir" },
   { "nome": "São João", "categoria": "Apóstolo, Evangelista" },
