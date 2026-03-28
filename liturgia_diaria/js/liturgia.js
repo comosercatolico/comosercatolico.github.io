@@ -35,8 +35,15 @@ async function carregarLiturgia(forceRefresh = false) {
 
         if (agora - cache.timestamp < 1000 * 60 * 60 * 6) {
           console.log("⚡ Usando cache");
-          usarDados(cache.data);
-          return;
+
+          // 🔥 VALIDA CACHE
+          if (cache.data?.evangelho?.texto) {
+            usarDados(cache.data);
+            return;
+          } else {
+            console.warn("⚠️ Cache inválido → ignorando");
+            localStorage.removeItem(chaveCache);
+          }
         }
       }
     }
@@ -52,10 +59,12 @@ async function carregarLiturgia(forceRefresh = false) {
       if (!res.ok) throw new Error("Erro na sua API");
 
       const api = await res.json();
+      console.log("📦 SUA API:", api);
 
       dados = adaptarLuxFidei(api);
+      console.log("📦 ADAPTADO:", dados);
 
-      if (!dados || !dados.evangelho) {
+      if (!dados?.evangelho?.texto) {
         throw new Error("Dados incompletos");
       }
 
@@ -72,10 +81,12 @@ async function carregarLiturgia(forceRefresh = false) {
         if (!res.ok) throw new Error();
 
         const api = await res.json();
+        console.log("📦 API ANTIGA:", api);
 
         dados = adaptarVercel(api);
+        console.log("📦 ADAPTADO:", dados);
 
-        if (!dados || !dados.evangelho) {
+        if (!dados?.evangelho?.texto) {
           throw new Error("Dados incompletos");
         }
 
@@ -95,15 +106,20 @@ async function carregarLiturgia(forceRefresh = false) {
         if (!res.ok) throw new Error("Nenhuma API respondeu");
 
         dados = await res.json();
+        console.log("📦 RAILWAY:", dados);
+
+        if (!dados?.evangelho?.texto) {
+          throw new Error("Railway retornou vazio");
+        }
       }
     }
 
     // 🛑 VALIDAÇÃO FINAL
-    if (!dados) {
+    if (!dados || !dados.evangelho || !dados.evangelho.texto) {
       throw new Error("Nenhum dado válido recebido");
     }
 
-    // 💾 SALVA CACHE
+    // 💾 SALVA CACHE (AGORA SEGURO)
     localStorage.setItem(chaveCache, JSON.stringify({
       timestamp: Date.now(),
       data: dados
@@ -139,7 +155,13 @@ async function carregarLiturgia(forceRefresh = false) {
 ========================= */
 
 function adaptarLuxFidei(api) {
-  const t = api.today || {};
+
+  if (!api || !api.today) {
+    console.error("❌ LuxFidei inválida:", api);
+    return null;
+  }
+
+  const t = api.today;
 
   return {
     liturgia: t.entry_title || "Liturgia do Dia",
@@ -155,6 +177,12 @@ function adaptarLuxFidei(api) {
 
 
 function adaptarVercel(api) {
+
+  if (!api) {
+    console.error("❌ Vercel inválida:", api);
+    return null;
+  }
+
   return {
     liturgia: api.titulo || "Liturgia do Dia",
     data: api.data || "",
@@ -169,10 +197,12 @@ function adaptarVercel(api) {
 
 
 /* =========================
-   🎨 USAR DADOS (ESSENCIAL)
+   🎨 USAR DADOS (CORRIGIDO)
 ========================= */
 
 function usarDados(dados) {
+
+  console.log("🎯 Renderizando:", dados);
 
   const titulo = document.getElementById("liturgia-titulo");
   const dataEl = document.getElementById("liturgia-data");
@@ -180,7 +210,17 @@ function usarDados(dados) {
 
   if (!container) return;
 
-  // 📅 DIA DA SEMANA
+  // 🔥 PROTEÇÃO
+  if (!dados?.evangelho?.texto) {
+    container.innerHTML = `
+      <p style="text-align:center;color:#666">
+        ⚠️ Liturgia indisponível no momento.
+      </p>
+    `;
+    return;
+  }
+
+  // 📅 DIA
   const dias = ["Domingo","Segunda","Terça","Quarta","Quinta","Sexta","Sábado"];
   const hoje = new Date();
 
@@ -192,7 +232,7 @@ function usarDados(dados) {
     dataEl.innerText = `${dias[hoje.getDay()]} • ${dados.data}`;
   }
 
-  // 🎨 COR LITÚRGICA
+  // 🎨 COR
   let cor = (dados.cor || "").toLowerCase();
 
   const cores = {
@@ -215,8 +255,8 @@ function usarDados(dados) {
   // 🧹 LIMPA
   container.innerHTML = "";
 
-  // 📖 PRIMEIRA LEITURA
-  if (dados.primeiraLeitura) {
+  // 📖 PRIMEIRA
+  if (dados.primeiraLeitura?.texto) {
     container.innerHTML += criarLeitura(
       "Primeira Leitura",
       dados.primeiraLeitura.referencia,
@@ -225,21 +265,21 @@ function usarDados(dados) {
   }
 
   // 🎵 SALMO
-  if (dados.salmo) {
+  if (dados.salmo?.texto) {
     container.innerHTML += `
       <div class="liturgia-card salmo">
         <h2>Salmo Responsorial</h2>
         <p class="referencia">${dados.salmo.referencia || ""}</p>
         <p><strong>${dados.salmo.refrao || ""}</strong></p>
         <div class="texto-liturgico">
-          ${formatarVersiculos(dados.salmo.texto || "")}
+          ${formatarVersiculos(dados.salmo.texto)}
         </div>
       </div>
     `;
   }
 
-  // 📖 SEGUNDA LEITURA
-  if (dados.segundaLeitura && dados.segundaLeitura.texto) {
+  // 📖 SEGUNDA
+  if (dados.segundaLeitura?.texto) {
     container.innerHTML += criarLeitura(
       "Segunda Leitura",
       dados.segundaLeitura.referencia,
@@ -248,20 +288,19 @@ function usarDados(dados) {
   }
 
   // ✝️ EVANGELHO
-  if (dados.evangelho) {
+  if (dados.evangelho?.texto) {
     container.innerHTML += `
       <div class="liturgia-card evangelho">
         <h2>✝️ Evangelho</h2>
         <p class="referencia">${dados.evangelho.referencia || ""}</p>
         <p><strong>${dados.evangelho.titulo || ""}</strong></p>
         <div class="texto-liturgico">
-          ${formatarVersiculos(dados.evangelho.texto || "")}
+          ${formatarVersiculos(dados.evangelho.texto)}
         </div>
       </div>
     `;
   }
 
-  // ✅ MOSTRA CONTEÚDO
   if (typeof mostrarConteudo === "function") {
     mostrarConteudo();
   }
@@ -290,7 +329,7 @@ function criarLeitura(titulo, referencia, texto) {
 ========================= */
 
 function formatarVersiculos(texto) {
-  return texto.replace(/(^|\s)(\d+)(?!,\d)(?=[A-Za-zÁÉÍÓÚ])/g,
+  return (texto || "").replace(/(^|\s)(\d+)(?!,\d)(?=[A-Za-zÁÉÍÓÚ])/g,
     (match, espaco, numero) => {
       return espaco + "<sup>" + numero + "</sup> ";
     }
