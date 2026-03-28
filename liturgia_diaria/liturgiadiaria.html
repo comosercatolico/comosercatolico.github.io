@@ -1,151 +1,80 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
-
 <meta charset="UTF-8">
+<title>Santos – Lux Fidei</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Liturgia Diária • Lux Fidei</title>
-
-<meta name="description" content="Liturgia diária completa com leituras, salmo e evangelho.">
-<meta name="theme-color" content="#5b2c83">
-
 <link rel="stylesheet" href="../style.css">
-<link rel="stylesheet" href="liturgia.css">
-
+<link rel="stylesheet" href="santos.css">
 <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 
 </head>
 
 <body>
 
-<header>
-  <h1>Lux Fidei</h1>
-  <p class="subtitulo">Luz da Fé Católica</p>
-</header>
-
-<!-- MENU -->
-<nav class="menu">
-
-<a href="../index.html" class="menu-item">Início</a>
-<a href="../liturgia_diaria/liturgiadiaria.html" class="menu-item active">Liturgia Diária</a>
-<a href="../santos/santos.html" class="menu-item">Santos</a>
-<a href="../biblioteca/biblioteca.html" class="menu-item">Biblioteca</a>
-<a href="../estudos/estudos.html" class="menu-item">Estudos</a>
-<a href="../jogos/jogos.html" class="menu-item">Jogos</a>
-
-<span class="menu-indicator"></span>
-
-</nav>
-
-<!-- CONTEÚDO -->
-<main>
-
-<!-- 🔄 LOADING -->
-<div id="loading" class="loading">
-  <p>⏳ Carregando liturgia...</p>
+<!-- MENU LATERAL -->
+<div class="sidebar" id="sidebar">
+  <a href="#" onclick="fecharMenu()">✖ Fechar</a>
+  <a href="../index.html">Início</a>
+  <a href="../index.html#liturgia">Liturgia diária</a>
+  <a href="santos.html">Santos</a>
+  <a href="../biblioteca/biblioteca.html">Biblioteca</a>
+  <a href="../estudos/estudos.html">Estudos</a>
+  <a href="../jogos/jogos.html">Jogos</a>
+  <hr>
+  <a href="../sobre.html">Sobre</a>
+  <a href="../privacy.html">Privacidade</a>
 </div>
 
-<!-- 📖 CONTEÚDO -->
-<section id="liturgia-box" style="display:none;">
+<header>
+  <span class="menu-btn" onclick="abrirMenu()">☰</span>
+  <h1>Lux Fidei</h1>
+  <p style="opacity:0.8">Luz da Fé Católica</p>
+</header>
 
-  <h1 id="liturgia-titulo"></h1>
-  <p id="liturgia-data" class="data-liturgia"></p>
+<!-- MENU PRINCIPAL -->
+<nav class="menu">
+  <a href="../index.html" class="menu-item ">Início</a>
+  <a href="../liturgia_diaria/liturgiadiaria.html" class="menu-item">Liturgia Diária</a>
+  <a href="santos.html" class="menu-item active">Santos</a>
+  <a href="../biblioteca/biblioteca.html" class="menu-item">Biblioteca</a>
+  <a href="../estudos/estudos.html" class="menu-item">Estudos</a>
+  <a href="../jogos/jogos.html" class="menu-item">Jogos</a>
+  <span class="menu-indicator"></span>
+</nav>
 
-  <div class="acoes-liturgia">
-    <button onclick="recarregar()">🔄 Atualizar</button>
-    <button onclick="compartilhar()">📤 Compartilhar</button>
-  </div>
-
-  <div id="liturgia-conteudo"></div>
-
+<!-- CABEÇALHO -->
+<section class="santos-header">
+  <h2>Santos da Igreja</h2>
+  <p>
+    A Igreja Católica reconhece ao longo dos séculos homens e mulheres que viveram
+    de maneira heroica a fé cristã. Nesta seção você poderá conhecer a vida,
+    os milagres e os ensinamentos de cada santo.
+  </p>
 </section>
 
-</main>
+<!-- PESQUISA -->
+<div class="santos-pesquisa">
+  <input type="text" placeholder="Pesquisar santo...">
+</div>
 
-<!-- FOOTER -->
+<!-- CATEGORIAS DE SANTOS -->
+<div class="categorias-container" id="categoriasContainer">
+  <!-- Botões de categoria serão adicionados dinamicamente pelo JS -->
+</div>
+
+<!-- GRID DE SANTOS -->
+<section class="santos-grid" id="santosGrid">
+  <!-- Cards de santos serão adicionados dinamicamente pelo JS -->
+</section>
+
 <footer>
-© 2026 – Lux Fidei
+  © 2026 – Lux Fidei
 </footer>
 
-<!-- SCRIPT PRINCIPAL -->
-<script src="js/liturgia.js"></script>
-
-<script>
-
-/* 🚀 INICIALIZAÇÃO */
-window.addEventListener("DOMContentLoaded", () => {
-
-  console.log("🚀 Iniciando liturgia...");
-
-  if (typeof carregarLiturgia === "function") {
-    carregarLiturgia();
-  } else {
-    console.error("❌ Função carregarLiturgia não encontrada!");
-  }
-
-  const active = document.querySelector(".menu-item.active");
-  if(active) updateIndicator(active);
-
-});
-
-
-/* 🔄 RECARREGAR */
-function recarregar(){
-  localStorage.clear();
-  location.reload();
-}
-
-
-/* 📤 COMPARTILHAR */
-function compartilhar(){
-
-  const titulo = document.getElementById("liturgia-titulo")?.innerText || "";
-
-  if(navigator.share){
-    navigator.share({
-      title: "Liturgia Diária",
-      text: titulo,
-      url: window.location.href
-    });
-  } else {
-    alert("Seu navegador não suporta compartilhamento.");
-  }
-}
-
-
-/* 🎯 MOSTRAR CONTEÚDO */
-function mostrarConteudo(){
-  const loading = document.getElementById("loading");
-  const box = document.getElementById("liturgia-box");
-
-  if (loading) loading.style.display = "none";
-  if (box) box.style.display = "block";
-}
-
-
-/* MENU ANIMAÇÃO */
-
-const indicator = document.querySelector(".menu-indicator");
-const items = document.querySelectorAll(".menu-item");
-
-function updateIndicator(el){
-  if (!indicator) return;
-
-  indicator.style.width = el.offsetWidth + "px";
-  indicator.style.left = el.offsetLeft + "px";
-}
-
-items.forEach(item => {
-  item.addEventListener("click", function(){
-    items.forEach(i => i.classList.remove("active"));
-    this.classList.add("active");
-    updateIndicator(this);
-  });
-});
-
-</script>
+<!-- SCRIPT DE SANTOS -->
+<script src="santos.js"></script>
 
 </body>
 </html>
