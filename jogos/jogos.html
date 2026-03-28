@@ -85,6 +85,7 @@
 </footer>
 
 <script>
+// ABRIR / FECHAR SIDEBAR
 function abrirMenu() {
   document.getElementById("sidebar").style.left = "0";
 }
@@ -92,85 +93,40 @@ function fecharMenu() {
   document.getElementById("sidebar").style.left = "-260px";
 }
 
+// MENU INDICATOR SUAVE
 const indicator = document.querySelector(".menu-indicator");
 const items = document.querySelectorAll(".menu-item");
 
-function updateIndicator(el){
-  indicator.style.width = el.offsetWidth + "px";
-  indicator.style.left = el.offsetLeft + "px";
+function updateIndicator(el) {
+  const menuRect = el.parentElement.getBoundingClientRect(); // menu container
+  const elRect = el.getBoundingClientRect();                 // item
+  const left = elRect.left - menuRect.left;                 // posição relativa
+  const width = elRect.width;                               // largura do item
+  indicator.style.width = width + "px";
+  indicator.style.left = left + "px";
 }
 
+// Inicializa no item ativo
+window.addEventListener("load", () => {
+  const active = document.querySelector(".menu-item.active");
+  if(active) updateIndicator(active);
+});
+
+// Quando clica em outro item
 items.forEach(item => {
-  item.addEventListener("click", function(){
+  item.addEventListener("click", function() {
     items.forEach(i => i.classList.remove("active"));
     this.classList.add("active");
     updateIndicator(this);
   });
 });
 
-window.onload = () => {
+// Recalcula posição do indicador ao redimensionar
+window.addEventListener("resize", () => {
   const active = document.querySelector(".menu-item.active");
-  if(active){
-    updateIndicator(active);
-  }
-};
-</script>
-  <script>
-
-/* MENU */
-function abrirMenu() {
-  document.getElementById("sidebar").style.left = "0";
-}
-
-function fecharMenu() {
-  document.getElementById("sidebar").style.left = "-250px";
-}
-
-/* PAGINAS */
-
-function mostrarInicio() {
-
-document.getElementById("inicio").style.display = "block";
-
-document.getElementById("liturgia").style.display = "none";
-
-}
-
-///ANIMAÇÃO MENUUUUUUUUUUUUU///
-
-const indicator = document.querySelector(".menu-indicator");
-const items = document.querySelectorAll(".menu-item");
-
-function updateIndicator(el){
-
-indicator.style.width = el.offsetWidth + "px";
-indicator.style.left = el.offsetLeft + "px";
-
-}
-
-items.forEach(item => {
-
-item.addEventListener("click", function(){
-
-items.forEach(i => i.classList.remove("active"));
-
-this.classList.add("active");
-
-updateIndicator(this);
-
+  if(active) updateIndicator(active);
 });
-
-});
-
-window.onload = () => {
-
-const active = document.querySelector(".menu-item.active");
-
-if(active){
-updateIndicator(active);
-}
-
-};
 </script>
+
 </body>
 </html>
