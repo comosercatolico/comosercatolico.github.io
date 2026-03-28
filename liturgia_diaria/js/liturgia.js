@@ -9,7 +9,6 @@ async function carregarLiturgia(forceRefresh = false) {
 
     const container = document.getElementById("liturgia-conteudo");
 
-    // 🛑 GARANTE QUE O HTML EXISTE
     if (!container) {
       console.error("Elemento #liturgia-conteudo não encontrado!");
       return;
@@ -31,8 +30,6 @@ async function carregarLiturgia(forceRefresh = false) {
         const agora = Date.now();
         if (agora - cache.timestamp < 1000 * 60 * 60 * 6) {
           console.log("⚡ Usando cache");
-
-          // 🔥 AGORA ACEITA QUALQUER FORMATO VÁLIDO
           if (cache.data) {
             usarDados(cache.data);
             return;
@@ -92,7 +89,6 @@ async function carregarLiturgia(forceRefresh = false) {
       }
     }
 
-    // 🛑 VALIDAÇÃO FINAL (MAIS FLEXÍVEL)
     if (!dados) {
       throw new Error("Nenhum dado válido recebido");
     }
@@ -106,7 +102,6 @@ async function carregarLiturgia(forceRefresh = false) {
       })
     );
 
-    // 🎨 ANIMAÇÃO
     container.style.opacity = 0;
     setTimeout(() => {
       usarDados(dados);
@@ -130,7 +125,6 @@ async function carregarLiturgia(forceRefresh = false) {
 ========================= */
 function adaptarLuxFidei(api) {
   if (!api || !api.today) return null;
-
   const t = api.today;
   return {
     liturgia: t.entry_title || "Liturgia do Dia",
@@ -145,7 +139,6 @@ function adaptarLuxFidei(api) {
 
 function adaptarVercel(api) {
   if (!api) return null;
-
   return {
     liturgia: api.titulo || "Liturgia do Dia",
     data: api.data || "",
@@ -162,40 +155,35 @@ function adaptarVercel(api) {
 ========================= */
 function usarDados(dados) {
   console.log("🎯 Renderizando:", dados);
-
   if (!dados) return;
 
   const tituloEl = document.getElementById("liturgia-titulo");
   const dataEl = document.getElementById("liturgia-data");
   const container = document.getElementById("liturgia-conteudo");
-
   if (!container) return;
 
-  // 📅 DIA
   const dias = ["Domingo","Segunda","Terça","Quarta","Quinta","Sexta","Sábado"];
   const hoje = new Date();
 
-  if (tituloEl) {
-    tituloEl.innerText = `${dados.liturgia || "Liturgia do Dia"} — ${dados.cor || ""}`;
-  }
-  if (dataEl) {
-    dataEl.innerText = `${dias[hoje.getDay()]} • ${dados.data || ""}`;
-  }
+  if (tituloEl) tituloEl.innerText = `${dados.liturgia || "Liturgia do Dia"} — ${dados.cor || ""}`;
+  if (dataEl) dataEl.innerText = `${dias[hoje.getDay()]} • ${dados.data || ""}`;
 
-  // 🎨 COR
   const cores = { roxo: "#6a1b9a", verde: "#2e7d32", vermelho: "#c62828", branco: "#d4af37" };
-  let corCSS = cores[(dados.cor || "").toLowerCase()] || "#5b2c83";
+  const corCSS = cores[(dados.cor || "").toLowerCase()] || "#5b2c83";
   document.documentElement.style.setProperty("--cor-liturgica", corCSS);
 
-  // 🧹 LIMPA CONTAINER
   container.innerHTML = "";
 
-  // =========================
   // Função auxiliar segura
   function renderLeitura(titulo, leitura) {
     if (!leitura) return;
     const referencia = leitura.referencia || "";
-    const texto = leitura.texto || leitura || "";
+    let texto = leitura.texto || leitura || "";
+    if (typeof texto !== "string") {
+      if (Array.isArray(texto)) texto = texto.join(" ");
+      else if (typeof texto === "object") texto = JSON.stringify(texto);
+      else texto = String(texto);
+    }
     container.innerHTML += `
       <div class="liturgia-card">
         <h2>${titulo}</h2>
@@ -205,37 +193,32 @@ function usarDados(dados) {
     `;
   }
 
-  // =========================
   // FORMATO COMPLETO
   if (dados.evangelho || dados.primeiraLeitura || dados.salmo || dados.segundaLeitura) {
     renderLeitura("Primeira Leitura", dados.primeiraLeitura);
 
     if (dados.salmo) {
+      let salmoTexto = dados.salmo.texto || "";
+      if (typeof salmoTexto !== "string") {
+        if (Array.isArray(salmoTexto)) salmoTexto = salmoTexto.join(" ");
+        else if (typeof salmoTexto === "object") salmoTexto = JSON.stringify(salmoTexto);
+        else salmoTexto = String(salmoTexto);
+      }
       container.innerHTML += `
         <div class="liturgia-card salmo">
           <h2>Salmo Responsorial</h2>
           <p class="referencia">${dados.salmo.referencia || ""}</p>
           <p><strong>${dados.salmo.refrao || ""}</strong></p>
-          <div class="texto-liturgico">${formatarVersiculos(dados.salmo.texto || "")}</div>
+          <div class="texto-liturgico">${formatarVersiculos(salmoTexto)}</div>
         </div>
       `;
     }
 
     renderLeitura("Segunda Leitura", dados.segundaLeitura);
 
-    if (dados.evangelho) {
-      container.innerHTML += `
-        <div class="liturgia-card evangelho">
-          <h2>✝️ Evangelho</h2>
-          <p class="referencia">${dados.evangelho.referencia || ""}</p>
-          <p><strong>${dados.evangelho.titulo || ""}</strong></p>
-          <div class="texto-liturgico">${formatarVersiculos(dados.evangelho.texto || "")}</div>
-        </div>
-      `;
-    }
-  } 
-  // =========================
-  // FORMATO SIMPLES (Railway)
+    if (dados.evangelho) renderLeitura("✝️ Evangelho", dados.evangelho);
+  }
+  // FORMATO SIMPLES
   else {
     renderLeitura("Liturgia do Dia", dados.dia);
     renderLeitura("Oferendas", dados.oferendas);
@@ -253,12 +236,13 @@ function usarDados(dados) {
    🧠 FORMATAÇÃO DE VERSÍCULOS SEGURO
 ========================= */
 function formatarVersiculos(texto) {
-  if (!texto) return "";
+  if (texto == null) return "";
+  if (typeof texto !== "string") {
+    if (Array.isArray(texto)) texto = texto.join(" ");
+    else if (typeof texto === "object") texto = JSON.stringify(texto);
+    else texto = String(texto);
+  }
   return texto.replace(/(^|\s)(\d+)(?!,\d)(?=[A-Za-zÁÉÍÓÚ])/g,
     (match, espaco, numero) => `${espaco}<sup>${numero}</sup> `
   );
 }
-
-
-
-
