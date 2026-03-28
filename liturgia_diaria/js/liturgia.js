@@ -8,7 +8,6 @@ async function carregarLiturgia(forceRefresh = false) {
     const chaveCache = "liturgia-" + hojeISO;
 
     const container = document.getElementById("liturgia-conteudo");
-
     if (!container) {
       console.error("Elemento #liturgia-conteudo não encontrado!");
       return;
@@ -30,13 +29,8 @@ async function carregarLiturgia(forceRefresh = false) {
         const agora = Date.now();
         if (agora - cache.timestamp < 1000 * 60 * 60 * 6) {
           console.log("⚡ Usando cache");
-          if (cache.data) {
-            usarDados(cache.data);
-            return;
-          } else {
-            console.warn("⚠️ Cache inválido → ignorando");
-            localStorage.removeItem(chaveCache);
-          }
+          usarDados(cache.data);
+          return;
         }
       }
     }
@@ -48,13 +42,8 @@ async function carregarLiturgia(forceRefresh = false) {
       console.log("🔵 Tentando sua API...");
       const res = await fetch("https://api-lirtugico-lux-fidei.vercel.app/cn");
       if (!res.ok) throw new Error("Erro na sua API");
-
       const api = await res.json();
-      console.log("📦 SUA API:", api);
-
       dados = adaptarLuxFidei(api);
-      console.log("📦 ADAPTADO:", dados);
-
       if (!dados) throw new Error("Dados inválidos");
     } catch (e1) {
       console.warn("⚠️ Sua API falhou:", e1.message);
@@ -64,13 +53,8 @@ async function carregarLiturgia(forceRefresh = false) {
         console.log("🟡 Tentando API antiga...");
         const res = await fetch("https://api-liturgia-diaria.vercel.app/cn");
         if (!res.ok) throw new Error();
-
         const api = await res.json();
-        console.log("📦 API ANTIGA:", api);
-
         dados = adaptarVercel(api);
-        console.log("📦 ADAPTADO:", dados);
-
         if (!dados) throw new Error("Dados inválidos");
       } catch (e2) {
         console.warn("⚠️ API antiga falhou");
@@ -83,15 +67,11 @@ async function carregarLiturgia(forceRefresh = false) {
 
         const res = await fetch(`https://liturgia.up.railway.app/${dia}-${mes}`);
         if (!res.ok) throw new Error("Nenhuma API respondeu");
-
         dados = await res.json();
-        console.log("📦 RAILWAY:", dados);
       }
     }
 
-    if (!dados) {
-      throw new Error("Nenhum dado válido recebido");
-    }
+    if (!dados) throw new Error("Nenhum dado válido recebido");
 
     // 💾 SALVA CACHE
     localStorage.setItem(
@@ -107,15 +87,14 @@ async function carregarLiturgia(forceRefresh = false) {
       usarDados(dados);
       container.style.opacity = 1;
     }, 200);
+
   } catch (erro) {
     console.error("❌ Erro geral:", erro);
     const container = document.getElementById("liturgia-conteudo");
     if (container) {
-      container.innerHTML = `
-        <p style="text-align:center;font-size:18px;color:#666">
-          ⚠️ Não foi possível carregar a liturgia.
-        </p>
-      `;
+      container.innerHTML = `<p style="text-align:center;font-size:18px;color:#666">
+        ⚠️ Não foi possível carregar a liturgia.
+      </p>`;
     }
   }
 }
@@ -154,9 +133,7 @@ function adaptarVercel(api) {
    🎯 USAR DADOS SEGUROS
 ========================= */
 function usarDados(dados) {
-  console.log("🎯 Renderizando:", dados);
   if (!dados) return;
-
   const tituloEl = document.getElementById("liturgia-titulo");
   const dataEl = document.getElementById("liturgia-data");
   const container = document.getElementById("liturgia-conteudo");
@@ -169,12 +146,10 @@ function usarDados(dados) {
   if (dataEl) dataEl.innerText = `${dias[hoje.getDay()]} • ${dados.data || ""}`;
 
   const cores = { roxo: "#6a1b9a", verde: "#2e7d32", vermelho: "#c62828", branco: "#d4af37" };
-  const corCSS = cores[(dados.cor || "").toLowerCase()] || "#5b2c83";
-  document.documentElement.style.setProperty("--cor-liturgica", corCSS);
+  document.documentElement.style.setProperty("--cor-liturgica", cores[(dados.cor || "").toLowerCase()] || "#5b2c83");
 
   container.innerHTML = "";
 
-  // Função auxiliar segura
   function renderLeitura(titulo, leitura) {
     if (!leitura) return;
     const referencia = leitura.referencia || "";
@@ -193,12 +168,13 @@ function usarDados(dados) {
     `;
   }
 
+  // =========================
   // FORMATO COMPLETO
   if (dados.evangelho || dados.primeiraLeitura || dados.salmo || dados.segundaLeitura) {
     renderLeitura("Primeira Leitura", dados.primeiraLeitura);
 
     if (dados.salmo) {
-      let salmoTexto = dados.salmo.texto || "";
+      let salmoTexto = dados.salmo.texto || dados.salmo || "";
       if (typeof salmoTexto !== "string") {
         if (Array.isArray(salmoTexto)) salmoTexto = salmoTexto.join(" ");
         else if (typeof salmoTexto === "object") salmoTexto = JSON.stringify(salmoTexto);
@@ -208,22 +184,21 @@ function usarDados(dados) {
         <div class="liturgia-card salmo">
           <h2>Salmo Responsorial</h2>
           <p class="referencia">${dados.salmo.referencia || ""}</p>
-          <p><strong>${dados.salmo.refrao || ""}</strong></p>
+          ${dados.salmo.refrao ? `<p><strong>${dados.salmo.refrao}</strong></p>` : ""}
           <div class="texto-liturgico">${formatarVersiculos(salmoTexto)}</div>
         </div>
       `;
     }
 
     renderLeitura("Segunda Leitura", dados.segundaLeitura);
-
-    if (dados.evangelho) renderLeitura("✝️ Evangelho", dados.evangelho);
+    renderLeitura("✝️ Evangelho", dados.evangelho);
   }
-  // FORMATO SIMPLES
+  // =========================
+  // FORMATO SIMPLES (Railway)
   else {
     renderLeitura("Liturgia do Dia", dados.dia);
     renderLeitura("Oferendas", dados.oferendas);
     renderLeitura("Comunhão", dados.comunhao);
-
     if (!dados.dia && !dados.oferendas && !dados.comunhao) {
       container.innerHTML = `<p style="text-align:center;color:#666">⚠️ Liturgia indisponível no momento.</p>`;
     }
@@ -242,7 +217,5 @@ function formatarVersiculos(texto) {
     else if (typeof texto === "object") texto = JSON.stringify(texto);
     else texto = String(texto);
   }
-  return texto.replace(/(^|\s)(\d+)(?!,\d)(?=[A-Za-zÁÉÍÓÚ])/g,
-    (match, espaco, numero) => `${espaco}<sup>${numero}</sup> `
-  );
+  return texto.replace(/(^|\s)(\d+)(?!,\d)(?=[A-Za-zÁÉÍÓÚ])/g, (match, espaco, numero) => `${espaco}<sup>${numero}</sup> `);
 }
