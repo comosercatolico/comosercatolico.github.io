@@ -1,88 +1,46 @@
 async function carregarLiturgia() {
   try {
 
-    const hoje = new Date();
-    const dia = String(hoje.getDate()).padStart(2, "0");
-    const mes = String(hoje.getMonth() + 1).padStart(2, "0");
+    const hoje = new Date().toISOString().split("T")[0];
 
-    const res = await fetch(`https://liturgia.up.railway.app/${dia}-${mes}`);
-
-    if (!res.ok) {
-      throw new Error("API não respondeu");
+    // 🔥 CACHE
+    const cache = localStorage.getItem("liturgia-" + hoje);
+    if (cache) {
+      usarDados(JSON.parse(cache));
+      return;
     }
 
-    const dados = await res.json();
+    let dados;
 
-    // TITULO
-    document.getElementById("liturgia-titulo").innerText =
-      `${dados.liturgia} — ${dados.cor}`;
+    // 🥇 API PRINCIPAL (VERCEL)
+    try {
+      const res = await fetch("https://api-liturgia-diaria.vercel.app/cn");
 
-    // DATA
-    document.getElementById("liturgia-data").innerText = dados.data;
+      if (!res.ok) throw new Error();
 
-    // COR LITÚRGICA
-    let cor = dados.cor.toLowerCase();
-    let corCSS = "#5b2c83";
+      dados = await res.json();
 
-    if (cor.includes("roxo")) corCSS = "#5b2c83";
-    if (cor.includes("verde")) corCSS = "#2e7d32";
-    if (cor.includes("vermelho")) corCSS = "#b71c1c";
-    if (cor.includes("branco")) corCSS = "#c7a25a";
+      // adapta formato da API nova → padrão antigo
+      dados = adaptarVercel(dados);
 
-    document.documentElement.style.setProperty("--cor-liturgica", corCSS);
+    } catch {
 
-    const c = document.getElementById("liturgia-conteudo");
-    c.innerHTML = "";
+      // 🥈 FALLBACK (RAILWAY)
+      const d = new Date();
+      const dia = String(d.getDate()).padStart(2, "0");
+      const mes = String(d.getMonth() + 1).padStart(2, "0");
 
-    // PRIMEIRA LEITURA
-    if (dados.primeiraLeitura) {
-      c.innerHTML += criarLeitura(
-        "Primeira Leitura",
-        dados.primeiraLeitura.referencia,
-        dados.primeiraLeitura.texto
-      );
+      const res = await fetch(`https://liturgia.up.railway.app/${dia}-${mes}`);
+
+      if (!res.ok) throw new Error("Nenhuma API respondeu");
+
+      dados = await res.json();
     }
 
-    // SALMO
-    if (dados.salmo) {
-      c.innerHTML += `
-        <div class="liturgia-card salmo">
-          <h2>Salmo Responsorial</h2>
-          <p class="referencia">${dados.salmo.referencia}</p>
-          <p><strong>${dados.salmo.refrao}</strong></p>
-          <div class="texto-liturgico">
-            ${formatarVersiculos(dados.salmo.texto)}
-          </div>
-        </div>
-      `;
-    }
+    // 💾 SALVA CACHE
+    localStorage.setItem("liturgia-" + hoje, JSON.stringify(dados));
 
-    // SEGUNDA LEITURA
-    if (
-      dados.segundaLeitura &&
-      dados.segundaLeitura.texto &&
-      dados.segundaLeitura.texto.trim() !== ""
-    ) {
-      c.innerHTML += criarLeitura(
-        "Segunda Leitura",
-        dados.segundaLeitura.referencia,
-        dados.segundaLeitura.texto
-      );
-    }
-
-    // EVANGELHO
-    if (dados.evangelho) {
-      c.innerHTML += `
-        <div class="liturgia-card evangelho">
-          <h2>✝️ Evangelho</h2>
-          <p class="referencia">${dados.evangelho.referencia}</p>
-          <p><strong>${dados.evangelho.titulo}</strong></p>
-          <div class="texto-liturgico">
-            ${formatarVersiculos(dados.evangelho.texto)}
-          </div>
-        </div>
-      `;
-    }
+    usarDados(dados);
 
   } catch (erro) {
 
@@ -90,11 +48,113 @@ async function carregarLiturgia() {
       "<p style='text-align:center;font-size:18px;color:#666'>⚠️ Não foi possível carregar a liturgia.</p>";
 
     console.error(erro);
-
   }
 }
 
-// 🔥 LEITURAS (já com formatação aplicada)
+
+// 🔄 ADAPTA API NOVA (VERCEL → SEU FORMATO)
+function adaptarVercel(api) {
+  return {
+    liturgia: api.titulo || "Liturgia do Dia",
+    data: api.data || "",
+    cor: api.cor || "verde",
+
+    primeiraLeitura: api.primeiraLeitura ? {
+      referencia: api.primeiraLeitura.referencia,
+      texto: api.primeiraLeitura.texto
+    } : null,
+
+    salmo: api.salmo ? {
+      referencia: api.salmo.referencia,
+      refrao: api.salmo.refrao,
+      texto: api.salmo.texto
+    } : null,
+
+    segundaLeitura: api.segundaLeitura ? {
+      referencia: api.segundaLeitura.referencia,
+      texto: api.segundaLeitura.texto
+    } : null,
+
+    evangelho: api.evangelho ? {
+      referencia: api.evangelho.referencia,
+      titulo: api.evangelho.titulo,
+      texto: api.evangelho.texto
+    } : null
+  };
+}
+
+
+// 🎨 USA OS DADOS (SEU CÓDIGO ORIGINAL MELHORADO)
+function usarDados(dados) {
+
+  document.getElementById("liturgia-titulo").innerText =
+    `${dados.liturgia} — ${dados.cor}`;
+
+  document.getElementById("liturgia-data").innerText = dados.data;
+
+  // 🎨 COR LITÚRGICA
+  let cor = dados.cor.toLowerCase();
+  let corCSS = "#5b2c83";
+
+  if (cor.includes("roxo")) corCSS = "#5b2c83";
+  if (cor.includes("verde")) corCSS = "#2e7d32";
+  if (cor.includes("vermelho")) corCSS = "#b71c1c";
+  if (cor.includes("branco")) corCSS = "#c7a25a";
+
+  document.documentElement.style.setProperty("--cor-liturgica", corCSS);
+
+  const c = document.getElementById("liturgia-conteudo");
+  c.innerHTML = "";
+
+  // PRIMEIRA LEITURA
+  if (dados.primeiraLeitura) {
+    c.innerHTML += criarLeitura(
+      "Primeira Leitura",
+      dados.primeiraLeitura.referencia,
+      dados.primeiraLeitura.texto
+    );
+  }
+
+  // SALMO
+  if (dados.salmo) {
+    c.innerHTML += `
+      <div class="liturgia-card salmo">
+        <h2>Salmo Responsorial</h2>
+        <p class="referencia">${dados.salmo.referencia}</p>
+        <p><strong>${dados.salmo.refrao}</strong></p>
+        <div class="texto-liturgico">
+          ${formatarVersiculos(dados.salmo.texto)}
+        </div>
+      </div>
+    `;
+  }
+
+  // SEGUNDA LEITURA
+  if (dados.segundaLeitura && dados.segundaLeitura.texto?.trim()) {
+    c.innerHTML += criarLeitura(
+      "Segunda Leitura",
+      dados.segundaLeitura.referencia,
+      dados.segundaLeitura.texto
+    );
+  }
+
+  // EVANGELHO
+  if (dados.evangelho) {
+    c.innerHTML += `
+      <div class="liturgia-card evangelho">
+        <h2>✝️ Evangelho</h2>
+        <p class="referencia">${dados.evangelho.referencia}</p>
+        <p><strong>${dados.evangelho.titulo}</strong></p>
+        <div class="texto-liturgico">
+          ${formatarVersiculos(dados.evangelho.texto)}
+        </div>
+      </div>
+    `;
+  }
+}
+
+
+// 🔥 LEITURAS
 function criarLeitura(titulo, referencia, texto) {
   return `
     <div class="liturgia-card">
@@ -107,18 +167,18 @@ function criarLeitura(titulo, referencia, texto) {
   `;
 }
 
-// 🧠 FORMATAÇÃO INTELIGENTE
-function formatarVersiculos(texto) {
 
-  // evita quebrar referências tipo 20,10-13
-  return texto.replace(/(^|\s)(\d+)(?!,\d)(?=[A-Za-zÁÉÍÓÚÂÊÔÃÕáéíóúâêôãõ])/g,
+// 🧠 FORMATAÇÃO
+function formatarVersiculos(texto) {
+  return texto.replace(/(^|\\s)(\\d+)(?!,\\d)(?=[A-Za-zÁÉÍÓÚÂÊÔÃÕáéíóúâêôãõ])/g,
     (match, espaco, numero) => {
       return espaco + "<sup>" + numeroParaSup(numero) + "</sup> ";
     }
   );
 }
 
-// 🔢 CONVERTE PARA SOBRESCRITO
+
+// 🔢 SOBRESCRITO
 function numeroParaSup(num) {
   const mapa = {
     "0":"⁰","1":"¹","2":"²","3":"³","4":"⁴",
