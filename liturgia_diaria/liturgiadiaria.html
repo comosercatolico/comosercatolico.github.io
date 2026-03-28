@@ -8,7 +8,6 @@
 
 <title>Liturgia Diária • Lux Fidei</title>
 
-<!-- SEO básico -->
 <meta name="description" content="Liturgia diária completa com leituras, salmo e evangelho.">
 <meta name="theme-color" content="#5b2c83">
 
@@ -26,44 +25,34 @@
   <p class="subtitulo">Luz da Fé Católica</p>
 </header>
 
-
 <!-- MENU -->
-
 <nav class="menu">
 
 <a href="../index.html" class="menu-item">Início</a>
-
 <a href="../liturgia_diaria/liturgiadiaria.html" class="menu-item active">Liturgia Diária</a>
-
 <a href="../santos/santos.html" class="menu-item">Santos</a>
-
 <a href="../biblioteca/biblioteca.html" class="menu-item">Biblioteca</a>
-
 <a href="../estudos/estudos.html" class="menu-item">Estudos</a>
-
 <a href="../jogos/jogos.html" class="menu-item">Jogos</a>
 
 <span class="menu-indicator"></span>
 
 </nav>
 
-
 <!-- CONTEÚDO -->
-
 <main>
 
-<!-- 🔥 LOADING (novo) -->
+<!-- 🔄 LOADING -->
 <div id="loading" class="loading">
-  <p>Carregando liturgia...</p>
+  <p>⏳ Carregando liturgia...</p>
 </div>
 
-<!-- 🔥 CONTEÚDO -->
+<!-- 📖 CONTEÚDO -->
 <section id="liturgia-box" style="display:none;">
 
   <h1 id="liturgia-titulo"></h1>
   <p id="liturgia-data" class="data-liturgia"></p>
 
-  <!-- 🔥 AÇÕES (novo) -->
   <div class="acoes-liturgia">
     <button onclick="recarregar()">🔄 Atualizar</button>
     <button onclick="compartilhar()">📤 Compartilhar</button>
@@ -75,32 +64,34 @@
 
 </main>
 
-
 <!-- FOOTER -->
-
 <footer>
 © 2026 – Lux Fidei
 </footer>
 
-
-<!-- SCRIPT LITURGIA -->
+<!-- SCRIPT PRINCIPAL -->
 <script src="js/liturgia.js"></script>
-
 
 <script>
 
-/* 🚀 CARREGAMENTO */
-window.onload = () => {
+/* 🚀 INICIALIZAÇÃO */
+window.addEventListener("DOMContentLoaded", () => {
 
-  carregarLiturgia();
+  console.log("🚀 Iniciando liturgia...");
+
+  if (typeof carregarLiturgia === "function") {
+    carregarLiturgia();
+  } else {
+    console.error("❌ Função carregarLiturgia não encontrada!");
+  }
 
   const active = document.querySelector(".menu-item.active");
   if(active) updateIndicator(active);
 
-};
+});
 
 
-/* 🔄 BOTÃO RECARREGAR */
+/* 🔄 RECARREGAR */
 function recarregar(){
   localStorage.clear();
   location.reload();
@@ -110,7 +101,7 @@ function recarregar(){
 /* 📤 COMPARTILHAR */
 function compartilhar(){
 
-  const titulo = document.getElementById("liturgia-titulo").innerText;
+  const titulo = document.getElementById("liturgia-titulo")?.innerText || "";
 
   if(navigator.share){
     navigator.share({
@@ -119,15 +110,18 @@ function compartilhar(){
       url: window.location.href
     });
   } else {
-    alert("Compartilhamento não suportado no seu navegador");
+    alert("Seu navegador não suporta compartilhamento.");
   }
 }
 
 
-/* 🎯 MOSTRAR CONTEÚDO QUANDO CARREGAR */
+/* 🎯 MOSTRAR CONTEÚDO */
 function mostrarConteudo(){
-  document.getElementById("loading").style.display = "none";
-  document.getElementById("liturgia-box").style.display = "block";
+  const loading = document.getElementById("loading");
+  const box = document.getElementById("liturgia-box");
+
+  if (loading) loading.style.display = "none";
+  if (box) box.style.display = "block";
 }
 
 
@@ -137,6 +131,8 @@ const indicator = document.querySelector(".menu-indicator");
 const items = document.querySelectorAll(".menu-item");
 
 function updateIndicator(el){
+  if (!indicator) return;
+
   indicator.style.width = el.offsetWidth + "px";
   indicator.style.left = el.offsetLeft + "px";
 }
