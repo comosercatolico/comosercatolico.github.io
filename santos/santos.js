@@ -491,17 +491,35 @@ const modalElement = document.getElementById("santoModal");
 
 window.abrirModal = function(nomeSanto) {
     const santo = santos.find(s => s.nome === nomeSanto);
-    document.getElementById("modalTitle").textContent = santo.nome;
-    modalElement.classList.add("active");
-    document.body.style.overflow = "hidden"; // Trava o scroll do fundo
+    if (!santo) return;
 
-    // Simulação de carregamento de texto (aqui você poderia buscar de um arquivo .txt ou API)
-    document.getElementById("modalContent").innerHTML = `
-        <p><strong>Categorias:</strong> ${santo.categoria}</p>
-        <p>Carregando biografia detalhada de ${santo.nome}...</p>
-        <p style="margin-top:20px; color:#666; font-style:italic">
-           "O testemunho dos santos nos guia no caminho da santidade."
-        </p>
+    const modalTitle = document.getElementById("modalTitle");
+    const modalContent = document.getElementById("modalContent");
+    
+    modalTitle.textContent = santo.nome;
+    modalElement.classList.add("active");
+    document.body.style.overflow = "hidden"; 
+
+    // Conteúdo Dinâmico
+    modalContent.innerHTML = `
+        <div class="santo-detalhe">
+            <img src="../imagens/santos/${santo.nome.toLowerCase().replace(/ /g, '-')}.jpg" 
+                 onerror="this.style.display='none'" 
+                 style="width:100%; max-height:300px; object-fit:cover; border-radius:10px; margin-bottom:20px;">
+            
+            <p><strong>Vocação:</strong> ${santo.categoria}</p>
+            <hr style="border:0; border-top:1px solid #eee; margin:20px 0;">
+            
+            <div class="biografia-texto">
+                <p>A vida de <strong>${santo.nome}</strong> é um testemunho profundo para toda a Igreja Católica. 
+                Sua trajetória dentro da categoria de <em>${santo.categoria}</em> inspira fiéis no mundo inteiro.</p>
+                
+                <br>
+                <div style="background:#f9f9f9; padding:20px; border-left:4px solid #8b6f3d; font-style:italic;">
+                    "Sem conteúdo por aqui no momento. Estamos trabalhando para trazer a biografia completa deste santo em breve."
+                </div>
+            </div>
+        </div>
     `;
 };
 
