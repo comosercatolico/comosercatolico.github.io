@@ -30,22 +30,15 @@
   <p style="opacity:0.8">Luz da Fé Católica</p>
 </header>
 
+<!-- MENU SUPERIOR -->
 <nav class="menu">
-
-<a href="../index.html" class="menu-item ">Início</a>
-
-<a href="../liturgia_diaria/liturgiadiaria.html" class="menu-item">Liturgia Diária</a>
-
-<a href="../santos/santos.html" class="menu-item">Santos</a>
-
-<a href="biblioteca.html" class="menu-item active">Biblioteca</a>
-
-<a href="../estudos/estudos.html" class="menu-item">Estudos</a>
-
-<a href="../jogos/jogos.html" class="menu-item">Jogos</a>
-  
-<span class="menu-indicator"></span>
-
+  <a href="../index.html" class="menu-item">Início</a>
+  <a href="../liturgia_diaria/liturgiadiaria.html" class="menu-item">Liturgia Diária</a>
+  <a href="../santos/santos.html" class="menu-item">Santos</a>
+  <a href="biblioteca.html" class="menu-item active">Biblioteca</a>
+  <a href="../estudos/estudos.html" class="menu-item">Estudos</a>
+  <a href="../jogos/jogos.html" class="menu-item">Jogos</a>
+  <span class="menu-indicator"></span>
 </nav>
 
 <main id="inicio">
@@ -88,7 +81,6 @@
         <a href="livros/catecismo.html" class="btn-leitura">Ler</a>
       </div>
     </div>
-
   </div>
 </main>
 
@@ -96,62 +88,48 @@
 © 2026 – Lux Fidei
 </footer>
 
+<!-- JAVASCRIPT -->
 <script>
-
-/* MENU */
+// SIDEBAR
 function abrirMenu() {
   document.getElementById("sidebar").style.left = "0";
 }
-
 function fecharMenu() {
-  document.getElementById("sidebar").style.left = "-250px";
+  document.getElementById("sidebar").style.left = "-260px";
 }
 
-/* PAGINAS */
-
-function mostrarInicio() {
-
-document.getElementById("inicio").style.display = "block";
-
-document.getElementById("liturgia").style.display = "none";
-
-}
-
-///ANIMAÇÃO MENUUUUUUUUUUUUU///
-
+// MENU INDICATOR SUAVE
 const indicator = document.querySelector(".menu-indicator");
 const items = document.querySelectorAll(".menu-item");
 
-function updateIndicator(el){
-
-indicator.style.width = el.offsetWidth + "px";
-indicator.style.left = el.offsetLeft + "px";
-
+function updateIndicator(el) {
+  const menuRect = el.parentElement.getBoundingClientRect();
+  const elRect = el.getBoundingClientRect();
+  const left = elRect.left - menuRect.left;
+  indicator.style.width = elRect.width + "px";
+  indicator.style.left = left + "px";
 }
 
+// Inicializa no item ativo
+window.addEventListener("load", () => {
+  const active = document.querySelector(".menu-item.active");
+  if(active) updateIndicator(active);
+});
+
+// Atualiza ao clicar
 items.forEach(item => {
-
-item.addEventListener("click", function(){
-
-items.forEach(i => i.classList.remove("active"));
-
-this.classList.add("active");
-
-updateIndicator(this);
-
+  item.addEventListener("click", function() {
+    items.forEach(i => i.classList.remove("active"));
+    this.classList.add("active");
+    updateIndicator(this);
+  });
 });
 
+// Atualiza ao redimensionar
+window.addEventListener("resize", () => {
+  const active = document.querySelector(".menu-item.active");
+  if(active) updateIndicator(active);
 });
-
-window.onload = () => {
-
-const active = document.querySelector(".menu-item.active");
-
-if(active){
-updateIndicator(active);
-}
-
-};
 </script>
 
 </body>
