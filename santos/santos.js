@@ -1,15 +1,12 @@
 /* =========================
       MENU LATERAL
 ========================= */
-function abrirMenu(){
-  document.getElementById("sidebar").style.left="0";
-}
+function abrirMenu(){ document.getElementById("sidebar").style.left="0"; }
+function fecharMenu(){ document.getElementById("sidebar").style.left="-260px"; }
 
-function fecharMenu(){
-  document.getElementById("sidebar").style.left="-260px";
-}
-
-/* ANIMAÇÃO MENU */
+/* =========================
+      MENU PRINCIPAL
+========================= */
 const indicator = document.querySelector(".menu-indicator");
 const items = document.querySelectorAll(".menu-item");
 
@@ -29,12 +26,11 @@ items.forEach(item=>{
 window.onload=()=>{
   const active=document.querySelector(".menu-item.active");
   updateIndicator(active);
-}
+};
 
 /* =========================
       LISTA DE SANTOS
 ========================= */
-// Transformar array simples em array de objetos com categoria
 let santos = [
   {nome:"São Pedro", categoria:"Apóstolo"},
   {nome:"São Paulo", categoria:"Apóstolo"},
@@ -62,12 +58,10 @@ let santos = [
   {nome:"São Miguel Arcanjo", categoria:"Anjo"},
   {nome:"São Rafael", categoria:"Anjo"},
   {nome:"São Gabriel", categoria:"Anjo"},
-  // Todos os outros santos originais transformados em objetos
-  // ...
   {nome:"São Camilo de Lellis Filho (discípulo homônimo)", categoria:"Confessor"}
 ];
 
-// Adicionar 50 santos extras automaticamente
+// Adicionar 50 santos extras
 for(let i=1;i<=50;i++){
   santos.push({
     nome:`Santo Extra ${i}`,
@@ -80,13 +74,11 @@ for(let i=1;i<=50;i++){
 ========================= */
 const grid = document.getElementById("santosGrid");
 
-// Função para criar card
 function criarCard(santo){
   const card = document.createElement("div");
-  card.className = "santo-card";
-  card.dataset.categoria = santo.categoria;
-
-  card.innerHTML = `
+  card.className="santo-card";
+  card.dataset.categoria=santo.categoria;
+  card.innerHTML=`
     <img src="../imagens/default.jpg">
     <div class="santo-card-content">
       <h3>${santo.nome}</h3>
@@ -95,51 +87,59 @@ function criarCard(santo){
       <div class="progress-bar"><div class="progress"></div></div>
     </div>
   `;
-
-  // Evento para destacar card
-  card.addEventListener("click", () => {
+  card.addEventListener("click", ()=>{
     document.querySelectorAll(".santo-card").forEach(c=>c.classList.remove("active-card"));
     card.classList.add("active-card");
-
-    // Scroll horizontal para centralizar o card
-    const rect = card.getBoundingClientRect();
-    const offset = rect.left - (window.innerWidth/2 - rect.width/2);
-    grid.scrollBy({left:offset, behavior:"smooth"});
+    const rect=card.getBoundingClientRect();
+    const offset=rect.left-(window.innerWidth/2-rect.width/2);
+    grid.scrollBy({left:offset,behavior:"smooth"});
   });
-
   grid.appendChild(card);
 }
 
-// Popular grid
 santos.forEach(criarCard);
 
 /* =========================
-      CATEGORIAS FILTRO
+      FILTRO POR CATEGORIA
 ========================= */
-const categoriasContainer = document.getElementById("categoriasContainer");
-const categorias = [...new Set(santos.map(s=>s.categoria))];
+const categoriasContainer=document.getElementById("categoriasContainer");
+const categorias=[...new Set(santos.map(s=>s.categoria))];
 
 categorias.forEach(cat=>{
-  const btn = document.createElement("button");
-  btn.textContent = cat;
-  btn.className = "categoria-btn";
+  const btn=document.createElement("button");
+  btn.className="categoria-btn";
+  btn.textContent=cat;
   btn.addEventListener("click",()=>{
     document.querySelectorAll(".santo-card").forEach(card=>{
-      card.style.display = card.dataset.categoria===cat?"block":"none";
+      card.style.display=(card.dataset.categoria===cat||cat==="Todos")?"block":"none";
     });
+    document.querySelectorAll(".categoria-btn").forEach(b=>b.classList.remove("active"));
+    btn.classList.add("active");
   });
   categoriasContainer.appendChild(btn);
 });
 
 /* =========================
-      BARRA DE PROGRESSO DE LEITURA
+      PESQUISA
+========================= */
+const inputPesquisa=document.getElementById("pesquisaSantos");
+inputPesquisa.addEventListener("input",()=>{
+  const termo=inputPesquisa.value.toLowerCase();
+  document.querySelectorAll(".santo-card").forEach(card=>{
+    const nome=card.querySelector("h3").textContent.toLowerCase();
+    card.style.display=nome.includes(termo)?"block":"none";
+  });
+});
+
+/* =========================
+      BARRA DE PROGRESSO
 ========================= */
 window.addEventListener("scroll",()=>{
-  const cardAtivo = document.querySelector(".santo-card.active-card");
+  const cardAtivo=document.querySelector(".santo-card.active-card");
   if(cardAtivo){
-    const rect = cardAtivo.getBoundingClientRect();
-    const totalHeight = cardAtivo.scrollHeight - window.innerHeight;
-    const progress = Math.min(Math.max((window.scrollY - cardAtivo.offsetTop + window.innerHeight)/totalHeight,0),1);
-    cardAtivo.querySelector(".progress").style.width = `${progress*100}%`;
+    const rect=cardAtivo.getBoundingClientRect();
+    const totalHeight=cardAtivo.scrollHeight-window.innerHeight;
+    const progress=Math.min(Math.max((window.scrollY-cardAtivo.offsetTop+window.innerHeight)/totalHeight,0),1);
+    cardAtivo.querySelector(".progress").style.width=`${progress*100}%`;
   }
 });
