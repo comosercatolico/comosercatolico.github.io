@@ -1,0 +1,7 @@
+---
+title: "São Basílio Magno"
+slug: "sao-basilio-magno"
+categorias: ["Doutor da Igreja"]
+---
+
+São Basílio Magno, bispo de Cesareia, é um dos pilares da teologia oriental e da vida monástica. Nascido em uma família cristã de grande santidade, estudou em Atenas ao lado de São Gregório Nazianzeno. Após uma breve carreira acadêmica, escolheu a vida ascética, fundando comunidades monásticas que se tornaram modelo para o Oriente. Como bispo, defendeu a fé contra os arianos e protegeu os pobres em tempos de fome, organizando obras de caridade que incluíam hospitais e abrigos. Basílio escreveu tratados sobre o Espírito Santo, afirmando sua divindade e combatendo heresias. Sua “Regra Monástica” é até hoje seguida por monges do Oriente, destacando o equilíbrio entre oração, trabalho e caridade. Ele via a vida comunitária como caminho para a santidade, onde cada irmão é responsável pelo outro. Basílio também foi um grande liturgista, deixando a “Liturgia de São Basílio”, ainda celebrada nas Igrejas orientais. Sua vida mostra a união entre contemplação e ação, entre teologia e serviço. Morreu em 379, desgastado pelas lutas e pela austeridade, mas deixou um legado que moldou a espiritualidade cristã. Ele nos ensina que a santidade floresce quando a fé se traduz em obras concretas de amor e justiça.

@@ -1,0 +1,7 @@
+---
+title: "São João Crisóstomo"
+slug: "sao-joao-crisostomo"
+categorias: ["Doutor da Igreja"]
+---
+
+São João Crisóstomo, cujo nome significa “boca de ouro”, é lembrado como o maior pregador da Igreja antiga. Nascido em Antioquia, recebeu formação em retórica com os melhores mestres da época, mas escolheu dedicar sua eloquência ao Evangelho. Ordenado sacerdote, suas homilias atraíam multidões, pois falava com clareza, profundidade e paixão. Como Patriarca de Constantinopla, enfrentou a corte imperial e denunciou os excessos da imperatriz Eudóxia, o que lhe custou o exílio. Sua vida foi marcada por perseguições, mas também por uma fidelidade inquebrantável à verdade. João ensinava que a liturgia devia ser vivida com o coração e que a caridade com os pobres era inseparável da fé. Suas homilias sobre o Evangelho de Mateus e as cartas de São Paulo são tesouros da exegese cristã. Ele insistia na necessidade da vida moral íntegra, condenando a avareza e a ostentação. Sua espiritualidade era profundamente bíblica e pastoral, buscando sempre conduzir o povo à conversão. Morreu em 407, no exílio, pronunciando suas últimas palavras: “Glória a Deus por tudo”. Sua memória nos ensina que a palavra proclamada com coragem pode transformar sociedades inteiras e que o verdadeiro pastor não teme os poderosos quando defende a justiça.
