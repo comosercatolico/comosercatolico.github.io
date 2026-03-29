@@ -507,135 +507,193 @@ const listaSantos = [
   { nome: "São Galgano", categorias: ["Justo"] },
   { nome: "Santa Verônica", categorias: ["Justa"] }
 ];
-
-// Validação técnica para garantir que o código funcione
-console.log("Total de entradas na lista:", listaSantos.length);
-
+/* =========================
+      CONFIGURAÇÕES GERAIS
+========================= */
 const grid = document.getElementById("santosGrid");
 const pesquisaInput = document.querySelector(".santos-pesquisa input");
 const categoriasContainer = document.getElementById("categoriasContainer");
 
+// Garante que usamos a lista correta (listaSantos) enviada anteriormente
+const baseDados = typeof listaSantos !== 'undefined' ? listaSantos : [];
+
 /* =========================
-      MOTOR DE RENDERIZAÇÃO
+      MOTOR DE RENDERIZAÇÃO OTIMIZADO
 ========================= */
 
+// Observer para efeito de Fade-In conforme o scroll
+const observerOptions = { threshold: 0.1 };
+const appearanceObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+            appearanceObserver.unobserve(entry.target);
+        }
+    });
+}, observerOptions);
+
 function renderizarGrid(lista) {
-    // Limpa o grid de forma performática
     grid.innerHTML = "";
-    
-    // DocumentFragment evita múltiplos reflows no navegador
     const fragment = document.createDocumentFragment();
 
-    lista.forEach(santo => {
-        const card = document.createElement("div");
-        card.className = "santo-card animate-in"; // Classe para animação CSS
-        
-        // Sanitização simples para IDs e classes
-        const categoriaLimpa = santo.categoria.split(',')[0].trim();
+    lista.forEach((santo, index) => {
+        const card = document.createElement("article");
+        card.className = "santo-card";
+        card.style.transitionDelay = `${(index % 10) * 50}ms`; // Efeito cascata suave
+
+        // Pega a primeira categoria como principal para o visual
+        const catPrincipal = santo.categorias[0];
 
         card.innerHTML = `
-            <div class="santo-badge">${categoriaLimpa}</div>
-            <img src="../imagens/santos/${santo.nome.toLowerCase().replace(/ /g, '-')}.jpg" 
-                 onerror="this.src='../imagens/default.jpg'" 
-                 alt="${santo.nome}" loading="lazy">
-            <div class="santo-card-content">
-                <h3>${santo.nome}</h3>
-                <p>Conheça a história e o legado de fé de ${santo.nome}.</p>
-                <button class="btn-ler" onclick="abrirModal('${santo.nome.replace(/'/g, "\\'")}')">
-                    Ler Vida <i class="fas fa-book-open"></i>
-                </button>
+            <div class="card-inner">
+                <div class="santo-badge-container">
+                    ${santo.categorias.map(c => `<span class="badge">${c}</span>`).join('')}
+                </div>
+                <div class="image-container">
+                    <img src="../imagens/santos/${santo.nome.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/ /g, '-')}.jpg" 
+                         onerror="this.src='../imagens/default.jpg'" 
+                         alt="${santo.nome}" loading="lazy">
+                </div>
+                <div class="santo-card-content">
+                    <h3>${santo.nome}</h3>
+                    <div class="card-footer">
+                        <button class="btn-primary" onclick="abrirModal('${santo.nome.replace(/'/g, "\\'")}')">
+                            <span>Ver Biografia</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
             </div>
         `;
+        
         fragment.appendChild(card);
+        appearanceObserver.observe(card);
     });
 
     grid.appendChild(fragment);
 }
 
 /* =========================
-      FILTROS E PESQUISA
+      INTELIGÊNCIA DE BUSCA (FUZZY-ISH)
 ========================= */
 
-// Pesquisa com "Debounce" (espera o usuário parar de digitar para processar)
-let timeoutPesquisa;
-pesquisaInput.addEventListener("input", () => {
-    clearTimeout(timeoutPesquisa);
-    timeoutPesquisa = setTimeout(() => {
-        const termo = pesquisaInput.value.toLowerCase();
-        const filtrados = santos.filter(s => 
-            s.nome.toLowerCase().includes(termo) || 
-            s.categoria.toLowerCase().includes(termo)
-        );
+let debounceTimer;
+pesquisaInput.addEventListener("input", (e) => {
+    clearTimeout(debounceTimer);
+    const termo = e.target.value.toLowerCase().trim();
+
+    debounceTimer = setTimeout(() => {
+        const filtrados = baseDados.filter(s => {
+            const nomeMatch = s.nome.toLowerCase().includes(termo);
+            const catMatch = s.categorias.some(c => c.toLowerCase().includes(termo));
+            return nomeMatch || catMatch;
+        });
+        
         renderizarGrid(filtrados);
-    }, 300);
+        atualizarContador(filtrados.length);
+    }, 250);
 });
 
-// Gerador de Botões de Categoria Inteligente
+/* =========================
+      CHIPS DE CATEGORIA (UX MODERNA)
+========================= */
+
 function inicializarCategorias() {
-    // Pega todas as categorias individuais, remove duplicatas e ordena
-    const todasCategorias = santos.flatMap(s => s.categoria.split(',').map(c => c.trim()));
-    const categoriasUnicas = ["Todos", ...new Set(todasCategorias)].sort();
+    // Extrai todas as categorias únicas de todos os santos
+    const cats = [...new Set(baseDados.flatMap(s => s.categorias))].sort();
+    const menuCategorias = ["Todos", ...cats];
 
-    categoriasUnicas.forEach(cat => {
-        const btn = document.createElement("button");
-        btn.textContent = cat;
-        btn.className = cat === "Todos" ? "categoria-btn active" : "categoria-btn";
+    categoriasContainer.innerHTML = "";
 
-        btn.addEventListener("click", () => {
-            document.querySelectorAll(".categoria-btn").forEach(b => b.classList.remove("active"));
-            btn.classList.add("active");
+    menuCategorias.forEach(cat => {
+        const chip = document.createElement("button");
+        chip.className = `chip ${cat === "Todos" ? "active" : ""}`;
+        chip.innerHTML = `
+            <span class="chip-text">${cat}</span>
+            <span class="chip-count">${cat === "Todos" ? baseDados.length : baseDados.filter(s => s.categorias.includes(cat)).length}</span>
+        `;
+
+        chip.addEventListener("click", () => {
+            document.querySelectorAll(".chip").forEach(c => c.classList.remove("active"));
+            chip.classList.add("active");
 
             const filtrados = cat === "Todos" 
-                ? santos 
-                : santos.filter(s => s.categoria.includes(cat));
+                ? baseDados 
+                : baseDados.filter(s => s.categorias.includes(cat));
             
             renderizarGrid(filtrados);
         });
 
-        categoriasContainer.appendChild(btn);
+        categoriasContainer.appendChild(chip);
     });
 }
 
 /* =========================
-      MODAL REFORMULADO
+      MODAL CINEMATOGRÁFICO
 ========================= */
 
-// Criar estrutura do modal dinamicamente (melhor que ter no HTML fixo)
-const estruturaModal = `
-    <div id="santoModal" class="modal-overlay">
-        <div class="modal-box">
-            <button class="modal-close">&times;</button>
-            <div class="modal-body">
-                <div class="modal-header-img"></div>
-                <h2 id="modalTitle"></h2>
-                <div id="modalContent" class="modal-scroll-area">
-                    <div class="loading-skeleton"></div>
-                </div>
+const modalHTML = `
+    <div id="santoModal" class="modal-blur">
+        <div class="modal-container">
+            <header class="modal-nav">
+                <div class="read-progress"></div>
+                <button class="close-modal"><i class="fas fa-times"></i></button>
+            </header>
+            <div class="modal-content-wrapper">
+                <aside class="modal-sidebar">
+                    <div id="modalImg" class="modal-img-frame"></div>
+                    <div id="modalTags" class="tag-cloud"></div>
+                </aside>
+                <main class="modal-main">
+                    <h1 id="modalTitle"></h1>
+                    <div id="modalText" class="text-content">
+                        <p class="placeholder-text">Carregando história...</p>
+                    </div>
+                </main>
             </div>
         </div>
     </div>
 `;
-document.body.insertAdjacentHTML('beforeend', estruturaModal);
+document.body.insertAdjacentHTML('beforeend', modalHTML);
 
-const modalElement = document.getElementById("santoModal");
-
-window.abrirModal = function(nomeSanto) {
-    const santo = santos.find(s => s.nome === nomeSanto);
+window.abrirModal = function(nome) {
+    const santo = baseDados.find(s => s.nome === nome);
     if (!santo) return;
 
-    const modalTitle = document.getElementById("modalTitle");
-    const modalContent = document.getElementById("modalContent");
-    
-    modalTitle.textContent = santo.nome;
-    modalElement.classList.add("active");
-    document.body.style.overflow = "hidden"; 
+    const modal = document.getElementById("santoModal");
+    const title = document.getElementById("modalTitle");
+    const tags = document.getElementById("modalTags");
+    const imgFrame = document.getElementById("modalImg");
 
-    // Conteúdo Dinâmico
-    modalContent.innerHTML = `
-        <div class="santo-detalhe">
-            <img src="../imagens/santos/${santo.nome.toLowerCase().replace(/ /g, '-')}.jpg" 
-                 onerror="this.style.display='none'" 
-                 style="width:100%; max-height:300px; object-fit:cover; border-radius:10px; margin-bottom:20px;">
+    title.textContent = santo.nome;
+    tags.innerHTML = santo.categorias.map(c => `<span class="tag">#${c}</span>`).join('');
+    imgFrame.innerHTML = `<img src="../imagens/santos/${santo.nome.toLowerCase().replace(/ /g, '-')}.jpg" onerror="this.src='../imagens/default.jpg'">`;
+
+    modal.classList.add("active");
+    document.body.style.overflow = "hidden"; // Trava o scroll do fundo
+};
+
+document.querySelector(".close-modal").addEventListener("click", () => {
+    document.getElementById("santoModal").classList.remove("active");
+    document.body.style.overflow = "auto";
+});
+
+/* =========================
+      UTILITÁRIOS
+========================= */
+
+function atualizarContador(num) {
+    const contador = document.getElementById("santoContador");
+    if(contador) contador.textContent = `${num} santos encontrados`;
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    // Inicialização com Delay para animação de entrada
+    setTimeout(() => {
+        renderizarGrid(baseDados);
+        inicializarCategorias();
+    }, 100);
+});
             
             <p><strong>Vocação:</strong> ${santo.categoria}</p>
             <hr style="border:0; border-top:1px solid #eee; margin:20px 0;">
