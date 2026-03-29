@@ -511,17 +511,16 @@ const listaSantos = [
       CONFIGURAÇÕES GERAIS
 ========================= */
 const grid = document.getElementById("santosGrid");
-const pesquisaInput = document.querySelector(".santos-pesquisa input");
+const pesquisaInput = document.getElementById("pesquisaSantos");
 const categoriasContainer = document.getElementById("categoriasContainer");
 
-// Garante que usamos a lista correta (listaSantos) enviada anteriormente
+// Define a base de dados principal (usa listaSantos que é o array de 500)
 const baseDados = typeof listaSantos !== 'undefined' ? listaSantos : [];
 
 /* =========================
-      MOTOR DE RENDERIZAÇÃO OTIMIZADO
+      MOTOR DE RENDERIZAÇÃO
 ========================= */
 
-// Observer para efeito de Fade-In conforme o scroll
 const observerOptions = { threshold: 0.1 };
 const appearanceObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
@@ -533,16 +532,14 @@ const appearanceObserver = new IntersectionObserver((entries) => {
 }, observerOptions);
 
 function renderizarGrid(lista) {
+    if (!grid) return;
     grid.innerHTML = "";
     const fragment = document.createDocumentFragment();
 
     lista.forEach((santo, index) => {
         const card = document.createElement("article");
         card.className = "santo-card";
-        card.style.transitionDelay = `${(index % 10) * 50}ms`; // Efeito cascata suave
-
-        // Pega a primeira categoria como principal para o visual
-        const catPrincipal = santo.categorias[0];
+        card.style.transitionDelay = `${(index % 10) * 50}ms`;
 
         card.innerHTML = `
             <div class="card-inner">
@@ -558,8 +555,8 @@ function renderizarGrid(lista) {
                     <h3>${santo.nome}</h3>
                     <div class="card-footer">
                         <button class="btn-primary" onclick="abrirModal('${santo.nome.replace(/'/g, "\\'")}')">
-                            <span>Ver Biografia</span>
-                            <i class="fas fa-arrow-right"></i>
+                            <span>Ler Biografia</span>
+                            <i class="fas fa-book-open"></i>
                         </button>
                     </div>
                 </div>
@@ -574,32 +571,29 @@ function renderizarGrid(lista) {
 }
 
 /* =========================
-      INTELIGÊNCIA DE BUSCA (FUZZY-ISH)
+      FILTROS E PESQUISA
 ========================= */
 
 let debounceTimer;
-pesquisaInput.addEventListener("input", (e) => {
-    clearTimeout(debounceTimer);
-    const termo = e.target.value.toLowerCase().trim();
+if (pesquisaInput) {
+    pesquisaInput.addEventListener("input", (e) => {
+        clearTimeout(debounceTimer);
+        const termo = e.target.value.toLowerCase().trim();
 
-    debounceTimer = setTimeout(() => {
-        const filtrados = baseDados.filter(s => {
-            const nomeMatch = s.nome.toLowerCase().includes(termo);
-            const catMatch = s.categorias.some(c => c.toLowerCase().includes(termo));
-            return nomeMatch || catMatch;
-        });
-        
-        renderizarGrid(filtrados);
-        atualizarContador(filtrados.length);
-    }, 250);
-});
-
-/* =========================
-      CHIPS DE CATEGORIA (UX MODERNA)
-========================= */
+        debounceTimer = setTimeout(() => {
+            const filtrados = baseDados.filter(s => {
+                const nomeMatch = s.nome.toLowerCase().includes(termo);
+                const catMatch = s.categorias.some(c => c.toLowerCase().includes(termo));
+                return nomeMatch || catMatch;
+            });
+            renderizarGrid(filtrados);
+            atualizarContador(filtrados.length);
+        }, 250);
+    });
+}
 
 function inicializarCategorias() {
-    // Extrai todas as categorias únicas de todos os santos
+    if (!categoriasContainer) return;
     const cats = [...new Set(baseDados.flatMap(s => s.categorias))].sort();
     const menuCategorias = ["Todos", ...cats];
 
@@ -616,11 +610,7 @@ function inicializarCategorias() {
         chip.addEventListener("click", () => {
             document.querySelectorAll(".chip").forEach(c => c.classList.remove("active"));
             chip.classList.add("active");
-
-            const filtrados = cat === "Todos" 
-                ? baseDados 
-                : baseDados.filter(s => s.categorias.includes(cat));
-            
+            const filtrados = cat === "Todos" ? baseDados : baseDados.filter(s => s.categorias.includes(cat));
             renderizarGrid(filtrados);
         });
 
@@ -629,93 +619,52 @@ function inicializarCategorias() {
 }
 
 /* =========================
-      MODAL CINEMATOGRÁFICO
+      MODAL DINÂMICO
 ========================= */
 
-const modalHTML = `
-    <div id="santoModal" class="modal-blur">
-        <div class="modal-container">
-            <header class="modal-nav">
-                <div class="read-progress"></div>
-                <button class="close-modal"><i class="fas fa-times"></i></button>
-            </header>
-            <div class="modal-content-wrapper">
-                <aside class="modal-sidebar">
-                    <div id="modalImg" class="modal-img-frame"></div>
-                    <div id="modalTags" class="tag-cloud"></div>
-                </aside>
-                <main class="modal-main">
-                    <h1 id="modalTitle"></h1>
-                    <div id="modalText" class="text-content">
-                        <p class="placeholder-text">Carregando história...</p>
-                    </div>
-                </main>
+// Injeta a estrutura do modal se não existir
+if (!document.getElementById("santoModal")) {
+    const modalHTML = `
+        <div id="santoModal" class="modal-blur">
+            <div class="modal-container">
+                <header class="modal-nav">
+                    <div class="read-progress"></div>
+                    <button class="close-modal"><i class="fas fa-times"></i></button>
+                </header>
+                <div class="modal-content-wrapper">
+                    <aside class="modal-sidebar">
+                        <div id="modalImg" class="modal-img-frame"></div>
+                    </aside>
+                    <main class="modal-main">
+                        <h1 id="modalTitle"></h1>
+                        <div id="modalContent" class="modal-body-text"></div>
+                    </main>
+                </div>
             </div>
         </div>
-    </div>
-`;
-document.body.insertAdjacentHTML('beforeend', modalHTML);
+    `;
+    document.body.insertAdjacentHTML('beforeend', modalHTML);
+}
 
-window.abrirModal = function(nome) {
-    const santo = baseDados.find(s => s.nome === nome);
+window.abrirModal = function(nomeSanto) {
+    const santo = baseDados.find(s => s.nome === nomeSanto);
     if (!santo) return;
 
     const modal = document.getElementById("santoModal");
     const title = document.getElementById("modalTitle");
-    const tags = document.getElementById("modalTags");
+    const content = document.getElementById("modalContent");
     const imgFrame = document.getElementById("modalImg");
 
     title.textContent = santo.nome;
-    tags.innerHTML = santo.categorias.map(c => `<span class="tag">#${c}</span>`).join('');
-    imgFrame.innerHTML = `<img src="../imagens/santos/${santo.nome.toLowerCase().replace(/ /g, '-')}.jpg" onerror="this.src='../imagens/default.jpg'">`;
+    imgFrame.innerHTML = `<img src="../imagens/santos/${santo.nome.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/ /g, '-')}.jpg" onerror="this.src='../imagens/default.jpg'">`;
 
-    modal.classList.add("active");
-    document.body.style.overflow = "hidden"; // Trava o scroll do fundo
-};
-
-document.querySelector(".close-modal").addEventListener("click", () => {
-    document.getElementById("santoModal").classList.remove("active");
-    document.body.style.overflow = "auto";
-});
-
-/* =========================
-      UTILITÁRIOS
-========================= */
-
-function atualizarContador(num) {
-    const contador = document.getElementById("santoContador");
-    if(contador) contador.textContent = `${num} santos encontrados`;
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-    // Inicialização com Delay para animação de entrada
-    setTimeout(() => {
-        renderizarGrid(baseDados);
-        inicializarCategorias();
-    }, 100);
-});
-            
-window.abrirModal = function(nomeSanto) {
-    const santo = listaSantos.find(s => s.nome === nomeSanto);
-    if (!santo) return;
-
-    const modalElement = document.getElementById("santoModal");
-    const modalTitle = document.getElementById("modalTitle");
-    const modalContent = document.getElementById("modalContent");
-
-    modalTitle.textContent = santo.nome;
-
-    // AQUI ESTÁ A CORREÇÃO: Tudo dentro de UMA única crase (`) do início ao fim
-    modalContent.innerHTML = `
+    content.innerHTML = `
         <div class="santo-info">
             <p><strong>Vocação:</strong> ${santo.categorias.join(', ')}</p>
-            
             <hr style="border:0; border-top:1px solid #eee; margin:20px 0;">
-            
             <div class="biografia-texto">
                 <p>A vida de <strong>${santo.nome}</strong> é um testemunho profundo para toda a Igreja Católica. 
                 Sua trajetória como <em>${santo.categorias[0]}</em> inspira fiéis no mundo inteiro.</p>
-                
                 <br>
                 <div style="background:#f9f9f9; padding:20px; border-left:4px solid #8b6f3d; font-style:italic;">
                     "Em breve, traremos a biografia completa e os detalhes da vida de ${santo.nome} aqui."
@@ -724,25 +673,44 @@ window.abrirModal = function(nomeSanto) {
         </div>
     `;
 
-    modalElement.classList.add("active");
+    modal.classList.add("active");
     document.body.style.overflow = "hidden";
 };
 
-
-// Fechar Modal
-document.querySelector(".modal-close").addEventListener("click", fecharModal);
-modalElement.addEventListener("click", e => e.target === modalElement && fecharModal());
+// Gerenciamento de Fechamento (Delegação de eventos para evitar erro de null)
+document.addEventListener("click", (e) => {
+    if (e.target.closest(".close-modal") || e.target.id === "santoModal") {
+        fecharModal();
+    }
+});
 
 function fecharModal() {
-    modalElement.classList.remove("active");
-    document.body.style.overflow = "auto";
+    const modal = document.getElementById("santoModal");
+    if (modal) {
+        modal.classList.remove("active");
+        document.body.style.overflow = "auto";
+    }
 }
 
 /* =========================
-      INICIALIZAÇÃO
+      INICIALIZAÇÃO FINAL
 ========================= */
 
+function atualizarContador(num) {
+    const contador = document.getElementById("santoContador");
+    if(contador) contador.textContent = `${num} santos encontrados`;
+}
+
 document.addEventListener("DOMContentLoaded", () => {
-    renderizarGrid(santos);
-    inicializarCategorias();
+    // Pequeno delay para garantir que a lista de 500 santos foi carregada no outro arquivo
+    setTimeout(() => {
+        renderizarGrid(baseDados);
+        inicializarCategorias();
+        atualizarContador(baseDados.length);
+    }, 100);
+});
+
+// Atalho ESC
+document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") fecharModal();
 });
