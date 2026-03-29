@@ -539,7 +539,7 @@ function renderizarGrid(lista) {
         card.style.transitionDelay = `${(index % 15) * 30}ms`;
 
         // Normalização do nome para o arquivo de imagem
-        const nomeArquivo = santo.nome.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/ /g, '-');
+        const nomeArquivo = santo.nome.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/ /g, '-').replace(/'/g, '');
 
         card.innerHTML = `
             <div class="card-inner">
@@ -571,13 +571,12 @@ function renderizarGrid(lista) {
 }
 
 /* =========================
-      FILTROS E PESQUISA (BUSCA INTELIGENTE)
+      FILTROS E PESQUISA
 ========================= */
 let debounceTimer;
 if (pesquisaInput) {
     pesquisaInput.addEventListener("input", (e) => {
         clearTimeout(debounceTimer);
-        // Normaliza a entrada do usuário
         const termo = e.target.value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
 
         debounceTimer = setTimeout(() => {
@@ -623,7 +622,7 @@ function inicializarCategorias() {
 }
 
 /* =========================
-      MODAL DINÂMICO
+      MODAL DINÂMICO (COM FETCH)
 ========================= */
 if (!document.getElementById("santoModal")) {
     const modalHTML = `
@@ -647,7 +646,7 @@ if (!document.getElementById("santoModal")) {
     document.body.insertAdjacentHTML('beforeend', modalHTML);
 }
 
-window.abrirModal = function(nomeSanto) {
+window.abrirModal = async function(nomeSanto) {
     const santo = baseDados.find(s => s.nome === nomeSanto);
     if (!santo) return;
 
@@ -656,30 +655,53 @@ window.abrirModal = function(nomeSanto) {
     const content = document.getElementById("modalContent");
     const imgFrame = document.getElementById("modalImg");
 
-    // Limpa conteúdo anterior para evitar "ghosting"
+    // Reset e Preparação
     title.textContent = santo.nome;
-    imgFrame.innerHTML = ""; 
+    imgFrame.innerHTML = "";
+    content.innerHTML = `<div class="loader-p">Carregando biografia sagrada...</div>`;
     
-    const nomeArquivo = santo.nome.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/ /g, '-');
-    imgFrame.innerHTML = `<img src="../imagens/santos/${nomeArquivo}.jpg" onerror="this.src='../imagens/default.jpg'">`;
-
-    content.innerHTML = `
-        <div class="santo-info">
-            <p><strong>Vocação:</strong> ${santo.categorias.join(', ')}</p>
-            <hr style="border:0; border-top:1px solid #eee; margin:20px 0;">
-            <div class="biografia-texto">
-                <p>A vida de <strong>${santo.nome}</strong> é um testemunho profundo para toda a Igreja Católica. 
-                Sua trajetória como <em>${santo.categorias[0]}</em> inspira fiéis no mundo inteiro.</p>
-                <br>
-                <div style="background:#f9f9f9; padding:25px; border-left:4px solid #8b6f3d; font-style:italic; border-radius: 0 8px 8px 0;">
-                    "Em breve, traremos a biografia completa e os detalhes da vida de ${santo.nome} aqui."
-                </div>
-            </div>
-        </div>
-    `;
+    const slug = santo.nome.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/ /g, '-').replace(/'/g, '');
+    imgFrame.innerHTML = `<img src="../imagens/santos/${slug}.jpg" onerror="this.src='../imagens/default.jpg'">`;
 
     modal.classList.add("active");
     document.body.style.overflow = "hidden";
+
+    try {
+        // Tenta buscar o arquivo gerado pelo Python na pasta doutores
+        const response = await fetch(`doutores/${slug}.md`);
+        
+        if (!response.ok) throw new Error("Arquivo não encontrado");
+
+        const text = await response.text();
+        
+        // Remove o Front Matter (conteúdo entre os primeiros --- ---)
+        const partes = text.split('---');
+        const biografiaFinal = partes.length > 2 ? partes.slice(2).join('---').trim() : text;
+
+        content.innerHTML = `
+            <div class="santo-info">
+                <p><strong>Vocação:</strong> ${santo.categorias.join(', ')}</p>
+                <hr style="border:0; border-top:1px solid #eee; margin:20px 0;">
+                <div class="biografia-texto">
+                    ${biografiaFinal.replace(/\n/g, '<br>')}
+                </div>
+            </div>
+        `;
+    } catch (err) {
+        // Fallback caso o arquivo .md não exista ou falhe
+        content.innerHTML = `
+            <div class="santo-info">
+                <p><strong>Vocação:</strong> ${santo.categorias.join(', ')}</p>
+                <hr style="border:0; border-top:1px solid #eee; margin:20px 0;">
+                <div class="biografia-texto">
+                    <p>A vida de <strong>${santo.nome}</strong> é um testemunho profundo para toda a Igreja Católica.</p>
+                    <div style="background:#f9f9f9; padding:25px; border-left:4px solid #8b6f3d; font-style:italic; border-radius: 0 8px 8px 0; margin-top:15px;">
+                        "Em breve, traremos detalhes adicionais sobre a vida e as obras de ${santo.nome}."
+                    </div>
+                </div>
+            </div>
+        `;
+    }
 };
 
 document.addEventListener("click", (e) => {
