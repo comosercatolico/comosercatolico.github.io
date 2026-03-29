@@ -256,7 +256,59 @@
   margin-bottom: 20px;
   color: var(--primary);
 }
+/* Container das categorias - Permite deslizar no celular */
+.categorias-container {
+    display: flex;
+    flex-wrap: wrap; /* Mude para 'nowrap' se quiser uma linha única deslizante */
+    justify-content: center;
+    gap: 10px;
+    padding: 20px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
 
+/* Estilização dos Chips (Botões) */
+.chip {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border: 1px solid #d4af37; /* Dourado suave */
+    border-radius: 25px;
+    background-color: #fff;
+    color: #555;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+/* Efeito ao passar o mouse */
+.chip:hover {
+    background-color: #fcf8e8;
+    transform: translateY(-2px);
+}
+
+/* Estilo do botão Ativo */
+.chip.active {
+    background-color: #8b6f3d; /* Marrom clássico/Dourado escuro */
+    color: white;
+    border-color: #8b6f3d;
+}
+
+/* Estilização do contador (o número dentro do chip) */
+.chip-count {
+    font-size: 0.75rem;
+    background: rgba(0,0,0,0.1);
+    padding: 2px 7px;
+    border-radius: 10px;
+    font-weight: bold;
+}
+
+.chip.active .chip-count {
+    background: rgba(255,255,255,0.2);
+}
 .modal-scroll-area {
   line-height: 1.8;
   color: var(--text-muted);
