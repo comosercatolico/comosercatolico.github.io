@@ -645,7 +645,6 @@ if (!document.getElementById("santoModal")) {
     `;
     document.body.insertAdjacentHTML('beforeend', modalHTML);
 }
-
 window.abrirModal = async function(nomeSanto) {
     const santo = baseDados.find(s => s.nome === nomeSanto);
     if (!santo) return;
@@ -655,10 +654,9 @@ window.abrirModal = async function(nomeSanto) {
     const content = document.getElementById("modalContent");
     const imgFrame = document.getElementById("modalImg");
 
-    // Reset e Preparação
     title.textContent = santo.nome;
     imgFrame.innerHTML = "";
-    content.innerHTML = `<div class="loader-p">Carregando biografia sagrada...</div>`;
+    content.innerHTML = `<div class="loader-p">Buscando registros sagrados...</div>`;
     
     const slug = santo.nome.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/ /g, '-').replace(/'/g, '');
     imgFrame.innerHTML = `<img src="../imagens/santos/${slug}.jpg" onerror="this.src='../imagens/default.jpg'">`;
@@ -667,40 +665,29 @@ window.abrirModal = async function(nomeSanto) {
     document.body.style.overflow = "hidden";
 
     try {
-        // Tenta buscar o arquivo gerado pelo Python na pasta doutores
         const response = await fetch(`doutores/${slug}.md`);
-        
-        if (!response.ok) throw new Error("Arquivo não encontrado");
+        if (!response.ok) throw new Error();
 
-        const text = await response.text();
+        let text = await response.text();
         
-        // Remove o Front Matter (conteúdo entre os primeiros --- ---)
-        const partes = text.split('---');
-        const biografiaFinal = partes.length > 2 ? partes.slice(2).join('---').trim() : text;
+        // Limpeza do Front Matter e formatação básica de Markdown
+        let biografiaFinal = text.split('---').pop().trim();
+        biografiaFinal = biografiaFinal
+            .replace(/^#+ .*\n?/g, '') // Remove títulos h1, h2...
+            .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') // Transforma ** em negrito
+            .replace(/\n\n/g, '</p><p>') // Transforma quebras duplas em parágrafos
+            .replace(/\n/g, '<br>');
 
         content.innerHTML = `
             <div class="santo-info">
-                <p><strong>Vocação:</strong> ${santo.categorias.join(', ')}</p>
-                <hr style="border:0; border-top:1px solid #eee; margin:20px 0;">
-                <div class="biografia-texto">
-                    ${biografiaFinal.replace(/\n/g, '<br>')}
+                <div class="vocation-badge">Doutor da Igreja • ${santo.categorias.join(' • ')}</div>
+                <div class="biografia-container">
+                    <p>${biografiaFinal}</p>
                 </div>
             </div>
         `;
     } catch (err) {
-        // Fallback caso o arquivo .md não exista ou falhe
-        content.innerHTML = `
-            <div class="santo-info">
-                <p><strong>Vocação:</strong> ${santo.categorias.join(', ')}</p>
-                <hr style="border:0; border-top:1px solid #eee; margin:20px 0;">
-                <div class="biografia-texto">
-                    <p>A vida de <strong>${santo.nome}</strong> é um testemunho profundo para toda a Igreja Católica.</p>
-                    <div style="background:#f9f9f9; padding:25px; border-left:4px solid #8b6f3d; font-style:italic; border-radius: 0 8px 8px 0; margin-top:15px;">
-                        "Em breve, traremos detalhes adicionais sobre a vida e as obras de ${santo.nome}."
-                    </div>
-                </div>
-            </div>
-        `;
+        content.innerHTML = `<div class="error-msg">A biografia de ${santo.nome} está sendo traduzida dos arquivos originais.</div>`;
     }
 };
 
