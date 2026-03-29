@@ -1,270 +1,241 @@
-/* =========================
-   RESET E BASE
-========================= */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+/* =========================================
+   VARIÁVEIS DE DESIGN (LUX FIDEI)
+   ========================================= */
+:root {
+    --primary-gold: #8b6f3d;
+    --light-gold: #d4af37;
+    --soft-white: #ffffff;
+    --bg-page: #f4f4f4;
+    --text-main: #2d3436;
+    --text-muted: #636e72;
+    --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.08);
+    --shadow-lg: 0 12px 24px rgba(0, 0, 0, 0.15);
+    --radius: 16px;
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-body {
-    font-family: 'Inter', sans-serif;
-    background: #f5f5f7;
-    color: #333;
-    line-height: 1.6;
-    overflow-x: hidden;
-}
-
-/* =========================
-   GRID DE SANTOS
-========================= */
-#santosGrid {
+/* =========================================
+   GRID PRINCIPAL
+   ========================================= */
+.santos-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 1.5rem;
-    padding: 2rem;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 30px;
+    padding: 40px 20px;
+    max-width: 1300px;
+    margin: 0 auto;
 }
 
-/* CARD */
+/* =========================================
+   ESTILIZAÇÃO DO CARD
+   ========================================= */
 .santo-card {
-    background: #fff;
-    border-radius: 1rem;
+    background: var(--soft-white);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm);
     overflow: hidden;
-    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    cursor: pointer;
     display: flex;
     flex-direction: column;
+    transition: var(--transition);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    
+    /* Configuração para a animação do JS */
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+/* Classe aplicada pelo JavaScript */
+.santo-card.visible {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 .santo-card:hover {
-    transform: translateY(-5px) scale(1.02);
-    box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+    transform: translateY(-10px);
+    box-shadow: var(--shadow-lg);
 }
 
-/* BADGE DE CATEGORIA */
-.santo-badge {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    background: linear-gradient(135deg, #f093fb, #f5576c);
-    color: #fff;
-    font-size: 0.8rem;
-    font-weight: 600;
-    padding: 0.3rem 0.6rem;
-    border-radius: 0.5rem;
-    text-transform: uppercase;
-    z-index: 2;
-    pointer-events: none;
-}
-
-/* IMAGEM */
-.santo-card img {
+/* Container da Imagem */
+.image-container {
     width: 100%;
-    height: 220px;
+    height: 250px;
+    background: #eee;
+    overflow: hidden;
+}
+
+.image-container img {
+    width: 100%;
+    height: 100%;
     object-fit: cover;
-    transition: transform 0.4s ease;
+    transition: transform 0.6s ease;
 }
 
-.santo-card:hover img {
-    transform: scale(1.05);
+.santo-card:hover .image-container img {
+    transform: scale(1.1);
 }
 
-/* CONTEÚDO DO CARD */
+/* Conteúdo do Card */
 .santo-card-content {
-    padding: 1rem;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    padding: 24px;
+    text-align: center;
+    flex-grow: 1;
 }
 
-.santo-card-content h3 {
-    font-size: 1.1rem;
-    margin-bottom: 0.5rem;
+.santo-card h3 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.5rem;
+    color: var(--text-main);
+    margin: 15px 0 10px;
 }
 
-.santo-card-content p {
-    font-size: 0.9rem;
-    color: #666;
-    flex: 1;
-}
-
-/* BOTÃO */
-.btn-ler {
-    background: #6c63ff;
-    color: #fff;
-    border: none;
-    padding: 0.5rem 0.8rem;
-    border-radius: 0.6rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background 0.3s ease, transform 0.2s ease;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-}
-
-.btn-ler:hover {
-    background: #574fd6;
-    transform: scale(1.05);
-}
-
-/* =========================
-   ANIMAÇÕES
-========================= */
-.animate-in {
-    opacity: 0;
-    transform: translateY(20px);
-    animation: fadeInUp 0.6s forwards;
-}
-
-@keyframes fadeInUp {
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* =========================
-   BOTÕES DE CATEGORIA
-========================= */
-#categoriasContainer {
+/* =========================================
+   BADGES (VOCAÇÕES) - O SEU PROBLEMA ESTAVA AQUI
+   ========================================= */
+.santo-badge-container {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.8rem;
-    padding: 1rem 2rem 0;
     justify-content: center;
+    gap: 6px; /* Espaço entre as tags */
+    margin-bottom: 10px;
 }
 
-.categoria-btn {
-    background: #e0e0e0;
+.badge {
+    background: #f8f1e5;
+    color: var(--primary-gold);
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    padding: 5px 12px;
+    border-radius: 20px;
+    letter-spacing: 0.5px;
+    border: 1px solid rgba(139, 111, 61, 0.2);
+}
+
+/* =========================================
+   BOTÃO "LER BIOGRAFIA"
+   ========================================= */
+.btn-primary {
+    background: var(--primary-gold);
+    color: white;
     border: none;
-    padding: 0.5rem 1rem;
-    border-radius: 0.8rem;
-    cursor: pointer;
+    padding: 14px 28px;
+    border-radius: 12px;
     font-weight: 600;
-    transition: background 0.3s ease, color 0.3s ease;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: var(--transition);
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 15px;
 }
 
-.categoria-btn:hover {
-    background: #6c63ff;
-    color: #fff;
+.btn-primary:hover {
+    background: var(--light-gold);
+    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
 }
 
-.categoria-btn.active {
-    background: #6c63ff;
-    color: #fff;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+/* =========================================
+   FILTRO DE CATEGORIAS (TOP)
+   ========================================= */
+.categorias-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    padding: 20px;
+    background: white;
+    border-bottom: 1px solid #eee;
 }
 
-/* =========================
-   MODAL
-========================= */
-.modal-overlay {
+.chip {
+    padding: 10px 20px;
+    border-radius: 30px;
+    border: 1px solid #ddd;
+    background: white;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.chip.active {
+    background: var(--primary-gold);
+    color: white;
+    border-color: var(--primary-gold);
+}
+
+.chip-count {
+    font-size: 0.75rem;
+    opacity: 0.7;
+    background: rgba(0,0,0,0.1);
+    padding: 2px 8px;
+    border-radius: 10px;
+}
+
+.chip.active .chip-count {
+    background: rgba(255,255,255,0.2);
+}
+
+/* =========================================
+   MODAL PREMIUM
+   ========================================= */
+.modal-blur {
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,0.6);
-    display: flex;
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(10px);
+    display: none;
     justify-content: center;
     align-items: center;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.3s ease;
-    z-index: 1000;
+    z-index: 9999;
+    padding: 20px;
 }
 
-.modal-overlay.active {
-    opacity: 1;
-    visibility: visible;
-}
+.modal-blur.active { display: flex; }
 
-.modal-box {
-    background: #fff;
-    border-radius: 1rem;
+.modal-container {
+    background: white;
+    width: 100%;
     max-width: 700px;
-    width: 90%;
-    max-height: 90vh;
+    border-radius: 24px;
     overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    box-shadow: 0 12px 30px rgba(0,0,0,0.25);
-    animation: scaleIn 0.4s ease forwards;
+    position: relative;
+    animation: slideUp 0.4s ease-out;
 }
 
-@keyframes scaleIn {
-    from { transform: scale(0.8); opacity: 0; }
-    to { transform: scale(1); opacity: 1; }
-}
-
-.modal-close {
-    background: none;
-    border: none;
-    font-size: 1.5rem;
-    padding: 1rem;
-    cursor: pointer;
-    align-self: flex-end;
-    color: #666;
-    transition: color 0.2s ease;
-}
-
-.modal-close:hover {
-    color: #f5576c;
-}
-
-.modal-body {
-    padding: 1rem 2rem 2rem;
-    overflow-y: auto;
+@keyframes slideUp {
+    from { transform: translateY(50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
 }
 
 .modal-header-img {
-    width: 100%;
     height: 250px;
     background-size: cover;
     background-position: center;
-    border-radius: 1rem 1rem 0 0;
-    margin-bottom: 1rem;
+    background-color: #eee;
 }
 
-#modalTitle {
-    font-size: 1.5rem;
-    margin-bottom: 0.8rem;
+.modal-body-padding {
+    padding: 40px;
 }
 
-#modalContent {
-    font-size: 0.95rem;
-    color: #555;
-}
-
-/* =========================
-   RESPONSIVO
-========================= */
-@media (max-width: 768px) {
-    .santo-card img {
-        height: 180px;
-    }
-
-    .modal-header-img {
-        height: 180px;
-    }
-
-    #santosGrid {
-        gap: 1rem;
-        padding: 1rem;
-    }
-}
-
-@media (max-width: 480px) {
-    #categoriasContainer {
-        gap: 0.5rem;
-    }
-
-    .santo-card-content h3 {
-        font-size: 1rem;
-    }
-
-    .btn-ler {
-        padding: 0.4rem 0.6rem;
-        font-size: 0.85rem;
-    }
+.close-modal {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: white;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    z-index: 10;
 }
