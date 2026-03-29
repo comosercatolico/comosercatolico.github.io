@@ -695,26 +695,39 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 100);
 });
             
-           // FORMA CORRETA:
-card.innerHTML = `
-    <div class="santo-info">
-        <p><strong>Vocação:</strong> ${santo.categorias.join(', ')}</p>
-    </div>
-`;
+window.abrirModal = function(nomeSanto) {
+    const santo = listaSantos.find(s => s.nome === nomeSanto);
+    if (!santo) return;
+
+    const modalElement = document.getElementById("santoModal");
+    const modalTitle = document.getElementById("modalTitle");
+    const modalContent = document.getElementById("modalContent");
+
+    modalTitle.textContent = santo.nome;
+
+    // AQUI ESTÁ A CORREÇÃO: Tudo dentro de UMA única crase (`) do início ao fim
+    modalContent.innerHTML = `
+        <div class="santo-info">
+            <p><strong>Vocação:</strong> ${santo.categorias.join(', ')}</p>
+            
             <hr style="border:0; border-top:1px solid #eee; margin:20px 0;">
             
             <div class="biografia-texto">
                 <p>A vida de <strong>${santo.nome}</strong> é um testemunho profundo para toda a Igreja Católica. 
-                Sua trajetória dentro da categoria de <em>${santo.categoria}</em> inspira fiéis no mundo inteiro.</p>
+                Sua trajetória como <em>${santo.categorias[0]}</em> inspira fiéis no mundo inteiro.</p>
                 
                 <br>
                 <div style="background:#f9f9f9; padding:20px; border-left:4px solid #8b6f3d; font-style:italic;">
-                    "Sem conteúdo por aqui no momento. Estamos trabalhando para trazer a biografia completa deste santo em breve."
+                    "Em breve, traremos a biografia completa e os detalhes da vida de ${santo.nome} aqui."
                 </div>
             </div>
         </div>
     `;
+
+    modalElement.classList.add("active");
+    document.body.style.overflow = "hidden";
 };
+
 
 // Fechar Modal
 document.querySelector(".modal-close").addEventListener("click", fecharModal);
