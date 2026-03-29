@@ -514,14 +514,11 @@ const grid = document.getElementById("santosGrid");
 const pesquisaInput = document.getElementById("pesquisaSantos");
 const categoriasContainer = document.getElementById("categoriasContainer");
 
-// Define a base de dados principal (usa listaSantos que é o array de 500)
 const baseDados = typeof listaSantos !== 'undefined' ? listaSantos : [];
 
 /* =========================
       MOTOR DE RENDERIZAÇÃO
 ========================= */
-
-const observerOptions = { threshold: 0.1 };
 const appearanceObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -529,7 +526,7 @@ const appearanceObserver = new IntersectionObserver((entries) => {
             appearanceObserver.unobserve(entry.target);
         }
     });
-}, observerOptions);
+}, { threshold: 0.1 });
 
 function renderizarGrid(lista) {
     if (!grid) return;
@@ -539,15 +536,18 @@ function renderizarGrid(lista) {
     lista.forEach((santo, index) => {
         const card = document.createElement("article");
         card.className = "santo-card";
-        card.style.transitionDelay = `${(index % 10) * 50}ms`;
+        card.style.transitionDelay = `${(index % 15) * 30}ms`;
+
+        // Normalização do nome para o arquivo de imagem
+        const nomeArquivo = santo.nome.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/ /g, '-');
 
         card.innerHTML = `
             <div class="card-inner">
                 <div class="santo-badge-container">
-                    ${santo.categorias.map(c => `<span class="badge">${c}</span>`).join('')}
+                    ${santo.categorias.map(c => `<span class="badge">${c}</span>`).join(' ')}
                 </div>
                 <div class="image-container">
-                    <img src="../imagens/santos/${santo.nome.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/ /g, '-')}.jpg" 
+                    <img src="../imagens/santos/${nomeArquivo}.jpg" 
                          onerror="this.src='../imagens/default.jpg'" 
                          alt="${santo.nome}" loading="lazy">
                 </div>
@@ -571,19 +571,22 @@ function renderizarGrid(lista) {
 }
 
 /* =========================
-      FILTROS E PESQUISA
+      FILTROS E PESQUISA (BUSCA INTELIGENTE)
 ========================= */
-
 let debounceTimer;
 if (pesquisaInput) {
     pesquisaInput.addEventListener("input", (e) => {
         clearTimeout(debounceTimer);
-        const termo = e.target.value.toLowerCase().trim();
+        // Normaliza a entrada do usuário
+        const termo = e.target.value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
 
         debounceTimer = setTimeout(() => {
             const filtrados = baseDados.filter(s => {
-                const nomeMatch = s.nome.toLowerCase().includes(termo);
-                const catMatch = s.categorias.some(c => c.toLowerCase().includes(termo));
+                const nomeNormalizado = s.nome.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+                const nomeMatch = nomeNormalizado.includes(termo);
+                const catMatch = s.categorias.some(c => 
+                    c.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(termo)
+                );
                 return nomeMatch || catMatch;
             });
             renderizarGrid(filtrados);
@@ -612,6 +615,7 @@ function inicializarCategorias() {
             chip.classList.add("active");
             const filtrados = cat === "Todos" ? baseDados : baseDados.filter(s => s.categorias.includes(cat));
             renderizarGrid(filtrados);
+            atualizarContador(filtrados.length);
         });
 
         categoriasContainer.appendChild(chip);
@@ -621,15 +625,12 @@ function inicializarCategorias() {
 /* =========================
       MODAL DINÂMICO
 ========================= */
-
-// Injeta a estrutura do modal se não existir
 if (!document.getElementById("santoModal")) {
     const modalHTML = `
         <div id="santoModal" class="modal-blur">
             <div class="modal-container">
                 <header class="modal-nav">
-                    <div class="read-progress"></div>
-                    <button class="close-modal"><i class="fas fa-times"></i></button>
+                    <button class="close-modal">&times;</button>
                 </header>
                 <div class="modal-content-wrapper">
                     <aside class="modal-sidebar">
@@ -655,8 +656,12 @@ window.abrirModal = function(nomeSanto) {
     const content = document.getElementById("modalContent");
     const imgFrame = document.getElementById("modalImg");
 
+    // Limpa conteúdo anterior para evitar "ghosting"
     title.textContent = santo.nome;
-    imgFrame.innerHTML = `<img src="../imagens/santos/${santo.nome.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/ /g, '-')}.jpg" onerror="this.src='../imagens/default.jpg'">`;
+    imgFrame.innerHTML = ""; 
+    
+    const nomeArquivo = santo.nome.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/ /g, '-');
+    imgFrame.innerHTML = `<img src="../imagens/santos/${nomeArquivo}.jpg" onerror="this.src='../imagens/default.jpg'">`;
 
     content.innerHTML = `
         <div class="santo-info">
@@ -666,7 +671,7 @@ window.abrirModal = function(nomeSanto) {
                 <p>A vida de <strong>${santo.nome}</strong> é um testemunho profundo para toda a Igreja Católica. 
                 Sua trajetória como <em>${santo.categorias[0]}</em> inspira fiéis no mundo inteiro.</p>
                 <br>
-                <div style="background:#f9f9f9; padding:20px; border-left:4px solid #8b6f3d; font-style:italic;">
+                <div style="background:#f9f9f9; padding:25px; border-left:4px solid #8b6f3d; font-style:italic; border-radius: 0 8px 8px 0;">
                     "Em breve, traremos a biografia completa e os detalhes da vida de ${santo.nome} aqui."
                 </div>
             </div>
@@ -677,7 +682,6 @@ window.abrirModal = function(nomeSanto) {
     document.body.style.overflow = "hidden";
 };
 
-// Gerenciamento de Fechamento (Delegação de eventos para evitar erro de null)
 document.addEventListener("click", (e) => {
     if (e.target.closest(".close-modal") || e.target.id === "santoModal") {
         fecharModal();
@@ -695,22 +699,19 @@ function fecharModal() {
 /* =========================
       INICIALIZAÇÃO FINAL
 ========================= */
-
 function atualizarContador(num) {
     const contador = document.getElementById("santoContador");
     if(contador) contador.textContent = `${num} santos encontrados`;
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-    // Pequeno delay para garantir que a lista de 500 santos foi carregada no outro arquivo
     setTimeout(() => {
         renderizarGrid(baseDados);
         inicializarCategorias();
         atualizarContador(baseDados.length);
-    }, 100);
+    }, 150);
 });
 
-// Atalho ESC
 document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") fecharModal();
 });
