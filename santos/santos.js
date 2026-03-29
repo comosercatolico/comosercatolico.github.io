@@ -695,7 +695,12 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 100);
 });
             
-            <p><strong>Vocação:</strong> ${santo.categoria}</p>
+           // FORMA CORRETA:
+card.innerHTML = `
+    <div class="santo-info">
+        <p><strong>Vocação:</strong> ${santo.categorias.join(', ')}</p>
+    </div>
+`;
             <hr style="border:0; border-top:1px solid #eee; margin:20px 0;">
             
             <div class="biografia-texto">
