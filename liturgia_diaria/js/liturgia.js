@@ -151,33 +151,29 @@ function usarDados(dados) {
 
   container.innerHTML = "";
 
-  function renderLeitura(titulo, leitura) {
-    if (!leitura) return;
+ function renderLeitura(titulo, leitura) {
+  if (!leitura) return;
 
-    const referencia = leitura?.referencia || leitura?.title || "";
+  const referencia = leitura?.referencia || leitura?.title || "";
+  let texto = leitura?.texto || leitura?.text || leitura?.conteudo || leitura;
 
-    let texto = leitura?.texto || leitura?.text || leitura?.conteudo || leitura;
-
-    // normalização total
-    if (typeof texto !== "string") {
-      if (Array.isArray(texto)) texto = texto.join(" ");
-      else if (typeof texto === "object") texto = texto.text || texto.conteudo || "";
-      else texto = String(texto);
-    }
-
-    // remove título duplicado no início
-    texto = texto.replace(/^Primeira Leitura.*?\.\s*/i, "");
-
-    container.innerHTML += `
-      <div class="liturgia-card">
-        <h2>${titulo}</h2>
-        ${referencia ? `<p class="referencia">${referencia}</p>` : ""}
-        <div class="texto-liturgico">
-          ${formatarVersiculos(texto)}
-        </div>
-      </div>
-    `;
+  if (typeof texto !== "string") {
+    if (Array.isArray(texto)) texto = texto.join(" ");
+    else if (typeof texto === "object") texto = texto.text || "";
+    else texto = String(texto);
   }
+
+  // IMPORTANTE: O container.innerHTML aqui deve criar a estrutura que o CSS espera
+  container.innerHTML += `
+    <article class="liturgia-card">
+      <h2>${titulo}</h2>
+      ${referencia ? `<span class="referencia">${referencia}</span>` : ""}
+      <div class="texto-liturgico">
+        ${formatarVersiculos(texto)}
+      </div>
+    </article>
+  `;
+}
 
   // =========================
   // FORMATO COMPLETO
