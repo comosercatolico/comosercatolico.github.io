@@ -1,80 +1,62 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-<meta charset="UTF-8">
-<title>Santos – Lux Fidei</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<section class="liturgia-master-container">
+    <header class="liturgia-super-header">
+        <div class="header-content">
+            <span id="liturgia-data" class="badge-liturgico">Carregando...</span>
+            <h1 id="liturgia-titulo" class="titulo-principal">Liturgia da Palavra</h1>
+            <p class="motto">"Tua palavra é lâmpada para os meus pés e luz para o meu caminho."</p>
+        </div>
+        
+        <div class="reading-toolbar">
+            <div class="tool-group">
+                <button onclick="ajustarFonte(-1)" title="Diminuir fonte">A-</button>
+                <button onclick="ajustarFonte(1)" title="Aumentar fonte">A+</button>
+            </div>
+            <div class="tool-divider"></div>
+            <button class="btn-focus-mode" onclick="toggleFocusMode()">
+                <i class="fas fa-expand"></i> Modo Foco
+            </button>
+            <button class="btn-refresh-top" onclick="carregarLiturgia(true)">
+                <i class="fas fa-sync"></i>
+            </button>
+        </div>
+    </header>
 
-<link rel="stylesheet" href="../style.css">
-<link rel="stylesheet" href="santos.css">
-<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <div class="liturgia-layout-grid">
+        <aside class="liturgia-sidebar">
+            <div class="santo-do-dia-mini">
+                <small>Santo do Dia</small>
+                <h4 id="santo-nome-liturgia">Carregando...</h4>
+                <div class="mini-divider"></div>
+                <p>Inspire-se na vida dos que precederam na fé.</p>
+            </div>
+            
+            <nav class="leitura-nav">
+                <a href="#primeira" class="nav-item active">I Leitura</a>
+                <a href="#salmo" class="nav-item">Salmo</a>
+                <a href="#segunda" class="nav-item">II Leitura</a>
+                <a href="#evangelho" class="nav-item">Evangelho</a>
+            </nav>
+        </aside>
 
-</head>
+        <main id="liturgia-conteudo" class="liturgia-main-content">
+            <div class="skeleton-wrapper">
+                <div class="skeleton-line title"></div>
+                <div class="skeleton-line text"></div>
+                <div class="skeleton-line text"></div>
+                <div class="skeleton-line text"></div>
+            </div>
+        </main>
+    </div>
 
-<body>
-
-<!-- MENU LATERAL -->
-<div class="sidebar" id="sidebar">
-  <a href="#" onclick="fecharMenu()">✖ Fechar</a>
-  <a href="../index.html">Início</a>
-  <a href="../index.html#liturgia">Liturgia diária</a>
-  <a href="santos.html">Santos</a>
-  <a href="../biblioteca/biblioteca.html">Biblioteca</a>
-  <a href="../estudos/estudos.html">Estudos</a>
-  <a href="../jogos/jogos.html">Jogos</a>
-  <hr>
-  <a href="../sobre.html">Sobre</a>
-  <a href="../privacy.html">Privacidade</a>
-</div>
-
-<header>
-  <span class="menu-btn" onclick="abrirMenu()">☰</span>
-  <h1>Lux Fidei</h1>
-  <p style="opacity:0.8">Luz da Fé Católica</p>
-</header>
-
-<!-- MENU PRINCIPAL -->
-<nav class="menu">
-  <a href="../index.html" class="menu-item ">Início</a>
-  <a href="../liturgia_diaria/liturgiadiaria.html" class="menu-item">Liturgia Diária</a>
-  <a href="santos.html" class="menu-item active">Santos</a>
-  <a href="../biblioteca/biblioteca.html" class="menu-item">Biblioteca</a>
-  <a href="../estudos/estudos.html" class="menu-item">Estudos</a>
-  <a href="../jogos/jogos.html" class="menu-item">Jogos</a>
-  <span class="menu-indicator"></span>
-</nav>
-
-<!-- CABEÇALHO -->
-<section class="santos-header">
-  <h2>Santos da Igreja</h2>
-  <p>
-    A Igreja Católica reconhece ao longo dos séculos homens e mulheres que viveram
-    de maneira heroica a fé cristã. Nesta seção você poderá conhecer a vida,
-    os milagres e os ensinamentos de cada santo.
-  </p>
+    <footer class="liturgia-super-footer">
+        <div class="footer-info">
+            <img src="imagens/logo-small.png" alt="Lux Fidei" class="mini-logo">
+            <span>Lux Fidei • Liturgia Oficial da Igreja</span>
+        </div>
+        <div class="share-actions">
+            <span>Compartilhar:</span>
+            <button class="share-btn"><i class="fab fa-whatsapp"></i></button>
+            <button class="share-btn"><i class="far fa-copy"></i></button>
+        </div>
+    </footer>
 </section>
-
-<!-- PESQUISA -->
-<div class="santos-pesquisa">
-  <input type="text" placeholder="Pesquisar santo...">
-</div>
-
-<!-- CATEGORIAS DE SANTOS -->
-<div class="categorias-container" id="categoriasContainer">
-  <!-- Botões de categoria serão adicionados dinamicamente pelo JS -->
-</div>
-
-<!-- GRID DE SANTOS -->
-<section class="santos-grid" id="santosGrid">
-  <!-- Cards de santos serão adicionados dinamicamente pelo JS -->
-</section>
-
-<footer>
-  © 2026 – Lux Fidei
-</footer>
-
-<!-- SCRIPT DE SANTOS -->
-<script src="santos.js"></script>
-
-</body>
-</html>
