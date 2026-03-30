@@ -219,3 +219,10 @@ function formatarVersiculos(texto) {
   }
   return texto.replace(/(^|\s)(\d+)(?!,\d)(?=[A-Za-zÁÉÍÓÚ])/g, (match, espaco, numero) => `${espaco}<sup>${numero}</sup> `);
 }
+let fontSize = 1.25;
+function ajustarFonte(delta) {
+    fontSize += delta * 0.1;
+    document.querySelectorAll('.texto-liturgico').forEach(el => {
+        el.style.fontSize = fontSize + 'rem';
+    });
+}
