@@ -548,7 +548,7 @@ function renderizarGrid(lista) {
                 </div>
                 <div class="image-container">
                     <img src="../imagens/santos/${nomeArquivo}.jpg" 
-                         onerror="this.src='../imagens/default.jpg'" 
+                         onerror="this.src='imagens/default.jpg'" 
                          alt="${santo.nome}" loading="lazy">
                 </div>
                 <div class="santo-card-content">
