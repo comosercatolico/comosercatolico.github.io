@@ -1,62 +1,118 @@
-<section class="liturgia-master-container">
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Liturgia Diária - Lux Fidei</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Inter:wght@300;400;600&family=Cinzel:wght@400;700&family=Lora:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../style.css"> <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* CSS EXCLUSIVO DA LITURGIA (Pode mover para o style.css depois) */
+        :root { --cor-liturgica: #8b6f3d; }
+        .liturgia-master-container { max-width: 1100px; margin: 40px auto; background: #fff; border-radius: 20px; box-shadow: 0 15px 45px rgba(0,0,0,0.1); overflow: hidden; border: 1px solid #eee; }
+        .liturgia-super-header { background: #1a1a1a; color: white; padding: 50px 20px 80px; text-align: center; position: relative; }
+        .badge-liturgico { background: var(--cor-liturgica); padding: 6px 18px; border-radius: 20px; font-size: 0.8rem; font-weight: bold; text-transform: uppercase; }
+        .reading-toolbar { position: absolute; bottom: -25px; left: 50%; transform: translateX(-50%); background: white; padding: 10px 25px; border-radius: 50px; display: flex; align-items: center; gap: 15px; box-shadow: 0 8px 20px rgba(0,0,0,0.1); z-index: 10; border: 1px solid #ddd; }
+        .reading-toolbar button { background: none; border: none; cursor: pointer; color: #555; font-weight: bold; padding: 5px 10px; border-radius: 5px; }
+        .reading-toolbar button:hover { background: #f0f0f0; color: var(--cor-liturgica); }
+        .liturgia-layout-grid { display: grid; grid-template-columns: 250px 1fr; gap: 30px; padding: 60px 30px 30px; }
+        .liturgia-sidebar { border-right: 1px solid #eee; padding-right: 15px; }
+        .santo-do-dia-mini { background: #fdfaf3; padding: 15px; border-radius: 10px; border-left: 4px solid var(--cor-liturgica); margin-bottom: 20px; font-size: 0.9rem; }
+        .texto-liturgico { font-family: 'Lora', serif; line-height: 1.8; font-size: 1.15rem; color: #333; transition: font-size 0.2s; }
+        .liturgia-card { margin-bottom: 40px; padding-bottom: 30px; border-bottom: 1px solid #f0f0f0; }
+        .liturgia-card h2 { font-family: 'Cinzel', serif; color: var(--cor-liturgica); font-size: 1.3rem; margin-bottom: 5px; }
+        .referencia { font-style: italic; color: #777; margin-bottom: 15px; display: block; }
+        @media (max-width: 850px) { .liturgia-layout-grid { grid-template-columns: 1fr; } .liturgia-sidebar { display: none; } }
+    </style>
+</head>
+<body>
+
+<div class="sidebar" id="sidebar">
+    <a href="#" onclick="fecharMenu()">✖ Fechar</a>
+    <a href="../index.html">Início</a>
+    <a href="liturgiadiaria.html">Liturgia diária</a>
+    <a href="../santos/santos.html">Santos</a>
+    <a href="../jogos/jogos.html">Jogos</a>
+    <hr>
+    <a href="../sobre.html">Sobre</a>
+</div>
+
+<header>
+    <span class="menu-btn" onclick="abrirMenu()">☰</span>
+    <h1>Lux Fidei</h1>
+    <p style="opacity:0.8">Luz da Fé Católica</p>
+</header>
+
+<nav class="menu">
+    <a href="../index.html" class="menu-item">Início</a>
+    <a href="liturgiadiaria.html" class="menu-item active">Liturgia Diária</a>
+    <a href="../santos/santos.html" class="menu-item">Santos</a>
+    <a href="../biblioteca/biblioteca.html" class="menu-item">Biblioteca</a>
+    <a href="../estudos/estudos.html" class="menu-item">Estudos</a>
+    <a href="../jogos/jogos.html" class="menu-item">Jogos</a>
+    <span class="menu-indicator"></span>
+</nav>
+
+<main class="liturgia-master-container">
     <header class="liturgia-super-header">
         <div class="header-content">
             <span id="liturgia-data" class="badge-liturgico">Carregando...</span>
-            <h1 id="liturgia-titulo" class="titulo-principal">Liturgia da Palavra</h1>
-            <p class="motto">"Tua palavra é lâmpada para os meus pés e luz para o meu caminho."</p>
+            <h1 id="liturgia-titulo" class="titulo-principal" style="font-family: 'Libre Baskerville', serif; margin-top:15px;">Liturgia da Palavra</h1>
         </div>
         
         <div class="reading-toolbar">
-            <div class="tool-group">
-                <button onclick="ajustarFonte(-1)" title="Diminuir fonte">A-</button>
-                <button onclick="ajustarFonte(1)" title="Aumentar fonte">A+</button>
-            </div>
-            <div class="tool-divider"></div>
-            <button class="btn-focus-mode" onclick="toggleFocusMode()">
-                <i class="fas fa-expand"></i> Modo Foco
-            </button>
-            <button class="btn-refresh-top" onclick="carregarLiturgia(true)">
-                <i class="fas fa-sync"></i>
-            </button>
+            <button onclick="ajustarFonte(-0.1)" title="Diminuir fonte"><i class="fas fa-font" style="font-size: 0.8rem;"></i>-</button>
+            <button onclick="ajustarFonte(0.1)" title="Aumentar fonte"><i class="fas fa-font"></i>+</button>
+            <div style="width:1px; height:20px; background:#ddd;"></div>
+            <button onclick="carregarLiturgia(true)"><i class="fas fa-sync-alt"></i></button>
         </div>
     </header>
 
     <div class="liturgia-layout-grid">
         <aside class="liturgia-sidebar">
             <div class="santo-do-dia-mini">
-                <small>Santo do Dia</small>
-                <h4 id="santo-nome-liturgia">Carregando...</h4>
-                <div class="mini-divider"></div>
-                <p>Inspire-se na vida dos que precederam na fé.</p>
+                <small style="color:#888; font-weight:bold;">MEDITAÇÃO</small>
+                <p style="margin-top:5px;">"A Palavra de Deus é viva e eficaz."</p>
             </div>
-            
-            <nav class="leitura-nav">
-                <a href="#primeira" class="nav-item active">I Leitura</a>
-                <a href="#salmo" class="nav-item">Salmo</a>
-                <a href="#segunda" class="nav-item">II Leitura</a>
-                <a href="#evangelho" class="nav-item">Evangelho</a>
-            </nav>
+            <p style="font-size: 0.8rem; color: #999; padding: 10px;">Use os controles acima para ajustar o tamanho do texto para sua leitura.</p>
         </aside>
 
-        <main id="liturgia-conteudo" class="liturgia-main-content">
-            <div class="skeleton-wrapper">
-                <div class="skeleton-line title"></div>
-                <div class="skeleton-line text"></div>
-                <div class="skeleton-line text"></div>
-                <div class="skeleton-line text"></div>
+        <section id="liturgia-conteudo" class="liturgia-main-content">
+            <div style="text-align:center; padding: 50px; color:#999;">
+                <i class="fas fa-cross fa-3x fa-spin" style="margin-bottom:15px;"></i>
+                <p>Abrindo o Missal...</p>
             </div>
-        </main>
+        </section>
     </div>
+</main>
 
-    <footer class="liturgia-super-footer">
-        <div class="footer-info">
-            <img src="imagens/logo-small.png" alt="Lux Fidei" class="mini-logo">
-            <span>Lux Fidei • Liturgia Oficial da Igreja</span>
-        </div>
-        <div class="share-actions">
-            <span>Compartilhar:</span>
-            <button class="share-btn"><i class="fab fa-whatsapp"></i></button>
-            <button class="share-btn"><i class="far fa-copy"></i></button>
-        </div>
-    </footer>
-</section>
+<script src="../js/liturgia.js"></script> <script>
+    /* FUNÇÕES DO MENU (Igual ao Index) */
+    function abrirMenu() { document.getElementById("sidebar").style.left = "0"; }
+    function fecharMenu() { document.getElementById("sidebar").style.left = "-250px"; }
+
+    /* ANIMAÇÃO DO INDICADOR DO MENU */
+    const indicator = document.querySelector(".menu-indicator");
+    const items = document.querySelectorAll(".menu-item");
+
+    function updateIndicator(el){
+        indicator.style.width = el.offsetWidth + "px";
+        indicator.style.left = el.offsetLeft + "px";
+    }
+
+    window.onload = () => {
+        const active = document.querySelector(".menu-item.active");
+        if(active) updateIndicator(active);
+        carregarLiturgia(); // Inicia o carregamento da API
+    };
+
+    /* FUNÇÃO DE AJUSTE DE FONTE (Nova) */
+    let currentFontSize = 1.15;
+    function ajustarFonte(ponto) {
+        currentFontSize += ponto;
+        const textos = document.querySelectorAll('.texto-liturgico');
+        textos.forEach(t => t.style.fontSize = currentFontSize + 'rem');
+    }
+</script>
+</body>
+</html>
