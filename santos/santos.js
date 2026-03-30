@@ -622,29 +622,24 @@ function inicializarCategorias() {
 }
 
 /* =========================
-      MODAL DINÂMICO (COM FETCH)
+      MODAL DINÂMICO (CORRIGIDO)
 ========================= */
 if (!document.getElementById("santoModal")) {
     const modalHTML = `
         <div id="santoModal" class="modal-blur">
-            <div class="modal-container">
-                <header class="modal-nav">
-                    <button class="close-modal">&times;</button>
-                </header>
-                <div class="modal-content-wrapper">
-                    <aside class="modal-sidebar">
-                        <div id="modalImg" class="modal-img-frame"></div>
-                    </aside>
-                    <main class="modal-main">
-                        <h1 id="modalTitle"></h1>
-                        <div id="modalContent" class="modal-body-text"></div>
-                    </main>
+            <button class="close-modal">&times;</button>
+            <div class="modal-content">
+                <div id="modalHeaderImg" class="modal-header-img"></div>
+                <div class="modal-body-padding">
+                    <h1 id="modalTitle"></h1>
+                    <div id="modalContent"></div>
                 </div>
             </div>
         </div>
     `;
     document.body.insertAdjacentHTML('beforeend', modalHTML);
 }
+
 window.abrirModal = async function(nomeSanto) {
     const santo = baseDados.find(s => s.nome === nomeSanto);
     if (!santo) return;
@@ -652,14 +647,15 @@ window.abrirModal = async function(nomeSanto) {
     const modal = document.getElementById("santoModal");
     const title = document.getElementById("modalTitle");
     const content = document.getElementById("modalContent");
-    const imgFrame = document.getElementById("modalImg");
+    const headerImg = document.getElementById("modalHeaderImg");
 
     title.textContent = santo.nome;
-    imgFrame.innerHTML = "";
     content.innerHTML = `<div class="loader-p">Buscando registros sagrados...</div>`;
     
     const slug = santo.nome.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/ /g, '-').replace(/'/g, '');
-    imgFrame.innerHTML = `<img src="../imagens/santos/${slug}.jpg" onerror="this.src='../imagens/default.jpg'">`;
+    
+    // Define a imagem de topo
+    headerImg.style.backgroundImage = `url('../imagens/santos/${slug}.jpg')`;
 
     modal.classList.add("active");
     document.body.style.overflow = "hidden";
@@ -669,13 +665,12 @@ window.abrirModal = async function(nomeSanto) {
         if (!response.ok) throw new Error();
 
         let text = await response.text();
-        
-        // Limpeza do Front Matter e formatação básica de Markdown
         let biografiaFinal = text.split('---').pop().trim();
+        
         biografiaFinal = biografiaFinal
-            .replace(/^#+ .*\n?/g, '') // Remove títulos h1, h2...
-            .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') // Transforma ** em negrito
-            .replace(/\n\n/g, '</p><p>') // Transforma quebras duplas em parágrafos
+            .replace(/^#+ .*\n?/g, '') 
+            .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') 
+            .replace(/\n\n/g, '</p><p>') 
             .replace(/\n/g, '<br>');
 
         content.innerHTML = `
@@ -687,7 +682,11 @@ window.abrirModal = async function(nomeSanto) {
             </div>
         `;
     } catch (err) {
-        content.innerHTML = `<div class="error-msg">A biografia de ${santo.nome} está sendo traduzida dos arquivos originais.</div>`;
+        content.innerHTML = `
+            <div class="vocation-badge">Doutor da Igreja • ${santo.categorias.join(' • ')}</div>
+            <div class="biografia-container">
+                <p>A biografia de ${santo.nome} está sendo traduzida dos arquivos originais.</p>
+            </div>`;
     }
 };
 
