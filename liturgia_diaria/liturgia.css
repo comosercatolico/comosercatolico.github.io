@@ -13,13 +13,14 @@
 body {
   background: linear-gradient(180deg, #f5f3ef, #ffffff);
   color: var(--text-main);
+  font-family: 'Inter', sans-serif;
   -webkit-font-smoothing: antialiased;
   margin: 0;
   padding: 0;
 }
 
 /* =========================
-      HEADER
+      HEADER & TOOLBAR
 ========================= */
 .liturgia-super-header {
   background: radial-gradient(circle at top, #2a2a2a, #0f0f0f);
@@ -38,6 +39,7 @@ body {
 }
 
 .badge-liturgico {
+  display: inline-block;
   background: linear-gradient(135deg, var(--gold), var(--gold-light));
   padding: 10px 22px;
   border-radius: 40px;
@@ -45,11 +47,9 @@ body {
   font-weight: 700;
   letter-spacing: 2px;
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+  margin-bottom: 20px;
 }
 
-/* =========================
-      TOOLBAR
-========================= */
 .reading-toolbar {
   position: absolute;
   bottom: -35px;
@@ -64,13 +64,14 @@ body {
   gap: 20px;
   box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
   z-index: 10;
+  white-space: nowrap;
 }
 
 /* =========================
       CONTAINER MASTER
 ========================= */
 .liturgia-master-container {
-  max-width: 1100px; /* Aumentado levemente para dar mais palco ao texto */
+  max-width: 1100px;
   margin: 80px auto;
   background: white;
   border-radius: 24px;
@@ -84,15 +85,18 @@ body {
 ========================= */
 .liturgia-layout-grid {
   display: grid;
-  grid-template-columns: 260px minmax(0, 1fr); /* Coluna da direita flexível e sem estouro */
+  grid-template-columns: 260px 1fr; /* Sidebar fixa e Conteúdo flexível */
   gap: 50px;
   padding: 60px 40px;
+  align-items: start;
 }
 
 /* =========================
       SIDEBAR
 ========================= */
 .liturgia-sidebar {
+  position: sticky;
+  top: 20px;
   padding-right: 20px;
   border-right: 1px solid #eee;
 }
@@ -103,50 +107,27 @@ body {
   border-radius: var(--radius);
   border-left: 5px solid var(--gold);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
-  transition: 0.3s;
-}
-
-.santo-do-dia-mini:hover {
-  transform: translateY(-3px);
 }
 
 /* =========================
-      NAV ITEMS
+      CONTEÚDO E CARDS
 ========================= */
-.nav-item {
-  padding: 12px 16px;
-  color: var(--text-soft);
-  border-radius: 10px;
-  transition: 0.25s;
-  display: block;
-  text-decoration: none;
+.liturgia-principal {
+  width: 100%;
+  min-width: 0; /* Evita quebra de grid com textos longos */
 }
 
-.nav-item:hover {
-  background: #f4efe6;
-  color: var(--gold);
-  transform: translateX(4px);
-}
-
-.nav-item.active {
-  background: linear-gradient(135deg, #f0e6d6, #f7f1e6);
-  color: var(--gold);
-  font-weight: 600;
-}
-
-/* =========================
-      CARDS DE LITURGIA
-========================= */
 .liturgia-card {
   padding-bottom: 40px;
   border-bottom: 1px solid #eee;
   margin-bottom: 40px;
   position: relative;
-  width: 100%; /* Ocupa toda a área disponível na grid */
+  width: 100%;
 }
 
 .liturgia-card h2 {
   font-size: 1.6rem;
+  margin-top: 0;
   margin-bottom: 8px;
   color: var(--text-main);
 }
@@ -154,8 +135,9 @@ body {
 .referencia {
   font-style: italic;
   color: var(--text-soft);
-  margin-bottom: 15px;
+  margin-bottom: 20px;
   display: block;
+  font-size: 1.1rem;
 }
 
 .liturgia-card::after {
@@ -164,26 +146,25 @@ body {
   height: 3px;
   background: var(--gold);
   position: absolute;
-  bottom: -2px;
+  bottom: -1px;
   left: 0;
   border-radius: 3px;
 }
 
 /* =========================
-      TEXTO LITÚRGICO (FOCO NA LEITURA)
+      TEXTO LITÚRGICO
 ========================= */
 .texto-liturgico {
   font-family: "Libre Baskerville", serif;
   font-size: 1.25rem;
-  line-height: 1.85;
+  line-height: 1.9;
   color: #222;
   text-align: justify;
   hyphens: auto;
-  word-spacing: -0.5px;
   width: 100%;
 }
 
-/* Letra Capitular (Primeira letra grande) */
+/* Letra Capitular */
 .texto-liturgico::first-letter {
   float: left;
   font-size: 3.8rem;
@@ -194,74 +175,38 @@ body {
   color: var(--gold);
 }
 
-/* Versículos (Números pequenos) */
+/* Versículos */
 .texto-liturgico sup {
-  font-size: 0.75rem;
+  font-size: 0.8rem;
   color: var(--gold);
-  font-weight: bold;
+  font-weight: 700;
   margin-right: 4px;
   vertical-align: baseline;
   position: relative;
   top: -0.4em;
 }
 
-/* =========================
-      ESTILO PARA SALMOS
-========================= */
+/* Salmo Diferenciado */
 .liturgia-card.salmo {
   background: #faf7f2;
-  padding: 30px;
+  padding: 35px;
   border-radius: var(--radius);
-  border-left: 4px solid var(--gold);
-  border-bottom: none; /* Remove a linha fina pra destacar o card */
+  border-left: 5px solid var(--gold);
+  border-bottom: none;
+  box-sizing: border-box;
 }
 
 .liturgia-card.salmo::after {
-  display: none; /* Remove a barrinha dourada no salmo */
+  display: none;
 }
 
 /* =========================
-      SANTOS DO DIA (GRID HORIZONTAL)
-========================= */
-.santos-grid {
-  display: flex;
-  gap: 20px;
-  overflow-x: auto;
-  padding: 30px;
-  scroll-behavior: smooth;
-}
-
-.santo-card {
-  background: white;
-  border-radius: 20px;
-  overflow: hidden;
-  min-width: 240px;
-  transition: all 0.4s ease;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
-}
-
-.santo-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
-}
-
-.santo-card img {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-}
-
-.santo-card-content {
-  padding: 18px;
-}
-
-/* =========================
-      RESPONSIVIDADE (MOBILE)
+      RESPONSIVIDADE
 ========================= */
 @media (max-width: 900px) {
   .liturgia-layout-grid {
-    grid-template-columns: 1fr; /* Sidebar some, texto ocupa tudo */
-    padding: 40px 20px;
+    grid-template-columns: 1fr;
+    padding: 30px 20px;
     gap: 30px;
   }
 
@@ -271,16 +216,21 @@ body {
 
   .texto-liturgico {
     font-size: 1.15rem;
-    line-height: 1.7;
-    text-align: left; /* No mobile, alinhar à esquerda evita buracos no texto */
+    line-height: 1.75;
+    text-align: left; /* Melhor leitura em telas pequenas */
   }
 
   .liturgia-master-container {
     margin: 20px 10px;
     border-radius: 16px;
   }
-  
+
   .liturgia-super-header {
     padding: 60px 20px 100px;
+  }
+
+  .reading-toolbar {
+    padding: 12px 20px;
+    font-size: 0.9rem;
   }
 }
