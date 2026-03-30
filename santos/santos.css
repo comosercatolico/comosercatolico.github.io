@@ -204,14 +204,21 @@
 .modal-content {
     width: 100vw !important;
     height: 100vh !important;
-    background: #ffffff !important;
+    background-color: #ffffff !important; /* FORÇA O FUNDO BRANCO */
+    color: #1a1a1a !important;            /* FORÇA O TEXTO ESCURO */
     position: fixed;
     top: 0;
     left: 0;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
-    animation: fadeIn 0.5s ease;
+    z-index: 10001;
+}
+
+/* Garante que o texto dentro da biografia seja legível */
+.biografia-container, .biografia-container p {
+    color: #2c2c2c !important;
+    font-size: 1.2rem;
 }
 
 /* Imagem de Topo (Ocupa parte da tela com degradê) */
