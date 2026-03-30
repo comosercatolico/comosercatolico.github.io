@@ -185,94 +185,72 @@
 /* =========================================
    MODAL TELA CHEIA (FULLSCREEN)
    ========================================= */
+/* =========================================
+   MODAL TELA CHEIA - DESIGN PREMIUM
+   ========================================= */
 .modal-blur {
     position: fixed;
     inset: 0;
-    background: rgba(0, 0, 0, 0.85); /* Fundo escuro atrás do modal */
-    backdrop-filter: blur(10px);
+    background: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(15px);
     display: none;
     justify-content: center;
     align-items: center;
-    z-index: 10000; /* Garante que fique acima de tudo */
+    z-index: 10000;
 }
 
-.modal-blur.active { 
-    display: flex; 
-}
+.modal-blur.active { display: flex; }
 
-/* =========================================
-   MODAL TELA CHEIA (FORÇADO)
-   ========================================= */
 .modal-content {
     width: 100vw !important;
     height: 100vh !important;
-    max-width: 100vw !important;
-    max-height: 100vh !important;
-    
-    /* Forçando o fundo branco e removendo transparências */
-    background-color: #ffffff !important; 
     background: #ffffff !important;
-    
-    margin: 0 !important;
-    border-radius: 0 !important;
-    position: fixed !important;
-    top: 0 !important;
-    left: 0 !important;
-    
-    display: flex !important;
+    position: fixed;
+    top: 0;
+    left: 0;
+    overflow-y: auto;
+    display: flex;
     flex-direction: column;
-    overflow-y: auto !important;
-    z-index: 10001;
+    animation: fadeIn 0.5s ease;
 }
 
-/* Ajuste para garantir que o texto apareça sobre o branco */
-#modalTitle, .biografia-container {
-    color: #1a1a1a !important; /* Cor escura para leitura no fundo branco */
-}
-
-/* O fundo que escurece o resto do site */
-.modal-blur {
-    background: rgba(0, 0, 0, 0.9) !important;
-    backdrop-filter: blur(10px);
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
+/* Imagem de Topo (Ocupa parte da tela com degradê) */
 .modal-header-img {
     width: 100%;
-    height: 40vh; /* Imagem ocupa 40% da altura da tela */
+    height: 50vh; /* Metade da tela é imagem */
     background-size: cover;
     background-position: center;
-    background-color: #eee;
+    position: relative;
     flex-shrink: 0;
+    border-bottom: 5px solid var(--primary-gold);
 }
 
-.modal-body-padding {
-    padding: 40px 10%; /* Mais respiro nas laterais em telas grandes */
-    max-width: 900px;  /* Mantém o texto legível centralizado */
-    margin: 0 auto;
+/* Sombra suave na imagem para o título não sumir */
+.modal-header-img::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
     width: 100%;
+    height: 30%;
+    background: linear-gradient(transparent, rgba(0,0,0,0.2));
 }
 
-/* BOTÃO FECHAR FIXO NO CANTO */
+/* Botão de Fechar flutuante e elegante */
 .close-modal {
-    position: fixed; /* Fixado para você sempre conseguir fechar mesmo com scroll */
-    top: 20px;
-    right: 20px;
-    width: 45px;
-    height: 45px;
+    position: fixed;
+    top: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
     background: white;
-    border: 2px solid var(--primary-gold);
-    font-size: 24px;
-    font-weight: bold;
     color: var(--primary-gold);
+    border: none;
+    font-size: 28px;
     cursor: pointer;
-    box-shadow: var(--shadow-lg);
-    z-index: 10001;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+    z-index: 10002;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -280,58 +258,62 @@
 }
 
 .close-modal:hover {
-    transform: scale(1.1);
+    transform: rotate(90deg) scale(1.1);
     background: var(--primary-gold);
     color: white;
 }
 
-/* TÍTULO E TEXTO */
+/* Container do Texto (Centralizado e com largura de leitura) */
+.modal-body-padding {
+    padding: 60px 20px;
+    max-width: 800px; /* Largura ideal para leitura */
+    margin: 0 auto;   /* Centraliza o bloco de texto */
+    width: 100%;
+}
+
 #modalTitle {
     font-family: 'Libre Baskerville', serif;
+    font-size: 2.5rem;
     color: var(--text-main);
     text-align: center;
-    border-bottom: 2px solid var(--light-gold);
-    padding-bottom: 15px;
-    margin-top: 20px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+}
+
+.vocation-badge {
+    text-align: center;
+    color: var(--primary-gold);
+    font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 2px;
+    font-size: 0.9rem;
+    margin-bottom: 40px;
+    display: block;
 }
 
 .biografia-container {
     font-family: 'Inter', sans-serif;
-    line-height: 1.8;
-    color: #2c2c2c;
+    line-height: 2; /* Texto bem espaçado */
+    color: #333;
+    font-size: 1.2rem;
     text-align: justify;
-    font-size: 1.15rem;
-    margin-top: 20px;
 }
 
-
+/* Capitular (A primeira letra grande) */
 .biografia-container p::first-letter {
     float: left;
-    font-size: 3.5rem;
+    font-size: 4rem;
     line-height: 1;
     font-weight: bold;
-    margin-right: 10px;
-    color: #8b6f3d; /* Capitular dourada */
+    margin-right: 15px;
+    color: var(--primary-gold);
+    font-family: 'Libre Baskerville', serif;
 }
 
-.modal-img-frame img {
-    border: 4px solid #fff;
-    outline: 1px solid #d4af37;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-    transition: transform 0.3s;
+/* Animação */
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(1.05); }
+    to { opacity: 1; transform: scale(1); }
 }
 
-.modal-img-frame img:hover {
-    transform: scale(1.02);
-}
-
-/* Scrollbar elegante para o texto */
-.modal-body-text::-webkit-scrollbar {
-    width: 6px;
-}
-.modal-body-text::-webkit-scrollbar-thumb {
-    background: #d4af37;
-    border-radius: 10px;
-}
