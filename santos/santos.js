@@ -661,7 +661,7 @@ window.abrirModal = async function(nomeSanto) {
     document.body.style.overflow = "hidden";
 
     try {
-        const response = await fetch(`doutores/${slug}.md`);
+const response = await fetch(`doutores/${slug}.md`);
         if (!response.ok) throw new Error();
 
         let text = await response.text();
