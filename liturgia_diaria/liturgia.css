@@ -230,3 +230,108 @@
     font-size:12px;
   }
 }
+.liturgia-master-container {
+    max-width: 1100px;
+    margin: 60px auto;
+    background: #fdfdfd;
+    border-radius: 24px;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.08);
+    overflow: hidden;
+    border: 1px solid #eee;
+}
+
+.liturgia-super-header {
+    background: linear-gradient(135deg, #1a1a1a 0%, #2c2c2c 100%);
+    color: white;
+    padding: 60px 40px 100px;
+    text-align: center;
+    position: relative;
+}
+
+.badge-liturgico {
+    background: var(--cor-liturgica, #8b6f3d);
+    padding: 8px 20px;
+    border-radius: 30px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+.reading-toolbar {
+    position: absolute;
+    bottom: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: white;
+    padding: 15px 30px;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    z-index: 10;
+}
+
+.liturgia-layout-grid {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 40px;
+    padding: 80px 40px 40px;
+}
+
+.liturgia-sidebar {
+    border-right: 1px solid #eee;
+    padding-right: 20px;
+}
+
+.santo-do-dia-mini {
+    background: #f9f6f0;
+    padding: 20px;
+    border-radius: 12px;
+    border-left: 4px solid var(--cor-liturgica);
+    margin-bottom: 30px;
+}
+
+.leitura-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.nav-item {
+    padding: 12px 20px;
+    text-decoration: none;
+    color: #666;
+    border-radius: 8px;
+    transition: 0.3s;
+    font-weight: 500;
+}
+
+.nav-item.active, .nav-item:hover {
+    background: #f0e6d6;
+    color: #8b6f3d;
+}
+
+/* Melhorias no card de leitura */
+.liturgia-card {
+    border: none !important;
+    padding: 0 0 50px 0 !important;
+    border-bottom: 1px solid #eee !important;
+    box-shadow: none !important;
+}
+
+.texto-liturgico {
+    font-size: 1.25rem; /* Fonte maior para leitura */
+    line-height: 2;
+    color: #222;
+}
+
+/* Responsividade */
+@media (max-width: 900px) {
+    .liturgia-layout-grid {
+        grid-template-columns: 1fr;
+    }
+    .liturgia-sidebar {
+        display: none;
+    }
+}
