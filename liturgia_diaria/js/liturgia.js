@@ -241,7 +241,7 @@ function formatarVersiculos(texto) {
   texto = texto.replace(/\\"/g, '"');
 
   // quebra parágrafo
-  texto = texto.replace(/\n/g, "<br><br>");
+ texto = texto.replace(/\n+/g, " ");
 
   // versículos
   texto = texto.replace(
