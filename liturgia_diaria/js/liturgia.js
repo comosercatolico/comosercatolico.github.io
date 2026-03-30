@@ -150,24 +150,33 @@ function usarDados(dados) {
 
   container.innerHTML = "";
 
-  function renderLeitura(titulo, leitura) {
-    if (!leitura) return;
-    const referencia = leitura.referencia || "";
-    let texto = leitura.texto || leitura || "";
-    if (typeof texto !== "string") {
-      if (Array.isArray(texto)) texto = texto.join(" ");
-      else if (typeof texto === "object") texto = JSON.stringify(texto);
-      else texto = String(texto);
+function renderLeitura(titulo, leitura) {
+  if (!leitura) return;
+
+  const referencia = leitura.referencia || leitura.title || "";
+
+  let texto = leitura.texto || leitura.text || leitura || "";
+
+  if (typeof texto !== "string") {
+    if (Array.isArray(texto)) {
+      texto = texto.join(" ");
+    } else if (typeof texto === "object") {
+      texto = texto.text || texto.conteudo || "";
+    } else {
+      texto = String(texto);
     }
-    container.innerHTML += `
-      <div class="liturgia-card">
-        <h2>${titulo}</h2>
-        <p class="referencia">${referencia}</p>
-        <div class="texto-liturgico">${formatarVersiculos(texto)}</div>
-      </div>
-    `;
   }
 
+  container.innerHTML += `
+    <div class="liturgia-card">
+      <h2>${titulo}</h2>
+      ${referencia ? `<p class="referencia">${referencia}</p>` : ""}
+      <div class="texto-liturgico">
+        ${formatarVersiculos(texto)}
+      </div>
+    </div>
+  `;
+}
   // =========================
   // FORMATO COMPLETO
   if (dados.evangelho || dados.primeiraLeitura || dados.salmo || dados.segundaLeitura) {
@@ -211,18 +220,33 @@ function usarDados(dados) {
    🧠 FORMATAÇÃO DE VERSÍCULOS SEGURO
 ========================= */
 function formatarVersiculos(texto) {
-  if (texto == null) return "";
+  if (!texto) return "";
+
   if (typeof texto !== "string") {
-    if (Array.isArray(texto)) texto = texto.join(" ");
-    else if (typeof texto === "object") texto = JSON.stringify(texto);
-    else texto = String(texto);
+    if (Array.isArray(texto)) {
+      texto = texto.join(" ");
+    } else if (typeof texto === "object") {
+      texto = texto.text || texto.conteudo || "";
+    } else {
+      texto = String(texto);
+    }
   }
-  return texto.replace(/(^|\s)(\d+)(?!,\d)(?=[A-Za-zÁÉÍÓÚ])/g, (match, espaco, numero) => `${espaco}<sup>${numero}</sup> `);
-}
-let fontSize = 1.25;
-function ajustarFonte(delta) {
-    fontSize += delta * 0.1;
-    document.querySelectorAll('.texto-liturgico').forEach(el => {
-        el.style.fontSize = fontSize + 'rem';
-    });
+
+  // remove lixo tipo {"text": ...}
+  texto = texto.replace(/^\{.*?"text"\s*:\s*"/, "");
+  texto = texto.replace(/"\}$/, "");
+
+  // limpa barras
+  texto = texto.replace(/\\"/g, '"');
+
+  // quebra parágrafos
+  texto = texto.replace(/\.\s+/g, ".<br><br>");
+
+  // versículos (números)
+  texto = texto.replace(
+    /(^|\s)(\d+)(?!,\d)(?=[A-Za-zÁÉÍÓÚ])/g,
+    (m, espaco, num) => `${espaco}<sup>${num}</sup> `
+  );
+
+  return texto;
 }
