@@ -649,26 +649,39 @@ window.abrirModal = async function(nomeSanto) {
     const content = document.getElementById("modalContent");
     const headerImg = document.getElementById("modalHeaderImg");
 
+    // Limpa e prepara o modal
     title.textContent = santo.nome;
-    content.innerHTML = `<div class="loader-p">Buscando registros sagrados...</div>`;
+    content.innerHTML = `<div style="color: #8b6f3d; text-align:center; padding:20px;">Buscando registros sagrados...</div>`;
     
     const slug = santo.nome.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/ /g, '-').replace(/'/g, '');
     
-    // Define a imagem de topo
+    // Define a imagem de fundo do cabeçalho
     headerImg.style.backgroundImage = `url('../imagens/santos/${slug}.jpg')`;
 
     modal.classList.add("active");
     document.body.style.overflow = "hidden";
 
     try {
-const response = await fetch(`doutores/${slug}.md`);
-        if (!response.ok) throw new Error();
+        // O segredo está aqui: o caminho correto a partir de santos.html
+        const response = await fetch(`doutores/${slug}.md`);
+        if (!response.ok) throw new Error("Arquivo não encontrado");
 
         let text = await response.text();
-        let biografiaFinal = text.split('---').pop().trim();
         
-        biografiaFinal = biografiaFinal
-            .replace(/^#+ .*\n?/g, '') 
+        // Como o seu arquivo tem uma tabela no topo, vamos pegar apenas o que vem depois dela.
+        // Se o arquivo começar com a tabela, vamos procurar o primeiro parágrafo real.
+        let partes = text.split('\n');
+        let biografiaReal = partes.filter(linha => 
+            !linha.startsWith('|') && 
+            !linha.startsWith('+-') && 
+            !linha.includes('title') && 
+            !linha.includes('slug') &&
+            !linha.includes('categorias') &&
+            linha.trim() !== ""
+        ).join('\n');
+
+        // Formatação simples do texto
+        let htmlFinal = biografiaReal
             .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') 
             .replace(/\n\n/g, '</p><p>') 
             .replace(/\n/g, '<br>');
@@ -677,19 +690,20 @@ const response = await fetch(`doutores/${slug}.md`);
             <div class="santo-info">
                 <div class="vocation-badge">Doutor da Igreja • ${santo.categorias.join(' • ')}</div>
                 <div class="biografia-container">
-                    <p>${biografiaFinal}</p>
+                    <p>${htmlFinal}</p>
                 </div>
             </div>
         `;
     } catch (err) {
+        console.error(err);
         content.innerHTML = `
-            <div class="vocation-badge">Doutor da Igreja • ${santo.categorias.join(' • ')}</div>
-            <div class="biografia-container">
-                <p>A biografia de ${santo.nome} está sendo traduzida dos arquivos originais.</p>
+            <div class="vocation-badge">Aviso</div>
+            <div class="biografia-container" style="text-align: center;">
+                <p>A biografia de <strong>${santo.nome}</strong> está sendo preparada. <br>
+                <small>(Verifique se o arquivo doutores/${slug}.md existe)</small></p>
             </div>`;
     }
 };
-
 document.addEventListener("click", (e) => {
     if (e.target.closest(".close-modal") || e.target.id === "santoModal") {
         fecharModal();
