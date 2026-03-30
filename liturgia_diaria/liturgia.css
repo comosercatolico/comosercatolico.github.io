@@ -17,7 +17,7 @@ body{
 }
 
 /* =========================
-      HEADER LITURGIA
+      HEADER
 ========================= */
 .liturgia-super-header {
   background: radial-gradient(circle at top, #2a2a2a, #0f0f0f);
@@ -46,7 +46,7 @@ body{
 }
 
 /* =========================
-      TOOLBAR MODERNA
+      TOOLBAR
 ========================= */
 .reading-toolbar {
   position: absolute;
@@ -64,14 +64,14 @@ body{
 }
 
 /* =========================
-      CONTAINER PRINCIPAL
+      CONTAINER
 ========================= */
 .liturgia-master-container {
-  max-width: 1150px;
+  max-width: 1050px;
   margin: 80px auto;
   background: white;
   border-radius: 24px;
-  box-shadow: 0 40px 80px rgba(0,0,0,0.08);
+  box-shadow: 0 30px 60px rgba(0,0,0,0.08);
   overflow: hidden;
   border: 1px solid #eee;
 }
@@ -81,9 +81,9 @@ body{
 ========================= */
 .liturgia-layout-grid {
   display: grid;
-  grid-template-columns: 260px 1fr;
-  gap: 50px;
-  padding: 100px 50px 50px;
+  grid-template-columns: 240px 1fr;
+  gap: 40px;
+  padding: 80px 40px 50px;
 }
 
 /* =========================
@@ -99,7 +99,7 @@ body{
   padding: 20px;
   border-radius: var(--radius);
   border-left: 5px solid var(--gold);
-  box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.05);
   transition: 0.3s;
 }
 
@@ -107,19 +107,20 @@ body{
   transform: translateY(-3px);
 }
 
-/* NAV */
+/* =========================
+      NAV
+========================= */
 .nav-item {
-  padding: 12px 18px;
+  padding: 12px 16px;
   color: var(--text-soft);
   border-radius: 10px;
   transition: 0.25s;
-  position: relative;
 }
 
 .nav-item:hover{
   background: #f4efe6;
   color: var(--gold);
-  transform: translateX(5px);
+  transform: translateX(4px);
 }
 
 .nav-item.active{
@@ -132,35 +133,56 @@ body{
       TEXTO LITÚRGICO
 ========================= */
 .texto-liturgico {
-  font-size: 1.3rem;
-  line-height: 2.1;
+  font-size: 1.25rem;
+  line-height: 2;
   color: #222;
   font-family: "Libre Baskerville", serif;
-  letter-spacing: 0.3px;
+  max-width: 720px;
 }
 
-/* EFEITO DE LEITURA */
+/* DROP CAP (melhorado) */
 .texto-liturgico::first-letter{
-  font-size: 2.8rem;
-  font-weight: bold;
   float: left;
-  margin-right: 8px;
+  font-size: 2.4rem;
+  line-height: 1;
+  margin-right: 6px;
   color: var(--gold);
+  font-weight: bold;
 }
 
 /* =========================
-      CARDS DE LEITURA
+      VERSÍCULOS
+========================= */
+.texto-liturgico sup{
+  font-size: 0.75rem;
+  color: var(--gold);
+  margin-right: 4px;
+}
+
+/* =========================
+      CARDS
 ========================= */
 .liturgia-card {
-  padding-bottom: 50px;
+  padding-bottom: 40px;
   border-bottom: 1px solid #eee;
-  margin-bottom: 50px;
+  margin-bottom: 40px;
   position: relative;
+}
+
+.liturgia-card h2{
+  font-size: 1.4rem;
+  margin-bottom: 8px;
+}
+
+.referencia{
+  font-style: italic;
+  color: var(--text-soft);
+  margin-bottom: 12px;
 }
 
 .liturgia-card::after{
   content:"";
-  width: 60px;
+  width: 50px;
   height: 3px;
   background: var(--gold);
   position:absolute;
@@ -170,7 +192,17 @@ body{
 }
 
 /* =========================
-      SANTOS GRID (UPGRADE)
+      SALMO
+========================= */
+.liturgia-card.salmo{
+  background: #faf7f2;
+  padding: 25px;
+  border-radius: var(--radius);
+  border-left: 4px solid var(--gold);
+}
+
+/* =========================
+      SANTOS
 ========================= */
 .santos-grid{
   display:flex;
@@ -184,43 +216,42 @@ body{
   background:white;
   border-radius:20px;
   overflow:hidden;
-  min-width:250px;
+  min-width:240px;
   transition: all 0.4s ease;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
 }
 
 .santo-card:hover{
-  transform: translateY(-10px) scale(1.02);
-  box-shadow: 0 25px 60px rgba(0,0,0,0.2);
+  transform: translateY(-8px);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.15);
 }
 
 .santo-card img{
-  height:230px;
+  height:200px;
   object-fit:cover;
-  filter: contrast(1.05) brightness(0.98);
 }
 
 .santo-card-content{
-  padding:20px;
+  padding:18px;
 }
 
 .santo-card h3{
-  font-size:1.2rem;
-  margin-bottom:10px;
+  font-size:1.1rem;
+  margin-bottom:8px;
 }
 
 .santo-card p{
   color:var(--text-soft);
+  font-size:0.9rem;
 }
 
-/* BOTÃO */
 .santo-card a{
   display:inline-block;
   margin-top:10px;
   background: linear-gradient(135deg, var(--gold), var(--gold-light));
   color:white;
-  padding:8px 14px;
-  border-radius:8px;
+  padding:7px 12px;
+  border-radius:6px;
   transition:0.3s;
 }
 
@@ -229,10 +260,10 @@ body{
 }
 
 /* =========================
-      SCROLLBAR PREMIUM
+      SCROLLBAR
 ========================= */
 .santos-grid::-webkit-scrollbar{
-  height:8px;
+  height:6px;
 }
 
 .santos-grid::-webkit-scrollbar-thumb{
@@ -244,9 +275,10 @@ body{
       RESPONSIVO
 ========================= */
 @media (max-width: 900px){
+
   .liturgia-layout-grid{
     grid-template-columns:1fr;
-    padding:80px 25px;
+    padding:60px 20px;
   }
 
   .liturgia-sidebar{
@@ -254,6 +286,12 @@ body{
   }
 
   .texto-liturgico{
-    font-size:1.15rem;
+    font-size:1.1rem;
+    line-height:1.9;
   }
+
+  .liturgia-master-container{
+    margin:40px 10px;
+  }
+
 }
