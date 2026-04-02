@@ -18,6 +18,7 @@ export function renderizarGrid(lista, grid, abrirModal) {
         card.className = "santo-card";
         card.style.transitionDelay = `${(index % 15) * 30}ms`;
 
+        // Tratamento do nome para buscar o arquivo de imagem
         const nomeArquivo = santo.nome.toLowerCase()
             .normalize("NFD")
             .replace(/[\u0300-\u036f]/g, "")
@@ -30,8 +31,8 @@ export function renderizarGrid(lista, grid, abrirModal) {
                     ${santo.categorias.map(c => `<span class="badge">${c}</span>`).join(' ')}
                 </div>
                 <div class="image-container">
-                    <img src="../imagens/santos/${nomeArquivo}.jpg" 
-                         onerror="this.src='imagens/default.jpg'" 
+                    <img src="imagens/santos/${nomeArquivo}.jpg" 
+                         onerror="this.onerror=null; this.src='imagens/default.jpg';" 
                          alt="${santo.nome}" loading="lazy">
                 </div>
                 <div class="santo-card-content">
