@@ -30,10 +30,11 @@ export function renderizarGrid(lista, grid, abrirModal) {
                 <div class="santo-badge-container">
                     ${santo.categorias.map(c => `<span class="badge">${c}</span>`).join(' ')}
                 </div>
-                <div class="image-container">
-                    <img src="imagens/santos/${nomeArquivo}.jpg" 
-                         onerror="this.onerror=null; this.src='imagens/default.jpg';" 
-                         alt="${santo.nome}" loading="lazy">
+               <div class="image-container">
+               <img src="./imagens/santos/${nomeArquivo}.jpg" 
+               onerror="this.onerror=null; this.src='./imagens/default.jpg';" 
+                alt="${santo.nome}" loading="lazy">
+                </div>
                 </div>
                 <div class="santo-card-content">
                     <h3>${santo.nome}</h3>
