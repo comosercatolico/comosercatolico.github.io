@@ -1,7 +1,0 @@
----
-title: "São Gregório Nazianzeno"
-slug: "sao-gregorio-nazianzeno"
-categorias: ["Doutor da Igreja"]
----
-
-São Gregório Nazianzeno, chamado “o Teólogo”, é um dos maiores mestres da Trindade. Nascido na Capadócia, filho de um bispo, recebeu educação refinada em retórica e filosofia. Sua amizade com São Basílio Magno marcou sua vida, juntos lutaram pela ortodoxia contra os arianos. Gregório foi ordenado bispo e, em Constantinopla, pregou sermões que se tornaram clássicos da teologia cristã. Suas “Cinco Orações Teológicas” são fundamentais para o entendimento da divindade do Filho e do Espírito Santo. Ele defendia que a teologia só pode ser feita na oração e na pureza de coração. Gregório tinha uma alma sensível e poética, escrevendo versos que revelam sua luta interior entre o desejo de solidão e a exigência do ministério pastoral. Foi eleito Patriarca de Constantinopla, mas renunciou por amor à paz da Igreja, preferindo a vida retirada. Morreu em 390, deixando escritos que influenciaram toda a teologia posterior. Sua vida mostra que o verdadeiro teólogo não é apenas um intelectual, mas alguém que contempla o mistério de Deus e o traduz em palavras vivas. Gregório nos ensina que a fé deve ser defendida com coragem, mas também com humildade e amor.

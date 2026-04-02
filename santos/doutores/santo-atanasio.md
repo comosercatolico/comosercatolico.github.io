@@ -1,7 +1,0 @@
----
-title: "Santo Atanásio"
-slug: "santo-atanasio"
-categorias: ["Doutor da Igreja"]
----
-
-Santo Atanásio de Alexandria é conhecido como o “Doutor da Encarnação”. Nascido no Egito, foi diácono no Concílio de Niceia em 325, onde se destacou como defensor da divindade de Cristo contra Ário. Mais tarde, como bispo de Alexandria, passou grande parte de sua vida no exílio, perseguido pelos imperadores que apoiavam o arianismo. Sua firmeza lhe valeu o título de “Atanásio contra o mundo”. Ele escreveu a obra “Sobre a Encarnação do Verbo”, onde explica que Deus se fez homem para que o homem pudesse participar da vida divina. Atanásio também foi biógrafo de Santo Antão, o pai do monaquismo, ajudando a difundir a vida eremítica. Sua teologia é profundamente cristocêntrica, mostrando que a salvação só é possível porque Cristo é verdadeiro Deus e verdadeiro homem. Apesar das perseguições, nunca abandonou seu rebanho, sendo pastor incansável e defensor da ortodoxia. Morreu em 373, após uma vida de lutas e vitórias espirituais. Sua memória nos ensina que a verdade não pode ser negociada e que a fidelidade a Cristo exige coragem diante das pressões do mundo. Atanásio é exemplo de bispo que une doutrina sólida e amor pastoral.
