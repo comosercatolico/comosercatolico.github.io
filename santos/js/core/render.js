@@ -47,7 +47,8 @@ export function renderizarGrid(lista, grid, abrirModal) {
                 </div>
             </div>
         `;
-
+// Use isso apenas enquanto não tiver as fotos de cada santo:
+ <img src="./imagens/default.jpg" alt="${santo.nome}" loading="lazy">
         const botao = card.querySelector(".btn-primary");
         botao.addEventListener("click", () => abrirModal(santo.nome));
 
