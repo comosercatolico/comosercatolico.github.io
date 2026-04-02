@@ -4,9 +4,10 @@ export function criarModal(baseDados) {
             <div id="santoModal" class="modal-blur">
                 <button class="close-modal">&times;</button>
                 <div class="modal-content">
-                    <div id="modalHeaderImg" class="modal-header-img"></div>
-                    <div class="modal-body-padding">
+                    <div id="modalHeaderImg" class="modal-header-img">
                         <h1 id="modalTitle"></h1>
+                    </div>
+                    <div class="modal-body-padding">
                         <div id="modalContent"></div>
                     </div>
                 </div>
