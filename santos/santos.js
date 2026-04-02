@@ -663,7 +663,7 @@ window.abrirModal = async function(nomeSanto) {
 
     try {
         // O segredo está aqui: o caminho correto a partir de santos.html
-        const response = await fetch(`doutores/${slug}.md`);
+      const response = await fetch(`/santos/doutores/${slug}.md`);
         if (!response.ok) throw new Error("Arquivo não encontrado");
 
         let text = await response.text();
