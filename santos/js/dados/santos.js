@@ -1,4 +1,4 @@
-const listaSantos = [
+export const listaSantos = [
   // --- APÓSTOLOS E EVANGELISTAS ---
   { nome: "São Pedro", categorias: ["Apóstolo", "Papa", "Mártir"] },
   { nome: "São Paulo", categorias: ["Apóstolo", "Mártir"] },
