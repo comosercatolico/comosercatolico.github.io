@@ -221,17 +221,6 @@
     font-size: 1.2rem;
 }
 
-/* Imagem de Topo (Ocupa parte da tela com degradê) */
-.modal-header-img {
-    width: 100%;
-    height: 50vh; /* Metade da tela é imagem */
-    background-size: cover;
-    background-position: center;
-    position: relative;
-    flex-shrink: 0;
-    border-bottom: 5px solid var(--primary-gold);
-}
-
 /* Sombra suave na imagem para o título não sumir */
 .modal-header-img::after {
     content: '';
@@ -270,24 +259,6 @@
     color: white;
 }
 
-/* Container do Texto (Centralizado e com largura de leitura) */
-.modal-body-padding {
-    padding: 60px 20px;
-    max-width: 800px; /* Largura ideal para leitura */
-    margin: 0 auto;   /* Centraliza o bloco de texto */
-    width: 100%;
-}
-
-#modalTitle {
-    font-family: 'Libre Baskerville', serif;
-    font-size: 2.5rem;
-    color: var(--text-main);
-    text-align: center;
-    margin-bottom: 10px;
-    text-transform: uppercase;
-    letter-spacing: 3px;
-}
-
 .vocation-badge {
     text-align: center;
     color: var(--primary-gold);
@@ -323,4 +294,39 @@
     from { opacity: 0; transform: scale(1.05); }
     to { opacity: 1; transform: scale(1); }
 }
+/* Ajuste no Header para centralizar o título */
+.modal-header-img {
+    width: 100%;
+    min-height: 30vh; /* Diminuí de 50vh para 30vh para não ocupar tela demais */
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    flex-shrink: 0;
+    border-bottom: 5px solid var(--primary-gold);
+    
+    /* Adicionado para centralizar o título */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+}
 
+/* Ajuste no Título */
+#modalTitle {
+    font-family: 'Libre Baskerville', serif;
+    font-size: clamp(1.8rem, 5vw, 3rem); /* Fonte responsiva */
+    color: var(--text-main);
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    z-index: 2;
+    margin: 0; /* Remove margens que podem empurrar o texto */
+}
+
+/* Ajuste no Padding do corpo (reduzir o espaço superior) */
+.modal-body-padding {
+    padding: 20px 20px 60px; /* Reduzi o padding superior de 60px para 20px */
+    max-width: 800px;
+    margin: 0 auto;
+    width: 100%;
+}
