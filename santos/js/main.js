@@ -4,7 +4,7 @@
 import { renderizarGrid } from "./core/render.js";
 import { iniciarPesquisa, inicializarCategorias } from "./core/filtros.js";
 import { criarModal, abrirModal, eventosModal } from "./core/modal.js";
-
+import { listaSantos } from "./dados/santos.js";
 /* =========================
       ELEMENTOS DOM
 ========================= */
@@ -16,8 +16,7 @@ const contador = document.getElementById("santoContador");
 /* =========================
       BASE DE DADOS
 ========================= */
-const baseDados = typeof listaSantos !== "undefined" ? listaSantos : [];
-
+const baseDados = listaSantos;
 /* =========================
       CONTADOR
 ========================= */
