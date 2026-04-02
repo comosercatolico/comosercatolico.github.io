@@ -1,10 +1,61 @@
-import listaSantos from './dados/santos.js';
-import { renderizarGrid } from './core/render.js';
-import { inicializarFiltros } from './core/filtros.js';
-import { abrirModal } from './core/modal.js';
+/* =========================
+      IMPORTS
+========================= */
+import { renderizarGrid } from "./core/render.js";
+import { iniciarPesquisa, inicializarCategorias } from "./core/filtros.js";
+import { criarModal, abrirModal, eventosModal } from "./core/modal.js";
 
+/* =========================
+      ELEMENTOS DOM
+========================= */
+const grid = document.getElementById("santosGrid");
+const pesquisaInput = document.getElementById("pesquisaSantos");
+const categoriasContainer = document.getElementById("categoriasContainer");
+const contador = document.getElementById("santoContador");
+
+/* =========================
+      BASE DE DADOS
+========================= */
+const baseDados = typeof listaSantos !== "undefined" ? listaSantos : [];
+
+/* =========================
+      CONTADOR
+========================= */
+function atualizarContador(num) {
+    if (contador) {
+        contador.textContent = `${num} santos encontrados`;
+    }
+}
+
+/* =========================
+      INICIALIZAÇÃO
+========================= */
 document.addEventListener("DOMContentLoaded", () => {
-    console.log("App iniciado");
-    renderizarGrid(listaSantos);
-    inicializarFiltros(listaSantos, renderizarGrid);
+
+    // 🔥 cria modal
+    criarModal(baseDados);
+
+    // 🔥 ativa eventos do modal
+    eventosModal();
+
+    // 🔥 render inicial
+    renderizarGrid(baseDados, grid, (nome) => abrirModal(nome, baseDados));
+
+    // 🔥 filtros
+    iniciarPesquisa(
+        pesquisaInput,
+        baseDados,
+        (lista) => renderizarGrid(lista, grid, (nome) => abrirModal(nome, baseDados)),
+        atualizarContador
+    );
+
+    inicializarCategorias(
+        categoriasContainer,
+        baseDados,
+        (lista) => renderizarGrid(lista, grid, (nome) => abrirModal(nome, baseDados)),
+        atualizarContador
+    );
+
+    // 🔥 contador inicial
+    atualizarContador(baseDados.length);
 });
