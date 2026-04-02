@@ -30,8 +30,8 @@ export function renderizarGrid(lista, grid, abrirModal) {
                     ${santo.categorias.map(c => `<span class="badge">${c}</span>`).join(' ')}
                 </div>
                 <div class="image-container">
-                    <img src="../imagens/santos/${nomeArquivo}.jpg" 
-                         onerror="this.src='imagens/default.jpg'" 
+                    <img src="santos/imagens/santos/${nomeArquivo}.jpg" 
+                         onerror="this.onerror=null; this.src='santos/imagens/default.jpg'" 
                          alt="${santo.nome}" loading="lazy">
                 </div>
                 <div class="santo-card-content">
@@ -46,7 +46,6 @@ export function renderizarGrid(lista, grid, abrirModal) {
             </div>
         `;
 
-        // 🔥 substitui o onclick
         const botao = card.querySelector(".btn-primary");
         botao.addEventListener("click", () => abrirModal(santo.nome));
 
