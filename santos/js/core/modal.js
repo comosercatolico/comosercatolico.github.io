@@ -28,7 +28,21 @@ export async function abrirModal(nomeSanto, baseDados) {
 
     title.textContent = santo.nome;
     content.innerHTML = `<div style="color: #8b6f3d; text-align:center; padding:20px;">Buscando registros sagrados...</div>`;
-    
+    // Rastrear progresso de leitura
+const modalBody = document.querySelector(".modal-body-padding");
+if (modalBody) {
+    modalBody.addEventListener("scroll", () => {
+        const { scrollTop, scrollHeight, clientHeight } = modalBody;
+        const pct = Math.round((scrollTop / (scrollHeight - clientHeight)) * 100);
+        localStorage.setItem(`progresso-${slug}`, pct);
+        
+        // Atualiza a card visualmente
+        const fill = document.getElementById(`fill-${slug}`);
+        const nome = document.getElementById(`nome-${slug}`);
+        if (fill) fill.style.height = pct + "%";
+        if (nome) nome.style.color = pct >= 50 ? "#ffffff" : "";
+    });
+}
     const slug = santo.nome.toLowerCase()
         .normalize("NFD")
         .replace(/[\u0300-\u036f]/g, "")
