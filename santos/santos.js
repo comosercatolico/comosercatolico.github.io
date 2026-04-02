@@ -662,38 +662,19 @@ window.abrirModal = async function(nomeSanto) {
     document.body.style.overflow = "hidden";
 
     try {
-        // O segredo está aqui: o caminho correto a partir de santos.html
-      const response = await fetch(`/santos/doutores/${slug}.md`);
-        if (!response.ok) throw new Error("Arquivo não encontrado");
+    const response = await fetch(`/santos/doutores/${slug}.html`);
+if (!response.ok) throw new Error("Arquivo não encontrado");
 
-        let text = await response.text();
-        
-        // Como o seu arquivo tem uma tabela no topo, vamos pegar apenas o que vem depois dela.
-        // Se o arquivo começar com a tabela, vamos procurar o primeiro parágrafo real.
-        let partes = text.split('\n');
-        let biografiaReal = partes.filter(linha => 
-            !linha.startsWith('|') && 
-            !linha.startsWith('+-') && 
-            !linha.includes('title') && 
-            !linha.includes('slug') &&
-            !linha.includes('categorias') &&
-            linha.trim() !== ""
-        ).join('\n');
+const html = await response.text();
 
-        // Formatação simples do texto
-        let htmlFinal = biografiaReal
-            .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') 
-            .replace(/\n\n/g, '</p><p>') 
-            .replace(/\n/g, '<br>');
-
-        content.innerHTML = `
-            <div class="santo-info">
-                <div class="vocation-badge">Doutor da Igreja • ${santo.categorias.join(' • ')}</div>
-                <div class="biografia-container">
-                    <p>${htmlFinal}</p>
-                </div>
-            </div>
-        `;
+content.innerHTML = `
+    <div class="santo-info">
+        <div class="vocation-badge">Doutor da Igreja • ${santo.categorias.join(' • ')}</div>
+        <div class="biografia-container">
+            ${html}
+        </div>
+    </div>
+`;
     } catch (err) {
         console.error(err);
         content.innerHTML = `
