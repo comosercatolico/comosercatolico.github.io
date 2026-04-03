@@ -27,14 +27,22 @@ export function criarModal(baseDados) {
             // Atualiza card da grid
             const fill = document.getElementById(`fill-${slug}`);
             const nome = document.getElementById(`nome-${slug}`);
-            if (fill) fill.style.height = pct + "%";
-            if (nome) nome.style.color = pct >= 50 ? "#ffffff" : "";
+            const lido = localStorage.getItem(`lido-${slug}`) === '1';
+            if (fill && !lido) fill.style.height = pct + "%";
+            if (nome && !lido) nome.style.color = pct >= 50 ? "#ffffff" : "";
 
-            // ✅ Atualiza card do histórico em tempo real
-            const histFill = document.querySelector(`.hist-card[data-slug="${slug}"] .hist-progresso-fill`);
-            const histPct  = document.querySelector(`.hist-card[data-slug="${slug}"] .hist-pct`);
-            if (histFill) histFill.style.width = pct + "%";
-            if (histPct)  histPct.textContent  = pct > 0 ? pct + "% lido" : "Não iniciado";
+            // Atualiza card do histórico em tempo real
+            if (!lido) {
+                const histCard = document.querySelector(`.hist-card[data-slug="${slug}"]`);
+                if (histCard) {
+                    const histFill = histCard.querySelector('.hist-progresso-fill-bg');
+                    const histNome = histCard.querySelector('.hist-nome');
+                    const histPct  = histCard.querySelector('.hist-pct');
+                    if (histFill) histFill.style.height = pct + "%";
+                    if (histNome) histNome.style.color = pct >= 50 ? "#ffffff" : "";
+                    if (histPct)  histPct.textContent  = pct > 0 ? pct + "% lido" : "Não iniciado";
+                }
+            }
         });
     }
 }
@@ -43,10 +51,10 @@ export async function abrirModal(nomeSanto, baseDados) {
     const santo = baseDados.find(s => s.nome === nomeSanto);
     if (!santo) return;
 
-    const modal     = document.getElementById("santoModal");
-    const title     = document.getElementById("modalTitle");
-    const content   = document.getElementById("modalContent");
-    const headerImg = document.getElementById("modalHeaderImg");
+    const modal      = document.getElementById("santoModal");
+    const title      = document.getElementById("modalTitle");
+    const content    = document.getElementById("modalContent");
+    const headerImg  = document.getElementById("modalHeaderImg");
     const scrollArea = document.getElementById("modalScrollArea");
 
     const slug = santo.nome.toLowerCase()
@@ -67,10 +75,16 @@ export async function abrirModal(nomeSanto, baseDados) {
 
     // Restaura progresso ao abrir
     const progressoSalvo = parseInt(localStorage.getItem(`progresso-${slug}`) || "0");
+    const lido = localStorage.getItem(`lido-${slug}`) === '1';
     const fill = document.getElementById(`fill-${slug}`);
     const nome = document.getElementById(`nome-${slug}`);
-    if (fill) fill.style.height = progressoSalvo + "%";
-    if (nome) nome.style.color = progressoSalvo >= 50 ? "#ffffff" : "";
+    if (fill) {
+        fill.style.height = lido ? '100%' : progressoSalvo + "%";
+        fill.style.background = lido
+            ? 'linear-gradient(180deg, #4caf82 0%, #388e60 100%)'
+            : 'linear-gradient(180deg, #5ba3d9 0%, #4a8fc2 100%)';
+    }
+    if (nome) nome.style.color = (lido || progressoSalvo >= 50) ? "#ffffff" : "";
 
     try {
         const response = await fetch(`/santos/doutores/${slug}.html`);
@@ -82,8 +96,27 @@ export async function abrirModal(nomeSanto, baseDados) {
                 <div class="biografia-container">
                     ${html}
                 </div>
+                <button class="btn-finalizado ${lido ? 'ativo' : ''}" id="btnFinalizado">
+                    ${lido ? '✓ Biografia concluída' : '✓ Marcar como concluída'}
+                </button>
             </div>
         `;
+
+        document.getElementById('btnFinalizado').addEventListener('click', () => {
+            const btn = document.getElementById('btnFinalizado');
+            const jaLido = localStorage.getItem(`lido-${slug}`) === '1';
+            if (jaLido) {
+                localStorage.removeItem(`lido-${slug}`);
+                btn.classList.remove('ativo');
+                btn.textContent = '✓ Marcar como concluída';
+            } else {
+                localStorage.setItem(`lido-${slug}`, '1');
+                btn.classList.add('ativo');
+                btn.textContent = '✓ Biografia concluída';
+            }
+            atualizarCoresCard(slug);
+        });
+
     } catch (err) {
         console.error(err);
         content.innerHTML = `
@@ -104,20 +137,7 @@ export function fecharModal() {
     modal.classList.remove("active");
     document.body.style.overflow = "auto";
 
-    // ✅ Ao fechar, sincroniza tudo uma última vez
-    if (slug) {
-        const progresso = parseInt(localStorage.getItem(`progresso-${slug}`) || "0");
-
-        const fill = document.getElementById(`fill-${slug}`);
-        const nome = document.getElementById(`nome-${slug}`);
-        if (fill) fill.style.height = progresso + "%";
-        if (nome) nome.style.color = progresso >= 50 ? "#ffffff" : "";
-
-        const histFill = document.querySelector(`.hist-card[data-slug="${slug}"] .hist-progresso-fill`);
-        const histPct  = document.querySelector(`.hist-card[data-slug="${slug}"] .hist-pct`);
-        if (histFill) histFill.style.width = progresso + "%";
-        if (histPct)  histPct.textContent  = progresso > 0 ? progresso + "% lido" : "Não iniciado";
-    }
+    if (slug) atualizarCoresCard(slug);
 }
 
 export function eventosModal() {
@@ -129,4 +149,44 @@ export function eventosModal() {
     document.addEventListener("keydown", (e) => {
         if (e.key === "Escape") fecharModal();
     });
+}
+
+function atualizarCoresCard(slug) {
+    const lido      = localStorage.getItem(`lido-${slug}`) === '1';
+    const progresso = parseInt(localStorage.getItem(`progresso-${slug}`) || '0');
+    const corFill   = lido
+        ? 'linear-gradient(180deg, #4caf82 0%, #388e60 100%)'
+        : 'linear-gradient(180deg, #5ba3d9 0%, #4a8fc2 100%)';
+
+    // Card da grid
+    const fill = document.getElementById(`fill-${slug}`);
+    const nome = document.getElementById(`nome-${slug}`);
+    if (fill) {
+        fill.style.height     = lido ? '100%' : progresso + '%';
+        fill.style.background = corFill;
+    }
+    if (nome) nome.style.color = (lido || progresso >= 50) ? '#ffffff' : '';
+
+    // Card do histórico
+    const histCard = document.querySelector(`.hist-card[data-slug="${slug}"]`);
+    if (histCard) {
+        const histFill  = histCard.querySelector('.hist-progresso-fill-bg');
+        const histNome  = histCard.querySelector('.hist-nome');
+        const histPct   = histCard.querySelector('.hist-pct');
+        const histBadge = histCard.querySelector('.hist-badge-lido');
+
+        if (lido) {
+            histCard.classList.add('lido');
+            if (histFill)  { histFill.style.height = '100%'; histFill.style.background = corFill; }
+            if (histNome)  histNome.style.color = '#ffffff';
+            if (histPct)   histPct.textContent   = '✓ Concluído';
+            if (histBadge) histBadge.style.display = 'block';
+        } else {
+            histCard.classList.remove('lido');
+            if (histFill)  { histFill.style.height = progresso + '%'; histFill.style.background = corFill; }
+            if (histNome)  histNome.style.color = progresso >= 50 ? '#ffffff' : '';
+            if (histPct)   histPct.textContent   = progresso > 0 ? progresso + '% lido' : 'Não iniciado';
+            if (histBadge) histBadge.style.display = 'none';
+        }
+    }
 }
