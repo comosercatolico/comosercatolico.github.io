@@ -9,27 +9,22 @@ const appearanceObserver = new IntersectionObserver((entries) => {
 
 export function renderizarGrid(lista, grid, abrirModal) {
     if (!grid) return;
-
     grid.innerHTML = "";
     const fragment = document.createDocumentFragment();
-
     lista.forEach((santo, index) => {
         const card = document.createElement("article");
         card.className = "santo-card";
         card.style.transitionDelay = `${(index % 15) * 30}ms`;
-
-        // Tratamento do nome para buscar o arquivo de imagem
         const nomeArquivo = santo.nome.toLowerCase()
             .normalize("NFD")
             .replace(/[\u0300-\u036f]/g, "")
             .replace(/ /g, '-')
             .replace(/'/g, '');
-
-       card.innerHTML = `
+        card.innerHTML = `
     <div class="card-inner" style="position:relative; border-radius: var(--radius); overflow: hidden;">
         <div class="progresso-fill" id="fill-${nomeArquivo}" style="
             position: absolute; bottom: 0; left: 0; width: 100%;
-           background: linear-gradient(180deg, #5ba3d9 0%, #4a8fc2 100%);
+            background: linear-gradient(180deg, #5ba3d9 0%, #4a8fc2 100%);
             height: 0%; z-index: 1; transition: height 1.2s cubic-bezier(0.4,0,0.2,1);
             border-radius: 0 0 var(--radius) var(--radius);
         "></div>
@@ -55,36 +50,29 @@ export function renderizarGrid(lista, grid, abrirModal) {
         </div>
     </div>
 `;
-
-// Aplica o progresso salvo
-const progresso = parseInt(localStorage.getItem(`progresso-${nomeArquivo}`) || "0");
-setTimeout(() => {
-    const fill = card.querySelector(".progresso-fill");
-    const nome = card.querySelector("h3");
-    if (fill) fill.style.height = progresso + "%";
-    if (nome && progresso >= 50) nome.style.color = "#ffffff";
-}, 100);
+        const progresso = parseInt(localStorage.getItem(`progresso-${nomeArquivo}`) || "0");
+        setTimeout(() => {
+            const fill = card.querySelector(".progresso-fill");
+            const nome = card.querySelector("h3");
+            if (fill) fill.style.height = progresso + "%";
+            if (nome && progresso >= 50) nome.style.color = "#ffffff";
+        }, 100);
         const botao = card.querySelector(".btn-primary");
         botao.addEventListener("click", () => abrirModal(santo.nome));
-
         fragment.appendChild(card);
         appearanceObserver.observe(card);
     });
-
     grid.appendChild(fragment);
 }
-// ── Salva o santo no histórico ──────────────────────────────
+
 export function salvarHistorico(nomeSanto) {
     let hist = JSON.parse(localStorage.getItem('historico-santos') || '[]');
-    // Remove se já existia (vai pro início)
     hist = hist.filter(n => n !== nomeSanto);
     hist.unshift(nomeSanto);
-    // Máximo 20 itens
     if (hist.length > 20) hist = hist.slice(0, 20);
     localStorage.setItem('historico-santos', JSON.stringify(hist));
 }
 
-// ── Renderiza o histórico ────────────────────────────────────
 export function renderizarHistorico(baseDados, abrirModal) {
     const section = document.getElementById('historicoSection');
     const scroll  = document.getElementById('historicoScroll');
@@ -115,6 +103,7 @@ export function renderizarHistorico(baseDados, abrirModal) {
 
         const card = document.createElement('div');
         card.className = 'hist-card';
+        card.dataset.slug = slug; // ✅ ESSA ERA A LINHA QUE FALTAVA
         card.innerHTML = `
             <div class="hist-img-wrap">
                 <img src="imagens/santos/${slug}.jpg"
