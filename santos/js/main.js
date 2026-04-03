@@ -5,7 +5,6 @@ import { renderizarGrid, salvarHistorico, renderizarHistorico } from "./core/ren
 import { iniciarPesquisa, inicializarCategorias } from "./core/filtros.js";
 import { criarModal, abrirModal, eventosModal } from "./core/modal.js";
 import { listaSantos } from "./dados/santos.js";
-
 /* =========================
       ELEMENTOS DOM
 ========================= */
@@ -13,12 +12,10 @@ const grid = document.getElementById("santosGrid");
 const pesquisaInput = document.getElementById("pesquisaSantos");
 const categoriasContainer = document.getElementById("categoriasContainer");
 const contador = document.getElementById("santoContador");
-
 /* =========================
       BASE DE DADOS
 ========================= */
 const baseDados = listaSantos;
-
 /* =========================
       CONTADOR
 ========================= */
@@ -27,7 +24,6 @@ function atualizarContador(num) {
         contador.textContent = `${num} santos encontrados`;
     }
 }
-
 /* =========================
       ABRIR MODAL + HISTÓRICO
 ========================= */
@@ -36,20 +32,19 @@ function abrirModalWrapper(nome) {
     abrirModal(nome, baseDados);
     setTimeout(() => renderizarHistorico(baseDados, abrirModalWrapper), 300);
 }
-
 /* =========================
       INICIALIZAÇÃO
 ========================= */
 document.addEventListener("DOMContentLoaded", () => {
-    // cria modal
+    // 🔥 cria modal
     criarModal(baseDados);
-    // ativa eventos do modal
+    // 🔥 ativa eventos do modal
     eventosModal();
-    // histórico
+    // 🔥 histórico
     renderizarHistorico(baseDados, abrirModalWrapper);
-    // render inicial
+    // 🔥 render inicial
     renderizarGrid(baseDados, grid, abrirModalWrapper);
-    // filtros
+    // 🔥 filtros
     iniciarPesquisa(
         pesquisaInput,
         baseDados,
@@ -62,6 +57,6 @@ document.addEventListener("DOMContentLoaded", () => {
         (lista) => renderizarGrid(lista, grid, abrirModalWrapper),
         atualizarContador
     );
-    // contador inicial
+    // 🔥 contador inicial
     atualizarContador(baseDados.length);
 });
