@@ -73,3 +73,66 @@ setTimeout(() => {
 
     grid.appendChild(fragment);
 }
+// ── Salva o santo no histórico ──────────────────────────────
+export function salvarHistorico(nomeSanto) {
+    let hist = JSON.parse(localStorage.getItem('historico-santos') || '[]');
+    // Remove se já existia (vai pro início)
+    hist = hist.filter(n => n !== nomeSanto);
+    hist.unshift(nomeSanto);
+    // Máximo 20 itens
+    if (hist.length > 20) hist = hist.slice(0, 20);
+    localStorage.setItem('historico-santos', JSON.stringify(hist));
+}
+
+// ── Renderiza o histórico ────────────────────────────────────
+export function renderizarHistorico(baseDados, abrirModal) {
+    const section = document.getElementById('historicoSection');
+    const scroll  = document.getElementById('historicoScroll');
+    const limpar  = document.getElementById('historicoLimpar');
+    if (!section || !scroll) return;
+
+    const hist = JSON.parse(localStorage.getItem('historico-santos') || '[]');
+
+    if (hist.length === 0) {
+        section.style.display = 'none';
+        return;
+    }
+
+    section.style.display = 'block';
+    scroll.innerHTML = '';
+
+    hist.forEach(nome => {
+        const santo = baseDados.find(s => s.nome === nome);
+        if (!santo) return;
+
+        const slug = nome.toLowerCase()
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .replace(/ /g, '-')
+            .replace(/'/g, '');
+
+        const progresso = parseInt(localStorage.getItem(`progresso-${slug}`) || '0');
+
+        const card = document.createElement('div');
+        card.className = 'hist-card';
+        card.innerHTML = `
+            <div class="hist-img-wrap">
+                <img src="imagens/santos/${slug}.jpg"
+                     onerror="this.onerror=null;this.src='imagens/default.jpg';"
+                     alt="${nome}">
+                <div class="hist-progresso-bar">
+                    <div class="hist-progresso-fill" style="width:${progresso}%"></div>
+                </div>
+            </div>
+            <div class="hist-nome">${nome}</div>
+            <div class="hist-pct">${progresso > 0 ? progresso + '% lido' : 'Não iniciado'}</div>
+        `;
+        card.addEventListener('click', () => abrirModal(nome));
+        scroll.appendChild(card);
+    });
+
+    limpar.onclick = () => {
+        localStorage.removeItem('historico-santos');
+        section.style.display = 'none';
+    };
+}
