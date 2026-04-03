@@ -24,16 +24,14 @@ export function criarModal(baseDados) {
             if (!slug) return;
 
             localStorage.setItem(`progresso-${slug}`, pct);
-            localStorage.setItem(`scroll-${slug}`, scrollTop); // ✅ salva posição exata
+            localStorage.setItem(`scroll-${slug}`, scrollTop);
 
-            // Atualiza card da grid
             const fill = document.getElementById(`fill-${slug}`);
             const nome = document.getElementById(`nome-${slug}`);
             const lido = localStorage.getItem(`lido-${slug}`) === '1';
             if (fill && !lido) fill.style.height = pct + "%";
             if (nome && !lido) nome.style.color = pct >= 50 ? "#ffffff" : "";
 
-            // Atualiza card do histórico em tempo real
             if (!lido) {
                 const histCard = document.querySelector(`.hist-card[data-slug="${slug}"]`);
                 if (histCard) {
@@ -91,6 +89,7 @@ export async function abrirModal(nomeSanto, baseDados) {
         const response = await fetch(`/santos/doutores/${slug}.html`);
         if (!response.ok) throw new Error("Arquivo não encontrado");
         const html = await response.text();
+        
         content.innerHTML = `
             <div class="santo-info">
                 <div class="vocation-badge">Doutor da Igreja • ${santo.categorias.join(' • ')}</div>
@@ -100,28 +99,26 @@ export async function abrirModal(nomeSanto, baseDados) {
                 <button class="btn-finalizado ${lido ? 'ativo' : ''}" id="btnFinalizado">
                     ${lido ? '✓ Biografia concluída' : '✓ Marcar como concluída'}
                 </button>
-                const btnHighlight = document.getElementById("toggleHighlight");
-
-// estado salvo
-const highlightAtivo = localStorage.getItem(`highlight-${slug}`) === '1';
-
-if (highlightAtivo) {
-    modal.classList.add("highlight-mode");
-}
-
-btnHighlight.onclick = () => {
-    const ativo = modal.classList.toggle("highlight-mode");
-
-    if (ativo) {
-        localStorage.setItem(`highlight-${slug}`, '1');
-    } else {
-        localStorage.removeItem(`highlight-${slug}`);
-    }
-};
             </div>
         `;
 
-        // ✅ restaura posição exata após conteúdo renderizar
+        // Código do highlight (movido para fora do template string)
+        const btnHighlight = document.getElementById("toggleHighlight");
+        if (btnHighlight) {
+            const highlightAtivo = localStorage.getItem(`highlight-${slug}`) === '1';
+            if (highlightAtivo) {
+                modal.classList.add("highlight-mode");
+            }
+            btnHighlight.onclick = () => {
+                const ativo = modal.classList.toggle("highlight-mode");
+                if (ativo) {
+                    localStorage.setItem(`highlight-${slug}`, '1');
+                } else {
+                    localStorage.removeItem(`highlight-${slug}`);
+                }
+            };
+        }
+
         const posicaoSalva = parseInt(localStorage.getItem(`scroll-${slug}`) || "0");
         if (posicaoSalva > 0) {
             setTimeout(() => {
@@ -134,7 +131,7 @@ btnHighlight.onclick = () => {
             const jaLido = localStorage.getItem(`lido-${slug}`) === '1';
             if (jaLido) {
                 localStorage.removeItem(`lido-${slug}`);
-                localStorage.removeItem(`scroll-${slug}`); // ✅ limpa posição ao desmarcar
+                localStorage.removeItem(`scroll-${slug}`);
                 btn.classList.remove('ativo');
                 btn.textContent = '✓ Marcar como concluída';
             } else {
@@ -186,7 +183,6 @@ function atualizarCoresCard(slug) {
         ? 'linear-gradient(180deg, #4caf82 0%, #388e60 100%)'
         : 'linear-gradient(180deg, #5ba3d9 0%, #4a8fc2 100%)';
 
-    // Card da grid
     const fill = document.getElementById(`fill-${slug}`);
     const nome = document.getElementById(`nome-${slug}`);
     if (fill) {
@@ -195,7 +191,6 @@ function atualizarCoresCard(slug) {
     }
     if (nome) nome.style.color = (lido || progresso >= 50) ? '#ffffff' : '';
 
-    // Card do histórico
     const histCard = document.querySelector(`.hist-card[data-slug="${slug}"]`);
     if (histCard) {
         const histFill  = histCard.querySelector('.hist-progresso-fill-bg');
