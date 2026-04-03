@@ -3,6 +3,7 @@ export function criarModal(baseDados) {
         const modalHTML = `
             <div id="santoModal" class="modal-blur">
                 <button class="close-modal">&times;</button>
+                <button class="toggle-highlight" id="toggleHighlight" title="Destacar texto">🖍️</button>
                 <div class="modal-content" id="modalScrollArea">
                     <div id="modalHeaderImg" class="modal-header-img">
                         <h1 id="modalTitle"></h1>
