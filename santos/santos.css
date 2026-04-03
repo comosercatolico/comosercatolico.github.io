@@ -587,27 +587,57 @@
     background: rgba(255,255,255,0.2);
 }
 
-/* 🔥 EFEITO MARCA TEXTO */
-.highlight-mode .biografia-container p,
-.highlight-mode .biografia-container li,
-.highlight-mode .biografia-container span {
-    background: linear-gradient(
-        120deg,
-        rgba(255, 235, 120, 0.4) 0%,
-        rgba(255, 235, 120, 0.7) 50%,
-        rgba(255, 235, 120, 0.4) 100%
-    );
-    padding: 2px 4px;
-    border-radius: 4px;
+/* Botão de marcar linha (ao lado do X) */
+.btn-marcar-linha {
+    position: fixed;
+    top: 30px;
+    right: 100px;  /* ao lado do X (que está a 30px da direita) */
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: white;
+    color: var(--primary-gold);
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+    z-index: 10002;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
+}
+.btn-marcar-linha:hover {
+    transform: scale(1.05);
+    background: var(--primary-gold);
+    color: white;
 }
 
-/* deixa mais "marcado" quando quiser */
-.highlight-mode {
-    animation: highlightFade 0.3s ease;
+/* Modo de escolha de linha: cada bloco fica destacado */
+.linha-selecionavel {
+    cursor: pointer;
+    transition: background 0.2s ease;
+    padding: 8px 12px;
+    margin: 4px 0;
+    border-radius: 8px;
+}
+.linha-selecionavel:hover {
+    background: #fff3cd !important;
+}
+.modo-ativo .linha-selecionavel {
+    background: #f8f9fa;
+    border-left: 4px solid var(--primary-gold);
 }
 
-@keyframes highlightFade {
-    from { opacity: 0.5; }
-    to { opacity: 1; }
+/* Estilo da linha que está marcada (com a seta) */
+.linha-marcada {
+    background: #e8f0fe;
+    border-left: 4px solid #d4a017;
+    position: relative;
 }
-
+.icone-marca-linha {
+    font-size: 1.3rem;
+    margin-right: 10px;
+    display: inline-block;
+    vertical-align: middle;
+}
