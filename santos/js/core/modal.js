@@ -23,6 +23,7 @@ export function criarModal(baseDados) {
             if (!slug) return;
 
             localStorage.setItem(`progresso-${slug}`, pct);
+            localStorage.setItem(`scroll-${slug}`, scrollTop); // ✅ salva posição exata
 
             // Atualiza card da grid
             const fill = document.getElementById(`fill-${slug}`);
@@ -73,7 +74,6 @@ export async function abrirModal(nomeSanto, baseDados) {
     modal.classList.add("active");
     document.body.style.overflow = "hidden";
 
-    // Restaura progresso ao abrir
     const progressoSalvo = parseInt(localStorage.getItem(`progresso-${slug}`) || "0");
     const lido = localStorage.getItem(`lido-${slug}`) === '1';
     const fill = document.getElementById(`fill-${slug}`);
@@ -102,11 +102,20 @@ export async function abrirModal(nomeSanto, baseDados) {
             </div>
         `;
 
+        // ✅ restaura posição exata após conteúdo renderizar
+        const posicaoSalva = parseInt(localStorage.getItem(`scroll-${slug}`) || "0");
+        if (posicaoSalva > 0) {
+            setTimeout(() => {
+                scrollArea.scrollTop = posicaoSalva;
+            }, 100);
+        }
+
         document.getElementById('btnFinalizado').addEventListener('click', () => {
             const btn = document.getElementById('btnFinalizado');
             const jaLido = localStorage.getItem(`lido-${slug}`) === '1';
             if (jaLido) {
                 localStorage.removeItem(`lido-${slug}`);
+                localStorage.removeItem(`scroll-${slug}`); // ✅ limpa posição ao desmarcar
                 btn.classList.remove('ativo');
                 btn.textContent = '✓ Marcar como concluída';
             } else {
