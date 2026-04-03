@@ -1,103 +1,878 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>São Tomás de Aquino - O Doutor Angélico</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Playfair+Display:wght@400;700&display=swap');
+        
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            line-height: 1.8;
+            color: #2c241b;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, #f5f0e8 0%, #e8dfd0 100%);
+        }
+        
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3em;
+            text-align: center;
+            color: #1a1a1a;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .subtitle {
+            text-align: center;
+            font-style: italic;
+            color: #6b5b4f;
+            font-size: 1.3em;
+            margin-bottom: 40px;
+            border-bottom: 3px double #d4c4b0;
+            padding-bottom: 30px;
+        }
+        
+        .capitulo {
+            background: white;
+            padding: 40px;
+            margin: 30px 0;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            border-left: 5px solid #c9a962;
+        }
+        
+        .capitulo h2 {
+            font-family: 'Playfair Display', serif;
+            color: #8b7355;
+            font-size: 1.8em;
+            margin-top: 0;
+            border-bottom: 2px solid #e8dfd0;
+            padding-bottom: 15px;
+        }
+        
+        .inicio-letra {
+            font-size: 3.5em;
+            font-weight: bold;
+            color: #c9a962;
+            float: left;
+            line-height: 0.8;
+            margin-right: 12px;
+            margin-top: 5px;
+            font-family: 'Playfair Display', serif;
+            text-shadow: 2px 2px 3px rgba(0,0,0,0.15);
+        }
+        
+        p {
+            text-align: justify;
+            margin: 20px 0;
+            font-size: 1.15em;
+            color: #3d3226;
+        }
+        
+        .destaque {
+            background: linear-gradient(120deg, #f9f5eb 0%, #f0e6d2 100%);
+            padding: 25px 30px;
+            border-left: 4px solid #d4af37;
+            margin: 30px 0;
+            font-style: italic;
+            border-radius: 0 8px 8px 0;
+            position: relative;
+        }
+        
+        .destaque::before {
+            content: """;
+            font-size: 4em;
+            color: #c9a962;
+            position: absolute;
+            top: -10px;
+            left: 10px;
+            opacity: 0.3;
+            font-family: Georgia, serif;
+        }
+        
+        .milagre {
+            background: linear-gradient(135deg, #fff9f0 0%, #fff5e6 100%);
+            border: 2px solid #e6c9a8;
+            border-radius: 10px;
+            padding: 25px;
+            margin: 30px 0;
+            position: relative;
+        }
+        
+        .milagre::after {
+            content: "✦";
+            position: absolute;
+            top: -15px;
+            right: 20px;
+            background: white;
+            padding: 0 10px;
+            color: #d4af37;
+            font-size: 1.5em;
+        }
+        
+        .milagre h3 {
+            color: #8b6914;
+            margin-top: 0;
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .linha-tempo {
+            border-left: 3px solid #d4c4b0;
+            padding-left: 30px;
+            margin: 40px 0;
+            position: relative;
+        }
+        
+        .linha-tempo::before {
+            content: "●";
+            position: absolute;
+            left: -9px;
+            color: #c9a962;
+            font-size: 1.5em;
+        }
+        
+        .citação-lateral {
+            float: right;
+            width: 35%;
+            background: #2c241b;
+            color: #f5f0e8;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0 20px 30px;
+            font-style: italic;
+            font-size: 0.95em;
+            box-shadow: 3px 3px 10px rgba(0,0,0,0.2);
+        }
+        
+        .secao-especial {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2c241b 100%);
+            color: #f5f0e8;
+            padding: 40px;
+            border-radius: 10px;
+            margin: 40px 0;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+        
+        .secao-especial h2 {
+            color: #d4af37;
+            font-family: 'Playfair Display', serif;
+            border-bottom: 2px solid #d4af37;
+            padding-bottom: 15px;
+        }
+        
+        .secao-especial p {
+            color: #e8dfd0;
+        }
+        
+        .lista-elegante {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .lista-elegante li {
+            padding: 12px 0 12px 35px;
+            position: relative;
+            border-bottom: 1px dotted #d4c4b0;
+        }
+        
+        .lista-elegante li::before {
+            content: "❧";
+            position: absolute;
+            left: 0;
+            color: #c9a962;
+            font-size: 1.2em;
+        }
+        
+        .box-doutrina {
+            background: white;
+            border: 2px solid #c9a962;
+            border-radius: 10px;
+            padding: 30px;
+            margin: 30px 0;
+            box-shadow: 0 4px 12px rgba(201,169,98,0.2);
+        }
+        
+        .box-doutrina h3 {
+            color: #8b7355;
+            font-family: 'Playfair Display', serif;
+            margin-top: 0;
+            text-align: center;
+            font-size: 1.4em;
+        }
+        
+        hr {
+            border: none;
+            height: 2px;
+            background: linear-gradient(to right, transparent, #d4c4b0, transparent);
+            margin: 50px 0;
+        }
+        
+        .assinatura {
+            text-align: center;
+            font-style: italic;
+            color: #6b5b4f;
+            font-size: 1.2em;
+            margin-top: 40px;
+            padding: 30px;
+            border-top: 2px solid #e8dfd0;
+        }
+        
+        @media (max-width: 768px) {
+            .citação-lateral {
+                float: none;
+                width: 100%;
+                margin: 20px 0;
+            }
+            
+            .capitulo {
+                padding: 25px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+
 <h1>São Tomás de Aquino</h1>
+<div class="subtitle">
+    <strong>A Vida, as Obras, os Milagres e o Legado do Doutor Angélico</strong><br>
+    <em>Doctor Angelicus • Doctor Communis</em>
+</div>
+
+<div class="capitulo">
+    <h2>✦ As Origens Nobres e o Chamado Divino</h2>
+    
+    <p>
+        <span class="inicio-letra">E</span>m um mundo ainda marcado pelas cruzadas, pelo florescimento das universidades medievais e pela tensão entre fé e razão, nasceu por volta de 1225, no imponente castelo de Roccasecca, próximo à cidade de Aquino, no Reino da Sicília (atual Itália central), aquele que se tornaria um dos maiores gigantes do pensamento humano. Tomás era filho do conde Landolfo de Aquino, descendente dos condes de Teano, e de Teodora de Chieti, uma nobre de profunda piedade cristã. Sua família pertencia à alta aristocracia do sul da Itália, com conexões importantes tanto com o Império quanto com o Papado.
+    </p>
+    
+    <p>
+        Desde os primeiros anos, Tomás demonstrou uma inclinação extraordinária para a vida espiritual e intelectual. Enquanto outras crianças brincavam nas amplas salas do castelo medieval, o jovem Tomás já buscava os cantos silenciosos para ler e meditar. Seus biógrafos contam que, ainda muito pequeno, fazia perguntas que deixavam os adultos sem resposta, demonstrando uma mente que não se contentava com explicações superficiais.
+    </p>
+    
+    <div class="destaque">
+        "A família de Tomás esperava que ele seguisse o caminho tradicional da nobreza: poder, prestígio e influência política. Mas Deus tinha outros planos — planos que transcendiam castelos e títulos, planos eternos."
+    </div>
+</div>
+
+<div class="capitulo">
+    <h2>✦ A Formação Beneditina em Montecassino</h2>
+    
+    <p>
+        <span class="inicio-letra">A</span>os cinco anos de idade, conforme o costume da época para filhos da nobreza destinados à carreira eclesiástica, Tomás foi enviado à abadia beneditina de Montecassino, fundada por São Bento de Núrsia no século VI. Este não era um mosteiro qualquer: Montecassino era um dos centros espirituais e culturais mais importantes da Cristandade, guardião de manuscritos preciosos e farol da vida monástica ocidental.
+    </p>
+    
+    <p>
+        A escolha da família não foi aleatória: seu tio, Sinibaldo, era abade do mosteiro, e havia a expectativa clara de que o jovem Tomás seguisse os passos beneditinos e, quem sabe, viesse a se tornar abade, garantindo assim prestígio e influência à família Aquino. Era um caminho seguro, honroso e previsível.
+    </p>
+    
+    <p>
+        Na abadia de Montecassino, Tomás destacou-se não pela rebeldia ou indisciplina, mas pela seriedade com que abraçava os estudos e pela profundidade inquietante de suas perguntas. Conta-se que, ainda criança, ele frequentemente interrompia os monges com a mesma pergunta insistente, que ecoava pelos corredores do mosteiro: <em>"O que é Deus?"</em>
+    </p>
+    
+    <div class="milagre">
+        <h3>A Pergunta que Definiu uma Vida</h3>
+        <p>Essa interrogação não era fruto da imaturidade infantil, mas de uma sede genuína e ardente de compreender o divino — sede que o acompanharia por toda a vida e que o levaria a produzir uma das sínteses filosófico-teológicas mais completas da história do pensamento humano. Os monges, inicialmente desconcertados, logo perceberam que tinham entre eles uma alma excepcional.</p>
+    </div>
+    
+    <p>
+        Sob a orientação dos monges beneditinos, Tomás aprendeu o latim, estudou as Sagradas Escrituras, a liturgia e as obras dos Padres da Igreja. A Regra de São Bento, com seu equilíbrio entre <em>ora et labora</em> (oração e trabalho), moldou seu caráter e estabeleceu as bases de sua disciplina intelectual, que seria lendária ao longo de toda sua vida.
+    </p>
+</div>
+
+<div class="capitulo">
+    <h2>✦ Nápoles e o Encontro com Aristóteles</h2>
+    
+    <p>
+        <span class="inicio-letra">P</span>or volta de 1239, após conflitos militares entre o Imperador Frederico II e o Papa Gregório IX que perturbaram a vida na abadia de Montecassino, Tomás foi enviado para a Universidade de Nápoles, fundada pelo próprio Frederico II em 1224. Lá, o jovem de 14 anos tomou contato com a filosofia aristotélica, recém-traduzida para o latim a partir de textos árabes e gregos por tradutores como Guilherme de Moerbeke e Miguel Escoto.
+    </p>
+    
+    <p>
+        Aquele encontro foi decisivo e transformador. A lógica rigorosa de Aristóteles, sua meticulosa análise da realidade, sua capacidade de unir razão e experiência fascinaram o jovem estudante. Tomás reconheceu ali uma ferramenta poderosa que, se devidamente purificada e orientada pela fé cristã, poderia servir como instrumento privilegiado para a compreensão da verdade revelada.
+    </p>
+    
+    <div class="citação-lateral">
+        "Foi em Nápoles que Tomás descobriu que a razão não era inimiga da fé, mas sua aliada natural na busca da verdade una."
+    </div>
+    
+    <p>
+        Foi também em Nápoles que Tomás teve seu primeiro contato com os frades da Ordem dos Pregadores, os Dominicanos, fundada por São Domingos de Gusmão em 1216. Fascinado pelo ideal de pobreza evangélica, estudo intenso e pregação itinerante que caracterizava aquela ordem mendicante, o jovem Tomás, por volta de 1244, tomou a decisão que mudaria seu destino e o da Igreja: ingressar na Ordem Dominicana.
+    </p>
+</div>
+
+<div class="capitulo">
+    <h2>✦ O Cativeiro e a Prova de Pureza</h2>
+    
+    <p>
+        <span class="inicio-letra">A</span> notícia da decisão de Tomás caiu como uma bomba sobre sua família nobre. Para a aristocracia do século XIII, uma ordem mendicante como a dos Dominicanos era vista com desconfiança — eram frades que renunciavam a propriedades, que viviam de esmolas, que pregavam nas ruas. Sua mãe Teodora, contrariada e temendo que o filho "desperdiçasse" seu nobre nascimento, tentou de todas as formas impedir a entrada do filho na ordem.
+    </p>
+    
+    <p>
+        Chegou a organizar o sequestro do próprio filho: enquanto Tomás viajava para Roma, seus irmãos, sob ordens da mãe, interceptaram-no e o levaram de volta ao castelo da família, onde foi mantido em cativeiro por cerca de um ano (1244-1245). Durante esse período de confinamento, os irmãos de Tomás tentaram de diversas formas fazê-lo abandonar sua vocação religiosa.
+    </p>
+    
+    <div class="milagre">
+        <h3>A Prova do Fogo</h3>
+        <p>A tentativa mais famosa e inusitada envolveu o envio de uma jovem cortesã ao quarto de Tomás, com a intenção de fazê-lo ceder à tentação da carne e, assim, abandonar o propósito de abraçar a vida religiosa. A resposta de Tomás foi imediata e enérgica: pegou um tição de fogo da lareira e expulsou a moça do quarto, desenhando depois uma cruz na parede com a brasa ardente.</p>
+    </div>
+    
+    <p>
+        Conta a tradição, registrada por múltiplos biógrafos medievais, que naquela mesma noite, dois anjos apareceram a ele em sonho e cingiram sua cintura com um cordão de pureza, símbolo de castidade perfeita que ele teria mantido pelo resto de sua vida. Daí vem a famosa devoção ao "Cíngulo de São Tomás de Aquino", ainda hoje praticada por muitos fiéis que buscam a virtude da pureza.
+    </p>
+    
+    <p>
+        Após cerca de um ano de cativeiro, sua mãe, vencida pela firmeza inabalável do filho — e talvez tocada pela graça — permitiu que ele escapasse. Segundo alguns relatos, ela mesma o ajudou a fugir por uma janela, percebendo finalmente que a vocação do filho vinha de Deus. Tomás pôde finalmente ingressar oficialmente na Ordem Dominicana e retomar seus estudos.
+    </p>
+</div>
+
+<div class="capitulo">
+    <h2>✦ Colônia e o "Boi Mudo"</h2>
+    
+    <p>
+        <span class="inicio-letra">L</span>ogo após sua libertação, Tomás foi enviado para Colônia, na Alemanha, onde estudou sob a orientação do grandioso Alberto Magno (São Alberto, o Grande), um dos maiores eruditos de sua época e ele mesmo um futuro santo da Igreja. Alberto era um polímata extraordinário, com conhecimentos que iam da teologia à botânica, da astronomia à química, e foi um dos primeiros a defender o estudo de Aristóteles no Ocidente cristão.
+    </p>
+    
+    <p>
+        Alberto Magno percebeu de imediato o que tinha diante de si. Seu novo aluno era silencioso, corpulento e quieto — características físicas e temperamentais que levaram os colegas, em sua superficialidade, a chamá-lo de <em>"o boi mudo"</em> (bos mutus). Mas Alberto, com a sagacidade que lhe era própria e um dom de discernimento extraordinário, respondeu a esses comentários com uma profecia que o tempo se encarregaria de confirmar de maneira espetacular:
+    </p>
+    
+    <div class="destaque">
+        "Chamais a este de boi mudo. Eu vos digo que esse boi mudo encherá o mundo inteiro com seus mugidos!"
+    </div>
+    
+    <p>
+        Jamais uma profecia acadêmica se cumpriu com tanta precisão e grandiosidade. O que os colegas viam como lentidão era, na verdade, profundidade; o que interpretavam como silêncio era concentração; o que chamavam de "mudez" era a prudência de quem só fala quando tem algo substancial a dizer.
+    </p>
+</div>
+
+<div class="capitulo">
+    <h2>✦ Paris: O Centro Intelectual da Cristandade</h2>
+    
+    <p>
+        <span class="inicio-letra">S</span>ob a tutela de Alberto Magno, Tomás aprofundou seus estudos em Aristóteles, Teologia e Filosofia de maneira sistemática. Em 1252, com apenas 27 anos, foi enviado a Paris para lecionar e prosseguir sua formação acadêmica. A Universidade de Paris era, naquele tempo, o centro intelectual do mundo cristão ocidental, um caldeirão fervilhante de ideias, debates e controvérsias onde os maiores pensadores da época cruzavam argumentos com apaixonada erudição.
+    </p>
+    
+    <p>
+        Tomás chegou a Paris como estudante e saiu de lá como mestre — um dos mais admirados de toda a universidade. Em 1256, recebeu o título de <em>Magister in Theologia</em> (Mestre em Teologia), o grau acadêmico mais alto da época, e começou a lecionar na Faculdade de Teologia. Suas aulas eram tão concorridas que a universidade teve que alocar salas cada vez maiores para acomodar os estudantes.
+    </p>
+    
+    <div class="linha-tempo">
+        <strong>1252-1259:</strong> Primeiro período em Paris como estudante e jovem mestre<br>
+        <strong>1259-1268:</strong> Período na Cúria Papal e na Itália<br>
+        <strong>1268-1272:</strong> Segundo período em Paris, durante as controvérsias<br>
+        <strong>1272-1274:</strong> Retorno à Itália e últimos anos em Nápoles
+    </div>
+    
+    <p>
+        Em Paris, Tomás enfrentou seus primeiros grandes embates intelectuais. Os franciscanos, especialmente seguidores de São Boaventura, e outros grupos conservadores resistiam à incorporação da filosofia aristotélica na teologia cristã, temendo que o racionalismo pagão corrompesse a pureza da fé revelada. Averróis, o grande comentador árabe de Aristóteles, era lido na universidade, e alguns mestres estavam desenvolvendo uma "teoria da dupla verdade" — afirmando que algo poderia ser verdadeiro na filosofia e falso na teologia, e vice-versa.
+    </p>
+    
+    <p>
+        Tomás, ao contrário, acreditava firmemente que a razão e a fé não eram inimigas, mas complementares e harmoniosas. Deus, sendo o autor tanto da razão natural quanto da revelação sobrenatural, não poderia contradizer-se. Onde a razão alcança seus limites, a fé ilumina o caminho; onde a fé exige compreensão, a razão serve como guia seguro e instrumento de exploração.
+    </p>
+    
+    <div class="destaque">
+        "Para Tomás de Aquino, não havia hierarquia de valor entre razão e fé, mas uma harmonia perfeita — uma dança sagrada entre o humano e o divino na busca da verdade una e indivisível."
+    </div>
+</div>
+
+<div class="secao-especial">
+    <h2>✦ A Síntese Tomista: Fé e Razão</h2>
+    
+    <p>
+        Essa convicção profunda é a espinha dorsal de toda a obra de Tomás de Aquino. Ela permeia cada linha de seus escritos, cada argumento de suas disputas, cada questão de suas magistrais <em>Summae</em>. Tomás desenvolveu o que chamamos de "síntese tomista" — uma integração harmoniosa entre a filosofia aristotélica e a teologia cristã, entre Atenas e Jerusalém, entre a razão grega e a revelação hebraico-cristã.
+    </p>
+    
+    <p>
+        Ao contrário do que alguns pensavam, Tomás não "cristianizou Aristóteles" de forma artificial. Ele reconheceu o valor do filósofo grego, corrigiu seus erros à luz da fé, completou suas lacunas e demonstrou como a razão natural, quando bem exercida, conduz naturalmente às portas da fé. A famosa máxima tomista <em>"gratia non tollit naturam, sed perficit"</em> (a graça não destrói a natureza, mas a aperfeiçoa) resume perfeitamente essa visão.
+    </p>
+</div>
+
+<div class="capitulo">
+    <h2>✦ A Produção Literária Monumental</h2>
+    
+    <p>
+        <span class="inicio-letra">A</span> produção literária de São Tomás é simplesmente impressionante, beirando o incompreensível, considerando que ele viveu apenas 49 anos e passou grande parte desse tempo ensinando, pregando e viajando. Sua obra completa, na edição leonina (a edição crítica patrocinada pelo Papa Leão XIII), ocupa mais de 50 volumes in-fólio. É uma das maiores produções intelectuais de um único autor na história da humanidade.
+    </p>
+    
+    <div class="box-doutrina">
+        <h3>Principais Obras de São Tomás</h3>
+        <ul class="lista-elegante">
+            <li><strong>Summa Theologiae</strong> (1265-1273) — Sua obra-prima inacabada</li>
+            <li><strong>Summa Contra Gentiles</strong> (1259-1265) — Para diálogo com não-cristãos</li>
+            <li><strong>Comentários a Aristóteles</strong> — Sobre Ética, Física, Metafísica, Alma, etc.</li>
+            <li><strong>Comentários Bíblicos</strong> — Sobre todos os livros principais da Escritura</li>
+            <li><strong>De Ente et Essentia</strong> — Sobre o Ser e a Essência (obra juvenil)</li>
+            <li><strong>De Regno</strong> — Sobre o governo dos príncipes (filosofia política)</li>
+            <li><strong>Quaestiones Disputatae</strong> — Questões disputadas sobre diversos temas</li>
+            <li><strong>Opúsculos</strong> — Mais de 100 trabalhos menores sobre diversos temas</li>
+            <li><strong>Hinos Litúrgicos</strong> — Pange Lingua, Adoro Te Devote, Lauda Sion, etc.</li>
+        </ul>
+    </div>
+    
+    <p>
+        Seu maior monumento intelectual é, sem dúvida, a <em>Summa Theologiae</em>, obra monumental iniciada em 1265 e que ficou inacabada por ocasião de sua morte em 1274. A <em>Summa</em> estava destinada a ser um manual para estudantes de teologia, mas transcendeu em muito esse objetivo inicial. Está dividida em três grandes partes (mais um suplemento póstumo compilado por seus discípulos):
+    </p>
+    
+    <p>
+        A <strong>Primeira Parte</strong> (Prima Pars) trata de Deus e da criação: a existência e natureza de Deus, a Trindade, a criação, os anjos, o homem e o governo divino do mundo. A <strong>Segunda Parte</strong> (Secunda Pars), dividida em duas subpartes (Prima Secundae e Secunda Secundae), trata da ética e da vida moral do homem em seu retorno a Deus: atos humanos, paixões, virtudes, vícios, lei, graça e os estados de vida. A <strong>Terceira Parte</strong> (Tertia Pars) trata de Cristo como caminho de salvação: a Encarnação, a vida de Cristo e os sacramentos.
+    </p>
+    
+    <div class="destaque">
+        "No total, a Summa Theologiae contém mais de 500 questões, 2.669 artigos e cerca de 10.000 objeções respondidas com precisão cirúrgica e clareza cristalina."
+    </div>
+    
+    <p>
+        Outro monumento filosófico-teológico de Tomás é a <em>Summa Contra Gentiles</em> (também conhecida como <em>Liber de Veritate Catholicae Fidei contra Infideles</em>), composta entre 1259 e 1265. Esta obra foi destinada a apresentar a fé cristã de forma racional a pessoas que não aceitavam a Bíblia como autoridade — missionários que debatiam com muçulmanos, judeus e filósofos pagãos utilizavam essa obra como guia apologético.
+    </p>
+    
+    <p>
+        Diferente da <em>Summa Theologiae</em>, que pressupõe a fé e parte da revelação, a <em>Summa Contra Gentiles</em> procura demonstrar as verdades da fé pela via da razão filosófica natural, usando argumentos acessíveis a qualquer pessoa racional, independentemente de sua fé religiosa. É uma obra-prima de apologética e filosofia da religião.
+    </p>
+</div>
+
+<div class="capitulo">
+    <h2>✦ Os Comentários a Aristóteles</h2>
+    
+    <p>
+        <span class="inicio-letra">E</span>ntre seus comentários a Aristóteles, destacam-se as análises profundas e detalhadas sobre a <em>Ética a Nicômaco</em>, a <em>Física</em>, a <em>Metafísica</em>, <em>Sobre a Alma</em> (De Anima), <em>Sobre a Geração e Corrupção</em>, os <em>Análíticos</em>, e muitos outros tratados do Estagirita. Nesses comentários, Tomás não se limitava a parafrasear o filósofo grego, mas interpretava, corrigia, completava e integrava o pensamento aristotélico ao universo cristão com maestria incomparável.
+    </p>
+    
+    <p>
+        Tomás foi um dos primeiros a perceber que Aristóteles, embora pagão e limitado pela falta da revelação, havia alcançado verdades profundas sobre a realidade natural através do exercício correto da razão. Ele separou o que em Aristóteles era compatível com a fé cristã do que precisava ser corrigido ou completado. Por exemplo, Tomás aceitou a física e a metafísica aristotélica, mas rejeitou a eternidade do mundo e o intelecto único para todos os homens (averroísmo).
+    </p>
+    
+    <p>
+        Também escreveu comentários detalhados sobre as Sagradas Escrituras, utilizando o método da <em>catena aurea</em> (cadeia de ouro), que reunia interpretações dos Padres da Igreja. Seus comentários sobre as cartas paulinas, os Evangelhos (especialmente o de João) e os Salmos são de profundidade extraordinária. O Papa Bento XVI, em suas catequeses sobre Tomás de Aquino, recomendou especificamente a leitura desses comentários bíblicos.
+    </p>
+</div>
+
+<div class="capitulo">
+    <h2>✦ As Obras Menores e os Opúsculos</h2>
+    
+    <p>
+        <span class="inicio-letra">D</span>entre suas obras mais curtas, mas igualmente profundas e influentes, destacam-se o <em>De Ente et Essentia</em> (Sobre o Ser e a Essência), escrito ainda jovem, por volta de 1252-1256, onde estabelece os fundamentos de sua metafísica. Neste pequeno tratado, Tomás desenvolve a distinção real entre essência e existência nas criaturas — distinção que se tornaria central para todo o tomismo.
+    </p>
+    
+    <p>
+        Enquanto em Deus essência e existência são idênticas (Deus é o Ser Subsistente, <em>Ipsum Esse Subsistens</em>), nas criaturas há uma composição real: a essência recebe a existência de outro. Essa doutrina é fundamental para entender a contingência do mundo e a dependência radical de todas as coisas em relação a Deus.
+    </p>
+    
+    <p>
+        O <em>De Regno</em> (Sobre o Reino), também conhecido como <em>De Regimine Principum</em>, é um tratado de filosofia política dedicado ao rei de Chipre, onde Tomás desenvolve suas ideias sobre o bem comum, a autoridade legítima, a tirania e a finalidade do Estado. Embora incompleto, é uma das fontes principais da filosofia política tomista e influenciou profundamente o pensamento político ocidental.
+    </p>
+    
+    <p>
+        As inúmeras <em>Quaestiones Disputatae</em> (Questões Disputadas) são disputas acadêmicas formalizadas em texto, nas quais Tomás debatia questões filosóficas e teológicas com a profundidade e o equilíbrio que lhe eram característicos. Entre elas, destacam-se as <em>Quaestiones Disputatae de Veritate</em> (sobre a verdade), <em>de Potentia</em> (sobre o poder de Deus), <em>de Anima</em> (sobre a alma), <em>de Malo</em> (sobre o mal), e muitas outras.
+    </p>
+</div>
+
+<div class="capitulo">
+    <h2>✦ A Teologia Sacramental e a Eucaristia</h2>
+    
+    <p>
+        <span class="inicio-letra">N</span>o campo da teologia sacramental, Tomás deu contribuições imensas e definitivas. Sua explicação da Transubstanciação — o mistério pelo qual o pão e o vinho se tornam o Corpo e Sangue de Cristo na Eucaristia — utilizando os conceitos aristotélicos de substância e acidente, tornou-se a explicação oficial adotada pela Igreja Católica e foi dogmatizada no Concílio de Trento.
+    </p>
+    
+    <p>
+        Tomás afirmava que, na consagração eucarística, a substância do pão e do vinho se transforma completamente no Corpo e Sangue de Cristo, enquanto os acidentes — cor, sabor, forma, textura — permanecem os mesmos para os sentidos. Mas a realidade subjacente (a substância) é inteiramente outra: o próprio Cristo, verdadeiro Deus e verdadeiro homem, presente real e substancialmente sob as espécies eucarísticas.
+    </p>
+    
+    <div class="milagre">
+        <h3>A Presença Real</h3>
+        <p>Para Tomás, a Eucaristia é o "sacramento dos sacramentos", porque contém o próprio autor da graça. Ele desenvolveu uma teologia eucarística de profundidade inigualável, explicando como Cristo está presente todo inteiro sob cada espécie e sob cada parte das espécies, como a presença é permanente (não apenas durante a comunhão), e quais são os efeitos espirituais da recepção digna da Eucaristia.</p>
+    </div>
+    
+    <p>
+        Não é por acaso que a Igreja encarregou Tomás de Aquino de compor os hinos e orações litúrgicas para a festa do Corpus Christi, instituída pelo Papa Urbano IV em 1264 após o milagre eucarístico de Bolsena. Tomás produziu então um dos mais sublimes conjuntos de textos litúrgicos da história cristã, que inclui:
+    </p>
+    
+    <p>
+        O <strong>Pange Lingua Gloriosi</strong>, hino que narra a instituição da Eucaristia na Última Ceia, com sua magistral estrofe final, o <strong>Tantum Ergo</strong>, entoado até hoje em todo o mundo católico durante a Benção do Santíssimo Sacramento. O <strong>Lauda Sion Salvatorem</strong>, uma sequência eucarística de beleza teológica e poética sem paralelo, que resume de forma densa e precisa toda a doutrina eucarística. O <strong>Adoro Te Devote</strong>, uma oração eucarística pessoal de adoração profunda. E o <strong>Sacris Solemniis</strong>, outro hino para a festa.
+    </p>
+    
+    <div class="destaque">
+        "Poucos pensadores na história conseguiram unir com tal maestria o rigor conceitual da mais alta teologia com a profundidade devocional da mais genuína adoração eucarística."
+    </div>
+</div>
+
+<div class="capitulo">
+    <h2>✦ Os Milagres e a Vida Mística</h2>
+    
+    <p>
+        <span class="inicio-letra">E</span>ntre os muitos milagres atribuídos a São Tomás de Aquino, um dos mais célebres e documentados ocorreu durante uma de suas orações diante de um crucifixo na capela de São Nicolau, em Nápoles. Tomás costumava rezar por longas horas diante das imagens de Cristo, mergulhado em contemplação profunda, muitas vezes em êxtase.
+    </p>
+    
+    <div class="milagre">
+        <h3>"Escreveste Bem de Mim"</h3>
+        <p>Numa dessas ocasiões, por volta de 1273, o próprio Cristo crucificado teria falado do alto da cruz, dizendo: <em>"Tomás, escreveste bem de Mim. Que recompensa queres?"</em> — ao que o santo respondeu com humildade total e desprendimento absoluto: <em>"Nenhuma outra além de Ti, Senhor."</em></p>
+    </div>
+    
+    <p>
+        Esse episódio, narrado por múltiplas fontes contemporâneas confiáveis, incluindo seu confessor e biógrafo Reginaldo de Piperno, tornou-se símbolo perfeito da atitude de Tomás diante de toda a sua obra: não a buscava para glória pessoal, não escrevia para ser admirado, mas como serviço ao conhecimento de Deus e à salvação das almas.
+    </p>
+    
+    <p>
+        Outro episódio marcante aconteceu quando o frade dominicano estava compondo uma parte particularmente difícil da <em>Summa Theologiae</em>, tratando de questões complexas sobre a Trindade. Após orar intensamente, ele adormeceu sobre os manuscritos e, ao despertar, encontrou os textos completos, escritos numa caligrafia que não era a sua.
+    </p>
+    
+    <p>
+        Muitos atribuíram o feito à intervenção milagrosa dos Santos Pedro e Paulo, que lhe teriam ditado a resposta enquanto dormia. Independentemente da interpretação que se faça do episódio, ele revela como os contemporâneos de Tomás percebiam sua obra como fruto não apenas de esforço humano e inteligência extraordinária, mas de iluminação divina e graça especial.
+    </p>
+    
+    <p>
+        Guilherme de Tocco, um de seus primeiros biógrafos, relata vários outros episódios sobrenaturais: levitações durante a Missa, conhecimento sobrenatural de coisas distantes, profecias cumpridas, e uma pureza angelical que se manifestava até em sua aparência física. Seus irmãos dominicanos testemunhavam que era comum vê-lo em êxtase durante a celebração litúrgica, tão absorto na contemplação que parecia ausente do mundo ao redor.
+    </p>
+</div>
+
+<div class="capitulo">
+    <h2>✦ A Fama e as Honrarias Recusadas</h2>
+    
+    <p>
+        <span class="inicio-letra">A</span> fama intelectual de Tomás ultrapassou rapidamente as fronteiras da Ordem Dominicana e da Universidade de Paris, espalhando-se por toda a Cristandade. Papas e cardeais consultavam-no sobre questões delicadas de doutrina e disciplina. Reis e príncipes buscavam seu conselho. A Universidade de Paris o reverenciava como seu maior mestre.
+    </p>
+    
+    <p>
+        O Papa Urbano IV pediu-lhe que compusesse o ofício litúrgico do Corpus Christi, honra que demonstra a confiança que o pontífice depositava em sua ortodoxia e em sua capacidade poético-teológica. O Papa Clemente IV quis nomeá-lo Arcebispo de Nápoles em 1265, oferecendo-lhe uma das dignidades eclesiásticas mais importantes do sul da Itália.
+    </p>
+    
+    <div class="destaque">
+        "Mas Tomás recusou com humildade total, preferindo permanecer frade e scholar a qualquer dignidade eclesiástica. Essa recusa é reveladora: para Tomás, o conhecimento da verdade e o serviço à Igreja pela via do estudo e do ensino eram vocações superiores a qualquer cargo ou honraria."
+    </div>
+    
+    <p>
+        Quando o Papa lhe ofereceu o cardinalato, Tomás novamente recusou. Sua ambição era outra: conhecer a verdade e ensiná-la. Em uma época em que muitos buscavam cargos e honrarias, Tomás representava um contra-testemunho radical: o do intelectual puro, do contemplativo que via no estudo uma forma de oração e no ensino uma forma de caridade.
+    </p>
+</div>
+
+<div class="capitulo">
+    <h2>✦ Curiosidades sobre o Homem Tomás</h2>
+    
+    <p>
+        <span class="inicio-letra">U</span>ma curiosidade pouco conhecida sobre Tomás de Aquino diz respeito a seu físico. Ele era um homem de estatura elevada e constituição robusta — o que lhe valeu o apelido de "boi" —, mas com uma particularidade: tinha um buraco no centro do peito, possivelmente uma deformidade congênita ou resultado de alguma doença. Os biógrafos medievais falam disso com reverência como de um sinal especial da providência divina.
+    </p>
+    
+    <p>
+        Sua memória era extraordinária, quase sobrenatural. Os secretários que lhe ditavam textos relatavam que ele ditava simultaneamente para quatro ou cinco escribas sobre assuntos completamente diferentes — teologia, filosofia, exegese bíblica, questões práticas —, alternando entre eles sem perder o fio de nenhuma argumentação, sem se confundir, demonstrando uma capacidade de concentração e organização mental que beirava o prodigioso.
+    </p>
+    
+    <p>
+        Tomás era conhecido por sua humildade profunda. Apesar de sua inteligência genial, jamais se orgulhou de seu saber. Quando elogiado, desviava o louvor para Deus. Dizia que havia aprendido mais com os livros simples dos monges do que com os grandes filósofos. Sua cela era simples, sem adornos, exceto por um crucifixo e imagens de santos.
+    </p>
+    
+    <p>
+        Uma dimensão frequentemente negligenciada de São Tomás é sua profunda sensibilidade humana e seu senso de humor. Os biógrafos medievais registram que ele era um homem agradável na convivência, generoso com seu tempo e atenção, capaz de simplificar questões complexas para estudantes que lutavam para acompanhá-lo.
+    </p>
+    
+    <div class="destaque">
+        "Quando discutia, jamais elevava a voz ou perdia a compostura; sua arma era sempre o argumento preciso, nunca a agressividade. Sabia rir de si mesmo e tinha paciência infinita com os alunos mais lentos."
+    </p>
+    </div>
+    
+    <p>
+        Tomás também era conhecido por sua generosidade com os pobres. Embora vivesse em pobreza religiosa, sempre que recebia algo, dividia com os necessitados. Conta-se que, em certa ocasião, deu sua túnica a um mendigo que tremia de frio, e teve que voltar para o convento enrolado em um cobertor.
+    </p>
+</div>
+
+<div class="capitulo">
+    <h2>✦ A Experiência Mística Final</h2>
+    
+    <p>
+        <span class="inicio-letra">E</span>m dezembro de 1273, algo extraordinário e transformador aconteceu. Tomás celebrava a Missa de São Nicolau na capela do convento dominicano em Nápoles quando foi tomado por uma experiência mística de tal profundidade e intensidade que, a partir daquele dia, simplesmente parou de escrever.
+    </p>
+    
+    <p>
+        Quando seu secretário e companheiro fiel, frei Reginaldo de Piperno, lhe pediu que retomasse a <em>Summa Theologiae</em>, ainda inacabada (faltava tratar do sacramento da Penitência e das últimas questões sobre a vida eterna), Tomás respondeu com uma frase que ficou para sempre gravada na história do pensamento cristão e que ecoa através dos séculos:
+    </p>
+    
+    <div class="destaque" style="text-align: center; font-size: 1.3em; padding: 40px;">
+        "Reginaldo, não posso mais. Tudo o que escrevi parece-me palha comparado com o que vi."
+    </div>
+    
+    <p>
+        <em>"Omnia quae scripsi videntur mihi ut palea"</em> — "Tudo o que escrevi me parece palha."
+    </p>
+    
+    <p>
+        O que exatamente Tomás experimentou naquela manhã de dezembro permanece envolto no mistério da mística cristã. Alguns especulam que teve uma visão da essência divina, outros que contemplou a humanidade glorificada de Cristo, outros ainda que recebeu uma iluminação especial sobre os mistérios da fé. O certo é que o filósofo da razão, o mestre da argumentação lógica, o gigante do intelecto, havia tocado os limites além dos quais apenas o silêncio e a contemplação podem habitar.
+    </p>
+    
+    <p>
+        Tomás parou de escrever, mas não de rezar. Passou seus últimos meses em oração intensa, preparando-se para o encontro definitivo com Aquele sobre Quem tanto havia escrito e a Quem tanto havia amado. A <em>Summa Theologiae</em> ficou inacabada, mas essa incompletude é, ela mesma, uma lição teológica: nenhuma síntese humana, por mais brilhante que seja, pode esgotar o mistério de Deus.
+    </p>
+</div>
+
+<div class="capitulo">
+    <h2>✦ A Última Viagem e a Morte</h2>
+    
+    <p>
+        <span class="inicio-letra">P</span>oucos meses depois, em fevereiro de 1274, Tomás foi convocado pelo Papa Gregório X para participar do Concílio de Lyon, que pretendia tratar da reunificação das Igrejas do Oriente e do Ocidente — um dos grandes sonhos da Cristandade medieval. Tomás partiu a contragosto, debilitado de saúde, já sentindo que seus dias estavam contados.
+    </p>
+    
+    <p>
+        No caminho, ao passar pela floresta perto de Teano, enquanto montava uma mula, bateu a cabeça num galho de árvore baixo e caiu, ficando ainda mais fragilizado. Buscou abrigo no castelo de Maenza, propriedade de sua sobrinha Francesca, onde foi cuidadosamente tratado. De lá, percebendo que não poderia continuar viagem, foi levado ao mosteiro cistercense de Fossanova, onde chegou já em estado grave.
+    </p>
+    
+    <p>
+        No mosteiro de Fossanova, os monges cistercienses, honrados e emocionados por ter entre eles o maior teólogo de sua época, perguntaram a Tomás se havia algo que ele desejasse. Ele pediu apenas que lhe lessem o Cântico dos Cânticos, livro bíblico de beleza poética incomparável, que é uma alegoria do amor entre Deus e a alma. Passou os últimos dias de sua vida terrena comentando esse livro em voz baixa, mergulhado na contemplação do amor divino.
+    </p>
+    
+    <div class="milagre">
+        <h3>A Última Comunhão</h3>
+        <p>Morreu na madrugada de 7 de março de 1274, aos 49 anos de idade, rodeado pelos monges de Fossanova. Sua última comunhão foi descrita pelos presentes como um momento de comoção profunda e graça intensa. Com os olhos cheios de lágrimas de devoção, Tomás teria dito:</p>
+        
+        <p style="font-style: italic; margin-top: 15px;">
+            "Recebo-Te, preço da redenção da minha alma. Recebo-Te, viático da minha peregrinação, por amor de Quem estudei, vigiei e me fatiguei. A Ti preguei e ensinei. Nunca disse coisa alguma contra Ti. Se algo foi dito sem ciência, não foi por obstinação. Submeto tudo ao juízo da Santa Igreja Romana, em cuja obediência agora expiro."
+        </p>
+    </div>
+    
+    <p>
+        Essas últimas palavras revelam a ortodoxia perfeita de Tomás, sua humildade intelectual (reconhecendo que poderia ter errado em algo por limitação humana, não por má-fé), e sua submissão total ao magistério da Igreja. Morreu como viveu: em plena comunhão com a Igreja Católica, fiel até o último suspiro.
+    </p>
+    
+    <p>
+        Seu corpo foi inicialmente sepultado na igreja do mosteiro de Fossanova. Em 1369, seus restos mortais foram transferidos para Toulouse, na França, onde repousam até hoje na igreja dos Jacobinos (dominicanos). Sua cabeça, separada do corpo, foi levada para a igreja de Saint-Sernin em Toulouse, e uma costela foi enviada para Aquino, sua cidade natal.
+    </p>
+</div>
+
+<div class="capitulo">
+    <h2>✦ A Canonização e o Reconhecimento da Igreja</h2>
+    
+    <p>
+        <span class="inicio-letra">A</span> canonização de São Tomás de Aquino ocorreu em 18 de julho de 1323, na cidade de Avignon, sob o pontificado do Papa João XXII, menos de cinquenta anos após sua morte — um tempo extraordinariamente rápido para os padrões medievais, o que demonstra a reputação de santidade que Tomás já gozava em vida e que se consolidou rapidamente após sua morte.
+    </p>
+    
+    <p>
+        Na ocasião da canonização, quando alguém questionou quais milagres embasavam a causa de Tomás (já que os processos de canonização exigiam milagres comprovados), o Papa João XXII respondeu com uma elegância e profundidade que se tornaram famosas:
+    </p>
+    
+    <div class="destaque">
+        "Tantos artigos, tantos milagres" — referindo-se aos milhares de artigos da <em>Summa Theologiae</em>, cada um deles uma conquista da razão humana iluminada pela fé, cada distinção precisa um reflexo da sabedoria divina.
+    </div>
+    
+    <p>
+        Em 1567, o Papa Pio V, dominicano e grande devoto de Tomás, conferiu-lhe o título de Doutor da Igreja, o mais alto reconhecimento teológico que a Igreja pode conceder. Determinou também que sua festa fosse celebrada com a mesma solenidade que a dos quatro grandes Doutores ocidentais: Santo Ambrósio, São Jerônimo, Santo Agostinho e São Gregório Magno.
+    </p>
+    
+    <p>
+        Em 1879, o Papa Leão XIII publicou a encíclica <em>Aeterni Patris</em>, considerada a "carta magna" do neotomismo, convocando toda a Igreja a retornar ao estudo de Santo Tomás como guia seguro para o diálogo da fé com a modernidade, com a ciência, com a filosofia contemporânea. Leão XIII via em Tomás não um pensador ultrapassado, mas uma fonte perene de sabedoria.
+    </p>
+    
+    <p>
+        Em 1923, no sétimo centenário de seu nascimento, o Papa Pio XI publicou a encíclica <em>Studiorum Ducem</em>, reafirmando Tomás como "mestre celeste" de todos os estudos católicos. Em 1980, São João Paulo II declarou Tomás padroeiro de todas as universidades, academias, colégios e escolas católicas do mundo.
+    </p>
+</div>
+
+<div class="secao-especial">
+    <h2>✦ O Pensamento Tomista: Pilares Fundamentais</h2>
+    
+    <h3 style="color: #d4af37; margin-top: 30px;">As Cinco Vias</h3>
+    
+    <p>
+        Sobre a existência de Deus, Tomás elaborou as famosas <em>Cinco Vias</em> (Quinque Viae) — cinco argumentos racionais para demonstrar a existência de um Ser Necessário que os cristãos chamam de Deus. Essas vias aparecem na <em>Summa Theologiae</em> (I, q. 2, a. 3) e representam um aperfeiçoamento das vias agostinianas e aristotélicas.
+    </p>
+    
+    <p>
+        <strong>Primeira Via:</strong> Do movimento. Tudo que se move é movido por outro. Não se pode proceder ao infinito na série de motores. Logo, deve haver um Primeiro Motor Imóvel, que todos chamam de Deus.
+    </p>
+    
+    <p>
+        <strong>Segunda Via:</strong> Da causalidade eficiente. Tudo tem uma causa. Nada pode ser causa de si mesmo. Não se pode proceder ao infinito nas causas eficientes. Logo, deve haver uma Primeira Causa Incausada, que todos chamam de Deus.
+    </p>
+    
+    <p>
+        <strong>Terceira Via:</strong> Da contingência. Encontramos no mundo seres contingentes (que podem ser ou não ser). Se tudo fosse contingente, em algum momento nada existiria. Mas algo existe. Logo, deve haver um Ser Necessário, que todos chamam de Deus.
+    </p>
+    
+    <p>
+        <strong>Quarta Via:</strong> Dos graus de perfeição. Encontramos no mundo coisas mais ou menos boas, verdadeiras, belas. Esses graus supõem um máximo absoluto. Logo, deve haver um Ser Summamente Perfeito, que todos chamam de Deus.
+    </p>
+    
+    <p>
+        <strong>Quinta Via:</strong> Da ordenação teleológica. Vemos que coisas sem inteligência (corpos naturais) agem de forma ordenada para um fim. Isso não pode ser fruto do acaso. Logo, deve haver um Ser Inteligente que dirige todas as coisas a seus fins, que todos chamam de Deus.
+    </p>
+    
+    <p style="margin-top: 25px;">
+        Esses argumentos continuam sendo estudados, debatidos e refinados por filósofos e teólogos em todo o mundo. Embora nem todos os filósofos modernos os aceitem, eles representam tentativas sérias e rigorosas de mostrar que a crença em Deus é racional e fundamentada.
+    </p>
+    
+    <h3 style="color: #d4af37; margin-top: 40px;">A Lei Natural</h3>
+    
+    <p>
+        No campo da ética, Tomás desenvolveu uma teoria da lei natural que permanece referência fundamental nos debates contemporâneos de bioética, filosofia política e direito. Para ele, existe uma lei moral inscrita na própria natureza racional do ser humano, acessível pela razão natural, independentemente da revelação.
+    </p>
+    
+    <p>
+        A lei natural é a participação da criatura racional na lei eterna (o plano divino para o universo). Seu primeiro preceito é: "deve-se fazer o bem e evitar o mal". Deste princípio fundamental derivam preceitos secundários, como a preservação da vida, a procriação e educação dos filhos, a busca da verdade e a vida em sociedade.
+    </p>
+    
+    <p>
+        Tomás afirma que a lei humana positiva deve estar em conformidade com essa lei natural; caso contrário, não é propriamente lei, mas corrupção da lei (<em>lex iniusta non est lex</em> — "lei injusta não é lei"). Essa doutrina influenciou profundamente o desenvolvimento dos direitos humanos, da teoria do estado de direito, da resistência à tirania e da filosofia jurídica ocidental.
+    </p>
+</div>
+
+<div class="capitulo">
+    <h2>✦ A Iconografia e a Devoção Popular</h2>
+    
+    <p>
+        <span class="inicio-letra">S</span>ão Tomás é frequentemente representado na iconografia cristã com diversos símbolos que evocam sua vida e obra:
+    </p>
+    
+    <ul class="lista-elegante">
+        <li>Um <strong>sol brilhante no peito</strong> ou sobre a cabeça, símbolo da luz do conhecimento e da sabedoria divina que o iluminava</li>
+        <li><strong>Livros e pena</strong> na mão, evocando seu magistério e sua produção literária monumental</li>
+        <li>Uma <strong>estrela</strong>, que segundo a lenda teria aparecido sobre ele ao nascer, anunciando sua futura santidade</li>
+        <li>A <strong>Suma Teológica</strong> sob o braço ou sobre uma mesa, referência à sua obra-prima</li>
+        <li>Um <strong>modelo de igreja</strong>, simbolizando que seu pensamento tornou-se pedra angular da teologia da Igreja</li>
+        <li>O <strong>hábito dominicano</strong> branco e preto, com o cíngulo (cordão) da pureza</li>
+        <li>Às vezes, uma <strong>pomba</strong> sobre o ombro, simbolizando a inspiração do Espírito Santo</li>
+        <li>Em representações mais antigas, aparece com um <strong>livro aberto</strong> mostrando a frase "Veritas" (Verdade)</li>
+    </ul>
+    
+    <p>
+        A devoção a São Tomás é particularmente forte entre dominicanos, estudantes, acadêmicos e teólogos. Muitas escolas e universidades católicas levam seu nome. A festa litúrgica de São Tomás de Aquino é celebrada em 28 de janeiro (data da trasladação de suas relíquias para Toulouse), embora em alguns lugares ainda se celebre em 7 de março, data de sua morte (dies natalis).
+    </p>
+</div>
+
+<div class="capitulo">
+    <h2>✦ O Tomismo e Sua Influência Perene</h2>
+    
+    <p>
+        <span class="inicio-letra">O</span> chamado Tomismo — sistema filosófico e teológico derivado da obra de Tomás — exerceu e continua exercendo influência imensurada sobre o pensamento ocidental. Já no século XIV, surgiram os primeiros comentadores e discípulos de Tomás, como Godofredo de Fontaines, João Quidort de Paris, e o grande Dante Alighieri, que coloca Tomás no Paraíso da <em>Divina Comédia</em> (Canto X).
+    </p>
+    
+    <p>
+        No século XVI, durante a Contra-Reforma, o tomismo foi adotado como referência doutrinária pela Igreja Católica. O Concílio de Trento (1545-1563) colocou a <em>Summa Theologiae</em> sobre o altar, ao lado da Bíblia e dos decretos dos papas, como fonte de inspiração para os trabalhos conciliares.
+    </p>
+    
+    <p>
+        O Neotomismo, movimento de renovação do pensamento tomista no século XIX e XX, contou com figuras extraordinárias como Jacques Maritain, Étienne Gilson, Josef Pieper, Reginald Garrigou-Lagrange, Marie-Dominique Chenu, Yves Congar, Henri de Lubac (embora este último tenha desenvolvido um tomismo mais aberto), e muitos outros pensadores que levaram a filosofia de Tomás para o diálogo com a modernidade, com as ciências, com o marxismo, com o existencialismo e com as filosofias contemporâneas.
+    </p>
+    
+    <div class="destaque">
+        "Esses pensadores demonstraram a surpreendente vitalidade de um pensamento nascido no século XIII, mostrando que Tomás não é um pensador ultrapassado, mas um interlocutor perene para todas as épocas."
+    </div>
+    
+    <p>
+        No século XX, o tomismo enfrentou desafios do modernismo, do existencialismo, da filosofia analítica e da teologia progressista. Surgiram diferentes correntes dentro do tomismo: o tomismo transcendental (Marechal, Rahner), o tomismo analítico (Geach, Kenny), o tomismo histórico (Chenu, Congar), e o tomismo tradicional (Garrigou-Lagrange).
+    </p>
+    
+    <p>
+        Hoje, no século XXI, assiste-se a um renovado interesse por Tomás de Aquino, não apenas em círculos católicos, mas também entre filósofos analíticos protestantes e até ateus, que reconhecem o valor de seus argumentos e a profundidade de suas análises metafísicas, éticas e antropológicas.
+    </p>
+</div>
+
+<div class="capitulo">
+    <h2>✦ Atualidade do Pensamento Tomista</h2>
+    
+    <p>
+        <span class="inicio-letra">P</span>or que estudar Tomás de Aquino no século XXI? O que um frade dominicano do século XIII pode dizer a homens e mulheres da era digital, da inteligência artificial, da genética, da globalização?
+    </p>
+    
+    <p>
+        A atualidade de Tomás reside em vários aspectos:
+    </p>
+    
+    <p>
+        <strong>Primeiro,</strong> sua confiança na razão. Em uma época de relativismo, ceticismo e pós-verdade, Tomás nos lembra que a razão humana é capaz de conhecer a verdade, de compreender a realidade, de distinguir o bem do mal.
+    </p>
+    
+    <p>
+        <strong>Segundo,</strong> sua síntese entre fé e razão. Em um mundo polarizado entre fundamentalismos religiosos e atheísmos militantes, Tomás oferece um caminho de harmonia, mostrando que fé e ciência, religião e razão, não precisam estar em conflito.
+    </p>
+    
+    <p>
+        <strong>Terceiro,</strong> sua ética da virtude. Em uma sociedade consumista e hedonista, Tomás propõe uma ética baseada no desenvolvimento das virtudes, na busca da felicidade verdadeira (beatitudo), na ordenação dos desejos à luz da razão.
+    </p>
+    
+    <p>
+        <strong>Quarto,</strong> sua metafísica do ser. Em uma cultura fragmentada e niilista, Tomás oferece uma visão integrada da realidade, onde tudo tem sentido, onde o ser é bom, onde há uma ordem inteligível no universo.
+    </p>
+    
+    <p>
+        <strong>Quinto,</strong> sua teologia sacramental. Em um mundo desencantado, Tomás nos lembra que a matéria pode ser veículo da graça, que o visível pode manifestar o invisível, que Deus se comunica através dos sinais sensíveis.
+    </p>
+    
+    <div class="destaque">
+        "Tomás de Aquino não oferece respostas prontas para todos os problemas contemporâneos, mas oferece um método, uma mentalidade, uma forma de pensar que pode iluminar os desafios do nosso tempo."
+    </div>
+</div>
+
+<div class="capitulo">
+    <h2>✦ O Legado Eterno do Doutor Angélico</h2>
+    
+    <p>
+        <span class="inicio-letra">S</span>ão Tomás de Aquino morreu jovem, aos 49 anos, mas deixou uma obra que poucos pensadores com o dobro de sua idade conseguiriam igualar. Sua influência estende-se muito além da teologia e da filosofia: marcou a literatura (Dante), a arte (inúmeras representações iconográficas), o direito (teoria da lei natural), a política (teoria do bem comum), a economia (teoria do justo preço), a educação (método escolástico), e até a música (hinos litúrgicos).
+    </p>
+    
+    <p>
+        O Papa Bento XVI, em uma audiência geral de 2 de junho de 2010, dedicada a Tomás de Aquino, disse:
+    </p>
+    
+    <div class="destaque">
+        "São Tomás de Aquino é um modelo para todos os que amam a verdade e se dedicam ao estudo. Ele nos ensina que não devemos ter medo da verdade, qualquer que seja o desafio que ela apresente à nossa visão do mundo ou ao nosso conforto pessoal."
+    </div>
+    
+    <p>
+        O Papa Francisco, embora não seja tomista estrito, reconhece o valor perene de Tomás. Em sua encíclica <em>Fides et Ratio</em> (na verdade escrita por João Paulo II, mas confirmada por Francisco), Tomás é apresentado como exemplo supremo da harmonia entre fé e razão.
+    </p>
+    
+    <p>
+        Hoje, em um mundo marcado pela fragmentação do saber, pela especialização excessiva, pela separação entre disciplinas, Tomás de Aquino nos lembra a importância da sabedoria integrada, da visão de conjunto, da busca da verdade una sob suas múltiplas manifestações.
+    </p>
+</div>
+
+<div class="secao-especial" style="background: linear-gradient(135deg, #f5f0e8 0%, #e8dfd0 100%); color: #2c241b;">
+    <h2 style="color: #8b7355; border-bottom-color: #8b7355;">✦ Oração a São Tomás de Aquino</h2>
+    
+    <p style="font-style: italic; font-size: 1.1em; line-height: 2;">
+        Ó glorioso São Tomás de Aquino,<br>
+        Doutor Angélico e Mestre da sabedoria,<br>
+        que dedicastes vossa vida à busca da verdade<br>
+        e ao serviço da Igreja de Cristo,<br><br>
+        
+        Intercedei por nós junto ao Trono da Graça,<br>
+        para que, como vós, saibamos unir<br>
+        a fé e a razão, a oração e o estudo,<br>
+        a contemplação e a ação.<br><br>
+        
+        Alcançai-nos a graça de amar a verdade<br>
+        acima de todas as coisas,<br>
+        de buscar a sabedoria que vem do Alto,<br>
+        e de colocar nosso conhecimento<br>
+        a serviço do bem comum e da glória de Deus.<br><br>
+        
+        Vós que declarastes que tudo quanto escrevestes<br>
+        era palha comparado ao que contemplastes,<br>
+        ensinai-nos a humildade do verdadeiro sábio,<br>
+        que reconhece a infinita transcendência de Deus<br>
+        e a limitação de todo saber humano.<br><br>
+        
+        Amém.
+    </p>
+</div>
 
 <hr>
 
-<p><strong>A Vida, as Obras, os Milagres e o Legado do Doutor Angélico</strong></p>
+<div class="assinatura">
+    <p style="font-size: 1.3em; margin-bottom: 10px;">
+        <em>"A verdade é o bem do intelecto."</em>
+    </p>
+    <p style="font-size: 1.1em;">
+        — São Tomás de Aquino
+    </p>
+    <p style="margin-top: 30px; font-size: 0.9em; color: #8b7355;">
+        <em>Doctor Angelicus • Doctor Communis • Doctor Universalis</em><br>
+        1225 — 7 de março de 1274
+    </p>
+</div>
 
-<hr>
-
-<p>São Tomás de Aquino nasceu por volta do ano de 1225, no castelo de Roccasecca, próximo à cidade de Aquino, no Reino da Sicília, região que hoje corresponde à Itália. Era filho do conde Landolfo de Aquino e de Teodora de Chieti, uma família da nobreza italiana com profundas raízes na tradição cristã. Desde os primeiros anos de vida, Tomás demonstrou uma inclinação singular para a vida espiritual e para o conhecimento, características que iriam defini-lo como um dos maiores pensadores que o mundo jamais conheceu.</p>
-
-<p>Aos cinco anos de idade, Tomás foi enviado à abadia beneditina de Montecassino, onde iniciou sua educação sob a orientação dos monges. A escolha da família não foi aleatória: seu tio era abade do mosteiro, e havia a expectativa de que o jovem Tomás seguisse os passos beneditinos e, quem sabe, viesse a se tornar abade, garantindo assim prestígio e influência à família. No entanto, os planos de Deus para aquele menino de olhos curiosos e mente inquieta eram muito maiores do que qualquer título mundano poderia oferecer.</p>
-
-<p>Na abadia de Montecassino, Tomás destacou-se pela seriedade com que abraçava os estudos e pela profundidade de suas perguntas. Conta-se que, ainda criança, ele frequentemente interrompia os monges com a mesma pergunta insistente: <em>"O que é Deus?"</em> Essa interrogação não era fruto da imaturidade, mas de uma sede genuína de compreender o divino — sede que o acompanharia por toda a vida e que o levaria a produzir uma das sínteses filosófico-teológicas mais completas da história do pensamento humano.</p>
-
-<p>Por volta de 1239, após conflitos militares que perturbaram a vida na abadia, Tomás foi enviado para a Universidade de Nápoles, onde tomou contato com a filosofia aristotélica, recém-traduzida para o latim a partir de textos árabes e gregos. Aquele encontro foi decisivo. A lógica rigorosa, a meticulosa análise da realidade e a capacidade de Aristóteles de unir razão e experiência fascinaram o jovem estudante. Tomás reconheceu ali uma ferramenta poderosa que, se devidamente purificada e orientada pela fé cristã, poderia servir como instrumento privilegiado para a compreensão da verdade.</p>
-
-<p>Foi também em Nápoles que Tomás teve seu primeiro contato com os frades da Ordem dos Pregadores, os Dominicanos, fundada por São Domingos de Gusmão. Fascinado pelo ideal de pobreza evangélica, estudo e pregação que caracterizava aquela ordem mendicante, o jovem Tomás tomou a decisão de ingressar nela, por volta de 1244.</p>
-
-<p>A notícia caiu como uma bomba sobre sua família. Sua mãe Teodora, contrariada, tentou de todas as formas impedir a entrada do filho na ordem. Chegou a organizar o sequestro do próprio filho, que foi mantido em cativeiro no castelo da família por cerca de um ano.</p>
-
-<p>Durante esse período de cativeiro, os irmãos de Tomás tentaram de diversas formas fazê-lo abandonar sua vocação. A tentativa mais famosa e inusitada envolveu o envio de uma jovem sedutora ao quarto de Tomás, com a intenção de fazê-lo ceder à tentação da carne e, assim, abandonar o propósito de abraçar a vida religiosa. A resposta de Tomás foi imediata e enérgica: pegou um tição de fogo da lareira e expulsou a moça do quarto, desenhando depois uma cruz na parede com a brasa.</p>
-
-<p>Conta a tradição que, naquela mesma noite, dois anjos apareceram a ele em sonho e cingirão sua cintura com um cordão de pureza, símbolo de castidade perfeita que ele teria mantido pelo resto de sua vida. Daí vem a famosa devoção ao "Cíngulo de São Tomás de Aquino".</p>
-
-<p>Após cerca de um ano de cativeiro, sua mãe, vencida pela firmeza inabalável do filho, permitiu que ele escapasse — segundo alguns relatos, ela mesma o ajudou a fugir por uma janela — e Tomás pôde finalmente ingressar oficialmente na Ordem Dominicana.</p>
-
-<p>Logo foi enviado para Colônia, na Alemanha, onde estudou sob a orientação do grandioso Alberto Magno, um dos maiores eruditos de sua época e ele mesmo um futuro santo da Igreja.</p>
-
-<p>Alberto Magno percebeu de imediato o que tinha diante de si. Seu novo aluno era silencioso, corpulento e quieto — características que levaram os colegas a chamá-lo de <em>"o boi mudo"</em>. Mas Alberto, com a sagacidade que lhe era própria, respondeu a esses comentários com uma profecia que o tempo se encarregaria de confirmar: <em>"Chamais a este de boi mudo. Eu vos digo que esse boi mudo encherá o mundo inteiro com seus mugidos."</em></p>
-
-<p>Jamais uma profecia acadêmica se cumpriu com tanta precisão.</p>
-
-<!-- continua exatamente igual... -->
-<p>Sob a tutela de Alberto Magno, Tomás aprofundou seus estudos em Aristóteles, Teologia e Filosofia. Em 1252, foi enviado a Paris para lecionar e prosseguir sua formação acadêmica. A Universidade de Paris era, naquele tempo, o centro intelectual do mundo cristão ocidental, um caldeirão de ideias, debates e controvérsias onde os maiores pensadores da época cruzavam argumentos com apaixonada erudição. Tomás chegou a Paris como estudante e saiu de lá como mestre — um dos mais admirados de toda a universidade.</p>
-
-<p>Em Paris, Tomás enfrentou seus primeiros grandes embates intelectuais. Os franciscanos e outros grupos resistiam à incorporação da filosofia aristotélica na teologia cristã, temendo que o racionalismo pagão corrompesse a pureza da fé revelada. Tomás, ao contrário, acreditava firmemente que a razão e a fé não eram inimigas, mas complementares. Deus, sendo o autor tanto da razão quanto da revelação, não poderia contradizer-se. Onde a razão alcança seus limites, a fé ilumina o caminho; onde a fé exige compreensão, a razão serve como guia seguro.</p>
-
-<p>Essa convicção profunda é a espinha dorsal de toda a obra de Tomás de Aquino. Ela permeia cada linha de seus escritos, cada argumento de suas disputas, cada questão de suas magistrais <em>Summae</em>. Para Tomás, não havia hierarquia de valor entre razão e fé, mas uma harmonia perfeita — uma dança entre o humano e o divino na busca da verdade una e indivisível.</p>
-
-<p>A produção literária de São Tomás é simplesmente impressionante, considerando que ele viveu apenas 49 anos. Seu maior monumento intelectual é, sem dúvida, a <em>Summa Theologiae</em>, obra monumental iniciada em 1265 e que ficou inacabada por ocasião de sua morte em 1274. A <em>Summa</em> está dividida em três grandes partes: a primeira trata de Deus e da criação; a segunda, em duas subpartes, trata da ética e da vida moral do homem em seu retorno a Deus; a terceira trata de Cristo como caminho de salvação. No total, a obra contém mais de 500 questões, 2.669 artigos e cerca de 10.000 objeções respondidas com precisão cirúrgica.</p>
-
-<p>Outro monumento filosófico-teológico de Tomás é a <em>Summa Contra Gentiles</em>, composta entre 1259 e 1265, destinada a apresentar a fé cristã de forma racional a pessoas que não aceitavam a Bíblia como autoridade — missionários que debatiam com muçulmanos, judeus e filósofos pagãos utilizavam essa obra como guia. Diferente da <em>Summa Theologiae</em>, que pressupõe a fé, a <em>Summa Contra Gentiles</em> procura demonstrar as verdades da fé pela via da razão filosófica.</p>
-
-<p>Entre seus comentários a Aristóteles, destacam-se as análises sobre a <em>Ética a Nicômaco</em>, a <em>Física</em>, a <em>Metafísica</em>, <em>Sobre a Alma</em> e muitos outros tratados. Nesses comentários, Tomás não se limitava a parafrasear o filósofo grego, mas interpretava, corrigia, completava e integrava o pensamento aristotélico ao universo cristão com maestria incomparável. Também escreveu comentários detalhados sobre as Sagradas Escrituras, cartas paulinas, os Evangelhos e os livros do Antigo Testamento.</p>
-
-<p>Dentre suas obras mais curtas, mas igualmente profundas, destacam-se o <em>De Ente et Essentia</em> (Sobre o Ser e a Essência), escrito ainda jovem, onde estabelece os fundamentos de sua metafísica; o <em>De Regno</em> (Sobre o Reino), um tratado de filosofia política; e inúmeras <em>Quaestiones Disputatae</em> — disputas acadêmicas formalizadas em texto, nas quais Tomás debatia questões filosóficas e teológicas com a profundidade e o equilíbrio que lhe eram característicos.</p>
-
-<p>No campo da teologia sacramental, Tomás deu contribuições imensas. Sua explicação da Transubstanciação — o mistério pelo qual o pão e o vinho se tornam o Corpo e Sangue de Cristo na Eucaristia — utilizando os conceitos aristotélicos de substância e acidente tornou-se a explicação oficial adotada pela Igreja Católica. Ele afirmava que a substância do pão e do vinho se transforma completamente, enquanto os acidentes — cor, sabor, forma — permanecem os mesmos para os sentidos, mas a realidade é inteiramente outra: o próprio Cristo.</p>
-
-<p>Não é por acaso que a Igreja encarregou Tomás de Aquino de compor os hinos e orações litúrgicas para a festa do Corpus Christi, instituída pelo Papa Urbano IV em 1264. Tomás produziu então um dos mais sublimes conjuntos de textos litúrgicos da história cristã, entre os quais se destacam o <em>Pange Lingua</em> com sua magistral estrofe final, o <em>Tantum Ergo</em>, entoado até hoje em todo o mundo durante a Benedição do Santíssimo Sacramento, e o <em>Lauda Sion Salvatorem</em>, uma sequência eucarística de beleza teológica e poética sem paralelo. Poucos pensadores na história conseguiram unir com tal maestria o rigor conceitual e a profundidade devocional.</p>
-
-<p>Entre os muitos milagres atribuídos a São Tomás de Aquino, um dos mais célebres ocorreu durante uma de suas orações diante de um crucifixo. Tomás costumava rezar por longas horas diante das imagens de Cristo, mergulhado em contemplação. Numa dessas ocasiões, em Nápoles, o próprio Cristo crucificado teria falado do alto da cruz, dizendo: <em>"Tomás, escreveste bem de Mim. Que recompensa queres?"</em> — ao que o santo respondeu com humildade total: <em>"Nenhuma outra além de Ti, Senhor."</em></p>
-
-<p>Esse episódio, narrado por múltiplas fontes contemporâneas, tornou-se símbolo perfeito da atitude de Tomás diante de toda a sua obra: não a buscava para glória pessoal, mas como serviço ao conhecimento de Deus.</p>
-
-<p>Outro episódio marcante aconteceu quando o frade dominicano estava compondo uma parte particularmente difícil da <em>Summa</em>. Após orar intensamente, ele adormeceu sobre os manuscritos e, ao despertar, encontrou os textos completos, escritos numa caligrafia que não era a sua. Muitos atribuíram o feito à intervenção milagrosa dos Santos Pedro e Paulo, que lhe teriam ditado a resposta enquanto dormia. Independentemente da interpretação que se faça do episódio, ele revela como os contemporâneos de Tomás percebiam sua obra como fruto não apenas de esforço humano, mas de iluminação divina.</p>
-<p>A fama intelectual de Tomás ultrapassou rapidamente as fronteiras da Ordem Dominicana e da Universidade de Paris. Papas e cardeais consultavam-no sobre questões delicadas. O Papa Urbano IV pediu-lhe que compusesse o ofício litúrgico do Corpus Christi. O Papa Clemente IV quis nomeá-lo Arcebispo de Nápoles, mas Tomás recusou com humildade, preferindo permanecer frade e scholar a qualquer dignidade eclesiástica. Essa recusa é reveladora: para Tomás, o conhecimento da verdade e o serviço à Igreja pela via do estudo e do ensino eram vocações superiores a qualquer cargo ou honraria.</p>
-
-<p>Uma curiosidade pouco conhecida sobre Tomás de Aquino diz respeito a seu físico. Ele era um homem de estatura elevada e constituição robusta, com um buraco no centro do peito — possivelmente uma deformidade congênita —, do qual os biógrafos medievais falam com reverência como de um sinal especial da providência divina. Sua memória era extraordinária: os secretários que lhe ditavam textos relatavam que ele ditava simultaneamente para quatro ou cinco escribas sobre assuntos completamente diferentes, alternando entre eles sem perder o fio de nenhuma argumentação.</p>
-
-<p>Em dezembro de 1273, algo extraordinário aconteceu. Tomás celebrava a Missa de São Nicolau em Nápoles quando foi tomado por uma experiência mística de tal profundidade que, a partir daquele dia, simplesmente parou de escrever. Quando seu secretário frei Reginaldo de Piperno lhe pediu que retomasse a <em>Summa Theologiae</em>, ainda inacabada, Tomás respondeu com uma frase que ficou para sempre gravada na história do pensamento cristão: <em>"Reginaldo, não posso mais. Tudo o que escrevi parece-me palha comparado com o que vi."</em></p>
-
-<p>O que exatamente Tomás experimentou naquela manhã de dezembro permanece envolto no mistério da mística cristã, mas é evidente que o filósofo da razão havia tocado os limites além dos quais apenas o silêncio e a contemplação podem habitar.</p>
-
-<p>Poucos meses depois, em fevereiro de 1274, Tomás foi convocado pelo Papa Gregório X para participar do Concílio de Lyon, que pretendia tratar da reunificação das Igrejas do Oriente e do Ocidente. Tomás partiu a contragosto, debilitado de saúde. No caminho, ao passar pela floresta perto de Teano, bateu a cabeça num galho de árvore e ficou ainda mais fragilizado. Buscou abrigo no castelo de Maenza, propriedade de sua sobrinha, e de lá foi levado ao mosteiro cistercense de Fossanova, onde chegou já em estado grave.</p>
-
-<p>No mosteiro de Fossanova, os monges, honrados e emocionados por ter entre eles o maior teólogo de sua época, perguntaram a Tomás se havia algo que ele desejasse. Ele pediu apenas que lhe lessem o Cântico dos Cânticos, livro bíblico de beleza poética incomparável, e passou os últimos dias comentando-o em voz baixa.</p>
-
-<p>Morreu na madrugada de 7 de março de 1274, aos 49 anos de idade. Sua última comunhão foi descrita pelos presentes como um momento de comoção profunda: com os olhos cheios de lágrimas, Tomás teria dito: <em>"Recebo-Te, preço da redenção da minha alma, recebo-Te, viático da minha peregrinação. Por amor de Ti estudei, trabalhei e me fatiguei. A Ti preguei e ensinei. Nunca disse coisa alguma contra Ti."</em></p>
-
-<p>A canonização de São Tomás de Aquino ocorreu em 18 de julho de 1323, sob o pontificado do Papa João XXII, menos de cinquenta anos após sua morte. Na ocasião, quando alguém questionou quais milagres embasavam a canonização, o Papa respondeu com elegância: <em>"Tantos artigos, tantos milagres"</em> — referindo-se aos milhares de artigos da <em>Summa Theologiae</em>, cada um deles uma conquista da razão humana iluminada pela fé. Em 1567, o Papa Pio V conferiu-lhe o título de Doutor da Igreja e determinou que sua festa fosse celebrada com a mesma solenidade que a dos quatro grandes Doutores ocidentais: Ambrósio, Jerônimo, Agostinho e Gregório Magno.</p>
-
-<p>São Tomás é frequentemente representado na iconografia cristã com um sol brilhante no peito, símbolo da luz do conhecimento; com livros e pena na mão, evocando seu magistério; e com uma estrela, que segundo a lenda teria aparecido sobre ele ao nascer. Em muitas representações, aparece também com a Suma Teológica e um modelo de igreja, referência ao fato de que seu pensamento tornou-se pedra angular da teologia e da filosofia da Igreja Católica.</p>
-
-<p>O chamado Tomismo — sistema filosófico e teológico derivado da obra de Tomás — exerceu e continua exercendo influência imensurada sobre o pensamento ocidental. O Neotomismo, movimento de renovação do pensamento tomista no século XIX e XX, contou com figuras como Jacques Maritain, Étienne Gilson, Josef Pieper e muitos outros pensadores que levaram a filosofia de Tomás para o diálogo com a modernidade, com as ciências, com o marxismo e com o existencialismo, demonstrando a surpreendente vitalidade de um pensamento nascido no século XIII.</p>
-
-<p>No campo da ética, Tomás desenvolveu uma teoria da lei natural que permanece referência fundamental nos debates contemporâneos de bioética, filosofia política e direito. Para ele, existe uma lei moral inscrita na própria natureza racional do ser humano, acessível pela razão, que fundamenta todos os sistemas jurídicos e políticos legítimos. A lei humana positiva deve estar em conformidade com essa lei natural; caso contrário, não é propriamente lei, mas corrupção da lei. Essa doutrina influenciou profundamente o desenvolvimento dos direitos humanos, da teoria do estado de direito e da filosofia jurídica ocidental.</p>
-
-<p>Sobre a existência de Deus, Tomás elaborou as famosas <em>Cinco Vias</em> — cinco argumentos racionais para demonstrar a existência de um Ser Necessário que os cristãos chamam de Deus. Partindo da observação do mundo sensível, ele argumenta: do movimento, deve haver um Primeiro Motor Imóvel; da causalidade eficiente, um Ser Incausado; da contingência, um Ser Necessário; dos graus de perfeição, um Ser Summamente Perfeito; e da ordenação teleológica da natureza, um Ser Inteligente que dirige todas as coisas a seus fins. Esses argumentos, aperfeiçoamento das vias agostinianas e aristotélicas, continuam sendo estudados, debatidos e refinados por filósofos e teólogos em todo o mundo.</p>
-
-<p>A relação de Tomás com a música e com a oração é outro aspecto fascinante de sua personalidade. Além dos hinos eucarísticos já mencionados, ele era conhecido por chorar com frequência durante a Missa e durante a recitação do Ofício Divino. Seu secretário e biógrafo Guilherme de Tocco relata que era comum ver o Mestre em êxtase durante a celebração litúrgica, tão absorto na contemplação que parecia ausente do mundo ao redor. A unidade entre oração e estudo era, para Tomás, não uma questão de método, mas de convicção profunda: o conhecimento autêntico de Deus só é possível a quem O ama, e o amor verdadeiro impele sempre ao conhecimento mais pleno.</p>
-
-<p>Muitos estudiosos modernos ficam surpresos ao descobrir que Tomás de Aquino também escreveu poesia. Além dos hinos litúrgicos, compôs o belíssimo <em>Adoro Te Devote</em>, uma oração eucarística em forma de hino que combina a mais alta teologia sacramental com a mais genuína devoção pessoal. Cada estrofe é um ato de adoração que avança progressivamente do reconhecimento da presença oculta de Cristo na Eucaristia até o pedido da visão beatífica na eternidade.</p>
-
-<p>No plano da filosofia da linguagem e da epistemologia, Tomás elaborou uma sofisticada teoria do conhecimento que supera tanto o empirismo radical quanto o idealismo excessivo. Para ele, o conhecimento começa nos sentidos — <em>nihil est in intellectu quod prius non fuerit in sensu</em> — mas não termina aí. O intelecto agente abstrai das imagens sensíveis os conteúdos inteligíveis universais, elevando o conhecimento ao nível do conceito e do julgamento.</p>
-
-<p>Uma dimensão frequentemente negligenciada de São Tomás é sua profunda sensibilidade humana e seu senso de humor. Os biógrafos medievais registram que ele era um homem agradável na convivência, generoso com seu tempo e atenção, capaz de simplificar questões complexas para estudantes que lutavam para acompanhá-lo. Quando discutia, jamais elevava a voz ou perdia a compostura; sua arma era sempre o argumento preciso.</p>
-
-<p>A influência de São Tomás de Aquino sobre a doutrina social da Igreja é profunda e duradoura. Sua análise do bem comum, da propriedade privada, do justo salário, da guerra justa e da autoridade legítima forneceu os fundamentos sobre os quais a Doutrina Social Católica foi sendo construída ao longo dos séculos.</p>
-
-<p>O Papa Leão XIII, grande promotor do tomismo no século XIX, emitiu em 1879 a encíclica <em>Aeterni Patris</em>, convocando toda a Igreja a retornar ao estudo de Santo Tomás como guia seguro para o diálogo da fé com a modernidade.</p>
-
-<p>São Tomás de Aquino é padroeiro das universidades, das escolas católicas, dos estudantes, dos teólogos, dos filósofos e dos livreiros. Sua festa litúrgica é celebrada em 28 de janeiro.</p>
-
-<p>No plano da mística e da contemplação, Tomás pertence àquela categoria rara de homens que conseguiram ser, ao mesmo tempo e sem contradição, grandes intelectuais e profundos contemplativos.</p>
-
-<p>São Tomás de Aquino morreu jovem, aos 49 anos, mas deixou uma obra que poucos pensadores com o dobro de sua idade conseguiriam igualar.</p>
-
-<p>O Doutor Angélico permanece até hoje como um dos maiores monumentos do espírito humano: a prova de que a razão, quando guiada pelo amor e iluminada pela fé, pode tocar as fronteiras do Infinito sem se perder.</p>
-
-<hr>
-
-<p><em>"A verdade é o bem do intelecto." — São Tomás de Aquino</em></p>
+</body>
+</html>
