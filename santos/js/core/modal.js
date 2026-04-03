@@ -15,20 +15,26 @@ export function criarModal(baseDados) {
         `;
         document.body.insertAdjacentHTML('beforeend', modalHTML);
 
-        // ✅ Listener adicionado UMA única vez, no elemento certo
         const scrollArea = document.getElementById("modalScrollArea");
         scrollArea.addEventListener("scroll", () => {
             const { scrollTop, scrollHeight, clientHeight } = scrollArea;
             const pct = Math.round((scrollTop / (scrollHeight - clientHeight)) * 100);
-            const slug = scrollArea.dataset.slug; // ✅ pega o slug salvo no dataset
+            const slug = scrollArea.dataset.slug;
             if (!slug) return;
 
             localStorage.setItem(`progresso-${slug}`, pct);
 
+            // Atualiza card da grid
             const fill = document.getElementById(`fill-${slug}`);
             const nome = document.getElementById(`nome-${slug}`);
             if (fill) fill.style.height = pct + "%";
             if (nome) nome.style.color = pct >= 50 ? "#ffffff" : "";
+
+            // ✅ Atualiza card do histórico em tempo real
+            const histFill = document.querySelector(`.hist-card[data-slug="${slug}"] .hist-progresso-fill`);
+            const histPct  = document.querySelector(`.hist-card[data-slug="${slug}"] .hist-pct`);
+            if (histFill) histFill.style.width = pct + "%";
+            if (histPct)  histPct.textContent  = pct > 0 ? pct + "% lido" : "Não iniciado";
         });
     }
 }
@@ -37,23 +43,19 @@ export async function abrirModal(nomeSanto, baseDados) {
     const santo = baseDados.find(s => s.nome === nomeSanto);
     if (!santo) return;
 
-    const modal = document.getElementById("santoModal");
-    const title = document.getElementById("modalTitle");
-    const content = document.getElementById("modalContent");
+    const modal     = document.getElementById("santoModal");
+    const title     = document.getElementById("modalTitle");
+    const content   = document.getElementById("modalContent");
     const headerImg = document.getElementById("modalHeaderImg");
     const scrollArea = document.getElementById("modalScrollArea");
 
-    // ✅ slug definido antes de tudo
     const slug = santo.nome.toLowerCase()
         .normalize("NFD")
         .replace(/[\u0300-\u036f]/g, "")
         .replace(/ /g, '-')
         .replace(/'/g, '');
 
-    // ✅ salva o slug no dataset para o listener de scroll acessar
     scrollArea.dataset.slug = slug;
-
-    // ✅ reseta o scroll para o topo ao abrir
     scrollArea.scrollTop = 0;
 
     title.textContent = santo.nome;
@@ -63,7 +65,7 @@ export async function abrirModal(nomeSanto, baseDados) {
     modal.classList.add("active");
     document.body.style.overflow = "hidden";
 
-    // ✅ restaura o progresso salvo ao abrir
+    // Restaura progresso ao abrir
     const progressoSalvo = parseInt(localStorage.getItem(`progresso-${slug}`) || "0");
     const fill = document.getElementById(`fill-${slug}`);
     const nome = document.getElementById(`nome-${slug}`);
@@ -95,9 +97,26 @@ export async function abrirModal(nomeSanto, baseDados) {
 
 export function fecharModal() {
     const modal = document.getElementById("santoModal");
-    if (modal) {
-        modal.classList.remove("active");
-        document.body.style.overflow = "auto";
+    if (!modal) return;
+
+    const slug = document.getElementById("modalScrollArea")?.dataset.slug;
+
+    modal.classList.remove("active");
+    document.body.style.overflow = "auto";
+
+    // ✅ Ao fechar, sincroniza tudo uma última vez
+    if (slug) {
+        const progresso = parseInt(localStorage.getItem(`progresso-${slug}`) || "0");
+
+        const fill = document.getElementById(`fill-${slug}`);
+        const nome = document.getElementById(`nome-${slug}`);
+        if (fill) fill.style.height = progresso + "%";
+        if (nome) nome.style.color = progresso >= 50 ? "#ffffff" : "";
+
+        const histFill = document.querySelector(`.hist-card[data-slug="${slug}"] .hist-progresso-fill`);
+        const histPct  = document.querySelector(`.hist-card[data-slug="${slug}"] .hist-pct`);
+        if (histFill) histFill.style.width = progresso + "%";
+        if (histPct)  histPct.textContent  = progresso > 0 ? progresso + "% lido" : "Não iniciado";
     }
 }
 
