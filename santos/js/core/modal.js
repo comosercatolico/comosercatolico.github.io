@@ -100,6 +100,24 @@ export async function abrirModal(nomeSanto, baseDados) {
                 <button class="btn-finalizado ${lido ? 'ativo' : ''}" id="btnFinalizado">
                     ${lido ? '✓ Biografia concluída' : '✓ Marcar como concluída'}
                 </button>
+                const btnHighlight = document.getElementById("toggleHighlight");
+
+// estado salvo
+const highlightAtivo = localStorage.getItem(`highlight-${slug}`) === '1';
+
+if (highlightAtivo) {
+    modal.classList.add("highlight-mode");
+}
+
+btnHighlight.onclick = () => {
+    const ativo = modal.classList.toggle("highlight-mode");
+
+    if (ativo) {
+        localStorage.setItem(`highlight-${slug}`, '1');
+    } else {
+        localStorage.removeItem(`highlight-${slug}`);
+    }
+};
             </div>
         `;
 
