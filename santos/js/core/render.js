@@ -29,7 +29,7 @@ export function renderizarGrid(lista, grid, abrirModal) {
     <div class="card-inner" style="position:relative; border-radius: var(--radius); overflow: hidden;">
         <div class="progresso-fill" id="fill-${nomeArquivo}" style="
             position: absolute; bottom: 0; left: 0; width: 100%;
-            background: linear-gradient(180deg, #1a6fc4 0%, #1258a8 100%);
+           background: linear-gradient(180deg, #5ba3d9 0%, #4a8fc2 100%);
             height: 0%; z-index: 1; transition: height 1.2s cubic-bezier(0.4,0,0.2,1);
             border-radius: 0 0 var(--radius) var(--radius);
         "></div>
