@@ -1,0 +1,275 @@
+/* =============================
+   SUMA TEOLÓGICA - ESTILOS (suma.css)
+============================= */
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+    --cor-fundo: #f5f0e8;
+    --cor-fundo-pagina: #ffffff;
+    --cor-texto: #2c1f17;
+    --cor-texto-secundario: #555555;
+    --cor-dourado: #d4af37;
+    --cor-roxo: #5b2c83;
+    --cor-roxo-hover: #4a246a;
+    --sombra: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body.pagina-suma {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--cor-fundo);
+    color: var(--cor-texto);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* HEADER */
+.suma-header {
+    background: linear-gradient(135deg, #1a1a1a 0%, #2c241b 100%);
+    color: #f5f0e8;
+    padding: 40px 20px 30px;
+    text-align: center;
+    position: relative;
+}
+
+.voltar-index {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    color: var(--cor-dourado);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: opacity 0.3s;
+}
+
+.voltar-index:hover { opacity: 0.8; }
+
+.suma-header h1 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+    letter-spacing: 0.5px;
+}
+
+.subtitulo {
+    font-style: italic;
+    opacity: 0.85;
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+}
+
+.info-pagina {
+    display: inline-block;
+    background: rgba(212, 175, 55, 0.15);
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    color: var(--cor-dourado);
+    margin-top: 10px;
+}
+
+/* NAVEGAÇÃO SUPERIOR */
+.navegacao-topo {
+    background: #fff;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.btn-nav {
+    display: inline-flex;
+    align-items: center;
+    padding: 10px 20px;
+    background: var(--cor-roxo);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+}
+
+.btn-nav:hover {
+    background: var(--cor-roxo-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(91, 44, 131, 0.3);
+}
+
+.info-centena {
+    color: #888;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.desabilitado {
+    background: #e0e0e0 !important;
+    color: #999 !important;
+    cursor: not-allowed;
+    pointer-events: none;
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+/* CONTEÚDO PRINCIPAL */
+.pagina-conteudo {
+    flex: 1;
+    max-width: 860px;
+    width: 100%;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.pagina-texto {
+    background: var(--cor-fundo-pagina);
+    padding: 60px 50px;
+    border-radius: 12px;
+    box-shadow: var(--sombra);
+    position: relative;
+}
+
+.pagina-texto::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 20px;
+    bottom: 20px;
+    width: 4px;
+    background: linear-gradient(to bottom, var(--cor-dourado), var(--cor-roxo));
+    border-radius: 0 4px 4px 0;
+}
+
+.pagina-corpo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.15rem;
+    line-height: 1.9;
+    color: #3d3226;
+    text-align: justify;
+}
+
+.pagina-corpo p { margin-bottom: 1.5em; }
+.pagina-corpo h3 {
+    font-family: 'Libre Baskerville', serif;
+    color: var(--cor-roxo);
+    margin: 2em 0 0.8em;
+    font-size: 1.4rem;
+}
+.pagina-corpo em { font-style: italic; color: #555; }
+.pagina-corpo strong { font-weight: 700; color: #2c1f17; }
+
+/* NAVEGAÇÃO INFERIOR */
+.navegacao-inferior {
+    max-width: 860px;
+    width: 100%;
+    margin: 0 auto 40px;
+    padding: 0 20px;
+}
+
+.nav-buttons {
+    background: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    box-shadow: var(--sombra);
+}
+
+.btn-primary {
+    flex: 1;
+    text-align: center;
+    padding: 14px 20px;
+    background: linear-gradient(135deg, var(--cor-roxo), #7a3eb5);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(91, 44, 131, 0.25);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(91, 44, 131, 0.35);
+}
+
+.pagina-atual {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--cor-dourado);
+    min-width: 60px;
+    text-align: center;
+}
+
+/* SEÇÃO DE EXPLICAÇÃO */
+.explicacao-section {
+    max-width: 860px;
+    width: 100%;
+    margin: 0 auto 50px;
+    padding: 0 20px;
+}
+
+.explicacao-container {
+    background: linear-gradient(135deg, #fffdf5 0%, #faf5eb 100%);
+    border-left: 5px solid var(--cor-dourado);
+    padding: 25px 30px;
+    border-radius: 0 12px 12px 0;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+.explicacao-container h3 {
+    font-family: 'Libre Baskerville', serif;
+    color: #8b6914;
+    margin-bottom: 12px;
+    font-size: 1.3rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.explicacao-conteudo {
+    font-family: 'Inter', sans-serif;
+    color: var(--cor-texto-secundario);
+    line-height: 1.7;
+    font-size: 1rem;
+}
+
+/* FOOTER */
+.suma-footer {
+    background: #1a1a1a;
+    color: #888;
+    text-align: center;
+    padding: 25px 20px;
+    margin-top: auto;
+    font-size: 0.9rem;
+}
+
+/* RESPONSIVIDADE */
+@media (max-width: 768px) {
+    .suma-header h1 { font-size: 1.8rem; }
+    .voltar-index { position: static; display: block; margin-bottom: 15px; text-align: center; }
+    .pagina-texto { padding: 30px 20px; }
+    .pagina-corpo { font-size: 1.05rem; }
+    
+    .navegacao-topo { flex-direction: column; gap: 10px; }
+    .btn-nav { width: 100%; justify-content: center; }
+    
+    .nav-buttons { flex-direction: column; gap: 15px; }
+    .pagina-atual { order: -1; margin-bottom: 5px; }
+    .btn-primary { width: 100%; }
+}
