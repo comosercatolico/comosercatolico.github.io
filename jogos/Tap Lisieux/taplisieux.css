@@ -1,322 +1,649 @@
-*{box-sizing:border-box;margin:0;padding:0;}
-body{background:#1a1a2e;font-family:'Segoe UI',sans-serif;overflow:hidden;color:white;}
-canvas{display:block;position:fixed;top:0;left:0;z-index:0;}
+/* ═══════════════════════════════════════
+   RESET & BASE
+═══════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-/* ===== LOBBY HUD ===== */
-#lobbyHUD{
-    position:fixed;top:0;left:0;right:0;
-    display:flex;justify-content:space-between;align-items:center;
-    padding:8px 14px;
-    background:rgba(10,5,25,0.82);
-    border-bottom:1px solid rgba(123,94,167,0.4);
-    z-index:80;
-    pointer-events:auto;
-}
-#lobbyHUDEsq{display:flex;gap:8px;}
-#lobbyMoedas{display:flex;gap:10px;}
-.moedaHUD{
-    background:rgba(255,255,255,0.08);
-    border:1px solid rgba(123,94,167,0.5);
-    border-radius:20px;
-    padding:5px 14px;
-    font-size:14px;
-    font-weight:bold;
-    color:#eeddff;
+:root {
+    --cor-fundo:      #0b0c1a;
+    --cor-painel:     #12112a;
+    --cor-painel2:    #1a1838;
+    --cor-borda:      #2e2c5a;
+    --cor-acento:     #f5a623;
+    --cor-acento2:    #e8416f;
+    --cor-verde:      #4caf7d;
+    --cor-azul:       #4a90d9;
+    --cor-roxo:       #9b59b6;
+    --cor-texto:      #e8e4f0;
+    --cor-texto2:     #9490b0;
+    --fonte-titulo:   'Cinzel', serif;
+    --fonte-corpo:    'Nunito', sans-serif;
+    --r:              12px;
+    --sombra:         0 4px 24px rgba(0,0,0,0.5);
 }
 
-/* ===== BOTÕES TOPO LOBBY (ESTILO GUARDIAN TALES) ===== */
-.btnTop {
-    background: #ffffff;
-    color: #333;
-    border: 2px solid #d0d8e8;
-    border-radius: 12px; 
-    padding: 8px 12px;
-    font-size: 14px;
-    font-weight: bold;
-    cursor: pointer;
-    box-shadow: 0 3px 0 #aebbd4, 0 4px 6px rgba(0,0,0,0.15);
-    transition: all 0.1s;
+body {
+    background: var(--cor-fundo);
+    font-family: var(--fonte-corpo);
+    color: var(--cor-texto);
+    overflow: hidden;
+    user-select: none;
+}
+
+canvas {
+    display: block;
+    position: fixed;
+    top: 0; left: 0;
+    z-index: 0;
+}
+
+/* ═══════════════════════════════════════
+   LOBBY HUD (TOPO)
+═══════════════════════════════════════ */
+#lobbyHUD {
+    position: fixed;
+    top: 0; left: 0; right: 0;
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    justify-content: center;
-    min-width: 40px;
+    padding: 8px 14px;
+    background: linear-gradient(180deg, rgba(8,7,20,0.95) 0%, rgba(8,7,20,0.7) 100%);
+    border-bottom: 1px solid var(--cor-borda);
+    z-index: 80;
+    backdrop-filter: blur(6px);
 }
 
-.btnTop:hover {
-    background: #f0f4ff;
-    transform: translateY(-1px);
-}
+#lobbyHUDEsq { display: flex; gap: 8px; }
+#lobbyMoedas { display: flex; gap: 8px; align-items: center; }
 
-.btnTop:active {
-    transform: translateY(2px);
-    box-shadow: 0 1px 0 #aebbd4;
+.moedaHUD {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 20px;
+    padding: 5px 14px;
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--cor-texto);
+    backdrop-filter: blur(4px);
+    transition: background 0.2s;
 }
+.moedaHUD:hover { background: rgba(255,255,255,0.1); }
 
-/* ===== BOTÕES DO LOBBY (ESTILO GUARDIAN TALES) ===== */
+.btnTop {
+    background: rgba(255,255,255,0.08);
+    color: var(--cor-texto);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 10px;
+    padding: 7px 12px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.15s;
+    backdrop-filter: blur(4px);
+}
+.btnTop:hover { background: rgba(255,255,255,0.16); transform: translateY(-1px); }
+.btnTop:active { transform: translateY(1px); }
+
+/* ═══════════════════════════════════════
+   BOTÕES DO LOBBY (RODAPÉ)
+═══════════════════════════════════════ */
 #lobbybotoes {
     position: fixed;
-    bottom: 35px;
-    left: 50%;
-    transform: translateX(-50%);
+    bottom: 0; left: 0; right: 0;
     display: flex;
-    gap: 10px;
+    gap: 0;
     z-index: 80;
-    padding: 0 10px;
-    width: 100%;
+    background: linear-gradient(0deg, rgba(8,7,20,0.98) 0%, rgba(8,7,20,0.7) 100%);
+    border-top: 1px solid var(--cor-borda);
+    padding: 10px 20px 20px;
     justify-content: center;
-    flex-wrap: wrap;
+    gap: 12px;
 }
 
 .btnLobby {
-    background: linear-gradient(180deg, #ffffff 0%, #dceefb 100%);
-    color: #2c1f4d;
-    border: 2px solid #ffffff;
-    border-bottom: 4px solid #aebbd4;
-    border-radius: 16px;
-    padding: 12px 20px;
-    font-size: 14px;
-    font-weight: 800;
-    font-family: 'Segoe UI', sans-serif;
-    cursor: pointer;
-    box-shadow: 0 4px 0 #7b8fa3, 0 6px 12px rgba(0,0,0,0.3);
-    transition: all 0.1s;
-    text-shadow: 0 1px 0 rgba(255,255,255,0.8);
     display: flex;
     flex-direction: column;
     align-items: center;
-    min-width: 80px;
+    gap: 4px;
+    background: linear-gradient(160deg, #2a2850 0%, #1a1838 100%);
+    color: var(--cor-texto);
+    border: 1px solid var(--cor-borda);
+    border-radius: 14px;
+    padding: 12px 20px 10px;
+    font-family: var(--fonte-corpo);
+    font-size: 11px;
+    font-weight: 800;
+    cursor: pointer;
+    min-width: 88px;
+    transition: all 0.15s;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.05);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
+.btnLobby:hover { transform: translateY(-3px); filter: brightness(1.2); }
+.btnLobby:active { transform: translateY(0px); }
+.btnLobby .btnIcon { font-size: 22px; }
+.btnLobby .btnLabel { font-size: 11px; }
 
-.btnLobby:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 0 #7b8fa3, 0 8px 16px rgba(0,0,0,0.3);
-    filter: brightness(1.05);
-}
-
-.btnLobby:active {
-    transform: translateY(2px);
-    box-shadow: 0 1px 0 #7b8fa3, 0 2px 4px rgba(0,0,0,0.3);
-    border-bottom-width: 1px;
-}
-
-/* Botão especial para INVOCAR/Gacha */
 .btnLobby.gacha {
-    background: linear-gradient(180deg, #ffd700 0%, #ffaa00 100%);
-    color: #5c3a00;
-    border-bottom: 4px solid #cc8800;
-    box-shadow: 0 4px 0 #cc8800, 0 6px 12px rgba(0,0,0,0.3);
+    background: linear-gradient(160deg, #4a3800 0%, #2d2200 100%);
+    border-color: var(--cor-acento);
+    box-shadow: 0 2px 16px rgba(245,166,35,0.25), inset 0 1px 0 rgba(255,255,255,0.08);
+    color: var(--cor-acento);
+}
+.btnLobby.gacha:hover { box-shadow: 0 4px 24px rgba(245,166,35,0.45); }
+
+.btnLobby.batalha {
+    background: linear-gradient(160deg, #3d0b1a 0%, #240710 100%);
+    border-color: var(--cor-acento2);
+    box-shadow: 0 2px 16px rgba(232,65,111,0.25), inset 0 1px 0 rgba(255,255,255,0.08);
+    color: var(--cor-acento2);
+}
+.btnLobby.batalha:hover { box-shadow: 0 4px 24px rgba(232,65,111,0.45); }
+
+/* ═══════════════════════════════════════
+   MODAIS
+═══════════════════════════════════════ */
+.modalOverlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background: rgba(0,0,0,0.78);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 500;
+    backdrop-filter: blur(3px);
 }
 
-.btnLobby.gacha:hover {
-    box-shadow: 0 6px 0 #cc8800, 0 8px 16px rgba(0,0,0,0.3);
+.modalBox {
+    background: linear-gradient(160deg, #16142e 0%, #0e0c24 100%);
+    border: 1px solid var(--cor-borda);
+    border-radius: 18px;
+    padding: 22px;
+    width: 92%;
+    max-width: 460px;
+    max-height: 88vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.7);
+}
+.modalBox.grande { max-width: 540px; }
+.modalBox.small  { max-width: 360px; }
+.modalBox::-webkit-scrollbar { width: 4px; }
+.modalBox::-webkit-scrollbar-thumb { background: var(--cor-borda); border-radius: 4px; }
+
+.modalTopo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 18px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--cor-borda);
+}
+.modalTopo h2 {
+    font-family: var(--fonte-titulo);
+    font-size: 17px;
+    color: var(--cor-acento);
+    letter-spacing: 1px;
 }
 
-/* ===== MODAIS ===== */
-.modalOverlay{
-    position:fixed;top:0;left:0;width:100vw;height:100vh;
-    background:rgba(0,0,0,0.75);
-    display:flex;align-items:center;justify-content:center;
-    z-index:500;
+.btnFecharModal {
+    background: rgba(232,65,111,0.15);
+    color: var(--cor-acento2);
+    border: 1px solid rgba(232,65,111,0.4);
+    border-radius: 8px;
+    padding: 5px 12px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.15s;
 }
-.modalBox{
-    background:linear-gradient(160deg,#1a0a30,#0d0520);
-    border:2px solid #7b5ea7;border-radius:18px;
-    padding:24px;max-width:480px;width:92%;
-    max-height:85vh;overflow-y:auto;
-    color:white;
-}
-.modalBox.grande{max-width:560px;}
-.modalTopo{
-    display:flex;justify-content:space-between;
-    align-items:center;margin-bottom:16px;
-}
-.modalTopo h2{color:#d4a8ff;font-size:18px;}
-.btnFecharModal{
-    background:rgba(180,30,30,.8);color:white;
-    border:1px solid #ff4444;border-radius:8px;
-    padding:5px 12px;cursor:pointer;font-size:15px;
-}
-#janelaConfig .modalBox{max-width:340px;}
-#janelaConfig h2{color:#d4a8ff;margin-bottom:14px;}
-#janelaConfig input{width:100%;margin-top:8px;}
-#janelaConfig button{
-    background:#7b5ea7;color:white;border:none;
-    border-radius:8px;padding:9px 20px;
-    cursor:pointer;font-size:14px;width:100%;
+.btnFecharModal:hover { background: rgba(232,65,111,0.3); }
+
+.secaoTitulo {
+    color: var(--cor-acento);
+    font-family: var(--fonte-titulo);
+    font-size: 13px;
+    letter-spacing: 1px;
+    margin: 14px 0 8px;
+    text-transform: uppercase;
 }
 
-/* ===== INVOCAR ===== */
-.invocarOpcoes{margin:12px 0;}
-.invocarCard{
-    background:rgba(255,255,255,.06);
-    border:1px solid #7b5ea7;border-radius:12px;padding:14px;
-}
-.invocarCard h4{color:#d4a8ff;margin-bottom:6px;}
-.invocarCard p{font-size:13px;color:#bbb;margin:3px 0;}
-#invocarResultado,#invocarResultado2{
-    font-size:14px;font-weight:bold;min-height:20px;
-    margin-bottom:8px;font-style:italic;
-}
-.heroiTag,.armaTag{
-    display:inline-block;
-    border-radius:8px;padding:4px 10px;
-    font-size:12px;margin:3px;
-    background:rgba(123,94,167,.25);
-    border:1px solid #7b5ea7;color:#eeddff;
-}
+.dica { color: var(--cor-texto2); font-size: 12px; margin-top: 10px; }
+.configLabel { display: block; color: var(--cor-texto2); font-size: 12px; margin-bottom: 6px; margin-top: 10px; }
+.slider { width: 100%; accent-color: var(--cor-acento); }
 
-/* ===== EQUIPAR ===== */
-.personagemCard{
-    display:flex;align-items:center;gap:12px;
-    background:rgba(255,255,255,.06);
-    border-radius:12px;padding:12px;
-    border:1px solid transparent;
+/* ═══════════════════════════════════════
+   GACHA / INVOCAR
+═══════════════════════════════════════ */
+.taxasRaridade {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 14px;
+    flex-wrap: wrap;
 }
-.personagemCard.ativo{border-color:#7b5ea7;}
-.personagemIcone{font-size:36px;width:48px;text-align:center;}
-.badge{
-    margin-left:auto;background:#7b5ea7;
-    padding:4px 10px;border-radius:20px;font-size:12px;
+.taxa {
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 800;
+    border: 1px solid;
 }
+.taxa.comum   { background: rgba(150,150,150,0.15); border-color: #888; color: #bbb; }
+.taxa.raro    { background: rgba(68,136,255,0.15);  border-color: #4488ff; color: #6ba3ff; }
+.taxa.epico   { background: rgba(170,68,255,0.15);  border-color: #aa44ff; color: #c480ff; }
+.taxa.lendario{ background: rgba(255,170,0,0.15);   border-color: var(--cor-acento); color: var(--cor-acento); }
 
-/* ===== UI BATALHA ===== */
-#uiBatalha{
-    position:fixed;top:0;left:0;
-    width:100vw;height:100vh;
-    z-index:200;display:flex;
-    flex-direction:column;
-    pointer-events:none;
+.resultadoInvocar {
+    min-height: 28px;
+    font-size: 15px;
+    font-weight: 800;
+    font-style: italic;
+    margin-bottom: 14px;
+    padding: 8px 12px;
+    background: rgba(255,255,255,0.04);
+    border-radius: 8px;
+    border-left: 3px solid var(--cor-acento);
+    color: var(--cor-acento);
 }
+.resultadoInvocar.small { font-size: 12px; min-height: 20px; padding: 5px 10px; }
+
+.invocarBotoes {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 16px;
+}
+.btnInvocar {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    background: linear-gradient(160deg, #2a2850 0%, #1a1838 100%);
+    border: 1px solid var(--cor-borda);
+    border-radius: 12px;
+    padding: 12px 8px;
+    color: var(--cor-texto);
+    font-family: var(--fonte-corpo);
+    font-weight: 800;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.15s;
+}
+.btnInvocar .custo { font-size: 12px; color: #88eeff; }
+.btnInvocar:hover { filter: brightness(1.2); transform: translateY(-2px); }
+.btnInvocar.destaque {
+    background: linear-gradient(160deg, #4a3800 0%, #2d2200 100%);
+    border-color: var(--cor-acento);
+    color: var(--cor-acento);
+}
+.btnInvocar.small { font-size: 12px; padding: 8px 6px; border-radius: 8px; }
+
+.inventarioGrid { display: flex; flex-direction: column; gap: 12px; }
+.inventarioSecao h4 { color: var(--cor-texto2); font-size: 12px; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
+.gridItens { display: flex; flex-wrap: wrap; gap: 6px; }
+.gridItens.small { gap: 4px; }
+
+.itemTag {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    border-radius: 8px;
+    padding: 4px 10px;
+    font-size: 12px;
+    font-weight: 700;
+    border: 1px solid;
+    background: rgba(0,0,0,0.3);
+    transition: transform 0.1s;
+}
+.itemTag:hover { transform: scale(1.05); }
+
+/* ═══════════════════════════════════════
+   PERSONAGEM / EQUIPAR CARD
+═══════════════════════════════════════ */
+.personagemCard {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(255,255,255,0.04);
+    border-radius: 12px;
+    padding: 12px;
+    border: 1px solid var(--cor-borda);
+    margin-bottom: 8px;
+    transition: border-color 0.2s;
+}
+.personagemCard.ativo { border-color: var(--cor-acento); }
+.personagemIcone { font-size: 38px; width: 52px; text-align: center; }
+.personagemInfo { flex: 1; display: flex; flex-direction: column; gap: 3px; }
+.personagemInfo b { font-size: 14px; }
+.personagemInfo small { color: var(--cor-texto2); font-size: 12px; }
+.badge { background: var(--cor-acento); color: #000; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 800; }
+
+/* ═══════════════════════════════════════
+   UI DE BATALHA
+═══════════════════════════════════════ */
+#uiBatalha {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    z-index: 200;
+    display: flex;
+    flex-direction: column;
+    pointer-events: none;
+}
+/* só os elementos interativos recebem eventos */
 #uiBatalha button,
-#painelUpgradesWrapper,
-#batalhaTopoUI,
-#btnSairBatalha,
-#statsUI{pointer-events:auto;}
+#batalhaNavTopo,
+#painelInferior,
+#statsRapidos,
+#btnSairBatalha { pointer-events: auto; }
 
-/* topo batalha */
-#batalhaTopoUI{
-    position:absolute;top:0;left:0;right:0;
-    display:flex;justify-content:space-between;align-items:center;
-    padding:8px 16px;
-    background:rgba(0,0,0,.6);
-    font-size:14px;font-weight:bold;
+/* ── NAV TOPO (estágio) ── */
+#batalhaNavTopo {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    background: linear-gradient(180deg, rgba(8,7,20,0.96) 0%, transparent 100%);
 }
-#batalhaTopoUI #moedaUI{color:#ffd700;}
-#batalhaTopoUI #gemaUI{color:#88eeff;}
-#estagioUI{color:#d4a8ff;}
 
-/* hp */
-#hpAreaBatalha{
-    position:absolute;top:44px;left:50%;
-    transform:translateX(-50%);
-    text-align:center;width:60%;
+.navBtn {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid var(--cor-borda);
+    border-radius: 8px;
+    padding: 6px 14px;
+    font-size: 16px;
+    color: var(--cor-texto2);
+    cursor: pointer;
+    transition: all 0.15s;
 }
-#nomeInimigo{font-size:14px;font-weight:bold;color:#ffdddd;text-shadow:0 1px 4px #000;margin-bottom:4px;}
-#hpBarraContainer{
-    width:100%;height:16px;
-    background:rgba(0,0,0,.5);
-    border-radius:10px;border:2px solid rgba(255,100,100,.5);
-    overflow:hidden;
-}
-#hpInimigo{
-    height:100%;width:100%;
-    background:linear-gradient(90deg,#ff4444,#ff8888);
-    border-radius:10px;transition:width .2s;
-}
-#hpTexto{font-size:12px;color:#ffaaaa;margin-top:3px;}
+.navBtn:hover { background: rgba(255,255,255,0.15); color: var(--cor-texto); }
 
-/* fala */
-#falaInimigo{
-    position:absolute;top:110px;left:50%;
-    transform:translateX(-50%);
-    background:rgba(30,0,0,.8);
-    border:1px solid #ff4444;border-radius:12px;
-    padding:7px 16px;font-size:13px;color:#ffaaaa;
-    font-style:italic;text-align:center;
-    opacity:0;transition:opacity .4s;
-    pointer-events:none;max-width:65%;white-space:normal;
+#estagioInfo { flex: 1; text-align: center; }
+#estagioNum {
+    font-family: var(--fonte-titulo);
+    font-size: 22px;
+    font-weight: 900;
+    color: var(--cor-acento);
+    line-height: 1;
 }
-#falaInimigo.visivel{opacity:1;}
+#estagioNome { font-size: 11px; color: var(--cor-texto2); }
 
-/* stats */
-#statsUI{
-    position:absolute;
-    bottom:calc(200px + 46px);
-    left:12px;
-    background:rgba(0,0,0,.55);
-    border-radius:10px;padding:7px 12px;
-    font-size:12px;display:flex;flex-direction:column;gap:3px;
+#btnEnfrentarChefe {
+    background: linear-gradient(135deg, #c0392b, #8e1a10);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 8px 14px;
+    font-family: var(--fonte-corpo);
+    font-size: 12px;
+    font-weight: 800;
+    cursor: pointer;
+    box-shadow: 0 2px 10px rgba(192,57,43,0.5);
+    transition: all 0.15s;
 }
-#danoTaqueUI{color:#ffdd88;}
-#dpsUI{color:#aaffcc;}
+#btnEnfrentarChefe:hover { filter: brightness(1.2); transform: scale(1.05); }
 
-/* ===== PAINEL UPGRADES MINIMIZÁVEL ===== */
-#painelUpgradesWrapper{
-    position:absolute;bottom:0;left:0;right:0;
-    pointer-events:auto;
+/* ── BARRA HP ── */
+#hpAreaBatalha {
+    position: absolute;
+    top: 54px; left: 50%;
+    transform: translateX(-50%);
+    width: 58%;
+    min-width: 280px;
 }
-#painelUpgradesHeader{
-    display:flex;justify-content:space-between;align-items:center;
-    padding:6px 12px;
-    background:rgba(20,8,45,.97);
-    border-top:2px solid #7b5ea7;
-}
-#btnMinimizar{
-    background:transparent;color:#d4a8ff;
-    border:1px solid #7b5ea7;border-radius:6px;
-    padding:2px 10px;font-size:16px;cursor:pointer;
-    transition:transform .2s;
-}
-.abaBtn{
-    background:rgba(30,10,60,.85);color:#ccaaff;
-    border:1px solid #7b5ea7;border-radius:8px;
-    padding:5px 10px;font-size:13px;cursor:pointer;transition:all .2s;
-}
-.abaBtn:hover,.abaBtn.ativa{background:#7b5ea7;color:white;}
 
-#painelUpgradesConteudo{
-    max-height:200px;overflow-y:auto;
-    background:rgba(12,6,28,.97);
-    transition:max-height .3s ease;
+#hpNomeRow {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 4px;
 }
-#painelUpgradesConteudo.minimizado{max-height:0;overflow:hidden;}
-
-.painelAba{padding:10px 14px 14px;}
-.painelAba h3,.painelAba h4{color:#d4a8ff;margin-bottom:8px;font-size:14px;}
-
-.upgradeItem{
-    display:flex;justify-content:space-between;align-items:center;
-    background:rgba(255,255,255,.05);
-    border-radius:10px;padding:8px 12px;margin-bottom:6px;
+#nomeInimigo {
+    font-weight: 800;
+    font-size: 13px;
+    color: #ffcccc;
+    text-shadow: 0 0 10px rgba(255,100,100,0.6);
 }
-.upgradeItem b{font-size:13px;}
-.upgradeItem small{color:#aaa;font-size:11px;}
+#hpNumero { font-size: 13px; color: var(--cor-texto2); }
 
-.btnUpgrade{
-    background:linear-gradient(135deg,#7b5ea7,#4a2080);
-    color:white;border:none;border-radius:8px;
-    padding:7px 13px;font-size:12px;cursor:pointer;
-    min-width:110px;transition:all .2s;
+#hpBarraContainer {
+    position: relative;
+    width: 100%;
+    height: 14px;
+    background: rgba(0,0,0,0.5);
+    border-radius: 20px;
+    border: 1px solid rgba(255,100,100,0.35);
+    overflow: hidden;
 }
-.btnUpgrade:hover{filter:brightness(1.2);}
-.btnUpgrade:disabled{background:#444;color:#888;cursor:not-allowed;}
-
-/* sair batalha */
-#btnSairBatalha{
-    position:absolute;top:8px;right:12px;
-    background:rgba(180,30,30,.8);color:white;
-    border:1px solid #ff4444;border-radius:10px;
-    padding:6px 13px;font-size:13px;cursor:pointer;
+#hpInimigo {
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(90deg, #c0392b 0%, #e74c3c 50%, #ff6b6b 100%);
+    border-radius: 20px;
+    transition: width 0.18s ease-out;
+    position: relative;
 }
-#btnSairBatalha:hover{background:#cc0000;}
+#hpBrilho {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 40%;
+    background: rgba(255,255,255,0.15);
+    border-radius: 20px 20px 0 0;
+    pointer-events: none;
+}
 
-/* scrollbar */
-#painelUpgradesConteudo::-webkit-scrollbar{width:4px;}
-#painelUpgradesConteudo::-webkit-scrollbar-thumb{background:#7b5ea7;border-radius:4px;}
-.modalBox::-webkit-scrollbar{width:4px;}
-.modalBox::-webkit-scrollbar-thumb{background:#7b5ea7;border-radius:4px;}
+/* ── MOEDA CENTRO (igual TT2) ── */
+#moedaCentro {
+    position: absolute;
+    top: 100px; left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 26px;
+    font-weight: 900;
+    color: var(--cor-acento);
+    text-shadow: 0 2px 10px rgba(245,166,35,0.6);
+    font-family: var(--fonte-titulo);
+    pointer-events: none;
+}
+#moedaCentroIcon { font-size: 24px; }
 
-/* cards de jogos (página principal) */
+/* ── FALA DO MONSTRO ── */
+#falaInimigo {
+    position: absolute;
+    top: 148px; left: 50%;
+    transform: translateX(-50%);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.4s;
+    z-index: 10;
+}
+#falaInimigo.visivel { opacity: 1; }
+#falaTexto {
+    background: rgba(20, 5, 5, 0.92);
+    border: 1px solid rgba(255, 80, 80, 0.5);
+    border-radius: 12px;
+    padding: 8px 16px;
+    font-size: 13px;
+    color: #ffbbbb;
+    font-style: italic;
+    white-space: nowrap;
+    max-width: 70vw;
+    white-space: normal;
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(255,50,50,0.2);
+}
+
+/* ── PAINEL INFERIOR ── */
+#painelInferior {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+}
+
+#statsRapidos {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 16px;
+    background: rgba(8,7,20,0.92);
+    border-top: 1px solid var(--cor-borda);
+    font-size: 13px;
+    font-weight: 700;
+}
+#danoTaqueUI { color: var(--cor-acento); }
+#moedaUIBatalha { color: #ffd700; }
+#gemaUIBatalha  { color: #88eeff; }
+
+/* ── ABAS RODAPÉ (estilo TT2) ── */
+#abaRodape {
+    display: flex;
+    background: rgba(10,9,25,0.98);
+    border-top: 1px solid var(--cor-borda);
+}
+.abaRodapeBtn {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    padding: 8px 4px 6px;
+    background: transparent;
+    border: none;
+    border-top: 3px solid transparent;
+    color: var(--cor-texto2);
+    font-family: var(--fonte-corpo);
+    font-size: 10px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.15s;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+.abaRodapeBtn .abaIcon { font-size: 18px; }
+.abaRodapeBtn:hover { color: var(--cor-texto); }
+.abaRodapeBtn.ativa {
+    color: var(--cor-acento);
+    border-top-color: var(--cor-acento);
+    background: rgba(245,166,35,0.06);
+}
+
+/* ── CONTEÚDO DA ABA ── */
+#abaConteudo {
+    background: rgba(10,9,25,0.98);
+    border-top: 1px solid var(--cor-borda);
+    overflow-y: auto;
+    max-height: 240px;
+    transition: max-height 0.3s ease;
+}
+#abaConteudo.minimizado { max-height: 0; overflow: hidden; }
+#abaConteudo::-webkit-scrollbar { width: 3px; }
+#abaConteudo::-webkit-scrollbar-thumb { background: var(--cor-borda); border-radius: 3px; }
+
+.abaPanel { padding: 10px 14px 12px; }
+.upgradeScroll { display: flex; flex-direction: column; gap: 6px; }
+
+/* ── ITEM DE UPGRADE ── */
+.upgradeItem {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 10px;
+    padding: 8px 12px;
+    transition: background 0.15s;
+}
+.upgradeItem:hover { background: rgba(255,255,255,0.06); }
+.upIcone { font-size: 22px; width: 28px; text-align: center; }
+.upInfo { flex: 1; display: flex; flex-direction: column; gap: 1px; }
+.upNome { font-size: 13px; font-weight: 800; color: var(--cor-texto); }
+.upDesc { font-size: 11px; color: var(--cor-texto2); }
+
+.btnUp {
+    background: linear-gradient(135deg, #2e5c2e, #1a3a1a);
+    color: #7ee87e;
+    border: 1px solid #3a7a3a;
+    border-radius: 8px;
+    padding: 6px 14px;
+    font-family: var(--fonte-corpo);
+    font-size: 12px;
+    font-weight: 800;
+    cursor: pointer;
+    white-space: nowrap;
+    min-width: 80px;
+    text-align: center;
+    transition: all 0.15s;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+.btnUp:hover { filter: brightness(1.25); transform: scale(1.04); }
+.btnUp:disabled { background: #1a1a28; color: #555; border-color: #333; cursor: not-allowed; transform: none; filter: none; }
+
+/* PRESTIGIAR */
+.prestigiarBox {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: linear-gradient(135deg, rgba(40,30,5,0.8), rgba(30,20,5,0.8));
+    border: 1px solid rgba(245,166,35,0.3);
+    border-radius: 10px;
+    padding: 10px 12px;
+    margin-top: 6px;
+}
+.prestigiarInfo { flex: 1; }
+.prestigiarInfo b { font-size: 13px; color: var(--cor-acento); }
+.prestigiarInfo small { display: block; font-size: 11px; color: var(--cor-texto2); margin-top: 3px; }
+.btnPrestigiar {
+    background: var(--cor-acento);
+    color: #000;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 14px;
+    font-family: var(--fonte-corpo);
+    font-size: 12px;
+    font-weight: 800;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.15s;
+}
+.btnPrestigiar:hover:not(:disabled) { filter: brightness(1.15); }
+.btnPrestigiar:disabled { background: #333; color: #888; cursor: not-allowed; }
+
+/* ── BOTÃO MINIMIZAR ── */
+#btnMinimizar {
+    position: absolute;
+    top: -30px; right: 12px;
+    background: rgba(10,9,25,0.95);
+    border: 1px solid var(--cor-borda);
+    border-bottom: none;
+    border-radius: 8px 8px 0 0;
+    color: var(--cor-texto2);
+    padding: 4px 14px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.15s;
+}
+#btnMinimizar:hover { color: var(--cor-texto); background: rgba(255,255,255,0.06); }
+
+/* ── SAIR BATALHA ── */
+#btnSairBatalha {
+    position: absolute;
+    top: 9px; right: 12px;
+    background: rgba(192,57,43,0.18);
+    color: #ff7b7b;
+    border: 1px solid rgba(192,57,43,0.45);
+    border-radius: 8px;
+    padding: 6px 14px;
+    font-size: 12px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.15s;
+    pointer-events: auto;
+}
+#btnSairBatalha:hover { background: rgba(192,57,43,0.35); color: #fff; }
+
+/* ═══════════════════════════════════════
+   CARDS PÁGINA PRINCIPAL (mantido)
+═══════════════════════════════════════ */
 .jogos-list{display:flex;flex-direction:column;gap:30px;}
 .jogo-card-horizontal{display:flex;background:linear-gradient(145deg,#fff,#f7f7f7);border-radius:16px;overflow:hidden;box-shadow:0 8px 20px rgba(0,0,0,.15);transition:transform .3s,box-shadow .3s;}
 .jogo-card-horizontal:hover{transform:translateY(-5px);box-shadow:0 15px 35px rgba(0,0,0,.25);}
