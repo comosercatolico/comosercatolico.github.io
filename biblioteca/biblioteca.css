@@ -1,92 +1,283 @@
-
 /* =============================
-   ESTILO DA PÁGINA DE BIBLIOTECA
+   BIBLIOTECA - ESTILOS ATUALIZADOS
 ============================= */
 
-/* Cards de livros */
-.biblioteca-list {
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
-    max-width: 900px;
+#inicio {
+    max-width: 1000px;
     margin: 0 auto;
+    padding: 30px 20px;
 }
 
-.livro-card {
+#inicio > h2 {
+    font-family: 'Libre Baskerville', serif;
+    color: #2c1f17;
+    margin-bottom: 10px;
+}
+
+#inicio > p {
+    color: #666;
+    margin-bottom: 40px;
+}
+
+/* DESTAQUE PRINCIPAL - SUMA TEOLÓGICA */
+.destaque-principal {
+    background: linear-gradient(135deg, #fff 0%, #f9f5eb 100%);
+    border: 2px solid #d4af37;
+    border-radius: 20px;
+    padding: 30px;
+    margin-bottom: 50px;
+    position: relative;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+}
+
+.destaque-badge {
+    position: absolute;
+    top: -12px;
+    right: 25px;
+    background: #d4af37;
+    color: white;
+    padding: 5px 20px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+}
+
+.destaque-conteudo {
     display: flex;
-    flex-direction: row;
-    background: linear-gradient(145deg, #fff, #f7f7f7);
-    border-radius: 16px;
+    gap: 30px;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+
+.destaque-capas {
+    flex: 0 0 200px;
+}
+
+.capa-livro {
+    background: linear-gradient(135deg, #e8dfd0, #d4c4b0);
+    border-radius: 10px;
     overflow: hidden;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-    transition: transform 0.3s, box-shadow 0.3s;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    aspect-ratio: 2/3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.livro-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 35px rgba(0,0,0,0.25);
-}
-
-.livro-card .livro-thumb {
-    flex: 0 0 140px;
-}
-
-.livro-card .livro-thumb img {
+.capa-livro img {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
 
-.livro-card .livro-info {
-    padding: 20px 25px;
+.destaque-info {
     flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    min-width: 250px;
 }
 
-.livro-card .livro-info h3 {
+.destaque-info h3 {
     font-family: 'Libre Baskerville', serif;
-    font-size: 1.5rem;
-    margin-bottom: 8px;
+    font-size: 1.8rem;
     color: #2c1f17;
+    margin: 0 0 8px 0;
 }
 
-.livro-card .livro-info p {
-    font-size: 1rem;
+.destaque-info .autor {
+    color: #5b2c83;
+    font-weight: 600;
+    margin-bottom: 15px;
+    font-style: italic;
+}
+
+.destaque-info .descricao {
     color: #555;
+    line-height: 1.7;
     margin-bottom: 20px;
-    line-height: 1.4;
 }
 
-.livro-card .btn-leitura {
-    align-self: flex-start;
+.meta-info {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 25px;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.meta-info span {
+    background: #f0e6d2;
+    padding: 5px 12px;
+    border-radius: 15px;
+}
+
+.progresso-traducao {
+    margin-bottom: 25px;
+}
+
+.progresso-traducao span {
+    display: block;
+    font-weight: 600;
+    color: #2c1f17;
+    margin-bottom: 8px;
+}
+
+.progress-bar {
+    height: 10px;
+    background: #e0e0e0;
+    border-radius: 5px;
+    overflow: hidden;
+    margin-bottom: 5px;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #5b2c83, #d4af37);
+    border-radius: 5px;
+    transition: width 0.5s ease;
+}
+
+.progresso-traducao small {
+    color: #888;
+    font-size: 0.85rem;
+}
+
+.btn-destaque {
     display: inline-block;
+    background: linear-gradient(135deg, #5b2c83, #7a3eb5);
+    color: white;
+    padding: 14px 30px;
+    border-radius: 10px;
     text-decoration: none;
     font-weight: 600;
+    transition: all 0.3s;
+    box-shadow: 0 4px 15px rgba(91, 44, 131, 0.3);
+}
+
+.btn-destaque:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(91, 44, 131, 0.4);
+}
+
+/* SEÇÃO EM BREVE */
+.em-breve {
+    margin: 50px 0;
+}
+
+.em-breve h3 {
+    font-family: 'Libre Baskerville', serif;
+    color: #2c1f17;
+    margin-bottom: 25px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #e8dfd0;
+}
+
+.grid-em-breve {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 20px;
+}
+
+.card-em-breve {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    text-align: center;
+    border: 1px solid #eee;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card-em-breve:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+.placeholder-capas {
+    width: 100%;
+    aspect-ratio: 2/3;
+    background: linear-gradient(135deg, #f5f0e8, #e8dfd0);
+    border-radius: 8px;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #888;
+    font-size: 0.8rem;
+}
+
+.card-em-breve h4 {
+    font-size: 1rem;
+    color: #2c1f17;
+    margin: 0 0 8px 0;
+}
+
+.card-em-breve p {
+    font-size: 0.85rem;
+    color: #666;
+    margin: 0;
+}
+
+/* SEÇÃO CONTRIBUIR */
+.contribuir-info {
+    background: linear-gradient(135deg, #fff9f0, #fff5e6);
+    border-left: 4px solid #d4af37;
+    padding: 25px;
+    border-radius: 0 12px 12px 0;
+    margin: 50px 0;
+}
+
+.contribuir-info h3 {
+    color: #8b6914;
+    margin-bottom: 12px;
+}
+
+.contribuir-info p {
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.btn-secundario {
+    display: inline-block;
+    color: #5b2c83;
+    text-decoration: none;
+    font-weight: 600;
+    padding: 10px 20px;
+    border: 2px solid #5b2c83;
+    border-radius: 8px;
+    transition: all 0.3s;
+}
+
+.btn-secundario:hover {
     background: #5b2c83;
     color: white;
-    padding: 10px 20px;
-    border-radius: 8px;
-    transition: background 0.3s, transform 0.2s;
 }
 
-.livro-card .btn-leitura:hover {
-    background: #4a246a;
-    transform: translateY(-2px);
-}
-
-/* Responsividade */
+/* RESPONSIVIDADE */
 @media (max-width: 768px) {
-    .livro-card {
+    .destaque-conteudo {
         flex-direction: column;
+        text-align: center;
     }
-    .livro-card .livro-thumb {
+    
+    .destaque-capas {
+        flex: none;
         width: 100%;
-        height: 200px;
+        max-width: 200px;
+        margin: 0 auto 25px;
     }
-    .livro-card .livro-info {
-        padding: 15px 20px;
+    
+    .meta-info {
+        justify-content: center;
+    }
+    
+    .grid-em-breve {
+        grid-template-columns: repeat(2, 1fr);
     }
 }
 
+@media (max-width: 480px) {
+    .grid-em-breve {
+        grid-template-columns: 1fr;
+    }
+}
