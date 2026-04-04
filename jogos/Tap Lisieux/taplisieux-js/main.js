@@ -1,45 +1,71 @@
-// =========================
-// IMPORTS (puxa tudo que o jogo precisa iniciar)
-// =========================
-import { initCamera } from "./camera.js";
+// ===================================================
+// MAIN (PONTO CENTRAL DO JOGO)
+// ===================================================
+
+
+// ===================================================
+// IMPORTS
+// ===================================================
+
+// render (loop principal)
+import { iniciarRender } from "./render.js";
+
+// batalha
+import { iniciarBatalha } from "./batalha.js";
+
+// economia
+import { iniciarEnergia, atualizarHUDLobby } from "./economia.js";
+
+// lobby (movimento, santa, objetos)
+import { inicializarLobby } from "./lobby.js";
+
+// câmera
+import { inicializarCamera } from "./camera.js";
+
+// imagens
 import { carregarImagens } from "./imagens.js";
-import { gerarMapa } from "./mapa.js";
-import { loop } from "./loop.js";
-
-import { atualizarHUDLobby } from "./economia.js";
-import { atualizarUIUpgrades } from "./upgrades.js";
-
-// (opcional - se você tiver sistema de invocação separado)
-// import { initInvocacao } from "./invocacao.js";
 
 
-// =========================
-// FUNÇÃO PRINCIPAL (start do jogo)
-// =========================
-function iniciarJogo(){
+// ===================================================
+// INICIALIZAÇÃO DO JOGO
+// ===================================================
+async function iniciarJogo(){
 
-    // 🎥 câmera + canvas
-    initCamera();
+    console.log("🔄 Iniciando jogo...");
 
-    // 🖼️ carregar sprites/imagens
-    carregarImagens();
+    // 1. carregar imagens
+    await carregarImagens();
 
-    // 🗺️ gerar mapa
-    gerarMapa();
+    // 2. iniciar sistemas base
+    inicializarCamera();
+    inicializarLobby();
 
-    // 💰 atualizar interface
+    // 3. economia
+    iniciarEnergia();
     atualizarHUDLobby();
-    atualizarUIUpgrades();
 
-    // 🔮 sistemas extras (se existir)
-    // initInvocacao();
+    // 4. iniciar render (loop principal)
+    iniciarRender();
 
-    // 🔁 iniciar loop do jogo
-    loop();
+    console.log("✅ Jogo iniciado com sucesso!");
 }
 
 
-// =========================
-// START AUTOMÁTICO
-// =========================
+// ===================================================
+// EVENTOS GLOBAIS
+// ===================================================
+
+// botão de iniciar batalha
+const btnBatalha = document.getElementById("btnBatalha");
+
+if(btnBatalha){
+    btnBatalha.addEventListener("click", ()=>{
+        iniciarBatalha();
+    });
+}
+
+
+// ===================================================
+// START
+// ===================================================
 iniciarJogo();
