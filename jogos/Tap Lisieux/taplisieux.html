@@ -2,174 +2,305 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Santa Teresinha Idle</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Nunito:wght@400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="taplisieux.css">
 </head>
 <body>
 
+<!-- ══════════════════════════════════
+     CANVAS (lobby + batalha desenhados aqui)
+══════════════════════════════════ -->
 <canvas id="game"></canvas>
 
-<!-- ===== LOBBY HUD TOPO ===== -->
+<!-- ══════════════════════════════════
+     LOBBY HUD (topo)
+══════════════════════════════════ -->
 <div id="lobbyHUD">
     <div id="lobbyHUDEsq">
         <button class="btnTop" onclick="abrirConfig()">⚙</button>
-        <button class="btnTop" onclick="voltarSite()">⬅</button>
+        <button class="btnTop" onclick="voltarSite()">◀</button>
     </div>
     <div id="lobbyMoedas">
-        <div class="moedaHUD">⚡ <span id="hudEnergiaVal">100/100</span></div>
-        <div class="moedaHUD">🪙 <span id="hudMoedaVal">0</span></div>
-        <div class="moedaHUD">💎 <span id="hudGemaVal">50</span></div>
+        <div class="moedaHUD" title="Energia">⚡ <span id="hudEnergiaVal">100/100</span></div>
+        <div class="moedaHUD" title="Moedas">🪙 <span id="hudMoedaVal">0</span></div>
+        <div class="moedaHUD" title="Gemas">💎 <span id="hudGemaVal">50</span></div>
     </div>
 </div>
 
-<!-- ===== BOTÕES DO LOBBY ===== -->
+<!-- ══════════════════════════════════
+     BOTÕES DO LOBBY (rodapé)
+══════════════════════════════════ -->
 <div id="lobbybotoes">
-    <button class="btnLobby" onclick="abrirModalInvocar()">✨ Invocar</button>
-    <button class="btnLobby" onclick="abrirModalEquipar()">🗡 Equipar</button>
-    <button class="btnLobby" id="btnBatalhar" onclick="iniciarBatalha()">⚔ Batalhar</button>
+    <button class="btnLobby gacha" onclick="abrirModalInvocar()">
+        <span class="btnIcon">✨</span>
+        <span class="btnLabel">Invocar</span>
+    </button>
+    <button class="btnLobby batalha" onclick="iniciarBatalha()">
+        <span class="btnIcon">⚔</span>
+        <span class="btnLabel">Batalhar</span>
+    </button>
+    <button class="btnLobby" onclick="abrirModalEquipar()">
+        <span class="btnIcon">🗡</span>
+        <span class="btnLabel">Equipar</span>
+    </button>
 </div>
 
-<!-- ===== CONFIG ===== -->
-<div id="janelaConfig" class="modalOverlay" style="display:none;">
-    <div class="modalBox">
-        <h2>⚙ Configurações</h2>
-        <label>Volume</label>
-        <input type="range" min="0" max="1" step="0.01" id="volumeSlider">
-        <button onclick="fecharConfig()" style="margin-top:16px;">Fechar</button>
+<!-- ══════════════════════════════════
+     MODAL: CONFIGURAÇÕES
+══════════════════════════════════ -->
+<div id="janelaConfig" class="modalOverlay" style="display:none;" onclick="fecharSeForaModal(event,'janelaConfig')">
+    <div class="modalBox small">
+        <div class="modalTopo">
+            <h2>⚙ Configurações</h2>
+            <button class="btnFecharModal" onclick="fecharConfig()">✕</button>
+        </div>
+        <label class="configLabel">Volume da música</label>
+        <input type="range" class="slider" min="0" max="1" step="0.01" id="volumeSlider">
+        <label class="configLabel" style="margin-top:14px;">Efeitos sonoros</label>
+        <input type="range" class="slider" min="0" max="1" step="0.01" id="sfxSlider">
     </div>
 </div>
 
-<!-- ===== MODAL INVOCAR ===== -->
-<div id="modalInvocar" class="modalOverlay" style="display:none;">
+<!-- ══════════════════════════════════
+     MODAL: INVOCAR (GACHA)
+══════════════════════════════════ -->
+<div id="modalInvocar" class="modalOverlay" style="display:none;" onclick="fecharSeForaModal(event,'modalInvocar')">
     <div class="modalBox grande">
         <div class="modalTopo">
-            <h2>✨ Invocação Sagrada</h2>
+            <h2>✨ Convocação Sagrada</h2>
             <button class="btnFecharModal" onclick="fecharModal('modalInvocar')">✕</button>
         </div>
-        <div id="invocarResultado"></div>
-        <div class="invocarOpcoes">
-            <div class="invocarCard">
-                <h4>Convocação Celestial</h4>
-                <p>Chance de obter heróis e armas raras</p>
-                <p>💎 <b>100 Gemas por invocação</b></p>
-                <div style="display:flex;gap:8px;margin-top:10px;">
-                    <button class="btnUpgrade" onclick="invocar(1)">Invocar x1</button>
-                    <button class="btnUpgrade" onclick="invocar(10)">Invocar x10</button>
-                </div>
+
+        <!-- Taxas de raridade -->
+        <div class="taxasRaridade">
+            <span class="taxa comum">Comum 74%</span>
+            <span class="taxa raro">Raro 20%</span>
+            <span class="taxa epico">Épico 4%</span>
+            <span class="taxa lendario">Lendário 1%</span>
+        </div>
+
+        <div id="invocarResultado" class="resultadoInvocar"></div>
+
+        <div class="invocarBotoes">
+            <button class="btnInvocar" onclick="invocar(1)">
+                <span>Invocar x1</span>
+                <span class="custo">💎 100</span>
+            </button>
+            <button class="btnInvocar destaque" onclick="invocar(10)">
+                <span>Invocar x10</span>
+                <span class="custo">💎 1.000</span>
+            </button>
+        </div>
+
+        <div class="inventarioGrid">
+            <div class="inventarioSecao">
+                <h4>👤 Heróis obtidos</h4>
+                <div id="listaHerois" class="gridItens"></div>
+            </div>
+            <div class="inventarioSecao">
+                <h4>🌹 Armas obtidas</h4>
+                <div id="listaEquipamentos" class="gridItens"></div>
             </div>
         </div>
-        <h4 style="margin-top:12px;color:#d4a8ff;">Heróis obtidos:</h4>
-        <div id="listaHerois"></div>
-        <h4 style="margin-top:8px;color:#d4a8ff;">Armas obtidas:</h4>
-        <div id="listaEquipamentos"></div>
     </div>
 </div>
 
-<!-- ===== MODAL EQUIPAR ===== -->
-<div id="modalEquipar" class="modalOverlay" style="display:none;">
+<!-- ══════════════════════════════════
+     MODAL: EQUIPAR
+══════════════════════════════════ -->
+<div id="modalEquipar" class="modalOverlay" style="display:none;" onclick="fecharSeForaModal(event,'modalEquipar')">
     <div class="modalBox grande">
         <div class="modalTopo">
             <h2>🗡 Equipamentos</h2>
             <button class="btnFecharModal" onclick="fecharModal('modalEquipar')">✕</button>
         </div>
+
         <div class="personagemCard ativo">
             <div class="personagemIcone">🌸</div>
-            <div>
-                <b>Santa Teresinha</b><br>
+            <div class="personagemInfo">
+                <b>Santa Teresinha</b>
                 <small>Lv. <span id="santaLvUI">1</span> &nbsp;|&nbsp; Arma: Rosas Sagradas 🌹</small>
             </div>
             <span class="badge">Ativo</span>
         </div>
-        <h4 style="margin-top:12px;color:#d4a8ff;">Armas disponíveis:</h4>
+
+        <h4 class="secaoTitulo">Armas disponíveis</h4>
         <div id="listaEquipamentosEquipar"></div>
-        <p style="color:#aaa;font-size:12px;margin-top:10px;">Obtenha armas via invocação!</p>
+        <p class="dica">Obtenha armas via invocação!</p>
     </div>
 </div>
 
-<!-- ===== UI DE BATALHA ===== -->
+<!-- ══════════════════════════════════
+     UI DE BATALHA (overlay sobre canvas)
+══════════════════════════════════ -->
 <div id="uiBatalha" style="display:none;">
 
-    <div id="batalhaTopoUI">
-        <div id="estagioUI">⚔ Estágio <span id="estagioNum">1</span></div>
-        <div style="display:flex;gap:14px;">
-            <span id="moedaUI">🪙 0</span>
-            <span id="gemaUI">💎 50</span>
+    <!-- TOPO: estágio + botões de navegação (igual TT2) -->
+    <div id="batalhaNavTopo">
+        <div id="btnEstagioAnterior" class="navBtn" onclick="irEstagioAnterior()">◀</div>
+        <div id="estagioInfo">
+            <div id="estagioNum">1</div>
+            <div id="estagioNome">Jardim das Sombras</div>
         </div>
+        <div id="btnProximoEstagio" class="navBtn" onclick="irProximoEstagio()">▶</div>
+        <button id="btnEnfrentarChefe" onclick="irParaChefe()">👿 Enfrentar Chefe</button>
     </div>
 
+    <!-- BARRA HP INIMIGO (estilo TT2: no topo central) -->
     <div id="hpAreaBatalha">
-        <p id="nomeInimigo">Inimigo</p>
-        <div id="hpBarraContainer"><div id="hpInimigo"></div></div>
-        <p id="hpTexto"></p>
-    </div>
-
-    <div id="falaInimigo"></div>
-
-    <div id="statsUI">
-        <span id="danoTaqueUI">👆 0</span>
-        <span id="dpsUI">⚡ 0 DPS</span>
-    </div>
-
-    <!-- PAINEL MINIMIZÁVEL -->
-    <div id="painelUpgradesWrapper">
-        <div id="painelUpgradesHeader">
-            <div style="display:flex;gap:6px;">
-                <button class="abaBtn ativa" onclick="abrirAba('upgrades',event)">⬆ Up</button>
-                <button class="abaBtn" onclick="abrirAba('personagens',event)">👤</button>
-                <button class="abaBtn" onclick="abrirAba('invocacao',event)">✨</button>
-                <button class="abaBtn" onclick="abrirAba('equipamentos',event)">🌹</button>
-            </div>
-            <button id="btnMinimizar" onclick="toggleUpgrades()">▼</button>
+        <div id="hpNomeRow">
+            <span id="nomeInimigo">Demônio</span>
+            <span id="hpNumero">100 / 100</span>
         </div>
-
-        <div id="painelUpgradesConteudo">
-            <div id="painelUpgrades" class="painelAba">
-                <div class="upgradeItem">
-                    <div><b>⚔ Força</b><br><small id="forcaAtualTxt"></small></div>
-                    <button class="btnUpgrade" onclick="comprarUpgrade('forca')" id="btnForca"></button>
-                </div>
-                <div class="upgradeItem">
-                    <div><b>🌹 Rosas</b><br><small id="rosaAtualTxt"></small></div>
-                    <button class="btnUpgrade" onclick="comprarUpgrade('rosa')" id="btnRosa"></button>
-                </div>
-                <div class="upgradeItem">
-                    <div><b>⚡ Veloc.</b><br><small id="velAtualTxt"></small></div>
-                    <button class="btnUpgrade" onclick="comprarUpgrade('velocidade')" id="btnVelocidade"></button>
-                </div>
-                <div class="upgradeItem">
-                    <div><b>🙏 DPS</b><br><small id="dpsAtualTxt"></small></div>
-                    <button class="btnUpgrade" onclick="comprarUpgrade('dps')" id="btnDps"></button>
-                </div>
-            </div>
-
-            <div id="painelPersonagens" class="painelAba" style="display:none;">
-                <div class="personagemCard ativo">
-                    <div class="personagemIcone">🌸</div>
-                    <div><b>Santa Teresinha</b><br><small>Lv. <span id="santaLvUI2">1</span></small></div>
-                    <span class="badge">Ativo</span>
-                </div>
-            </div>
-
-            <div id="painelInvocacao" class="painelAba" style="display:none;">
-                <div id="invocarResultado2" style="font-size:13px;color:#ffd700;margin-bottom:8px;min-height:18px;"></div>
-                <div style="display:flex;gap:8px;">
-                    <button class="btnUpgrade" onclick="invocar(1)">✨ x1 (💎100)</button>
-                    <button class="btnUpgrade" onclick="invocar(10)">✨ x10 (💎1k)</button>
-                </div>
-                <div id="listaHerois2" style="display:flex;flex-wrap:wrap;gap:5px;margin-top:8px;"></div>
-            </div>
-
-            <div id="painelEquipamentos" class="painelAba" style="display:none;">
-                <div id="listaEquipamentos2" style="display:flex;flex-wrap:wrap;gap:5px;"></div>
-                <p style="color:#aaa;font-size:12px;margin-top:6px;">Obtenha armas via invocação!</p>
-            </div>
+        <div id="hpBarraContainer">
+            <div id="hpInimigo"></div>
+            <div id="hpBrilho"></div>
         </div>
     </div>
 
-    <button id="btnSairBatalha" onclick="sairBatalha()">❌ Sair</button>
-</div>
+    <!-- MOEDAS CAINDO (igual TT2: moeda grande no centro) -->
+    <div id="moedaCentro">
+        <span id="moedaCentroIcon">🪙</span>
+        <span id="moedaCentroVal">0</span>
+    </div>
 
+    <!-- FALA DO MONSTRO (balão de fala) -->
+    <div id="falaInimigo">
+        <div id="falaTexto"></div>
+    </div>
+
+    <!-- PAINEL INFERIOR (estilo TT2 completo) -->
+    <div id="painelInferior">
+
+        <!-- BARRA de stats rápidos (dano / DPS) -->
+        <div id="statsRapidos">
+            <span id="danoTaqueUI">👆 0 Dano de Toque</span>
+            <span id="gemaUIBatalha">💎 50</span>
+            <span id="moedaUIBatalha">🪙 0</span>
+        </div>
+
+        <!-- ABAS (igual TT2: ícones no rodapé) -->
+        <div id="abaRodape">
+            <button class="abaRodapeBtn ativa" data-aba="upgrades" onclick="abrirAba('upgrades',this)">
+                <span class="abaIcon">⬆</span>
+                <span class="abaTexto">Habilidades</span>
+            </button>
+            <button class="abaRodapeBtn" data-aba="herois" onclick="abrirAba('herois',this)">
+                <span class="abaIcon">👤</span>
+                <span class="abaTexto">Heróis</span>
+            </button>
+            <button class="abaRodapeBtn" data-aba="armas" onclick="abrirAba('armas',this)">
+                <span class="abaIcon">🌹</span>
+                <span class="abaTexto">Armas</span>
+            </button>
+            <button class="abaRodapeBtn" data-aba="invocacao" onclick="abrirAba('invocacao',this)">
+                <span class="abaIcon">✨</span>
+                <span class="abaTexto">Invocar</span>
+            </button>
+        </div>
+
+        <!-- CONTEÚDO DA ABA -->
+        <div id="abaConteudo">
+
+            <!-- ABA UPGRADES (habilidades de Santa) -->
+            <div id="abaUpgrades" class="abaPanel">
+                <div class="upgradeScroll">
+                    <div class="upgradeItem" id="upForca">
+                        <div class="upIcone">⚔</div>
+                        <div class="upInfo">
+                            <span class="upNome">Força de Ataque</span>
+                            <span class="upDesc" id="forcaDesc">Nv.1 · +5 dano/toque</span>
+                        </div>
+                        <button class="btnUp" onclick="comprarUpgrade('forca')" id="btnForca">🪙 15</button>
+                    </div>
+                    <div class="upgradeItem" id="upRosa">
+                        <div class="upIcone">🌹</div>
+                        <div class="upInfo">
+                            <span class="upNome">Poder das Rosas</span>
+                            <span class="upDesc" id="rosaDesc">Nv.1 · +3 dano/toque</span>
+                        </div>
+                        <button class="btnUp" onclick="comprarUpgrade('rosa')" id="btnRosa">🪙 20</button>
+                    </div>
+                    <div class="upgradeItem" id="upVel">
+                        <div class="upIcone">⚡</div>
+                        <div class="upInfo">
+                            <span class="upNome">Rapidez Celestial</span>
+                            <span class="upDesc" id="velDesc">Nv.1 · x1 velocidade</span>
+                        </div>
+                        <button class="btnUp" onclick="comprarUpgrade('velocidade')" id="btnVelocidade">🪙 30</button>
+                    </div>
+                    <div class="upgradeItem" id="upDps">
+                        <div class="upIcone">🙏</div>
+                        <div class="upInfo">
+                            <span class="upNome">Fé Passiva (DPS)</span>
+                            <span class="upDesc" id="dpsDesc">Nv.1 · +2 DPS</span>
+                        </div>
+                        <button class="btnUp" onclick="comprarUpgrade('dps')" id="btnDps">🪙 25</button>
+                    </div>
+                    <!-- Prestigiar (igual TT2) -->
+                    <div class="prestigiarBox">
+                        <div class="prestigiarInfo">
+                            <b>🌟 Prestigiar</b>
+                            <small>Reinicie em troca de Relíquias Sagradas. Disponível no Estágio 60.</small>
+                        </div>
+                        <button class="btnPrestigiar" id="btnPrestigiar" onclick="prestigiar()" disabled>Alcance o Est. 60</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ABA HERÓIS -->
+            <div id="abaHerois" class="abaPanel" style="display:none;">
+                <div class="upgradeScroll" id="listaHeroisBatalha">
+                    <div class="personagemCard ativo">
+                        <div class="personagemIcone">🌸</div>
+                        <div class="personagemInfo">
+                            <b>Santa Teresinha</b>
+                            <small>Lv. <span id="santaLvUI2">1</span> · Rosas Sagradas</small>
+                        </div>
+                        <span class="badge">Ativo</span>
+                    </div>
+                    <p class="dica">Invoque heróis para trazê-los para a batalha!</p>
+                </div>
+            </div>
+
+            <!-- ABA ARMAS -->
+            <div id="abaArmas" class="abaPanel" style="display:none;">
+                <div class="upgradeScroll" id="listaArmasBatalha">
+                    <p class="dica">Nenhuma arma extra ainda. Invoque para obter!</p>
+                </div>
+            </div>
+
+            <!-- ABA INVOCAÇÃO (dentro da batalha) -->
+            <div id="abaInvocacao" class="abaPanel" style="display:none;">
+                <div id="invocarResultado2" class="resultadoInvocar small"></div>
+                <div style="display:flex;gap:8px;margin-bottom:10px;">
+                    <button class="btnInvocar small" onclick="invocar(1)">✨ x1 · 💎100</button>
+                    <button class="btnInvocar small destaque" onclick="invocar(10)">✨ x10 · 💎1k</button>
+                </div>
+                <div id="listaHeroisBatalha2" class="gridItens small"></div>
+            </div>
+
+        </div><!-- /abaConteudo -->
+
+        <!-- BOTÃO MINIMIZAR (igual TT2) -->
+        <button id="btnMinimizar" onclick="togglePainel()">▲</button>
+
+    </div><!-- /painelInferior -->
+
+    <!-- BOTÃO SAIR -->
+    <button id="btnSairBatalha" onclick="sairBatalha()">✕ Sair</button>
+
+</div><!-- /uiBatalha -->
+
+<!-- ══════════════════════════════════
+     SCRIPTS (ordem importa!)
+══════════════════════════════════ -->
+<script src="game-lobby.js"></script>
+<script src="game-batalha.js"></script>
+<script src="game-ui.js"></script>
 <script src="taplisieux.js"></script>
 </body>
 </html>
