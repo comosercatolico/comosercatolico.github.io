@@ -8,40 +8,141 @@
 </head>
 <body>
 
-    <!-- MENU TOPO -->
-    <div id="menuTopo">
-        <button class="btnTop" onclick="abrirConfig()">⚙</button>
-        <button class="btnTop" onclick="voltarSite()">⬅</button>
+<!-- MENU TOPO -->
+<div id="menuTopo">
+    <button class="btnTop" onclick="abrirConfig()">⚙</button>
+    <button class="btnTop" onclick="voltarSite()">⬅</button>
+</div>
+
+<!-- JANELA DE CONFIGURAÇÕES -->
+<div id="janelaConfig" style="display:none;">
+    <h2>Configurações</h2>
+    <label>Volume</label>
+    <input type="range" min="0" max="1" step="0.01" id="volumeSlider">
+    <br><br>
+    <button onclick="fecharConfig()">Fechar</button>
+</div>
+
+<!-- CANVAS DO JOGO -->
+<canvas id="game"></canvas>
+
+<!-- BOTÃO DE BATALHAR -->
+<button id="btnBatalhar" onclick="iniciarBatalha()">⚔ Batalhar</button>
+
+<!-- ===================== UI DE BATALHA ===================== -->
+<div id="uiBatalha" style="display:none;">
+
+    <!-- TOPO: moedas e gemas -->
+    <div id="batalhaTopoUI">
+        <span id="moedaUI">🪙 0</span>
+        <span id="gemaUI">💎 0</span>
+    </div>
+
+    <!-- BARRA DE HP INIMIGO -->
+    <div id="hpBarraContainer">
+        <div id="hpInimigo"></div>
+    </div>
+    <p id="nomeInimigo"></p>
+    <p id="hpTexto"></p>
+
+    <!-- FALA PROVOCADORA DO INIMIGO -->
+    <div id="falaInimigo"></div>
+
+    <!-- NÍVEL / ESTÁGIO -->
+    <div id="estagioUI"></div>
+
+    <!-- DPS E DANO DE TOQUE -->
+    <div id="statsUI">
+        <span id="danoTaqueUI"></span>
+        <span id="dpsUI"></span>
+    </div>
+
+    <!-- ABAS INFERIORES -->
+    <div id="abasInferiores">
+        <button class="abaBtn ativa" onclick="abrirAba('upgrades')">⬆ Upgrades</button>
+        <button class="abaBtn" onclick="abrirAba('personagens')">👤 Personagens</button>
+        <button class="abaBtn" onclick="abrirAba('invocacao')">✨ Invocar</button>
+        <button class="abaBtn" onclick="abrirAba('equipamentos')">🌹 Armas</button>
+    </div>
+
+    <!-- PAINEL UPGRADES -->
+    <div id="painelUpgrades" class="painelAba">
+        <h3>Upgrades de Santa Teresinha</h3>
+        <div class="upgradeItem">
+            <div>
+                <b>⚔ Força de Ataque</b><br>
+                <small id="forcaAtualTxt"></small>
+            </div>
+            <button onclick="comprarUpgrade('forca')" id="btnForca"></button>
+        </div>
+        <div class="upgradeItem">
+            <div>
+                <b>🌹 Poder das Rosas</b><br>
+                <small id="rosaAtualTxt"></small>
+            </div>
+            <button onclick="comprarUpgrade('rosa')" id="btnRosa"></button>
+        </div>
+        <div class="upgradeItem">
+            <div>
+                <b>⚡ Velocidade de Click</b><br>
+                <small id="velAtualTxt"></small>
+            </div>
+            <button onclick="comprarUpgrade('velocidade')" id="btnVelocidade"></button>
+        </div>
+        <div class="upgradeItem">
+            <div>
+                <b>🙏 DPS Passivo (Fé)</b><br>
+                <small id="dpsAtualTxt"></small>
+            </div>
+            <button onclick="comprarUpgrade('dps')" id="btnDps"></button>
+        </div>
+    </div>
+
+    <!-- PAINEL PERSONAGENS -->
+    <div id="painelPersonagens" class="painelAba" style="display:none;">
+        <h3>Personagens</h3>
+        <div class="personagemCard ativo">
+            <div class="personagemIcone">🌸</div>
+            <div>
+                <b>Santa Teresinha</b><br>
+                <small>Lv. <span id="santaLvUI">1</span></small><br>
+                <small>Arma: Rosas Sagradas 🌹</small>
+            </div>
+            <span class="badge">Ativo</span>
+        </div>
+        <p style="color:#aaa; font-size:13px; margin-top:10px;">Novos personagens serão desbloqueados via invocação!</p>
+    </div>
+
+    <!-- PAINEL INVOCAÇÃO -->
+    <div id="painelInvocacao" class="painelAba" style="display:none;">
+        <h3>✨ Invocação</h3>
+        <div id="invocarResultado"></div>
+        <div class="invocarOpcoes">
+            <div class="invocarCard">
+                <h4>Invocação Simples</h4>
+                <p>Chance de obter heróis e armas raras</p>
+                <p>💎 <b>100 Gemas</b></p>
+                <button onclick="invocar(1)">Invocar x1</button>
+                <button onclick="invocar(10)">Invocar x10</button>
+            </div>
+        </div>
+        <div id="inventarioInvocado">
+            <h4>Heróis obtidos:</h4>
+            <div id="listaHerois"></div>
+        </div>
+    </div>
+
+    <!-- PAINEL EQUIPAMENTOS -->
+    <div id="painelEquipamentos" class="painelAba" style="display:none;">
+        <h3>🌹 Equipamentos de Santa Teresinha</h3>
+        <div id="listaEquipamentos"></div>
+        <p style="color:#aaa; font-size:13px;">Obtenha armas via invocação!</p>
     </div>
 
     <!-- BOTÃO SAIR DA BATALHA -->
-    <button onclick="sairBatalha()" style="position:fixed; top:20px; right:20px;">
-        ❌ Sair
-    </button>
+    <button id="btnSairBatalha" onclick="sairBatalha()">❌ Sair</button>
+</div>
 
-    <!-- JANELA DE CONFIGURAÇÕES -->
-    <div id="janelaConfig" style="display:none;">
-        <h2>Configurações</h2>
-        <label>Volume</label>
-        <input type="range" min="0" max="1" step="0.01" id="volumeSlider">
-        <p id="ouroUI"></p>
-        <br><br>
-        <button onclick="fecharConfig()">Fechar</button>
-    </div>
-
-    <!-- CANVAS DO JOGO -->
-    <canvas id="game"></canvas>
-
-    <!-- BOTÃO DE BATALHAR -->
-    <button id="btnBatalhar" onclick="iniciarBatalha()">⚔ Batalhar</button>
-
-    <!-- UI DE BATALHA -->
-    <div id="uiBatalha" style="display:none;">
-        <div id="hpInimigo"></div>
-        <p id="nomeInimigo"></p>
-    </div>
-
-    <!-- SCRIPT DO JOGO (NO FINAL PARA GARANTIR QUE O DOM EXISTE) -->
-    <script src="taplisieux.js"></script>
+<script src="taplisieux.js"></script>
 </body>
 </html>
