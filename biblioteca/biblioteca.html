@@ -43,49 +43,82 @@
 
 <main id="inicio">
   <h2>Biblioteca</h2>
-  <p>Explore nossa seleção de livros e materiais inspirados na fé católica. Clique para ler ou baixar!</p>
+  <p>Explore nossa seleção de obras fundamentais da fé católica. Novos títulos serão adicionados gradualmente.</p>
 
-  <div class="biblioteca-list">
-    <!-- Livro 1 -->
-    <div class="livro-card">
-      <div class="livro-thumb">
-        <img src="capas/livros/teresinha.jpg" alt="História de Santa Teresinha">
+  <!-- DESTAQUE: SUMA TEOLÓGICA -->
+  <div class="destaque-principal">
+    <div class="destaque-badge">★ Em Tradução</div>
+    <div class="destaque-conteudo">
+      <div class="destaque-capas">
+        <div class="capa-livro">
+          <img src="suma-teologica/capa-suma.jpg" alt="Suma Teológica" onerror="this.src='https://via.placeholder.com/200x280/e8dfd0/2c1f17?text=Suma+Teológica'">
+        </div>
       </div>
-      <div class="livro-info">
-        <h3>História de Santa Teresinha</h3>
-        <p>Conheça a vida e os ensinamentos de Santa Teresinha do Menino Jesus, a pequena flor de Deus.</p>
-        <a href="livros/teresinha.html" class="btn-leitura">Ler</a>
-      </div>
-    </div>
-
-    <!-- Livro 2 -->
-    <div class="livro-card">
-      <div class="livro-thumb">
-        <img src="capas/livros/biblia.jpg" alt="Bíblia Sagrada">
-      </div>
-      <div class="livro-info">
-        <h3>Bíblia Sagrada</h3>
-        <p>Leia a Palavra de Deus em uma versão interativa e comentada, acessível a todos os fiéis.</p>
-        <a href="livros/biblia.html" class="btn-leitura">Ler</a>
-      </div>
-    </div>
-
-    <!-- Livro 3 -->
-    <div class="livro-card">
-      <div class="livro-thumb">
-        <img src="capas/livros/catecismo.jpg" alt="Catecismo da Igreja Católica">
-      </div>
-      <div class="livro-info">
-        <h3>Catecismo da Igreja Católica</h3>
-        <p>Aprenda os fundamentos da fé católica com explicações claras e referências bíblicas.</p>
-        <a href="livros/catecismo.html" class="btn-leitura">Ler</a>
+      <div class="destaque-info">
+        <h3>Suma Teológica</h3>
+        <p class="autor">São Tomás de Aquino (1225-1274)</p>
+        <p class="descricao">A obra-prima da teologia católica. Uma síntese monumental da fé e da razão, organizada em mais de 3.000 artigos que abordam Deus, a criação, a moral, os sacramentos e o fim último do homem.</p>
+        
+        <div class="meta-info">
+          <span><strong>Partes:</strong> I, I-II, II-II, III</span>
+          <span><strong>Artigos:</strong> ~3.000</span>
+          <span><strong>Tradução:</strong> Em andamento</span>
+        </div>
+        
+        <div class="progresso-traducao">
+          <span>Progresso da tradução:</span>
+          <div class="progress-bar">
+            <div class="progress-fill" style="width: 2%"></div>
+          </div>
+          <small>~60 de 3.000 artigos traduzidos</small>
+        </div>
+        
+        <a href="suma-teologica/index.html" class="btn-destaque">
+          📖 Acessar Suma Teológica
+        </a>
       </div>
     </div>
   </div>
+
+  <!-- SEÇÃO: EM BREVE -->
+  <section class="em-breve">
+    <h3>📚 Em breve nesta biblioteca</h3>
+    <div class="grid-em-breve">
+      <div class="card-em-breve">
+        <div class="placeholder-capas"></div>
+        <h4>Catecismo da Igreja Católica</h4>
+        <p>Compêndio oficial da doutrina católica</p>
+      </div>
+      <div class="card-em-breve">
+        <div class="placeholder-capas"></div>
+        <h4>Confissões</h4>
+        <p>Santo Agostinho</p>
+      </div>
+      <div class="card-em-breve">
+        <div class="placeholder-capas"></div>
+        <h4>Imitação de Cristo</h4>
+        <p>Tomás de Kempis</p>
+      </div>
+      <div class="card-em-breve">
+        <div class="placeholder-capas"></div>
+        <h4>Diálogo da Divina Providência</h4>
+        <p>Santa Catarina de Sena</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- INFO: CONTRIBUIR -->
+  <section class="contribuir-info">
+    <h3>🤝 Deseja contribuir?</h3>
+    <p>Este projeto de tradução da <em>Suma Teológica</em> é construído com dedicação. Se você domina o latim, o inglês ou tem conhecimentos de teologia e deseja ajudar na tradução ou revisão, entre em contato conosco.</p>
+    <a href="../sobre.html#contato" class="btn-secundario">Saiba como participar</a>
+  </section>
+
 </main>
 
 <footer>
-© 2026 – Lux Fidei
+  <p>© 2026 – Lux Fidei • Luz da Fé Católica</p>
+  <p style="font-size: 0.9rem; opacity: 0.8;">"A verdade é o bem do intelecto." — São Tomás de Aquino</p>
 </footer>
 
 <!-- JAVASCRIPT -->
@@ -103,6 +136,7 @@ const indicator = document.querySelector(".menu-indicator");
 const items = document.querySelectorAll(".menu-item");
 
 function updateIndicator(el) {
+  if (!indicator || !el) return;
   const menuRect = el.parentElement.getBoundingClientRect();
   const elRect = el.getBoundingClientRect();
   const left = elRect.left - menuRect.left;
