@@ -1,137 +1,488 @@
-/* BOTÃO BATALHAR */
-#btnBatalhar{
-    position: fixed;
-    bottom: 20px;
-    left: 20px;
-    padding: 15px 25px;
-    font-size: 18px;
-    background: #8e44ad;
-    color: white;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-}
+/* =============================================
+   RESET E BASE
+============================================= */
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
-/* UI DE BATALHA */
-#uiBatalha{
-    position: fixed;
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: none;
-    text-align: center;
+body {
+    background: #1a1a2e;
+    font-family: 'Segoe UI', sans-serif;
+    overflow: hidden;
     color: white;
 }
 
-/* BARRA DE VIDA */
-#hpInimigo{
-    width: 300px;
-    height: 20px;
-    background: red;
-    margin-bottom: 10px;
+canvas {
+    display: block;
+    position: fixed;
+    top: 0; left: 0;
+    z-index: 0;
 }
 
-/* MENU TOPO DO JOGO */
-#menuTopo{
+/* =============================================
+   MENU TOPO
+============================================= */
+#menuTopo {
     position: fixed;
     top: 10px;
     left: 10px;
     display: flex;
-    gap: 10px;
-    z-index: 10;
+    gap: 8px;
+    z-index: 100;
 }
 
-/* BOTÕES DO TOPO */
-.btnTop{
-    width: 50px;
-    height: 50px;
-    border-radius: 12px;
-    border: none;
-    font-size: 20px;
+.btnTop {
+    background: rgba(30,30,60,0.85);
+    color: white;
+    border: 2px solid #7b5ea7;
+    border-radius: 10px;
+    padding: 8px 14px;
+    font-size: 18px;
     cursor: pointer;
-
-    background: rgba(0,0,0,0.6);
-    color: white;
-
-    backdrop-filter: blur(6px);
-
-    transition: 0.2s;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    transition: all 0.2s;
 }
+.btnTop:hover { background: #7b5ea7; }
 
-.btnTop:hover{
-    transform: scale(1.1);
-    background: rgba(142, 68, 173, 0.8);
-}
-
-.btnTop:active{
-    transform: scale(0.95);
-}
-
-/* BOTÃO SAIR */
-#menuTopo button.sair{
+/* =============================================
+   JANELA DE CONFIG
+============================================= */
+#janelaConfig {
     position: fixed;
-    right: 20px;
-    top: 20px;
-    background: rgba(200,50,50,0.8);
-}
-
-#menuTopo button.sair:hover{
-    background: rgba(255,80,80,1);
-}
-
-/* JANELA CONFIG */
-#janelaConfig{
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-
-    background: rgba(0,0,0,0.6);
-    backdrop-filter: blur(5px);
-
-    display: none;
-    align-items: center;
-    justify-content: center;
-}
-
-/* CAIXA CONFIG */
-#janelaConfig .box{
-    background: #1e1e1e;
+    top: 50%; left: 50%;
+    transform: translate(-50%,-50%);
+    background: rgba(20,10,40,0.97);
+    border: 2px solid #7b5ea7;
+    border-radius: 16px;
     padding: 30px;
-    border-radius: 15px;
-    width: 300px;
-    text-align: center;
+    z-index: 999;
+    min-width: 280px;
     color: white;
-    box-shadow: 0 0 20px rgba(0,0,0,0.5);
 }
-
-/* INPUT CONFIG */
-#janelaConfig input{
-    width: 100%;
-}
-
-/* BOTÃO CONFIG */
-#janelaConfig button{
-    margin-top: 20px;
-    padding: 10px;
+#janelaConfig h2 { margin-bottom: 16px; color: #d4a8ff; }
+#janelaConfig button {
+    margin-top: 16px;
+    background: #7b5ea7;
+    color: white;
     border: none;
     border-radius: 8px;
-    background: #444;
-    color: white;
+    padding: 10px 20px;
     cursor: pointer;
+    font-size: 15px;
 }
 
-#janelaConfig button:hover{
-    background: #666;
+/* =============================================
+   BOTÃO BATALHAR (LOBBY)
+============================================= */
+#btnBatalhar {
+    position: fixed;
+    bottom: 30px;
+    left: 30px;
+    background: linear-gradient(135deg, #7b5ea7, #4a2080);
+    color: white;
+    border: none;
+    border-radius: 14px;
+    padding: 14px 28px;
+    font-size: 17px;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 50;
+    box-shadow: 0 4px 20px rgba(123,94,167,0.6);
+    transition: all 0.2s;
+}
+#btnBatalhar:hover {
+    transform: scale(1.07);
+    box-shadow: 0 6px 28px rgba(123,94,167,0.9);
 }
 
-/* CANVAS */
-#game{
-    display: block;
+/* =============================================
+   UI DE BATALHA (TELA INTEIRA)
+============================================= */
+#uiBatalha {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background: transparent;
+    z-index: 200;
+    display: flex;
+    flex-direction: column;
+    pointer-events: none;
 }
-body{
-margin:0;
-font-family:"Inter",sans-serif;
+
+/* tudo que tem interação recebe pointer-events auto */
+#uiBatalha button,
+#uiBatalha input,
+#painelUpgrades,
+#painelPersonagens,
+#painelInvocacao,
+#painelEquipamentos,
+#abasInferiores,
+#batalhaTopoUI,
+#btnSairBatalha {
+    pointer-events: auto;
+}
+
+/* =============================================
+   TOPO DA BATALHA (MOEDAS / GEMAS)
+============================================= */
+#batalhaTopoUI {
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    display: flex;
+    gap: 16px;
+    background: rgba(0,0,0,0.55);
+    border-radius: 20px;
+    padding: 8px 18px;
+    font-size: 16px;
+    font-weight: bold;
+}
+#moedaUI { color: #ffd700; }
+#gemaUI  { color: #88eeff; }
+
+/* =============================================
+   BARRA HP INIMIGO
+============================================= */
+#hpBarraContainer {
+    position: absolute;
+    top: 60px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 55%;
+    height: 18px;
+    background: rgba(0,0,0,0.5);
+    border-radius: 10px;
+    border: 2px solid rgba(255,100,100,0.5);
+    overflow: hidden;
+}
+
+#hpInimigo {
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(90deg, #ff4444, #ff8888);
+    border-radius: 10px;
+    transition: width 0.2s;
+}
+
+#nomeInimigo {
+    position: absolute;
+    top: 38px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 15px;
+    font-weight: bold;
+    color: #ffdddd;
+    text-shadow: 0 1px 4px #000;
+    white-space: nowrap;
+}
+
+#hpTexto {
+    position: absolute;
+    top: 82px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 13px;
+    color: #ffaaaa;
+    text-shadow: 0 1px 3px #000;
+}
+
+/* =============================================
+   FALA PROVOCADORA
+============================================= */
+#falaInimigo {
+    position: absolute;
+    top: 108px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(30,0,0,0.75);
+    border: 1px solid #ff4444;
+    border-radius: 12px;
+    padding: 8px 18px;
+    font-size: 14px;
+    color: #ffaaaa;
+    font-style: italic;
+    text-align: center;
+    opacity: 0;
+    transition: opacity 0.4s;
+    pointer-events: none;
+    max-width: 70%;
+    white-space: nowrap;
+}
+#falaInimigo.visivel { opacity: 1; }
+
+/* =============================================
+   ESTÁGIO
+============================================= */
+#estagioUI {
+    position: absolute;
+    top: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0,0,0,0.6);
+    border: 1px solid #7b5ea7;
+    border-radius: 20px;
+    padding: 5px 20px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #d4a8ff;
+}
+
+/* =============================================
+   STATS UI (DANO / DPS)
+============================================= */
+#statsUI {
+    position: absolute;
+    bottom: 270px;
+    left: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    background: rgba(0,0,0,0.5);
+    border-radius: 10px;
+    padding: 8px 14px;
+    font-size: 13px;
+    color: #ffffffcc;
+}
+#danoTaqueUI { color: #ffdd88; }
+#dpsUI { color: #aaffcc; }
+
+/* =============================================
+   ABAS INFERIORES
+============================================= */
+#abasInferiores {
+    position: absolute;
+    bottom: 230px;
+    left: 0; right: 0;
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    padding: 0 10px;
+}
+
+.abaBtn {
+    flex: 1;
+    max-width: 130px;
+    background: rgba(30,10,60,0.85);
+    color: #ccaaff;
+    border: 1px solid #7b5ea7;
+    border-radius: 10px;
+    padding: 8px 4px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.abaBtn:hover, .abaBtn.ativa {
+    background: #7b5ea7;
+    color: white;
+}
+
+/* =============================================
+   PAINÉIS DE ABAS
+============================================= */
+.painelAba {
+    position: absolute;
+    bottom: 0;
+    left: 0; right: 0;
+    height: 230px;
+    background: rgba(12,6,28,0.97);
+    border-top: 2px solid #7b5ea7;
+    overflow-y: auto;
+    padding: 12px 16px 16px;
+}
+
+.painelAba h3 {
+    color: #d4a8ff;
+    margin-bottom: 10px;
+    font-size: 15px;
+}
+
+.painelAba h4 {
+    color: #ccaaff;
+    margin: 8px 0 5px;
+    font-size: 14px;
+}
+
+/* =============================================
+   UPGRADES
+============================================= */
+.upgradeItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(255,255,255,0.05);
+    border-radius: 10px;
+    padding: 10px 14px;
+    margin-bottom: 8px;
+}
+.upgradeItem small { color: #aaa; font-size: 12px; }
+.upgradeItem button {
+    background: linear-gradient(135deg, #7b5ea7, #4a2080);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 14px;
+    font-size: 13px;
+    cursor: pointer;
+    min-width: 120px;
+    transition: all 0.2s;
+}
+.upgradeItem button:hover { filter: brightness(1.2); }
+.upgradeItem button:disabled {
+    background: #444;
+    color: #888;
+    cursor: not-allowed;
+}
+
+/* =============================================
+   PERSONAGENS
+============================================= */
+.personagemCard {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 12px;
+    padding: 12px;
+    margin-bottom: 8px;
+    border: 1px solid transparent;
+}
+.personagemCard.ativo { border-color: #7b5ea7; }
+.personagemIcone {
+    font-size: 36px;
+    width: 50px;
+    text-align: center;
+}
+.badge {
+    margin-left: auto;
+    background: #7b5ea7;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+}
+
+/* =============================================
+   INVOCAÇÃO
+============================================= */
+.invocarOpcoes {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+.invocarCard {
+    background: rgba(255,255,255,0.06);
+    border-radius: 12px;
+    padding: 12px 16px;
+    flex: 1;
+    border: 1px solid #7b5ea7;
+}
+.invocarCard p { font-size: 12px; color: #aaa; margin: 4px 0; }
+.invocarCard button {
+    background: linear-gradient(135deg, #7b5ea7, #4a2080);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 7px 14px;
+    cursor: pointer;
+    font-size: 13px;
+    margin-top: 6px;
+    margin-right: 6px;
+    transition: all 0.2s;
+}
+.invocarCard button:hover { filter: brightness(1.2); }
+
+#invocarResultado {
+    font-size: 14px;
+    color: #ffd700;
+    margin-bottom: 8px;
+    min-height: 20px;
+    font-style: italic;
+}
+
+#listaHerois, #listaEquipamentos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 6px;
+}
+
+.heroiTag, .armaTag {
+    background: rgba(123,94,167,0.35);
+    border: 1px solid #7b5ea7;
+    border-radius: 8px;
+    padding: 5px 10px;
+    font-size: 12px;
+    color: #eeddff;
+}
+
+/* =============================================
+   BOTÃO SAIR BATALHA
+============================================= */
+#btnSairBatalha {
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    /* fica atrás do HUD de moedas em telas pequenas */
+    /* ajuste no JS se necessário */
+    background: rgba(180,30,30,0.8);
+    color: white;
+    border: 1px solid #ff4444;
+    border-radius: 10px;
+    padding: 7px 14px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+#btnSairBatalha:hover { background: #cc0000; }
+
+/* =============================================
+   SCROLLBAR CUSTOM
+============================================= */
+.painelAba::-webkit-scrollbar { width: 5px; }
+.painelAba::-webkit-scrollbar-track { background: transparent; }
+.painelAba::-webkit-scrollbar-thumb { background: #7b5ea7; border-radius: 4px; }
+
+/* =============================================
+   CARDS DE JOGOS (página principal, mantido)
+============================================= */
+.jogos-list { display: flex; flex-direction: column; gap: 30px; }
+.jogo-card-horizontal {
+    display: flex;
+    background: linear-gradient(145deg,#fff,#f7f7f7);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+.jogo-card-horizontal:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.25);
+}
+.jogo-card-horizontal .jogo-thumb { flex: 0 0 180px; }
+.jogo-card-horizontal .jogo-thumb img { width:100%; height:100%; object-fit:cover; }
+.jogo-card-horizontal .jogo-info {
+    padding: 20px 25px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.jogo-card-horizontal .jogo-info h3 {
+    font-family: 'Libre Baskerville',serif;
+    font-size: 1.6rem;
+    margin-bottom: 8px;
+    color: #2c1f17;
+}
+.jogo-card-horizontal .jogo-info p { font-size:1rem; color:#555; margin-bottom:20px; line-height:1.4; }
+.jogo-card-horizontal .btn-jogar {
+    align-self: flex-start;
+    text-decoration: none;
+    font-weight: 600;
+    background: #f44336;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    transition: background 0.3s, transform 0.2s;
+}
+.jogo-card-horizontal .btn-jogar:hover { background:#d32f2f; transform:translateY(-2px); }
+@media(max-width:768px){
+    .jogo-card-horizontal { flex-direction:column; }
+    .jogo-card-horizontal .jogo-thumb { width:100%; height:200px; }
+    .jogo-card-horizontal .jogo-info { padding:15px 20px; }
 }
