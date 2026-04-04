@@ -1,488 +1,268 @@
-/* =============================================
-   RESET E BASE
-============================================= */
-* { box-sizing: border-box; margin: 0; padding: 0; }
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:#1a1a2e;font-family:'Segoe UI',sans-serif;overflow:hidden;color:white;}
+canvas{display:block;position:fixed;top:0;left:0;z-index:0;}
 
-body {
-    background: #1a1a2e;
-    font-family: 'Segoe UI', sans-serif;
-    overflow: hidden;
-    color: white;
+/* ===== LOBBY HUD ===== */
+#lobbyHUD{
+    position:fixed;top:0;left:0;right:0;
+    display:flex;justify-content:space-between;align-items:center;
+    padding:8px 14px;
+    background:rgba(10,5,25,0.82);
+    border-bottom:1px solid rgba(123,94,167,0.4);
+    z-index:80;
+    pointer-events:auto;
 }
-
-canvas {
-    display: block;
-    position: fixed;
-    top: 0; left: 0;
-    z-index: 0;
-}
-
-/* =============================================
-   MENU TOPO
-============================================= */
-#menuTopo {
-    position: fixed;
-    top: 10px;
-    left: 10px;
-    display: flex;
-    gap: 8px;
-    z-index: 100;
+#lobbyHUDEsq{display:flex;gap:8px;}
+#lobbyMoedas{display:flex;gap:10px;}
+.moedaHUD{
+    background:rgba(255,255,255,0.08);
+    border:1px solid rgba(123,94,167,0.5);
+    border-radius:20px;
+    padding:5px 14px;
+    font-size:14px;
+    font-weight:bold;
+    color:#eeddff;
 }
 
-.btnTop {
-    background: rgba(30,30,60,0.85);
-    color: white;
-    border: 2px solid #7b5ea7;
-    border-radius: 10px;
-    padding: 8px 14px;
-    font-size: 18px;
-    cursor: pointer;
-    transition: all 0.2s;
+/* ===== BOTÕES TOPO LOBBY ===== */
+.btnTop{
+    background:rgba(30,10,60,0.85);
+    color:white;border:1.5px solid #7b5ea7;
+    border-radius:10px;padding:7px 13px;
+    font-size:17px;cursor:pointer;transition:all .2s;
 }
-.btnTop:hover { background: #7b5ea7; }
+.btnTop:hover{background:#7b5ea7;}
 
-/* =============================================
-   JANELA DE CONFIG
-============================================= */
-#janelaConfig {
-    position: fixed;
-    top: 50%; left: 50%;
-    transform: translate(-50%,-50%);
-    background: rgba(20,10,40,0.97);
-    border: 2px solid #7b5ea7;
-    border-radius: 16px;
-    padding: 30px;
-    z-index: 999;
-    min-width: 280px;
-    color: white;
+/* ===== BOTÕES DO LOBBY (MAPA) ===== */
+#lobbybotoes{
+    position:fixed;bottom:28px;left:50%;
+    transform:translateX(-50%);
+    display:flex;gap:12px;
+    z-index:80;
 }
-#janelaConfig h2 { margin-bottom: 16px; color: #d4a8ff; }
-#janelaConfig button {
-    margin-top: 16px;
-    background: #7b5ea7;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    padding: 10px 20px;
-    cursor: pointer;
-    font-size: 15px;
+.btnLobby{
+    background:linear-gradient(135deg,#7b5ea7,#4a2080);
+    color:white;border:none;border-radius:14px;
+    padding:13px 24px;font-size:15px;font-weight:bold;
+    cursor:pointer;box-shadow:0 4px 18px rgba(123,94,167,.6);
+    transition:all .2s;
 }
+.btnLobby:hover{transform:scale(1.07);filter:brightness(1.2);}
 
-/* =============================================
-   BOTÃO BATALHAR (LOBBY)
-============================================= */
-#btnBatalhar {
-    position: fixed;
-    bottom: 30px;
-    left: 30px;
-    background: linear-gradient(135deg, #7b5ea7, #4a2080);
-    color: white;
-    border: none;
-    border-radius: 14px;
-    padding: 14px 28px;
-    font-size: 17px;
-    font-weight: bold;
-    cursor: pointer;
-    z-index: 50;
-    box-shadow: 0 4px 20px rgba(123,94,167,0.6);
-    transition: all 0.2s;
+/* ===== MODAIS ===== */
+.modalOverlay{
+    position:fixed;top:0;left:0;width:100vw;height:100vh;
+    background:rgba(0,0,0,0.75);
+    display:flex;align-items:center;justify-content:center;
+    z-index:500;
 }
-#btnBatalhar:hover {
-    transform: scale(1.07);
-    box-shadow: 0 6px 28px rgba(123,94,167,0.9);
+.modalBox{
+    background:linear-gradient(160deg,#1a0a30,#0d0520);
+    border:2px solid #7b5ea7;border-radius:18px;
+    padding:24px;max-width:480px;width:92%;
+    max-height:85vh;overflow-y:auto;
+    color:white;
+}
+.modalBox.grande{max-width:560px;}
+.modalTopo{
+    display:flex;justify-content:space-between;
+    align-items:center;margin-bottom:16px;
+}
+.modalTopo h2{color:#d4a8ff;font-size:18px;}
+.btnFecharModal{
+    background:rgba(180,30,30,.8);color:white;
+    border:1px solid #ff4444;border-radius:8px;
+    padding:5px 12px;cursor:pointer;font-size:15px;
+}
+#janelaConfig .modalBox{max-width:340px;}
+#janelaConfig h2{color:#d4a8ff;margin-bottom:14px;}
+#janelaConfig input{width:100%;margin-top:8px;}
+#janelaConfig button{
+    background:#7b5ea7;color:white;border:none;
+    border-radius:8px;padding:9px 20px;
+    cursor:pointer;font-size:14px;width:100%;
 }
 
-/* =============================================
-   UI DE BATALHA (TELA INTEIRA)
-============================================= */
-#uiBatalha {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100vw; height: 100vh;
-    background: transparent;
-    z-index: 200;
-    display: flex;
-    flex-direction: column;
-    pointer-events: none;
+/* ===== INVOCAR ===== */
+.invocarOpcoes{margin:12px 0;}
+.invocarCard{
+    background:rgba(255,255,255,.06);
+    border:1px solid #7b5ea7;border-radius:12px;padding:14px;
+}
+.invocarCard h4{color:#d4a8ff;margin-bottom:6px;}
+.invocarCard p{font-size:13px;color:#bbb;margin:3px 0;}
+#invocarResultado,#invocarResultado2{
+    font-size:14px;font-weight:bold;min-height:20px;
+    margin-bottom:8px;font-style:italic;
+}
+.heroiTag,.armaTag{
+    display:inline-block;
+    border-radius:8px;padding:4px 10px;
+    font-size:12px;margin:3px;
+    background:rgba(123,94,167,.25);
+    border:1px solid #7b5ea7;color:#eeddff;
 }
 
-/* tudo que tem interação recebe pointer-events auto */
+/* ===== EQUIPAR ===== */
+.personagemCard{
+    display:flex;align-items:center;gap:12px;
+    background:rgba(255,255,255,.06);
+    border-radius:12px;padding:12px;
+    border:1px solid transparent;
+}
+.personagemCard.ativo{border-color:#7b5ea7;}
+.personagemIcone{font-size:36px;width:48px;text-align:center;}
+.badge{
+    margin-left:auto;background:#7b5ea7;
+    padding:4px 10px;border-radius:20px;font-size:12px;
+}
+
+/* ===== UI BATALHA ===== */
+#uiBatalha{
+    position:fixed;top:0;left:0;
+    width:100vw;height:100vh;
+    z-index:200;display:flex;
+    flex-direction:column;
+    pointer-events:none;
+}
 #uiBatalha button,
-#uiBatalha input,
-#painelUpgrades,
-#painelPersonagens,
-#painelInvocacao,
-#painelEquipamentos,
-#abasInferiores,
+#painelUpgradesWrapper,
 #batalhaTopoUI,
-#btnSairBatalha {
-    pointer-events: auto;
-}
+#btnSairBatalha,
+#statsUI{pointer-events:auto;}
 
-/* =============================================
-   TOPO DA BATALHA (MOEDAS / GEMAS)
-============================================= */
-#batalhaTopoUI {
-    position: absolute;
-    top: 12px;
-    right: 16px;
-    display: flex;
-    gap: 16px;
-    background: rgba(0,0,0,0.55);
-    border-radius: 20px;
-    padding: 8px 18px;
-    font-size: 16px;
-    font-weight: bold;
+/* topo batalha */
+#batalhaTopoUI{
+    position:absolute;top:0;left:0;right:0;
+    display:flex;justify-content:space-between;align-items:center;
+    padding:8px 16px;
+    background:rgba(0,0,0,.6);
+    font-size:14px;font-weight:bold;
 }
-#moedaUI { color: #ffd700; }
-#gemaUI  { color: #88eeff; }
+#batalhaTopoUI #moedaUI{color:#ffd700;}
+#batalhaTopoUI #gemaUI{color:#88eeff;}
+#estagioUI{color:#d4a8ff;}
 
-/* =============================================
-   BARRA HP INIMIGO
-============================================= */
-#hpBarraContainer {
-    position: absolute;
-    top: 60px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 55%;
-    height: 18px;
-    background: rgba(0,0,0,0.5);
-    border-radius: 10px;
-    border: 2px solid rgba(255,100,100,0.5);
-    overflow: hidden;
+/* hp */
+#hpAreaBatalha{
+    position:absolute;top:44px;left:50%;
+    transform:translateX(-50%);
+    text-align:center;width:60%;
 }
+#nomeInimigo{font-size:14px;font-weight:bold;color:#ffdddd;text-shadow:0 1px 4px #000;margin-bottom:4px;}
+#hpBarraContainer{
+    width:100%;height:16px;
+    background:rgba(0,0,0,.5);
+    border-radius:10px;border:2px solid rgba(255,100,100,.5);
+    overflow:hidden;
+}
+#hpInimigo{
+    height:100%;width:100%;
+    background:linear-gradient(90deg,#ff4444,#ff8888);
+    border-radius:10px;transition:width .2s;
+}
+#hpTexto{font-size:12px;color:#ffaaaa;margin-top:3px;}
 
-#hpInimigo {
-    height: 100%;
-    width: 100%;
-    background: linear-gradient(90deg, #ff4444, #ff8888);
-    border-radius: 10px;
-    transition: width 0.2s;
+/* fala */
+#falaInimigo{
+    position:absolute;top:110px;left:50%;
+    transform:translateX(-50%);
+    background:rgba(30,0,0,.8);
+    border:1px solid #ff4444;border-radius:12px;
+    padding:7px 16px;font-size:13px;color:#ffaaaa;
+    font-style:italic;text-align:center;
+    opacity:0;transition:opacity .4s;
+    pointer-events:none;max-width:65%;white-space:normal;
 }
+#falaInimigo.visivel{opacity:1;}
 
-#nomeInimigo {
-    position: absolute;
-    top: 38px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 15px;
-    font-weight: bold;
-    color: #ffdddd;
-    text-shadow: 0 1px 4px #000;
-    white-space: nowrap;
+/* stats */
+#statsUI{
+    position:absolute;
+    bottom:calc(200px + 46px);
+    left:12px;
+    background:rgba(0,0,0,.55);
+    border-radius:10px;padding:7px 12px;
+    font-size:12px;display:flex;flex-direction:column;gap:3px;
 }
+#danoTaqueUI{color:#ffdd88;}
+#dpsUI{color:#aaffcc;}
 
-#hpTexto {
-    position: absolute;
-    top: 82px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 13px;
-    color: #ffaaaa;
-    text-shadow: 0 1px 3px #000;
+/* ===== PAINEL UPGRADES MINIMIZÁVEL ===== */
+#painelUpgradesWrapper{
+    position:absolute;bottom:0;left:0;right:0;
+    pointer-events:auto;
 }
+#painelUpgradesHeader{
+    display:flex;justify-content:space-between;align-items:center;
+    padding:6px 12px;
+    background:rgba(20,8,45,.97);
+    border-top:2px solid #7b5ea7;
+}
+#btnMinimizar{
+    background:transparent;color:#d4a8ff;
+    border:1px solid #7b5ea7;border-radius:6px;
+    padding:2px 10px;font-size:16px;cursor:pointer;
+    transition:transform .2s;
+}
+.abaBtn{
+    background:rgba(30,10,60,.85);color:#ccaaff;
+    border:1px solid #7b5ea7;border-radius:8px;
+    padding:5px 10px;font-size:13px;cursor:pointer;transition:all .2s;
+}
+.abaBtn:hover,.abaBtn.ativa{background:#7b5ea7;color:white;}
 
-/* =============================================
-   FALA PROVOCADORA
-============================================= */
-#falaInimigo {
-    position: absolute;
-    top: 108px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: rgba(30,0,0,0.75);
-    border: 1px solid #ff4444;
-    border-radius: 12px;
-    padding: 8px 18px;
-    font-size: 14px;
-    color: #ffaaaa;
-    font-style: italic;
-    text-align: center;
-    opacity: 0;
-    transition: opacity 0.4s;
-    pointer-events: none;
-    max-width: 70%;
-    white-space: nowrap;
+#painelUpgradesConteudo{
+    max-height:200px;overflow-y:auto;
+    background:rgba(12,6,28,.97);
+    transition:max-height .3s ease;
 }
-#falaInimigo.visivel { opacity: 1; }
+#painelUpgradesConteudo.minimizado{max-height:0;overflow:hidden;}
 
-/* =============================================
-   ESTÁGIO
-============================================= */
-#estagioUI {
-    position: absolute;
-    top: 12px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: rgba(0,0,0,0.6);
-    border: 1px solid #7b5ea7;
-    border-radius: 20px;
-    padding: 5px 20px;
-    font-size: 14px;
-    font-weight: bold;
-    color: #d4a8ff;
-}
+.painelAba{padding:10px 14px 14px;}
+.painelAba h3,.painelAba h4{color:#d4a8ff;margin-bottom:8px;font-size:14px;}
 
-/* =============================================
-   STATS UI (DANO / DPS)
-============================================= */
-#statsUI {
-    position: absolute;
-    bottom: 270px;
-    left: 16px;
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    background: rgba(0,0,0,0.5);
-    border-radius: 10px;
-    padding: 8px 14px;
-    font-size: 13px;
-    color: #ffffffcc;
+.upgradeItem{
+    display:flex;justify-content:space-between;align-items:center;
+    background:rgba(255,255,255,.05);
+    border-radius:10px;padding:8px 12px;margin-bottom:6px;
 }
-#danoTaqueUI { color: #ffdd88; }
-#dpsUI { color: #aaffcc; }
+.upgradeItem b{font-size:13px;}
+.upgradeItem small{color:#aaa;font-size:11px;}
 
-/* =============================================
-   ABAS INFERIORES
-============================================= */
-#abasInferiores {
-    position: absolute;
-    bottom: 230px;
-    left: 0; right: 0;
-    display: flex;
-    justify-content: center;
-    gap: 6px;
-    padding: 0 10px;
+.btnUpgrade{
+    background:linear-gradient(135deg,#7b5ea7,#4a2080);
+    color:white;border:none;border-radius:8px;
+    padding:7px 13px;font-size:12px;cursor:pointer;
+    min-width:110px;transition:all .2s;
 }
+.btnUpgrade:hover{filter:brightness(1.2);}
+.btnUpgrade:disabled{background:#444;color:#888;cursor:not-allowed;}
 
-.abaBtn {
-    flex: 1;
-    max-width: 130px;
-    background: rgba(30,10,60,0.85);
-    color: #ccaaff;
-    border: 1px solid #7b5ea7;
-    border-radius: 10px;
-    padding: 8px 4px;
-    font-size: 13px;
-    cursor: pointer;
-    transition: all 0.2s;
+/* sair batalha */
+#btnSairBatalha{
+    position:absolute;top:8px;right:12px;
+    background:rgba(180,30,30,.8);color:white;
+    border:1px solid #ff4444;border-radius:10px;
+    padding:6px 13px;font-size:13px;cursor:pointer;
 }
-.abaBtn:hover, .abaBtn.ativa {
-    background: #7b5ea7;
-    color: white;
-}
+#btnSairBatalha:hover{background:#cc0000;}
 
-/* =============================================
-   PAINÉIS DE ABAS
-============================================= */
-.painelAba {
-    position: absolute;
-    bottom: 0;
-    left: 0; right: 0;
-    height: 230px;
-    background: rgba(12,6,28,0.97);
-    border-top: 2px solid #7b5ea7;
-    overflow-y: auto;
-    padding: 12px 16px 16px;
-}
+/* scrollbar */
+#painelUpgradesConteudo::-webkit-scrollbar{width:4px;}
+#painelUpgradesConteudo::-webkit-scrollbar-thumb{background:#7b5ea7;border-radius:4px;}
+.modalBox::-webkit-scrollbar{width:4px;}
+.modalBox::-webkit-scrollbar-thumb{background:#7b5ea7;border-radius:4px;}
 
-.painelAba h3 {
-    color: #d4a8ff;
-    margin-bottom: 10px;
-    font-size: 15px;
-}
-
-.painelAba h4 {
-    color: #ccaaff;
-    margin: 8px 0 5px;
-    font-size: 14px;
-}
-
-/* =============================================
-   UPGRADES
-============================================= */
-.upgradeItem {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: rgba(255,255,255,0.05);
-    border-radius: 10px;
-    padding: 10px 14px;
-    margin-bottom: 8px;
-}
-.upgradeItem small { color: #aaa; font-size: 12px; }
-.upgradeItem button {
-    background: linear-gradient(135deg, #7b5ea7, #4a2080);
-    color: white;
-    border: none;
-    border-radius: 8px;
-    padding: 8px 14px;
-    font-size: 13px;
-    cursor: pointer;
-    min-width: 120px;
-    transition: all 0.2s;
-}
-.upgradeItem button:hover { filter: brightness(1.2); }
-.upgradeItem button:disabled {
-    background: #444;
-    color: #888;
-    cursor: not-allowed;
-}
-
-/* =============================================
-   PERSONAGENS
-============================================= */
-.personagemCard {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    background: rgba(255,255,255,0.06);
-    border-radius: 12px;
-    padding: 12px;
-    margin-bottom: 8px;
-    border: 1px solid transparent;
-}
-.personagemCard.ativo { border-color: #7b5ea7; }
-.personagemIcone {
-    font-size: 36px;
-    width: 50px;
-    text-align: center;
-}
-.badge {
-    margin-left: auto;
-    background: #7b5ea7;
-    padding: 4px 10px;
-    border-radius: 20px;
-    font-size: 12px;
-}
-
-/* =============================================
-   INVOCAÇÃO
-============================================= */
-.invocarOpcoes {
-    display: flex;
-    gap: 12px;
-    margin-bottom: 12px;
-}
-.invocarCard {
-    background: rgba(255,255,255,0.06);
-    border-radius: 12px;
-    padding: 12px 16px;
-    flex: 1;
-    border: 1px solid #7b5ea7;
-}
-.invocarCard p { font-size: 12px; color: #aaa; margin: 4px 0; }
-.invocarCard button {
-    background: linear-gradient(135deg, #7b5ea7, #4a2080);
-    color: white;
-    border: none;
-    border-radius: 8px;
-    padding: 7px 14px;
-    cursor: pointer;
-    font-size: 13px;
-    margin-top: 6px;
-    margin-right: 6px;
-    transition: all 0.2s;
-}
-.invocarCard button:hover { filter: brightness(1.2); }
-
-#invocarResultado {
-    font-size: 14px;
-    color: #ffd700;
-    margin-bottom: 8px;
-    min-height: 20px;
-    font-style: italic;
-}
-
-#listaHerois, #listaEquipamentos {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-top: 6px;
-}
-
-.heroiTag, .armaTag {
-    background: rgba(123,94,167,0.35);
-    border: 1px solid #7b5ea7;
-    border-radius: 8px;
-    padding: 5px 10px;
-    font-size: 12px;
-    color: #eeddff;
-}
-
-/* =============================================
-   BOTÃO SAIR BATALHA
-============================================= */
-#btnSairBatalha {
-    position: absolute;
-    top: 12px;
-    right: 16px;
-    /* fica atrás do HUD de moedas em telas pequenas */
-    /* ajuste no JS se necessário */
-    background: rgba(180,30,30,0.8);
-    color: white;
-    border: 1px solid #ff4444;
-    border-radius: 10px;
-    padding: 7px 14px;
-    font-size: 14px;
-    cursor: pointer;
-    transition: all 0.2s;
-}
-#btnSairBatalha:hover { background: #cc0000; }
-
-/* =============================================
-   SCROLLBAR CUSTOM
-============================================= */
-.painelAba::-webkit-scrollbar { width: 5px; }
-.painelAba::-webkit-scrollbar-track { background: transparent; }
-.painelAba::-webkit-scrollbar-thumb { background: #7b5ea7; border-radius: 4px; }
-
-/* =============================================
-   CARDS DE JOGOS (página principal, mantido)
-============================================= */
-.jogos-list { display: flex; flex-direction: column; gap: 30px; }
-.jogo-card-horizontal {
-    display: flex;
-    background: linear-gradient(145deg,#fff,#f7f7f7);
-    border-radius: 16px;
-    overflow: hidden;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-    transition: transform 0.3s, box-shadow 0.3s;
-}
-.jogo-card-horizontal:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 35px rgba(0,0,0,0.25);
-}
-.jogo-card-horizontal .jogo-thumb { flex: 0 0 180px; }
-.jogo-card-horizontal .jogo-thumb img { width:100%; height:100%; object-fit:cover; }
-.jogo-card-horizontal .jogo-info {
-    padding: 20px 25px;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-.jogo-card-horizontal .jogo-info h3 {
-    font-family: 'Libre Baskerville',serif;
-    font-size: 1.6rem;
-    margin-bottom: 8px;
-    color: #2c1f17;
-}
-.jogo-card-horizontal .jogo-info p { font-size:1rem; color:#555; margin-bottom:20px; line-height:1.4; }
-.jogo-card-horizontal .btn-jogar {
-    align-self: flex-start;
-    text-decoration: none;
-    font-weight: 600;
-    background: #f44336;
-    color: white;
-    padding: 10px 20px;
-    border-radius: 8px;
-    transition: background 0.3s, transform 0.2s;
-}
-.jogo-card-horizontal .btn-jogar:hover { background:#d32f2f; transform:translateY(-2px); }
-@media(max-width:768px){
-    .jogo-card-horizontal { flex-direction:column; }
-    .jogo-card-horizontal .jogo-thumb { width:100%; height:200px; }
-    .jogo-card-horizontal .jogo-info { padding:15px 20px; }
-}
+/* cards de jogos (página principal) */
+.jogos-list{display:flex;flex-direction:column;gap:30px;}
+.jogo-card-horizontal{display:flex;background:linear-gradient(145deg,#fff,#f7f7f7);border-radius:16px;overflow:hidden;box-shadow:0 8px 20px rgba(0,0,0,.15);transition:transform .3s,box-shadow .3s;}
+.jogo-card-horizontal:hover{transform:translateY(-5px);box-shadow:0 15px 35px rgba(0,0,0,.25);}
+.jogo-card-horizontal .jogo-thumb{flex:0 0 180px;}
+.jogo-card-horizontal .jogo-thumb img{width:100%;height:100%;object-fit:cover;}
+.jogo-card-horizontal .jogo-info{padding:20px 25px;flex:1;display:flex;flex-direction:column;justify-content:space-between;}
+.jogo-card-horizontal .jogo-info h3{font-family:'Libre Baskerville',serif;font-size:1.6rem;margin-bottom:8px;color:#2c1f17;}
+.jogo-card-horizontal .jogo-info p{font-size:1rem;color:#555;margin-bottom:20px;line-height:1.4;}
+.jogo-card-horizontal .btn-jogar{align-self:flex-start;text-decoration:none;font-weight:600;background:#f44336;color:white;padding:10px 20px;border-radius:8px;transition:background .3s,transform .2s;}
+.jogo-card-horizontal .btn-jogar:hover{background:#d32f2f;transform:translateY(-2px);}
+@media(max-width:768px){.jogo-card-horizontal{flex-direction:column;}.jogo-card-horizontal .jogo-thumb{width:100%;height:200px;}.jogo-card-horizontal .jogo-info{padding:15px 20px;}}
