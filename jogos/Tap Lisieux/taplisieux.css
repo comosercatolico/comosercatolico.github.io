@@ -24,30 +24,92 @@ canvas{display:block;position:fixed;top:0;left:0;z-index:0;}
     color:#eeddff;
 }
 
-/* ===== BOTÕES TOPO LOBBY ===== */
-.btnTop{
-    background:rgba(30,10,60,0.85);
-    color:white;border:1.5px solid #7b5ea7;
-    border-radius:10px;padding:7px 13px;
-    font-size:17px;cursor:pointer;transition:all .2s;
+/* ===== BOTÕES TOPO LOBBY (ESTILO GUARDIAN TALES) ===== */
+.btnTop {
+    background: #ffffff;
+    color: #333;
+    border: 2px solid #d0d8e8;
+    border-radius: 12px; 
+    padding: 8px 12px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 3px 0 #aebbd4, 0 4px 6px rgba(0,0,0,0.15);
+    transition: all 0.1s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px;
 }
-.btnTop:hover{background:#7b5ea7;}
 
-/* ===== BOTÕES DO LOBBY (MAPA) ===== */
-#lobbybotoes{
-    position:fixed;bottom:28px;left:50%;
-    transform:translateX(-50%);
-    display:flex;gap:12px;
-    z-index:80;
+.btnTop:hover {
+    background: #f0f4ff;
+    transform: translateY(-1px);
 }
-.btnLobby{
-    background:linear-gradient(135deg,#7b5ea7,#4a2080);
-    color:white;border:none;border-radius:14px;
-    padding:13px 24px;font-size:15px;font-weight:bold;
-    cursor:pointer;box-shadow:0 4px 18px rgba(123,94,167,.6);
-    transition:all .2s;
+
+.btnTop:active {
+    transform: translateY(2px);
+    box-shadow: 0 1px 0 #aebbd4;
 }
-.btnLobby:hover{transform:scale(1.07);filter:brightness(1.2);}
+
+/* ===== BOTÕES DO LOBBY (ESTILO GUARDIAN TALES) ===== */
+#lobbybotoes {
+    position: fixed;
+    bottom: 35px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+    z-index: 80;
+    padding: 0 10px;
+    width: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.btnLobby {
+    background: linear-gradient(180deg, #ffffff 0%, #dceefb 100%);
+    color: #2c1f4d;
+    border: 2px solid #ffffff;
+    border-bottom: 4px solid #aebbd4;
+    border-radius: 16px;
+    padding: 12px 20px;
+    font-size: 14px;
+    font-weight: 800;
+    font-family: 'Segoe UI', sans-serif;
+    cursor: pointer;
+    box-shadow: 0 4px 0 #7b8fa3, 0 6px 12px rgba(0,0,0,0.3);
+    transition: all 0.1s;
+    text-shadow: 0 1px 0 rgba(255,255,255,0.8);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 80px;
+}
+
+.btnLobby:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 0 #7b8fa3, 0 8px 16px rgba(0,0,0,0.3);
+    filter: brightness(1.05);
+}
+
+.btnLobby:active {
+    transform: translateY(2px);
+    box-shadow: 0 1px 0 #7b8fa3, 0 2px 4px rgba(0,0,0,0.3);
+    border-bottom-width: 1px;
+}
+
+/* Botão especial para INVOCAR/Gacha */
+.btnLobby.gacha {
+    background: linear-gradient(180deg, #ffd700 0%, #ffaa00 100%);
+    color: #5c3a00;
+    border-bottom: 4px solid #cc8800;
+    box-shadow: 0 4px 0 #cc8800, 0 6px 12px rgba(0,0,0,0.3);
+}
+
+.btnLobby.gacha:hover {
+    box-shadow: 0 6px 0 #cc8800, 0 8px 16px rgba(0,0,0,0.3);
+}
 
 /* ===== MODAIS ===== */
 .modalOverlay{
