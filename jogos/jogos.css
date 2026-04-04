@@ -1,268 +1,93 @@
-*{box-sizing:border-box;margin:0;padding:0;}
-body{background:#1a1a2e;font-family:'Segoe UI',sans-serif;overflow:hidden;color:white;}
-canvas{display:block;position:fixed;top:0;left:0;z-index:0;}
 
-/* ===== LOBBY HUD ===== */
-#lobbyHUD{
-    position:fixed;top:0;left:0;right:0;
-    display:flex;justify-content:space-between;align-items:center;
-    padding:8px 14px;
-    background:rgba(10,5,25,0.82);
-    border-bottom:1px solid rgba(123,94,167,0.4);
-    z-index:80;
-    pointer-events:auto;
-}
-#lobbyHUDEsq{display:flex;gap:8px;}
-#lobbyMoedas{display:flex;gap:10px;}
-.moedaHUD{
-    background:rgba(255,255,255,0.08);
-    border:1px solid rgba(123,94,167,0.5);
-    border-radius:20px;
-    padding:5px 14px;
-    font-size:14px;
-    font-weight:bold;
-    color:#eeddff;
+/* =============================
+   ESTILO DA PÁGINA DE JOGOS
+============================= */
+/* Lista de jogos horizontal */
+.jogos-list {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
 }
 
-/* ===== BOTÕES TOPO LOBBY ===== */
-.btnTop{
-    background:rgba(30,10,60,0.85);
-    color:white;border:1.5px solid #7b5ea7;
-    border-radius:10px;padding:7px 13px;
-    font-size:17px;cursor:pointer;transition:all .2s;
-}
-.btnTop:hover{background:#7b5ea7;}
-
-/* ===== BOTÕES DO LOBBY (MAPA) ===== */
-#lobbybotoes{
-    position:fixed;bottom:28px;left:50%;
-    transform:translateX(-50%);
-    display:flex;gap:12px;
-    z-index:80;
-}
-.btnLobby{
-    background:linear-gradient(135deg,#7b5ea7,#4a2080);
-    color:white;border:none;border-radius:14px;
-    padding:13px 24px;font-size:15px;font-weight:bold;
-    cursor:pointer;box-shadow:0 4px 18px rgba(123,94,167,.6);
-    transition:all .2s;
-}
-.btnLobby:hover{transform:scale(1.07);filter:brightness(1.2);}
-
-/* ===== MODAIS ===== */
-.modalOverlay{
-    position:fixed;top:0;left:0;width:100vw;height:100vh;
-    background:rgba(0,0,0,0.75);
-    display:flex;align-items:center;justify-content:center;
-    z-index:500;
-}
-.modalBox{
-    background:linear-gradient(160deg,#1a0a30,#0d0520);
-    border:2px solid #7b5ea7;border-radius:18px;
-    padding:24px;max-width:480px;width:92%;
-    max-height:85vh;overflow-y:auto;
-    color:white;
-}
-.modalBox.grande{max-width:560px;}
-.modalTopo{
-    display:flex;justify-content:space-between;
-    align-items:center;margin-bottom:16px;
-}
-.modalTopo h2{color:#d4a8ff;font-size:18px;}
-.btnFecharModal{
-    background:rgba(180,30,30,.8);color:white;
-    border:1px solid #ff4444;border-radius:8px;
-    padding:5px 12px;cursor:pointer;font-size:15px;
-}
-#janelaConfig .modalBox{max-width:340px;}
-#janelaConfig h2{color:#d4a8ff;margin-bottom:14px;}
-#janelaConfig input{width:100%;margin-top:8px;}
-#janelaConfig button{
-    background:#7b5ea7;color:white;border:none;
-    border-radius:8px;padding:9px 20px;
-    cursor:pointer;font-size:14px;width:100%;
+/* Card horizontal */
+.jogo-card-horizontal {
+    display: flex;
+    flex-direction: row;
+    background: linear-gradient(145deg, #fff, #f7f7f7);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    transition: transform 0.3s, box-shadow 0.3s;
 }
 
-/* ===== INVOCAR ===== */
-.invocarOpcoes{margin:12px 0;}
-.invocarCard{
-    background:rgba(255,255,255,.06);
-    border:1px solid #7b5ea7;border-radius:12px;padding:14px;
-}
-.invocarCard h4{color:#d4a8ff;margin-bottom:6px;}
-.invocarCard p{font-size:13px;color:#bbb;margin:3px 0;}
-#invocarResultado,#invocarResultado2{
-    font-size:14px;font-weight:bold;min-height:20px;
-    margin-bottom:8px;font-style:italic;
-}
-.heroiTag,.armaTag{
-    display:inline-block;
-    border-radius:8px;padding:4px 10px;
-    font-size:12px;margin:3px;
-    background:rgba(123,94,167,.25);
-    border:1px solid #7b5ea7;color:#eeddff;
+.jogo-card-horizontal:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.25);
 }
 
-/* ===== EQUIPAR ===== */
-.personagemCard{
-    display:flex;align-items:center;gap:12px;
-    background:rgba(255,255,255,.06);
-    border-radius:12px;padding:12px;
-    border:1px solid transparent;
-}
-.personagemCard.ativo{border-color:#7b5ea7;}
-.personagemIcone{font-size:36px;width:48px;text-align:center;}
-.badge{
-    margin-left:auto;background:#7b5ea7;
-    padding:4px 10px;border-radius:20px;font-size:12px;
+/* Capa do jogo */
+.jogo-card-horizontal .jogo-thumb {
+    flex: 0 0 180px;
 }
 
-/* ===== UI BATALHA ===== */
-#uiBatalha{
-    position:fixed;top:0;left:0;
-    width:100vw;height:100vh;
-    z-index:200;display:flex;
-    flex-direction:column;
-    pointer-events:none;
+.jogo-card-horizontal .jogo-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
-#uiBatalha button,
-#painelUpgradesWrapper,
-#batalhaTopoUI,
-#btnSairBatalha,
-#statsUI{pointer-events:auto;}
 
-/* topo batalha */
-#batalhaTopoUI{
-    position:absolute;top:0;left:0;right:0;
-    display:flex;justify-content:space-between;align-items:center;
-    padding:8px 16px;
-    background:rgba(0,0,0,.6);
-    font-size:14px;font-weight:bold;
+/* Info do jogo */
+.jogo-card-horizontal .jogo-info {
+    padding: 20px 25px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
-#batalhaTopoUI #moedaUI{color:#ffd700;}
-#batalhaTopoUI #gemaUI{color:#88eeff;}
-#estagioUI{color:#d4a8ff;}
 
-/* hp */
-#hpAreaBatalha{
-    position:absolute;top:44px;left:50%;
-    transform:translateX(-50%);
-    text-align:center;width:60%;
+.jogo-card-horizontal .jogo-info h3 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.6rem;
+    margin-bottom: 8px;
+    color: #2c1f17;
 }
-#nomeInimigo{font-size:14px;font-weight:bold;color:#ffdddd;text-shadow:0 1px 4px #000;margin-bottom:4px;}
-#hpBarraContainer{
-    width:100%;height:16px;
-    background:rgba(0,0,0,.5);
-    border-radius:10px;border:2px solid rgba(255,100,100,.5);
-    overflow:hidden;
-}
-#hpInimigo{
-    height:100%;width:100%;
-    background:linear-gradient(90deg,#ff4444,#ff8888);
-    border-radius:10px;transition:width .2s;
-}
-#hpTexto{font-size:12px;color:#ffaaaa;margin-top:3px;}
 
-/* fala */
-#falaInimigo{
-    position:absolute;top:110px;left:50%;
-    transform:translateX(-50%);
-    background:rgba(30,0,0,.8);
-    border:1px solid #ff4444;border-radius:12px;
-    padding:7px 16px;font-size:13px;color:#ffaaaa;
-    font-style:italic;text-align:center;
-    opacity:0;transition:opacity .4s;
-    pointer-events:none;max-width:65%;white-space:normal;
+.jogo-card-horizontal .jogo-info p {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 20px;
+    line-height: 1.4;
 }
-#falaInimigo.visivel{opacity:1;}
 
-/* stats */
-#statsUI{
-    position:absolute;
-    bottom:calc(200px + 46px);
-    left:12px;
-    background:rgba(0,0,0,.55);
-    border-radius:10px;padding:7px 12px;
-    font-size:12px;display:flex;flex-direction:column;gap:3px;
+/* Botão jogar */
+.jogo-card-horizontal .btn-jogar {
+    align-self: flex-start;
+    display: inline-block;
+    text-decoration: none;
+    font-weight: 600;
+    background: #f44336;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    transition: background 0.3s, transform 0.2s;
 }
-#danoTaqueUI{color:#ffdd88;}
-#dpsUI{color:#aaffcc;}
 
-/* ===== PAINEL UPGRADES MINIMIZÁVEL ===== */
-#painelUpgradesWrapper{
-    position:absolute;bottom:0;left:0;right:0;
-    pointer-events:auto;
+.jogo-card-horizontal .btn-jogar:hover {
+    background: #d32f2f;
+    transform: translateY(-2px);
 }
-#painelUpgradesHeader{
-    display:flex;justify-content:space-between;align-items:center;
-    padding:6px 12px;
-    background:rgba(20,8,45,.97);
-    border-top:2px solid #7b5ea7;
-}
-#btnMinimizar{
-    background:transparent;color:#d4a8ff;
-    border:1px solid #7b5ea7;border-radius:6px;
-    padding:2px 10px;font-size:16px;cursor:pointer;
-    transition:transform .2s;
-}
-.abaBtn{
-    background:rgba(30,10,60,.85);color:#ccaaff;
-    border:1px solid #7b5ea7;border-radius:8px;
-    padding:5px 10px;font-size:13px;cursor:pointer;transition:all .2s;
-}
-.abaBtn:hover,.abaBtn.ativa{background:#7b5ea7;color:white;}
 
-#painelUpgradesConteudo{
-    max-height:200px;overflow-y:auto;
-    background:rgba(12,6,28,.97);
-    transition:max-height .3s ease;
+/* Responsividade */
+@media (max-width: 768px) {
+    .jogo-card-horizontal {
+        flex-direction: column;
+    }
+    .jogo-card-horizontal .jogo-thumb {
+        width: 100%;
+        height: 200px;
+    }
+    .jogo-card-horizontal .jogo-info {
+        padding: 15px 20px;
+    }
 }
-#painelUpgradesConteudo.minimizado{max-height:0;overflow:hidden;}
 
-.painelAba{padding:10px 14px 14px;}
-.painelAba h3,.painelAba h4{color:#d4a8ff;margin-bottom:8px;font-size:14px;}
-
-.upgradeItem{
-    display:flex;justify-content:space-between;align-items:center;
-    background:rgba(255,255,255,.05);
-    border-radius:10px;padding:8px 12px;margin-bottom:6px;
-}
-.upgradeItem b{font-size:13px;}
-.upgradeItem small{color:#aaa;font-size:11px;}
-
-.btnUpgrade{
-    background:linear-gradient(135deg,#7b5ea7,#4a2080);
-    color:white;border:none;border-radius:8px;
-    padding:7px 13px;font-size:12px;cursor:pointer;
-    min-width:110px;transition:all .2s;
-}
-.btnUpgrade:hover{filter:brightness(1.2);}
-.btnUpgrade:disabled{background:#444;color:#888;cursor:not-allowed;}
-
-/* sair batalha */
-#btnSairBatalha{
-    position:absolute;top:8px;right:12px;
-    background:rgba(180,30,30,.8);color:white;
-    border:1px solid #ff4444;border-radius:10px;
-    padding:6px 13px;font-size:13px;cursor:pointer;
-}
-#btnSairBatalha:hover{background:#cc0000;}
-
-/* scrollbar */
-#painelUpgradesConteudo::-webkit-scrollbar{width:4px;}
-#painelUpgradesConteudo::-webkit-scrollbar-thumb{background:#7b5ea7;border-radius:4px;}
-.modalBox::-webkit-scrollbar{width:4px;}
-.modalBox::-webkit-scrollbar-thumb{background:#7b5ea7;border-radius:4px;}
-
-/* cards de jogos (página principal) */
-.jogos-list{display:flex;flex-direction:column;gap:30px;}
-.jogo-card-horizontal{display:flex;background:linear-gradient(145deg,#fff,#f7f7f7);border-radius:16px;overflow:hidden;box-shadow:0 8px 20px rgba(0,0,0,.15);transition:transform .3s,box-shadow .3s;}
-.jogo-card-horizontal:hover{transform:translateY(-5px);box-shadow:0 15px 35px rgba(0,0,0,.25);}
-.jogo-card-horizontal .jogo-thumb{flex:0 0 180px;}
-.jogo-card-horizontal .jogo-thumb img{width:100%;height:100%;object-fit:cover;}
-.jogo-card-horizontal .jogo-info{padding:20px 25px;flex:1;display:flex;flex-direction:column;justify-content:space-between;}
-.jogo-card-horizontal .jogo-info h3{font-family:'Libre Baskerville',serif;font-size:1.6rem;margin-bottom:8px;color:#2c1f17;}
-.jogo-card-horizontal .jogo-info p{font-size:1rem;color:#555;margin-bottom:20px;line-height:1.4;}
-.jogo-card-horizontal .btn-jogar{align-self:flex-start;text-decoration:none;font-weight:600;background:#f44336;color:white;padding:10px 20px;border-radius:8px;transition:background .3s,transform .2s;}
-.jogo-card-horizontal .btn-jogar:hover{background:#d32f2f;transform:translateY(-2px);}
-@media(max-width:768px){.jogo-card-horizontal{flex-direction:column;}.jogo-card-horizontal .jogo-thumb{width:100%;height:200px;}.jogo-card-horizontal .jogo-info{padding:15px 20px;}}
