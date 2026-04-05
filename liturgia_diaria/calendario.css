@@ -1,141 +1,164 @@
 /* ==============================================
-   CALENDÁRIO LITÚRGICO - Lux Fidei v2.0
+   CALENDÁRIO LITÚRGICO - Lux Fidei
+   Design Profissional v3.0
    ============================================== */
 
 /* ==============================================
-   MINI CALENDÁRIO - SIDEBAR
+   MINI CALENDÁRIO
    ============================================== */
-
 #mini-calendario-container {
-  margin-top: 20px;
+  margin-top: 22px;
 }
 
 .mini-cal-card {
   cursor: pointer;
-  background: linear-gradient(160deg, #ffffff 0%, #faf7f2 100%);
-  border: 1px solid rgba(139, 111, 61, 0.25);
-  border-radius: 18px;
-  padding: 18px 16px;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background: #ffffff;
+  border: 1px solid rgba(139, 111, 61, 0.2);
+  border-radius: 20px;
+  padding: 18px 16px 14px;
+  transition: all 0.32s cubic-bezier(0.4, 0, 0.2, 1);
   outline: none;
   position: relative;
   overflow: hidden;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
 }
 
-.mini-cal-card::before {
+.mini-cal-card::after {
   content: '';
   position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, #8b6f3d, #c5a96a, #8b6f3d);
-  border-radius: 18px 18px 0 0;
+  inset: 0;
+  border-radius: 20px;
+  background: linear-gradient(135deg, rgba(139,111,61,0.04), transparent 60%);
   opacity: 0;
   transition: opacity 0.3s;
+  pointer-events: none;
 }
 
-.mini-cal-card:hover::before,
-.mini-cal-card:focus::before {
-  opacity: 1;
-}
+.mini-cal-card:hover::after { opacity: 1; }
 
 .mini-cal-card:hover {
-  transform: translateY(-3px);
+  transform: translateY(-4px);
   box-shadow:
-    0 12px 32px rgba(139, 111, 61, 0.15),
-    0 4px 12px rgba(0, 0, 0, 0.06);
-  border-color: rgba(139, 111, 61, 0.45);
+    0 16px 40px rgba(139, 111, 61, 0.14),
+    0 4px 12px rgba(0, 0, 0, 0.07);
+  border-color: rgba(139, 111, 61, 0.4);
 }
 
-.mini-cal-card:active {
-  transform: translateY(-1px);
-}
+.mini-cal-card:active { transform: translateY(-2px); }
 
-/* Topo */
+/* Topo com decoração */
 .mini-cal-topo {
-  margin-bottom: 12px;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 14px;
+  justify-content: center;
+}
+
+.mini-cal-linha-decorativa {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(139,111,61,0.3));
+}
+
+.mini-cal-linha-decorativa:last-child {
+  background: linear-gradient(90deg, rgba(139,111,61,0.3), transparent);
 }
 
 .mini-cal-label {
   font-family: 'Inter', sans-serif;
-  font-size: 0.62rem;
+  font-size: 0.6rem;
   font-weight: 700;
-  letter-spacing: 2.5px;
+  letter-spacing: 2px;
   text-transform: uppercase;
   color: #8b6f3d;
+  white-space: nowrap;
 }
 
 /* Anel SVG */
 .mini-cal-ring {
-  width: 140px;
-  height: 140px;
+  width: 150px;
+  height: 150px;
   margin: 0 auto 14px;
-  filter: drop-shadow(0 4px 14px rgba(0, 0, 0, 0.12));
+  filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.13));
+  transition: filter 0.3s;
 }
 
-/* Rodapé */
-.mini-cal-rodape {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+.mini-cal-card:hover .mini-cal-ring {
+  filter: drop-shadow(0 8px 22px rgba(0, 0, 0, 0.18));
 }
 
-.mini-cal-tempo-info {
+/* Info row */
+.mini-cal-info-row {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 7px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
 }
 
-.mini-dot {
-  width: 10px;
-  height: 10px;
+.mini-dot-tempo {
+  width: 9px;
+  height: 9px;
   border-radius: 50%;
   flex-shrink: 0;
-  box-shadow: 0 0 0 2px rgba(255,255,255,0.8), 0 0 0 3px currentColor;
+  box-shadow: 0 0 0 2px rgba(255,255,255,0.9), 0 0 0 3.5px currentColor;
 }
 
 .mini-tempo-nome {
   font-family: 'Inter', sans-serif;
-  font-size: 0.82rem;
+  font-size: 0.8rem;
   font-weight: 600;
-  color: #2a2a2a;
+  color: #1a1a1a;
 }
 
-.mini-cal-cta {
+.mini-veste {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.68rem;
+  font-weight: 500;
+  opacity: 0.7;
+}
+
+/* CTA */
+.mini-cal-cta-btn {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 5px;
+  padding: 8px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, rgba(139,111,61,0.08), rgba(197,169,106,0.08));
+  border: 1px solid rgba(139,111,61,0.15);
   font-family: 'Inter', sans-serif;
-  font-size: 0.7rem;
+  font-size: 0.68rem;
   font-weight: 600;
   color: #8b6f3d;
-  opacity: 0.75;
-  transition: opacity 0.2s;
+  transition: all 0.2s;
 }
 
-.mini-cal-card:hover .mini-cal-cta {
-  opacity: 1;
+.mini-cal-card:hover .mini-cal-cta-btn {
+  background: linear-gradient(135deg, rgba(139,111,61,0.14), rgba(197,169,106,0.14));
+  border-color: rgba(139,111,61,0.3);
 }
 
 /* ==============================================
-   MODAL - OVERLAY
+   MODAL OVERLAY
    ============================================== */
 .modal-calendario-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(10, 8, 5, 0.72);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  background: rgba(8, 6, 3, 0.78);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   z-index: 9999;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 20px;
+  padding: 16px;
   opacity: 0;
   visibility: hidden;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: opacity 0.38s ease, visibility 0.38s ease;
 }
 
 .modal-calendario-overlay.modal-aberto {
@@ -144,20 +167,21 @@
 }
 
 /* ==============================================
-   MODAL - CAIXA
+   MODAL BOX
    ============================================== */
 .modal-calendario-box {
   background: #ffffff;
-  border-radius: 26px;
+  border-radius: 28px;
   width: 100%;
-  max-width: 920px;
-  max-height: 92vh;
+  max-width: 960px;
+  max-height: 94vh;
   overflow-y: auto;
   box-shadow:
-    0 50px 100px rgba(0, 0, 0, 0.35),
-    0 0 0 1px rgba(255, 255, 255, 0.08);
-  transform: scale(0.9) translateY(30px);
-  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    0 60px 120px rgba(0, 0, 0, 0.4),
+    0 0 0 1px rgba(255, 255, 255, 0.06),
+    inset 0 1px 0 rgba(255,255,255,0.1);
+  transform: scale(0.88) translateY(40px);
+  transition: transform 0.42s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .modal-calendario-overlay.modal-aberto .modal-calendario-box {
@@ -165,242 +189,280 @@
 }
 
 .modal-calendario-box::-webkit-scrollbar { width: 5px; }
-.modal-calendario-box::-webkit-scrollbar-track { background: #f5f3ef; }
+.modal-calendario-box::-webkit-scrollbar-track { background: #f5f2ec; border-radius: 0 28px 28px 0; }
 .modal-calendario-box::-webkit-scrollbar-thumb {
-  background: linear-gradient(#8b6f3d, #c5a96a);
+  background: linear-gradient(180deg, #8b6f3d, #c5a96a);
   border-radius: 3px;
 }
 
 /* ==============================================
-   MODAL - CABEÇALHO
+   MODAL CABEÇALHO
    ============================================== */
 .modal-cal-header {
-  background: linear-gradient(135deg, #151210 0%, #2a2218 50%, #1a1510 100%);
-  padding: 26px 36px;
+  background: linear-gradient(135deg, #111008 0%, #221c10 50%, #111008 100%);
+  padding: 24px 36px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-radius: 26px 26px 0 0;
+  border-radius: 28px 28px 0 0;
   position: sticky;
   top: 0;
-  z-index: 10;
-  border-bottom: 1px solid rgba(197, 169, 106, 0.2);
+  z-index: 100;
+  border-bottom: 1px solid rgba(197, 169, 106, 0.18);
 }
 
 .modal-cal-titulo span {
   display: block;
   font-family: 'Inter', sans-serif;
-  font-size: 0.62rem;
+  font-size: 0.6rem;
   font-weight: 700;
-  letter-spacing: 3px;
+  letter-spacing: 3.5px;
   text-transform: uppercase;
   color: #c5a96a;
-  margin-bottom: 4px;
+  margin-bottom: 5px;
 }
 
 .modal-cal-titulo h2 {
   margin: 0;
   font-family: 'Libre Baskerville', serif;
-  font-size: 1.45rem;
+  font-size: 1.5rem;
   color: #ffffff;
   font-weight: 700;
+  letter-spacing: -0.3px;
 }
 
 .modal-cal-fechar {
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  color: rgba(255, 255, 255, 0.7);
-  width: 42px;
-  height: 42px;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.6);
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  font-size: 1.1rem;
+  font-size: 1.15rem;
   transition: all 0.25s;
   flex-shrink: 0;
+  line-height: 1;
 }
 
 .modal-cal-fechar:hover {
-  background: rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.15);
   color: #ffffff;
   transform: rotate(90deg);
+  border-color: rgba(255,255,255,0.2);
 }
 
 /* ==============================================
-   MODAL - CORPO (GRID)
+   MODAL CORPO
    ============================================== */
 .modal-cal-body {
   display: grid;
-  grid-template-columns: 1fr 320px;
+  grid-template-columns: 1fr 300px;
+  min-height: 520px;
 }
 
-/* SVG container */
+/* Container SVG */
 .modal-cal-svg-container {
-  padding: 44px;
+  padding: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(145deg, #fafaf8, #f5f2ec);
-  border-right: 1px solid #eeebe4;
+  background: linear-gradient(145deg, #fdfcfa 0%, #f5f1e8 100%);
+  border-right: 1px solid #ece8df;
 }
 
 #modal-cal-svg {
   width: 100%;
-  max-width: 460px;
-  filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.1));
+  max-width: 480px;
+  filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.12));
 }
 
-/* Painel info */
+/* Painel direito */
 .modal-cal-painel {
-  padding: 36px 30px;
   background: #ffffff;
+  padding: 0;
   display: flex;
   flex-direction: column;
 }
 
 #modal-cal-info {
+  padding: 32px 28px;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 18px;
   height: 100%;
 }
 
 /* ==============================================
-   MODAL - INFORMAÇÕES DO TEMPO
+   PAINEL - CONTEÚDO INFO
    ============================================== */
-.modal-info-header {
+
+/* Header do tempo */
+.mci-header {
   display: flex;
-  align-items: center;
+  align-items: stretch;
   gap: 14px;
-  padding-bottom: 20px;
-  border-bottom: 1px solid #f0ece4;
 }
 
-.modal-tempo-icone {
-  width: 48px;
-  height: 48px;
-  background: linear-gradient(135deg, #8b6f3d, #c5a96a);
-  border-radius: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.4rem;
+.mci-cor-barra {
+  width: 5px;
+  border-radius: 3px;
   flex-shrink: 0;
-  box-shadow: 0 4px 12px rgba(139, 111, 61, 0.3);
+  min-height: 52px;
 }
 
-.modal-info-label {
-  margin: 0 0 2px;
+.mci-header-texto {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  justify-content: center;
+}
+
+.mci-label-pequeno {
   font-family: 'Inter', sans-serif;
-  font-size: 0.72rem;
-  font-weight: 600;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 2px;
   text-transform: uppercase;
-  letter-spacing: 1.5px;
-  color: #999;
+  color: #bbb;
 }
 
-.modal-info-nome {
+.mci-nome {
   margin: 0;
   font-family: 'Libre Baskerville', serif;
-  font-size: 1.35rem;
+  font-size: 1.4rem;
   font-weight: 700;
+  line-height: 1.2;
 }
 
-/* Badge cor litúrgica */
-.modal-info-badge {
+/* Veste */
+.mci-veste-row {
+  background: #faf8f3;
+  border-radius: 12px;
+  padding: 12px 16px;
+  border: 1px solid #ede9de;
+}
+
+.mci-veste-item {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 12px 16px;
-  border-radius: 12px;
-  border: 1px solid;
 }
 
-.modal-info-veste-label {
+.mci-veste-label {
   font-family: 'Inter', sans-serif;
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 1px;
-  color: #999;
+  letter-spacing: 1.5px;
+  color: #aaa;
 }
 
-.modal-info-veste-valor {
+.mci-veste-valor {
   display: flex;
   align-items: center;
   gap: 7px;
+}
+
+.mci-cor-bolinha {
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.mci-veste-valor strong {
   font-family: 'Inter', sans-serif;
   font-size: 0.85rem;
   font-weight: 700;
 }
 
-.modal-dot-cor {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
+/* Separador */
+.mci-separador {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #e8e4dc, transparent);
 }
 
 /* Descrição */
-.modal-info-desc {
+.mci-descricao {
   font-family: 'Libre Baskerville', serif;
-  font-size: 0.97rem;
-  line-height: 1.8;
+  font-size: 0.92rem;
+  line-height: 1.82;
   color: #555;
   margin: 0;
-  flex: 1;
 }
 
-/* Botão Ler Mais */
-.modal-btn-lermais {
+/* Lista subsegmentos */
+.mci-subseg-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.mci-subseg-item {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.78rem;
+  color: #555;
+}
+
+.mci-subseg-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+/* Botão ler mais */
+.mci-btn-ler {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  background: linear-gradient(135deg, #8b6f3d 0%, #c5a96a 100%);
+  justify-content: center;
+  gap: 9px;
+  background: linear-gradient(135deg, #7a5f2e 0%, #c5a96a 100%);
   color: #ffffff;
-  padding: 13px 22px;
-  border-radius: 12px;
+  padding: 13px 20px;
+  border-radius: 13px;
   font-family: 'Inter', sans-serif;
-  font-size: 0.82rem;
+  font-size: 0.8rem;
   font-weight: 600;
   text-decoration: none;
-  transition: all 0.25s;
-  box-shadow: 0 4px 16px rgba(139, 111, 61, 0.3);
-  width: fit-content;
+  transition: all 0.26s;
+  box-shadow: 0 4px 16px rgba(139, 111, 61, 0.28);
   margin-top: auto;
+  letter-spacing: 0.2px;
 }
 
-.modal-btn-lermais:hover {
+.mci-btn-ler:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(139, 111, 61, 0.45);
+  box-shadow: 0 8px 28px rgba(139, 111, 61, 0.42);
 }
 
-.modal-btn-lermais svg {
-  transition: transform 0.2s;
-}
-
-.modal-btn-lermais:hover svg {
-  transform: translateX(4px);
-}
+.mci-btn-ler svg { transition: transform 0.22s; }
+.mci-btn-ler:hover svg { transform: translateX(4px); }
 
 /* ==============================================
-   MODAL - LEGENDA
+   MODAL LEGENDA
    ============================================== */
 .modal-cal-legenda-section {
-  padding: 22px 36px 28px;
-  border-top: 1px solid #eeebe4;
-  background: linear-gradient(180deg, #fafaf8, #f5f2ec);
-  border-radius: 0 0 26px 26px;
+  border-top: 1px solid #ece8df;
+  background: linear-gradient(180deg, #fdfcfa, #f5f1e8);
+  padding: 20px 36px 26px;
+  border-radius: 0 0 28px 28px;
 }
 
 .modal-cal-legenda-titulo {
   font-family: 'Inter', sans-serif;
-  font-size: 0.62rem;
+  font-size: 0.58rem;
   font-weight: 700;
-  letter-spacing: 2.5px;
+  letter-spacing: 3px;
   text-transform: uppercase;
-  color: #bbb;
+  color: #c5c0b8;
   margin: 0 0 14px;
 }
 
@@ -410,75 +472,82 @@
   gap: 8px;
 }
 
-.legenda-pill {
+.leg-pill {
   display: inline-flex;
   align-items: center;
   gap: 7px;
-  padding: 7px 14px;
+  padding: 6px 14px;
   border-radius: 30px;
   background: #ffffff;
-  border: 1px solid #e8e4dc;
+  border: 1px solid #e5e0d5;
   font-family: 'Inter', sans-serif;
-  font-size: 0.78rem;
+  font-size: 0.75rem;
   font-weight: 500;
   color: #555;
   transition: all 0.2s;
 }
 
-.legenda-pill-ativa {
+.leg-pill-ativa {
   background: #fffbeb;
-  border-color: #FFD700;
+  border-color: rgba(255, 200, 0, 0.5);
   font-weight: 700;
   color: #333;
-  box-shadow: 0 2px 8px rgba(255, 215, 0, 0.2);
+  box-shadow: 0 2px 10px rgba(255, 200, 0, 0.15);
 }
 
-.legenda-dot {
+.leg-dot {
   width: 10px;
   height: 10px;
   border-radius: 50%;
   flex-shrink: 0;
 }
 
+.leg-agora {
+  background: #FFD700;
+  color: #333;
+  font-size: 0.6rem;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 20px;
+  letter-spacing: 0.5px;
+}
+
 /* ==============================================
    RESPONSIVIDADE
    ============================================== */
-@media (max-width: 768px) {
+@media (max-width: 800px) {
   .modal-cal-body {
     grid-template-columns: 1fr;
   }
 
   .modal-cal-svg-container {
     border-right: none;
-    border-bottom: 1px solid #eeebe4;
-    padding: 28px 20px;
+    border-bottom: 1px solid #ece8df;
+    padding: 28px 16px;
   }
 
-  #modal-cal-svg {
-    max-width: 300px;
-  }
+  #modal-cal-svg { max-width: 290px; }
 
-  .modal-cal-painel {
-    padding: 24px 20px;
-  }
+  .modal-cal-painel { border-radius: 0; }
+  #modal-cal-info { padding: 24px 20px; }
 
   .modal-cal-header {
-    padding: 20px 22px;
-    border-radius: 22px 22px 0 0;
+    padding: 18px 22px;
+    border-radius: 24px 24px 0 0;
   }
 
   .modal-calendario-box {
-    border-radius: 22px;
-    max-height: 95vh;
+    border-radius: 24px;
+    max-height: 96vh;
   }
 
   .modal-cal-legenda-section {
-    padding: 18px 20px 24px;
-    border-radius: 0 0 22px 22px;
+    padding: 16px 20px 22px;
+    border-radius: 0 0 24px 24px;
   }
+}
 
-  .mini-cal-ring {
-    width: 120px;
-    height: 120px;
-  }
+@media (max-width: 480px) {
+  .modal-cal-titulo h2 { font-size: 1.2rem; }
+  .mini-cal-ring { width: 130px; height: 130px; }
 }
