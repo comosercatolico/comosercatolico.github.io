@@ -241,8 +241,8 @@ body {
   position: absolute;
   bottom: 20px;
   right: 30px;
-  background: rgba(255,255,255,0.12);
-  border: 1px solid rgba(255,255,255,0.25);
+  background: rgba(255,255,255,0.10);
+  border: 1px solid rgba(255,255,255,0.20);
   border-radius: 16px;
   padding: 10px 14px;
   cursor: pointer;
@@ -260,18 +260,15 @@ body {
 }
 
 #btn-calendario:hover {
-  background: rgba(255,255,255,0.22);
+  background: rgba(255,255,255,0.20);
   transform: translateY(-3px);
-  box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.4);
 }
 
-#cal-thumb {
-  width: 80px;
-  height: 80px;
-  border-radius: 10px;
-  object-fit: cover;
+#cal-canvas-mini {
+  border-radius: 50%;
   display: block;
-  border: 2px solid rgba(255,255,255,0.3);
+  border: 2px solid rgba(197,169,106,0.5);
 }
 
 /* =========================
@@ -280,8 +277,8 @@ body {
 #cal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.75);
-  backdrop-filter: blur(6px);
+  background: rgba(0,0,0,0.80);
+  backdrop-filter: blur(8px);
   z-index: 9999;
   display: flex;
   align-items: center;
@@ -300,14 +297,14 @@ body {
   background: white;
   border-radius: 24px;
   padding: 30px;
-  max-width: 640px;
+  max-width: 600px;
   width: 90vw;
-  max-height: 90vh;
+  max-height: 92vh;
   overflow-y: auto;
   position: relative;
-  box-shadow: 0 30px 80px rgba(0,0,0,0.4);
+  box-shadow: 0 40px 100px rgba(0,0,0,0.5);
   text-align: center;
-  transform: scale(0.92);
+  transform: scale(0.90);
   transition: transform 0.3s ease;
 }
 
@@ -318,15 +315,15 @@ body {
 #cal-modal h3 {
   font-family: 'Libre Baskerville', serif;
   font-size: 1.4rem;
-  color: var(--text-main);
+  color: #1a1a1a;
   margin: 0 0 6px;
 }
 
 #cal-semana-info {
-  color: var(--text-soft);
+  color: #666;
   font-size: 0.9rem;
   margin-bottom: 20px;
-  line-height: 1.6;
+  line-height: 1.7;
 }
 
 #cal-fechar {
@@ -345,67 +342,39 @@ body {
   justify-content: center;
   transition: background 0.2s;
   color: #333;
+  line-height: 1;
 }
 
 #cal-fechar:hover {
-  background: #e0e0e0;
+  background: #ddd;
 }
 
-/* =========================
-   📅 CONTAINER DA IMAGEM
-========================= */
 #cal-container {
-  position: relative;
-  display: inline-block;
-  width: 100%;
-  max-width: 520px;
-  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-#cal-imagem {
-  width: 100%;
-  height: auto;
-  display: block;
+#cal-canvas-grande {
   border-radius: 50%;
-  border: 3px solid #eee;
-}
-
-/* MARCADOR DA SEMANA */
-#cal-destaque {
-  position: absolute;
-  width: 4px;
-  height: 32px;
-  background: linear-gradient(180deg, #00ff88, #00cc66);
-  border-radius: 4px;
-  box-shadow: 0 0 12px rgba(0,255,136,0.8),
-              0 0 24px rgba(0,255,136,0.4);
-  display: none;
-  pointer-events: none;
-  transform-origin: center center;
+  display: block;
+  max-width: 100%;
 }
 
 #cal-legenda {
-  font-size: 0.8rem;
-  color: var(--text-soft);
+  font-size: 0.82rem;
+  color: #888;
   margin-top: 16px;
   font-style: italic;
 }
 
-/* =========================
-   RESPONSIVO
-========================= */
-@media (max-width: 900px) {
+@media (max-width: 600px) {
   #btn-calendario {
     bottom: 10px;
-    right: 15px;
+    right: 12px;
+    padding: 8px 10px;
   }
-
-  #cal-thumb {
-    width: 60px;
-    height: 60px;
-  }
-
   #cal-modal {
-    padding: 20px;
+    padding: 20px 15px;
   }
 }
