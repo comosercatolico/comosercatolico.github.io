@@ -1,0 +1,438 @@
+/* ==============================================
+   CALENDÁRIO LITÚRGICO - Lux Fidei
+   ============================================== */
+
+/* ==============================================
+   MINI CALENDÁRIO (Sidebar)
+   ============================================== */
+.mini-cal-wrapper {
+  cursor: pointer;
+  background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+  border-radius: 16px;
+  padding: 16px;
+  margin-top: 16px;
+  border: 1px solid rgba(139, 111, 61, 0.3);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.mini-cal-wrapper::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(139,111,61,0.1), transparent);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.mini-cal-wrapper:hover::before {
+  opacity: 1;
+}
+
+.mini-cal-wrapper:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+  border-color: rgba(197, 169, 106, 0.5);
+}
+
+.mini-cal-wrapper:active {
+  transform: translateY(-1px);
+}
+
+.mini-cal-ring {
+  width: 130px;
+  height: 130px;
+  margin: 0 auto 12px;
+  filter: drop-shadow(0 4px 12px rgba(0,0,0,0.3));
+}
+
+.mini-cal-info {
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+.mini-cal-label {
+  display: block;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 8px;
+  font-family: 'Inter', sans-serif;
+}
+
+.mini-cal-tempo {
+  display: inline-block;
+  padding: 5px 14px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  font-family: 'Inter', sans-serif;
+}
+
+.mini-cal-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  color: rgba(197, 169, 106, 0.8);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  font-family: 'Inter', sans-serif;
+  transition: color 0.2s;
+}
+
+.mini-cal-wrapper:hover .mini-cal-btn {
+  color: #c5a96a;
+}
+
+/* ==============================================
+   MODAL - OVERLAY
+   ============================================== */
+.modal-calendario-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.modal-calendario-overlay.modal-aberto {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* ==============================================
+   MODAL - JANELA
+   ============================================== */
+.modal-calendario-box {
+  background: #ffffff;
+  border-radius: 24px;
+  width: 100%;
+  max-width: 900px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 40px 80px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255,255,255,0.1);
+  transform: scale(0.92) translateY(20px);
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+
+.modal-calendario-overlay.modal-aberto .modal-calendario-box {
+  transform: scale(1) translateY(0);
+}
+
+/* Scrollbar customizada */
+.modal-calendario-box::-webkit-scrollbar {
+  width: 6px;
+}
+.modal-calendario-box::-webkit-scrollbar-track {
+  background: #f5f3ef;
+}
+.modal-calendario-box::-webkit-scrollbar-thumb {
+  background: var(--gold);
+  border-radius: 3px;
+}
+
+/* ==============================================
+   MODAL - HEADER
+   ============================================== */
+.modal-cal-header {
+  background: radial-gradient(circle at top left, #2a2a2a, #0f0f0f);
+  padding: 28px 36px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 24px 24px 0 0;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.modal-cal-titulo {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.modal-cal-titulo span {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold-light, #c5a96a);
+  font-family: 'Inter', sans-serif;
+}
+
+.modal-cal-titulo h2 {
+  margin: 0;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #ffffff;
+  font-family: 'Libre Baskerville', serif;
+}
+
+.modal-cal-fechar {
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.15);
+  color: white;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 1.2rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.modal-cal-fechar:hover {
+  background: rgba(255,255,255,0.2);
+  transform: rotate(90deg);
+}
+
+/* ==============================================
+   MODAL - CORPO
+   ============================================== */
+.modal-cal-body {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 0;
+  min-height: 500px;
+}
+
+/* SVG do calendário */
+.modal-cal-svg-container {
+  padding: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fafaf8;
+  border-right: 1px solid #eee;
+}
+
+.modal-cal-svg-container svg {
+  max-width: 480px;
+  width: 100%;
+}
+
+/* Painel lateral */
+.modal-cal-painel {
+  padding: 36px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  background: #ffffff;
+}
+
+/* ==============================================
+   MODAL - BADGE DO TEMPO ATUAL
+   ============================================== */
+.modal-tempo-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border-radius: 40px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  font-family: 'Inter', sans-serif;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+  width: fit-content;
+}
+
+.modal-tempo-dot {
+  width: 8px;
+  height: 8px;
+  background: currentColor;
+  border-radius: 50%;
+  opacity: 0.7;
+  animation: pulsar 2s infinite;
+}
+
+@keyframes pulsar {
+  0%, 100% { transform: scale(1); opacity: 0.7; }
+  50% { transform: scale(1.4); opacity: 1; }
+}
+
+.modal-tempo-desc {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 1rem;
+  line-height: 1.75;
+  color: #444;
+  margin: 0;
+}
+
+.modal-tempo-veste {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  background: #faf7f2;
+  border-radius: 10px;
+  border-left: 3px solid var(--gold, #8b6f3d);
+}
+
+.veste-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-family: 'Inter', sans-serif;
+}
+
+.veste-valor {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--gold, #8b6f3d);
+  font-family: 'Inter', sans-serif;
+}
+
+/* ==============================================
+   MODAL - BOTÃO LER MAIS
+   ============================================== */
+.modal-ler-mais {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #8b6f3d, #c5a96a);
+  color: white;
+  padding: 13px 22px;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+  font-family: 'Inter', sans-serif;
+  transition: all 0.25s;
+  box-shadow: 0 4px 15px rgba(139,111,61,0.3);
+  width: fit-content;
+  margin-top: auto;
+}
+
+.modal-ler-mais:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(139,111,61,0.4);
+}
+
+.modal-ler-mais svg {
+  transition: transform 0.2s;
+}
+
+.modal-ler-mais:hover svg {
+  transform: translateX(3px);
+}
+
+/* ==============================================
+   MODAL - LEGENDA
+   ============================================== */
+.modal-cal-legenda-section {
+  padding: 24px 36px;
+  border-top: 1px solid #eee;
+  background: #fafaf8;
+  border-radius: 0 0 24px 24px;
+}
+
+.modal-cal-legenda-titulo {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: #999;
+  margin: 0 0 16px;
+  font-family: 'Inter', sans-serif;
+}
+
+.modal-cal-legenda-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.legenda-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 14px;
+  border-radius: 30px;
+  background: white;
+  border: 1px solid #eee;
+  transition: all 0.2s;
+}
+
+.legenda-item.legenda-ativa {
+  border-color: #FFD700;
+  background: #fffbeb;
+  box-shadow: 0 2px 8px rgba(255,215,0,0.2);
+}
+
+.legenda-cor {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.legenda-nome {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #444;
+  font-family: 'Inter', sans-serif;
+}
+
+/* ==============================================
+   FATIA ANIMADA (tempo atual)
+   ============================================== */
+.fatia-ativa {
+  filter: brightness(1.08);
+}
+
+/* ==============================================
+   RESPONSIVIDADE
+   ============================================== */
+@media (max-width: 700px) {
+  .modal-cal-body {
+    grid-template-columns: 1fr;
+  }
+
+  .modal-cal-svg-container {
+    border-right: none;
+    border-bottom: 1px solid #eee;
+    padding: 30px 20px;
+  }
+
+  .modal-cal-painel {
+    padding: 24px 20px;
+  }
+
+  .modal-cal-header {
+    padding: 20px 24px;
+    border-radius: 20px 20px 0 0;
+  }
+
+  .modal-cal-legenda-section {
+    padding: 20px;
+    border-radius: 0 0 20px 20px;
+  }
+
+  .modal-calendario-box {
+    border-radius: 20px;
+    max-height: 95vh;
+  }
+}
