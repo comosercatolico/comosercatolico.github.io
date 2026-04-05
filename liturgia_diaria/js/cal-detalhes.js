@@ -1,54 +1,59 @@
 /* ================================================
    CALENDÁRIO LITÚRGICO — PARTE 2
-   Detalhes: textos nos anéis, datas, centro
+   Textos, datas, separadores, centro
    ================================================ */
 
-/* ────────────────────────────────────────────────
-   ANEL DE DATAS (anel externo)
-──────────────────────────────────────────────── */
+/* ════════════════════════════════════════════════
+   ANEL DE DATAS
+════════════════════════════════════════════════ */
 
-function desenharDatas(ctx, cx, cy, R, inicioAdv, total, tamanho) {
-  const CAL   = window.CalBase.CAL;
+function desenharDatas(ctx, cx, cy, R, ini, total, tam) {
+  const CAL    = window.CalBase.CAL;
   const sToAng = window.CalBase.sToAng;
 
-  const rO    = R * CAL.raios.externo;
-  const rData = R * CAL.raios.datas;
+  const rO   = R * CAL.r.externo;
+  const rD   = R * CAL.r.datas;
+  const rMid = (rO + rD) / 2;
 
-  // Faixa escura de fundo para as datas
+  // ── Faixa de fundo fosca ──
+  ctx.save();
   ctx.beginPath();
   ctx.arc(cx, cy, rO, 0, 2 * Math.PI);
-  ctx.arc(cx, cy, rData, 0, 2 * Math.PI, true);
-  ctx.fillStyle = "rgba(0,0,0,0.45)";
+  ctx.arc(cx, cy, rD, 0, 2 * Math.PI, true);
+
+  const gFaixa = ctx.createRadialGradient(cx, cy, rD, cx, cy, rO);
+  gFaixa.addColorStop(0, "rgba(0,0,0,0.55)");
+  gFaixa.addColorStop(1, "rgba(0,0,0,0.30)");
+  ctx.fillStyle = gFaixa;
   ctx.fill();
+  ctx.restore();
 
-  // Borda separadora
+  // ── Linha separadora interna ──
+  ctx.save();
   ctx.beginPath();
-  ctx.arc(cx, cy, rData, 0, 2 * Math.PI);
-  ctx.strokeStyle = "rgba(197,169,106,0.25)";
-  ctx.lineWidth = 1;
+  ctx.arc(cx, cy, rD, 0, 2 * Math.PI);
+  ctx.strokeStyle = "rgba(255,255,255,0.06)";
+  ctx.lineWidth   = 1;
   ctx.stroke();
+  ctx.restore();
 
-  // Datas
+  // ── Datas ──
   for (let i = 0; i < total; i++) {
-    const ang = sToAng(i, total) + (Math.PI / total);
+    const angFatia = sToAng(i, total);
+    const angProx  = sToAng(i + 1, total);
+    const aMid     = (angFatia + angProx) / 2;
 
-    const dataRef = new Date(inicioAdv);
-    dataRef.setDate(inicioAdv.getDate() + i * 7);
+    const d = new Date(ini);
+    d.setDate(ini.getDate() + i * 7);
 
-    const dia   = dataRef.getDate();
-    const mes   = dataRef.getMonth() + 1;
-    const label = `${dia}/${mes}`;
-
-    const raioTexto = (rData + rO) / 2;
+    const label = `${d.getDate()}/${d.getMonth() + 1}`;
 
     ctx.save();
-    ctx.translate(
-      cx + raioTexto * Math.cos(ang),
-      cy + raioTexto * Math.sin(ang)
-    );
-    ctx.rotate(ang + Math.PI / 2);
-    ctx.fillStyle    = "rgba(255,245,220,0.80)";
-    ctx.font         = CAL.fonte.data(tamanho);
+    ctx.translate(cx + rMid * Math.cos(aMid), cy + rMid * Math.sin(aMid));
+    ctx.rotate(aMid + Math.PI / 2);
+
+    ctx.fillStyle    = "rgba(255,245,225,0.72)";
+    ctx.font         = CAL.font.data(tam);
     ctx.textAlign    = "center";
     ctx.textBaseline = "middle";
     ctx.fillText(label, 0, 0);
@@ -56,265 +61,320 @@ function desenharDatas(ctx, cx, cy, R, inicioAdv, total, tamanho) {
   }
 }
 
-/* ────────────────────────────────────────────────
-   NOMES DAS SEMANAS (anel médio interno)
-──────────────────────────────────────────────── */
+/* ════════════════════════════════════════════════
+   NOMES DAS SEMANAS
+════════════════════════════════════════════════ */
 
-function desenharNomesSemanas(ctx, cx, cy, R, segs, total, tamanho) {
+function desenharNomesSemanas(ctx, cx, cy, R, segs, total, tam) {
   const CAL    = window.CalBase.CAL;
   const sToAng = window.CalBase.sToAng;
 
-  const rNomes = R * CAL.raios.nomes;
-  const rData  = R * CAL.raios.datas;
-  const raio   = (rNomes + rData) / 2;
+  const rD   = R * CAL.r.datas;
+  const rS   = R * CAL.r.semanas;
+  const rMid = (rD + rS) / 2;
 
   segs.forEach((seg) => {
+    if (!seg.nome) return;
+
     const a1   = sToAng(seg.inicio, total);
     const a2   = sToAng(seg.fim,    total);
     const aMid = (a1 + a2) / 2;
+    const span = a2 - a1;
 
-    if (!seg.nome) return;
+    // Não desenha se a fatia for muito pequena
+    const minSpan = (2 * Math.PI) / total * 0.6;
+    if (span < minSpan) return;
 
     ctx.save();
-    ctx.translate(
-      cx + raio * Math.cos(aMid),
-      cy + raio * Math.sin(aMid)
-    );
+    ctx.translate(cx + rMid * Math.cos(aMid), cy + rMid * Math.sin(aMid));
     ctx.rotate(aMid + Math.PI / 2);
 
-    ctx.fillStyle    = "rgba(255,255,255,0.88)";
-    ctx.font         = CAL.fonte.semana(tamanho);
+    ctx.fillStyle    = "rgba(255,255,255,0.82)";
+    ctx.font         = CAL.font.semana(tam);
     ctx.textAlign    = "center";
     ctx.textBaseline = "middle";
 
-    ctx.shadowColor   = "rgba(0,0,0,0.70)";
-    ctx.shadowBlur    = 3;
-    ctx.shadowOffsetX = 0;
-    ctx.shadowOffsetY = 1;
+    // Sombra para legibilidade
+    ctx.shadowColor  = "rgba(0,0,0,0.90)";
+    ctx.shadowBlur   = 4;
 
     ctx.fillText(seg.nome, 0, 0);
     ctx.restore();
   });
 }
 
-/* ────────────────────────────────────────────────
-   NOMES DOS TEMPOS LITÚRGICOS (anel interno)
-──────────────────────────────────────────────── */
+/* ════════════════════════════════════════════════
+   NOMES DOS TEMPOS LITÚRGICOS
+════════════════════════════════════════════════ */
 
-function desenharNomesTempos(ctx, cx, cy, R, segs, total, tamanho) {
+function desenharNomesTempos(ctx, cx, cy, R, segs, total, tam) {
   const CAL    = window.CalBase.CAL;
   const sToAng = window.CalBase.sToAng;
 
-  const rTempos = R * CAL.raios.tempos;
-  const rNomes  = R * CAL.raios.nomes;
-  const raio    = (rTempos + rNomes) / 2;
+  const rS   = R * CAL.r.semanas;
+  const rT   = R * CAL.r.tempos;
+  const rMid = (rS + rT) / 2;
 
-  // Agrupar segmentos por tempo
-  const grupos = {};
+  // ── Agrupar por tempo ──
+  const grupos = new Map();
   segs.forEach((seg) => {
-    if (!grupos[seg.tempo]) {
-      grupos[seg.tempo] = { inicio: seg.inicio, fim: seg.fim, cor: seg.cor };
+    if (!grupos.has(seg.tempo)) {
+      grupos.set(seg.tempo, { inicio: seg.inicio, fim: seg.fim, cor: seg.cor });
     } else {
-      grupos[seg.tempo].fim = seg.fim;
+      grupos.get(seg.tempo).fim = seg.fim;
     }
   });
 
-  Object.entries(grupos).forEach(([nome, g]) => {
+  grupos.forEach((g, nome) => {
     const a1   = sToAng(g.inicio, total);
     const a2   = sToAng(g.fim,    total);
     const aMid = (a1 + a2) / 2;
-    const span = a2 - a1;
+    const span = Math.abs(a2 - a1);
 
-    if (span < 0.18) return;
+    // Só renderiza se houver espaço
+    if (span < 0.22) return;
+
+    // ── Texto curvado letra por letra ──
+    const texto    = nome.toUpperCase();
+    const fontSize = Math.max(8, Math.round(tam * 0.019));
+    const arcRaio  = rMid;
+    const charAngle = fontSize * 0.65 / arcRaio;
+    const totalAng  = texto.length * charAngle;
+
+    // Limita o texto ao espaço disponível
+    if (totalAng > span * 0.85) {
+      // Versão curta sem curvar
+      ctx.save();
+      ctx.translate(cx + rMid * Math.cos(aMid), cy + rMid * Math.sin(aMid));
+      ctx.rotate(aMid + Math.PI / 2);
+      ctx.fillStyle    = "rgba(255,255,255,0.38)";
+      ctx.font         = `600 ${fontSize}px Inter, sans-serif`;
+      ctx.textAlign    = "center";
+      ctx.textBaseline = "middle";
+      ctx.shadowColor  = "rgba(0,0,0,0.80)";
+      ctx.shadowBlur   = 3;
+      ctx.fillText(texto, 0, 0);
+      ctx.restore();
+      return;
+    }
+
+    // ── Texto curvado ──
+    const startAng = aMid - totalAng / 2;
 
     ctx.save();
-    ctx.translate(
-      cx + raio * Math.cos(aMid),
-      cy + raio * Math.sin(aMid)
-    );
-    ctx.rotate(aMid + Math.PI / 2);
-
-    ctx.fillStyle    = "rgba(255,255,255,0.55)";
-    ctx.font         = CAL.fonte.tempo(tamanho);
+    ctx.fillStyle    = "rgba(255,255,255,0.38)";
+    ctx.font         = `600 ${fontSize}px Inter, sans-serif`;
     ctx.textAlign    = "center";
     ctx.textBaseline = "middle";
+    ctx.shadowColor  = "rgba(0,0,0,0.80)";
+    ctx.shadowBlur   = 3;
 
-    ctx.shadowColor = "rgba(0,0,0,0.80)";
-    ctx.shadowBlur  = 4;
+    for (let i = 0; i < texto.length; i++) {
+      const ang = startAng + (i + 0.5) * charAngle;
+      ctx.save();
+      ctx.translate(cx + arcRaio * Math.cos(ang), cy + arcRaio * Math.sin(ang));
+      ctx.rotate(ang + Math.PI / 2);
+      ctx.fillText(texto[i], 0, 0);
+      ctx.restore();
+    }
 
-    ctx.fillText(nome.toUpperCase(), 0, 0);
     ctx.restore();
   });
 }
 
-/* ────────────────────────────────────────────────
-   SEPARADORES DE TEMPO (linhas maiores)
-──────────────────────────────────────────────── */
+/* ════════════════════════════════════════════════
+   SEPARADORES DE TEMPO
+════════════════════════════════════════════════ */
 
-function desenharSeparadoresTempos(ctx, cx, cy, R, segs, total) {
+function desenharSeparadores(ctx, cx, cy, R, segs, total) {
   const CAL    = window.CalBase.CAL;
   const sToAng = window.CalBase.sToAng;
 
-  const rI = R * CAL.raios.interno;
-  const rO = R * CAL.raios.externo;
+  const rI = R * CAL.r.centro;
+  const rO = R * CAL.r.externo;
 
   let tempoAtual = null;
 
   segs.forEach((seg) => {
-    if (seg.tempo !== tempoAtual) {
-      tempoAtual = seg.tempo;
-      const ang  = sToAng(seg.inicio, total);
+    if (seg.tempo === tempoAtual) return;
+    tempoAtual = seg.tempo;
 
-      ctx.beginPath();
-      ctx.moveTo(cx + rI * Math.cos(ang), cy + rI * Math.sin(ang));
-      ctx.lineTo(cx + rO * Math.cos(ang), cy + rO * Math.sin(ang));
-      ctx.strokeStyle = "rgba(255,255,255,0.22)";
-      ctx.lineWidth   = 1.8;
-      ctx.setLineDash([3, 3]);
-      ctx.stroke();
-      ctx.setLineDash([]);
-    }
+    const ang = sToAng(seg.inicio, total);
+    const p1  = { x: cx + rI * Math.cos(ang), y: cy + rI * Math.sin(ang) };
+    const p2  = { x: cx + rO * Math.cos(ang), y: cy + rO * Math.sin(ang) };
+
+    // Linha principal
+    ctx.save();
+    ctx.beginPath();
+    ctx.moveTo(p1.x, p1.y);
+    ctx.lineTo(p2.x, p2.y);
+    ctx.strokeStyle = "rgba(255,255,255,0.18)";
+    ctx.lineWidth   = 1.5;
+    ctx.setLineDash([4, 4]);
+    ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.restore();
+
+    // Ponto na borda externa
+    ctx.save();
+    ctx.beginPath();
+    ctx.arc(p2.x, p2.y, 2, 0, 2 * Math.PI);
+    ctx.fillStyle = "rgba(255,255,255,0.25)";
+    ctx.fill();
+    ctx.restore();
   });
 }
 
-/* ────────────────────────────────────────────────
+/* ════════════════════════════════════════════════
    CÍRCULO CENTRAL
-──────────────────────────────────────────────── */
+════════════════════════════════════════════════ */
 
-function desenharCentro(ctx, cx, cy, R, tamanho, mini) {
-  const CAL = window.CalBase.CAL;
-  const rI  = R * CAL.raios.interno;
+function desenharCentro(ctx, cx, cy, R, tam, mini) {
+  const CAL      = window.CalBase.CAL;
+  const roundRect = window.CalBase.roundRect;
 
-  // Fundo do centro
-  const gCentro = ctx.createRadialGradient(cx, cy, 0, cx, cy, rI);
+  const rC = R * CAL.r.centro;
+
+  // ── Fundo do centro ──
+  const gFundo = ctx.createRadialGradient(cx, cy, 0, cx, cy, rC);
   if (mini) {
-    gCentro.addColorStop(0, "#222");
-    gCentro.addColorStop(1, "#111");
+    gFundo.addColorStop(0, "#1e1e1e");
+    gFundo.addColorStop(1, "#111111");
   } else {
-    gCentro.addColorStop(0,   "#2a1f0a");
-    gCentro.addColorStop(0.5, "#1a1206");
-    gCentro.addColorStop(1,   "#0f0c04");
+    gFundo.addColorStop(0,   "#1a1714");
+    gFundo.addColorStop(0.6, "#111009");
+    gFundo.addColorStop(1,   "#0a0906");
   }
 
   ctx.beginPath();
-  ctx.arc(cx, cy, rI, 0, 2 * Math.PI);
-  ctx.fillStyle = gCentro;
+  ctx.arc(cx, cy, rC, 0, 2 * Math.PI);
+  ctx.fillStyle = gFundo;
   ctx.fill();
 
-  // Anel dourado do centro
-  ctx.beginPath();
-  ctx.arc(cx, cy, rI, 0, 2 * Math.PI);
-  ctx.strokeStyle = CAL.cores.bordaOuro;
-  ctx.lineWidth   = mini ? 1.5 : 3;
-  ctx.stroke();
-
-  // Mini: só cruz
   if (mini) {
-    ctx.fillStyle    = CAL.cores.bordaOuro;
-    ctx.font         = `bold ${tamanho * 0.32}px serif`;
+    // Mini: só anel + cruz simples
+    ctx.beginPath();
+    ctx.arc(cx, cy, rC, 0, 2 * Math.PI);
+    ctx.strokeStyle = "rgba(212,168,83,0.50)";
+    ctx.lineWidth   = 1.5;
+    ctx.stroke();
+
+    ctx.fillStyle    = "rgba(212,168,83,0.80)";
+    ctx.font         = CAL.font.simbolo(tam);
     ctx.textAlign    = "center";
     ctx.textBaseline = "middle";
     ctx.fillText("✝", cx, cy);
     return;
   }
 
-  // Círculos decorativos internos
-  ctx.beginPath();
-  ctx.arc(cx, cy, rI * 0.80, 0, 2 * Math.PI);
-  ctx.strokeStyle = "rgba(197,169,106,0.30)";
-  ctx.lineWidth   = 1;
-  ctx.stroke();
+  // ── Anéis decorativos internos ──
+  [0.90, 0.68, 0.44].forEach((fator, i) => {
+    ctx.beginPath();
+    ctx.arc(cx, cy, rC * fator, 0, 2 * Math.PI);
+    ctx.strokeStyle = `rgba(212,168,83,${0.12 - i * 0.03})`;
+    ctx.lineWidth   = 1;
+    ctx.stroke();
+  });
 
-  ctx.beginPath();
-  ctx.arc(cx, cy, rI * 0.55, 0, 2 * Math.PI);
-  ctx.strokeStyle = "rgba(197,169,106,0.20)";
-  ctx.lineWidth   = 1;
-  ctx.stroke();
-
-  // Cruz
-  desenharCruz(ctx, cx, cy, rI * 0.58, tamanho);
-
-  // Alfa e Ômega
+  // ── Anel externo dourado ──
   ctx.save();
-  ctx.fillStyle    = "rgba(197,169,106,0.75)";
-  ctx.font         = `bold ${tamanho * 0.042}px 'Libre Baskerville', serif`;
-  ctx.textAlign    = "center";
-  ctx.textBaseline = "middle";
-  ctx.shadowColor  = "rgba(0,0,0,0.5)";
-  ctx.shadowBlur   = 6;
-  ctx.fillText("Α", cx - rI * 0.42, cy + rI * 0.14);
-  ctx.fillText("Ω", cx + rI * 0.42, cy + rI * 0.14);
+  ctx.beginPath();
+  ctx.arc(cx, cy, rC, 0, 2 * Math.PI);
+  const gAnel = ctx.createLinearGradient(cx - rC, cy - rC, cx + rC, cy + rC);
+  gAnel.addColorStop(0,    "rgba(212,168,83,0.70)");
+  gAnel.addColorStop(0.35, "rgba(240,201,106,0.90)");
+  gAnel.addColorStop(0.65, "rgba(212,168,83,0.70)");
+  gAnel.addColorStop(1,    "rgba(139,105,20,0.60)");
+  ctx.strokeStyle = gAnel;
+  ctx.lineWidth   = 2;
+  ctx.stroke();
   ctx.restore();
 
-  // Texto "ANO LITÚRGICO"
+  // ── Cruz central moderna ──
+  desenharCruzModerna(ctx, cx, cy, rC * 0.52, tam);
+
+  // ── Alfa e Ômega ──
   ctx.save();
-  ctx.fillStyle    = "rgba(197,169,106,0.35)";
-  ctx.font         = `${tamanho * 0.022}px 'Inter', sans-serif`;
+  ctx.font         = `300 ${Math.round(tam * 0.036)}px Inter, sans-serif`;
   ctx.textAlign    = "center";
   ctx.textBaseline = "middle";
-  ctx.fillText("ANO LITÚRGICO", cx, cy - rI * 0.70);
+  ctx.fillStyle    = "rgba(212,168,83,0.55)";
+  ctx.letterSpacing = "1px";
+  ctx.fillText("α", cx - rC * 0.44, cy + rC * 0.18);
+  ctx.fillText("ω", cx + rC * 0.44, cy + rC * 0.18);
+  ctx.restore();
+
+  // ── Label sutil ──
+  ctx.save();
+  ctx.font         = `300 ${Math.round(tam * 0.018)}px Inter, sans-serif`;
+  ctx.textAlign    = "center";
+  ctx.textBaseline = "middle";
+  ctx.fillStyle    = "rgba(212,168,83,0.22)";
+  ctx.letterSpacing = "3px";
+  ctx.fillText("ANO LITÚRGICO", cx, cy - rC * 0.72);
   ctx.restore();
 }
 
-/* ────────────────────────────────────────────────
-   CRUZ ESTILIZADA
-──────────────────────────────────────────────── */
+/* ════════════════════════════════════════════════
+   CRUZ MODERNA
+════════════════════════════════════════════════ */
 
-function desenharCruz(ctx, cx, cy, tamanho, canvasSize) {
-  const pathRect = window.CalBase.pathRect;
+function desenharCruzModerna(ctx, cx, cy, tam, canvasTam) {
+  const espV  = tam * 0.14;
+  const altV  = tam * 1.10;
+  const espH  = tam * 0.14;
+  const largH = tam * 0.72;
+  const posH  = -tam * 0.14;
+  const raio  = espV * 0.40;
 
-  const larg  = tamanho * 0.16;
-  const altV  = tamanho * 0.95;
-  const largH = tamanho * 0.70;
-  const posH  = -tamanho * 0.18;
-  const r     = larg * 0.35;
+  const roundRect = window.CalBase.roundRect;
 
-  const gV = ctx.createLinearGradient(
-    cx - larg / 2, cy - altV / 2,
-    cx + larg / 2, cy - altV / 2
-  );
-  gV.addColorStop(0,   "#6b4c1a");
-  gV.addColorStop(0.3, "#c5a96a");
-  gV.addColorStop(0.6, "#e8cc8a");
-  gV.addColorStop(1,   "#8b6914");
+  // Gradiente vertical
+  const gV = ctx.createLinearGradient(cx, cy - altV / 2, cx, cy + altV / 2);
+  gV.addColorStop(0,    "rgba(212,168,83,0.30)");
+  gV.addColorStop(0.25, "rgba(240,201,106,0.85)");
+  gV.addColorStop(0.5,  "rgba(255,220,120,0.95)");
+  gV.addColorStop(0.75, "rgba(212,168,83,0.85)");
+  gV.addColorStop(1,    "rgba(139,105,20,0.30)");
+
+  // Gradiente horizontal
+  const gH = ctx.createLinearGradient(cx - largH / 2, cy, cx + largH / 2, cy);
+  gH.addColorStop(0,    "rgba(139,105,20,0.30)");
+  gH.addColorStop(0.25, "rgba(212,168,83,0.85)");
+  gH.addColorStop(0.5,  "rgba(255,220,120,0.95)");
+  gH.addColorStop(0.75, "rgba(212,168,83,0.85)");
+  gH.addColorStop(1,    "rgba(139,105,20,0.30)");
 
   ctx.save();
-  ctx.shadowColor   = "rgba(0,0,0,0.55)";
-  ctx.shadowBlur    = 8;
-  ctx.shadowOffsetX = 2;
-  ctx.shadowOffsetY = 3;
+
+  // Sombra suave
+  ctx.shadowColor   = "rgba(212,168,83,0.25)";
+  ctx.shadowBlur    = 12;
+  ctx.shadowOffsetX = 0;
+  ctx.shadowOffsetY = 4;
 
   // Vertical
   ctx.fillStyle = gV;
-  pathRect(ctx, cx - larg / 2, cy - altV / 2, larg, altV, r);
+  roundRect(ctx, cx - espV / 2, cy - altV / 2, espV, altV, raio);
   ctx.fill();
 
   // Horizontal
-  const gH = ctx.createLinearGradient(
-    cx - largH / 2, cy + posH,
-    cx + largH / 2, cy + posH
-  );
-  gH.addColorStop(0,   "#6b4c1a");
-  gH.addColorStop(0.3, "#c5a96a");
-  gH.addColorStop(0.6, "#e8cc8a");
-  gH.addColorStop(1,   "#6b4c1a");
-
   ctx.fillStyle = gH;
-  pathRect(ctx, cx - largH / 2, cy + posH - larg / 2, largH, larg, r);
+  roundRect(ctx, cx - largH / 2, cy + posH - espH / 2, largH, espH, raio);
   ctx.fill();
 
   ctx.restore();
 }
 
-/* ────────────────────────────────────────────────
+/* ════════════════════════════════════════════════
    EXPORTAR
-──────────────────────────────────────────────── */
+════════════════════════════════════════════════ */
 
 window.CalDetalhes = {
   desenharDatas,
   desenharNomesSemanas,
   desenharNomesTempos,
-  desenharSeparadoresTempos,
+  desenharSeparadores,
   desenharCentro,
-  desenharCruz,
+  desenharCruzModerna,
 };
