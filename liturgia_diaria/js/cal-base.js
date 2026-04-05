@@ -1,64 +1,69 @@
 /* ================================================
    CALENDÁRIO LITÚRGICO — PARTE 1
-   Base: Canvas, anéis, estrutura, cores
+   Base: configurações, matemática, dados
    ================================================ */
 
 const CAL = {
 
-  // ── Paleta moderna ──────────────────────────────
+  // ── Paleta moderna e minimalista ───────────────
   cores: {
-    advento:      { principal: "#7B2FBE", claro: "#9D5FD6", escuro: "#4A1080" },
-    natal:        { principal: "#C8A84B", claro: "#E8CC7A", escuro: "#8B6914" },
-    tempoComum:   { principal: "#2D6A2D", claro: "#4A9A4A", escuro: "#1A3D1A" },
-    quaresma:     { principal: "#4A1060", claro: "#7B2FA0", escuro: "#280838" },
-    semanaS:      { principal: "#8B0000", claro: "#B22020", escuro: "#500000" },
-    triduo:       { principal: "#5A0010", claro: "#8B1020", escuro: "#300008" },
-    pascal:       { principal: "#B8860B", claro: "#DCA520", escuro: "#785808" },
-    pentecostes:  { principal: "#CC2200", claro: "#E84422", escuro: "#881400" },
-    fundo:        "#0D0D0D",
-    bordaOuro:    "#C5A96A",
-    bordaOuroClaro: "#E8CC8A",
-    centro:       "#1A1208",
+    advento:     { base: "#8B5CF6", brilho: "#A78BFA", sombra: "#4C1D95" },
+    natal:       { base: "#F59E0B", brilho: "#FCD34D", sombra: "#92400E" },
+    tempoComum:  { base: "#10B981", brilho: "#34D399", sombra: "#064E3B" },
+    quaresma:    { base: "#7C3AED", brilho: "#8B5CF6", sombra: "#3B0764" },
+    semanaS:     { base: "#DC2626", brilho: "#EF4444", sombra: "#7F1D1D" },
+    triduo:      { base: "#991B1B", brilho: "#DC2626", sombra: "#450A0A" },
+    pascal:      { base: "#D97706", brilho: "#F59E0B", sombra: "#78350F" },
+    pentecostes: { base: "#EF4444", brilho: "#F87171", sombra: "#7F1D1D" },
+
+    // UI
+    fundo:       "#080808",
+    anel:        "rgba(255,255,255,0.04)",
+    bordaOuro:   "#D4A853",
+    ouroClaro:   "#F0C96A",
+    ouroDark:    "#8B6914",
+    hoje:        "#00F5A0",
+    hojeGlow:    "rgba(0,245,160,0.4)",
+    texto:       "rgba(255,255,255,0.90)",
+    textoSuave:  "rgba(255,255,255,0.45)",
   },
 
-  // ── Raios relativos (proporção do raio total) ───
-  raios: {
-    externo:    0.97,   // borda de fora
-    datas:      0.90,   // faixa das datas
-    nomes:      0.76,   // faixa dos nomes das semanas
-    tempos:     0.61,   // faixa do nome do tempo
-    interno:    0.50,   // início do círculo central
+  // ── Raios (proporção do raio total R) ──────────
+  r: {
+    externo:  0.96,
+    datas:    0.875,
+    semanas:  0.75,
+    tempos:   0.60,
+    centro:   0.48,
   },
 
-  // ── Tipografia ──────────────────────────────────
-  fonte: {
-    data:   (s) => `${Math.max(9, s * 0.016)}px 'Inter', sans-serif`,
-    semana: (s) => `${Math.max(8, s * 0.018)}px 'Inter', sans-serif`,
-    tempo:  (s) => `bold ${Math.max(9, s * 0.020)}px 'Inter', sans-serif`,
+  // ── Fontes ─────────────────────────────────────
+  font: {
+    data:   (s) => `${Math.max(8,  Math.round(s * 0.0155))}px Inter, sans-serif`,
+    semana: (s) => `${Math.max(7,  Math.round(s * 0.0165))}px Inter, sans-serif`,
+    tempo:  (s) => `600 ${Math.max(8, Math.round(s * 0.019))}px Inter, sans-serif`,
+    centro: (s) => `300 ${Math.round(s * 0.038)}px Inter, sans-serif`,
+    simbolo:(s) => `${Math.round(s * 0.13)}px serif`,
   },
 
 };
 
-/* ────────────────────────────────────────────────
-   FUNÇÕES MATEMÁTICAS BASE
-──────────────────────────────────────────────── */
+/* ════════════════════════════════════════════════
+   MATEMÁTICA BASE
+════════════════════════════════════════════════ */
 
-/** Converte semana (índice) → ângulo em radianos
- *  Topo = -90° = início do Advento */
+/** Semana → ângulo. Topo (-90°) = início do Advento */
 function sToAng(semana, total) {
   return -Math.PI / 2 + (semana / total) * (2 * Math.PI);
 }
 
-/** Ponto (x,y) num raio e ângulo */
-function ponto(cx, cy, raio, ang) {
-  return {
-    x: cx + raio * Math.cos(ang),
-    y: cy + raio * Math.sin(ang),
-  };
+/** Ponto num ângulo e raio */
+function pt(cx, cy, r, ang) {
+  return { x: cx + r * Math.cos(ang), y: cy + r * Math.sin(ang) };
 }
 
-/** Retângulo com cantos arredondados (path) */
-function pathRect(ctx, x, y, w, h, r) {
+/** Path de retângulo com cantos arredondados */
+function roundRect(ctx, x, y, w, h, r) {
   r = Math.min(r, w / 2, h / 2);
   ctx.beginPath();
   ctx.moveTo(x + r, y);
@@ -73,11 +78,11 @@ function pathRect(ctx, x, y, w, h, r) {
   ctx.closePath();
 }
 
-/* ────────────────────────────────────────────────
-   ALGORITMOS LITÚRGICOS
-──────────────────────────────────────────────── */
+/* ════════════════════════════════════════════════
+   CÁLCULOS LITÚRGICOS
+════════════════════════════════════════════════ */
 
-/** Páscoa — algoritmo de Meeus/Jones/Butcher */
+/** Páscoa — Meeus/Jones/Butcher */
 function calcPascoa(ano) {
   const a = ano % 19;
   const b = Math.floor(ano / 100);
@@ -96,207 +101,172 @@ function calcPascoa(ano) {
   return new Date(ano, mes, dia);
 }
 
-/** 1º domingo do Advento (4 domingos antes do Natal) */
+/** 1º domingo do Advento */
 function calcAdvento(ano) {
   const natal = new Date(ano, 11, 25);
-  const dow   = natal.getDay(); // 0=Dom
-  const dias  = dow === 0 ? 28 : 28 - dow + (dow > 0 ? 0 : 0);
-  // 4 domingos antes = natal - dow - 21 dias
-  const adv = new Date(natal);
+  const dow   = natal.getDay();
+  const adv   = new Date(natal);
   adv.setDate(25 - dow - 21);
   return adv;
 }
 
-/** Diferença em semanas inteiras entre duas datas */
-function semanasDiff(dataA, dataB) {
-  return Math.floor((dataB - dataA) / (7 * 24 * 3600 * 1000));
+/** Diferença em semanas */
+function diffSem(a, b) {
+  return Math.floor((b - a) / (7 * 86400000));
 }
 
-/** Semana litúrgica atual (0-based desde o Advento) */
+/** Semana litúrgica atual (0-based) */
 function semanaAtual() {
   const hoje = new Date();
   const ano  = hoje.getFullYear();
-
-  let inicio = calcAdvento(ano - 1);
+  let ini    = calcAdvento(ano - 1);
   const prox = calcAdvento(ano);
-
-  if (hoje >= prox) inicio = prox;
-
-  const s = semanasDiff(inicio, hoje);
-  return Math.max(0, Math.min(51, s));
+  if (hoje >= prox) ini = prox;
+  return Math.max(0, Math.min(51, diffSem(ini, hoje)));
 }
 
-/* ────────────────────────────────────────────────
+/* ════════════════════════════════════════════════
    CONSTRUIR SEGMENTOS DO ANO LITÚRGICO
-   Retorna array de { inicio, fim, cor, nome, tempo }
-──────────────────────────────────────────────── */
+════════════════════════════════════════════════ */
 
 function buildSegmentos(ano) {
-  const inicioAdv = calcAdvento(ano - 1);
-  const pascoa    = calcPascoa(ano);
-  const total     = 52;
+  const ini    = calcAdvento(ano - 1);
+  const pascoa = calcPascoa(ano);
+  const TOTAL  = 52;
 
-  // Helper: semana desde o início do Advento
-  const sw = (data) => Math.max(0, Math.min(total - 1, semanasDiff(inicioAdv, data)));
+  const sw = (d) => Math.max(0, Math.min(TOTAL - 1, diffSem(ini, d)));
 
   // Datas-chave
-  const natal         = new Date(ano - 1, 11, 25);
-  const epifania      = new Date(ano, 0, 6);
-  const batismo       = new Date(ano, 0, 13); // domingo após epifania
-  const cinzas        = new Date(pascoa); cinzas.setDate(pascoa.getDate() - 46);
-  const domPalmas     = new Date(pascoa); domPalmas.setDate(pascoa.getDate() - 7);
-  const quintaSanta   = new Date(pascoa); quintaSanta.setDate(pascoa.getDate() - 3);
-  const pentecostes   = new Date(pascoa); pentecostes.setDate(pascoa.getDate() + 49);
-  const corpusChristi = new Date(pascoa); corpusChristi.setDate(pascoa.getDate() + 63);
-  const cristoRei     = calcAdvento(ano); cristoRei.setDate(cristoRei.getDate() - 7);
+  const natal       = new Date(ano - 1, 11, 25);
+  const epifania    = new Date(ano, 0, 6);
+  const batismo     = new Date(ano, 0, 12);
+  const cinzas      = new Date(pascoa); cinzas.setDate(pascoa.getDate() - 46);
+  const palmas      = new Date(pascoa); palmas.setDate(pascoa.getDate() - 7);
+  const quintaS     = new Date(pascoa); quintaS.setDate(pascoa.getDate() - 3);
+  const pentecostes = new Date(pascoa); pentecostes.setDate(pascoa.getDate() + 49);
+  const corpus      = new Date(pascoa); corpus.setDate(pascoa.getDate() + 63);
+  const cristoRei   = calcAdvento(ano); cristoRei.setDate(cristoRei.getDate() - 7);
 
   const C = CAL.cores;
 
-  // ── Índices de semana ──
-  const iAdv      = 0;
-  const iNatal    = sw(natal);
-  const iBatismo  = sw(batismo) + 1;
-  const iCinzas   = sw(cinzas);
-  const iPalmas   = sw(domPalmas);
-  const iTriduo   = sw(quintaSanta);
-  const iPascoa   = sw(pascoa);
-  const iPente    = sw(pentecostes);
-  const iCorpus   = sw(corpusChristi);
-  const iCristoRei = sw(cristoRei);
+  // Índices
+  const iAdv    = 0;
+  const iNatal  = sw(natal);
+  const iBat    = sw(batismo) + 1;
+  const iCinzas = sw(cinzas);
+  const iPalmas = sw(palmas);
+  const iTriduo = sw(quintaS);
+  const iPascoa = sw(pascoa);
+  const iPente  = sw(pentecostes);
+  const iCorpus = sw(corpus);
+  const iCRei   = sw(cristoRei);
 
   const segs = [];
 
-  // ── ADVENTO (roxo) ──
+  const push = (inicio, fim, cor, nome, tempo) =>
+    segs.push({ inicio, fim, cor, nome, tempo });
+
+  // ADVENTO
   for (let i = iAdv; i < iNatal; i++) {
-    segs.push({
-      inicio: i, fim: i + 1,
-      cor: C.advento.principal,
-      corBrilho: C.advento.claro,
-      nome: `${i - iAdv + 1}ª sem.`,
-      tempo: "Advento",
-    });
+    push(i, i + 1, C.advento, `${i + 1}ª sem.`, "Advento");
   }
 
-  // ── NATAL (dourado) ──
-  for (let i = iNatal; i < iBatismo; i++) {
+  // NATAL
+  for (let i = iNatal; i < iBat; i++) {
     let nome = `${i - iNatal + 1}ª sem.`;
-    if (i === iNatal)           nome = "Natal";
-    if (i === sw(epifania))     nome = "Epifania";
-    if (i === sw(batismo))      nome = "Batismo";
-    segs.push({
-      inicio: i, fim: i + 1,
-      cor: C.natal.principal,
-      corBrilho: C.natal.claro,
-      nome, tempo: "Natal",
-    });
+    if (i === iNatal)        nome = "Natal";
+    if (i === sw(epifania))  nome = "Epifania";
+    if (i === sw(batismo))   nome = "Batismo";
+    push(i, i + 1, C.natal, nome, "Natal");
   }
 
-  // ── TEMPO COMUM I (verde) ──
-  for (let i = iBatismo; i < iCinzas; i++) {
-    segs.push({
-      inicio: i, fim: i + 1,
-      cor: C.tempoComum.principal,
-      corBrilho: C.tempoComum.claro,
-      nome: `${i - iBatismo + 1}ª sem.`,
-      tempo: "Tempo Comum",
-    });
+  // TEMPO COMUM I
+  for (let i = iBat; i < iCinzas; i++) {
+    push(i, i + 1, C.tempoComum, `${i - iBat + 1}ª sem.`, "Tempo Comum");
   }
 
-  // ── QUARESMA (roxo escuro) ──
+  // QUARESMA
   for (let i = iCinzas; i < iPalmas; i++) {
-    let nome = `${i - iCinzas + 1}ª sem.`;
-    if (i === iCinzas) nome = "Cinzas";
-    segs.push({
-      inicio: i, fim: i + 1,
-      cor: C.quaresma.principal,
-      corBrilho: C.quaresma.claro,
-      nome, tempo: "Quaresma",
-    });
+    const nome = i === iCinzas ? "Cinzas" : `${i - iCinzas + 1}ª sem.`;
+    push(i, i + 1, C.quaresma, nome, "Quaresma");
   }
 
-  // ── SEMANA SANTA (vermelho escuro) ──
-  segs.push({
-    inicio: iPalmas, fim: iTriduo,
-    cor: C.semanaS.principal,
-    corBrilho: C.semanaS.claro,
-    nome: "Semana Santa",
-    tempo: "Semana Santa",
-  });
+  // SEMANA SANTA
+  push(iPalmas, iTriduo, C.semanaS, "Semana Santa", "Semana Santa");
 
-  // ── TRÍDUO PASCAL (bordô) ──
-  segs.push({
-    inicio: iTriduo, fim: iPascoa,
-    cor: C.triduo.principal,
-    corBrilho: C.triduo.claro,
-    nome: "Tríduo",
-    tempo: "Tríduo Pascal",
-  });
+  // TRÍDUO
+  push(iTriduo, iPascoa, C.triduo, "Tríduo", "Tríduo Pascal");
 
-  // ── TEMPO PASCAL (âmbar/dourado) ──
+  // TEMPO PASCAL
   for (let i = iPascoa; i < iPente; i++) {
-    let nome = `${i - iPascoa + 1}ª sem.`;
-    if (i === iPascoa) nome = "Páscoa";
-    segs.push({
-      inicio: i, fim: i + 1,
-      cor: C.pascal.principal,
-      corBrilho: C.pascal.claro,
-      nome, tempo: "Tempo Pascal",
-    });
+    const nome = i === iPascoa ? "Páscoa" : `${i - iPascoa + 1}ª sem.`;
+    push(i, i + 1, C.pascal, nome, "Tempo Pascal");
   }
 
-  // ── PENTECOSTES (vermelho vivo) ──
-  segs.push({
-    inicio: iPente, fim: iPente + 1,
-    cor: C.pentecostes.principal,
-    corBrilho: C.pentecostes.claro,
-    nome: "Pentecostes",
-    tempo: "Pentecostes",
-  });
+  // PENTECOSTES
+  push(iPente, iPente + 1, C.pentecostes, "Pentecostes", "Pentecostes");
 
-  // ── TEMPO COMUM II (verde) ──
-  for (let i = iPente + 1; i <= total - 1; i++) {
+  // TEMPO COMUM II
+  for (let i = iPente + 1; i < TOTAL; i++) {
     let nome = `${i - iPente}ª sem.`;
-    if (i === iCorpus)    nome = "Corpus Christi";
-    if (i === iCristoRei) nome = "Cristo Rei";
-    segs.push({
-      inicio: i, fim: i + 1,
-      cor: C.tempoComum.principal,
-      corBrilho: C.tempoComum.claro,
-      nome, tempo: "Tempo Comum",
-    });
+    if (i === iCorpus) nome = "Corpus Christi";
+    if (i === iCRei)   nome = "Cristo Rei";
+    push(i, i + 1, C.tempoComum, nome, "Tempo Comum");
   }
 
-  return { segs, inicioAdv, total };
+  return { segs, ini, total: TOTAL };
 }
 
-/* ────────────────────────────────────────────────
+/* ════════════════════════════════════════════════
+   DESENHAR FUNDO
+════════════════════════════════════════════════ */
+
+function desenharFundo(ctx, cx, cy, R, mini) {
+  ctx.clearRect(0, 0, cx * 2, cy * 2);
+
+  // Fundo preto profundo com gradiente sutil
+  const g = ctx.createRadialGradient(cx, cy * 0.6, 0, cx, cy, R * 1.1);
+  g.addColorStop(0,   mini ? "#1a1a1a" : "#111111");
+  g.addColorStop(0.5, mini ? "#111111" : "#0a0a0a");
+  g.addColorStop(1,   "#050505");
+
+  ctx.beginPath();
+  ctx.arc(cx, cy, R + 4, 0, 2 * Math.PI);
+  ctx.fillStyle = g;
+  ctx.fill();
+}
+
+/* ════════════════════════════════════════════════
    DESENHAR ANEL BASE (fatias)
-──────────────────────────────────────────────── */
+════════════════════════════════════════════════ */
 
 function desenharAnelBase(ctx, cx, cy, R, segs, total) {
-  const rO = R * CAL.raios.externo;
-  const rI = R * CAL.raios.interno;
+  const rO = R * CAL.r.externo;
+  const rI = R * CAL.r.centro;
 
   segs.forEach((seg) => {
     const a1   = sToAng(seg.inicio, total);
     const a2   = sToAng(seg.fim,    total);
     const aMid = (a1 + a2) / 2;
-    const span = a2 - a1;
 
-    // ── Fatia principal ──
+    // ── Fatia base ──
     ctx.beginPath();
     ctx.moveTo(cx + rI * Math.cos(a1), cy + rI * Math.sin(a1));
     ctx.arc(cx, cy, rO, a1, a2);
     ctx.arc(cx, cy, rI, a2, a1, true);
     ctx.closePath();
-    ctx.fillStyle = seg.cor;
+    ctx.fillStyle = seg.cor.base;
     ctx.fill();
 
-    // ── Brilho radial (toque moderno) ──
-    const gBrilho = ctx.createRadialGradient(cx, cy, rI * 0.95, cx, cy, rO);
-    gBrilho.addColorStop(0,   "rgba(255,255,255,0.12)");
-    gBrilho.addColorStop(0.5, "rgba(255,255,255,0.04)");
-    gBrilho.addColorStop(1,   "rgba(0,0,0,0.18)");
+    // ── Overlay de brilho angular (lado claro) ──
+    const gBrilho = ctx.createLinearGradient(
+      cx + rI * Math.cos(aMid - 0.05), cy + rI * Math.sin(aMid - 0.05),
+      cx + rO * Math.cos(aMid + 0.05), cy + rO * Math.sin(aMid + 0.05)
+    );
+    gBrilho.addColorStop(0,   "rgba(255,255,255,0.14)");
+    gBrilho.addColorStop(0.4, "rgba(255,255,255,0.05)");
+    gBrilho.addColorStop(1,   "rgba(0,0,0,0.15)");
+
     ctx.beginPath();
     ctx.moveTo(cx + rI * Math.cos(a1), cy + rI * Math.sin(a1));
     ctx.arc(cx, cy, rO, a1, a2);
@@ -305,62 +275,42 @@ function desenharAnelBase(ctx, cx, cy, R, segs, total) {
     ctx.fillStyle = gBrilho;
     ctx.fill();
 
-    // ── Linha divisória entre semanas ──
+    // ── Linha divisória fina ──
     ctx.beginPath();
     ctx.moveTo(cx + rI * Math.cos(a1), cy + rI * Math.sin(a1));
     ctx.lineTo(cx + rO * Math.cos(a1), cy + rO * Math.sin(a1));
-    ctx.strokeStyle = "rgba(0,0,0,0.30)";
-    ctx.lineWidth   = 0.8;
+    ctx.strokeStyle = "rgba(0,0,0,0.40)";
+    ctx.lineWidth   = 0.7;
     ctx.stroke();
   });
 
-  // ── Borda externa ──
+  // ── Borda externa nítida ──
   ctx.beginPath();
   ctx.arc(cx, cy, rO, 0, 2 * Math.PI);
-  ctx.strokeStyle = CAL.cores.bordaOuro;
-  ctx.lineWidth   = 2.5;
+  ctx.strokeStyle = "rgba(255,255,255,0.08)";
+  ctx.lineWidth   = 1;
   ctx.stroke();
 
-  // ── Borda interna do anel ──
+  // ── Borda interna ──
   ctx.beginPath();
   ctx.arc(cx, cy, rI, 0, 2 * Math.PI);
-  ctx.strokeStyle = "rgba(197,169,106,0.40)";
-  ctx.lineWidth   = 1.5;
+  ctx.strokeStyle = "rgba(255,255,255,0.06)";
+  ctx.lineWidth   = 1;
   ctx.stroke();
 }
 
-/* ────────────────────────────────────────────────
-   FUNDO DO CANVAS
-──────────────────────────────────────────────── */
-
-function desenharFundo(ctx, cx, cy, R, mini) {
-  // Fundo geral do canvas
-  ctx.clearRect(0, 0, cx * 2, cy * 2);
-
-  // Fundo circular escuro com gradiente sutil
-  const gFundo = ctx.createRadialGradient(cx, cy, 0, cx, cy, R);
-  gFundo.addColorStop(0,   mini ? "#1a1a1a" : "#161008");
-  gFundo.addColorStop(0.6, mini ? "#111111" : "#0D0A04");
-  gFundo.addColorStop(1,   mini ? "#0a0a0a" : "#050300");
-
-  ctx.beginPath();
-  ctx.arc(cx, cy, R + 2, 0, 2 * Math.PI);
-  ctx.fillStyle = gFundo;
-  ctx.fill();
-}
-
-/* ────────────────────────────────────────────────
-   EXPORTAR para os outros arquivos
-──────────────────────────────────────────────── */
+/* ════════════════════════════════════════════════
+   EXPORTAR
+════════════════════════════════════════════════ */
 
 window.CalBase = {
   CAL,
   sToAng,
-  ponto,
-  pathRect,
+  pt,
+  roundRect,
   calcPascoa,
   calcAdvento,
-  semanasDiff,
+  diffSem,
   semanaAtual,
   buildSegmentos,
   desenharFundo,
