@@ -71,6 +71,12 @@ function finalizarEstudo(id) {
 
 }
 
+/* ── CONCÍLIOS ── */
+
+function abrirConcilios() {
+  window.location.href = "concilios/index.html";
+}
+
 /* ── HISTÓRICO ── */
 
 function toggleHistorico() {
