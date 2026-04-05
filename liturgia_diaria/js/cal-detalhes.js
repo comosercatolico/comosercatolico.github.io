@@ -3,13 +3,14 @@
    Detalhes: textos nos anéis, datas, centro
    ================================================ */
 
-const { CAL, sToAng, ponto, pathRect, calcAdvento, buildSegmentos } = window.CalBase;
-
 /* ────────────────────────────────────────────────
    ANEL DE DATAS (anel externo)
 ──────────────────────────────────────────────── */
 
 function desenharDatas(ctx, cx, cy, R, inicioAdv, total, tamanho) {
+  const CAL   = window.CalBase.CAL;
+  const sToAng = window.CalBase.sToAng;
+
   const rO    = R * CAL.raios.externo;
   const rData = R * CAL.raios.datas;
 
@@ -29,13 +30,13 @@ function desenharDatas(ctx, cx, cy, R, inicioAdv, total, tamanho) {
 
   // Datas
   for (let i = 0; i < total; i++) {
-    const ang = sToAng(i, total) + (Math.PI / total); // centro da fatia
+    const ang = sToAng(i, total) + (Math.PI / total);
 
     const dataRef = new Date(inicioAdv);
     dataRef.setDate(inicioAdv.getDate() + i * 7);
 
-    const dia = dataRef.getDate();
-    const mes = dataRef.getMonth() + 1;
+    const dia   = dataRef.getDate();
+    const mes   = dataRef.getMonth() + 1;
     const label = `${dia}/${mes}`;
 
     const raioTexto = (rData + rO) / 2;
@@ -46,10 +47,9 @@ function desenharDatas(ctx, cx, cy, R, inicioAdv, total, tamanho) {
       cy + raioTexto * Math.sin(ang)
     );
     ctx.rotate(ang + Math.PI / 2);
-
-    ctx.fillStyle = "rgba(255,245,220,0.80)";
-    ctx.font = CAL.fonte.data(tamanho);
-    ctx.textAlign = "center";
+    ctx.fillStyle    = "rgba(255,245,220,0.80)";
+    ctx.font         = CAL.fonte.data(tamanho);
+    ctx.textAlign    = "center";
     ctx.textBaseline = "middle";
     ctx.fillText(label, 0, 0);
     ctx.restore();
@@ -61,6 +61,9 @@ function desenharDatas(ctx, cx, cy, R, inicioAdv, total, tamanho) {
 ──────────────────────────────────────────────── */
 
 function desenharNomesSemanas(ctx, cx, cy, R, segs, total, tamanho) {
+  const CAL    = window.CalBase.CAL;
+  const sToAng = window.CalBase.sToAng;
+
   const rNomes = R * CAL.raios.nomes;
   const rData  = R * CAL.raios.datas;
   const raio   = (rNomes + rData) / 2;
@@ -79,14 +82,13 @@ function desenharNomesSemanas(ctx, cx, cy, R, segs, total, tamanho) {
     );
     ctx.rotate(aMid + Math.PI / 2);
 
-    ctx.fillStyle   = "rgba(255,255,255,0.88)";
-    ctx.font        = CAL.fonte.semana(tamanho);
-    ctx.textAlign   = "center";
+    ctx.fillStyle    = "rgba(255,255,255,0.88)";
+    ctx.font         = CAL.fonte.semana(tamanho);
+    ctx.textAlign    = "center";
     ctx.textBaseline = "middle";
 
-    // Sombra sutil para legibilidade
-    ctx.shadowColor  = "rgba(0,0,0,0.70)";
-    ctx.shadowBlur   = 3;
+    ctx.shadowColor   = "rgba(0,0,0,0.70)";
+    ctx.shadowBlur    = 3;
     ctx.shadowOffsetX = 0;
     ctx.shadowOffsetY = 1;
 
@@ -100,6 +102,9 @@ function desenharNomesSemanas(ctx, cx, cy, R, segs, total, tamanho) {
 ──────────────────────────────────────────────── */
 
 function desenharNomesTempos(ctx, cx, cy, R, segs, total, tamanho) {
+  const CAL    = window.CalBase.CAL;
+  const sToAng = window.CalBase.sToAng;
+
   const rTempos = R * CAL.raios.tempos;
   const rNomes  = R * CAL.raios.nomes;
   const raio    = (rTempos + rNomes) / 2;
@@ -118,9 +123,8 @@ function desenharNomesTempos(ctx, cx, cy, R, segs, total, tamanho) {
     const a1   = sToAng(g.inicio, total);
     const a2   = sToAng(g.fim,    total);
     const aMid = (a1 + a2) / 2;
-    const span = a2 - a1; // arco em radianos
+    const span = a2 - a1;
 
-    // Só desenha se tiver espaço suficiente
     if (span < 0.18) return;
 
     ctx.save();
@@ -134,10 +138,9 @@ function desenharNomesTempos(ctx, cx, cy, R, segs, total, tamanho) {
     ctx.font         = CAL.fonte.tempo(tamanho);
     ctx.textAlign    = "center";
     ctx.textBaseline = "middle";
-    ctx.letterSpacing = "1px";
 
-    ctx.shadowColor  = "rgba(0,0,0,0.80)";
-    ctx.shadowBlur   = 4;
+    ctx.shadowColor = "rgba(0,0,0,0.80)";
+    ctx.shadowBlur  = 4;
 
     ctx.fillText(nome.toUpperCase(), 0, 0);
     ctx.restore();
@@ -149,6 +152,9 @@ function desenharNomesTempos(ctx, cx, cy, R, segs, total, tamanho) {
 ──────────────────────────────────────────────── */
 
 function desenharSeparadoresTempos(ctx, cx, cy, R, segs, total) {
+  const CAL    = window.CalBase.CAL;
+  const sToAng = window.CalBase.sToAng;
+
   const rI = R * CAL.raios.interno;
   const rO = R * CAL.raios.externo;
 
@@ -157,7 +163,7 @@ function desenharSeparadoresTempos(ctx, cx, cy, R, segs, total) {
   segs.forEach((seg) => {
     if (seg.tempo !== tempoAtual) {
       tempoAtual = seg.tempo;
-      const ang = sToAng(seg.inicio, total);
+      const ang  = sToAng(seg.inicio, total);
 
       ctx.beginPath();
       ctx.moveTo(cx + rI * Math.cos(ang), cy + rI * Math.sin(ang));
@@ -176,9 +182,10 @@ function desenharSeparadoresTempos(ctx, cx, cy, R, segs, total) {
 ──────────────────────────────────────────────── */
 
 function desenharCentro(ctx, cx, cy, R, tamanho, mini) {
-  const rI = R * CAL.raios.interno;
+  const CAL = window.CalBase.CAL;
+  const rI  = R * CAL.raios.interno;
 
-  // ── Fundo do centro ──
+  // Fundo do centro
   const gCentro = ctx.createRadialGradient(cx, cy, 0, cx, cy, rI);
   if (mini) {
     gCentro.addColorStop(0, "#222");
@@ -194,15 +201,15 @@ function desenharCentro(ctx, cx, cy, R, tamanho, mini) {
   ctx.fillStyle = gCentro;
   ctx.fill();
 
-  // ── Anel dourado do centro ──
+  // Anel dourado do centro
   ctx.beginPath();
   ctx.arc(cx, cy, rI, 0, 2 * Math.PI);
   ctx.strokeStyle = CAL.cores.bordaOuro;
   ctx.lineWidth   = mini ? 1.5 : 3;
   ctx.stroke();
 
+  // Mini: só cruz
   if (mini) {
-    // Mini: só símbolo ✝
     ctx.fillStyle    = CAL.cores.bordaOuro;
     ctx.font         = `bold ${tamanho * 0.32}px serif`;
     ctx.textAlign    = "center";
@@ -211,7 +218,7 @@ function desenharCentro(ctx, cx, cy, R, tamanho, mini) {
     return;
   }
 
-  // ── Círculo decorativo interno ──
+  // Círculos decorativos internos
   ctx.beginPath();
   ctx.arc(cx, cy, rI * 0.80, 0, 2 * Math.PI);
   ctx.strokeStyle = "rgba(197,169,106,0.30)";
@@ -224,10 +231,10 @@ function desenharCentro(ctx, cx, cy, R, tamanho, mini) {
   ctx.lineWidth   = 1;
   ctx.stroke();
 
-  // ── Cruz estilizada ──
+  // Cruz
   desenharCruz(ctx, cx, cy, rI * 0.58, tamanho);
 
-  // ── Alfa e Ômega ──
+  // Alfa e Ômega
   ctx.save();
   ctx.fillStyle    = "rgba(197,169,106,0.75)";
   ctx.font         = `bold ${tamanho * 0.042}px 'Libre Baskerville', serif`;
@@ -239,7 +246,7 @@ function desenharCentro(ctx, cx, cy, R, tamanho, mini) {
   ctx.fillText("Ω", cx + rI * 0.42, cy + rI * 0.14);
   ctx.restore();
 
-  // ── Texto pequeno no topo do centro ──
+  // Texto "ANO LITÚRGICO"
   ctx.save();
   ctx.fillStyle    = "rgba(197,169,106,0.35)";
   ctx.font         = `${tamanho * 0.022}px 'Inter', sans-serif`;
@@ -250,25 +257,27 @@ function desenharCentro(ctx, cx, cy, R, tamanho, mini) {
 }
 
 /* ────────────────────────────────────────────────
-   CRUZ ESTILIZADA (moderna, sem excesso)
+   CRUZ ESTILIZADA
 ──────────────────────────────────────────────── */
 
 function desenharCruz(ctx, cx, cy, tamanho, canvasSize) {
-  const larg  = tamanho * 0.16;   // espessura do braço
-  const altV  = tamanho * 0.95;   // altura vertical
-  const largH = tamanho * 0.70;   // largura horizontal
-  const posH  = -tamanho * 0.18;  // posição vertical da barra horizontal
+  const pathRect = window.CalBase.pathRect;
 
-  const r = larg * 0.35; // arredondamento
+  const larg  = tamanho * 0.16;
+  const altV  = tamanho * 0.95;
+  const largH = tamanho * 0.70;
+  const posH  = -tamanho * 0.18;
+  const r     = larg * 0.35;
 
-  // Gradiente dourado vertical
-  const gV = ctx.createLinearGradient(cx - larg / 2, cy - altV / 2, cx + larg / 2, cy - altV / 2);
+  const gV = ctx.createLinearGradient(
+    cx - larg / 2, cy - altV / 2,
+    cx + larg / 2, cy - altV / 2
+  );
   gV.addColorStop(0,   "#6b4c1a");
   gV.addColorStop(0.3, "#c5a96a");
   gV.addColorStop(0.6, "#e8cc8a");
   gV.addColorStop(1,   "#8b6914");
 
-  // Sombra
   ctx.save();
   ctx.shadowColor   = "rgba(0,0,0,0.55)";
   ctx.shadowBlur    = 8;
@@ -281,7 +290,10 @@ function desenharCruz(ctx, cx, cy, tamanho, canvasSize) {
   ctx.fill();
 
   // Horizontal
-  const gH = ctx.createLinearGradient(cx - largH / 2, cy + posH, cx + largH / 2, cy + posH);
+  const gH = ctx.createLinearGradient(
+    cx - largH / 2, cy + posH,
+    cx + largH / 2, cy + posH
+  );
   gH.addColorStop(0,   "#6b4c1a");
   gH.addColorStop(0.3, "#c5a96a");
   gH.addColorStop(0.6, "#e8cc8a");
