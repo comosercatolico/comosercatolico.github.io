@@ -10,7 +10,7 @@
 
 <link rel="stylesheet" href="../style.css">
 <link rel="stylesheet" href="liturgia.css">
-
+<link rel="stylesheet" href="calendario.css">
 <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 
 </head>
@@ -57,10 +57,13 @@
   
   <aside class="liturgia-sidebar">
       <div class="santo-do-dia-mini">
+
           <small>Sugestão</small>
           <p><strong>Meditação Diária</strong></p>
           <p style="font-size: 0.9rem; color: var(--text-soft)">Reserve 10 minutos para o silêncio após a leitura.</p>
       </div>
+    <!-- MINI CALENDÁRIO LITÚRGICO -->
+<div id="mini-calendario-container"></div>
   </aside>
 
   <main id="liturgia-conteudo" class="liturgia-principal">
@@ -115,5 +118,39 @@ window.onload = () => {
 };
 
 </script>
+  <!-- MODAL CALENDÁRIO LITÚRGICO -->
+<div class="modal-calendario-overlay" id="modal-calendario">
+  <div class="modal-calendario-box">
+
+    <!-- Header -->
+    <div class="modal-cal-header">
+      <div class="modal-cal-titulo">
+        <span>✦ Lux Fidei</span>
+        <h2>Calendário Litúrgico</h2>
+      </div>
+      <button class="modal-cal-fechar" onclick="fecharModalCalendario()" aria-label="Fechar">✕</button>
+    </div>
+
+    <!-- Corpo -->
+    <div class="modal-cal-body">
+      <div class="modal-cal-svg-container">
+        <div id="modal-cal-svg"></div>
+      </div>
+      <div class="modal-cal-painel">
+        <div id="modal-cal-info"></div>
+      </div>
+    </div>
+
+    <!-- Legenda -->
+    <div class="modal-cal-legenda-section">
+      <p class="modal-cal-legenda-titulo">Tempos do Ano Litúrgico</p>
+      <div class="modal-cal-legenda-grid" id="modal-cal-legenda"></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- SCRIPT -->
+<script src="js/calendario.js"></script>
 </body>
 </html>
