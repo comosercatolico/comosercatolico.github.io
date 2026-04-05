@@ -1,12 +1,12 @@
 /* ================================================================
    CALENDÁRIO LITÚRGICO PROFISSIONAL - Lux Fidei
-   Versão Definitiva - SVG puro, preciso e elegante
+   Renderização via HTML5 Canvas — precisão total
    ================================================================ */
 
 'use strict';
 
 /* ================================================================
-   1. CÁLCULO DA PÁSCOA (Algoritmo de Butcher)
+   1. CÁLCULO DA PÁSCOA
    ================================================================ */
 function calcularPascoa(ano) {
   const a = ano % 19;
@@ -26,43 +26,28 @@ function calcularPascoa(ano) {
   return new Date(ano, mes - 1, dia);
 }
 
-/* ================================================================
-   2. UTILITÁRIOS DE DATA
-   ================================================================ */
 function somarDias(data, n) {
   const d = new Date(data);
   d.setDate(d.getDate() + n);
   return d;
 }
 
-function datasSaoIguais(a, b) {
-  return a.getFullYear() === b.getFullYear()
-    && a.getMonth() === b.getMonth()
-    && a.getDate() === b.getDate();
-}
-
 function dataEntre(data, ini, fim) {
-  const d = dataSemHora(data);
-  return d >= dataSemHora(ini) && d <= dataSemHora(fim);
-}
-
-function dataSemHora(d) {
-  return new Date(d.getFullYear(), d.getMonth(), d.getDate());
+  const d = new Date(data.getFullYear(), data.getMonth(), data.getDate());
+  const i = new Date(ini.getFullYear(), ini.getMonth(), ini.getDate());
+  const f = new Date(fim.getFullYear(), fim.getMonth(), fim.getDate());
+  return d >= i && d <= f;
 }
 
 function primeiroDomingoAdvento(ano) {
-  // Primeiro domingo do Advento = 4 domingos antes do Natal
   const natal = new Date(ano, 11, 25);
-  const diaNatal = natal.getDay(); // 0=Dom
-  // Domingo anterior mais próximo de 25/Nov a 3/Dez
+  const diaNatal = natal.getDay();
   const diasAteUltimoDomingo = diaNatal === 0 ? 7 : diaNatal;
   const ultimoDomingoAntes = somarDias(natal, -diasAteUltimoDomingo);
-  return somarDias(ultimoDomingoAntes, -21); // 3 domingos antes
+  return somarDias(ultimoDomingoAntes, -21);
 }
 
 function batismoDoSenhor(ano) {
-  // Domingo após 6 de Janeiro (Epifania)
-  // Se 6/Jan for domingo → Batismo no domingo seguinte (13/Jan)
   const epifania = new Date(ano, 0, 6);
   const dia = epifania.getDay();
   if (dia === 0) return new Date(ano, 0, 13);
@@ -70,80 +55,60 @@ function batismoDoSenhor(ano) {
 }
 
 /* ================================================================
-   3. DETECTAR TEMPO LITÚRGICO ATUAL
+   2. DETECTAR TEMPO ATUAL
    ================================================================ */
 function detectarTempoAtual() {
   const hoje = new Date();
   const ano = hoje.getFullYear();
 
-  const pascoa        = calcularPascoa(ano);
-  const quartaCinzas  = somarDias(pascoa, -46);
-  const quintaSanta   = somarDias(pascoa, -3);
-  const sabadoSanto   = somarDias(pascoa, -1);
-  const pentecostes   = somarDias(pascoa, 49);
-  const batismo       = batismoDoSenhor(ano);
-  const advento       = primeiroDomingoAdvento(ano);
-  const aventoAnt     = primeiroDomingoAdvento(ano - 1);
-  const natalAnt      = new Date(ano - 1, 11, 25);
-  const batismoAnt    = batismoDoSenhor(ano);
+  const pascoa       = calcularPascoa(ano);
+  const quartaCinzas = somarDias(pascoa, -46);
+  const quintaSanta  = somarDias(pascoa, -3);
+  const sabadoSanto  = somarDias(pascoa, -1);
+  const pentecostes  = somarDias(pascoa, 49);
+  const batismo      = batismoDoSenhor(ano);
+  const advento      = primeiroDomingoAdvento(ano);
+  const aventoAnt    = primeiroDomingoAdvento(ano - 1);
 
-  // Natal do ano anterior → até Batismo do Senhor
-  if (dataEntre(hoje, natalAnt, somarDias(batismo, -1))) return 'natal';
-
-  // Tempo Comum I → Batismo até véspera de Cinzas
-  if (dataEntre(hoje, batismo, somarDias(quartaCinzas, -1))) return 'tempoComum';
-
-  // Quaresma → Cinzas até Quinta Santa
-  if (dataEntre(hoje, quartaCinzas, somarDias(quintaSanta, -1))) return 'quaresma';
-
-  // Tríduo → Quinta Santa, Sexta, Sábado Santo
-  if (dataEntre(hoje, quintaSanta, sabadoSanto)) return 'triduo';
-
-  // Tempo Pascal → Domingo de Páscoa até Pentecostes
-  if (dataEntre(hoje, pascoa, pentecostes)) return 'pascoa';
-
-  // Tempo Comum II → Após Pentecostes até Advento
+  if (dataEntre(hoje, new Date(ano - 1, 11, 25), somarDias(batismo, -1))) return 'natal';
+  if (dataEntre(hoje, batismo, somarDias(quartaCinzas, -1)))               return 'tempoComum';
+  if (dataEntre(hoje, quartaCinzas, somarDias(quintaSanta, -1)))           return 'quaresma';
+  if (dataEntre(hoje, quintaSanta, sabadoSanto))                           return 'triduo';
+  if (dataEntre(hoje, pascoa, pentecostes))                                return 'pascoa';
   if (dataEntre(hoje, somarDias(pentecostes, 1), somarDias(advento, -1))) return 'tempoComum';
-
-  // Advento atual
-  if (dataEntre(hoje, advento, new Date(ano, 11, 24))) return 'advento';
-
-  // Advento anterior
-  if (dataEntre(hoje, aventoAnt, new Date(ano - 1, 11, 24))) return 'advento';
-
-  // Natal atual (25/Dez em diante)
-  if (dataEntre(hoje, new Date(ano, 11, 25), new Date(ano, 11, 31))) return 'natal';
-
+  if (dataEntre(hoje, advento, new Date(ano, 11, 24)))                     return 'advento';
+  if (dataEntre(hoje, aventoAnt, new Date(ano - 1, 11, 24)))               return 'advento';
+  if (dataEntre(hoje, new Date(ano, 11, 25), new Date(ano, 11, 31)))       return 'natal';
   return 'tempoComum';
 }
 
 /* ================================================================
-   4. DADOS COMPLETOS DOS TEMPOS LITÚRGICOS
+   3. DADOS DOS TEMPOS LITÚRGICOS
    ================================================================ */
 const TEMPOS = {
   advento: {
     id: 'advento',
     nome: 'Advento',
     cor: '#5c2d91',
-    corSecundaria: '#7b52a8',
+    corClara: '#7b52b0',
     corTexto: '#ffffff',
     corVeste: 'Roxo',
-    descricao: 'O Advento é o tempo de preparação e esperança que abre o Ano Litúrgico. Durante quatro semanas, a Igreja nos convida à vigilância, à conversão do coração e à espera jubilosa da vinda do Senhor — tanto em Belém quanto no fim dos tempos.',
+    descricao: 'O Advento é o tempo de preparação e esperança que abre o Ano Litúrgico. Durante quatro semanas, a Igreja nos convida à vigilância, à conversão do coração e à espera jubilosa da vinda do Senhor.',
     celebracoes: [
       '1ª Semana do Advento',
       '2ª Semana do Advento',
-      '3ª Semana do Advento (Gaudete)',
+      '3ª Semana — Gaudete',
       '4ª Semana do Advento',
     ]
   },
   natal: {
     id: 'natal',
     nome: 'Natal',
-    cor: '#c8a96e',
-    corSecundaria: '#e8cfa0',
+    cor: '#b8976a',
+    corClara: '#d4b88a',
     corTexto: '#2a1a00',
     corVeste: 'Branco',
-    descricao: 'O Tempo do Natal celebra o grande mistério da Encarnação: o Verbo Eterno de Deus se fez carne e habitou entre nós. A liturgia nos faz contemplar a humildade de Deus que nasce em Belém, revelando seu amor infinito pela humanidade.',
+    descricao: 'O Tempo do Natal celebra o mistério da Encarnação: o Verbo Eterno de Deus se fez carne e habitou entre nós. A liturgia contempla a humildade de Deus que nasce em Belém.',
     celebracoes: [
       'Natividade do Senhor',
       'Sagrada Família',
@@ -156,26 +121,27 @@ const TEMPOS = {
     id: 'tempoComum',
     nome: 'Tempo Comum',
     cor: '#1a6b35',
-    corSecundaria: '#2d8a50',
+    corClara: '#2d8a50',
     corTexto: '#ffffff',
     corVeste: 'Verde',
-    descricao: 'O Tempo Comum representa o crescimento da Igreja no seguimento de Cristo. Durante as 33 ou 34 semanas distribuídas ao longo do ano, a liturgia nos conduz a aprofundar os mistérios da fé, crescendo na caridade, na sabedoria e na virtude cristã.',
+    descricao: 'O Tempo Comum representa o crescimento da Igreja no seguimento de Cristo. Durante as semanas distribuídas ao longo do ano, aprofundamos os mistérios da fé e crescemos na caridade.',
     celebracoes: [
       '1ª a 9ª semana (pré-Quaresma)',
       '10ª a 34ª semana (pós-Pentecostes)',
+      'Santíssima Trindade',
       'Corpus Christi',
       'Sagrado Coração de Jesus',
-      'Solenidade de Cristo Rei',
+      'Cristo Rei do Universo',
     ]
   },
   quaresma: {
     id: 'quaresma',
     nome: 'Quaresma',
     cor: '#5c2d91',
-    corSecundaria: '#7b52a8',
+    corClara: '#7b52b0',
     corTexto: '#ffffff',
     corVeste: 'Roxo',
-    descricao: 'A Quaresma é o grande tempo de penitência, oração e jejum que prepara o coração para a Páscoa. Durante quarenta dias, caminhamos com Cristo no deserto, purificando nossa alma pela conversão sincera, pelas obras de misericórdia e pela escuta da Palavra.',
+    descricao: 'A Quaresma é o tempo de penitência, oração e jejum que prepara o coração para a Páscoa. Quarenta dias caminhando com Cristo no deserto, purificando a alma pela conversão sincera.',
     celebracoes: [
       '4ª feira de Cinzas',
       '1ª Semana da Quaresma',
@@ -190,10 +156,10 @@ const TEMPOS = {
     id: 'triduo',
     nome: 'Tríduo Pascal',
     cor: '#8b1a1a',
-    corSecundaria: '#c0302e',
+    corClara: '#b03030',
     corTexto: '#ffffff',
     corVeste: 'Vermelho / Branco',
-    descricao: 'O Tríduo Pascal é o ápice e o coração de todo o Ano Litúrgico. Em três dias sagrados contemplamos o mistério central da fé cristã: a Paixão e Morte de Nosso Senhor na Sexta-feira Santa, o silêncio do Sábado Santo e a glória da Ressurreição no Domingo de Páscoa.',
+    descricao: 'O Tríduo Pascal é o ápice de todo o Ano Litúrgico. Em três dias sagrados contemplamos o mistério central da fé: a Paixão, Morte e Ressurreição de Nosso Senhor Jesus Cristo.',
     celebracoes: [
       'Quinta-feira Santa — Ceia do Senhor',
       'Sexta-feira Santa — Paixão do Senhor',
@@ -205,16 +171,12 @@ const TEMPOS = {
     id: 'pascoa',
     nome: 'Tempo Pascal',
     cor: '#b8860b',
-    corSecundaria: '#d4a820',
+    corClara: '#d4a820',
     corTexto: '#1a0f00',
     corVeste: 'Branco / Dourado',
-    descricao: 'O Tempo Pascal é a grande festa de cinquenta dias em que a Igreja exulta de alegria pela Ressurreição de Cristo. Do Domingo de Páscoa a Pentecostes, proclamamos com júbilo que Cristo venceu a morte e nos abriu as portas da vida eterna. Aleluia!',
+    descricao: 'O Tempo Pascal são cinquenta dias de alegria pela Ressurreição de Cristo. Do Domingo de Páscoa a Pentecostes, proclamamos que Cristo venceu a morte e nos abriu as portas da vida eterna. Aleluia!',
     celebracoes: [
-      '2ª Semana de Páscoa',
-      '3ª Semana de Páscoa',
-      '4ª Semana de Páscoa',
-      '5ª Semana de Páscoa',
-      '6ª Semana de Páscoa',
+      '2ª a 6ª Semana de Páscoa',
       'Ascensão do Senhor',
       'Pentecostes',
       'Santíssima Trindade',
@@ -224,512 +186,568 @@ const TEMPOS = {
 };
 
 /* ================================================================
-   5. ESTRUTURA DO CALENDÁRIO CIRCULAR
-   
-   Cada segmento define:
-   - tempoId: qual tempo litúrgico pertence
-   - angulo: onde começa e termina no círculo (0° = topo)
-   - fatias: subdivisões internas (semanas/celebrações)
+   4. SEGMENTOS DO CALENDÁRIO
+   Ângulos: 0° = topo, sentido horário
    ================================================================ */
-const SEGMENTOS_CALENDARIO = [
+const SEGMENTOS = [
   {
     tempoId: 'advento',
-    angIni: 0,
-    angFim: 52,
+    angIni: 0, angFim: 52,
     fatias: [
-      { nome: '1ª semana', peso: 1 },
-      { nome: '2ª semana', peso: 1 },
-      { nome: '3ª semana', peso: 1 }, // Gaudete
-      { nome: '4ª semana', peso: 1 },
+      { nome: '1ª semana' },
+      { nome: '2ª semana' },
+      { nome: '3ª semana' },
+      { nome: '4ª semana' },
     ]
   },
   {
     tempoId: 'natal',
-    angIni: 52,
-    angFim: 96,
+    angIni: 52, angFim: 96,
     fatias: [
-      { nome: 'Natal',             peso: 1 },
-      { nome: 'Sagrada Família',   peso: 1 },
-      { nome: 'Mãe de Deus',       peso: 1 },
-      { nome: 'Epifania',          peso: 1 },
-      { nome: 'Batismo',           peso: 1 },
+      { nome: 'Natal' },
+      { nome: 'Sag. Família' },
+      { nome: 'Mãe de Deus' },
+      { nome: 'Epifania' },
+      { nome: 'Batismo' },
     ]
   },
   {
     tempoId: 'tempoComum',
-    angIni: 96,
-    angFim: 168,
+    angIni: 96, angFim: 168,
     fatias: [
-      { nome: '1ª',  peso: 1 }, { nome: '2ª',  peso: 1 },
-      { nome: '3ª',  peso: 1 }, { nome: '4ª',  peso: 1 },
-      { nome: '5ª',  peso: 1 }, { nome: '6ª',  peso: 1 },
-      { nome: '7ª',  peso: 1 }, { nome: '8ª',  peso: 1 },
-      { nome: '9ª',  peso: 1 },
+      { nome: '1ª' }, { nome: '2ª' }, { nome: '3ª' },
+      { nome: '4ª' }, { nome: '5ª' }, { nome: '6ª' },
+      { nome: '7ª' }, { nome: '8ª' }, { nome: '9ª' },
     ]
   },
   {
     tempoId: 'quaresma',
-    angIni: 168,
-    angFim: 232,
+    angIni: 168, angFim: 232,
     fatias: [
-      { nome: 'Cinzas',    peso: 0.5 },
-      { nome: '1ª semana', peso: 1 },
-      { nome: '2ª semana', peso: 1 },
-      { nome: '3ª semana', peso: 1 },
-      { nome: '4ª semana', peso: 1 },
-      { nome: '5ª semana', peso: 1 },
-      { nome: 'Ramos',     peso: 0.5 },
+      { nome: 'Cinzas', peso: 0.6 },
+      { nome: '1ª semana' },
+      { nome: '2ª semana' },
+      { nome: '3ª semana' },
+      { nome: '4ª semana' },
+      { nome: '5ª semana' },
+      { nome: 'Ramos', peso: 0.6 },
     ]
   },
   {
     tempoId: 'triduo',
-    angIni: 232,
-    angFim: 262,
+    angIni: 232, angFim: 264,
     fatias: [
-      { nome: '5ª Santa',  peso: 1 },
-      { nome: '6ª Santa',  peso: 1 },
-      { nome: 'Sábado',    peso: 0.6 },
-      { nome: 'Páscoa',    peso: 1 },
+      { nome: '5ª Santa' },
+      { nome: '6ª Santa' },
+      { nome: 'Vigília' },
+      { nome: 'Páscoa' },
     ]
   },
   {
     tempoId: 'pascoa',
-    angIni: 262,
-    angFim: 336,
+    angIni: 264, angFim: 336,
     fatias: [
-      { nome: '2ª sem.',    peso: 1 },
-      { nome: '3ª sem.',    peso: 1 },
-      { nome: '4ª sem.',    peso: 1 },
-      { nome: '5ª sem.',    peso: 1 },
-      { nome: '6ª sem.',    peso: 1 },
-      { nome: 'Ascensão',   peso: 0.8 },
-      { nome: 'Pentecoste', peso: 0.8 },
-      { nome: 'Trindade',   peso: 0.8 },
-      { nome: 'Corpus',     peso: 0.8 },
+      { nome: '2ª sem.' }, { nome: '3ª sem.' },
+      { nome: '4ª sem.' }, { nome: '5ª sem.' },
+      { nome: '6ª sem.' }, { nome: 'Ascensão' },
+      { nome: 'Pentec.' }, { nome: 'Trindade' },
+      { nome: 'Corpus'  },
     ]
   },
   {
     tempoId: 'tempoComum',
-    angIni: 336,
-    angFim: 360,
+    angIni: 336, angFim: 360,
     fatias: [
-      { nome: '…',        peso: 1 },
-      { nome: '33ª',      peso: 1 },
-      { nome: 'Cristo Rei', peso: 1 },
+      { nome: '…' },
+      { nome: '33ª' },
+      { nome: 'Cristo Rei' },
     ]
   }
 ];
 
 /* ================================================================
-   6. NÚCLEO SVG — Funções matemáticas precisas
+   5. UTILITÁRIOS CANVAS
    ================================================================ */
 
-const f2 = n => parseFloat(n.toFixed(4));
-
-function angParaRad(graus) {
-  // 0° = topo (norte), cresce no sentido horário
-  return (graus - 90) * (Math.PI / 180);
+// Converter graus para radianos com offset de -90° (topo = 0°)
+function toRad(graus) {
+  return (graus - 90) * Math.PI / 180;
 }
 
-function pontoNoCirculo(cx, cy, raio, graus) {
-  const rad = angParaRad(graus);
-  return {
-    x: f2(cx + raio * Math.cos(rad)),
-    y: f2(cy + raio * Math.sin(rad))
-  };
+// Desenhar setor de anel (donut slice)
+function desenharSetor(ctx, cx, cy, rExt, rInt, angIni, angFim) {
+  const ai = toRad(angIni);
+  const af = toRad(angFim);
+  ctx.beginPath();
+  ctx.arc(cx, cy, rExt, ai, af);
+  ctx.arc(cx, cy, rInt, af, ai, true);
+  ctx.closePath();
 }
 
-/**
- * Gera o path de um setor de anel (donut slice)
- * @param {number} cx - centro x
- * @param {number} cy - centro y
- * @param {number} rExt - raio externo
- * @param {number} rInt - raio interno
- * @param {number} angIni - ângulo inicial (graus)
- * @param {number} angFim - ângulo final (graus)
- */
-function setorAnel(cx, cy, rExt, rInt, angIni, angFim) {
-  // Garantir que angFim > angIni e diferença < 360
-  const span = angFim - angIni;
-  if (span <= 0 || span >= 360) return '';
+// Escrever texto curvado ao longo de um arco
+function textoArco(ctx, texto, cx, cy, raio, angIni, angFim, fontSize, cor, fontWeight, fontFamily) {
+  const angMeio = (angIni + angFim) / 2;
+  const totalChars = texto.length;
 
-  const p1 = pontoNoCirculo(cx, cy, rExt, angIni);
-  const p2 = pontoNoCirculo(cx, cy, rExt, angFim);
-  const p3 = pontoNoCirculo(cx, cy, rInt, angFim);
-  const p4 = pontoNoCirculo(cx, cy, rInt, angIni);
-  const grande = span > 180 ? 1 : 0;
+  ctx.save();
+  ctx.font = `${fontWeight} ${fontSize}px ${fontFamily}`;
+  ctx.fillStyle = cor;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
 
-  return [
-    `M ${p1.x} ${p1.y}`,
-    `A ${rExt} ${rExt} 0 ${grande} 1 ${p2.x} ${p2.y}`,
-    `L ${p3.x} ${p3.y}`,
-    `A ${rInt} ${rInt} 0 ${grande} 0 ${p4.x} ${p4.y}`,
-    'Z'
-  ].join(' ');
+  // Medir largura total do texto
+  const larguraTotal = ctx.measureText(texto).width;
+  // Ângulo que o texto ocupa no arco
+  const angTextoTotal = larguraTotal / raio; // em radianos
+
+  // Decidir se inverte (texto na metade de baixo)
+  const angMeioRad = toRad(angMeio);
+  // Normalizar para [0, 2PI]
+  const angNorm = ((angMeioRad % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI);
+  const invertido = angNorm > Math.PI;
+
+  // Ângulo de início do texto (centralizado)
+  let angAtual;
+  if (!invertido) {
+    angAtual = toRad(angMeio) - angTextoTotal / 2;
+  } else {
+    angAtual = toRad(angMeio) + angTextoTotal / 2;
+  }
+
+  for (let i = 0; i < totalChars; i++) {
+    const char = texto[i];
+    const larguraChar = ctx.measureText(char).width;
+    const meioDaLetra = larguraChar / 2;
+    const angLetra = meioDaLetra / raio;
+
+    if (!invertido) {
+      angAtual += angLetra;
+    } else {
+      angAtual -= angLetra;
+    }
+
+    ctx.save();
+    ctx.translate(
+      cx + raio * Math.cos(angAtual),
+      cy + raio * Math.sin(angAtual)
+    );
+
+    if (!invertido) {
+      ctx.rotate(angAtual + Math.PI / 2);
+    } else {
+      ctx.rotate(angAtual - Math.PI / 2);
+    }
+
+    ctx.fillText(char, 0, 0);
+    ctx.restore();
+
+    if (!invertido) {
+      angAtual += angLetra;
+    } else {
+      angAtual -= angLetra;
+    }
+  }
+
+  ctx.restore();
 }
 
-/**
- * Gera path de arco (apenas a linha, para textPath)
- */
-function arcoPath(cx, cy, raio, angIni, angFim) {
-  const span = angFim - angIni;
-  const p1 = pontoNoCirculo(cx, cy, raio, angIni);
-  const p2 = pontoNoCirculo(cx, cy, raio, angFim);
-  const grande = span > 180 ? 1 : 0;
-  return `M ${p1.x} ${p1.y} A ${raio} ${raio} 0 ${grande} 1 ${p2.x} ${p2.y}`;
+// Criar gradiente radial
+function gradienteRadial(ctx, cx, cy, r0, r1, cor1, cor2) {
+  const g = ctx.createRadialGradient(cx, cy, r0, cx, cy, r1);
+  g.addColorStop(0, cor1);
+  g.addColorStop(1, cor2);
+  return g;
 }
 
-/**
- * Gera path de arco invertido (para texto na metade inferior)
- */
-function arcoPathInvertido(cx, cy, raio, angIni, angFim) {
-  const span = angFim - angIni;
-  const p1 = pontoNoCirculo(cx, cy, raio, angFim);
-  const p2 = pontoNoCirculo(cx, cy, raio, angIni);
-  const grande = span > 180 ? 1 : 0;
-  return `M ${p1.x} ${p1.y} A ${raio} ${raio} 0 ${grande} 0 ${p2.x} ${p2.y}`;
+// Criar gradiente cônico simulado (overlay de brilho)
+function aplicarBrilhoSetor(ctx, cx, cy, rExt, rInt, angIni, angFim) {
+  ctx.save();
+  desenharSetor(ctx, cx, cy, rExt, rInt, angIni, angFim);
+  ctx.clip();
+  const grad = ctx.createLinearGradient(
+    cx + rInt * Math.cos(toRad((angIni + angFim) / 2)),
+    cy + rInt * Math.sin(toRad((angIni + angFim) / 2)),
+    cx + rExt * Math.cos(toRad((angIni + angFim) / 2)),
+    cy + rExt * Math.sin(toRad((angIni + angFim) / 2))
+  );
+  grad.addColorStop(0, 'rgba(255,255,255,0.00)');
+  grad.addColorStop(0.5, 'rgba(255,255,255,0.06)');
+  grad.addColorStop(1, 'rgba(255,255,255,0.14)');
+  ctx.fillStyle = grad;
+  ctx.fill();
+  ctx.restore();
 }
 
 /* ================================================================
-   7. GERADOR PRINCIPAL DO SVG
+   6. RENDERIZAR CALENDÁRIO NO CANVAS
    ================================================================ */
-function gerarSVG(tempoAtual, tamanho) {
-  const S  = tamanho;
-  const cx = S / 2;
-  const cy = S / 2;
+function renderizarCalendario(canvas, tempoAtual, tamanho) {
+  canvas.width  = tamanho;
+  canvas.height = tamanho;
 
-  // ── Raios dos anéis ──────────────────────────────────────────
-  const R_FUNDO     = S * 0.490;  // círculo de fundo (borda branca)
-  const R_EXT       = S * 0.460;  // borda externa das fatias
-  const R_FATIAS    = S * 0.385;  // divisória entre anel externo e interno
-  const R_INTERNO   = S * 0.230;  // borda interna (limite do centro)
-  const R_CENTRO    = S * 0.218;  // círculo dourado central
-  const GAP_GRAUS   = 0.7;        // gap entre segmentos em graus
+  const ctx = canvas.getContext('2d');
+  const cx  = tamanho / 2;
+  const cy  = tamanho / 2;
+  const DPR = window.devicePixelRatio || 1;
 
-  // Raios de texto
-  const R_TXT_EXT   = S * 0.425;  // texto anel externo (fatias)
-  const R_TXT_INT   = S * 0.305;  // texto anel interno (nome do tempo)
+  // Para telas retina
+  canvas.width  = tamanho * DPR;
+  canvas.height = tamanho * DPR;
+  canvas.style.width  = tamanho + 'px';
+  canvas.style.height = tamanho + 'px';
+  ctx.scale(DPR, DPR);
 
-  let ids = 0;
-  const uid = () => `lc${++ids}`;
+  const S = tamanho;
 
-  // ── Acumulador SVG ────────────────────────────────────────────
-  const partes = [];
+  // ── Raios ────────────────────────────────────────────────────
+  const R_BORDA   = S * 0.488;  // borda externa total
+  const R_EXT     = S * 0.458;  // anel externo (fatias)
+  const R_DIV     = S * 0.368;  // divisória entre anel externo e interno
+  const R_INT     = S * 0.228;  // borda interna
+  const R_CENTRO  = S * 0.216;  // círculo central
 
-  // ── DEFS ──────────────────────────────────────────────────────
-  partes.push(`<defs>
-    <!-- Gradientes radiais do fundo -->
-    <radialGradient id="gFundo" cx="50%" cy="45%" r="55%">
-      <stop offset="0%" stop-color="#ffffff"/>
-      <stop offset="100%" stop-color="#f2ede2"/>
-    </radialGradient>
+  const GAP = 0.8; // graus de espaço entre segmentos
 
-    <!-- Centro dourado -->
-    <radialGradient id="gCentro" cx="38%" cy="32%" r="65%">
-      <stop offset="0%"   stop-color="#c49a3c"/>
-      <stop offset="45%"  stop-color="#8a5e1a"/>
-      <stop offset="100%" stop-color="#3d2005"/>
-    </radialGradient>
+  // ── FUNDO CIRCULAR ───────────────────────────────────────────
+  ctx.save();
+  ctx.shadowColor   = 'rgba(0,0,0,0.22)';
+  ctx.shadowBlur    = 32;
+  ctx.shadowOffsetY = 10;
+  const gFundo = gradienteRadial(ctx, cx, cy * 0.85, 0, R_BORDA + 10, '#ffffff', '#f0ebe0');
+  ctx.fillStyle = gFundo;
+  ctx.beginPath();
+  ctx.arc(cx, cy, R_BORDA + 10, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.restore();
 
-    <!-- Anel dourado decorativo -->
-    <linearGradient id="gAnel" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%"   stop-color="#f0c040"/>
-      <stop offset="50%"  stop-color="#c8860c"/>
-      <stop offset="100%" stop-color="#f0c040"/>
-    </linearGradient>
+  // Anel borda externo decorativo
+  ctx.save();
+  ctx.strokeStyle = 'rgba(160,130,70,0.25)';
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.arc(cx, cy, R_BORDA + 2, 0, Math.PI * 2);
+  ctx.stroke();
+  ctx.restore();
 
-    <!-- Filtros -->
-    <filter id="fSombra" x="-20%" y="-20%" width="140%" height="140%">
-      <feDropShadow dx="0" dy="10" stdDeviation="18" flood-color="#000" flood-opacity="0.22"/>
-    </filter>
-    <filter id="fGlowOuro">
-      <feDropShadow dx="0" dy="0" stdDeviation="6" flood-color="#ffd700" flood-opacity="0.75"/>
-    </filter>
-    <filter id="fGlowSeg">
-      <feDropShadow dx="0" dy="0" stdDeviation="4" flood-color="#ffd700" flood-opacity="0.45"/>
-    </filter>
-    <filter id="fSombraCentro" x="-30%" y="-30%" width="160%" height="160%">
-      <feDropShadow dx="0" dy="5" stdDeviation="10" flood-color="#000" flood-opacity="0.50"/>
-    </filter>
-    <filter id="fBrilhoCentro" x="-5%" y="-5%" width="110%" height="110%">
-      <feGaussianBlur stdDeviation="2" result="blur"/>
-      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
-    </filter>
-  </defs>`);
+  // ── RENDERIZAR CADA SEGMENTO ─────────────────────────────────
+  SEGMENTOS.forEach((seg, segIdx) => {
+    const tempo   = TEMPOS[seg.tempoId];
+    const isAtual = seg.tempoId === tempoAtual;
+    const spanSeg = seg.angFim - seg.angIni;
+    const angMeio = (seg.angIni + seg.angFim) / 2;
 
-  // ── FUNDO ─────────────────────────────────────────────────────
-  // Sombra externa
-  partes.push(`<circle cx="${cx}" cy="${cy}" r="${R_FUNDO + 8}"
-    fill="url(#gFundo)" filter="url(#fSombra)"/>`);
-  // Anel decorativo externo
-  partes.push(`<circle cx="${cx}" cy="${cy}" r="${R_FUNDO + 1}"
-    fill="none" stroke="rgba(180,150,80,0.3)" stroke-width="2"/>`);
-  // Fundo principal
-  partes.push(`<circle cx="${cx}" cy="${cy}" r="${R_FUNDO}"
-    fill="url(#gFundo)"/>`);
+    // Calcular pesos das fatias
+    const fatias = seg.fatias.map(f => ({ ...f, peso: f.peso || 1 }));
+    const pesoTotal = fatias.reduce((s, f) => s + f.peso, 0);
 
-  // ── RENDERIZAR SEGMENTOS ──────────────────────────────────────
-  SEGMENTOS_CALENDARIO.forEach((seg, segIdx) => {
-    const tempo    = TEMPOS[seg.tempoId];
-    const isAtual  = seg.tempoId === tempoAtual;
-    const spanSeg  = seg.angFim - seg.angIni;
-    const angMeio  = (seg.angIni + seg.angFim) / 2;
-
-    // Cor do segmento (com leve variação para distinguir duplicatas de tempoComum)
-    const corBase  = tempo.cor;
-    const corSec   = tempo.corSecundaria;
-    const corTxt   = tempo.corTexto;
-
-    // ── HALO DOURADO no tempo atual (atrás de tudo) ──
+    // ── HALO DOURADO (tempo atual) ──
     if (isAtual) {
-      const haloPath = setorAnel(cx, cy, R_EXT + 14, R_INTERNO - 6,
-        seg.angIni, seg.angFim);
-      partes.push(`<path d="${haloPath}"
-        fill="${corBase}" opacity="0.18" filter="url(#fGlowSeg)"/>`);
+      ctx.save();
+      ctx.shadowColor = '#FFD700';
+      ctx.shadowBlur  = 22;
+      desenharSetor(ctx, cx, cy, R_EXT + 14, R_INT - 8, seg.angIni, seg.angFim);
+      ctx.fillStyle = tempo.cor + '30';
+      ctx.fill();
+      ctx.restore();
     }
 
-    // ══════════════════════════════════════════════
-    // ANEL EXTERNO — Fatias (semanas/celebrações)
-    // ══════════════════════════════════════════════
-    const totalPeso = seg.fatias.reduce((s, f) => s + f.peso, 0);
+    // ══════════════════════════════════
+    // ANEL EXTERNO — Fatias individuais
+    // ══════════════════════════════════
     let angAcum = seg.angIni;
 
-    seg.fatias.forEach((fatia, fIdx) => {
-      const proporcao = fatia.peso / totalPeso;
+    fatias.forEach((fatia, fIdx) => {
+      const proporcao = fatia.peso / pesoTotal;
       const fSpan     = spanSeg * proporcao;
-      const fAngIni   = angAcum + (fIdx === 0 ? GAP_GRAUS : GAP_GRAUS * 0.5);
-      const fAngFim   = angAcum + fSpan - (fIdx === seg.fatias.length - 1 ? GAP_GRAUS : GAP_GRAUS * 0.5);
+      const fAngIni   = angAcum + (fIdx === 0 ? GAP : GAP * 0.5);
+      const fAngFim   = angAcum + fSpan - (fIdx === fatias.length - 1 ? GAP : GAP * 0.5);
       angAcum        += fSpan;
 
-      if (fAngFim <= fAngIni) return;
+      if (fAngFim <= fAngIni + 0.1) return;
 
-      // Alternar leve tonalidade entre fatias
-      const corFatia = fIdx % 2 === 0 ? corBase : corSec;
+      // Alternar tonalidade
+      const corFatia = fIdx % 2 === 0 ? tempo.cor : tempo.corClara;
 
-      partes.push(`<path d="${setorAnel(cx, cy, R_EXT, R_FATIAS, fAngIni, fAngFim)}"
-        fill="${corFatia}"
-        stroke="rgba(255,255,255,0.22)"
-        stroke-width="0.6"/>`);
+      // Fatia
+      ctx.save();
+      desenharSetor(ctx, cx, cy, R_EXT, R_DIV, fAngIni, fAngFim);
+      ctx.fillStyle = corFatia;
+      ctx.fill();
 
-      // Texto da fatia (apenas se houver ângulo suficiente)
+      // Borda branca entre fatias
+      ctx.strokeStyle = 'rgba(255,255,255,0.28)';
+      ctx.lineWidth = 0.8;
+      ctx.stroke();
+      ctx.restore();
+
+      // Brilho de profundidade
+      aplicarBrilhoSetor(ctx, cx, cy, R_EXT, R_DIV, fAngIni, fAngFim);
+
+      // Texto da fatia
       const fSpanReal = fAngFim - fAngIni;
-      if (fSpanReal >= 6 && fatia.nome && fatia.nome !== '…') {
-        const tId = uid();
-        const angMeioF = (fAngIni + fAngFim) / 2;
-
-        // Decidir sentido do texto baseado na posição
-        const invertido = angMeioF > 90 && angMeioF < 270;
-        const pathTxt = invertido
-          ? arcoPathInvertido(cx, cy, R_TXT_EXT, fAngIni, fAngFim)
-          : arcoPath(cx, cy, R_TXT_EXT, fAngIni, fAngFim);
-
-        const fs = Math.max(S * 0.016, 8);
-        partes.push(`
-          <path id="${tId}" d="${pathTxt}" fill="none"/>
-          <text font-family="'Inter',sans-serif" font-size="${f2(fs)}"
-            font-weight="500" fill="rgba(255,255,255,0.88)">
-            <textPath href="#${tId}" startOffset="50%" text-anchor="middle">
-              ${fatia.nome}
-            </textPath>
-          </text>`);
+      if (fSpanReal >= 5.5 && fatia.nome && fatia.nome !== '…') {
+        const rTextoFatia = (R_EXT + R_DIV) / 2;
+        const fs = Math.max(S * 0.017, 7.5);
+        textoArco(ctx, fatia.nome, cx, cy, rTextoFatia, fAngIni, fAngFim,
+          fs, 'rgba(255,255,255,0.92)', '500', "'Inter', sans-serif");
       }
     });
 
-    // ══════════════════════════════════════════════
-    // ANEL INTERNO — Nome do tempo litúrgico
-    // ══════════════════════════════════════════════
-    const iAngIni = seg.angIni + GAP_GRAUS;
-    const iAngFim = seg.angFim - GAP_GRAUS;
+    // ══════════════════════════════════
+    // ANEL INTERNO — Nome do tempo
+    // ══════════════════════════════════
+    const iAngIni = seg.angIni + GAP;
+    const iAngFim = seg.angFim - GAP;
 
-    if (iAngFim > iAngIni) {
-      partes.push(`<path d="${setorAnel(cx, cy, R_FATIAS, R_INTERNO, iAngIni, iAngFim)}"
-        fill="${corBase}"
-        stroke="rgba(255,255,255,0.18)"
-        stroke-width="0.8"/>`);
+    if (iAngFim > iAngIni + 0.1) {
+      // Fatia interna
+      ctx.save();
+      desenharSetor(ctx, cx, cy, R_DIV, R_INT, iAngIni, iAngFim);
+      ctx.fillStyle = tempo.cor;
+      ctx.fill();
+      ctx.strokeStyle = 'rgba(255,255,255,0.18)';
+      ctx.lineWidth = 0.8;
+      ctx.stroke();
+      ctx.restore();
 
-      // Overlay gradiente de profundidade
-      partes.push(`<path d="${setorAnel(cx, cy, R_FATIAS, R_INTERNO, iAngIni, iAngFim)}"
-        fill="rgba(255,255,255,${isAtual ? '0.08' : '0.04'})"
-        stroke="none"/>`);
-    }
+      // Brilho
+      aplicarBrilhoSetor(ctx, cx, cy, R_DIV, R_INT, iAngIni, iAngFim);
 
-    // Borda dourada luminosa no tempo atual
-    if (isAtual) {
-      // Borda externa
-      partes.push(`<path d="${setorAnel(cx, cy, R_EXT + 6, R_EXT, seg.angIni, seg.angFim)}"
-        fill="url(#gAnel)" filter="url(#fGlowOuro)" opacity="0.95"/>`);
-      // Borda interna
-      partes.push(`<path d="${setorAnel(cx, cy, R_INTERNO, R_INTERNO - 5, seg.angIni, seg.angFim)}"
-        fill="url(#gAnel)" opacity="0.8"/>`);
-    }
+      // Borda dourada no tempo atual
+      if (isAtual) {
+        // Borda externa dourada
+        ctx.save();
+        ctx.shadowColor = '#FFD700';
+        ctx.shadowBlur  = 12;
+        desenharSetor(ctx, cx, cy, R_EXT + 7, R_EXT, seg.angIni, seg.angFim);
+        ctx.fillStyle = '#FFD700';
+        ctx.fill();
+        ctx.restore();
 
-    // ── Texto nome do tempo (curvado no anel interno) ──
-    const spanInterno = iAngFim - iAngIni;
-    if (spanInterno >= 20) {
-      const tId2   = uid();
-      const angM   = (iAngIni + iAngFim) / 2;
-      const invertido2 = angM > 90 && angM < 270;
-      const rTxt   = R_TXT_INT + (isAtual ? 0 : 0);
+        // Borda interna dourada
+        ctx.save();
+        desenharSetor(ctx, cx, cy, R_INT, R_INT - 5, seg.angIni, seg.angFim);
+        ctx.fillStyle = '#FFD700';
+        ctx.fill();
+        ctx.restore();
+      }
 
-      const pathNome = invertido2
-        ? arcoPathInvertido(cx, cy, rTxt, iAngIni, iAngFim)
-        : arcoPath(cx, cy, rTxt, iAngIni, iAngFim);
+      // Nome do tempo (texto curvado)
+      const spanInterno = iAngFim - iAngIni;
+      if (spanInterno >= 18) {
+        const rTextoInt = (R_DIV + R_INT) / 2 + S * 0.005;
+        const fsNome    = Math.min(Math.max(S * 0.028, 10), 17);
+        const corNome   = isAtual ? '#ffffff' : tempo.corTexto;
+        textoArco(ctx, tempo.nome, cx, cy, rTextoInt, iAngIni, iAngFim,
+          fsNome, corNome, '700', "'Libre Baskerville', serif");
 
-      const fsNome = f2(Math.min(Math.max(S * 0.030, 11), 18));
-      partes.push(`
-        <path id="${tId2}" d="${pathNome}" fill="none"/>
-        <text font-family="'Libre Baskerville',serif"
-          font-size="${fsNome}"
-          font-weight="700"
-          fill="${isAtual ? '#ffffff' : corTxt}">
-          <textPath href="#${tId2}" startOffset="50%" text-anchor="middle">
-            ${tempo.nome}
-          </textPath>
-        </text>`);
-
-      // Badge "● AGORA" abaixo do nome, se for tempo atual
-      if (isAtual && spanInterno >= 35) {
-        const tId3 = uid();
-        const rBadge = rTxt - S * 0.048;
-        const pathBadge = invertido2
-          ? arcoPathInvertido(cx, cy, rBadge, iAngIni, iAngFim)
-          : arcoPath(cx, cy, rBadge, iAngIni, iAngFim);
-
-        const fsBadge = f2(Math.max(S * 0.020, 8));
-        partes.push(`
-          <path id="${tId3}" d="${pathBadge}" fill="none"/>
-          <text font-family="'Inter',sans-serif"
-            font-size="${fsBadge}"
-            font-weight="700"
-            fill="#FFD700"
-            letter-spacing="1">
-            <textPath href="#${tId3}" startOffset="50%" text-anchor="middle">
-              ● TEMPO ATUAL
-            </textPath>
-          </text>`);
+        // "● AGORA" abaixo do nome
+        if (isAtual && spanInterno >= 38) {
+          const rBadge = rTextoInt - S * 0.050;
+          const fsBadge = Math.max(S * 0.019, 8);
+          textoArco(ctx, '● TEMPO ATUAL', cx, cy, rBadge, iAngIni, iAngFim,
+            fsBadge, '#FFD700', '700', "'Inter', sans-serif");
+        }
       }
     }
   });
 
-  // ── SEPARADORES ENTRE SEGMENTOS ───────────────────────────────
-  // Usar Set para evitar duplicatas nos ângulos
+  // ── SEPARADORES ───────────────────────────────────────────────
   const angulos = new Set();
-  SEGMENTOS_CALENDARIO.forEach(seg => {
-    angulos.add(seg.angIni);
-    angulos.add(seg.angFim);
-  });
+  SEGMENTOS.forEach(s => { angulos.add(s.angIni); angulos.add(s.angFim); });
 
   angulos.forEach(ang => {
-    const pExt = pontoNoCirculo(cx, cy, R_EXT + 6,   ang);
-    const pInt = pontoNoCirculo(cx, cy, R_INTERNO - 2, ang);
-    partes.push(`<line
-      x1="${pExt.x}" y1="${pExt.y}"
-      x2="${pInt.x}" y2="${pInt.y}"
-      stroke="rgba(255,255,255,0.6)"
-      stroke-width="1.8"
-      stroke-linecap="round"/>`);
+    const rad = toRad(ang);
+    ctx.save();
+    ctx.strokeStyle = 'rgba(255,255,255,0.65)';
+    ctx.lineWidth   = 2;
+    ctx.lineCap     = 'round';
+    ctx.beginPath();
+    ctx.moveTo(cx + (R_INT - 5) * Math.cos(rad), cy + (R_INT - 5) * Math.sin(rad));
+    ctx.lineTo(cx + (R_EXT + 7) * Math.cos(rad), cy + (R_EXT + 7) * Math.sin(rad));
+    ctx.stroke();
+    ctx.restore();
   });
 
   // ── ANÉIS DECORATIVOS ─────────────────────────────────────────
-  partes.push(`<circle cx="${cx}" cy="${cy}" r="${R_FATIAS}"
-    fill="none" stroke="rgba(255,255,255,0.30)" stroke-width="1.2"/>`);
-  partes.push(`<circle cx="${cx}" cy="${cy}" r="${R_INTERNO}"
-    fill="none" stroke="url(#gAnel)" stroke-width="2.5"/>`);
-  partes.push(`<circle cx="${cx}" cy="${cy}" r="${R_INTERNO + 6}"
-    fill="none" stroke="rgba(200,160,60,0.25)" stroke-width="1"/>`);
+  // Divisória externa/interna
+  ctx.save();
+  ctx.strokeStyle = 'rgba(255,255,255,0.35)';
+  ctx.lineWidth = 1.5;
+  ctx.beginPath();
+  ctx.arc(cx, cy, R_DIV, 0, Math.PI * 2);
+  ctx.stroke();
+  ctx.restore();
+
+  // Anel dourado interno
+  ctx.save();
+  ctx.shadowColor = 'rgba(200,160,40,0.4)';
+  ctx.shadowBlur  = 6;
+  const gAnel = ctx.createLinearGradient(cx - R_INT, cy, cx + R_INT, cy);
+  gAnel.addColorStop(0,   '#f0c040');
+  gAnel.addColorStop(0.5, '#c8860c');
+  gAnel.addColorStop(1,   '#f0c040');
+  ctx.strokeStyle = gAnel;
+  ctx.lineWidth = 3;
+  ctx.beginPath();
+  ctx.arc(cx, cy, R_INT, 0, Math.PI * 2);
+  ctx.stroke();
+  ctx.restore();
 
   // ── CÍRCULO CENTRAL ───────────────────────────────────────────
   // Sombra
-  partes.push(`<circle cx="${cx}" cy="${cy}" r="${R_CENTRO}"
-    fill="#2a1408" filter="url(#fSombraCentro)"/>`);
-  // Gradiente dourado
-  partes.push(`<circle cx="${cx}" cy="${cy}" r="${R_CENTRO}"
-    fill="url(#gCentro)"/>`);
-  // Anel dourado externo do centro
-  partes.push(`<circle cx="${cx}" cy="${cy}" r="${R_CENTRO}"
-    fill="none" stroke="url(#gAnel)" stroke-width="3.5"/>`);
-  // Anel interno decorativo
-  partes.push(`<circle cx="${cx}" cy="${cy}" r="${R_CENTRO - 10}"
-    fill="none" stroke="rgba(240,192,64,0.30)" stroke-width="1.2"/>`);
+  ctx.save();
+  ctx.shadowColor   = 'rgba(0,0,0,0.55)';
+  ctx.shadowBlur    = 24;
+  ctx.shadowOffsetY = 5;
+  ctx.fillStyle     = '#1a0a02';
+  ctx.beginPath();
+  ctx.arc(cx, cy, R_CENTRO, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.restore();
 
-  // ── CRUZ ─────────────────────────────────────────────────────
-  const cL = R_CENTRO * 0.68;   // metade do comprimento vertical
-  const cB = R_CENTRO * 0.60;   // metade do comprimento horizontal
-  const cW = S * 0.030;         // espessura do braço
-  const cY = -R_CENTRO * 0.05;  // posição vertical do braço horizontal
+  // Gradiente dourado
+  const gCentro = ctx.createRadialGradient(
+    cx - R_CENTRO * 0.3, cy - R_CENTRO * 0.3, 0,
+    cx, cy, R_CENTRO
+  );
+  gCentro.addColorStop(0,    '#d4a030');
+  gCentro.addColorStop(0.4,  '#9a6018');
+  gCentro.addColorStop(0.75, '#6a3c0a');
+  gCentro.addColorStop(1,    '#3a1e04');
+  ctx.fillStyle = gCentro;
+  ctx.beginPath();
+  ctx.arc(cx, cy, R_CENTRO, 0, Math.PI * 2);
+  ctx.fill();
+
+  // Anel externo dourado do centro
+  ctx.save();
+  ctx.shadowColor = 'rgba(240,192,60,0.5)';
+  ctx.shadowBlur  = 8;
+  const gAnelCentro = ctx.createLinearGradient(cx - R_CENTRO, cy, cx + R_CENTRO, cy);
+  gAnelCentro.addColorStop(0,   '#f0c840');
+  gAnelCentro.addColorStop(0.5, '#c88010');
+  gAnelCentro.addColorStop(1,   '#f0c840');
+  ctx.strokeStyle = gAnelCentro;
+  ctx.lineWidth   = 3.5;
+  ctx.beginPath();
+  ctx.arc(cx, cy, R_CENTRO, 0, Math.PI * 2);
+  ctx.stroke();
+  ctx.restore();
+
+  // Anel interno decorativo do centro
+  ctx.save();
+  ctx.strokeStyle = 'rgba(240,200,80,0.28)';
+  ctx.lineWidth   = 1.5;
+  ctx.beginPath();
+  ctx.arc(cx, cy, R_CENTRO - 10, 0, Math.PI * 2);
+  ctx.stroke();
+  ctx.restore();
+
+  // ── CRUZ ──────────────────────────────────────────────────────
+  const cL  = R_CENTRO * 0.70;   // metade do comprimento vertical
+  const cB  = R_CENTRO * 0.60;   // metade do comprimento horizontal
+  const cW  = S * 0.030;         // espessura
+  const cOY = -R_CENTRO * 0.06;  // offset vertical do braço horizontal
+
+  function desenharCruz(ox, oy, alpha) {
+    ctx.save();
+    ctx.globalAlpha = alpha;
+    ctx.fillStyle = alpha < 1 ? '#000000' : 'rgba(255,230,140,0.97)';
+
+    // Braço vertical
+    ctx.beginPath();
+    ctx.roundRect(ox + cx - cW / 2, oy + cy - cL, cW, cL * 2, 4);
+    ctx.fill();
+
+    // Braço horizontal
+    ctx.beginPath();
+    ctx.roundRect(ox + cx - cB, oy + cy + cOY - cW / 2, cB * 2, cW, 4);
+    ctx.fill();
+
+    ctx.restore();
+  }
 
   // Sombra da cruz
-  partes.push(`<g transform="translate(2,4)" opacity="0.35">
-    <rect x="${f2(cx - cW/2)}" y="${f2(cy - cL)}" width="${f2(cW)}" height="${f2(cL*2)}" rx="3" fill="#000"/>
-    <rect x="${f2(cx - cB)}" y="${f2(cy + cY - cW/2)}" width="${f2(cB*2)}" height="${f2(cW)}" rx="3" fill="#000"/>
-  </g>`);
+  ctx.save();
+  ctx.shadowColor   = 'rgba(0,0,0,0)';
+  ctx.shadowBlur    = 0;
+  desenharCruz(3, 5, 0.30);
+  ctx.restore();
 
-  // Cruz principal
-  partes.push(`<rect x="${f2(cx - cW/2)}" y="${f2(cy - cL)}" width="${f2(cW)}" height="${f2(cL*2)}"
-    rx="3.5" fill="rgba(255,230,140,0.97)"/>`);
-  partes.push(`<rect x="${f2(cx - cB)}" y="${f2(cy + cY - cW/2)}" width="${f2(cB*2)}" height="${f2(cW)}"
-    rx="3.5" fill="rgba(255,230,140,0.97)"/>`);
+  // Cruz principal com brilho
+  ctx.save();
+  ctx.shadowColor = 'rgba(255,220,100,0.35)';
+  ctx.shadowBlur  = 12;
+  desenharCruz(0, 0, 1);
+  ctx.restore();
 
-  // Destaque luminoso na cruz
-  partes.push(`<rect x="${f2(cx - cW/2 + 2)}" y="${f2(cy - cL + 4)}" width="${f2(cW * 0.4)}" height="${f2(cL*2 - 8)}"
-    rx="2" fill="rgba(255,255,220,0.35)"/>`);
+  // Destaque brilhante na cruz
+  ctx.save();
+  ctx.fillStyle   = 'rgba(255,255,220,0.28)';
+  ctx.globalAlpha = 1;
+  ctx.beginPath();
+  ctx.roundRect(cx - cW / 2 + 2, cy - cL + 4, cW * 0.38, cL * 2 - 8, 2);
+  ctx.fill();
+  ctx.restore();
 
   // ── ALFA E ÔMEGA ──────────────────────────────────────────────
-  const szGrk  = f2(S * 0.068);
-  const yGrk   = f2(cy + R_CENTRO * 0.25);
-  const xAlfa  = f2(cx - R_CENTRO * 0.42);
-  const xOmega = f2(cx + R_CENTRO * 0.42);
+  const szGrk  = S * 0.072;
+  const yGrk   = cy + R_CENTRO * 0.28;
 
-  partes.push(`<text x="${xAlfa}" y="${yGrk}"
-    text-anchor="middle" dominant-baseline="middle"
-    font-family="'Libre Baskerville',serif"
-    font-size="${szGrk}" font-weight="700"
-    fill="rgba(255,238,170,0.95)">Α</text>`);
+  ctx.save();
+  ctx.shadowColor = 'rgba(0,0,0,0.4)';
+  ctx.shadowBlur  = 6;
+  ctx.shadowOffsetY = 2;
+  ctx.font        = `700 ${szGrk}px 'Libre Baskerville', serif`;
+  ctx.fillStyle   = 'rgba(255,240,170,0.96)';
+  ctx.textAlign   = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText('Α', cx - R_CENTRO * 0.43, yGrk);
+  ctx.fillText('Ω', cx + R_CENTRO * 0.43, yGrk);
+  ctx.restore();
 
-  partes.push(`<text x="${xOmega}" y="${yGrk}"
-    text-anchor="middle" dominant-baseline="middle"
-    font-family="'Libre Baskerville',serif"
-    font-size="${szGrk}" font-weight="700"
-    fill="rgba(255,238,170,0.95)">Ω</text>`);
+  // ── SETA E LABEL "início do ano litúrgico" ────────────────────
+  const setaY = cy - R_BORDA - 14;
 
-  // ── INDICADOR DE INÍCIO DO ANO LITÚRGICO (topo) ───────────────
-  // Pequena seta apontando para o topo (ângulo 0° = início do Advento)
-  const setaCx = cx;
-  const setaY  = cy - R_FUNDO - 18;
-  partes.push(`<g opacity="0.65">
-    <polygon points="${f2(setaCx)},${f2(setaY)} ${f2(setaCx-7)},${f2(setaY+12)} ${f2(setaCx+7)},${f2(setaY+12)}"
-      fill="#8b6f3d"/>
-    <line x1="${f2(setaCx)}" y1="${f2(setaY+12)}" x2="${f2(setaCx)}" y2="${f2(cy - R_FUNDO + 2)}"
-      stroke="#8b6f3d" stroke-width="1.5"/>
-  </g>`);
+  // Seta
+  ctx.save();
+  ctx.fillStyle   = '#8b6f3d';
+  ctx.globalAlpha = 0.7;
+  ctx.beginPath();
+  ctx.moveTo(cx, setaY - 4);
+  ctx.lineTo(cx - 6, setaY + 8);
+  ctx.lineTo(cx + 6, setaY + 8);
+  ctx.closePath();
+  ctx.fill();
+  ctx.restore();
 
-  // Label "início do ano litúrgico"
-  const tIdLabel = uid();
-  const rLabel   = R_FUNDO - 8;
-  const angLabelIni = -22;
-  const angLabelFim = 22;
-  const pathLabel = arcoPath(cx, cy, rLabel, angLabelIni < 0 ? 360 + angLabelIni : angLabelIni, angLabelFim);
-  // Texto simples centralizado no topo
-  partes.push(`<text
-    x="${cx}" y="${f2(cy - R_FUNDO + 14)}"
-    text-anchor="middle"
-    font-family="'Inter',sans-serif"
-    font-size="${f2(S * 0.022)}"
-    font-weight="600"
-    fill="#8b6f3d"
-    opacity="0.75">início do ano litúrgico</text>`);
-
-  // ── WRAPPER SVG ───────────────────────────────────────────────
-  return `<svg
-    viewBox="0 0 ${S} ${S}"
-    xmlns="http://www.w3.org/2000/svg"
-    style="width:100%;height:100%;display:block;overflow:visible">
-    ${partes.join('\n')}
-  </svg>`;
+  // Texto
+  ctx.save();
+  ctx.font        = `600 ${S * 0.022}px 'Inter', sans-serif`;
+  ctx.fillStyle   = '#8b6f3d';
+  ctx.globalAlpha = 0.72;
+  ctx.textAlign   = 'center';
+  ctx.textBaseline = 'bottom';
+  ctx.fillText('início do ano litúrgico', cx, setaY - 8);
+  ctx.restore();
 }
 
 /* ================================================================
-   8. MINI CALENDÁRIO (sidebar)
+   7. CRIAR/ATUALIZAR CANVAS
+   ================================================================ */
+function criarCanvas(id, tamanho) {
+  let canvas = document.getElementById(id);
+  if (!canvas) {
+    canvas = document.createElement('canvas');
+    canvas.id = id;
+  }
+  renderizarCalendario(canvas, detectarTempoAtual(), tamanho);
+  return canvas;
+}
+
+/* ================================================================
+   8. MINI CALENDÁRIO
    ================================================================ */
 function gerarMiniCalendario() {
   const tempoAtual = detectarTempoAtual();
@@ -739,10 +757,9 @@ function gerarMiniCalendario() {
 
   container.innerHTML = `
     <div class="mini-cal-card"
-      onclick="abrirModalCalendario()"
-      role="button"
-      tabindex="0"
-      aria-label="Abrir calendário litúrgico completo">
+      role="button" tabindex="0"
+      aria-label="Abrir calendário litúrgico completo"
+      onclick="abrirModalCalendario()">
 
       <div class="mini-cal-topo">
         <div class="mini-cal-linha"></div>
@@ -750,31 +767,31 @@ function gerarMiniCalendario() {
         <div class="mini-cal-linha"></div>
       </div>
 
-      <div class="mini-cal-ring">
-        ${gerarSVG(tempoAtual, 190)}
-      </div>
+      <div class="mini-cal-ring" id="mini-cal-ring-wrap"></div>
 
       <div class="mini-cal-tempo-row">
         <span class="mini-dot" style="background:${tempo.cor}"></span>
         <span class="mini-tempo-txt">${tempo.nome}</span>
       </div>
 
-      <div class="mini-cal-veste" style="color:${tempo.cor}">
-        ${tempo.corVeste}
-      </div>
+      <div class="mini-cal-veste" style="color:${tempo.cor}">${tempo.corVeste}</div>
 
       <div class="mini-cal-cta">
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none"
-          stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
-          stroke-linejoin="round">
+          stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
           <circle cx="11" cy="11" r="8"/>
           <path d="M21 21l-4.35-4.35"/>
         </svg>
         Ver calendário completo
       </div>
-
     </div>`;
 
+  // Inserir canvas no wrapper
+  const wrap   = document.getElementById('mini-cal-ring-wrap');
+  const canvas = criarCanvas('canvas-mini-cal', 190);
+  wrap.appendChild(canvas);
+
+  // Teclado
   container.querySelector('.mini-cal-card').addEventListener('keydown', e => {
     if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); abrirModalCalendario(); }
   });
@@ -787,13 +804,18 @@ function abrirModalCalendario() {
   const tempoAtual = detectarTempoAtual();
   const tempo      = TEMPOS[tempoAtual];
 
-  // SVG grande
-  document.getElementById('modal-cal-svg').innerHTML = gerarSVG(tempoAtual, 520);
+  // Canvas grande no modal
+  const svgWrap = document.getElementById('modal-cal-svg');
+  svgWrap.innerHTML = '';
+  const canvasModal = criarCanvas('canvas-modal-cal', 520);
+  svgWrap.appendChild(canvasModal);
 
-  // Painel de info
+  // Painel de informações
   document.getElementById('modal-cal-info').innerHTML = `
     <div class="mci-topo">
-      <div class="mci-barra" style="background:linear-gradient(180deg,${tempo.cor},${tempo.corSecundaria})"></div>
+      <div class="mci-barra"
+        style="background:linear-gradient(180deg,${tempo.cor},${tempo.corClara})">
+      </div>
       <div>
         <p class="mci-rotulo">Tempo Litúrgico Atual</p>
         <h3 class="mci-titulo" style="color:${tempo.cor}">${tempo.nome}</h3>
@@ -828,8 +850,8 @@ function abrirModalCalendario() {
     </a>`;
 
   // Legenda
-  const temposUnicos = ['advento','natal','tempoComum','quaresma','triduo','pascoa'];
-  document.getElementById('modal-cal-legenda').innerHTML = temposUnicos.map(id => {
+  const ordemTempos = ['advento','natal','tempoComum','quaresma','triduo','pascoa'];
+  document.getElementById('modal-cal-legenda').innerHTML = ordemTempos.map(id => {
     const t  = TEMPOS[id];
     const ia = id === tempoAtual;
     return `<div class="leg-pill ${ia ? 'leg-ativa' : ''}">
