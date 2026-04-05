@@ -1,102 +1,71 @@
 /* ================================================
-   CALENDÁRIO LITÚRGICO — PARTE 2
-   Textos, datas, separadores, centro
+   CALENDÁRIO LITÚRGICO — PARTE 2  (REBUILD TOTAL)
+   Textos, datas, separadores, centro — alinhado
+   com a nova Parte 1
    ================================================ */
 
 /* ════════════════════════════════════════════════
-   ANEL DE DATAS
+   ANEL DE DATAS (wrapper — chama CalBase)
 ════════════════════════════════════════════════ */
 
 function desenharDatas(ctx, cx, cy, R, ini, total, tam) {
-  const CAL    = window.CalBase.CAL;
-  const sToAng = window.CalBase.sToAng;
-
-  const rO   = R * CAL.r.externo;
-  const rD   = R * CAL.r.datas;
-  const rMid = (rO + rD) / 2;
-
-  // ── Faixa de fundo fosca ──
-  ctx.save();
-  ctx.beginPath();
-  ctx.arc(cx, cy, rO, 0, 2 * Math.PI);
-  ctx.arc(cx, cy, rD, 0, 2 * Math.PI, true);
-
-  const gFaixa = ctx.createRadialGradient(cx, cy, rD, cx, cy, rO);
-  gFaixa.addColorStop(0, "rgba(0,0,0,0.55)");
-  gFaixa.addColorStop(1, "rgba(0,0,0,0.30)");
-  ctx.fillStyle = gFaixa;
-  ctx.fill();
-  ctx.restore();
-
-  // ── Linha separadora interna ──
-  ctx.save();
-  ctx.beginPath();
-  ctx.arc(cx, cy, rD, 0, 2 * Math.PI);
-  ctx.strokeStyle = "rgba(255,255,255,0.06)";
-  ctx.lineWidth   = 1;
-  ctx.stroke();
-  ctx.restore();
-
-  // ── Datas ──
-  for (let i = 0; i < total; i++) {
-    const angFatia = sToAng(i, total);
-    const angProx  = sToAng(i + 1, total);
-    const aMid     = (angFatia + angProx) / 2;
-
-    const d = new Date(ini);
-    d.setDate(ini.getDate() + i * 7);
-
-    const label = `${d.getDate()}/${d.getMonth() + 1}`;
-
-    ctx.save();
-    ctx.translate(cx + rMid * Math.cos(aMid), cy + rMid * Math.sin(aMid));
-    ctx.rotate(aMid + Math.PI / 2);
-
-    ctx.fillStyle    = "rgba(255,245,225,0.72)";
-    ctx.font         = CAL.font.data(tam);
-    ctx.textAlign    = "center";
-    ctx.textBaseline = "middle";
-    ctx.fillText(label, 0, 0);
-    ctx.restore();
-  }
+  window.CalBase.desenharAnelDatas(ctx, cx, cy, R, ini, null, total, tam);
 }
 
 /* ════════════════════════════════════════════════
-   NOMES DAS SEMANAS
+   NOMES DAS SEMANAS NAS FATIAS
 ════════════════════════════════════════════════ */
 
 function desenharNomesSemanas(ctx, cx, cy, R, segs, total, tam) {
   const CAL    = window.CalBase.CAL;
   const sToAng = window.CalBase.sToAng;
 
-  const rD   = R * CAL.r.datas;
-  const rS   = R * CAL.r.semanas;
-  const rMid = (rD + rS) / 2;
+  const rO   = R * CAL.r.segOuter;
+  const rI   = R * CAL.r.segInner;
+  const rMid = R * CAL.r.textoSemana;
 
   segs.forEach((seg) => {
-    if (!seg.nome) return;
-
     const a1   = sToAng(seg.inicio, total);
     const a2   = sToAng(seg.fim,    total);
     const aMid = (a1 + a2) / 2;
-    const span = a2 - a1;
+    const span = Math.abs(a2 - a1);
 
-    // Não desenha se a fatia for muito pequena
-    const minSpan = (2 * Math.PI) / total * 0.6;
-    if (span < minSpan) return;
+    // Fatia muito pequena: pula
+    if (span < 0.055) return;
+
+    const fontSize = Math.max(
+      6,
+      Math.round(tam * (seg.destaque ? 0.0148 : 0.0118))
+    );
+
+    // Verifica se o texto cabe na fatia (largura do arco)
+    const arcWidth = rMid * span;
+    const estimatedTextWidth = seg.nome.length * fontSize * 0.58;
 
     ctx.save();
     ctx.translate(cx + rMid * Math.cos(aMid), cy + rMid * Math.sin(aMid));
     ctx.rotate(aMid + Math.PI / 2);
 
-    ctx.fillStyle    = "rgba(255,255,255,0.82)";
-    ctx.font         = CAL.font.semana(tam);
     ctx.textAlign    = "center";
     ctx.textBaseline = "middle";
 
-    // Sombra para legibilidade
-    ctx.shadowColor  = "rgba(0,0,0,0.90)";
-    ctx.shadowBlur   = 4;
+    // Sombra forte para legibilidade sobre qualquer cor
+    ctx.shadowColor  = "rgba(0,0,0,1)";
+    ctx.shadowBlur   = 6;
+
+    if (seg.destaque) {
+      ctx.font      = `700 ${fontSize}px Inter, system-ui, sans-serif`;
+      ctx.fillStyle = seg.cor.text || "rgba(255,255,255,0.97)";
+    } else {
+      ctx.font      = `500 ${fontSize}px Inter, system-ui, sans-serif`;
+      ctx.fillStyle = "rgba(255,255,255,0.82)";
+    }
+
+    // Se texto é maior que o arco, escala para caber
+    if (estimatedTextWidth > arcWidth * 0.88) {
+      const scale = (arcWidth * 0.88) / estimatedTextWidth;
+      ctx.scale(scale, 1);
+    }
 
     ctx.fillText(seg.nome, 0, 0);
     ctx.restore();
@@ -104,22 +73,24 @@ function desenharNomesSemanas(ctx, cx, cy, R, segs, total, tam) {
 }
 
 /* ════════════════════════════════════════════════
-   NOMES DOS TEMPOS LITÚRGICOS
+   NOMES DOS TEMPOS — texto curvado no anel médio
 ════════════════════════════════════════════════ */
 
 function desenharNomesTempos(ctx, cx, cy, R, segs, total, tam) {
   const CAL    = window.CalBase.CAL;
   const sToAng = window.CalBase.sToAng;
 
-  const rS   = R * CAL.r.semanas;
-  const rT   = R * CAL.r.tempos;
-  const rMid = (rS + rT) / 2;
+  const rTxt = R * CAL.r.textoTempo;
 
-  // ── Agrupar por tempo ──
+  // ── Agrupar segmentos por tempo ──
   const grupos = new Map();
   segs.forEach((seg) => {
     if (!grupos.has(seg.tempo)) {
-      grupos.set(seg.tempo, { inicio: seg.inicio, fim: seg.fim, cor: seg.cor });
+      grupos.set(seg.tempo, {
+        inicio: seg.inicio,
+        fim:    seg.fim,
+        cor:    seg.cor,
+      });
     } else {
       grupos.get(seg.tempo).fim = seg.fim;
     }
@@ -131,50 +102,53 @@ function desenharNomesTempos(ctx, cx, cy, R, segs, total, tam) {
     const aMid = (a1 + a2) / 2;
     const span = Math.abs(a2 - a1);
 
-    // Só renderiza se houver espaço
-    if (span < 0.22) return;
+    if (span < 0.16) return;
 
-    // ── Texto curvado letra por letra ──
     const texto    = nome.toUpperCase();
-    const fontSize = Math.max(8, Math.round(tam * 0.019));
-    const arcRaio  = rMid;
-    const charAngle = fontSize * 0.65 / arcRaio;
-    const totalAng  = texto.length * charAngle;
-
-    // Limita o texto ao espaço disponível
-    if (totalAng > span * 0.85) {
-      // Versão curta sem curvar
-      ctx.save();
-      ctx.translate(cx + rMid * Math.cos(aMid), cy + rMid * Math.sin(aMid));
-      ctx.rotate(aMid + Math.PI / 2);
-      ctx.fillStyle    = "rgba(255,255,255,0.38)";
-      ctx.font         = `600 ${fontSize}px Inter, sans-serif`;
-      ctx.textAlign    = "center";
-      ctx.textBaseline = "middle";
-      ctx.shadowColor  = "rgba(0,0,0,0.80)";
-      ctx.shadowBlur   = 3;
-      ctx.fillText(texto, 0, 0);
-      ctx.restore();
-      return;
-    }
-
-    // ── Texto curvado ──
-    const startAng = aMid - totalAng / 2;
+    const fontSize = Math.max(7, Math.round(tam * 0.0155));
+    const charAng  = (fontSize * 0.62) / rTxt;
+    const totalAng = texto.length * charAng;
+    const corTexto = g.cor.text
+      ? hexToRgba(g.cor.text, 0.45)
+      : "rgba(255,255,255,0.28)";
 
     ctx.save();
-    ctx.fillStyle    = "rgba(255,255,255,0.38)";
-    ctx.font         = `600 ${fontSize}px Inter, sans-serif`;
+    ctx.fillStyle    = corTexto;
+    ctx.font         = `700 ${fontSize}px Inter, system-ui, sans-serif`;
     ctx.textAlign    = "center";
     ctx.textBaseline = "middle";
-    ctx.shadowColor  = "rgba(0,0,0,0.80)";
-    ctx.shadowBlur   = 3;
+    ctx.shadowColor  = "rgba(0,0,0,0.90)";
+    ctx.shadowBlur   = 5;
 
-    for (let i = 0; i < texto.length; i++) {
-      const ang = startAng + (i + 0.5) * charAngle;
+    // Cabe no arco → curva letra a letra
+    if (totalAng <= span * 0.88) {
+      const startAng = aMid - totalAng / 2;
+      for (let i = 0; i < texto.length; i++) {
+        const ang = startAng + (i + 0.5) * charAng;
+        ctx.save();
+        ctx.translate(
+          cx + rTxt * Math.cos(ang),
+          cy + rTxt * Math.sin(ang)
+        );
+        ctx.rotate(ang + Math.PI / 2);
+        ctx.fillText(texto[i], 0, 0);
+        ctx.restore();
+      }
+    } else {
+      // Versão plana — texto centrado na fatia
       ctx.save();
-      ctx.translate(cx + arcRaio * Math.cos(ang), cy + arcRaio * Math.sin(ang));
-      ctx.rotate(ang + Math.PI / 2);
-      ctx.fillText(texto[i], 0, 0);
+      ctx.translate(cx + rTxt * Math.cos(aMid), cy + rTxt * Math.sin(aMid));
+      ctx.rotate(aMid + Math.PI / 2);
+
+      // Escalar para caber
+      const arcWidth = rTxt * span;
+      const estimatedW = texto.length * fontSize * 0.62;
+      if (estimatedW > arcWidth * 0.85) {
+        const scale = (arcWidth * 0.85) / estimatedW;
+        ctx.scale(scale, 1);
+      }
+
+      ctx.fillText(texto, 0, 0);
       ctx.restore();
     }
 
@@ -184,186 +158,89 @@ function desenharNomesTempos(ctx, cx, cy, R, segs, total, tam) {
 
 /* ════════════════════════════════════════════════
    SEPARADORES DE TEMPO
+   (wrapper — a lógica principal está na Parte 1)
 ════════════════════════════════════════════════ */
 
-function desenharSeparadores(ctx, cx, cy, R, segs, total) {
-  const CAL    = window.CalBase.CAL;
-  const sToAng = window.CalBase.sToAng;
-
-  const rI = R * CAL.r.centro;
-  const rO = R * CAL.r.externo;
-
-  let tempoAtual = null;
-
-  segs.forEach((seg) => {
-    if (seg.tempo === tempoAtual) return;
-    tempoAtual = seg.tempo;
-
-    const ang = sToAng(seg.inicio, total);
-    const p1  = { x: cx + rI * Math.cos(ang), y: cy + rI * Math.sin(ang) };
-    const p2  = { x: cx + rO * Math.cos(ang), y: cy + rO * Math.sin(ang) };
-
-    // Linha principal
-    ctx.save();
-    ctx.beginPath();
-    ctx.moveTo(p1.x, p1.y);
-    ctx.lineTo(p2.x, p2.y);
-    ctx.strokeStyle = "rgba(255,255,255,0.18)";
-    ctx.lineWidth   = 1.5;
-    ctx.setLineDash([4, 4]);
-    ctx.stroke();
-    ctx.setLineDash([]);
-    ctx.restore();
-
-    // Ponto na borda externa
-    ctx.save();
-    ctx.beginPath();
-    ctx.arc(p2.x, p2.y, 2, 0, 2 * Math.PI);
-    ctx.fillStyle = "rgba(255,255,255,0.25)";
-    ctx.fill();
-    ctx.restore();
-  });
+function desenharSeparadoresTempos(ctx, cx, cy, R, segs, total) {
+  window.CalBase.desenharSeparadores(ctx, cx, cy, R, segs, total);
 }
 
 /* ════════════════════════════════════════════════
-   CÍRCULO CENTRAL
+   CENTRO
+   (wrapper — a lógica principal está na Parte 1)
 ════════════════════════════════════════════════ */
 
 function desenharCentro(ctx, cx, cy, R, tam, mini) {
-  const CAL      = window.CalBase.CAL;
-  const roundRect = window.CalBase.roundRect;
+  window.CalBase.desenharCentro(ctx, cx, cy, R, tam, mini);
+}
 
-  const rC = R * CAL.r.centro;
+/* ════════════════════════════════════════════════
+   ANEL DE PULSO — destaque visual da semana atual
+   Desenhado sobre tudo, logo antes do marcador
+════════════════════════════════════════════════ */
 
-  // ── Fundo do centro ──
-  const gFundo = ctx.createRadialGradient(cx, cy, 0, cx, cy, rC);
-  if (mini) {
-    gFundo.addColorStop(0, "#1e1e1e");
-    gFundo.addColorStop(1, "#111111");
-  } else {
-    gFundo.addColorStop(0,   "#1a1714");
-    gFundo.addColorStop(0.6, "#111009");
-    gFundo.addColorStop(1,   "#0a0906");
-  }
+function desenharPulseSemana(ctx, cx, cy, R, sAtual, total) {
+  const CAL    = window.CalBase.CAL;
+  const sToAng = window.CalBase.sToAng;
 
+  const a1   = sToAng(sAtual,     total);
+  const a2   = sToAng(sAtual + 1, total);
+  const rO   = R * CAL.r.segOuter;
+  const rI   = R * CAL.r.segInner;
+
+  // Overlay suave na fatia atual
+  ctx.save();
   ctx.beginPath();
-  ctx.arc(cx, cy, rC, 0, 2 * Math.PI);
-  ctx.fillStyle = gFundo;
+  ctx.arc(cx, cy, rO, a1, a2);
+  ctx.arc(cx, cy, rI, a2, a1, true);
+  ctx.closePath();
+  ctx.fillStyle = "rgba(0,245,160,0.14)";
   ctx.fill();
 
-  if (mini) {
-    // Mini: só anel + cruz simples
-    ctx.beginPath();
-    ctx.arc(cx, cy, rC, 0, 2 * Math.PI);
-    ctx.strokeStyle = "rgba(212,168,83,0.50)";
-    ctx.lineWidth   = 1.5;
-    ctx.stroke();
-
-    ctx.fillStyle    = "rgba(212,168,83,0.80)";
-    ctx.font         = CAL.font.simbolo(tam);
-    ctx.textAlign    = "center";
-    ctx.textBaseline = "middle";
-    ctx.fillText("✝", cx, cy);
-    return;
-  }
-
-  // ── Anéis decorativos internos ──
-  [0.90, 0.68, 0.44].forEach((fator, i) => {
-    ctx.beginPath();
-    ctx.arc(cx, cy, rC * fator, 0, 2 * Math.PI);
-    ctx.strokeStyle = `rgba(212,168,83,${0.12 - i * 0.03})`;
-    ctx.lineWidth   = 1;
-    ctx.stroke();
-  });
-
-  // ── Anel externo dourado ──
-  ctx.save();
+  // Borda brilhante nas arestas da fatia
+  // Aresta 1
   ctx.beginPath();
-  ctx.arc(cx, cy, rC, 0, 2 * Math.PI);
-  const gAnel = ctx.createLinearGradient(cx - rC, cy - rC, cx + rC, cy + rC);
-  gAnel.addColorStop(0,    "rgba(212,168,83,0.70)");
-  gAnel.addColorStop(0.35, "rgba(240,201,106,0.90)");
-  gAnel.addColorStop(0.65, "rgba(212,168,83,0.70)");
-  gAnel.addColorStop(1,    "rgba(139,105,20,0.60)");
-  ctx.strokeStyle = gAnel;
-  ctx.lineWidth   = 2;
+  ctx.moveTo(cx + rI * Math.cos(a1), cy + rI * Math.sin(a1));
+  ctx.lineTo(cx + rO * Math.cos(a1), cy + rO * Math.sin(a1));
+  ctx.strokeStyle = "rgba(0,245,160,0.55)";
+  ctx.lineWidth   = 1.5;
   ctx.stroke();
-  ctx.restore();
 
-  // ── Cruz central moderna ──
-  desenharCruzModerna(ctx, cx, cy, rC * 0.52, tam);
+  // Aresta 2
+  ctx.beginPath();
+  ctx.moveTo(cx + rI * Math.cos(a2), cy + rI * Math.sin(a2));
+  ctx.lineTo(cx + rO * Math.cos(a2), cy + rO * Math.sin(a2));
+  ctx.stroke();
 
-  // ── Alfa e Ômega ──
-  ctx.save();
-  ctx.font         = `300 ${Math.round(tam * 0.036)}px Inter, sans-serif`;
-  ctx.textAlign    = "center";
-  ctx.textBaseline = "middle";
-  ctx.fillStyle    = "rgba(212,168,83,0.55)";
-  ctx.letterSpacing = "1px";
-  ctx.fillText("α", cx - rC * 0.44, cy + rC * 0.18);
-  ctx.fillText("ω", cx + rC * 0.44, cy + rC * 0.18);
-  ctx.restore();
+  // Arco externo brilhante
+  ctx.beginPath();
+  ctx.arc(cx, cy, rO, a1, a2);
+  ctx.strokeStyle = "rgba(0,245,160,0.70)";
+  ctx.lineWidth   = 2;
+  ctx.shadowColor = CAL.cores.hojeGlow;
+  ctx.shadowBlur  = 12;
+  ctx.stroke();
 
-  // ── Label sutil ──
-  ctx.save();
-  ctx.font         = `300 ${Math.round(tam * 0.018)}px Inter, sans-serif`;
-  ctx.textAlign    = "center";
-  ctx.textBaseline = "middle";
-  ctx.fillStyle    = "rgba(212,168,83,0.22)";
-  ctx.letterSpacing = "3px";
-  ctx.fillText("ANO LITÚRGICO", cx, cy - rC * 0.72);
+  // Arco interno
+  ctx.beginPath();
+  ctx.arc(cx, cy, rI, a1, a2);
+  ctx.strokeStyle = "rgba(0,245,160,0.40)";
+  ctx.lineWidth   = 1.5;
+  ctx.shadowBlur  = 8;
+  ctx.stroke();
+
   ctx.restore();
 }
 
 /* ════════════════════════════════════════════════
-   CRUZ MODERNA
+   UTILITÁRIO — hex → rgba
 ════════════════════════════════════════════════ */
 
-function desenharCruzModerna(ctx, cx, cy, tam, canvasTam) {
-  const espV  = tam * 0.14;
-  const altV  = tam * 1.10;
-  const espH  = tam * 0.14;
-  const largH = tam * 0.72;
-  const posH  = -tam * 0.14;
-  const raio  = espV * 0.40;
-
-  const roundRect = window.CalBase.roundRect;
-
-  // Gradiente vertical
-  const gV = ctx.createLinearGradient(cx, cy - altV / 2, cx, cy + altV / 2);
-  gV.addColorStop(0,    "rgba(212,168,83,0.30)");
-  gV.addColorStop(0.25, "rgba(240,201,106,0.85)");
-  gV.addColorStop(0.5,  "rgba(255,220,120,0.95)");
-  gV.addColorStop(0.75, "rgba(212,168,83,0.85)");
-  gV.addColorStop(1,    "rgba(139,105,20,0.30)");
-
-  // Gradiente horizontal
-  const gH = ctx.createLinearGradient(cx - largH / 2, cy, cx + largH / 2, cy);
-  gH.addColorStop(0,    "rgba(139,105,20,0.30)");
-  gH.addColorStop(0.25, "rgba(212,168,83,0.85)");
-  gH.addColorStop(0.5,  "rgba(255,220,120,0.95)");
-  gH.addColorStop(0.75, "rgba(212,168,83,0.85)");
-  gH.addColorStop(1,    "rgba(139,105,20,0.30)");
-
-  ctx.save();
-
-  // Sombra suave
-  ctx.shadowColor   = "rgba(212,168,83,0.25)";
-  ctx.shadowBlur    = 12;
-  ctx.shadowOffsetX = 0;
-  ctx.shadowOffsetY = 4;
-
-  // Vertical
-  ctx.fillStyle = gV;
-  roundRect(ctx, cx - espV / 2, cy - altV / 2, espV, altV, raio);
-  ctx.fill();
-
-  // Horizontal
-  ctx.fillStyle = gH;
-  roundRect(ctx, cx - largH / 2, cy + posH - espH / 2, largH, espH, raio);
-  ctx.fill();
-
-  ctx.restore();
+function hexToRgba(hex, alpha) {
+  const r = parseInt(hex.slice(1, 3), 16);
+  const g = parseInt(hex.slice(3, 5), 16);
+  const b = parseInt(hex.slice(5, 7), 16);
+  return `rgba(${r},${g},${b},${alpha})`;
 }
 
 /* ════════════════════════════════════════════════
@@ -374,7 +251,8 @@ window.CalDetalhes = {
   desenharDatas,
   desenharNomesSemanas,
   desenharNomesTempos,
-  desenharSeparadores,
+  desenharSeparadoresTempos,
   desenharCentro,
-  desenharCruzModerna,
+  desenharPulseSemana,
+  hexToRgba,
 };
