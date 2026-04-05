@@ -3,12 +3,6 @@
    UI: botão, modal, marcador HOJE, render final
    ================================================ */
 
-const { CAL, sToAng, semanaAtual, buildSegmentos,
-        desenharFundo, desenharAnelBase } = window.CalBase;
-
-const { desenharDatas, desenharNomesSemanas, desenharNomesTempos,
-        desenharSeparadoresTempos, desenharCentro } = window.CalDetalhes;
-
 /* ────────────────────────────────────────────────
    RENDER COMPLETO
 ──────────────────────────────────────────────── */
@@ -17,17 +11,29 @@ function renderCalendario(canvasId, tamanho, mini) {
   const canvas = document.getElementById(canvasId);
   if (!canvas) return;
 
+  const CAL            = window.CalBase.CAL;
+  const buildSegmentos = window.CalBase.buildSegmentos;
+  const semanaAtual    = window.CalBase.semanaAtual;
+  const desenharFundo  = window.CalBase.desenharFundo;
+  const desenharAnelBase = window.CalBase.desenharAnelBase;
+
+  const desenharDatas             = window.CalDetalhes.desenharDatas;
+  const desenharNomesSemanas      = window.CalDetalhes.desenharNomesSemanas;
+  const desenharNomesTempos       = window.CalDetalhes.desenharNomesTempos;
+  const desenharSeparadoresTempos = window.CalDetalhes.desenharSeparadoresTempos;
+  const desenharCentro            = window.CalDetalhes.desenharCentro;
+
   const ctx = canvas.getContext("2d");
   canvas.width  = tamanho;
   canvas.height = tamanho;
 
-  const cx  = tamanho / 2;
-  const cy  = tamanho / 2;
-  const R   = tamanho / 2 - 6;
+  const cx = tamanho / 2;
+  const cy = tamanho / 2;
+  const R  = tamanho / 2 - 6;
 
-  const ano             = new Date().getFullYear();
+  const ano = new Date().getFullYear();
   const { segs, inicioAdv, total } = buildSegmentos(ano);
-  const sAtual          = semanaAtual();
+  const sAtual = semanaAtual();
 
   // 1. Fundo
   desenharFundo(ctx, cx, cy, R, mini);
@@ -61,13 +67,15 @@ function renderCalendario(canvasId, tamanho, mini) {
 ──────────────────────────────────────────────── */
 
 function desenharMarcadorHoje(ctx, cx, cy, R, sAtual, total, mini) {
-  const ang  = sToAng(sAtual, total) + (Math.PI / total); // centro da fatia
-  const rI   = R * CAL.raios.interno;
-  const rO   = R * CAL.raios.externo;
-  const rD   = R * CAL.raios.datas;
+  const CAL    = window.CalBase.CAL;
+  const sToAng = window.CalBase.sToAng;
+
+  const ang = sToAng(sAtual, total) + (Math.PI / total);
+  const rI  = R * CAL.raios.interno;
+  const rO  = R * CAL.raios.externo;
+  const rD  = R * CAL.raios.datas;
 
   if (mini) {
-    // Mini: linha simples brilhante
     ctx.save();
     ctx.beginPath();
     ctx.moveTo(cx + rI * 1.02 * Math.cos(ang), cy + rI * 1.02 * Math.sin(ang));
@@ -82,7 +90,7 @@ function desenharMarcadorHoje(ctx, cx, cy, R, sAtual, total, mini) {
     return;
   }
 
-  // ── Linha principal ──
+  // Linha principal
   ctx.save();
   ctx.beginPath();
   ctx.moveTo(cx + rI * 1.02 * Math.cos(ang), cy + rI * 1.02 * Math.sin(ang));
@@ -95,22 +103,21 @@ function desenharMarcadorHoje(ctx, cx, cy, R, sAtual, total, mini) {
   ctx.stroke();
   ctx.restore();
 
-  // ── Ponto externo ──
+  // Ponto externo com halo
   ctx.save();
   const px = cx + rD * Math.cos(ang);
   const py = cy + rD * Math.sin(ang);
 
-  // Halo
   const gHalo = ctx.createRadialGradient(px, py, 0, px, py, 14);
   gHalo.addColorStop(0,   "rgba(0,255,136,0.5)");
   gHalo.addColorStop(0.5, "rgba(0,255,136,0.15)");
   gHalo.addColorStop(1,   "rgba(0,255,136,0)");
+
   ctx.beginPath();
   ctx.arc(px, py, 14, 0, 2 * Math.PI);
   ctx.fillStyle = gHalo;
   ctx.fill();
 
-  // Ponto sólido
   ctx.beginPath();
   ctx.arc(px, py, 5, 0, 2 * Math.PI);
   ctx.fillStyle   = "#00FF88";
@@ -119,7 +126,7 @@ function desenharMarcadorHoje(ctx, cx, cy, R, sAtual, total, mini) {
   ctx.fill();
   ctx.restore();
 
-  // ── Label "HOJE" curvado no arco externo ──
+  // Label "HOJE" curvado
   desenharTextoArco(ctx, cx, cy, rO + 14, ang, "● HOJE", "#00FF88", 11);
 }
 
@@ -129,12 +136,12 @@ function desenharMarcadorHoje(ctx, cx, cy, R, sAtual, total, mini) {
 
 function desenharTextoArco(ctx, cx, cy, raio, angBase, texto, cor, fontSize) {
   ctx.save();
-  ctx.fillStyle   = cor;
-  ctx.font        = `bold ${fontSize}px 'Inter', sans-serif`;
-  ctx.textAlign   = "center";
+  ctx.fillStyle    = cor;
+  ctx.font         = `bold ${fontSize}px 'Inter', sans-serif`;
+  ctx.textAlign    = "center";
   ctx.textBaseline = "middle";
-  ctx.shadowColor = cor;
-  ctx.shadowBlur  = 8;
+  ctx.shadowColor  = cor;
+  ctx.shadowBlur   = 8;
 
   const charWidth = fontSize * 0.6;
   const totalLen  = texto.length * charWidth;
@@ -152,6 +159,7 @@ function desenharTextoArco(ctx, cx, cy, raio, angBase, texto, cor, fontSize) {
     ctx.fillText(texto[i], 0, 0);
     ctx.restore();
   }
+
   ctx.restore();
 }
 
@@ -167,12 +175,12 @@ function criarBotao() {
   btn.id    = "btn-calendario";
   btn.title = "Calendário Litúrgico";
 
-  const canvasMini = document.createElement("canvas");
+  const canvasMini  = document.createElement("canvas");
   canvasMini.id     = "cal-mini";
   canvasMini.width  = 88;
   canvasMini.height = 88;
 
-  const label = document.createElement("span");
+  const label       = document.createElement("span");
   label.textContent = "Calendário";
 
   btn.appendChild(canvasMini);
@@ -197,7 +205,7 @@ function criarModal() {
       <div id="cal-modal-header">
         <div>
           <h3 id="cal-titulo">Calendário Litúrgico</h3>
-          <p  id="cal-data-texto"></p>
+          <p id="cal-data-texto"></p>
         </div>
         <button id="cal-fechar" aria-label="Fechar">✕</button>
       </div>
@@ -215,11 +223,12 @@ function criarModal() {
 
   document.body.appendChild(overlay);
 
-  // Fechar
   overlay.addEventListener("click", (e) => {
     if (e.target === overlay) fecharModal();
   });
+
   document.getElementById("cal-fechar").addEventListener("click", fecharModal);
+
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") fecharModal();
   });
@@ -227,14 +236,14 @@ function criarModal() {
 
 function legendaHTML() {
   const itens = [
-    { cor: "#7B2FBE", nome: "Advento"       },
-    { cor: "#C8A84B", nome: "Natal"          },
-    { cor: "#2D6A2D", nome: "Tempo Comum"    },
-    { cor: "#4A1060", nome: "Quaresma"       },
-    { cor: "#8B0000", nome: "Semana Santa"   },
-    { cor: "#B8860B", nome: "Tempo Pascal"   },
-    { cor: "#CC2200", nome: "Pentecostes"    },
-    { cor: "#00FF88", nome: "Semana Atual"   },
+    { cor: "#7B2FBE", nome: "Advento"      },
+    { cor: "#C8A84B", nome: "Natal"         },
+    { cor: "#2D6A2D", nome: "Tempo Comum"   },
+    { cor: "#4A1060", nome: "Quaresma"      },
+    { cor: "#8B0000", nome: "Semana Santa"  },
+    { cor: "#B8860B", nome: "Tempo Pascal"  },
+    { cor: "#CC2200", nome: "Pentecostes"   },
+    { cor: "#00FF88", nome: "Semana Atual"  },
   ];
 
   return itens.map(({ cor, nome }) => `
@@ -253,18 +262,14 @@ function abrirModal() {
   const overlay = document.getElementById("cal-overlay");
   if (!overlay) return;
 
-  // Info da data
   atualizarDataTexto();
-
   overlay.classList.add("ativo");
   document.body.style.overflow = "hidden";
 
-  // Calcular tamanho ideal
-  const maxW   = Math.min(window.innerWidth  * 0.82, 560);
-  const maxH   = window.innerHeight * 0.60;
-  const tam    = Math.floor(Math.min(maxW, maxH));
+  const maxW = Math.min(window.innerWidth  * 0.82, 560);
+  const maxH = window.innerHeight * 0.60;
+  const tam  = Math.floor(Math.min(maxW, maxH));
 
-  // Render com pequeno delay para a animação do modal
   requestAnimationFrame(() => {
     setTimeout(() => renderCalendario("cal-grande", tam, false), 80);
   });
@@ -286,13 +291,14 @@ function atualizarDataTexto() {
   if (!el) return;
 
   const hoje  = new Date();
-  const dias  = ["Domingo","Segunda","Terça","Quarta","Quinta","Sexta","Sábado"];
+  const dias  = ["Domingo","Segunda","Terça","Quarta",
+                 "Quinta","Sexta","Sábado"];
   const meses = ["Janeiro","Fevereiro","Março","Abril","Maio","Junho",
                  "Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
 
-  const dow  = hoje.getDay();
-  const ini  = new Date(hoje); ini.setDate(hoje.getDate() - dow);
-  const fim  = new Date(ini);  fim.setDate(ini.getDate() + 6);
+  const dow = hoje.getDay();
+  const ini = new Date(hoje); ini.setDate(hoje.getDate() - dow);
+  const fim = new Date(ini);  fim.setDate(ini.getDate() + 6);
 
   const fmt = (d) => `${d.getDate()} de ${meses[d.getMonth()]}`;
 
@@ -303,14 +309,13 @@ function atualizarDataTexto() {
 }
 
 /* ────────────────────────────────────────────────
-   CSS INJETADO (escopo do calendário)
+   CSS INJETADO
 ──────────────────────────────────────────────── */
 
 function injetarCSS() {
   const style = document.createElement("style");
   style.textContent = `
 
-  /* ── BOTÃO ── */
   #btn-calendario {
     position: absolute;
     bottom: 22px;
@@ -350,7 +355,6 @@ function injetarCSS() {
     box-shadow: 0 4px 16px rgba(0,0,0,0.45);
   }
 
-  /* ── OVERLAY ── */
   #cal-overlay {
     position: fixed;
     inset: 0;
@@ -371,7 +375,6 @@ function injetarCSS() {
     pointer-events: all;
   }
 
-  /* ── MODAL ── */
   #cal-modal {
     background: #0f0c06;
     border: 1px solid rgba(197,169,106,0.28);
@@ -394,7 +397,6 @@ function injetarCSS() {
     transform: scale(1) translateY(0);
   }
 
-  /* ── HEADER DO MODAL ── */
   #cal-modal-header {
     display: flex;
     justify-content: space-between;
@@ -445,7 +447,6 @@ function injetarCSS() {
     color: white;
   }
 
-  /* ── CANVAS ── */
   #cal-canvas-wrap {
     display: flex;
     justify-content: center;
@@ -462,7 +463,6 @@ function injetarCSS() {
       0 16px 40px rgba(0,0,0,0.55);
   }
 
-  /* ── LEGENDA ── */
   #cal-legenda {
     display: flex;
     flex-wrap: wrap;
@@ -494,7 +494,6 @@ function injetarCSS() {
     white-space: nowrap;
   }
 
-  /* ── RESPONSIVO ── */
   @media (max-width: 600px) {
     #btn-calendario {
       bottom: 12px;
