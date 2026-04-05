@@ -1,93 +1,122 @@
 /* ==============================================
-   CALENDÁRIO LITÚRGICO - Lux Fidei
+   CALENDÁRIO LITÚRGICO - Lux Fidei v2.0
    ============================================== */
 
 /* ==============================================
-   MINI CALENDÁRIO (Sidebar)
+   MINI CALENDÁRIO - SIDEBAR
    ============================================== */
-.mini-cal-wrapper {
+
+#mini-calendario-container {
+  margin-top: 20px;
+}
+
+.mini-cal-card {
   cursor: pointer;
-  background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
-  border-radius: 16px;
-  padding: 16px;
-  margin-top: 16px;
-  border: 1px solid rgba(139, 111, 61, 0.3);
+  background: linear-gradient(160deg, #ffffff 0%, #faf7f2 100%);
+  border: 1px solid rgba(139, 111, 61, 0.25);
+  border-radius: 18px;
+  padding: 18px 16px;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  outline: none;
   position: relative;
   overflow: hidden;
 }
 
-.mini-cal-wrapper::before {
+.mini-cal-card::before {
   content: '';
   position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, rgba(139,111,61,0.1), transparent);
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #8b6f3d, #c5a96a, #8b6f3d);
+  border-radius: 18px 18px 0 0;
   opacity: 0;
   transition: opacity 0.3s;
 }
 
-.mini-cal-wrapper:hover::before {
+.mini-cal-card:hover::before,
+.mini-cal-card:focus::before {
   opacity: 1;
 }
 
-.mini-cal-wrapper:hover {
+.mini-cal-card:hover {
   transform: translateY(-3px);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
-  border-color: rgba(197, 169, 106, 0.5);
+  box-shadow:
+    0 12px 32px rgba(139, 111, 61, 0.15),
+    0 4px 12px rgba(0, 0, 0, 0.06);
+  border-color: rgba(139, 111, 61, 0.45);
 }
 
-.mini-cal-wrapper:active {
+.mini-cal-card:active {
   transform: translateY(-1px);
 }
 
-.mini-cal-ring {
-  width: 130px;
-  height: 130px;
-  margin: 0 auto 12px;
-  filter: drop-shadow(0 4px 12px rgba(0,0,0,0.3));
-}
-
-.mini-cal-info {
-  text-align: center;
+/* Topo */
+.mini-cal-topo {
   margin-bottom: 12px;
+  text-align: center;
 }
 
 .mini-cal-label {
-  display: block;
-  font-size: 0.65rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.62rem;
   font-weight: 700;
-  letter-spacing: 2px;
+  letter-spacing: 2.5px;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.5);
-  margin-bottom: 8px;
-  font-family: 'Inter', sans-serif;
+  color: #8b6f3d;
 }
 
-.mini-cal-tempo {
-  display: inline-block;
-  padding: 5px 14px;
-  border-radius: 20px;
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-  font-family: 'Inter', sans-serif;
+/* Anel SVG */
+.mini-cal-ring {
+  width: 140px;
+  height: 140px;
+  margin: 0 auto 14px;
+  filter: drop-shadow(0 4px 14px rgba(0, 0, 0, 0.12));
 }
 
-.mini-cal-btn {
+/* Rodapé */
+.mini-cal-rodape {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.mini-cal-tempo-info {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
-  color: rgba(197, 169, 106, 0.8);
-  font-size: 0.7rem;
-  font-weight: 600;
-  letter-spacing: 0.5px;
-  font-family: 'Inter', sans-serif;
-  transition: color 0.2s;
+  gap: 8px;
 }
 
-.mini-cal-wrapper:hover .mini-cal-btn {
-  color: #c5a96a;
+.mini-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  box-shadow: 0 0 0 2px rgba(255,255,255,0.8), 0 0 0 3px currentColor;
+}
+
+.mini-tempo-nome {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #2a2a2a;
+}
+
+.mini-cal-cta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #8b6f3d;
+  opacity: 0.75;
+  transition: opacity 0.2s;
+}
+
+.mini-cal-card:hover .mini-cal-cta {
+  opacity: 1;
 }
 
 /* ==============================================
@@ -96,9 +125,9 @@
 .modal-calendario-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.75);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  background: rgba(10, 8, 5, 0.72);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   z-index: 9999;
   display: flex;
   align-items: center;
@@ -106,7 +135,7 @@
   padding: 20px;
   opacity: 0;
   visibility: hidden;
-  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .modal-calendario-overlay.modal-aberto {
@@ -115,306 +144,318 @@
 }
 
 /* ==============================================
-   MODAL - JANELA
+   MODAL - CAIXA
    ============================================== */
 .modal-calendario-box {
   background: #ffffff;
-  border-radius: 24px;
+  border-radius: 26px;
   width: 100%;
-  max-width: 900px;
-  max-height: 90vh;
+  max-width: 920px;
+  max-height: 92vh;
   overflow-y: auto;
-  box-shadow: 0 40px 80px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255,255,255,0.1);
-  transform: scale(0.92) translateY(20px);
-  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
+  box-shadow:
+    0 50px 100px rgba(0, 0, 0, 0.35),
+    0 0 0 1px rgba(255, 255, 255, 0.08);
+  transform: scale(0.9) translateY(30px);
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .modal-calendario-overlay.modal-aberto .modal-calendario-box {
   transform: scale(1) translateY(0);
 }
 
-/* Scrollbar customizada */
-.modal-calendario-box::-webkit-scrollbar {
-  width: 6px;
-}
-.modal-calendario-box::-webkit-scrollbar-track {
-  background: #f5f3ef;
-}
+.modal-calendario-box::-webkit-scrollbar { width: 5px; }
+.modal-calendario-box::-webkit-scrollbar-track { background: #f5f3ef; }
 .modal-calendario-box::-webkit-scrollbar-thumb {
-  background: var(--gold);
+  background: linear-gradient(#8b6f3d, #c5a96a);
   border-radius: 3px;
 }
 
 /* ==============================================
-   MODAL - HEADER
+   MODAL - CABEÇALHO
    ============================================== */
 .modal-cal-header {
-  background: radial-gradient(circle at top left, #2a2a2a, #0f0f0f);
-  padding: 28px 36px;
+  background: linear-gradient(135deg, #151210 0%, #2a2218 50%, #1a1510 100%);
+  padding: 26px 36px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-radius: 24px 24px 0 0;
+  border-radius: 26px 26px 0 0;
   position: sticky;
   top: 0;
   z-index: 10;
-}
-
-.modal-cal-titulo {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
+  border-bottom: 1px solid rgba(197, 169, 106, 0.2);
 }
 
 .modal-cal-titulo span {
-  font-size: 0.65rem;
+  display: block;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.62rem;
   font-weight: 700;
   letter-spacing: 3px;
   text-transform: uppercase;
-  color: var(--gold-light, #c5a96a);
-  font-family: 'Inter', sans-serif;
+  color: #c5a96a;
+  margin-bottom: 4px;
 }
 
 .modal-cal-titulo h2 {
   margin: 0;
-  font-size: 1.4rem;
-  font-weight: 700;
-  color: #ffffff;
   font-family: 'Libre Baskerville', serif;
+  font-size: 1.45rem;
+  color: #ffffff;
+  font-weight: 700;
 }
 
 .modal-cal-fechar {
-  background: rgba(255,255,255,0.1);
-  border: 1px solid rgba(255,255,255,0.15);
-  color: white;
-  width: 40px;
-  height: 40px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.7);
+  width: 42px;
+  height: 42px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: all 0.2s;
-  font-size: 1.2rem;
-  line-height: 1;
+  font-size: 1.1rem;
+  transition: all 0.25s;
   flex-shrink: 0;
 }
 
 .modal-cal-fechar:hover {
-  background: rgba(255,255,255,0.2);
+  background: rgba(255, 255, 255, 0.16);
+  color: #ffffff;
   transform: rotate(90deg);
 }
 
 /* ==============================================
-   MODAL - CORPO
+   MODAL - CORPO (GRID)
    ============================================== */
 .modal-cal-body {
   display: grid;
-  grid-template-columns: 1fr 340px;
-  gap: 0;
-  min-height: 500px;
+  grid-template-columns: 1fr 320px;
 }
 
-/* SVG do calendário */
+/* SVG container */
 .modal-cal-svg-container {
-  padding: 40px;
+  padding: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #fafaf8;
-  border-right: 1px solid #eee;
+  background: linear-gradient(145deg, #fafaf8, #f5f2ec);
+  border-right: 1px solid #eeebe4;
 }
 
-.modal-cal-svg-container svg {
-  max-width: 480px;
+#modal-cal-svg {
   width: 100%;
+  max-width: 460px;
+  filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.1));
 }
 
-/* Painel lateral */
+/* Painel info */
 .modal-cal-painel {
-  padding: 36px 32px;
+  padding: 36px 30px;
+  background: #ffffff;
   display: flex;
   flex-direction: column;
-  gap: 24px;
-  background: #ffffff;
+}
+
+#modal-cal-info {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  height: 100%;
 }
 
 /* ==============================================
-   MODAL - BADGE DO TEMPO ATUAL
+   MODAL - INFORMAÇÕES DO TEMPO
    ============================================== */
-.modal-tempo-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 18px;
-  border-radius: 40px;
-  font-size: 0.85rem;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-  font-family: 'Inter', sans-serif;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-  width: fit-content;
-}
-
-.modal-tempo-dot {
-  width: 8px;
-  height: 8px;
-  background: currentColor;
-  border-radius: 50%;
-  opacity: 0.7;
-  animation: pulsar 2s infinite;
-}
-
-@keyframes pulsar {
-  0%, 100% { transform: scale(1); opacity: 0.7; }
-  50% { transform: scale(1.4); opacity: 1; }
-}
-
-.modal-tempo-desc {
-  font-family: 'Libre Baskerville', serif;
-  font-size: 1rem;
-  line-height: 1.75;
-  color: #444;
-  margin: 0;
-}
-
-.modal-tempo-veste {
+.modal-info-header {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 12px 16px;
-  background: #faf7f2;
-  border-radius: 10px;
-  border-left: 3px solid var(--gold, #8b6f3d);
+  gap: 14px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #f0ece4;
 }
 
-.veste-label {
-  font-size: 0.75rem;
+.modal-tempo-icone {
+  width: 48px;
+  height: 48px;
+  background: linear-gradient(135deg, #8b6f3d, #c5a96a);
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(139, 111, 61, 0.3);
+}
+
+.modal-info-label {
+  margin: 0 0 2px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.72rem;
   font-weight: 600;
-  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: #999;
+}
+
+.modal-info-nome {
+  margin: 0;
+  font-family: 'Libre Baskerville', serif;
+  font-size: 1.35rem;
+  font-weight: 700;
+}
+
+/* Badge cor litúrgica */
+.modal-info-badge {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border-radius: 12px;
+  border: 1px solid;
+}
+
+.modal-info-veste-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 1px;
-  font-family: 'Inter', sans-serif;
+  color: #999;
 }
 
-.veste-valor {
-  font-size: 0.9rem;
+.modal-info-veste-valor {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.85rem;
   font-weight: 700;
-  color: var(--gold, #8b6f3d);
-  font-family: 'Inter', sans-serif;
 }
 
-/* ==============================================
-   MODAL - BOTÃO LER MAIS
-   ============================================== */
-.modal-ler-mais {
+.modal-dot-cor {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+/* Descrição */
+.modal-info-desc {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 0.97rem;
+  line-height: 1.8;
+  color: #555;
+  margin: 0;
+  flex: 1;
+}
+
+/* Botão Ler Mais */
+.modal-btn-lermais {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: linear-gradient(135deg, #8b6f3d, #c5a96a);
-  color: white;
+  background: linear-gradient(135deg, #8b6f3d 0%, #c5a96a 100%);
+  color: #ffffff;
   padding: 13px 22px;
   border-radius: 12px;
-  font-size: 0.85rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.82rem;
   font-weight: 600;
   text-decoration: none;
-  font-family: 'Inter', sans-serif;
   transition: all 0.25s;
-  box-shadow: 0 4px 15px rgba(139,111,61,0.3);
+  box-shadow: 0 4px 16px rgba(139, 111, 61, 0.3);
   width: fit-content;
   margin-top: auto;
 }
 
-.modal-ler-mais:hover {
+.modal-btn-lermais:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(139,111,61,0.4);
+  box-shadow: 0 8px 24px rgba(139, 111, 61, 0.45);
 }
 
-.modal-ler-mais svg {
+.modal-btn-lermais svg {
   transition: transform 0.2s;
 }
 
-.modal-ler-mais:hover svg {
-  transform: translateX(3px);
+.modal-btn-lermais:hover svg {
+  transform: translateX(4px);
 }
 
 /* ==============================================
    MODAL - LEGENDA
    ============================================== */
 .modal-cal-legenda-section {
-  padding: 24px 36px;
-  border-top: 1px solid #eee;
-  background: #fafaf8;
-  border-radius: 0 0 24px 24px;
+  padding: 22px 36px 28px;
+  border-top: 1px solid #eeebe4;
+  background: linear-gradient(180deg, #fafaf8, #f5f2ec);
+  border-radius: 0 0 26px 26px;
 }
 
 .modal-cal-legenda-titulo {
-  font-size: 0.65rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.62rem;
   font-weight: 700;
   letter-spacing: 2.5px;
   text-transform: uppercase;
-  color: #999;
-  margin: 0 0 16px;
-  font-family: 'Inter', sans-serif;
+  color: #bbb;
+  margin: 0 0 14px;
 }
 
 .modal-cal-legenda-grid {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 8px;
 }
 
-.legenda-item {
-  display: flex;
+.legenda-pill {
+  display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 7px;
   padding: 7px 14px;
   border-radius: 30px;
-  background: white;
-  border: 1px solid #eee;
+  background: #ffffff;
+  border: 1px solid #e8e4dc;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: #555;
   transition: all 0.2s;
 }
 
-.legenda-item.legenda-ativa {
-  border-color: #FFD700;
+.legenda-pill-ativa {
   background: #fffbeb;
-  box-shadow: 0 2px 8px rgba(255,215,0,0.2);
+  border-color: #FFD700;
+  font-weight: 700;
+  color: #333;
+  box-shadow: 0 2px 8px rgba(255, 215, 0, 0.2);
 }
 
-.legenda-cor {
-  width: 14px;
-  height: 14px;
+.legenda-dot {
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
   flex-shrink: 0;
-}
-
-.legenda-nome {
-  font-size: 0.78rem;
-  font-weight: 600;
-  color: #444;
-  font-family: 'Inter', sans-serif;
-}
-
-/* ==============================================
-   FATIA ANIMADA (tempo atual)
-   ============================================== */
-.fatia-ativa {
-  filter: brightness(1.08);
 }
 
 /* ==============================================
    RESPONSIVIDADE
    ============================================== */
-@media (max-width: 700px) {
+@media (max-width: 768px) {
   .modal-cal-body {
     grid-template-columns: 1fr;
   }
 
   .modal-cal-svg-container {
     border-right: none;
-    border-bottom: 1px solid #eee;
-    padding: 30px 20px;
+    border-bottom: 1px solid #eeebe4;
+    padding: 28px 20px;
+  }
+
+  #modal-cal-svg {
+    max-width: 300px;
   }
 
   .modal-cal-painel {
@@ -422,17 +463,22 @@
   }
 
   .modal-cal-header {
-    padding: 20px 24px;
-    border-radius: 20px 20px 0 0;
-  }
-
-  .modal-cal-legenda-section {
-    padding: 20px;
-    border-radius: 0 0 20px 20px;
+    padding: 20px 22px;
+    border-radius: 22px 22px 0 0;
   }
 
   .modal-calendario-box {
-    border-radius: 20px;
+    border-radius: 22px;
     max-height: 95vh;
+  }
+
+  .modal-cal-legenda-section {
+    padding: 18px 20px 24px;
+    border-radius: 0 0 22px 22px;
+  }
+
+  .mini-cal-ring {
+    width: 120px;
+    height: 120px;
   }
 }
