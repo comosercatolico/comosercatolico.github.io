@@ -445,7 +445,7 @@ document.addEventListener('keydown', function(e) {
 // ─────────────────────────────────────────────────────────────
 function iniciarLeitura(pagAtual) {
 
-    // Salvar progresso SILENCIOSAMENTE (sem notificação)
+    // Salvar progresso silenciosamente
     salvar(pagAtual);
 
     // ── TOPO: substituir .info-centena por campo de busca ──
@@ -526,33 +526,16 @@ function iniciarLeitura(pagAtual) {
 }
 
 // ─────────────────────────────────────────────────────────────
-// INDEX DA SUMA
+// INDEX DA SUMA — redireciona direto para última página lida
 // ─────────────────────────────────────────────────────────────
 function iniciarIndex() {
     var prog = lerSalvo();
     if (!prog) return;
 
-    var banner = document.createElement('div');
-    banner.id  = 'leitor-continuar';
-    banner.innerHTML =
-        '<span class="lc-icone">📖</span>'
-        + '<div class="lc-txt">'
-        +   '<div class="lc-titulo">Continuar leitura</div>'
-        +   '<div class="lc-sub">Você parou na <strong>página ' + prog + '</strong> de ' + TOTAL_PAGINAS + '</div>'
-        + '</div>'
-        + '<button class="lc-btn" id="lc-btn">Continuar →</button>';
-
-    var ref = document.querySelector('.btn-start') || document.querySelector('.descricao');
-    if (ref) {
-        ref.parentNode.insertBefore(banner, ref);
-        banner.classList.add('visivel');
-    }
-
-    document.getElementById('lc-btn').addEventListener('click', function() {
-        var inicio = Math.floor((prog - 1) / 100) * 100 + 1;
-        var fim    = inicio + 99;
-        window.location.href = 'sumateologia' + inicio + '-' + fim + '/suma-pagina' + prog + '.html';
-    });
+    // Redireciona automaticamente para a última página lida
+    var inicio = Math.floor((prog - 1) / 100) * 100 + 1;
+    var fim    = inicio + 99;
+    window.location.href = 'sumateologia' + inicio + '-' + fim + '/suma-pagina' + prog + '.html';
 }
 
 // ─────────────────────────────────────────────────────────────
