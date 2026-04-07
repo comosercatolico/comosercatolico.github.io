@@ -1,21 +1,3 @@
-// ═══════════════════════════════════════════════════════════════
-//  LEITOR.JS  —  Lux Fidei
-//  Sistema genérico de leitura: salvar progresso, busca, índice.
-//
-//  ──────────────────────────────────────────────────────────────
-//  COMO USAR NAS PÁGINAS DE LEITURA:
-//  Adicione no <head> de cada suma-paginaN.html:
-//
-//    <meta name="leitor-pagina" content="1">   ← número da página
-//    <script src="../../leitor.js"></script>    ← caminho até leitor.js
-//
-//  O leitor.js fica em:  biblioteca/suma-teologia/leitor.js
-//  As páginas ficam em:  biblioteca/suma-teologia/sumateologia1-100/suma-pagina1.html
-//  Então o caminho do script é sempre:  ../leitor.js
-//
-//  Para a biblioteca.html e o index.html da suma, inclua também:
-//    <script src="leitor.js"></script>  (ou o caminho relativo correto)
-// ═══════════════════════════════════════════════════════════════
 
 (function () {
 'use strict';
