@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Questão 60, Artigo 5 — — Se o anjo, pela dileção natural, mais ama a Deus que a si mesmo. | Suma Teológica</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+    --cor-fundo: #f5f0e8;
+    --cor-pagina: #fff;
+    --cor-texto: #2c1f17;
+    --cor-dourado: #d4af37;
+    --cor-roxo: #5b2c83;
+    --sombra: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cor-fundo);
+    color: var(--cor-texto);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CABEÇALHO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-header {
+    background: linear-gradient(135deg, #1a1a1a, #2c241b);
+    color: #f5f0e8;
+    padding: 32px 20px 24px;
+    text-align: center;
+    position: relative;
+}
+
+.voltar-index {
+    position: absolute;
+    top: 16px;
+    left: 20px;
+    color: var(--cor-dourado);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: opacity 0.2s;
+}
+
+.voltar-index:hover {
+    opacity: 0.8;
+}
+
+.suma-header h1 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.info-pagina {
+    display: inline-block;
+    background: rgba(212, 175, 55, 0.15);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    color: var(--cor-dourado);
+    margin-top: 8px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-topo {
+    background: #fff;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    gap: 10px;
+}
+
+.btn-nav {
+    display: inline-flex;
+    align-items: center;
+    padding: 9px 18px;
+    background: var(--cor-roxo);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.btn-nav:hover {
+    background: #4a246a;
+    transform: translateY(-1px);
+}
+
+.desabilitado {
+    background: #ddd !important;
+    color: #999 !important;
+    pointer-events: none;
+}
+
+.info-centena {
+    font-size: 0.85rem;
+    color: #888;
+    font-weight: 500;
+    padding: 0 10px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CONTEÚDO PRINCIPAL                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.pagina-conteudo {
+    flex: 1;
+    max-width: 860px;
+    width: 100%;
+    margin: 36px auto;
+    padding: 0 20px;
+}
+
+.bloco-texto {
+    background: var(--cor-pagina);
+    padding: 48px 44px;
+    border-radius: 12px;
+    box-shadow: var(--sombra);
+    position: relative;
+    margin-bottom: 24px;
+}
+
+.bloco-texto::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 20px;
+    bottom: 20px;
+    width: 4px;
+    background: linear-gradient(to bottom, var(--cor-dourado), var(--cor-roxo));
+    border-radius: 0 4px 4px 0;
+}
+
+.bloco-titulo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.3rem;
+    color: var(--cor-roxo);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e8dfd0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pagina-corpo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.1rem;
+    line-height: 1.95;
+    color: #3d3226;
+    text-align: justify;
+}
+
+.pagina-corpo p {
+    margin-bottom: 1.3em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  BLOCO DE EXPLICAÇÃO                                        */
+/* ────────────────────────────────────────────────────────── */
+
+.bloco-explicacao {
+    background: linear-gradient(135deg, #fffdf5, #faf5eb);
+    border-left: 5px solid var(--cor-dourado);
+    padding: 32px 40px;
+    border-radius: 0 12px 12px 0;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    margin-bottom: 24px;
+}
+
+.explicacao-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--cor-dourado);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 14px;
+}
+
+.explicacao-corpo {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #4a3c2c;
+}
+
+.explicacao-corpo p {
+    margin-bottom: 1em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO INFERIOR                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-inferior {
+    max-width: 860px;
+    width: 100%;
+    margin: 0 auto 40px;
+    padding: 0 20px;
+}
+
+.nav-buttons {
+    background: #fff;
+    padding: 18px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    box-shadow: var(--sombra);
+}
+
+.btn-primary {
+    flex: 1;
+    text-align: center;
+    padding: 13px 16px;
+    background: linear-gradient(135deg, var(--cor-roxo), #7a3eb5);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(91, 44, 131, 0.3);
+}
+
+.pagina-atual {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--cor-dourado);
+    min-width: 50px;
+    text-align: center;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RODAPÉ                                                     */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-footer {
+    background: #1a1a1a;
+    color: #888;
+    text-align: center;
+    padding: 22px 20px;
+    margin-top: auto;
+    font-size: 0.85rem;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RESPONSIVIDADE                                             */
+/* ────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+    .suma-header h1 {
+        font-size: 1.4rem;
+    }
+    
+    .bloco-texto {
+        padding: 28px 18px;
+    }
+    
+    .bloco-explicacao {
+        padding: 22px 18px;
+    }
+    
+    .navegacao-topo {
+        flex-wrap: wrap;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CABEÇALHO                                               -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="suma-header">
+  <a href="../../index.html" class="voltar-index">← Índice</a>
+  <h1>Suma Teológica</h1>
+  <p style="opacity:0.8; font-style:italic; margin-top:4px;">São Tomás de Aquino</p>
+  <span class="info-pagina">Página 309 de 3000</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO SUPERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<nav class="navegacao-topo">
+  <a href="suma-pagina308.html" class="btn-nav">← Anterior</a>
+  <span class="info-centena">Pág. 309/3000</span>
+  <a href="suma-pagina310.html" class="btn-nav">Próxima →</a>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CONTEÚDO PRINCIPAL                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<main class="pagina-conteudo">
+  
+  <!-- Texto Original -->
+  <div class="bloco-texto">
+    <div class="bloco-titulo">
+      <span>📜</span>
+      Questão 60, Artigo 5 — — Se o anjo, pela dileção natural, mais ama a Deus que a si mesmo.
+    </div>
+    <div class="pagina-corpo">
+    <p>(Ia IIae, q. 109, a. 3; IIa IIae, q. 26, a. 3; II Sent., dist. III, part. II, q. 3; III dist. 29, a. 3; Quodl. I, q. 4, a. 3; De div. nom., cap. IV, lect. IX, X) O quinto discute-se assim. — Parece que o anjo, por dileção natural, não ama a Deus mais que a si mesmo.</p>
+    <p>1. — Pois, como já se disse, a dileção natural se funda na união natural. Ora, a natureza divina dista maximamente da do anjo. Logo, por dileção natural, o anjo ama a Deus menos que a si próprio ou mesmo que a outro anjo. 2. Demais. — Toda causa inclui, em grau eminente, o seu efeito. Ora, o que alguém ama por dileção natural é por causa de si, pois todo ser ama alguma coisa, enquanto é o seu bem. Logo, por dileção natural, o anjo não ama a Deus mais que a si mesmo. 3. Demais. — A natureza se reflete sobre si mesma, pois vemos que todo agente naturalmente age para a conservação de si. Ora, a natureza não se refletiria sobre si mesma se tendesse mais para outra coisa do que para si própria. Logo, por dileção natural, o anjo não ama a Deus mais que a si mesmo. 4. Demais. — É próprio à caridade o amarmos a Deus mais que a nós mesmos. Ora, a dileção da caridade não é natural aos anjos, mas se lhes infunde nos corações pelo Espírito Santo, que lhes foi dado, como diz Agostinho. Logo, por dileção natural, os anjos não amam a Deus mais que a si mesmos. 5. Demais. — A dileção natural sempre permanece, permanecendo a natureza. Ora, o amor a Deus mais que a si mesmo não permanece no anjo ou no homem pecadores; pois, como diz Agostinho dois amores fizeram duas cidades, a saber: a terrena, o amor de si até o desprezo de Deus; a celeste, porém, o amor de Deus até o desprezo de si. Logo, amar a Deus mais que a si mesmo não é natural.</p>
+    <p>Mas, em contrário. Todos os preceitos morais da lei pertencem à lei natural. Ora, amar a Deus mais que a si mesmo, sendo preceito moral da lei, o é também da lei natural. Logo, por dileção natural, o anjo ama a Deus mais que a si mesmo.</p>
+    <p>SOLUÇÃO. — Alguns disseram que o anjo, por dileção natural, ama a Deus mais que a si mesmo, por amor de concupiscência, pois mais deseja para si o bem divino do que o seu bem. E também por amor de amizade, querendo o anjo, naturalmente, para Deus, maior bem do que para si; pois, naturalmente, quer que Deus seja Deus, querendo, porém, para si, a sua natureza própria. Mas, absolutamente falando, por dileção natural, mais se ama a si do que a Deus, pois, naturalmente mais intensa e principalmente ama-se a si do que a Deus. Mas, surgirá de manifesto a falsidade desta opinião a quem considerar para o que se movem, naturalmente, os seres naturais; pois, a inclinação natural, nos seres desprovidos de razão indica a da vontade da natureza intelectual. Ora, o ser natural que, por natureza, depende de outro, naquilo mesmo que é, mais principalmente se inclina para esse outro do que para si próprio. E essa inclinação natural se verifica nas coisas naturalmente feitas. Assim, uma coisa é produzida pela natureza como é natural que a façamos, diz Aristóteles. Ora, vemos a parte se expor, naturalmente, para a conservação do todo; assim, a mão se expõe ao golpe, sem deliberar, para a conservação de todo o corpo. E, como a razão imita a natureza, tal imitação encontramos nas virtudes políticas; pois, é próprio do cidadão virtuoso expor-se ao perigo de morte pela conservação de toda a república; e se o homem fosse parte natural de tal república, natural lhe seria essa inclinação. Como, porém, em Deus mesmo é o bem universal, e esse bem abrange também o anjo, o homem e toda criatura, porque toda criatura, naturalmente, pelo seu ser, vem de Deus, resulta que, por dileção natural, também o anjo, como o homem, ama a Deus mais e mais principalmente do que a si próprio. Do contrário, se naturalmente amasse mais a si mesmo que a Deus, resultaria que a dileção natural seria perversa e não se aperfeiçoaria, mas se destruiria pela caridade.</p>
+    <p>DONDE A</p>
+    <p>RESPOSTA À PRIMEIRA OBJEÇÃO. — Essa objeção procede quanto aos seres que entre si se distinguem no mesmo pé de igualdade, nos quais um, não sendo a razão da existência e da bondade do outro, ama naturalmente mais a si mesmo do que ao outro, pois, mais unificado está consigo mesmo do que com o outro. Mas ao ser que é a razão total da existência e da bondade dos outros, mais se ama, naturalmente, do que a si mesmo; e assim, dissemos que cada parte ama, naturalmente, o todo mais que a si; e cada indivíduo singular ama, naturalmente, mais o bem da sua espécie do que o seu bem singular. Ora, Deus, sendo não somente o bem de uma espécie, mas o mesmo bem universal absolutamente, daí resulta que cada ser ama naturalmente, ao seu modo, mais a Deus que a si mesmo.</p>
+    <p>RESPOSTA À SEGUNDA. — No dizer-se que deus é amado pelo anjo enquanto é o bem deste, se enquantoexprimir o fim, então há falsidade, pois, o anjo não ama naturalmente a Deus por causa do bem do anjo, mas por causa de Deus mesmo. Se, porém, exprimir a razão do amor, por parte do amante, então há verdade, pois, não estaria na natureza de nenhum ser amar a Deus se cada um não dependesse do bem, que é Deus.</p>
+    <p>RESPOSTA À TERCEIRA. — A natureza se reflete em si mesma, não só quanto ao que lhe é singular, mas muito mais quanto ao comum. Pois, cada ser se inclina não somente para a sua conservação individual, mas ainda para a específica. E muito mais cada ser tem inclinação natural para o bem absolutamente universal.</p>
+    <p>RESPOSTA À QUARTA. — Deus, como bem universal de que depende todo bem natural, é amado por dileção natural, de cada ser; mas, enquanto bem beatificante, universalmente, de todos os seres, pela beatitude sobrenatural, é amado pela dileção da caridade. RESPOSTA À QUINTA. — Identificando-se, em Deus, a sua substância e o bem comum, todos os que vêem a essência divina, em si, pelo mesmo movimento de dileção, movem-se para ela como distinta dos outros seres e como sendo um bem comum. E sendo, enquanto bem comum, naturalmente amada de todos, é impossível não a ame quem a vê. Os que, porém, não a vêem a conhecem por certos efeitos particulares que, por vezes, contrariando-lhes a vontade, diz-se, então, que esses odeiam a Deus. Mas, como bem comum de todos, cada qual naturalmente o ama mais que a si mesmo. Após o que ficou dito da natureza, do conhecimento e da vontade dos anjos, resta considerar-lhes a criação, ou o começo deles, em universal. E esta consideração é tripartita. Assim, primeiro consideraremos como foi produzido o ser natural deles. Segundo, como foram aperfeiçoados pela graça ou pela glória. Terceiro, como alguns deles tornaram-se maus. Sobre o primeiro ponto quatro artigos se discutem:</p>
+
+    </div>
+  </div>
+  
+  <!-- Bloco de Explicação (a ser preenchido) -->
+  <div class="bloco-explicacao">
+    <div class="explicacao-label">💡 Explicação e Contexto</div>
+    <div class="explicacao-corpo" id="explicacao">
+    <p><em>Explicação será adicionada em breve.</em></p>
+
+    </div>
+  </div>
+  
+</main>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO INFERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="navegacao-inferior">
+  <div class="nav-buttons">
+    <a href="suma-pagina308.html" class="btn-primary">← Anterior</a>
+    <span class="pagina-atual">309</span>
+    <a href="suma-pagina310.html" class="btn-primary">Próxima →</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  RODAPÉ                                                  -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<footer class="suma-footer">
+  <p>Suma Teológica · São Tomás de Aquino | Biblioteca Lux Fidei</p>
+</footer>
+
+</body>
+</html>

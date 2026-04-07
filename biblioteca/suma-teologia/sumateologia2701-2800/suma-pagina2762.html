@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Questão 25, Artigo 2 — — Se as indulgências valem tanto quanto o seu conteúdo. | Suma Teológica</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+    --cor-fundo: #f5f0e8;
+    --cor-pagina: #fff;
+    --cor-texto: #2c1f17;
+    --cor-dourado: #d4af37;
+    --cor-roxo: #5b2c83;
+    --sombra: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cor-fundo);
+    color: var(--cor-texto);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CABEÇALHO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-header {
+    background: linear-gradient(135deg, #1a1a1a, #2c241b);
+    color: #f5f0e8;
+    padding: 32px 20px 24px;
+    text-align: center;
+    position: relative;
+}
+
+.voltar-index {
+    position: absolute;
+    top: 16px;
+    left: 20px;
+    color: var(--cor-dourado);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: opacity 0.2s;
+}
+
+.voltar-index:hover {
+    opacity: 0.8;
+}
+
+.suma-header h1 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.info-pagina {
+    display: inline-block;
+    background: rgba(212, 175, 55, 0.15);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    color: var(--cor-dourado);
+    margin-top: 8px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-topo {
+    background: #fff;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    gap: 10px;
+}
+
+.btn-nav {
+    display: inline-flex;
+    align-items: center;
+    padding: 9px 18px;
+    background: var(--cor-roxo);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.btn-nav:hover {
+    background: #4a246a;
+    transform: translateY(-1px);
+}
+
+.desabilitado {
+    background: #ddd !important;
+    color: #999 !important;
+    pointer-events: none;
+}
+
+.info-centena {
+    font-size: 0.85rem;
+    color: #888;
+    font-weight: 500;
+    padding: 0 10px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CONTEÚDO PRINCIPAL                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.pagina-conteudo {
+    flex: 1;
+    max-width: 860px;
+    width: 100%;
+    margin: 36px auto;
+    padding: 0 20px;
+}
+
+.bloco-texto {
+    background: var(--cor-pagina);
+    padding: 48px 44px;
+    border-radius: 12px;
+    box-shadow: var(--sombra);
+    position: relative;
+    margin-bottom: 24px;
+}
+
+.bloco-texto::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 20px;
+    bottom: 20px;
+    width: 4px;
+    background: linear-gradient(to bottom, var(--cor-dourado), var(--cor-roxo));
+    border-radius: 0 4px 4px 0;
+}
+
+.bloco-titulo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.3rem;
+    color: var(--cor-roxo);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e8dfd0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pagina-corpo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.1rem;
+    line-height: 1.95;
+    color: #3d3226;
+    text-align: justify;
+}
+
+.pagina-corpo p {
+    margin-bottom: 1.3em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  BLOCO DE EXPLICAÇÃO                                        */
+/* ────────────────────────────────────────────────────────── */
+
+.bloco-explicacao {
+    background: linear-gradient(135deg, #fffdf5, #faf5eb);
+    border-left: 5px solid var(--cor-dourado);
+    padding: 32px 40px;
+    border-radius: 0 12px 12px 0;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    margin-bottom: 24px;
+}
+
+.explicacao-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--cor-dourado);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 14px;
+}
+
+.explicacao-corpo {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #4a3c2c;
+}
+
+.explicacao-corpo p {
+    margin-bottom: 1em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO INFERIOR                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-inferior {
+    max-width: 860px;
+    width: 100%;
+    margin: 0 auto 40px;
+    padding: 0 20px;
+}
+
+.nav-buttons {
+    background: #fff;
+    padding: 18px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    box-shadow: var(--sombra);
+}
+
+.btn-primary {
+    flex: 1;
+    text-align: center;
+    padding: 13px 16px;
+    background: linear-gradient(135deg, var(--cor-roxo), #7a3eb5);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(91, 44, 131, 0.3);
+}
+
+.pagina-atual {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--cor-dourado);
+    min-width: 50px;
+    text-align: center;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RODAPÉ                                                     */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-footer {
+    background: #1a1a1a;
+    color: #888;
+    text-align: center;
+    padding: 22px 20px;
+    margin-top: auto;
+    font-size: 0.85rem;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RESPONSIVIDADE                                             */
+/* ────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+    .suma-header h1 {
+        font-size: 1.4rem;
+    }
+    
+    .bloco-texto {
+        padding: 28px 18px;
+    }
+    
+    .bloco-explicacao {
+        padding: 22px 18px;
+    }
+    
+    .navegacao-topo {
+        flex-wrap: wrap;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CABEÇALHO                                               -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="suma-header">
+  <a href="../../index.html" class="voltar-index">← Índice</a>
+  <h1>Suma Teológica</h1>
+  <p style="opacity:0.8; font-style:italic; margin-top:4px;">São Tomás de Aquino</p>
+  <span class="info-pagina">Página 2762 de 3000</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO SUPERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<nav class="navegacao-topo">
+  <a href="suma-pagina2761.html" class="btn-nav">← Anterior</a>
+  <span class="info-centena">Pág. 2762/3000</span>
+  <a href="suma-pagina2763.html" class="btn-nav">Próxima →</a>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CONTEÚDO PRINCIPAL                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<main class="pagina-conteudo">
+  
+  <!-- Texto Original -->
+  <div class="bloco-texto">
+    <div class="bloco-titulo">
+      <span>📜</span>
+      Questão 25, Artigo 2 — — Se as indulgências valem tanto quanto o seu conteúdo.
+    </div>
+    <div class="pagina-corpo">
+    <p>O segundo discute-se assim. — Parece que as indulgências não valem tanto quanto o seu conteúdo.</p>
+    <p>1. — Pois, as indulgências não produzem o seu efeito senão em virtude do poder das chaves. Ora, quem tem o poder das chaves não pode, em virtude dele, perdoar senão uma parte determinada da pena do pecado, considerada a gravidade deste e a Intensidade da contrição do penitente. Logo, como as indulgências são concedidas conforme à vontade de quem as institui, parece não valem tanto quanto o seu conteúdo. 2. Demais. — Pelo débito da pena se nos restava a obtenção da glória, que devemos sumamente desejar. Ora, se as indulgências valem tanto quanto o seu conteúdo, poderíamos, ganhando umas após outras, nos tornarmos imunes de todo o reato da pena temporal. Logo, parece que devíamos empregar todo o nosso estudo em ganhar as indulgências com prejuízo de quaisquer outras obras. 3. Demais. — As vezes é concedida a quem der auxílios para a ereção da fábrica de uma igreja, a indulgência de alcançar a remissão da terça parte dos pecados. Se, pois, as indulgências valem tanto quanto o seu conteúdo, então, quem desse um dinheiro, depois mais um e depois ainda um terceiro, alcançaria a absolvição plena da pena de todos os pecados. O que é absurdo. 4. Demais. — As vezes é a indulgência concedida nos termos seguintes: quem entrar numa igreja ganhará sete anos de perdão dos pecados. Se, pois, uma indulgência vale tanto quanto o seu conteúdo, quem morar perto dessa igreja ou os clérigos da mesma, que a ela vão quotidianamente, ganharão tanto como os que vem de longe — o que é injusto. E além disso, segundo parece, ganhará num dia tantas vezes indulgências quantas entrar nessa igreja. 5. Demais. — Perdoar a alguém uma pena, além do merecido, é o mesmo que perdoar sem causa, pois esse excesso por nada é recompensado. Ora, quem concede a indulgência não pode perdoar a ninguém a sua pena, total ou parcialmente, sem causa; como se lhe dissesse o Papa: Eu te perdoo toda a pena devida pelo pecado. Logo, parece que também não pode perdoar nada além da justa medida. Ora, as indulgências às vezes são pregadas além da justa medida. Logo, não valem tanto quanto o seu contendo.</p>
+    <p>Mas, em contrário. — A Escritura diz: Acaso necessita Deus das vossas mentiras para que em sua defesa faleis dolosamente? Logo, a Igreja, quando prega as indulgências, não mente. Logo, valem tanto quanto o por que são pregadas. 2. Demais. — O Apóstolo diz: Se é vã a nossa pregação também é vã a vossa fé. Logo, quem diz falsidades na pregação torna vã, o quanto pode, a sua fé e portanto peca mortalmente. Logo, se as indulgências não valem tanto quanto o por quê são pregadas, todos os que as pregam pecam mortalmente. O que é absurdo.</p>
+    <p>SOLUÇÃO. — Nesta matéria várias são as opiniões. Uns dizem que tais indulgências não valem tanto quanto o seu conteúdo, mas valem para cada um na medida da sua fé e devoção. Mas afirmam que a Igreja usa de uma linguagem exagerada para, mediante uma pia fraude, aliciar à beneficência, como a mãe que promete uma fruta ao filho para provocá-lo a andar. — Mas essa é uma opinião muito perigosa de se professar. Pois, como diz Agostinho, se se encontrasse na Sagrada Escritura algo de falso, perderia ela a força da sua autoridade. Semelhantemente, se descobríssemos alguma falsidade na pregação da Igreja, nenhuma autoridade lhe teriam os ensinamentos, para roborar a fé. Por isso outros disseram, que as indulgências valem tanto quanto o seu conteúdo, segundo uma justa ponderação; não porém segundo a ponderação de quem a dá, que estima excessivamente a sua dádiva; nem segundo a estimação de quem a recebe, que poderia avaliar em muito pouco o que foi dado; mas segundo uma avaliação justa, justa pelo juízo dos bons, pesada a condição da pessoa, a utilidade e a necessidade da Igreja, pois, num tempo ela pode necessitar mais que em outro. — Mas esta opinião não pode sustentar-se, como passamos a expor. Primeiro, porque de acordo com ela, as indulgências não valeriam para a remissão, mas só para uma certa comutação dos pecados. Além disso, a pregação da Igreja não seria isenta de mentira. Pois, às vezes, uma indulgência seria pregada, muito maior que o que poderia exigir uma justa estimativa, pesadas todas as condições referidas. Assim, quando o Papa concede a indulgência de sete anos a quem entrar numa igreja; e tais indulgências também foram instituídas por São Gregório nas estações de Roma. Por isso outros dizem, que a extensão do perdão nas indulgências não se deve medir pela devoção de quem as ganha somente, como professa a primeira opinião; nem pela quantidade do que é dado, como quer a segunda; mas pela causa por que a indulgência é concedida, e que faz com que alguém seja digno de a ganhar. Por onde, conforme o que se dá por essa causa, nessa medida se consegue o perdão concedido pela indulgência, total ou parcialmente. — Mas, de novo, isto não pode salvar o costume da Igreja que concede uma indulgência, ora maior, ora menor, pela mesma causa. Assim, nas mesmas circunstâncias, ora dá a indulgência de um ano aos visitantes de uma igreja; ora, quarenta dias — como se o Papa, concedendo uma indulgência, quisesse conferir uma graça. Por onde, a extensão do perdão concedido pela indulgência não se deve medir pela causa, que tornou alguém digno dela. Devemos, pois, opinar diferentemente, que a extensão do efeito depende da extensão da causa. Ora, a causa da remissão da pena nas indulgências não é outra senão a abundância dos méritos da Igreja, suficiente para fazer expiar totalmente a pena. E não é a causa efetiva dela nem a devoção, nem a pena, nem o dom feito por quem a recebe, nem a causa por que é ela dada. Por isso, não há mister de proporcionar a nada disso a extensão do perdão; mas aos méritos, da Igreja, que sempre superabundam. Portanto na medida em que a cada um forem esses méritos aplicados, nessa mesma conseguirá o perdão da culpa. Mas, a fim de serem aplicados a uma pessoa determinada, é necessária a autoridade de dispensar o referido tesouro e a união daquele a quem é dispensado como aquele que mereceu, o que se faz pela caridade. Necessária também é a razão da dispensa, pela qual se obedeça à intenção dos autores de tais obras meritórias — pois as fizeram para a honra de Deus e a utilidade geral da Igreja. Por onde, qualquer causa, que redunde em utilidade da Igreja e honra de Deus, é razão suficiente de conceder indulgências. E assim devemos, com outros, pensar que, absolutamente falando, as indulgências tanto valem quanto o por que são pregadas. Contanto que tenha autoridade quem a concede; haja caridade da parte de quem a recebe; e da parte da causa, a piedade, que compreende a honra de Deus e a utilidade do próximo. Nem isso torna demasiado largo o tribunal de Deus ou derroga à justiça divina; porque nada é perdoado da pena, mas a pena de um é atribuída a outro.</p>
+    <p>DONDE A</p>
+    <p>RESPOSTA À PRIMEIRA OBJEÇÃO. — O poder das chaves, como dissemos, é de duas espécies: o da ordem e o da jurisdição. A chave da ordem é um sacramental. E como os efeitos dos sacramentos não são determinados pelo homem, mas por Deus, o sacerdote não pode determinar quanto, pela chave da ordem, é perdoado da pena devida, no foro da consciência; mas tanto será perdoado quanto Deus tiver ordenado. A chave da jurisdição porém não é um sacramental e o seu efeito depende do arbítrio humano. E o efeito dessa chave é a remissão operada pelas indulgências; pois, não depende esse perdão da dispensa dos sacramentos, mas da dos bens comuns da Igreja. Por isso, também os legados não-sacerdotes podem conferir indulgências. Portanto, no arbítrio de quem as concede está determinada a quantidade da pena que pela indulgência será perdoada. Se porém o perdão for desordenado, de modo que os fiéis venham, quase, por nada, a abandonar as obras de penitência: peca quem tais indulgências concede; mas nem por isso deixará ninguém de ganhar uma indulgência plenária.</p>
+    <p>RESPOSTA À SEGUNDA. — Embora as indulgências valham muito para a remissão da pena, contudo as outras obras satisfatórias são mais meritórias para se ganhar o prêmio essencial — o que é infinitamente melhor que a remissão da pena temporal.</p>
+    <p>RESPOSTA À TERCEIRA. — Quando é concedida uma indulgência determinadamente — a quem der auxílio para a fábrica de uma igreja, entende-se esse auxílio como sendo proporcionado a quem o dá; e conforme maior ou menor for ele, maior ou menor será a indulgência ganha. E assim, o pobre que só der um dinheiro ganhará totalmente a indulgência; não porém o rico, que não deve para obra tão pia e frutuosa dar tão pouco, que se poria no caso de um rei do qual não se disse que socorreu alguém por lhe ter dado um óbulo.</p>
+    <p>RESPOSTA À QUARTA. - Quem mora perto da igreja, bem como os sacerdotes e os clérigos ganham tanta indulgência como os que vêm de mil léguas de distância; porque o perdão não se proporciona ao trabalho, como se disse, mas aos méritos aplicados. Mas quem mais penas se desse mais méritos adquiriria. Mas isto se entende de indulgência dada indistintamente. As vezes porém faz-se distinção. Assim o Papa, nas absolvições gerais, dá cinco anos aos que atravessam o mar; aos que atravessarem montes, três; aos outros, um. — Contudo, os que visitam o lugar referido, no período durante o qual podem ganhar a indulgência, tantas vezes quantas puderem, nem por isso ganharão outras tantas indulgências. Pois, às vezes uma indulgência é concedida só num tempo determinado, como quando se diz: Quem visitar a igreja tal em tal tempo ganhará tanto de indulgência; entendendo-se uma vez só. Mas se numa igreja houver indulgência perene, como a de quarenta dias na igreja de S. Pedro, então quantas vezes alguém a visitar, outras tantas indulgências ganhará. RESPOSTA À QUINTA. — A causa da indulgência é necessária, não a fim de por ela dever medir-se o perdão da pena, mas para que a intenção daqueles cujos méritos são comunicados possa aplicar-se a quem ganhar a indulgência. Ora, o bem de um pode comunicar-se a outro de dois modos. Primeiro, pela caridade; e então, mesmo sem indulgências podemos, se temos a caridade, participar de todos os bens praticados. De outro modo, pela intenção de quem praticou a obra. E assim, pelas indulgências, havendo causa legítima, poderá a intenção de quem praticou uma obra para utilidade da Igreja ser aplicada a quem ganha a indulgência.</p>
+
+    </div>
+  </div>
+  
+  <!-- Bloco de Explicação (a ser preenchido) -->
+  <div class="bloco-explicacao">
+    <div class="explicacao-label">💡 Explicação e Contexto</div>
+    <div class="explicacao-corpo" id="explicacao">
+    <p><em>Explicação será adicionada em breve.</em></p>
+
+    </div>
+  </div>
+  
+</main>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO INFERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="navegacao-inferior">
+  <div class="nav-buttons">
+    <a href="suma-pagina2761.html" class="btn-primary">← Anterior</a>
+    <span class="pagina-atual">2762</span>
+    <a href="suma-pagina2763.html" class="btn-primary">Próxima →</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  RODAPÉ                                                  -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<footer class="suma-footer">
+  <p>Suma Teológica · São Tomás de Aquino | Biblioteca Lux Fidei</p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Questão 108, Artigo 6 — — Se os graus das ordens estão convenientemente distribuídos. | Suma Teológica</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+    --cor-fundo: #f5f0e8;
+    --cor-pagina: #fff;
+    --cor-texto: #2c1f17;
+    --cor-dourado: #d4af37;
+    --cor-roxo: #5b2c83;
+    --sombra: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cor-fundo);
+    color: var(--cor-texto);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CABEÇALHO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-header {
+    background: linear-gradient(135deg, #1a1a1a, #2c241b);
+    color: #f5f0e8;
+    padding: 32px 20px 24px;
+    text-align: center;
+    position: relative;
+}
+
+.voltar-index {
+    position: absolute;
+    top: 16px;
+    left: 20px;
+    color: var(--cor-dourado);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: opacity 0.2s;
+}
+
+.voltar-index:hover {
+    opacity: 0.8;
+}
+
+.suma-header h1 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.info-pagina {
+    display: inline-block;
+    background: rgba(212, 175, 55, 0.15);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    color: var(--cor-dourado);
+    margin-top: 8px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-topo {
+    background: #fff;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    gap: 10px;
+}
+
+.btn-nav {
+    display: inline-flex;
+    align-items: center;
+    padding: 9px 18px;
+    background: var(--cor-roxo);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.btn-nav:hover {
+    background: #4a246a;
+    transform: translateY(-1px);
+}
+
+.desabilitado {
+    background: #ddd !important;
+    color: #999 !important;
+    pointer-events: none;
+}
+
+.info-centena {
+    font-size: 0.85rem;
+    color: #888;
+    font-weight: 500;
+    padding: 0 10px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CONTEÚDO PRINCIPAL                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.pagina-conteudo {
+    flex: 1;
+    max-width: 860px;
+    width: 100%;
+    margin: 36px auto;
+    padding: 0 20px;
+}
+
+.bloco-texto {
+    background: var(--cor-pagina);
+    padding: 48px 44px;
+    border-radius: 12px;
+    box-shadow: var(--sombra);
+    position: relative;
+    margin-bottom: 24px;
+}
+
+.bloco-texto::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 20px;
+    bottom: 20px;
+    width: 4px;
+    background: linear-gradient(to bottom, var(--cor-dourado), var(--cor-roxo));
+    border-radius: 0 4px 4px 0;
+}
+
+.bloco-titulo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.3rem;
+    color: var(--cor-roxo);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e8dfd0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pagina-corpo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.1rem;
+    line-height: 1.95;
+    color: #3d3226;
+    text-align: justify;
+}
+
+.pagina-corpo p {
+    margin-bottom: 1.3em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  BLOCO DE EXPLICAÇÃO                                        */
+/* ────────────────────────────────────────────────────────── */
+
+.bloco-explicacao {
+    background: linear-gradient(135deg, #fffdf5, #faf5eb);
+    border-left: 5px solid var(--cor-dourado);
+    padding: 32px 40px;
+    border-radius: 0 12px 12px 0;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    margin-bottom: 24px;
+}
+
+.explicacao-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--cor-dourado);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 14px;
+}
+
+.explicacao-corpo {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #4a3c2c;
+}
+
+.explicacao-corpo p {
+    margin-bottom: 1em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO INFERIOR                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-inferior {
+    max-width: 860px;
+    width: 100%;
+    margin: 0 auto 40px;
+    padding: 0 20px;
+}
+
+.nav-buttons {
+    background: #fff;
+    padding: 18px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    box-shadow: var(--sombra);
+}
+
+.btn-primary {
+    flex: 1;
+    text-align: center;
+    padding: 13px 16px;
+    background: linear-gradient(135deg, var(--cor-roxo), #7a3eb5);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(91, 44, 131, 0.3);
+}
+
+.pagina-atual {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--cor-dourado);
+    min-width: 50px;
+    text-align: center;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RODAPÉ                                                     */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-footer {
+    background: #1a1a1a;
+    color: #888;
+    text-align: center;
+    padding: 22px 20px;
+    margin-top: auto;
+    font-size: 0.85rem;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RESPONSIVIDADE                                             */
+/* ────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+    .suma-header h1 {
+        font-size: 1.4rem;
+    }
+    
+    .bloco-texto {
+        padding: 28px 18px;
+    }
+    
+    .bloco-explicacao {
+        padding: 22px 18px;
+    }
+    
+    .navegacao-topo {
+        flex-wrap: wrap;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CABEÇALHO                                               -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="suma-header">
+  <a href="../../index.html" class="voltar-index">← Índice</a>
+  <h1>Suma Teológica</h1>
+  <p style="opacity:0.8; font-style:italic; margin-top:4px;">São Tomás de Aquino</p>
+  <span class="info-pagina">Página 534 de 3000</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO SUPERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<nav class="navegacao-topo">
+  <a href="suma-pagina533.html" class="btn-nav">← Anterior</a>
+  <span class="info-centena">Pág. 534/3000</span>
+  <a href="suma-pagina535.html" class="btn-nav">Próxima →</a>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CONTEÚDO PRINCIPAL                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<main class="pagina-conteudo">
+  
+  <!-- Texto Original -->
+  <div class="bloco-texto">
+    <div class="bloco-titulo">
+      <span>📜</span>
+      Questão 108, Artigo 6 — — Se os graus das ordens estão convenientemente distribuídos.
+    </div>
+    <div class="pagina-corpo">
+    <p>(II Sent., dist. IX, a. 3; III Cont. Gent., cap. LXXX; Compend.) O sexto discute-se assim. — Parece que os graus das ordens estão inconvenientemente distribuídos.</p>
+    <p>1. — Pois, a ordem dos superiores é a suprema. Ora, as Dominações, os Principados e as Potestades têm, pelos seus próprios nomes, certa superioridade. Logo, estas ordens devem ser, entre todas, as supremas. 2. Demais. — Quanto mais próximo de Deus for uma ordem, tanto mais superior será. Ora, a ordem dos Tronos é a mais próxima de Deus, pois, nada se une mais proximamente com quem está sentado do que o seu assento. Logo, a ordem dos Tronos é a mais elevada.</p>
+    <p>3. — A ciência tem prioridade sobre o amor e o intelecto é mais elevado que a vontade. Logo também a ordem dos Querubins é mais elevada que a dos Serafins. 4. Demais. — Gregório coloca os Principados acima das Potestades. Logo, eles não estão colocados imediatamente acima dos Arcanjos, como diz Dionísio.</p>
+    <p>Mas, em contrário, Dionísio coloca na primeira hierarquia, como mais elevados, os Serafins; como médios, os Querubins, e os Tronos, como últimos. Na hierarquia média, as Dominações, como primeiros; as Virtudes, como médios; e as Potestades, como últimos. Na última, por fim, os Principados, como primeiros; os Arcanjos, como médios; e os Anjos, como últimos.</p>
+    <p>SOLUÇÃO. — Gregório e Dionísio distribuem os graus das ordens angélicas diferentemente, quanto aos Principados e às Virtudes, e, no mais, do mesmo modo. Pois, Dionísio coloca as Virtudes inferiores às Dominações e superiores às Potestades; os Principados, porém, inferiores às Potestades e superiores aos Arcanjos. Ao passo que Gregório coloca os Principados no meio, entre as Dominações e as Potestades; e as Virtudes, no meio, entre as Potestades e os Arcanjos. E ambas essas disposições podem se apoiar na autoridade do Apóstolo (Ef 1, 20) que, enumerando as ordens médias de maneiraascendente, diz, que Deus o constituiu, i. é, Cristo, à sua mão direita no céu, acima de todo o Principado, e Potestade, e Virtude, e Dominação; onde põe a Virtude entre a Potestade e a Dominação, conforme a distribuição de Dionísio. Mas, noutro passo, enumerando as mesmas ordens, de maneira descendente, diz (Cl 1, 16): quer sejam os Tronos, quer as Dominações, quer os Principados, quer as Potestades, tudo foi criado por ele e para ele; onde coloca os Principados como médios entre as Dominações e as Potestades, conforme a distribuição de Gregório. Primeiro, pois, vejamos a razão da distribuição de Dionísio. Nela se deve considerar que, como já foi dito (a. 1), a primeira hierarquia vê as razões das coisas, no próprio Deus; a segunda, nas causas universais; a terceira, porém, quanto à determinação para efeitos especiais. E como Deus é o fim, não só dos ministérios angélicos, mas também de todas as criaturas, à primeira hierarquia pertence à consideração do fim; à média, a disposição universal do que se deve fazer; à última, a aplicação da disposição ao efeito, que é a execução da obra. Ora, estas três coisas encontram-se, manifestamente, em qualquer operação. E por isso, Dionísio, deduzindo dos nomes das ordens as propriedades delas, colocou, na primeira hierarquia, as ordens, cujos nomes são impostos, relativos a Deus, e são os Serafins, os Querubins e os Tronos. Colocou na hierarquia média as ordens, cujos nomes designam um governo ou disposição comuns, e que são as Dominações, as Virtudes e as Potestades. Colocou, por fim, na terceira hierarquia, as ordens cujos nomes designam a execução da obra e que são os Principados, os Anjos e os Arcanjos. Em relação ao fim, porém, três coisas se podem considerar. Pois, primeiro, considera-se o fim; depois, adquire-se o conhecimento perfeito dele; terceiro, fixa-se nele a intenção. Ora, destas três coisas, a segunda se adiciona a primeira e a terceira, a ambas as outras. E como Deus é o fim das criaturas, assim como o chefe é o fim do exército, conforme diz Aristóteles, pode-se descobrir, nas coisas humanas, um símile das ordens em questão. Assim, há certos que têm tal dignidade, que podem por si mesmos achegar-se familiarmente ao rei ou ao chefe; outros, além disso, podem ainda conhecer-lhe os segredos; outros por fim e ainda mais, sempre o acompanham, estando-lhe como conjuntos. E de acordo com esta semelhança, podemos compreender a disposição das ordens da primeira hierarquia. Pois, os Tronos estão elevados de modo que recebem a Deus, familiarmente, em si mesmos, porque podem conhecer nele imediatamente as razões das coisas; e isso é próprio de toda a primeira hierarquia. Ao passo que os Querubins conhecem supereminentemente os segredos divinos. E os Serafins, enfim, são excelentes pelo que é mais elevado que tudo, a saber, estar unido ao próprio Deus. De modo que a ordem dos Tronos é denominada pelo que é comum a toda a hierarquia; assim como, pelo que é comum a todos os espíritos celestes, é denominada a ordem dos Anjos. Por outro lado, em a noção de governo três coisas se incluem. A primeira é a definição daquilo que se deve fazer, e isso é próprio às Dominações. A segunda é dar a faculdade de cumprir, e isso pertence às Virtudes. A terceira é ordenar de que modo o preceituado ou definido pode ser cumprido, para que se executem, e isso pertence às Potestades. Ora, a execução dos ministérios angélicos consiste em anunciar as coisas divinas. Mas, na execução de qualquer ato, uns começam a ação e outros a dirigem; assim, no canto, os que entoam e, na guerra, os que comandam e dirigem os outros. E isto pertence aos Principados. Outros há porém que simplesmente executam, e isso pertence aos Anjos. Outros, por fim, têm uma situação média, e é o que se dá com os Arcanjos, como já se disse. Ora, esta distribuição das ordens é congruente, porque sempre o mais elevado da ordem inferior tem afinidade com o último da superior; assim os ínfimos animais distam pouco das plantas. A primeira ordem, pois, é a das divinas Pessoas e tem o seu termo no Espírito Santo, que é o amor procedente; com esta tem afinidade a ordem suprema da primeira hierarquia, que tira a denominação do incêndio do amor. Depois, a ínfima ordem da primeira hierarquia é a dos Tronos que, em virtude do próprio nome, têm certa afinidade com as Dominações. Pois os Tronos, como diz Gregório, são aqueles pelos quais Deus decreta os seus juízos; e recebem as iluminações divinas para o fim de iluminarem imediatamente a segunda hierarquia, à qual pertence à disposição dos divinos ministérios. Em seguida, a ordem das Potestades tem afinidade com a dos Principados; pois, devendo as Potestades impor a ordem aos que lhes estão sujeitos, essa ordenação está imediatamente designada em o nome dos Principados, que são os primeiros na execução dos ministérios divinos, por presidirem ao governo dos povos e dos reinos, que é o primeiro e o principal dos ministérios divinos, porque o bem do povo é mais divino que o de um só homem. E por isso, diz a Escritura: O príncipe do reino dos Persas resistiu-me. Mas, também a distribuição que Gregório faz das ordens é congruente. Pois, como as Dominações definem e preceituam o que entende com os ministérios divinos, pelas disposições deles, em que se exercem os ministérios divinos, dispõem-se às ordens que lhe estão sujeitas. Porque, como diz Agostinho, os corpos são regidos numa certa ordem: os inferiores, pelos superiores, e todos, pela criatura espiritual; e o espírito mau, pelo bom. E a primeira ordem, depois das Dominações, é a dos Principados que governam também aos bons espíritos. Depois, as Potestades, pelas quais são afastados os maus espíritos, assim como pelas potestades terrenas são afastados os malfeitores, segundo a Escri- tura. Depois delas, as Virtudes, que têm poder sobre a natureza corpórea, na operação dos milagres. Em seguida, os Arcanjos e os Anjos, que anunciam aos homens grandes acontecimentos superiores à razão, ou pequenos, que a razão pode alcançar.</p>
+    <p>DONDE A</p>
+    <p>RESPOSTA À PRIMEIRA OBJEÇÃO. — É mais importante para os anjos estarem sujeitos a Deus, do que presidirem aos inferiores; e isto deriva daquilo. Por onde, as ordens que recebem denominação da superioridade não são as supremas, mas antes, as que recebem a denominação do se voltarem para Deus.</p>
+    <p>RESPOSTA À SEGUNDA. — A proximidade de Deus designada pelo nome dos Tronos, convém também aos Querubins e aos Serafins, e de modo mais excelente, como já se disse.</p>
+    <p>RESPOSTA À TERCEIRA. — Como já se disse, o conhecimento. supõe o objeto conhecido em quem conhece; enquanto que o amor supõe. o amante unido à causa amada. Ora, o superior está, em si mesmo, de modo mais nobre que no inferior; ao passo que o inferior está de modo mais nobre no superior, que em si mesmo. Por onde, o conhecimento do que é inferior tem, preeminência sobre o amor; ao passo que o amor do que é superior, e sobretudo de Deus, tem preeminência sobre o conhecimento.</p>
+    <p>RESPOSTA À QUARTA. — Se considerarmos atentamente as distribuições das ordens, segundo Dionísio e segundo Gregório, veremos que em pouco, ou nada diferem, referidas à realidade. Assim, Gregório, deduz o nome dos Principados do presidirem aos bons espíritos; o que também convém às Virtudes, em cujo nome se compreende a fortaleza, que dá eficácia aos espíritos inferiores para executarem os divinos ministérios. — Ainda. As Virtudes de Gregório identificam-se com os Principados, de Dionísio. Pois, o primeiro dos ministérios divinos é fazer milagres, preparando-se, por aí, a via para a anunciação dos Arcanjos e dos Anjos.</p>
+
+    </div>
+  </div>
+  
+  <!-- Bloco de Explicação (a ser preenchido) -->
+  <div class="bloco-explicacao">
+    <div class="explicacao-label">💡 Explicação e Contexto</div>
+    <div class="explicacao-corpo" id="explicacao">
+    <p><em>Explicação será adicionada em breve.</em></p>
+
+    </div>
+  </div>
+  
+</main>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO INFERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="navegacao-inferior">
+  <div class="nav-buttons">
+    <a href="suma-pagina533.html" class="btn-primary">← Anterior</a>
+    <span class="pagina-atual">534</span>
+    <a href="suma-pagina535.html" class="btn-primary">Próxima →</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  RODAPÉ                                                  -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<footer class="suma-footer">
+  <p>Suma Teológica · São Tomás de Aquino | Biblioteca Lux Fidei</p>
+</footer>
+
+</body>
+</html>

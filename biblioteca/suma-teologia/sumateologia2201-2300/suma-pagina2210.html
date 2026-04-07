@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Questão 15, Artigo 6 — — Se Cristo sofreu a tristeza. | Suma Teológica</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+    --cor-fundo: #f5f0e8;
+    --cor-pagina: #fff;
+    --cor-texto: #2c1f17;
+    --cor-dourado: #d4af37;
+    --cor-roxo: #5b2c83;
+    --sombra: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cor-fundo);
+    color: var(--cor-texto);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CABEÇALHO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-header {
+    background: linear-gradient(135deg, #1a1a1a, #2c241b);
+    color: #f5f0e8;
+    padding: 32px 20px 24px;
+    text-align: center;
+    position: relative;
+}
+
+.voltar-index {
+    position: absolute;
+    top: 16px;
+    left: 20px;
+    color: var(--cor-dourado);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: opacity 0.2s;
+}
+
+.voltar-index:hover {
+    opacity: 0.8;
+}
+
+.suma-header h1 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.info-pagina {
+    display: inline-block;
+    background: rgba(212, 175, 55, 0.15);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    color: var(--cor-dourado);
+    margin-top: 8px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-topo {
+    background: #fff;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    gap: 10px;
+}
+
+.btn-nav {
+    display: inline-flex;
+    align-items: center;
+    padding: 9px 18px;
+    background: var(--cor-roxo);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.btn-nav:hover {
+    background: #4a246a;
+    transform: translateY(-1px);
+}
+
+.desabilitado {
+    background: #ddd !important;
+    color: #999 !important;
+    pointer-events: none;
+}
+
+.info-centena {
+    font-size: 0.85rem;
+    color: #888;
+    font-weight: 500;
+    padding: 0 10px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CONTEÚDO PRINCIPAL                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.pagina-conteudo {
+    flex: 1;
+    max-width: 860px;
+    width: 100%;
+    margin: 36px auto;
+    padding: 0 20px;
+}
+
+.bloco-texto {
+    background: var(--cor-pagina);
+    padding: 48px 44px;
+    border-radius: 12px;
+    box-shadow: var(--sombra);
+    position: relative;
+    margin-bottom: 24px;
+}
+
+.bloco-texto::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 20px;
+    bottom: 20px;
+    width: 4px;
+    background: linear-gradient(to bottom, var(--cor-dourado), var(--cor-roxo));
+    border-radius: 0 4px 4px 0;
+}
+
+.bloco-titulo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.3rem;
+    color: var(--cor-roxo);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e8dfd0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pagina-corpo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.1rem;
+    line-height: 1.95;
+    color: #3d3226;
+    text-align: justify;
+}
+
+.pagina-corpo p {
+    margin-bottom: 1.3em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  BLOCO DE EXPLICAÇÃO                                        */
+/* ────────────────────────────────────────────────────────── */
+
+.bloco-explicacao {
+    background: linear-gradient(135deg, #fffdf5, #faf5eb);
+    border-left: 5px solid var(--cor-dourado);
+    padding: 32px 40px;
+    border-radius: 0 12px 12px 0;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    margin-bottom: 24px;
+}
+
+.explicacao-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--cor-dourado);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 14px;
+}
+
+.explicacao-corpo {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #4a3c2c;
+}
+
+.explicacao-corpo p {
+    margin-bottom: 1em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO INFERIOR                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-inferior {
+    max-width: 860px;
+    width: 100%;
+    margin: 0 auto 40px;
+    padding: 0 20px;
+}
+
+.nav-buttons {
+    background: #fff;
+    padding: 18px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    box-shadow: var(--sombra);
+}
+
+.btn-primary {
+    flex: 1;
+    text-align: center;
+    padding: 13px 16px;
+    background: linear-gradient(135deg, var(--cor-roxo), #7a3eb5);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(91, 44, 131, 0.3);
+}
+
+.pagina-atual {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--cor-dourado);
+    min-width: 50px;
+    text-align: center;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RODAPÉ                                                     */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-footer {
+    background: #1a1a1a;
+    color: #888;
+    text-align: center;
+    padding: 22px 20px;
+    margin-top: auto;
+    font-size: 0.85rem;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RESPONSIVIDADE                                             */
+/* ────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+    .suma-header h1 {
+        font-size: 1.4rem;
+    }
+    
+    .bloco-texto {
+        padding: 28px 18px;
+    }
+    
+    .bloco-explicacao {
+        padding: 22px 18px;
+    }
+    
+    .navegacao-topo {
+        flex-wrap: wrap;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CABEÇALHO                                               -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="suma-header">
+  <a href="../../index.html" class="voltar-index">← Índice</a>
+  <h1>Suma Teológica</h1>
+  <p style="opacity:0.8; font-style:italic; margin-top:4px;">São Tomás de Aquino</p>
+  <span class="info-pagina">Página 2210 de 3000</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO SUPERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<nav class="navegacao-topo">
+  <a href="suma-pagina2209.html" class="btn-nav">← Anterior</a>
+  <span class="info-centena">Pág. 2210/3000</span>
+  <a href="suma-pagina2211.html" class="btn-nav">Próxima →</a>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CONTEÚDO PRINCIPAL                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<main class="pagina-conteudo">
+  
+  <!-- Texto Original -->
+  <div class="bloco-texto">
+    <div class="bloco-titulo">
+      <span>📜</span>
+      Questão 15, Artigo 6 — — Se Cristo sofreu a tristeza.
+    </div>
+    <div class="pagina-corpo">
+    <p>O sexto discute-se assim. — Parece que Cristo não sofreu a tristeza.</p>
+    <p>1. — Pois, diz de Cristo a Escritura : Não será triste nem turbulento. 2. Demais. — Diz a Escritura : Não entristecerá ao justo coisa alguma, qualquer que for o que lhe acontecer. E a razão disto os estóicos a davam dizendo, que ninguém se entristece senão pela perda dos seus bens; ora o justo não considera bens senão a justiça e a virtude, que não pode perder. Do contrário, estaria sujeito à fortuna, se se entristecesse quando perdesse os bens dela. Ora, Cristo era o justo por excelência, segundo a Escritura: Este é o nome que lhe chamaram, o Senhor nosso justo. Logo, não sofreu a tristeza, 3. Demais. — O Filosofo diz, que toda tristeza deve ser evitada como um mal. Ora, Cristo não tinha que evitar nenhum mal. Logo, não sofreu a tristeza. 4. Demais. — Como diz Agostinho, Nós nos entristecemos com o que nos contraria a vontade. Ora, Cristo nada sofreu contra a sua vontade; pois, como diz a Escritura, foi oferecido porque ele mesmo quis. Logo, Cristo não sofreu a tristeza.</p>
+    <p>Mas, em contrário, diz o Senhor: A minha alma está numa tristeza mortal. E Ambrósio: Como homem, sofreu tristeza; pois, assumiu a minha tristeza, Pois, exprimo por certo a tristeza quando me refiro à cruz.</p>
+    <p>SOLUÇÃO. — Como dissemos, o prazer da contemplação divina concentrava-se, por disposição do poder de Deus, na alma de Cristo, a ponto de não derivar para as potências sensitivas e, assim, excluir a dor sensível. Ora, como a dor sensível tem a sua sede no apetite sensitivo, assim também a tristeza; mas diferentemente, pelo seu motivo ou objeto. Pois, o objeto e o motivo da dor é uma lesão percebida pelo sentido do tato; como quando alguém é ferido. Ora, o objeto e o motivo da tristeza é um dano ou um mal interiormente apreendido, pela razão ou pela imaginação, como dissemos na Segunda Parte; tal o caso de quem se entristece pela perda da graça ou do dinheiro. Ora, e alma de Cristo podia apreender interiormente uma coisa como nociva, tanta para si mesmo, como o foi a sua paixão e morte; quanto para os outros, como o pecado dos discípulos ou ainda dos Judeus que o mataram. Por onde, assim como Cristo podia sofrer realmente a dor, também podia padecer realmente a tristeza; mas de maneira diferente de nós, daqueles três modos que assinalamos, quando tratamos em geral das paixões da alma de Cristo.</p>
+    <p>DONDE A</p>
+    <p>RESPOSTA À PRIMEIRA OBJEÇÃO. — Cristo não sofreu a tristeza, como paixão, no seu sentido prefeito; mas houve nele uma tristeza incoativa, como propaixão. Donde o dizer a Escritura: Começou a entristecer-se e a angustiar-se. — Ora, uma coisa é entristecer-se e outra, começar a entristecer -se.</p>
+    <p>RESPOSTA À SEGUNDA. — Como diz Agostinho, os estóicos ensinavam que há na alma do sábio três eupatias, isto é, boas paixões, correspondentes às três perturbações - a cobiça, a alegria e o temor. Essas três eupatias correspondentes são: à cobiça, a vontade; à alegria, o gáudio; ao medo, a cautela. Mas negavam pudesse haver algo na alma do sábio de correspondente à tristeza; porque a tristeza supõe um mal já acontecido; ora, julgavam que nenhum mal podia atingir o sábio. E pensavam assim por só considerarem como bem o honesto, que torna os homens bons; e como sendo mal só o desonesto, que torna os homens maus. — Mas, embora o honesto seja o principal bem do homem, e o desonesto o mal principal, por dizerem respeito à razão, que é o principal no homem, há contudo, certos bens humanos secundários, relativos ao corpo ou às coisas exteriores que servem ao corpo. E, assim sendo, pode haver tristeza na alma do sábio, quando o apetite sensitivo venha a apreender algum dos referidos males; não vai porém essa tristeza até perturbar a razão. E também a esta luz entende-se que o justo não se contristará, seja o que for que lhe suceda; pois, nenhum acontecimento lhe perturba a razão, Por onde, Cristo sofreu tristeza, quanto à propaixão; mas não quanto à paixão.</p>
+    <p>RESPOSTA À TERCEIRA. — Toda tristeza implica o mal da pena; mas nem sempre o mal da culpa, senão só quando procede do afeto desordenado. Donde o dizer Agostinho: Quando estas paixões obedecem à razão reta e lhes cedemos em tempo e lugar oportunos, quem ousará chamar-lhes doenças ou paixões más?</p>
+    <p>RESPOSTA À QUARTA. — Nada impede ser uma coisa contrária à vontade, em si mesma considerada e, contudo, querida, em razão do fim a que se ordena. Assim, um remédio amargo não o queremos em si mesmo, mas enquanto ordenado à saúde. Ora, deste modo, a morte de Cristo e a sua paixão foram, em si mesmas consideradas, involuntárias e causas de tristeza; embora fossem voluntárias quanto ao fim, que é a redenção do gênero humano.</p>
+
+    </div>
+  </div>
+  
+  <!-- Bloco de Explicação (a ser preenchido) -->
+  <div class="bloco-explicacao">
+    <div class="explicacao-label">💡 Explicação e Contexto</div>
+    <div class="explicacao-corpo" id="explicacao">
+    <p><em>Explicação será adicionada em breve.</em></p>
+
+    </div>
+  </div>
+  
+</main>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO INFERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="navegacao-inferior">
+  <div class="nav-buttons">
+    <a href="suma-pagina2209.html" class="btn-primary">← Anterior</a>
+    <span class="pagina-atual">2210</span>
+    <a href="suma-pagina2211.html" class="btn-primary">Próxima →</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  RODAPÉ                                                  -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<footer class="suma-footer">
+  <p>Suma Teológica · São Tomás de Aquino | Biblioteca Lux Fidei</p>
+</footer>
+
+</body>
+</html>

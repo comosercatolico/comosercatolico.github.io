@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Questão 61, Artigo 3 — — Se depois do pecado, antes de Cristo, deviam existir | Suma Teológica</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+    --cor-fundo: #f5f0e8;
+    --cor-pagina: #fff;
+    --cor-texto: #2c1f17;
+    --cor-dourado: #d4af37;
+    --cor-roxo: #5b2c83;
+    --sombra: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cor-fundo);
+    color: var(--cor-texto);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CABEÇALHO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-header {
+    background: linear-gradient(135deg, #1a1a1a, #2c241b);
+    color: #f5f0e8;
+    padding: 32px 20px 24px;
+    text-align: center;
+    position: relative;
+}
+
+.voltar-index {
+    position: absolute;
+    top: 16px;
+    left: 20px;
+    color: var(--cor-dourado);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: opacity 0.2s;
+}
+
+.voltar-index:hover {
+    opacity: 0.8;
+}
+
+.suma-header h1 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.info-pagina {
+    display: inline-block;
+    background: rgba(212, 175, 55, 0.15);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    color: var(--cor-dourado);
+    margin-top: 8px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-topo {
+    background: #fff;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    gap: 10px;
+}
+
+.btn-nav {
+    display: inline-flex;
+    align-items: center;
+    padding: 9px 18px;
+    background: var(--cor-roxo);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.btn-nav:hover {
+    background: #4a246a;
+    transform: translateY(-1px);
+}
+
+.desabilitado {
+    background: #ddd !important;
+    color: #999 !important;
+    pointer-events: none;
+}
+
+.info-centena {
+    font-size: 0.85rem;
+    color: #888;
+    font-weight: 500;
+    padding: 0 10px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CONTEÚDO PRINCIPAL                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.pagina-conteudo {
+    flex: 1;
+    max-width: 860px;
+    width: 100%;
+    margin: 36px auto;
+    padding: 0 20px;
+}
+
+.bloco-texto {
+    background: var(--cor-pagina);
+    padding: 48px 44px;
+    border-radius: 12px;
+    box-shadow: var(--sombra);
+    position: relative;
+    margin-bottom: 24px;
+}
+
+.bloco-texto::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 20px;
+    bottom: 20px;
+    width: 4px;
+    background: linear-gradient(to bottom, var(--cor-dourado), var(--cor-roxo));
+    border-radius: 0 4px 4px 0;
+}
+
+.bloco-titulo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.3rem;
+    color: var(--cor-roxo);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e8dfd0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pagina-corpo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.1rem;
+    line-height: 1.95;
+    color: #3d3226;
+    text-align: justify;
+}
+
+.pagina-corpo p {
+    margin-bottom: 1.3em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  BLOCO DE EXPLICAÇÃO                                        */
+/* ────────────────────────────────────────────────────────── */
+
+.bloco-explicacao {
+    background: linear-gradient(135deg, #fffdf5, #faf5eb);
+    border-left: 5px solid var(--cor-dourado);
+    padding: 32px 40px;
+    border-radius: 0 12px 12px 0;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    margin-bottom: 24px;
+}
+
+.explicacao-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--cor-dourado);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 14px;
+}
+
+.explicacao-corpo {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #4a3c2c;
+}
+
+.explicacao-corpo p {
+    margin-bottom: 1em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO INFERIOR                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-inferior {
+    max-width: 860px;
+    width: 100%;
+    margin: 0 auto 40px;
+    padding: 0 20px;
+}
+
+.nav-buttons {
+    background: #fff;
+    padding: 18px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    box-shadow: var(--sombra);
+}
+
+.btn-primary {
+    flex: 1;
+    text-align: center;
+    padding: 13px 16px;
+    background: linear-gradient(135deg, var(--cor-roxo), #7a3eb5);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(91, 44, 131, 0.3);
+}
+
+.pagina-atual {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--cor-dourado);
+    min-width: 50px;
+    text-align: center;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RODAPÉ                                                     */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-footer {
+    background: #1a1a1a;
+    color: #888;
+    text-align: center;
+    padding: 22px 20px;
+    margin-top: auto;
+    font-size: 0.85rem;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RESPONSIVIDADE                                             */
+/* ────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+    .suma-header h1 {
+        font-size: 1.4rem;
+    }
+    
+    .bloco-texto {
+        padding: 28px 18px;
+    }
+    
+    .bloco-explicacao {
+        padding: 22px 18px;
+    }
+    
+    .navegacao-topo {
+        flex-wrap: wrap;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CABEÇALHO                                               -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="suma-header">
+  <a href="../../index.html" class="voltar-index">← Índice</a>
+  <h1>Suma Teológica</h1>
+  <p style="opacity:0.8; font-style:italic; margin-top:4px;">São Tomás de Aquino</p>
+  <span class="info-pagina">Página 2451 de 3000</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO SUPERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<nav class="navegacao-topo">
+  <a href="suma-pagina2450.html" class="btn-nav">← Anterior</a>
+  <span class="info-centena">Pág. 2451/3000</span>
+  <a href="suma-pagina2452.html" class="btn-nav">Próxima →</a>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CONTEÚDO PRINCIPAL                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<main class="pagina-conteudo">
+  
+  <!-- Texto Original -->
+  <div class="bloco-texto">
+    <div class="bloco-titulo">
+      <span>📜</span>
+      Questão 61, Artigo 3 — — Se depois do pecado, antes de Cristo, deviam existir
+    </div>
+    <div class="pagina-corpo">
+    <p>sacramentos. O terceiro discute-se assim. — Parece que depois do pecado, antes de Cristo, não deviam existir sacramentos.</p>
+    <p>1. — Pois, como se disse, pelos sacramentos a Paixão de Cristo é aplicada aos homens; e assim a Paixão de Cristo está para os sacramentos como a causa para o efeito. Ora, o efeito não precede a causa. Logo, não devia haver sacramentos antes do advento de Cristo. 2. Demais. — Os sacramentos devem ser convenientes ao estado do gênero humano, como está claro em Agostinho. Ora, o estado do gênero humano não mudou, depois do pecado, até a reparação feita por Cristo. Logo, nem os sacramentos deviam ser mudados de modo que além dos sacramentos da lei natural, outros fossem estatuídos, na lei de Moisés. 3. Demais. — Quanto mais uma coisa está próxima à perfeição, tanto mais se lhe deve assimilar. Ora, a salvação humana, na sua perfeição, operou-a Cristo, de quem estavam mais próximos os sacramentos da lei antiga do que os existentes antes da lei. Logo, deviam ser mais semelhantes aos sacramentos de Cristo. Entretanto, o contrário resulta da predição que o sacerdócio de Cristo havia de ser segundo a ordem de Melquisedeque e não segundo a ordem de Arão, como está no Apóstolo. Logo, antes de Cristo, os sacramentos não foram dispostos convenientemente.</p>
+    <p>Mas, em contrário diz Agostinho, que os primeiros sacramentos, celebrados e observados na vigência da lei, eram os prenúncios da vinda de Cristo. Ora, era necessário à salvação humana que fosse preanunciado o advento de Cristo. Logo, era necessário que, antes de Cristo, certos sacramentos fossem instituídos.</p>
+    <p>SOLUÇÃO. — Os sacramentos são necessários à salvação humana, enquanto uns sinais sensíveis de realidades invisíveis pelas quais o homem se santifica. Ora, ninguém pode ser santificado, depois do pecado, senão por Cristo, ao qual propôs Deus para ser vítima de propiciação pela fé no seu sangue, a fim de manifestar a sua justiça, a fim de que ele seja achado justo e justificador daquele que tem a fé de Jesus Cristo. Logo, era necessário que antes do advento de Cristo existissem certos sinais visíveis pelos quais o homem proclamasse a sua fé no futuro advento do Salvador. E esses sinais se chamam sacramentos. Por onde é claro que antes do advento de Cristo era necessário fossem instituídos certos sacramentos.</p>
+    <p>DONDE A</p>
+    <p>RESPOSTA À PRIMEIRA OBJEÇÃO. — A Paixão de Cristo é a causa final dos sacramentos antigos, que alias, foram instituídos para a significar. Ora, a causa final não tem precedência no tempo, mas só na intenção do agente. Logo, não havia inconveniente em certos sacramentos terem existido antes da Paixão de Cristo.</p>
+    <p>RESPOSTA À SEGUNDA. — O estado do gênero humano, depois do pecado e antes de Cristo, pode ser considerado a dupla luz. - Primeiro, segundo a natureza da fé. E então permaneceu sempre o mesmo, porque os homens eram justificados pela fé no advento futuro de Cristo. - A outra luz pode ser considerado segundo a intenção e a remissão do pecado e o expresso conhecimento de Cristo. Pois no decurso dos tempos, de um lado o pecado começou a dominar cada vez mais o homem, porque obnubilando-lhe a razão, não bastavam ao homem, para viver retamente, os preceitos da lei da natureza, mas foi necessário se determinassem preceitos na lei escrita e, com estes, certos sacramentos da fé. E também de outro lado era necessário que, no decorrer dos tempos, mais se desenvolvesse o conhecimento da fé; pois como diz Gregório, no suceder-se dos tempos teve maior incremento o conhecimento divino. E por isso também foi necessário que, na lei antiga, fossem determinados certos sacramentos da fé, que tinham no futuro advento de Cristo. Os quais estão para 03 sacramentos anteriores à lei, como o determinado para o indeterminado. Porque, antes da lei, não foi prefixado determinadamente ao homem de que sacramentos usasse como o foi pela lei. O que era necessário, tanto pelo entenebrecimento da lei natural como para ser mais determinada a significação da fé.</p>
+    <p>RESPOSTA À TERCEIRA. — O sacramento de Melquisedeque, anterior à lei, mais se assemelhava ao sacramento da lei nova pela matéria; isto é, porque oferecia pão e vinho, como está na Escritura; assim como também o sacrifício do Novo Testamento se perfaz pelo oferecimento do pão e do vinho. Ao passo que os sacramentos da lei Mosaica mais se assemelham à realidade significada pelo sacramento, isto é, a Paixão de Cristo, como é claro no caso do cordeiro pascoal e outros semelhantes. E isto assim a fim de que se, na continuidade do tempo, permanecesse a mesma espécie de sacramentos, concluir-se- ía pela continuação do mesmo sacramento.</p>
+
+    </div>
+  </div>
+  
+  <!-- Bloco de Explicação (a ser preenchido) -->
+  <div class="bloco-explicacao">
+    <div class="explicacao-label">💡 Explicação e Contexto</div>
+    <div class="explicacao-corpo" id="explicacao">
+    <p><em>Explicação será adicionada em breve.</em></p>
+
+    </div>
+  </div>
+  
+</main>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO INFERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="navegacao-inferior">
+  <div class="nav-buttons">
+    <a href="suma-pagina2450.html" class="btn-primary">← Anterior</a>
+    <span class="pagina-atual">2451</span>
+    <a href="suma-pagina2452.html" class="btn-primary">Próxima →</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  RODAPÉ                                                  -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<footer class="suma-footer">
+  <p>Suma Teológica · São Tomás de Aquino | Biblioteca Lux Fidei</p>
+</footer>
+
+</body>
+</html>

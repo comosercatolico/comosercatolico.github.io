@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Questão 180, Artigo 4 — Se a vida contemplativa consiste só na contemplação de Deus ou | Suma Teológica</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+    --cor-fundo: #f5f0e8;
+    --cor-pagina: #fff;
+    --cor-texto: #2c1f17;
+    --cor-dourado: #d4af37;
+    --cor-roxo: #5b2c83;
+    --sombra: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cor-fundo);
+    color: var(--cor-texto);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CABEÇALHO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-header {
+    background: linear-gradient(135deg, #1a1a1a, #2c241b);
+    color: #f5f0e8;
+    padding: 32px 20px 24px;
+    text-align: center;
+    position: relative;
+}
+
+.voltar-index {
+    position: absolute;
+    top: 16px;
+    left: 20px;
+    color: var(--cor-dourado);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: opacity 0.2s;
+}
+
+.voltar-index:hover {
+    opacity: 0.8;
+}
+
+.suma-header h1 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.info-pagina {
+    display: inline-block;
+    background: rgba(212, 175, 55, 0.15);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    color: var(--cor-dourado);
+    margin-top: 8px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-topo {
+    background: #fff;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    gap: 10px;
+}
+
+.btn-nav {
+    display: inline-flex;
+    align-items: center;
+    padding: 9px 18px;
+    background: var(--cor-roxo);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.btn-nav:hover {
+    background: #4a246a;
+    transform: translateY(-1px);
+}
+
+.desabilitado {
+    background: #ddd !important;
+    color: #999 !important;
+    pointer-events: none;
+}
+
+.info-centena {
+    font-size: 0.85rem;
+    color: #888;
+    font-weight: 500;
+    padding: 0 10px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CONTEÚDO PRINCIPAL                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.pagina-conteudo {
+    flex: 1;
+    max-width: 860px;
+    width: 100%;
+    margin: 36px auto;
+    padding: 0 20px;
+}
+
+.bloco-texto {
+    background: var(--cor-pagina);
+    padding: 48px 44px;
+    border-radius: 12px;
+    box-shadow: var(--sombra);
+    position: relative;
+    margin-bottom: 24px;
+}
+
+.bloco-texto::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 20px;
+    bottom: 20px;
+    width: 4px;
+    background: linear-gradient(to bottom, var(--cor-dourado), var(--cor-roxo));
+    border-radius: 0 4px 4px 0;
+}
+
+.bloco-titulo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.3rem;
+    color: var(--cor-roxo);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e8dfd0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pagina-corpo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.1rem;
+    line-height: 1.95;
+    color: #3d3226;
+    text-align: justify;
+}
+
+.pagina-corpo p {
+    margin-bottom: 1.3em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  BLOCO DE EXPLICAÇÃO                                        */
+/* ────────────────────────────────────────────────────────── */
+
+.bloco-explicacao {
+    background: linear-gradient(135deg, #fffdf5, #faf5eb);
+    border-left: 5px solid var(--cor-dourado);
+    padding: 32px 40px;
+    border-radius: 0 12px 12px 0;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    margin-bottom: 24px;
+}
+
+.explicacao-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--cor-dourado);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 14px;
+}
+
+.explicacao-corpo {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #4a3c2c;
+}
+
+.explicacao-corpo p {
+    margin-bottom: 1em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO INFERIOR                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-inferior {
+    max-width: 860px;
+    width: 100%;
+    margin: 0 auto 40px;
+    padding: 0 20px;
+}
+
+.nav-buttons {
+    background: #fff;
+    padding: 18px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    box-shadow: var(--sombra);
+}
+
+.btn-primary {
+    flex: 1;
+    text-align: center;
+    padding: 13px 16px;
+    background: linear-gradient(135deg, var(--cor-roxo), #7a3eb5);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(91, 44, 131, 0.3);
+}
+
+.pagina-atual {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--cor-dourado);
+    min-width: 50px;
+    text-align: center;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RODAPÉ                                                     */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-footer {
+    background: #1a1a1a;
+    color: #888;
+    text-align: center;
+    padding: 22px 20px;
+    margin-top: auto;
+    font-size: 0.85rem;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RESPONSIVIDADE                                             */
+/* ────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+    .suma-header h1 {
+        font-size: 1.4rem;
+    }
+    
+    .bloco-texto {
+        padding: 28px 18px;
+    }
+    
+    .bloco-explicacao {
+        padding: 22px 18px;
+    }
+    
+    .navegacao-topo {
+        flex-wrap: wrap;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CABEÇALHO                                               -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="suma-header">
+  <a href="../../index.html" class="voltar-index">← Índice</a>
+  <h1>Suma Teológica</h1>
+  <p style="opacity:0.8; font-style:italic; margin-top:4px;">São Tomás de Aquino</p>
+  <span class="info-pagina">Página 2049 de 3000</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO SUPERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<nav class="navegacao-topo">
+  <a href="suma-pagina2048.html" class="btn-nav">← Anterior</a>
+  <span class="info-centena">Pág. 2049/3000</span>
+  <a href="suma-pagina2050.html" class="btn-nav">Próxima →</a>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CONTEÚDO PRINCIPAL                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<main class="pagina-conteudo">
+  
+  <!-- Texto Original -->
+  <div class="bloco-texto">
+    <div class="bloco-titulo">
+      <span>📜</span>
+      Questão 180, Artigo 4 — Se a vida contemplativa consiste só na contemplação de Deus ou
+    </div>
+    <div class="pagina-corpo">
+    <p>também na consideração de qualquer verdade. O quarto discute–se assim. – Parece que a vida contemplativa não consiste só na contemplação de Deus, mas também na consideração de qualquer verdade. 1. – Pois, diz a Escritura: Maravilhosas são as tuas obras e a minha. alma o conhece muito. Ora, o conhecimento das obras divinas nós o conseguimos pela contemplação de alguma verdade. Logo, parece que à vida contemplativa pertence contemplar não só a divina verdade, mas qualquer uma. 2. Demais. – Bernardo diz, que a primeira contemplação é a admiração da majestade; a segunda, a dos juízos de Deus; a terceira, a dos seus benefícios; a quarta, a das suas promessas. Ora, destas quatro coisas, só a primeira respeita à divina verdade; as outras três dizem respeito a efeitos dela. Logo, a vida contemplativa não consiste só na contemplação da verdade divina, mas também na consideração da verdade relativamente aos efeitos divinos. 3. Demais. – Ricardo de S. Vitor distingue seis espécies de contemplação. A primeira, só fundada na imaginação, é a pela qual consideramos as coisas corpóreas. A segunda se funda na imaginação racional e por ela consideramos a disposição e a ordem das coisas sensíveis. A terceira se apoia na razão imaginativa, e é quando pelo exame das coisas visíveis nos elevamos às invisíveis. A quarta é a pela qual, apoiada na razão racional, a alma considera as coisas invisíveis, desconhecidas da imaginação. A quinta, superior à razão, é quando, pela divina revelação, conhecemos o que não pode a razão humana alcançar. A sexta, enfim, superior à razão e fora do seu alcance, quando, por iluminação divina, conhecemos o que parece repugnar à razão humana, como por exemplo, a doutrina do mistério da Trindade. Ora, só a última espécie é que tem como objeto a verdade divina. Logo, a contemplação da verdade não só recai sobre a verdade divina mas também sobre a que as criaturas manifestam. 4. Demais. – A vida contemplativa busca a contemplação da verdade, enquanto constitui uma perfeição do homem. Ora, qualquer verdade é uma perfeição do intelecto humano. Logo, a vida contemplativa consiste na contemplação de qualquer verdade.</p>
+    <p>Mas, em contrário, Gregório diz, que a contemplação tem por objeto Deus, como princípio. SOLUÇÃO. – Como já dissemos o que constitui a vida contemplativa pode constituí–la de dois modos: principalmente e secundária ou dispositivamente. Principalmente, à vida contemplativa consiste na contemplação da verdade divina; pois, tal contemplação é o fim de toda a vida humana. Donde o dizer Agostinho: Pela contemplação de Deus é– nos prometida o fim de todas as atividades e a perfeição eterna da alegria. A qual será perfeita na vida futura, quando virmos a Deus face a face; e então ela nos tornará perfeitamente bem–aventurados. Nesta vida porém a nossa contemplação da verdade divina é imperfeita, como por um espelho, em enigmas; o que já nos constitui um começo de bem–aventurança, iniciada nesta vida e que continuará na futura. Por isso o Filósofo põe a felicidade última do homem na contemplação do ótimo inteligível. Ora, pelos efeitos divinos somos levados à contemplação de Deus, segundo as palavras do Apóstolo: As coisas invisíveis de Deus se veem consideradas pelas obras que foram feitas. Por onde, também a contemplação dos divinos efeitos pertence secundariamente à vida contemplativa, enquanto nos conduz ao conhecimento de Deus. Por isso, diz Agostinho, que a consideração das criaturas não deve ser para nós o exercício de uma curiosidade vã e estéril; mas, um grau para nos elevar ao imortal e permanente. Assim pois, do sobredito se colige que, numa certa ordem, quatro coisas abrange a vida contemplativa: primeiro, as virtudes morais; segundo, outros atos, além da contemplação; terceiro, a contemplação dos efeitos divinos; quarto e complemento do mais a contemplação mesma da verdade divina.</p>
+    <p>DONDE A</p>
+    <p>RESPOSTA À PRIMEIRA OBJEÇÃO. – Davi buscava conhecer as obras divinas, para por meio delas elevar–se até Deus. Por isso, noutro lugar diz: Tenho meditado em todas as tuas obras; meditava nas obras das tuas mãos; estendi as minhas mãos a ti.</p>
+    <p>RESPOSTA À SEGUNDA. – A meditação nos juízos de Deus conduz o homem à contemplação da justiça divina. E considerando os benefícios de Deus e as suas promessas, o homem se eleva ao conhecimento da divina misericórdia ou bondade, quase por efeitos manifestados ou que o serão.</p>
+    <p>RESPOSTA À TERCEIRA. – Essas seis espécies de contemplação designam os graus pelos quais, por meio das criaturas, subimos à contemplação de Deus. Assim, o primeiro grau consiste na percepção dos próprios sensíveis; o segundo, na ascensão dos sensíveis para os inteligíveis; o terceiro consiste em discernir os sensíveis pelos inteligíveis; o quarto, na consideração absoluta dos inteligíveis a que chegamos pelos sensíveis; o quinto, na contemplação dos inteligíveis que não podemos descobrir por meio dos sensíveis, mas que podemos apreender pela razão; o sexto, na consideração dos inteligíveis, que a razão não pode nem descobrir nem apreender e que constituem a sublime contemplação da divina verdade, complemento final da contemplação.</p>
+    <p>RESPOSTA À QUARTA. – A perfeição última do intelecto humano é a verdade divina; ao passo que as outras verdades aperfeiçoam o intelecto em ordem à verdade divina.</p>
+
+    </div>
+  </div>
+  
+  <!-- Bloco de Explicação (a ser preenchido) -->
+  <div class="bloco-explicacao">
+    <div class="explicacao-label">💡 Explicação e Contexto</div>
+    <div class="explicacao-corpo" id="explicacao">
+    <p><em>Explicação será adicionada em breve.</em></p>
+
+    </div>
+  </div>
+  
+</main>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO INFERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="navegacao-inferior">
+  <div class="nav-buttons">
+    <a href="suma-pagina2048.html" class="btn-primary">← Anterior</a>
+    <span class="pagina-atual">2049</span>
+    <a href="suma-pagina2050.html" class="btn-primary">Próxima →</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  RODAPÉ                                                  -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<footer class="suma-footer">
+  <p>Suma Teológica · São Tomás de Aquino | Biblioteca Lux Fidei</p>
+</footer>
+
+</body>
+</html>

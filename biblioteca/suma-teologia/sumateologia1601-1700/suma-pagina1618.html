@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Questão 78, Artigo 2 — Se podemos, pelo dinheiro mutuado, exigir uma outra vantagem. | Suma Teológica</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+    --cor-fundo: #f5f0e8;
+    --cor-pagina: #fff;
+    --cor-texto: #2c1f17;
+    --cor-dourado: #d4af37;
+    --cor-roxo: #5b2c83;
+    --sombra: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cor-fundo);
+    color: var(--cor-texto);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CABEÇALHO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-header {
+    background: linear-gradient(135deg, #1a1a1a, #2c241b);
+    color: #f5f0e8;
+    padding: 32px 20px 24px;
+    text-align: center;
+    position: relative;
+}
+
+.voltar-index {
+    position: absolute;
+    top: 16px;
+    left: 20px;
+    color: var(--cor-dourado);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: opacity 0.2s;
+}
+
+.voltar-index:hover {
+    opacity: 0.8;
+}
+
+.suma-header h1 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.info-pagina {
+    display: inline-block;
+    background: rgba(212, 175, 55, 0.15);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    color: var(--cor-dourado);
+    margin-top: 8px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-topo {
+    background: #fff;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    gap: 10px;
+}
+
+.btn-nav {
+    display: inline-flex;
+    align-items: center;
+    padding: 9px 18px;
+    background: var(--cor-roxo);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.btn-nav:hover {
+    background: #4a246a;
+    transform: translateY(-1px);
+}
+
+.desabilitado {
+    background: #ddd !important;
+    color: #999 !important;
+    pointer-events: none;
+}
+
+.info-centena {
+    font-size: 0.85rem;
+    color: #888;
+    font-weight: 500;
+    padding: 0 10px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CONTEÚDO PRINCIPAL                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.pagina-conteudo {
+    flex: 1;
+    max-width: 860px;
+    width: 100%;
+    margin: 36px auto;
+    padding: 0 20px;
+}
+
+.bloco-texto {
+    background: var(--cor-pagina);
+    padding: 48px 44px;
+    border-radius: 12px;
+    box-shadow: var(--sombra);
+    position: relative;
+    margin-bottom: 24px;
+}
+
+.bloco-texto::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 20px;
+    bottom: 20px;
+    width: 4px;
+    background: linear-gradient(to bottom, var(--cor-dourado), var(--cor-roxo));
+    border-radius: 0 4px 4px 0;
+}
+
+.bloco-titulo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.3rem;
+    color: var(--cor-roxo);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e8dfd0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pagina-corpo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.1rem;
+    line-height: 1.95;
+    color: #3d3226;
+    text-align: justify;
+}
+
+.pagina-corpo p {
+    margin-bottom: 1.3em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  BLOCO DE EXPLICAÇÃO                                        */
+/* ────────────────────────────────────────────────────────── */
+
+.bloco-explicacao {
+    background: linear-gradient(135deg, #fffdf5, #faf5eb);
+    border-left: 5px solid var(--cor-dourado);
+    padding: 32px 40px;
+    border-radius: 0 12px 12px 0;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    margin-bottom: 24px;
+}
+
+.explicacao-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--cor-dourado);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 14px;
+}
+
+.explicacao-corpo {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #4a3c2c;
+}
+
+.explicacao-corpo p {
+    margin-bottom: 1em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO INFERIOR                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-inferior {
+    max-width: 860px;
+    width: 100%;
+    margin: 0 auto 40px;
+    padding: 0 20px;
+}
+
+.nav-buttons {
+    background: #fff;
+    padding: 18px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    box-shadow: var(--sombra);
+}
+
+.btn-primary {
+    flex: 1;
+    text-align: center;
+    padding: 13px 16px;
+    background: linear-gradient(135deg, var(--cor-roxo), #7a3eb5);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(91, 44, 131, 0.3);
+}
+
+.pagina-atual {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--cor-dourado);
+    min-width: 50px;
+    text-align: center;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RODAPÉ                                                     */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-footer {
+    background: #1a1a1a;
+    color: #888;
+    text-align: center;
+    padding: 22px 20px;
+    margin-top: auto;
+    font-size: 0.85rem;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RESPONSIVIDADE                                             */
+/* ────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+    .suma-header h1 {
+        font-size: 1.4rem;
+    }
+    
+    .bloco-texto {
+        padding: 28px 18px;
+    }
+    
+    .bloco-explicacao {
+        padding: 22px 18px;
+    }
+    
+    .navegacao-topo {
+        flex-wrap: wrap;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CABEÇALHO                                               -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="suma-header">
+  <a href="../../index.html" class="voltar-index">← Índice</a>
+  <h1>Suma Teológica</h1>
+  <p style="opacity:0.8; font-style:italic; margin-top:4px;">São Tomás de Aquino</p>
+  <span class="info-pagina">Página 1618 de 3000</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO SUPERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<nav class="navegacao-topo">
+  <a href="suma-pagina1617.html" class="btn-nav">← Anterior</a>
+  <span class="info-centena">Pág. 1618/3000</span>
+  <a href="suma-pagina1619.html" class="btn-nav">Próxima →</a>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CONTEÚDO PRINCIPAL                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<main class="pagina-conteudo">
+  
+  <!-- Texto Original -->
+  <div class="bloco-texto">
+    <div class="bloco-titulo">
+      <span>📜</span>
+      Questão 78, Artigo 2 — Se podemos, pelo dinheiro mutuado, exigir uma outra vantagem.
+    </div>
+    <div class="pagina-corpo">
+    <p>O segundo discute-se assim. – Parece que podemos, pelo dinheiro mutuado, exigir uma outra vantagem. 1. – Pois, cada qual pode tomar as suas precauções para evitar uma perda. Ora, às vezes, sofremos um dano por ter mutuado o dinheiro. Logo, é lícito, além do dinheiro mutuado, pedir ou mesmo exigir alguma outra vantagem em recompensa do dano. 2. Demais. – Todos estamos obrigados, por um dever de honestidade, a dar uma recompensa a quem nos fez um benefício, como diz Aristóteles. Ora, quem empresta dinheiro ao que está dele necessitado; presta-lhe um benefício; logo, torna-se credor de uma recompensa. Portanto, o beneficiado tem o dever natural de recompensar. Ora, não é ilícito nos obrigarmos ao que constitui uma exigência do direito natural. Logo, parece não ser ilícito constituirmo-nos na obrigação de recompensar a quem nos mutuou dinheiro. 3. Demais. – Assim como há certos presentes de que a mão é o instrumento, assim há outros que se fazem por palavras e por obséquio, conforme a Glosa aquilo da Escritura Feliz daquele que sacode as suas mãos de todo o presente. Ora, podemos receber um serviço ou ainda um louvor, daquele a quem mutuamos dinheiro. Logo, pela mesma razão, podemos receber qualquer outra espécie de presente. 4. Demais. – A mesma relação há entre um dom e outro dom, que entre um mútuo e outro mútuo. Ora, podemos receber dinheiro pelo dinheiro que demos. Logo, também podemos receber a retribuição de outro mútuo pelo dinheiro que mutuámos. 5. Demais. – Aliena mais de si o dinheiro quem, dando-o em mútuo, transfere-lhe o domínio, do que quem o entrega a um negociante ou a um artífice. Ora, é lícito auferir lucro pelo dinheiro dado a um negociante ou a um artífice. Logo, também o é pelo dinheiro mutuado. 6. Demais – Pelo dinheiro mutuado podemos receber um penhor, cujo uso poderíamos vender por um determinado preço: tal se dá quando é penhorado um campo ou a casa habitada. Logo, também podemos auferir um lucro pelo dinheiro mutuado. 7. Demais. – Acontece às vezes vendermos as nossa coisas mais caro, em razão do mútuo; ou comprarmos mais barato o que é de outro; ou ainda, aumentarmos o preço por causa da demora no pagamento, ou o diminuirmos por causa da presteza com que este é feito. E em todos esses casos há uma como que retribuição pelo dinheiro mutuado. Ora, não parece que isso seja manifestamente ilícito. Logo, parece lícito esperar ou mesmo exigir alguma vantagem pelo dinheiro mutuado.</p>
+    <p>Mas, em contrário, a Escritura enumera entre as outras condições para um homem ser justo: Não receber usura nem mais do que emprestou. SOLUÇÃO. – Segundo o Filósofo, tudo aquilo deve ser considerado como dinheiro cujo valor pode ser medido pelo dinheiro. Portanto, quem, por contrato tácito ou expresso, receber dinheiro pelo dinheiro emprestado ou pelo empréstimo de qualquer outra coisa, que se consome pelo próprio uso, peca contra a justiça, como já dissemos. Do mesmo modo, quem, por contrato tácito ou expresso, receber qualquer outra coisa, cujo valor possa ser medido pelo dinheiro, incorre no mesmo pecado. Se porém receber uma coisa desse gênero, não pela exigir nem por uma como obrigação tácita ou expressa, mas, como dom gratuito, não peca. Pois, mesmo antes de ter mutuado o dinheiro podia licitamente receber um dom gratuito, nem piora de condição por ter mutuado. - Mas, é lícito exigir, como recompensa do mútuo, o que não se mede pelo dinheiro, como, a benevolência, o amor do mutuado ou retribuições semelhantes.</p>
+    <p>DONDE A</p>
+    <p>RESPOSTA À PRIMEIRA OBJEÇÃO. – Quem mutua pode sem pecado contratar com o mutuado uma recompensa pelo dano que sofre por se ver privado de um bem que lhe pertence; o que não é vender o uso do dinheiro, mas, evitar um dano. E pode acontecer que o mutuado evite maior dano do que aquele a que se expõe o mutuante; por onde, o mutuado recompensa, com a utilidade que aufere do mútuo, o dano do mutuante. - Mas não pode fazer objeto do contrato a retribuição pelo dano consistente em não auferir lucro do dinheiro; pois, não deve o mutuante vender o que ainda não tem e que pode ser impedido de muitos modos de vir a ter.</p>
+    <p>RESPOSTA À SEGUNDA. – De dois modos podese recompensar um benefício. - Por um dever de justiça; ao qual podemos nos obrigar por um contrato estipulado. E esse débito depende da quantidade do benefício recebido. Por onde, quem recebeu dinheiro mutuado, ou qualquer coisa semelhante, cujo uso consiste na consumpção, não está obrigado a dar maior retribuição que o valor do mútuo recebido. Logo, será contra a justiça se for obrigado a restituir mais. - De outro modo, estamos obrigados a recompensar um benefício por dever de amizade, no qual mais se considera o afeto com que nos foi feito o benefício, do que a quantidade do objeto dele. E esse dever não pode constituir matéria de uma obrigação civil, que impõe uma determinada necessidade, de modo que a retribuição já não é espontânea.</p>
+    <p>RESPOSTA À TERCEIRA. – Quem espera ou exige, pelo dinheiro mutuado, e por uma como obrigação fundada num contrato tácito ou expresso, a recompensa de um obséquio ou de palavras, estaria na mesma situação de quem esperasse ou exigisse um serviço manual. Porque, em ambos os casos pode-se fazer uma estimativa em dinheiro, como o demonstram os que alugam o trabalho manual ou o consistente em palavras. Mas se o presente manual ou verbal foi feito, não por obrigação, mas por benevolência, que não é susceptível de avaliação pecuniária, podemos então não só recebê-lo, como exigí-lo e esperá-lo.</p>
+    <p>RESPOSTA À QUARTA. – A quantia de dinheiro mutuado e que deve ser restituído não pode ser vendida por maior soma do que a que lhe corresponde. Nem há outra coisa mais a ser exigida ou esperada, nesse caso, além do sentimento de benevolência. não susceptível de avaliação pecuniária; donde pode resultar, como retribuição, um mútuo. Mas repugna ao mutuado a obrigação de fazer, por sua vez, no futuro, um mútuo, porque essa obrigação seria susceptível de avaliação pecuniária. Portanto, embora mutuante e mutuado o sejam simultânea e reciprocamente, não pode o mutuado ser obrigado a fazer, no futuro, um mútuo ao mutuante. RESPOSTA À QUINTA. – Quem mutua dinheiro transfere o domínio deste ao mutuado; portanto, o mutuado guarda o dinheiro, respondendo pelo perigo de perdê-lo, e está obrigado a restituí-lo integralmente. Por isso, o mutuante não pode exigir mais do que o emprestado. Mas, quem entrega o seu dinheiro a um negociante ou a um artífice a título de sociedade, não lhe transfere, mas permanece seu; de modo que, respondendo pelo perigo de perdê-lo, o negociante e o artífice o empregam. Portanto, pode o dono licitamente esperar parte do lucro dele proveniente, como de coisa sua. RESPOSTA À SEXTA. – Se pelo dinheiro for empenhada uma coisa, cujo uso é susceptível de avaliação pecuniária, o mutuante está obrigado a computar o uso dessa coisa ao ser-lhe restituído o dinheiro mutuado. Do contrário, se quisesse que o uso da coisa lhe fosse dado a mais, a título gratuito, equivaleria isso a receber dinheiro pelo mútuo, o que é usura. Salvo se a coisa for daquelas cujo uso costuma ser concedido aos amigos, sem retribuição, como é o caso de um livro dado em comodato. RESPOSTA À SÉTIMA. – Quem quiser vender as suas coisas mais caro do que pelo justo preço, com a condição de o comprador ter prazo para pagar, manifestamente pratica a usura. Porque, esse pagamento a prazo tem a natureza de mútuo. Por onde, tudo o que, a pretexto desse prazo for exigido ,além do justo preço, é um como pagamento pelo mútuo, o que implica a usura por essência. Semelhantemente, o comprador que quiser comprar uma coisa por preço inferior ao justo, porque deu o dinheiro antes de a coisa lhe poder ser entregue, comete o pecado de usura. Porque também essa antecipação de pagamento é por natureza um mútuo, cuja retribuição estaria no abatimento feito no justo preço da coisa comprada. Mas quem quiser diminuir o justo preço para receber mais cedo o seu dinheiro, não comete pecado de usura.</p>
+
+    </div>
+  </div>
+  
+  <!-- Bloco de Explicação (a ser preenchido) -->
+  <div class="bloco-explicacao">
+    <div class="explicacao-label">💡 Explicação e Contexto</div>
+    <div class="explicacao-corpo" id="explicacao">
+    <p><em>Explicação será adicionada em breve.</em></p>
+
+    </div>
+  </div>
+  
+</main>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO INFERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="navegacao-inferior">
+  <div class="nav-buttons">
+    <a href="suma-pagina1617.html" class="btn-primary">← Anterior</a>
+    <span class="pagina-atual">1618</span>
+    <a href="suma-pagina1619.html" class="btn-primary">Próxima →</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  RODAPÉ                                                  -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<footer class="suma-footer">
+  <p>Suma Teológica · São Tomás de Aquino | Biblioteca Lux Fidei</p>
+</footer>
+
+</body>
+</html>

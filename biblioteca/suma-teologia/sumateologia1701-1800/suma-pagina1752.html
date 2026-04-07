@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Questão 105, Artigo 2 — Se a desobediência é o mais grave dos pecados. | Suma Teológica</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+    --cor-fundo: #f5f0e8;
+    --cor-pagina: #fff;
+    --cor-texto: #2c1f17;
+    --cor-dourado: #d4af37;
+    --cor-roxo: #5b2c83;
+    --sombra: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cor-fundo);
+    color: var(--cor-texto);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CABEÇALHO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-header {
+    background: linear-gradient(135deg, #1a1a1a, #2c241b);
+    color: #f5f0e8;
+    padding: 32px 20px 24px;
+    text-align: center;
+    position: relative;
+}
+
+.voltar-index {
+    position: absolute;
+    top: 16px;
+    left: 20px;
+    color: var(--cor-dourado);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: opacity 0.2s;
+}
+
+.voltar-index:hover {
+    opacity: 0.8;
+}
+
+.suma-header h1 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.info-pagina {
+    display: inline-block;
+    background: rgba(212, 175, 55, 0.15);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    color: var(--cor-dourado);
+    margin-top: 8px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-topo {
+    background: #fff;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    gap: 10px;
+}
+
+.btn-nav {
+    display: inline-flex;
+    align-items: center;
+    padding: 9px 18px;
+    background: var(--cor-roxo);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.btn-nav:hover {
+    background: #4a246a;
+    transform: translateY(-1px);
+}
+
+.desabilitado {
+    background: #ddd !important;
+    color: #999 !important;
+    pointer-events: none;
+}
+
+.info-centena {
+    font-size: 0.85rem;
+    color: #888;
+    font-weight: 500;
+    padding: 0 10px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CONTEÚDO PRINCIPAL                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.pagina-conteudo {
+    flex: 1;
+    max-width: 860px;
+    width: 100%;
+    margin: 36px auto;
+    padding: 0 20px;
+}
+
+.bloco-texto {
+    background: var(--cor-pagina);
+    padding: 48px 44px;
+    border-radius: 12px;
+    box-shadow: var(--sombra);
+    position: relative;
+    margin-bottom: 24px;
+}
+
+.bloco-texto::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 20px;
+    bottom: 20px;
+    width: 4px;
+    background: linear-gradient(to bottom, var(--cor-dourado), var(--cor-roxo));
+    border-radius: 0 4px 4px 0;
+}
+
+.bloco-titulo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.3rem;
+    color: var(--cor-roxo);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e8dfd0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pagina-corpo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.1rem;
+    line-height: 1.95;
+    color: #3d3226;
+    text-align: justify;
+}
+
+.pagina-corpo p {
+    margin-bottom: 1.3em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  BLOCO DE EXPLICAÇÃO                                        */
+/* ────────────────────────────────────────────────────────── */
+
+.bloco-explicacao {
+    background: linear-gradient(135deg, #fffdf5, #faf5eb);
+    border-left: 5px solid var(--cor-dourado);
+    padding: 32px 40px;
+    border-radius: 0 12px 12px 0;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    margin-bottom: 24px;
+}
+
+.explicacao-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--cor-dourado);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 14px;
+}
+
+.explicacao-corpo {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #4a3c2c;
+}
+
+.explicacao-corpo p {
+    margin-bottom: 1em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO INFERIOR                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-inferior {
+    max-width: 860px;
+    width: 100%;
+    margin: 0 auto 40px;
+    padding: 0 20px;
+}
+
+.nav-buttons {
+    background: #fff;
+    padding: 18px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    box-shadow: var(--sombra);
+}
+
+.btn-primary {
+    flex: 1;
+    text-align: center;
+    padding: 13px 16px;
+    background: linear-gradient(135deg, var(--cor-roxo), #7a3eb5);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(91, 44, 131, 0.3);
+}
+
+.pagina-atual {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--cor-dourado);
+    min-width: 50px;
+    text-align: center;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RODAPÉ                                                     */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-footer {
+    background: #1a1a1a;
+    color: #888;
+    text-align: center;
+    padding: 22px 20px;
+    margin-top: auto;
+    font-size: 0.85rem;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RESPONSIVIDADE                                             */
+/* ────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+    .suma-header h1 {
+        font-size: 1.4rem;
+    }
+    
+    .bloco-texto {
+        padding: 28px 18px;
+    }
+    
+    .bloco-explicacao {
+        padding: 22px 18px;
+    }
+    
+    .navegacao-topo {
+        flex-wrap: wrap;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CABEÇALHO                                               -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="suma-header">
+  <a href="../../index.html" class="voltar-index">← Índice</a>
+  <h1>Suma Teológica</h1>
+  <p style="opacity:0.8; font-style:italic; margin-top:4px;">São Tomás de Aquino</p>
+  <span class="info-pagina">Página 1752 de 3000</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO SUPERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<nav class="navegacao-topo">
+  <a href="suma-pagina1751.html" class="btn-nav">← Anterior</a>
+  <span class="info-centena">Pág. 1752/3000</span>
+  <a href="suma-pagina1753.html" class="btn-nav">Próxima →</a>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CONTEÚDO PRINCIPAL                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<main class="pagina-conteudo">
+  
+  <!-- Texto Original -->
+  <div class="bloco-texto">
+    <div class="bloco-titulo">
+      <span>📜</span>
+      Questão 105, Artigo 2 — Se a desobediência é o mais grave dos pecados.
+    </div>
+    <div class="pagina-corpo">
+    <p>O segundo discute–se assim. – Parece que a desobediência é o mais grave dos pecados. 1. – Pois, diz a Escritura: O resistir é como o pecado de adivinhação, e não querer submeter–se é como o crime de idolatria. Ora, a idolatria é o mais grave dos recados, como se estabeleceu– Logo, a desobediência te o mais grave dos pecados. 2. Demais. – Chama–se pecado contra o Espírito Santo o que destrói as peias estabelecidas contra o pecado, como se disse. Ora, pela desobediência, desprezamos o preceito que, sobretudo nos afasta do pecado. Logo, a desobediência é um pecado contra o Espírito Santo. E portanto é o mais grave dos pecados. 3. Demais. – O Apóstolo diz: Pela desobediência de um só homem foram muitos feitos pecadores. Ora, a causa prepondera sobre o efeito. Logo, parece que a desobediência é mais grave pecado que todos os efeitos que ela causa.</p>
+    <p>Mas, em contrário, é mais grave desprezar quem manda do que a ordem que dá. Ora, certos pecados são contra a pessoa mesmo que manda como é o caso da blasfêmia e do homicídio. Logo, a desobediência não é o mais grave dos pecados. SOLUÇÃO. – Nem toda desobediência constitui igualmente pecado. Pois, uma pode ser mais grave que outra, de dois modos. – Primeiro, relativamente a quem manda, Pois, embora todos devemos cuidar de obedecer aos nossos superiores, contudo, devemos obedecer antes a uma autoridade superior que a uma inferior; e a prova está em que devemos desobedecer à ordem do inferior quando contrária à do superior. Por onde e consequentemente, quanto maior for a autoridade do superior que nos manda, tanto mais grave será desobedecer–lhe. E assim, é mais grave desobedecer a Deus que ao homem. – Segundo, relativamente ao que é mandado. Pois, quem manda não quer que se lhe cumpram todas as ordens igualmente; pois, quer mais o fim e o que lhe está mais próximo. Por onde, a desobediência será tanto mais grave quanto mais estiver na intenção de quem manda a ordem preterida. E quanto aos preceitos de Deus, é claro que quanto mais importante for a matéria sobre que eles versam, tanto mais grave será a desobediência. Porque, a vontade de Deus, tendo essencialmente por objeto o bem, quanto melhor for um ato tanto mais Deus quer que ele seja praticado. Por onde, quem desobedecer ao mandamento de amor a Deus peca mais gravemente que quem desobedecer ao de amar ao próximo. Mas, a vontade do homem nem sempre busca de preferência o melhor. Por isso, quando estamos obrigados apenas por uma ordem humana, a maior gravidade do pecado não está em preterirmos um maior bem, mas, aquilo que está mais na intenção de quem manda. Por onde, os diversos graus de desobediência são necessariamente relativos aos diversos graus de pecados. Assim, a desobediência pela qual desprezamos os preceitos divinos é, por essência, mais grave pecado do que o pecado cometido contra um homem, mesmo abstraindo da desobediência a Deus, que este último pecado implica. E isto digo porque quem peca contra o próximo também age contra o preceito divino. E se ainda desprezasse um preceito de Deus mais importante, ainda mais grave seria o pecado. A desobediência, porém, pela qual desprezamos um preceito humano, é mais leve pecado que aquela pela qual desprezamos a pessoa mesma que nos manda; pois, é do respeito a quem manda que procede o respeito pela sua ordem. Semelhantemente, o pecado que importa diretamente desprezo de Deus, como a blasfémia eu outro semelhante, é mais grave, mesmo separando do pecado, pelo intelecto, a desobediência, do que o pecado pelo qual desprezemos o só preceito de Deus.</p>
+    <p>DONDE A</p>
+    <p>RESPOSTA À PRIMEIRA OBJEÇÃO. – A comparação de Samuel não se funda na igualdade, mas na semelhança; porque a desobediência redunda em desprezo de Deus, assim como a idolatria, embora esta, mais.</p>
+    <p>RESPOSTA À SEGUNDA. – Nem toda desobediência é pecado contra o Espírito Santo, mas só a que é acompanhada da obstinação. Pois, nem todo desprezo do que é obstáculo ao pecado constitui pecado contra o Espírito Santo; do contrário, o desprezo de qualquer bem seria pecado contra o Espírito Santo, porque qualquer bem pode nos livrar do pecado. Mas é pecado contra o Espírito Santo o desprezo daqueles bens, que levam diretamente à penitência e à remissão dos pecados.</p>
+    <p>RESPOSTA À TERCEIRA. – O primeiro pecado dos nossos primeiros pais, que contaminou todos os seus descendentes, não foi de desobediência enquanto pecado especial; mas, de soberba, que os levou à desobediência. Por isso o Apóstolo, nas palavras citadas, considera a desobediência na sua relação geral com os demais pecados. Em seguida devemos tratar do reconhecimento ou gratidão, e da ingratidão. Sobre a gratidão discutem–se seis artigos:</p>
+
+    </div>
+  </div>
+  
+  <!-- Bloco de Explicação (a ser preenchido) -->
+  <div class="bloco-explicacao">
+    <div class="explicacao-label">💡 Explicação e Contexto</div>
+    <div class="explicacao-corpo" id="explicacao">
+    <p><em>Explicação será adicionada em breve.</em></p>
+
+    </div>
+  </div>
+  
+</main>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO INFERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="navegacao-inferior">
+  <div class="nav-buttons">
+    <a href="suma-pagina1751.html" class="btn-primary">← Anterior</a>
+    <span class="pagina-atual">1752</span>
+    <a href="suma-pagina1753.html" class="btn-primary">Próxima →</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  RODAPÉ                                                  -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<footer class="suma-footer">
+  <p>Suma Teológica · São Tomás de Aquino | Biblioteca Lux Fidei</p>
+</footer>
+
+</body>
+</html>

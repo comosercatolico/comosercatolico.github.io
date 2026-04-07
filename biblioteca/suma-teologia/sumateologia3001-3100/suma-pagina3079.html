@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Questão 96, Artigo 4 — ─ Se acertadamente se atribuem três frutos às três partes da | Suma Teológica</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+    --cor-fundo: #f5f0e8;
+    --cor-pagina: #fff;
+    --cor-texto: #2c1f17;
+    --cor-dourado: #d4af37;
+    --cor-roxo: #5b2c83;
+    --sombra: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cor-fundo);
+    color: var(--cor-texto);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CABEÇALHO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-header {
+    background: linear-gradient(135deg, #1a1a1a, #2c241b);
+    color: #f5f0e8;
+    padding: 32px 20px 24px;
+    text-align: center;
+    position: relative;
+}
+
+.voltar-index {
+    position: absolute;
+    top: 16px;
+    left: 20px;
+    color: var(--cor-dourado);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: opacity 0.2s;
+}
+
+.voltar-index:hover {
+    opacity: 0.8;
+}
+
+.suma-header h1 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.info-pagina {
+    display: inline-block;
+    background: rgba(212, 175, 55, 0.15);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    color: var(--cor-dourado);
+    margin-top: 8px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-topo {
+    background: #fff;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    gap: 10px;
+}
+
+.btn-nav {
+    display: inline-flex;
+    align-items: center;
+    padding: 9px 18px;
+    background: var(--cor-roxo);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.btn-nav:hover {
+    background: #4a246a;
+    transform: translateY(-1px);
+}
+
+.desabilitado {
+    background: #ddd !important;
+    color: #999 !important;
+    pointer-events: none;
+}
+
+.info-centena {
+    font-size: 0.85rem;
+    color: #888;
+    font-weight: 500;
+    padding: 0 10px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CONTEÚDO PRINCIPAL                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.pagina-conteudo {
+    flex: 1;
+    max-width: 860px;
+    width: 100%;
+    margin: 36px auto;
+    padding: 0 20px;
+}
+
+.bloco-texto {
+    background: var(--cor-pagina);
+    padding: 48px 44px;
+    border-radius: 12px;
+    box-shadow: var(--sombra);
+    position: relative;
+    margin-bottom: 24px;
+}
+
+.bloco-texto::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 20px;
+    bottom: 20px;
+    width: 4px;
+    background: linear-gradient(to bottom, var(--cor-dourado), var(--cor-roxo));
+    border-radius: 0 4px 4px 0;
+}
+
+.bloco-titulo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.3rem;
+    color: var(--cor-roxo);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e8dfd0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pagina-corpo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.1rem;
+    line-height: 1.95;
+    color: #3d3226;
+    text-align: justify;
+}
+
+.pagina-corpo p {
+    margin-bottom: 1.3em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  BLOCO DE EXPLICAÇÃO                                        */
+/* ────────────────────────────────────────────────────────── */
+
+.bloco-explicacao {
+    background: linear-gradient(135deg, #fffdf5, #faf5eb);
+    border-left: 5px solid var(--cor-dourado);
+    padding: 32px 40px;
+    border-radius: 0 12px 12px 0;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    margin-bottom: 24px;
+}
+
+.explicacao-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--cor-dourado);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 14px;
+}
+
+.explicacao-corpo {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #4a3c2c;
+}
+
+.explicacao-corpo p {
+    margin-bottom: 1em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO INFERIOR                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-inferior {
+    max-width: 860px;
+    width: 100%;
+    margin: 0 auto 40px;
+    padding: 0 20px;
+}
+
+.nav-buttons {
+    background: #fff;
+    padding: 18px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    box-shadow: var(--sombra);
+}
+
+.btn-primary {
+    flex: 1;
+    text-align: center;
+    padding: 13px 16px;
+    background: linear-gradient(135deg, var(--cor-roxo), #7a3eb5);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(91, 44, 131, 0.3);
+}
+
+.pagina-atual {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--cor-dourado);
+    min-width: 50px;
+    text-align: center;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RODAPÉ                                                     */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-footer {
+    background: #1a1a1a;
+    color: #888;
+    text-align: center;
+    padding: 22px 20px;
+    margin-top: auto;
+    font-size: 0.85rem;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RESPONSIVIDADE                                             */
+/* ────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+    .suma-header h1 {
+        font-size: 1.4rem;
+    }
+    
+    .bloco-texto {
+        padding: 28px 18px;
+    }
+    
+    .bloco-explicacao {
+        padding: 22px 18px;
+    }
+    
+    .navegacao-topo {
+        flex-wrap: wrap;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CABEÇALHO                                               -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="suma-header">
+  <a href="../../index.html" class="voltar-index">← Índice</a>
+  <h1>Suma Teológica</h1>
+  <p style="opacity:0.8; font-style:italic; margin-top:4px;">São Tomás de Aquino</p>
+  <span class="info-pagina">Página 3079 de 3000</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO SUPERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<nav class="navegacao-topo">
+  <a href="suma-pagina3078.html" class="btn-nav">← Anterior</a>
+  <span class="info-centena">Pág. 3079/3000</span>
+  <a href="suma-pagina3080.html" class="btn-nav">Próxima →</a>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CONTEÚDO PRINCIPAL                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<main class="pagina-conteudo">
+  
+  <!-- Texto Original -->
+  <div class="bloco-texto">
+    <div class="bloco-titulo">
+      <span>📜</span>
+      Questão 96, Artigo 4 — ─ Se acertadamente se atribuem três frutos às três partes da
+    </div>
+    <div class="pagina-corpo">
+    <p>continência. O quarto discute-se assim. ─ Parece que não se atribuem acertadamente três frutos às três partes da continência. 1. ─ Pois, o Apóstolo enumera doze frutos do espírito: A caridade, a alegria, a paz, etc. Logo, não se devem enumerar só três. 2. Demais. ─ Fruto designa um prêmio especial. Ora, o prêmio atribuído às virgens, às viúvas e aos casados não é um prêmio especial. Pois, todos os que hão de salvar-se estão incluídos numa dessas três classes; porque ninguém se salva sem ter praticado a continência, e esta se divide suficientemente pelas três classes referidas. Logo, não se atribuem com acerto três frutos a essas três classes. 3. Demais. ─ Assim como a viuvez excede à continência conjugal, assim a virgindade à viuvez. Ora, quem recebeu o fruto centuplicado não excede quem o recebeu trinta vezes mais, como o que o recebeu centuplicado excede o que recebem sessenta vezes mais. Nem por proporção aritmética, porque sessenta excede a trinta em trinta, e cem excede em quarenta a sessenta. Nem por proporção geométrica, porque sessenta excede a trinta na proporção de dois para quatro, ao passo que cem está para sessenta como cinco para dois, porque contém sessenta mais duas terças partes deste número. Logo, não é acertado fazer corresponder os frutos aos três graus de continência. 4. Demais. ─ O que está dito na Sagrada Escritura deve durar sempre, conforme aquilo do Evangelho: Passará o céu e a terra, mas as minhas palavras não passarão. Ao contrário, todas as obras feitas pelo homem podem mudar a cada passo. Logo, nas obras humanas não devemos buscar um critério para apreciar os ditos da Sagrada Escritura. E assim parece inadmissível o fundamento dado por Beda aos referidos frutos, dizendo que o fruto de trinta por um é devido aos casados, porque na representação do ábaco, trinta é expresso pelo contato das pontas do polegar e do índex, que por assim dizer se beijam. E assim o número trinta significa os ósculos dos casados. Ao passo que o número sessenta é expresso pelo contato do índex com a articulação média do polegar; e assim o índex, sobre o polegar e apertando-o, significa a opressão que as viúvas sofrem neste mundo. Mas, quando na numeração chegamos ao número cem, passamos do lado direito para o esquerdo; por isso o número cem designa a virgindade, porque participa da dignidade dos anjos, que estão à direita, i. é, na glória; enquanto que nós outros estamos à esquerda, por causa da imperfeição desta vida. SOLUÇÃO. ─ Pela continência, a que corresponde um fruto, o homem, desprezando os prazeres da carne, eleva-se a um estado de espiritualidade. Por onde, conforme os diversos graus de espiritualidade produzidos pela continência, assim se distinguem os diversos frutos. Ora, há uma espiritualidade necessária e outra superabundante. ─ A espiritualidade necessária consiste em a retidão do espírito não ser pervertida pelos prazeres carnais; e isso se dá quando buscamos os prazeres da carne segundo a ordem reta da razão. E esta é a espiritualidade dos casados. ─ A espiritualidade superabundante é a pela qual o homem se abstém completamente de todos os prazeres carnais, que impedem a liberdade do espírito. O que de dois modos pode ser. ─ Ou absolutamente, em qualquer tempo ─ passado, presente ou futuro; e esta é a espiritualidade das virgens. ─ Ou num tempo determinado e essa é a das viúvas. Assim, pois, os que observam à continência conjugal é dado o fruto de trinta por um: à da viuvez, o de sessenta por um; e à virginal, o de cem por um, pela razão que dá Beda, supra-referida. Embora possamos ainda dar a razão seguinte, fundada em a natureza dos números. ─ Pois, o número trinta resulta da multiplicação de três por dez. Ora, o número três é o número de todas as cousas, diz Aristóteles; e tem em si a perfeição de princípio, de meio e de fim, comum a todos os seres. Por isso o número trinta é acertadamente atribuído aos casados, que, além da observação do Decálogo, significado pelo número dez, não tem nenhuma outra perfeição senão a comum, sem a qual não pode haver salvação. ─ O número seis, que multiplicado por dez produz cem, tem uma perfeição resultante das suas partes, pois, as tem todas simultaneamente unidas. Por isso corresponde com conveniência à viuvez, que implica a completa abstenção dos prazeres da carne com todas as suas circunstâncias, que são como partes do ato virtuoso. Pois, a viuvez se opõe ao gozo do prazer carnal, seja com que pessoa for e em qualquer lugar que seja; e assim quanto às outras circunstâncias. O que não se dá com a continência conjugal. ─ Mas o número cem convém convenientemente à virgindade; porque o número dez, de cuja multiplicação resulta o número cem, é o limite da espiritualidade, porque nada mais de espiritual se lhe pode acrescentar. Pois, o número cem, como número quadrado, é, pela sua figura, um número perfeito. Porque a figura do quadrado é perfeita por, sendo igual de todos os lados, ter uma igualdade total. Por isso corresponde à virgindade, que permanece incorrupta igualmente em todo tempo.</p>
+    <p>DONDE A</p>
+    <p>RESPOSTA À PRIMEIRA OBJEÇÃO. ─ No lugar citado a palavra fruto não tem o mesmo sentido no em que agora dele nos ocupamos.</p>
+    <p>RESPOSTA À SEGUNDA. ─ Nada obriga a admitir o fruto como um prêmio não comum a todos os que se salvam. Pois, não só o prêmio essencial é comum a todos, mas também certas recompensas acidentais, como a alegria resultante das obras sem as quais não pode haver salvação. ─ Pode-se porém dizer que os frutos não convém a todos os que devem salvar-se, como o demonstram os que, depois de terem vivido na incontinência; fizeram penitência no fim da vida; pois a esses não é devido o fruto, mas só o prêmio essencial.</p>
+    <p>RESPOSTA À TERCEIRA. ─ A distinção dos frutos se funda, antes, nas espécies e nas figuras dos números, que nas quantidades que representam. Contudo, mesmo considerando-lhes essas quantidades é possível descobrir uma razão de excesso entre eles. Assim o casado só se abstém da mulher que não é a sua; a viúva, porém, do seu marido e do que não é seu; e assim há aí um certo excesso em dobro, como sessenta é o dobro de trinta. Quanto ao número cem, excede a sessenta em quarenta, resultando este da multiplicação de quatro por trinta. Ora, o número quatro é o primeiro número sólido e cúbico. E assim, uma tal adição convém à virgindade, que acrescenta à perfeição da viuvez a perpétua incorrupção.</p>
+    <p>RESPOSTA À QUARTA. ─ Embora esse modo referido de representar os números seja de instituição humana, contudo se funda de certo modo em a natureza das cousas, pois os números são designados gradualmente pela ordem dos dedos, das articulações.</p>
+
+    </div>
+  </div>
+  
+  <!-- Bloco de Explicação (a ser preenchido) -->
+  <div class="bloco-explicacao">
+    <div class="explicacao-label">💡 Explicação e Contexto</div>
+    <div class="explicacao-corpo" id="explicacao">
+    <p><em>Explicação será adicionada em breve.</em></p>
+
+    </div>
+  </div>
+  
+</main>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO INFERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="navegacao-inferior">
+  <div class="nav-buttons">
+    <a href="suma-pagina3078.html" class="btn-primary">← Anterior</a>
+    <span class="pagina-atual">3079</span>
+    <a href="suma-pagina3080.html" class="btn-primary">Próxima →</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  RODAPÉ                                                  -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<footer class="suma-footer">
+  <p>Suma Teológica · São Tomás de Aquino | Biblioteca Lux Fidei</p>
+</footer>
+
+</body>
+</html>

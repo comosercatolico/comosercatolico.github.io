@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Questão 85, Artigo 3 — — Se o que é mais universal tem prioridade em o nosso | Suma Teológica</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+    --cor-fundo: #f5f0e8;
+    --cor-pagina: #fff;
+    --cor-texto: #2c1f17;
+    --cor-dourado: #d4af37;
+    --cor-roxo: #5b2c83;
+    --sombra: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cor-fundo);
+    color: var(--cor-texto);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CABEÇALHO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-header {
+    background: linear-gradient(135deg, #1a1a1a, #2c241b);
+    color: #f5f0e8;
+    padding: 32px 20px 24px;
+    text-align: center;
+    position: relative;
+}
+
+.voltar-index {
+    position: absolute;
+    top: 16px;
+    left: 20px;
+    color: var(--cor-dourado);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: opacity 0.2s;
+}
+
+.voltar-index:hover {
+    opacity: 0.8;
+}
+
+.suma-header h1 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.info-pagina {
+    display: inline-block;
+    background: rgba(212, 175, 55, 0.15);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    color: var(--cor-dourado);
+    margin-top: 8px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-topo {
+    background: #fff;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    gap: 10px;
+}
+
+.btn-nav {
+    display: inline-flex;
+    align-items: center;
+    padding: 9px 18px;
+    background: var(--cor-roxo);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.btn-nav:hover {
+    background: #4a246a;
+    transform: translateY(-1px);
+}
+
+.desabilitado {
+    background: #ddd !important;
+    color: #999 !important;
+    pointer-events: none;
+}
+
+.info-centena {
+    font-size: 0.85rem;
+    color: #888;
+    font-weight: 500;
+    padding: 0 10px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CONTEÚDO PRINCIPAL                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.pagina-conteudo {
+    flex: 1;
+    max-width: 860px;
+    width: 100%;
+    margin: 36px auto;
+    padding: 0 20px;
+}
+
+.bloco-texto {
+    background: var(--cor-pagina);
+    padding: 48px 44px;
+    border-radius: 12px;
+    box-shadow: var(--sombra);
+    position: relative;
+    margin-bottom: 24px;
+}
+
+.bloco-texto::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 20px;
+    bottom: 20px;
+    width: 4px;
+    background: linear-gradient(to bottom, var(--cor-dourado), var(--cor-roxo));
+    border-radius: 0 4px 4px 0;
+}
+
+.bloco-titulo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.3rem;
+    color: var(--cor-roxo);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e8dfd0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pagina-corpo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.1rem;
+    line-height: 1.95;
+    color: #3d3226;
+    text-align: justify;
+}
+
+.pagina-corpo p {
+    margin-bottom: 1.3em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  BLOCO DE EXPLICAÇÃO                                        */
+/* ────────────────────────────────────────────────────────── */
+
+.bloco-explicacao {
+    background: linear-gradient(135deg, #fffdf5, #faf5eb);
+    border-left: 5px solid var(--cor-dourado);
+    padding: 32px 40px;
+    border-radius: 0 12px 12px 0;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    margin-bottom: 24px;
+}
+
+.explicacao-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--cor-dourado);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 14px;
+}
+
+.explicacao-corpo {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #4a3c2c;
+}
+
+.explicacao-corpo p {
+    margin-bottom: 1em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO INFERIOR                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-inferior {
+    max-width: 860px;
+    width: 100%;
+    margin: 0 auto 40px;
+    padding: 0 20px;
+}
+
+.nav-buttons {
+    background: #fff;
+    padding: 18px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    box-shadow: var(--sombra);
+}
+
+.btn-primary {
+    flex: 1;
+    text-align: center;
+    padding: 13px 16px;
+    background: linear-gradient(135deg, var(--cor-roxo), #7a3eb5);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(91, 44, 131, 0.3);
+}
+
+.pagina-atual {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--cor-dourado);
+    min-width: 50px;
+    text-align: center;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RODAPÉ                                                     */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-footer {
+    background: #1a1a1a;
+    color: #888;
+    text-align: center;
+    padding: 22px 20px;
+    margin-top: auto;
+    font-size: 0.85rem;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RESPONSIVIDADE                                             */
+/* ────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+    .suma-header h1 {
+        font-size: 1.4rem;
+    }
+    
+    .bloco-texto {
+        padding: 28px 18px;
+    }
+    
+    .bloco-explicacao {
+        padding: 22px 18px;
+    }
+    
+    .navegacao-topo {
+        flex-wrap: wrap;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CABEÇALHO                                               -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="suma-header">
+  <a href="../../index.html" class="voltar-index">← Índice</a>
+  <h1>Suma Teológica</h1>
+  <p style="opacity:0.8; font-style:italic; margin-top:4px;">São Tomás de Aquino</p>
+  <span class="info-pagina">Página 425 de 3000</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO SUPERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<nav class="navegacao-topo">
+  <a href="suma-pagina424.html" class="btn-nav">← Anterior</a>
+  <span class="info-centena">Pág. 425/3000</span>
+  <a href="suma-pagina426.html" class="btn-nav">Próxima →</a>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CONTEÚDO PRINCIPAL                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<main class="pagina-conteudo">
+  
+  <!-- Texto Original -->
+  <div class="bloco-texto">
+    <div class="bloco-titulo">
+      <span>📜</span>
+      Questão 85, Artigo 3 — — Se o que é mais universal tem prioridade em o nosso
+    </div>
+    <div class="pagina-corpo">
+    <p>conhecimento intelectual. (I Poster., lect. IV; I Metaphys., lect. I). O terceiro discute-se assim. ― Parece que o que é mais universal não tem prioridade em o nosso conhecimento intelectual. 1. ― Pois, o que tem prioridade e é mais conhecido, por natureza, é posterior e menos conhecido por nós. Ora, os universais têm prioridade, por natureza, porque se chama primeiro aquilo de que não há reciprocação quanto à conseqüência pela qual dizemos que uma coisa existe. Logo, os universais são posteriores. 2. Demais. ― O composto é, para nós, anterior ao simples. Ora, os universais são o que há de mais simples. Logo, são conhecidos por nós posteriormente. 3. Demais. ― O Filósofo diz, que nós conhecemos o definido antes de conhecermos as partes da definição. Ora, o mais universal é parte da definição do menos universal; assim, animal é parte da definição do homem. Logo, os universais são, quanto a nós, conhecidos posteriormente. 4. Demais. ― Pelos efeitos, chegamos às causas e aos princípios. Ora, os universais são princípios. Logo, são conhecidos por nós posteriormente.</p>
+    <p>Mas, em contrário, pelo universal é que devemos chegar ao singular. SOLUÇÃO. ― Duas coisas devem-se considerar no conhecimento do nosso intelecto. A primeira é que o conhecimento intelectivo tem o seu princípio, de certo modo, no sensitivo. E como o sentido conhece o singular e o intelecto, o universal, forçoso é que o conhecimento do singular seja, quanto a nós, anterior ao do universal. A segunda consideração é que o nosso intelecto procede da potência para o ato. Ora, tudo o que assim procede chega ao ato incompleto, meio termo entre a potência e o ato, antes de chegar ao ato perfeito. Ora, esse ato perfeito, ao qual chega o intelecto, é a ciência completa, pela qual as coisas são conhecidas distinta e determinadamente. O ato incompleto, porém, é a ciência imperfeita, pela qual as coisas são conhecidas indistintamente, com certa confusão; e o que é assim conhecido sob certo aspecto o é em ato e, de certo modo, em potência. Por onde, diz o Filósofo: o mais confuso é o que, primariamente, nos é manifesto e certo; depois, é que conhecemos os princípios e os elementos distintos. Ora, é claro que conhecer uma coisa na qual várias outras se contêm, sem ter conhecimento próprio de cada uma das coisas naquela contidas, é conhecê-la com certa confusão. E assim, pode ser conhecido tanto o todo universal no qual se contêm as partes, potencialmente, como o todo integral; pois, ambos esses todos podem ser conhecidos com certa confusão, sem serem conhecidas, distintamente, as partes. Ao passo que conhecer distintamente o que se contém no todo universal, é ter conhecimento de coisa menos comum. Assim, conhecer um animal, indistintamente, é conhecê-lo como animal; conhecê- lo, porém, distintamente é conhecê-lo como animal racional ou irracional, o que é conhecer o homem ou leão. Ora, o nosso intelecto conhece o animal antes de conhecer o homem. E o mesmo se verá se se comparar o que quer que seja de mais universal com o menos universal. Como, porém, o sentido, semelhantemente ao intelecto, passa da potência para o ato, a mesma ordem do conhecimento nele aparece. Pois, pelo sentido, discernimos o mais comum antes do menos comum, tanto local como temporalmente. Localmente, como quando alguma coisa, vista de longe, é apreendida como corpo antes de o ser como animal; antes como animal do que como homem; e antes como homem do que como Sócrates ou Platão. Temporalmente, pois que a criança, a princípio, distingue um homem do que não é homem e, depois, tal homem, de tal outro; donde vem que as crianças, a princípio denominam todos os homens, pais; depois, determinam cada pessoa, como diz Aristóteles. E a razão disto é manifesta. Pois, quem conhece uma coisa indistintamente ainda está em potência para conhecer o princípio da distinção; assim, quem conhece o gênero está em potência para conhecer a diferença. Por onde se vê que o conhecimento indistinto é médio entre a potência e o ato. Logo, deve-se dizer que o conhecimento do singular é anterior, em relação a nós, ao do universal, bem como o conhecimento sensitivo é anterior ao intelectivo. Mas, tanto em relação ao sentido como ao intelecto, o conhecimento mais comum é anterior ao menos comum.</p>
+    <p>DONDE A</p>
+    <p>RESPOSTA À PRIMEIRA OBJEÇÃO. ― De dois modos se pode considerar o universal. ― De um modo, considerando-se a natureza do universal simultaneamente com a intenção da universalidade. E como esta, que faz com que o que tem unidade e identidade se refira a muitas coisas, provém da abstração do intelecto, necessário é que, deste modo, o universal seja posterior. Por onde, diz-se que, o animal universal ou não é nada ou é o que é posterior. Mas, para Platão, admitindo os universais como subsistentes, o universal é anterior ao particular que, na sua opinião, não existe senão por participação dos universais subsistentes chamados idéias. ― De outro modo, o universal pode ser considerado quanto à própria natureza mesma, a saber, de animalidade ou humanidade, tal como existe nos seres particulares. E então, deve-se dizer que há uma dupla ordem da natureza. Uma, segundo a via da geração e do tempo e, então, o que é imperfeito e potencial tem prioridade. E, deste modo, o mais comum tem prioridade, quando à natureza; o que manifestamente aparece na geração do homem e do animal; pois, este é gerado antes daquele, como diz Aristóteles. Outra é a ordem da perfeição ou da tendência da natureza; assim, ato, em si mesmo e pela sua natureza, é anterior à potência, e o perfeito, ao imperfeito. E, deste modo, o menos comum é anterior, por natureza, ao mais comum, como, p. ex., o homem, ao animal; pois, a tendência da natureza não estaca na geração do animal, mas busca gerar o homem.</p>
+    <p>RESPOSTA À SEGUNDA. ― O universal mais comum está para o menos comum como o todo para a parte. Como todo, nele está potencialmente contido, não só o menos universal, mas ainda outras coisas; assim, no animalestá contido, não só o homem, mas também o cavalo. Como parte, a noção do menos comum contém, não só o mais comum, mas também outras coisas: assim no homem se contém, não só o animal, mas também o racional. Assim, pois, o animal, considerado em si, é anterior, em o nosso conhecimento, ao homem; mas o homem, é conhecido antes da noção de animal, como parte do mesmo homem.</p>
+    <p>RESPOSTA À TERCEIRA. ― Uma parte pode ser conhecida de duplo modo. Absolutamente, como é em si mesma; e, então, nada impede conhecer as partes antes do todo, p. ex., as pedras antes da casa. De outro modo, como partes de um determinado todo, e então, necessário é conheçamos o todo antes da parte; pois, conhecemos a casa, por um conhecimento confuso, antes de lhe distinguirmos cada uma das partes. Por onde, deve-se dizer que as partes da definição, absolutamente consideradas, são conhecidas antes do definido, do contrário não se conheceria este por aquelas; mas, como partes da definição são conhecidas posteriormente. Assim, conhecemos o homem por um conhecimento confuso, antes que saibamos distinguir tudo o que é da essência do homem.</p>
+    <p>RESPOSTA À QUARTA. ― O universal, entendido simultaneamente com a intenção da universalidade, é, de certo modo, princípio de conhecimento, enquanto essa intenção é conseqüente ao modo de inteligir, que se opera pela abstração. Não é necessário, porém, que tudo o que é princípio de conhecimento seja princípio de existência, como pensava Platão; pois, por vezes, conhecemos a causa pelo efeito e a substância pelo acidente, como se vê em Aristóteles. ― Se porém considerarmos a natureza mesma do gênero e da espécie, como existe nos seres particulares, então exerce a função de princípio formal em relação a eles; pois, ao passo que o singular existe pela matéria, a noção da espécie é deduzida da forma. Ora, a natureza do gênero se compara com a da espécie, sobretudo como princípio material; porque a natureza do gênero se deduz do que é material na coisa, ao passo que a da espécie, do que é formal; assim, a noção de animal se tira do sensitivo; a do homem, do intelectivo. E daí vem que a última tendência da natureza é para a espécie, não, porém, para o indivíduo nem para o gênero; porque a forma é o fim da geração; ao passo que a matéria existe pela forma. Não é necessário, porém, que o conhecimento de qualquer causa ou princípio seja posterior, quanto a nós; pois; às vezes conhecemos, pelas causas sensíveis, efeitos ignotos, e às vezes, inversamente.</p>
+
+    </div>
+  </div>
+  
+  <!-- Bloco de Explicação (a ser preenchido) -->
+  <div class="bloco-explicacao">
+    <div class="explicacao-label">💡 Explicação e Contexto</div>
+    <div class="explicacao-corpo" id="explicacao">
+    <p><em>Explicação será adicionada em breve.</em></p>
+
+    </div>
+  </div>
+  
+</main>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO INFERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="navegacao-inferior">
+  <div class="nav-buttons">
+    <a href="suma-pagina424.html" class="btn-primary">← Anterior</a>
+    <span class="pagina-atual">425</span>
+    <a href="suma-pagina426.html" class="btn-primary">Próxima →</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  RODAPÉ                                                  -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<footer class="suma-footer">
+  <p>Suma Teológica · São Tomás de Aquino | Biblioteca Lux Fidei</p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Questão 43, Artigo 4 — — Se os milagres que Cristo fez foram suficientes a lhe manifestar | Suma Teológica</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+    --cor-fundo: #f5f0e8;
+    --cor-pagina: #fff;
+    --cor-texto: #2c1f17;
+    --cor-dourado: #d4af37;
+    --cor-roxo: #5b2c83;
+    --sombra: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cor-fundo);
+    color: var(--cor-texto);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CABEÇALHO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-header {
+    background: linear-gradient(135deg, #1a1a1a, #2c241b);
+    color: #f5f0e8;
+    padding: 32px 20px 24px;
+    text-align: center;
+    position: relative;
+}
+
+.voltar-index {
+    position: absolute;
+    top: 16px;
+    left: 20px;
+    color: var(--cor-dourado);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: opacity 0.2s;
+}
+
+.voltar-index:hover {
+    opacity: 0.8;
+}
+
+.suma-header h1 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.info-pagina {
+    display: inline-block;
+    background: rgba(212, 175, 55, 0.15);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    color: var(--cor-dourado);
+    margin-top: 8px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-topo {
+    background: #fff;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    gap: 10px;
+}
+
+.btn-nav {
+    display: inline-flex;
+    align-items: center;
+    padding: 9px 18px;
+    background: var(--cor-roxo);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.btn-nav:hover {
+    background: #4a246a;
+    transform: translateY(-1px);
+}
+
+.desabilitado {
+    background: #ddd !important;
+    color: #999 !important;
+    pointer-events: none;
+}
+
+.info-centena {
+    font-size: 0.85rem;
+    color: #888;
+    font-weight: 500;
+    padding: 0 10px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CONTEÚDO PRINCIPAL                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.pagina-conteudo {
+    flex: 1;
+    max-width: 860px;
+    width: 100%;
+    margin: 36px auto;
+    padding: 0 20px;
+}
+
+.bloco-texto {
+    background: var(--cor-pagina);
+    padding: 48px 44px;
+    border-radius: 12px;
+    box-shadow: var(--sombra);
+    position: relative;
+    margin-bottom: 24px;
+}
+
+.bloco-texto::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 20px;
+    bottom: 20px;
+    width: 4px;
+    background: linear-gradient(to bottom, var(--cor-dourado), var(--cor-roxo));
+    border-radius: 0 4px 4px 0;
+}
+
+.bloco-titulo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.3rem;
+    color: var(--cor-roxo);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e8dfd0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pagina-corpo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.1rem;
+    line-height: 1.95;
+    color: #3d3226;
+    text-align: justify;
+}
+
+.pagina-corpo p {
+    margin-bottom: 1.3em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  BLOCO DE EXPLICAÇÃO                                        */
+/* ────────────────────────────────────────────────────────── */
+
+.bloco-explicacao {
+    background: linear-gradient(135deg, #fffdf5, #faf5eb);
+    border-left: 5px solid var(--cor-dourado);
+    padding: 32px 40px;
+    border-radius: 0 12px 12px 0;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    margin-bottom: 24px;
+}
+
+.explicacao-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--cor-dourado);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 14px;
+}
+
+.explicacao-corpo {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #4a3c2c;
+}
+
+.explicacao-corpo p {
+    margin-bottom: 1em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO INFERIOR                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-inferior {
+    max-width: 860px;
+    width: 100%;
+    margin: 0 auto 40px;
+    padding: 0 20px;
+}
+
+.nav-buttons {
+    background: #fff;
+    padding: 18px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    box-shadow: var(--sombra);
+}
+
+.btn-primary {
+    flex: 1;
+    text-align: center;
+    padding: 13px 16px;
+    background: linear-gradient(135deg, var(--cor-roxo), #7a3eb5);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(91, 44, 131, 0.3);
+}
+
+.pagina-atual {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--cor-dourado);
+    min-width: 50px;
+    text-align: center;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RODAPÉ                                                     */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-footer {
+    background: #1a1a1a;
+    color: #888;
+    text-align: center;
+    padding: 22px 20px;
+    margin-top: auto;
+    font-size: 0.85rem;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RESPONSIVIDADE                                             */
+/* ────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+    .suma-header h1 {
+        font-size: 1.4rem;
+    }
+    
+    .bloco-texto {
+        padding: 28px 18px;
+    }
+    
+    .bloco-explicacao {
+        padding: 22px 18px;
+    }
+    
+    .navegacao-topo {
+        flex-wrap: wrap;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CABEÇALHO                                               -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="suma-header">
+  <a href="../../index.html" class="voltar-index">← Índice</a>
+  <h1>Suma Teológica</h1>
+  <p style="opacity:0.8; font-style:italic; margin-top:4px;">São Tomás de Aquino</p>
+  <span class="info-pagina">Página 2352 de 3000</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO SUPERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<nav class="navegacao-topo">
+  <a href="suma-pagina2351.html" class="btn-nav">← Anterior</a>
+  <span class="info-centena">Pág. 2352/3000</span>
+  <a href="suma-pagina2353.html" class="btn-nav">Próxima →</a>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CONTEÚDO PRINCIPAL                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<main class="pagina-conteudo">
+  
+  <!-- Texto Original -->
+  <div class="bloco-texto">
+    <div class="bloco-titulo">
+      <span>📜</span>
+      Questão 43, Artigo 4 — — Se os milagres que Cristo fez foram suficientes a lhe manifestar
+    </div>
+    <div class="pagina-corpo">
+    <p>a divindade. O quarto discute-se assim. — Parece que os milagres que Cristo fez não eram suficientes a lhe manifestar a divindade.</p>
+    <p>1. — Pois, ser Deus e homem é propriedade de Cristo. Ora, os milagres que fez Cristo também outros o fizeram. Logo, parece que não eram suficientes a manifestar-lhe a divindade. 2. Demais. — Nenhum poder é maior que o da divindade. Ora, houve quem fizesse maiores milagres que Cristo; assim, diz o Evangelho: Aquele que crê em mim esse fará também as obras que eu faça e fará outras ainda maiores. Logo, parece que os milagres feitos por Cristo não eram suficientes a manifestar- lhe a divindade. 3. Demais. — O universal não se manifesta suficientemente pelo particular. Ora, cada um dos milagres de Cristo foi uma obra particular. Logo, por nenhum deles podia manifestar-se suficientemente a divindade de Cristo, que tem um poder universal sobre todas as coisas.</p>
+    <p>Mas, em contrário, o Senhor diz: As obras que meu Pai me deu que cumprisse, as mesmas obras que eu faço dão por mim testemunho.</p>
+    <p>SOLUÇÃO. —0s milagres que Cristo fez eram suficientes para manifestar-lhe a divindade, num tríplice ponto de vista. — Primeiro, pela mesma espécie dessas obras, que transcendiam todo poder de qualquer virtude criada; e portanto não podiam ser feitas senão por virtude divina. Por isso, o cego que recobrou a vista dizia: Desde que há mundo, nunca se ouviu que alguém abrisse os olhos a um cego de nascença. Se este não fosse Deus não podia ele obrar coisa alguma. — Segundo, pelo modo de fazer os milagres; pois, ele os fazia quase por poder próprio e não depois de ter orado, como os outros. Donde o dizer o Evangelho: Dele saía uma virtude que os curava a todos. O que demonstra, como nota Cirílo, que não dependia de nenhum poder alheio; mas, sendo naturalmente Deus, agia por virtude própria sobre os enfermos. E por isso também jazia inumeráveis milagres. Por isso, àquilo do Evangelho — Com sua palavra expelia os espíritos e curava todos os enfermos — diz Crisóstomo: Notai como os evangelistas reterem uma multidão de pessoas curadas, sem nomear nenhuma em particular, indicando apenas com uma palavra, a multidão inumerável de milagres. E assim mostrava uma virtude igual a de Deus Padre, conforme aquilo do Evangelho: Tudo o que fizer o Pai, o faz também semelhantemente o Filho. E ainda: Assim como o Pai. ressuscita os mortos e lhes dá vida, assim também dá o Filho vida aqueles que quer. — Terceiro, pela doutrina mesma em virtude da qual se afirmava Deus, a qual se não fosse verdadeira não fora confirmada por milagres feitos pelo seu poder divino. Por isso se diz no Evangelho: Que nova doutrina é esta? Porque ele põe preceito com império até aos espíritos imundos e obedecem-lhe.</p>
+    <p>DONDE A</p>
+    <p>RESPOSTA À PRIMEIRA OBJEÇÃO. — Era essa uma objeção dos gentios. Donde o dizer Agostinho: Cristo, afirmam, não fez milagres que fossem sinais suficientes da sua tão grande majestade. Pois, aquela purificação figurada, pela qual expulsava os demônios, a cura de doentes, a vida restituída aos mortos e outras obras tais são pequenas para Deus. Ao que Agostinho responde assim: Também nós confessamos que os profetas fizeram coisas semelhantes. Mas Moisés e os outros profetas prenunciaram o Senhor Jesus e lhe deram grande glória. E essas mesmas obras também Cristo quis fazer, pois seria absurdo que não as fizesse ele depois de havê-las feito por meio dos profetas. Certas coisas porém fez, que só ele podia fazer: nascer de uma Virgem, ressurgir dos mortos e subir ao céu. E quem pensar que isso é pouco para Deus, ignoro o que mais espera. Por ventura, depois de assumida a humanidade, devia fazer outro mundo para acreditarmos que foi ele quem fez o mundo? Mas não podia ser feito um mundo nem maior nem igual ao das obras referidas; e então, se fizesse algo menor que elas, também isso seria tido em pouca conta. Quanto ao que outros fizeram, Cristo o fez mais excelentemente. Por isso, aquilo do Evangelho — Se eu não tivesse feito entre elestais obras quais não fezoutro algum, etc., diz Agostinho: Nenhuma obra de Cristo é maior que a ressurreição de um morto, da qual sabemos que também os profetas a fizeram. Mas Cristo operou milagres que ninguém mais obrou. Responder-nos-ão, porém, que outros fizeram o que nem ele nem ninguém jamais fez. Contudo, não há nenhuma prova que algum dos antigos fizesse o que ele fez curar tão numerosos vícios, tantas doenças perigosas e tantas vexações dos mortais, com tão grande poder. Pois, não podendo dar o nome de cada um dos que curou com a sua palavra, a medida que se lhe apresentavam, Marcos diz: E aonde quer que ele entrava, fosse nas aldeias, ou nos casais, ou nas cidades, punham os enfermos no meio das praças e pediam-lhe que os deixasse tocar ao menos a orla do seu vestido; e todos os que o tocavam ficavam sãos. Ora, essas obras ninguém mais as fez neles senão Cristo. E nesse sentido devemos entender a expressão do Evangelho, que é — neles — e não entre eles — ou — na presença deles; mas exatamente — neles — porque os curou. E quem quer que tivesse feito neles essas curas, não as fez tais quais; pois, quem quer que as tivesse feito algumas delas, tê-Ias-ia feito por autoria de Cristo; ao passo que Cristo as realizou por si mesmo e não por autoria de outros</p>
+    <p>RESPOSTA À SEGUNDA. — Agostinho, interpretando essas palavras de João, indaga quais fossem essas obras maiores, que haviam de fazer os crentes em Cristo. Seriam porventura as de curar os doentes a simples sombra delesao passarem? Pois, maior obra é curá-las com a sombra do que Cristo com a fímbria da sua túnica. Contudo, quando assim falava, queria fazer ver os efeitos e as obras da sua palavra. Pois, quando dizia — O Pai que está em mim esse é o que faz as obras — a que obras se referia senão às palavras que proferia? E o fruto dessas mesmas palavras era a fé dos discípulos. Contudo pela evangelização dos discípulos, não foram tão poucos esses que nele creram, pois também os gentios vieram a ser crentes. Assim, não se partiu triste da presença a ele aquele rico que pedia conselhos de vida eterna? E todavia o conselho que ele ouviu e não praticou, muitos o praticaram quando Cristo o pregava por meio dos discípulos. Eis porque as obras que realizou, pregadas pelos que nele criam, eram maiores que as que ensinou aos seus ouvintes. Mas ainda mais nos move o fato de ter operado essas obras maiores por meio dos Apóstolos. Assim, referindo-se a eles não disse somente: Quem crer em mim. Mas, ouvi o que disse: Quem crer em mim, esse fará também as obras que eu faço. Primeiro as farei eu — diz — depois as fará os que crerem em mim, porque eu o farei fazê-las. E essas obras em que consistem, senão em fazer do ímpio um justo? O que Cristo opera em nós mas não sem nós. E isso eu até mesmo direi que é mais do que criar o céu e a terra. Pois, o céu e a terra passarão; ao passo que a salvação e a justificação dos predestinados permanecerá. — Mas no céu os anjos são as obras de Deus. Porventura também fará maiores obras que essa quem coopera com Cristo na sua justificação própria? Julgue quem puder, se é mais criar os justos, que justificar os ímpios. Por certo, se ambas essas obras supõem o mesmo poder, esta última necessita de maior misericórdia. Mas nenhuma necessidade nos obriga a compreender todas as obras de Cristo, implicadas no seu dito - Fará obras maiores que estas. Pois, talvez dissesse isso das obras que nesse momento fazia; porque então procurava infundir a fé. E por certo, é menos pregar verbalmente a justiça, o que fez por nosso amor; do que justificar os ímpios, o que realiza em nós para também nós o fazermos.</p>
+    <p>RESPOSTA À TERCEIRA. — Quando uma obra determinada é uma obra própria de um certo agente, então dessa obra determinada se deduz a virtude total do agente. Assim, raciocinar, sendo uma atividade própria do homem, mostra que é homem quem raciocina qualquer propósito deliberado que tome. E semelhantemente, como só Deus pode fazer milagres por virtude própria, fica suficientemente provado que Cristo é Deus por qualquer dos milagres que fez por virtude própria. Em seguida devemos tratar de cada uma das espécies de milagres.</p>
+
+    </div>
+  </div>
+  
+  <!-- Bloco de Explicação (a ser preenchido) -->
+  <div class="bloco-explicacao">
+    <div class="explicacao-label">💡 Explicação e Contexto</div>
+    <div class="explicacao-corpo" id="explicacao">
+    <p><em>Explicação será adicionada em breve.</em></p>
+
+    </div>
+  </div>
+  
+</main>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO INFERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="navegacao-inferior">
+  <div class="nav-buttons">
+    <a href="suma-pagina2351.html" class="btn-primary">← Anterior</a>
+    <span class="pagina-atual">2352</span>
+    <a href="suma-pagina2353.html" class="btn-primary">Próxima →</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  RODAPÉ                                                  -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<footer class="suma-footer">
+  <p>Suma Teológica · São Tomás de Aquino | Biblioteca Lux Fidei</p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Questão 123, Artigo 10 — Se o corajoso recorre à ira nos seus atos. | Suma Teológica</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+    --cor-fundo: #f5f0e8;
+    --cor-pagina: #fff;
+    --cor-texto: #2c1f17;
+    --cor-dourado: #d4af37;
+    --cor-roxo: #5b2c83;
+    --sombra: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cor-fundo);
+    color: var(--cor-texto);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CABEÇALHO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-header {
+    background: linear-gradient(135deg, #1a1a1a, #2c241b);
+    color: #f5f0e8;
+    padding: 32px 20px 24px;
+    text-align: center;
+    position: relative;
+}
+
+.voltar-index {
+    position: absolute;
+    top: 16px;
+    left: 20px;
+    color: var(--cor-dourado);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: opacity 0.2s;
+}
+
+.voltar-index:hover {
+    opacity: 0.8;
+}
+
+.suma-header h1 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.info-pagina {
+    display: inline-block;
+    background: rgba(212, 175, 55, 0.15);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    color: var(--cor-dourado);
+    margin-top: 8px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-topo {
+    background: #fff;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    gap: 10px;
+}
+
+.btn-nav {
+    display: inline-flex;
+    align-items: center;
+    padding: 9px 18px;
+    background: var(--cor-roxo);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.btn-nav:hover {
+    background: #4a246a;
+    transform: translateY(-1px);
+}
+
+.desabilitado {
+    background: #ddd !important;
+    color: #999 !important;
+    pointer-events: none;
+}
+
+.info-centena {
+    font-size: 0.85rem;
+    color: #888;
+    font-weight: 500;
+    padding: 0 10px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CONTEÚDO PRINCIPAL                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.pagina-conteudo {
+    flex: 1;
+    max-width: 860px;
+    width: 100%;
+    margin: 36px auto;
+    padding: 0 20px;
+}
+
+.bloco-texto {
+    background: var(--cor-pagina);
+    padding: 48px 44px;
+    border-radius: 12px;
+    box-shadow: var(--sombra);
+    position: relative;
+    margin-bottom: 24px;
+}
+
+.bloco-texto::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 20px;
+    bottom: 20px;
+    width: 4px;
+    background: linear-gradient(to bottom, var(--cor-dourado), var(--cor-roxo));
+    border-radius: 0 4px 4px 0;
+}
+
+.bloco-titulo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.3rem;
+    color: var(--cor-roxo);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e8dfd0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pagina-corpo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.1rem;
+    line-height: 1.95;
+    color: #3d3226;
+    text-align: justify;
+}
+
+.pagina-corpo p {
+    margin-bottom: 1.3em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  BLOCO DE EXPLICAÇÃO                                        */
+/* ────────────────────────────────────────────────────────── */
+
+.bloco-explicacao {
+    background: linear-gradient(135deg, #fffdf5, #faf5eb);
+    border-left: 5px solid var(--cor-dourado);
+    padding: 32px 40px;
+    border-radius: 0 12px 12px 0;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    margin-bottom: 24px;
+}
+
+.explicacao-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--cor-dourado);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 14px;
+}
+
+.explicacao-corpo {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #4a3c2c;
+}
+
+.explicacao-corpo p {
+    margin-bottom: 1em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO INFERIOR                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-inferior {
+    max-width: 860px;
+    width: 100%;
+    margin: 0 auto 40px;
+    padding: 0 20px;
+}
+
+.nav-buttons {
+    background: #fff;
+    padding: 18px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    box-shadow: var(--sombra);
+}
+
+.btn-primary {
+    flex: 1;
+    text-align: center;
+    padding: 13px 16px;
+    background: linear-gradient(135deg, var(--cor-roxo), #7a3eb5);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(91, 44, 131, 0.3);
+}
+
+.pagina-atual {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--cor-dourado);
+    min-width: 50px;
+    text-align: center;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RODAPÉ                                                     */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-footer {
+    background: #1a1a1a;
+    color: #888;
+    text-align: center;
+    padding: 22px 20px;
+    margin-top: auto;
+    font-size: 0.85rem;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RESPONSIVIDADE                                             */
+/* ────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+    .suma-header h1 {
+        font-size: 1.4rem;
+    }
+    
+    .bloco-texto {
+        padding: 28px 18px;
+    }
+    
+    .bloco-explicacao {
+        padding: 22px 18px;
+    }
+    
+    .navegacao-topo {
+        flex-wrap: wrap;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CABEÇALHO                                               -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="suma-header">
+  <a href="../../index.html" class="voltar-index">← Índice</a>
+  <h1>Suma Teológica</h1>
+  <p style="opacity:0.8; font-style:italic; margin-top:4px;">São Tomás de Aquino</p>
+  <span class="info-pagina">Página 1825 de 3000</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO SUPERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<nav class="navegacao-topo">
+  <a href="suma-pagina1824.html" class="btn-nav">← Anterior</a>
+  <span class="info-centena">Pág. 1825/3000</span>
+  <a href="suma-pagina1826.html" class="btn-nav">Próxima →</a>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CONTEÚDO PRINCIPAL                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<main class="pagina-conteudo">
+  
+  <!-- Texto Original -->
+  <div class="bloco-texto">
+    <div class="bloco-titulo">
+      <span>📜</span>
+      Questão 123, Artigo 10 — Se o corajoso recorre à ira nos seus atos.
+    </div>
+    <div class="pagina-corpo">
+    <p>O décimo discute–se assim. – Parece que o corajoso não recorre à ira, nos seus atos. 1. – Pois, ninguém deve tomar como instrumento dos seus atos, aquilo de que não se pode servir ao seu talante. Ora, não pode o homem a seu talante empregar a sua ira, de modo a poder servir–se dela quando quiser e, quando quiser depô–Ia. Pois, como diz o Filósofo, a paixão corpórea, uma vez suscitada, não se acalma quando o quisermos. Logo, o corajoso não deve recorrer à ira, nos seus atos. 2. Demais. – Quem se basta a si mesmo para praticar um ato não deve recorrer ao auxílio do que é mais fraco e imperfeito. Ora, a razão por si mesma basta para praticarmos atos de coragem, para o que a ira é insuficiente. Donde o dizer Séneca: Não só para prevermos, mas também para agirmos a razão por si mesma nos basta. E haverá nada mais estulto do que, nessa matéria, pedirmos auxilio à ira? Do que querer apoiar o certo no incerto; o fiel, no infiel; o são, no doente? Logo, a coragem não deve recorrer à ira. 3. Demais. – Assim como certos, pela ira, praticam melhor atos corajosos, assim também, por tristeza ou concupiscência. Por isso, o Filósofo diz, que às feras, a tristeza ou a dor as excita a afrontar o perigo; e a concupiscência leva os adúlteros a agirem muitas vezes audaciosamente. Ora, a coragem, para o ser, não recorre nem à tristeza nem à concupiscência. Logo, pela mesma razão, não deve recorrer à ira.</p>
+    <p>Mas, em contrário, diz o Filósofo: O jurar ajuda os fortes. SOLUÇÃO. – Da ira e das outras paixões da alma, como já dissemos, trataram de um modo os Peripatéticos e de outro, os Estóicos. Assim, os Estóicos excluíam da alma do sábio ou do virtuoso, todas as outras paixões. Ao contrário, os Peripatéticos, cujo chefe foi Aristóteles, atribuíam ao virtuoso a ira e as outras paixões, mas, moderadas pela razão. E talvez não diferissem entre si na realidade, mas só quanto ao modo de se exprimirem. Pois, os Peripatéticos, como dissemos, chamavam paixões da alma a todos os apetites sensitivos, de qualquer modo que se apresentassem. E como o apetite sensitivo se move pelo império da razão de modo a nos tornar mais pronta a ação, por isso diziam que os virtuosos deviam recorrer à ira e às outras paixões da alma, moderadas pelo império da razão. Ao passo que os Estóicos chamavam paixões da alma a certos afetos moderados do apetite sensitivo; e por isso as consideravam como estados mórbidos ou doenças; e portanto as separavam completamente da virtude. Assim, pois, o corajoso, ao agir, recorre à ira moderada e não, a imoderada.</p>
+    <p>DONDE A</p>
+    <p>RESPOSTA À PRIMEIRA OBJEÇÃO. – A ira moderada pela razão submete–se ao império desta. Por onde e consequentemente, podemos usá–la ao nosso arbítrio; mas não se for imoderada.</p>
+    <p>RESPOSTA À SEGUNDA. – A razão não recorre à ira, como auxílio para o seu ato; mas porque usa do apetite sensitivo como instrumento, como usa dos membros do corpo. Nem há inconveniente se o instrumento for mais imperfeito que o agente principal, como o martelo, que o ferreiro. E quanto a Séneca foi discípulo dos Estóicos e as suas palavras citadas vão diretamente contra Aristóteles.</p>
+    <p>RESPOSTA À TERCEIRA. – Sendo dois os atos próprios da virtude, a saber, suportar e atacar, ela recorre à ira, não para o ato de suportar, porque esse a razão por si o produz; mas, para o de atacar. Para o qual recorre, antes, a ira que às outras paixões; porque, sendo próprio da ira, eliminar o obstáculo que nos contrista, ela coopera diretamente com a coragem quando ataca. A tristeza, pelo contrário, por natureza sucumbe ao mal; mas, por acidente, ajuda o ataque, ou por ser a causa da ira, como dissemos, ou porque, nos expomos ao perigo para evitar a tristeza. Do mesmo modo, a concupiscência, por natureza, tende para o bem deleitável, ao qual, em si mesmo, repugna enfrentar os perigos, mas, por acidente, às vezes ajuda a atacá–los, quando queremos, antes, cair no perigo do que nos privarmos do prazer. Por isso, diz o Filósofa, que entre os atos de coragem inspirados na paixão, o mais natural ao homem é o produzido pela ira, contanto que o seja com eleição e subordinado ao fim, sem o que não haveria verdadeira coragem.</p>
+
+    </div>
+  </div>
+  
+  <!-- Bloco de Explicação (a ser preenchido) -->
+  <div class="bloco-explicacao">
+    <div class="explicacao-label">💡 Explicação e Contexto</div>
+    <div class="explicacao-corpo" id="explicacao">
+    <p><em>Explicação será adicionada em breve.</em></p>
+
+    </div>
+  </div>
+  
+</main>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO INFERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="navegacao-inferior">
+  <div class="nav-buttons">
+    <a href="suma-pagina1824.html" class="btn-primary">← Anterior</a>
+    <span class="pagina-atual">1825</span>
+    <a href="suma-pagina1826.html" class="btn-primary">Próxima →</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  RODAPÉ                                                  -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<footer class="suma-footer">
+  <p>Suma Teológica · São Tomás de Aquino | Biblioteca Lux Fidei</p>
+</footer>
+
+</body>
+</html>

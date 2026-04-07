@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Questão 19, Artigo 3 — — Se Deus quer necessariamente tudo o que quer. | Suma Teológica</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+    --cor-fundo: #f5f0e8;
+    --cor-pagina: #fff;
+    --cor-texto: #2c1f17;
+    --cor-dourado: #d4af37;
+    --cor-roxo: #5b2c83;
+    --sombra: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cor-fundo);
+    color: var(--cor-texto);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CABEÇALHO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-header {
+    background: linear-gradient(135deg, #1a1a1a, #2c241b);
+    color: #f5f0e8;
+    padding: 32px 20px 24px;
+    text-align: center;
+    position: relative;
+}
+
+.voltar-index {
+    position: absolute;
+    top: 16px;
+    left: 20px;
+    color: var(--cor-dourado);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: opacity 0.2s;
+}
+
+.voltar-index:hover {
+    opacity: 0.8;
+}
+
+.suma-header h1 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.info-pagina {
+    display: inline-block;
+    background: rgba(212, 175, 55, 0.15);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    color: var(--cor-dourado);
+    margin-top: 8px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-topo {
+    background: #fff;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    gap: 10px;
+}
+
+.btn-nav {
+    display: inline-flex;
+    align-items: center;
+    padding: 9px 18px;
+    background: var(--cor-roxo);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.btn-nav:hover {
+    background: #4a246a;
+    transform: translateY(-1px);
+}
+
+.desabilitado {
+    background: #ddd !important;
+    color: #999 !important;
+    pointer-events: none;
+}
+
+.info-centena {
+    font-size: 0.85rem;
+    color: #888;
+    font-weight: 500;
+    padding: 0 10px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CONTEÚDO PRINCIPAL                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.pagina-conteudo {
+    flex: 1;
+    max-width: 860px;
+    width: 100%;
+    margin: 36px auto;
+    padding: 0 20px;
+}
+
+.bloco-texto {
+    background: var(--cor-pagina);
+    padding: 48px 44px;
+    border-radius: 12px;
+    box-shadow: var(--sombra);
+    position: relative;
+    margin-bottom: 24px;
+}
+
+.bloco-texto::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 20px;
+    bottom: 20px;
+    width: 4px;
+    background: linear-gradient(to bottom, var(--cor-dourado), var(--cor-roxo));
+    border-radius: 0 4px 4px 0;
+}
+
+.bloco-titulo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.3rem;
+    color: var(--cor-roxo);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e8dfd0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pagina-corpo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.1rem;
+    line-height: 1.95;
+    color: #3d3226;
+    text-align: justify;
+}
+
+.pagina-corpo p {
+    margin-bottom: 1.3em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  BLOCO DE EXPLICAÇÃO                                        */
+/* ────────────────────────────────────────────────────────── */
+
+.bloco-explicacao {
+    background: linear-gradient(135deg, #fffdf5, #faf5eb);
+    border-left: 5px solid var(--cor-dourado);
+    padding: 32px 40px;
+    border-radius: 0 12px 12px 0;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    margin-bottom: 24px;
+}
+
+.explicacao-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--cor-dourado);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 14px;
+}
+
+.explicacao-corpo {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #4a3c2c;
+}
+
+.explicacao-corpo p {
+    margin-bottom: 1em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO INFERIOR                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-inferior {
+    max-width: 860px;
+    width: 100%;
+    margin: 0 auto 40px;
+    padding: 0 20px;
+}
+
+.nav-buttons {
+    background: #fff;
+    padding: 18px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    box-shadow: var(--sombra);
+}
+
+.btn-primary {
+    flex: 1;
+    text-align: center;
+    padding: 13px 16px;
+    background: linear-gradient(135deg, var(--cor-roxo), #7a3eb5);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(91, 44, 131, 0.3);
+}
+
+.pagina-atual {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--cor-dourado);
+    min-width: 50px;
+    text-align: center;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RODAPÉ                                                     */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-footer {
+    background: #1a1a1a;
+    color: #888;
+    text-align: center;
+    padding: 22px 20px;
+    margin-top: auto;
+    font-size: 0.85rem;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RESPONSIVIDADE                                             */
+/* ────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+    .suma-header h1 {
+        font-size: 1.4rem;
+    }
+    
+    .bloco-texto {
+        padding: 28px 18px;
+    }
+    
+    .bloco-explicacao {
+        padding: 22px 18px;
+    }
+    
+    .navegacao-topo {
+        flex-wrap: wrap;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CABEÇALHO                                               -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="suma-header">
+  <a href="../../index.html" class="voltar-index">← Índice</a>
+  <h1>Suma Teológica</h1>
+  <p style="opacity:0.8; font-style:italic; margin-top:4px;">São Tomás de Aquino</p>
+  <span class="info-pagina">Página 118 de 3000</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO SUPERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<nav class="navegacao-topo">
+  <a href="suma-pagina117.html" class="btn-nav">← Anterior</a>
+  <span class="info-centena">Pág. 118/3000</span>
+  <a href="suma-pagina119.html" class="btn-nav">Próxima →</a>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CONTEÚDO PRINCIPAL                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<main class="pagina-conteudo">
+  
+  <!-- Texto Original -->
+  <div class="bloco-texto">
+    <div class="bloco-titulo">
+      <span>📜</span>
+      Questão 19, Artigo 3 — — Se Deus quer necessariamente tudo o que quer.
+    </div>
+    <div class="pagina-corpo">
+    <p>(I Cont. Gent., cap. LXXX sq.; III, cap. XCVII; De Verit., q. 23, a. 4; De Pot., q. 1, a. 5; q. 10, a. 2, ad 6). O terceiro discute-se assim. — Parece que Deus quer necessariamente tudo o que quer.</p>
+    <p>1. — Pois, tudo o que é eterno é necessário. Ora, tudo o que Deus quer o quer abeterno, aliás a sua vontade seria mutável. Logo, tudo o que ele quer o quer necessariamente. 2. Demais. — Deus, querendo a sua bondade, quer outras coisas de si diversas. Ora, quer a sua bondade necessariamente. Logo, quer necessariamente outras coisas diversas de si. 3. Demais. — Tudo o que é natural a Deus é necessário, porque é o ser necessário, em si, e o princípio de toda necessidade, como já se demonstrou. Ora, é natural a Deus querer tudo quanto quer, porque nele nada pode existir contra a sua natureza, como diz Aristóteles. Logo, tudo quanto Deus quer necessariamente o quer. 4. Demais. — Não ser, necessariamente, e não ser possivelmente são expressões eqüipolentes. Se, pois, Deus não quer necessariamente alguma das coisas que quer, é lhe possível também não querê-la e, portanto, querer aquilo que não quer. Logo, a vontade divina é contingente em um e outro caso e, por conseqüência, imperfeita, porque todo contingente é imperfeito. 5. Demais. — Nenhuma ação pode resultar de uma causa capaz de produzir dois efeitos diferentes, exceto se, por um ser estranho, for inclinada a um deles como diz o Comentador. Se, pois, a vontade de Deus, em certos casos, tem duas possibilidades, segue-se que é determinada a uma delas por um ser estranho, e, assim, tem uma causa anterior. 6. Demais. — Tudo o que Deus sabe, necessariamente o sabe. Ora, como a ciência divina, também a vontade é a sua essência. Logo, Deus quer necessariamente tudo quanto quer.</p>
+    <p>Mas, em contrário, o Apóstolo (Ef 1, 11): É Deus que faz todas as coisas segundo o conselho da sua vontade. Ora, o que é feito pelo conselho da vontade não o queremos necessariamente. Logo, Deus não quer necessariamente tudo o que quer.</p>
+    <p>SOLUÇÃO. — Em duplo sentido dizemos que uma coisa é necessária; absolutamente e por suposição. A necessidade absoluta resulta da natureza dos termos, ou porque o predicado está incluído na definição do sujeito — assim, é necessário o homem ser animal; ou porque o sujeito é da essência do predicado — assim, é necessário o número ser par ou ímpar. Ora, assim, não é necessário, p. ex., Sócrates sentar-se. Por onde, não é necessário, absolutamente, mas podemos dizer que o é, por suposição; pois, suposto que esteja sentado, é necessário que o esteja, enquanto o está. Ora, no querer divino, devemos considerar que é um necessário absoluto o querer Deus alguma coisa; mas, isso não é verdade em relação a tudo o que quer. Pois, a vontade divina tem relação necessária com a divina bondade, que é o seu objeto próprio. Donde, o querer Deus necessariamente a existência da sua bondade, do mesmo modo que a nossa vontade quer necessariamente a beatitude; e que qualquer outra potência tem relação necessária com o seu objeto próprio e principal, p. ex., a vista, com a cor; pois, é da sua natureza o tender para ela. As demais coisas, porém, Deus as quer enquanto ordenadas à sua bondade, como o fim delas. Ora, querendo o fim não queremos necessariamente os meios, senão os que são tais que, sem eles, o fim não possa existir: assim, querendo a conservação da vida, queremos o alimento e, querendo atravessar o mar, queremos o navio. Mas, não queremos necessariamente aquelas coisas sem as quais o fim pode existir; p. ex., um cavalo, para passear, porque podemos andar sem ele; e o mesmo se dá em outros casos. Ora, sendo a bondade de Deus perfeita, e podendo existir sem os outros seres, que nenhuma perfeição lhe acrescentam, segue-se não ser necessário de necessidade absoluta, que Deus queira coisas diversas de si. Mas o é por suposição; pois, suposto que queira, não pode deixar de querer, pois, suposto que queira, não pode deixar de querer, pois, não se lhe pode mudar a vontade.</p>
+    <p>DONDE A</p>
+    <p>RESPOSTA À PRIMEIRA OBJEÇÃO. — De querer Deus abeterno tudo quanto quer, não se segue que o queira necessariamente, exceto por suposição.</p>
+    <p>RESPOSTA À SEGUNDA. — Embora Deus queira necessariamente a sua bondade, contudo, não quer necessariamente aquilo que quer por causa dela, pois, esta pode existir sem tais coisas.</p>
+    <p>RESPOSTA À TERCEIRA. — Não é natural nem inatural a Deus, ou contra a sua natureza, mas é voluntário, querer alguma daquelas coisas que não quer necessariamente.</p>
+    <p>RESPOSTA À QUARTA. — Às vezes, uma causa necessária tem relação não-necessária com certo efeito; e isso por deficiência deste e não daquela. Assim, a virtude do sol tem relação não necessária com qualquer dos fenômenos contingentes da terra, não por deficiência de tal virtude, mas, do efeito proveniente não necessariamente da causa. Do mesmo modo, o querer Deus não necessariamente alguma daquelas causas que quer, não é por deficiência da sua vontade, mas, pela deficiência da coisa querida, em virtude da natureza mesma desta, que é tal que, sem ela, pode existir a perfeita bondade de Deus. Ora, tal deficiência acompanha todo o bem criado. RESPOSTA À QUINTA. — Necessariamente a causa em si mesma contingente, há de ser determinada ao efeito por algo de exterior. Ora, a vontade divina, que tem de si mesma a sua necessidade, determina-se por si ao objeto querido, com a qual tem relação não necessária. RESPOSTA À SEXTA. — Como o ser divino é, em si, necessário, assim também o querer e o saber divinos; mas o saber divino tem relação necessária como seu objeto; não a tem porém o querer divino com as coisas queridas. E isto porque a ciência tem por objeto as coisas, conforme elas existem no sujeito; a vontade, porém, refere-se a elas conforme são em si mesmas. Logo, todas as coisas têm existência necessária, enquanto existem em Deus, mas não têm necessidade absoluta enquanto existem em si mesmas, de modo a serem em si mesmas necessárias. E por isso, Deus sabe necessariamente tudo o que quer.</p>
+
+    </div>
+  </div>
+  
+  <!-- Bloco de Explicação (a ser preenchido) -->
+  <div class="bloco-explicacao">
+    <div class="explicacao-label">💡 Explicação e Contexto</div>
+    <div class="explicacao-corpo" id="explicacao">
+    <p><em>Explicação será adicionada em breve.</em></p>
+
+    </div>
+  </div>
+  
+</main>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO INFERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="navegacao-inferior">
+  <div class="nav-buttons">
+    <a href="suma-pagina117.html" class="btn-primary">← Anterior</a>
+    <span class="pagina-atual">118</span>
+    <a href="suma-pagina119.html" class="btn-primary">Próxima →</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  RODAPÉ                                                  -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<footer class="suma-footer">
+  <p>Suma Teológica · São Tomás de Aquino | Biblioteca Lux Fidei</p>
+</footer>
+
+</body>
+</html>

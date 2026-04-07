@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Questão 27, Artigo 1 — — Se em Deus há alguma processão. | Suma Teológica</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+    --cor-fundo: #f5f0e8;
+    --cor-pagina: #fff;
+    --cor-texto: #2c1f17;
+    --cor-dourado: #d4af37;
+    --cor-roxo: #5b2c83;
+    --sombra: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cor-fundo);
+    color: var(--cor-texto);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CABEÇALHO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-header {
+    background: linear-gradient(135deg, #1a1a1a, #2c241b);
+    color: #f5f0e8;
+    padding: 32px 20px 24px;
+    text-align: center;
+    position: relative;
+}
+
+.voltar-index {
+    position: absolute;
+    top: 16px;
+    left: 20px;
+    color: var(--cor-dourado);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: opacity 0.2s;
+}
+
+.voltar-index:hover {
+    opacity: 0.8;
+}
+
+.suma-header h1 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.info-pagina {
+    display: inline-block;
+    background: rgba(212, 175, 55, 0.15);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    color: var(--cor-dourado);
+    margin-top: 8px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-topo {
+    background: #fff;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    gap: 10px;
+}
+
+.btn-nav {
+    display: inline-flex;
+    align-items: center;
+    padding: 9px 18px;
+    background: var(--cor-roxo);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.btn-nav:hover {
+    background: #4a246a;
+    transform: translateY(-1px);
+}
+
+.desabilitado {
+    background: #ddd !important;
+    color: #999 !important;
+    pointer-events: none;
+}
+
+.info-centena {
+    font-size: 0.85rem;
+    color: #888;
+    font-weight: 500;
+    padding: 0 10px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CONTEÚDO PRINCIPAL                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.pagina-conteudo {
+    flex: 1;
+    max-width: 860px;
+    width: 100%;
+    margin: 36px auto;
+    padding: 0 20px;
+}
+
+.bloco-texto {
+    background: var(--cor-pagina);
+    padding: 48px 44px;
+    border-radius: 12px;
+    box-shadow: var(--sombra);
+    position: relative;
+    margin-bottom: 24px;
+}
+
+.bloco-texto::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 20px;
+    bottom: 20px;
+    width: 4px;
+    background: linear-gradient(to bottom, var(--cor-dourado), var(--cor-roxo));
+    border-radius: 0 4px 4px 0;
+}
+
+.bloco-titulo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.3rem;
+    color: var(--cor-roxo);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e8dfd0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pagina-corpo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.1rem;
+    line-height: 1.95;
+    color: #3d3226;
+    text-align: justify;
+}
+
+.pagina-corpo p {
+    margin-bottom: 1.3em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  BLOCO DE EXPLICAÇÃO                                        */
+/* ────────────────────────────────────────────────────────── */
+
+.bloco-explicacao {
+    background: linear-gradient(135deg, #fffdf5, #faf5eb);
+    border-left: 5px solid var(--cor-dourado);
+    padding: 32px 40px;
+    border-radius: 0 12px 12px 0;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    margin-bottom: 24px;
+}
+
+.explicacao-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--cor-dourado);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 14px;
+}
+
+.explicacao-corpo {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #4a3c2c;
+}
+
+.explicacao-corpo p {
+    margin-bottom: 1em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO INFERIOR                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-inferior {
+    max-width: 860px;
+    width: 100%;
+    margin: 0 auto 40px;
+    padding: 0 20px;
+}
+
+.nav-buttons {
+    background: #fff;
+    padding: 18px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    box-shadow: var(--sombra);
+}
+
+.btn-primary {
+    flex: 1;
+    text-align: center;
+    padding: 13px 16px;
+    background: linear-gradient(135deg, var(--cor-roxo), #7a3eb5);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(91, 44, 131, 0.3);
+}
+
+.pagina-atual {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--cor-dourado);
+    min-width: 50px;
+    text-align: center;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RODAPÉ                                                     */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-footer {
+    background: #1a1a1a;
+    color: #888;
+    text-align: center;
+    padding: 22px 20px;
+    margin-top: auto;
+    font-size: 0.85rem;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RESPONSIVIDADE                                             */
+/* ────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+    .suma-header h1 {
+        font-size: 1.4rem;
+    }
+    
+    .bloco-texto {
+        padding: 28px 18px;
+    }
+    
+    .bloco-explicacao {
+        padding: 22px 18px;
+    }
+    
+    .navegacao-topo {
+        flex-wrap: wrap;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CABEÇALHO                                               -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="suma-header">
+  <a href="../../index.html" class="voltar-index">← Índice</a>
+  <h1>Suma Teológica</h1>
+  <p style="opacity:0.8; font-style:italic; margin-top:4px;">São Tomás de Aquino</p>
+  <span class="info-pagina">Página 161 de 3000</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO SUPERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<nav class="navegacao-topo">
+  <a href="suma-pagina160.html" class="btn-nav">← Anterior</a>
+  <span class="info-centena">Pág. 161/3000</span>
+  <a href="suma-pagina162.html" class="btn-nav">Próxima →</a>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CONTEÚDO PRINCIPAL                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<main class="pagina-conteudo">
+  
+  <!-- Texto Original -->
+  <div class="bloco-texto">
+    <div class="bloco-titulo">
+      <span>📜</span>
+      Questão 27, Artigo 1 — — Se em Deus há alguma processão.
+    </div>
+    <div class="pagina-corpo">
+    <p>(I Sent., dist. XIII, a. 1; IV Cont. Gent., cap. XI; De Pot., q. 10, a. 1). O primeiro discute-se assim. — Parece que em Deus não há nenhuma processão.</p>
+    <p>1. — Pois, processão significa movimento para o exterior. Ora, em Deus nada há de móvel nem exterior. Logo, nem processão. 2. Demais. — Todo procedente é diverso daquilo de que procede. Ora, em Deus, sumamente simples, não há nenhuma diversidade. Logo, em Deus não há processão. 3. Demais. — Proceder de outro parece repugnar à noção de primeiro princípio. Ora, Deus é o primeiro princípio, como já se demonstrou. Logo, em Deus não pode haver processão.</p>
+    <p>Mas, em contrário, diz o Senhor (Jo 8, 42): Eu saí de Deus.</p>
+    <p>SOLUÇÃO. — A Escritura usa, falando das coisas divinas, de expressões que implicam processão. Ora, dessa processão há vários conceitos. Uns a compreendem no sentido em que o efeito procede da causa; e assim Ário, dizendo que o Filho procede do Pai como a primeira criatura deste, e o Espírito Santo, do Pai e do Filho, como criatura de ambos. E segundo esta opinião, nem o Filho nem o Espírito Santo seriam verdadeiro Deus, o que vai contra a Escritura quando diz, do Filho (1 Jo, 5, 20): E estejamos em seu verdadeiro Filho. Este é o verdadeiro Deus; e do Espírito Santo (1 Cor 6, 19): Acaso não sabeis que os vossos membros são templos do Espírito Santo? Ora, só Deus pode ter templo. — Outros, porém, concebem a processão no sentido em que se diz que a causa se manifesta no efeito, movendo-o ou imprimindo-lhe a sua semelhança. Assim o entendeu Sabélio, ensinando que o mesmo Deus Padre se chama Filho, enquanto encarnado na Virgem, e Espírito Santo enquanto santifica e dá vida à criatura racional. Mas contra esta doutrina vão as palavras do Senhor, a respeito de si mesmo (Jo 5, 19): O Filho não pode de si mesmo fazer coisa alguma; e muitas outras, mostram não ser o Pai o mesmo que o Filho. Mas, consideradas diligentemente, ambas essas opiniões concebem a processão como tendendo para o exterior; e por isso não a atribuem a Deus. Mas como toda processão supõe uma certa ação, assim como pela ação que recai sobre a matéria exterior, a processão é exterior, assim pela que permanece no próprio agente, é interior. O que sobretudo se vê no intelecto, cuja ação, o inteligir, permanece no ser que intelige; pois, quem intelige, por isso mesmo causa algo dentro de si, que é o conceito da coisa inteligida, nascida da potência intelectiva e procedente do conhecimento da coisa. E esse conceito, expresso pela palavra, chama-se verbo mental, significado pelo verbo oral. Mas, como Deus está acima de tudo, o que dele se diz não se deve entender ao modo das criaturas ínfimas, que são os corpos, mas por semelhança com as criaturas supremas, que são as substâncias intelectuais, se bem tal semelhança seja deficiente para representar o divino. Por onde, não se deve conceber a processão como a dos seres corpóreos, quer pelo movimento local, quer pela ação de alguma causa produtora de um efeito exterior, como o calor procedente do agente, que aquece, para o corpo aquecido; mas segundo a emanação inteligível, isto é, do verbo inteligível emanando de quem o pronuncia e neste permanecendo. E é assim que a fé católica atribui a processão a Deus.</p>
+    <p>DONDE A</p>
+    <p>RESPOSTA À PRIMEIRA OBJEÇÃO. — Ela se funda na processão por movimento local, ou na que se realiza pela ação transitiva para a matéria exterior ou o efeito exterior. Ora, tal processão não existe em Deus, como dissemos.</p>
+    <p>RESPOSTA À SEGUNDA. — O que procede por processão exterior deve ser diverso daquilo donde procede; mas o que procede interiormente pelo processo inteligível, não é necessariamente diverso; antes, quanto mais perfeitamente proceder, tanto mais se unifica com o ser donde procede. Pois, é manifesto, que quanto mais uma coisa é inteligida, tanto mais íntima e mais unida com o ser inteligente é a concepção intelectual; porque o intelecto, ao inteligir em ato, unifica-se com a coisa inteligida. Donde, como o inteligir divino é o auge da perfeição, como vimos, necessário se faz que o Verbo divino seja perfeitamente uno com o ser donde procede, sem a mínima diversidade.</p>
+    <p>RESPOSTA À TERCEIRA. — Proceder de um principio, como de estranho e diverso, repugna à essência do primeiro princípio; mas proceder como íntimo e sem diversidade, de maneira inteligível, é da essência do primeiro princípio. Assim, pois, quando dizemos ser o construtor o princípio da casa, esse princípio inclui, por essência, a concepção da sua arte, que também se incluiria na essência do primeiro princípio se tal princípio fosse o construtor. Ora, Deus, primeiro princípio das coisas, está para as coisas criadas como o artífice, para as artificiadas.</p>
+
+    </div>
+  </div>
+  
+  <!-- Bloco de Explicação (a ser preenchido) -->
+  <div class="bloco-explicacao">
+    <div class="explicacao-label">💡 Explicação e Contexto</div>
+    <div class="explicacao-corpo" id="explicacao">
+    <p><em>Explicação será adicionada em breve.</em></p>
+
+    </div>
+  </div>
+  
+</main>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO INFERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="navegacao-inferior">
+  <div class="nav-buttons">
+    <a href="suma-pagina160.html" class="btn-primary">← Anterior</a>
+    <span class="pagina-atual">161</span>
+    <a href="suma-pagina162.html" class="btn-primary">Próxima →</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  RODAPÉ                                                  -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<footer class="suma-footer">
+  <p>Suma Teológica · São Tomás de Aquino | Biblioteca Lux Fidei</p>
+</footer>
+
+</body>
+</html>

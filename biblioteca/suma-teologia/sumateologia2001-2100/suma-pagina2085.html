@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Questão 186, Artigo 4 — Se a perfeição religiosa exige a continência perpétua. | Suma Teológica</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+    --cor-fundo: #f5f0e8;
+    --cor-pagina: #fff;
+    --cor-texto: #2c1f17;
+    --cor-dourado: #d4af37;
+    --cor-roxo: #5b2c83;
+    --sombra: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cor-fundo);
+    color: var(--cor-texto);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CABEÇALHO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-header {
+    background: linear-gradient(135deg, #1a1a1a, #2c241b);
+    color: #f5f0e8;
+    padding: 32px 20px 24px;
+    text-align: center;
+    position: relative;
+}
+
+.voltar-index {
+    position: absolute;
+    top: 16px;
+    left: 20px;
+    color: var(--cor-dourado);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: opacity 0.2s;
+}
+
+.voltar-index:hover {
+    opacity: 0.8;
+}
+
+.suma-header h1 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.info-pagina {
+    display: inline-block;
+    background: rgba(212, 175, 55, 0.15);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    color: var(--cor-dourado);
+    margin-top: 8px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-topo {
+    background: #fff;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    gap: 10px;
+}
+
+.btn-nav {
+    display: inline-flex;
+    align-items: center;
+    padding: 9px 18px;
+    background: var(--cor-roxo);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.btn-nav:hover {
+    background: #4a246a;
+    transform: translateY(-1px);
+}
+
+.desabilitado {
+    background: #ddd !important;
+    color: #999 !important;
+    pointer-events: none;
+}
+
+.info-centena {
+    font-size: 0.85rem;
+    color: #888;
+    font-weight: 500;
+    padding: 0 10px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CONTEÚDO PRINCIPAL                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.pagina-conteudo {
+    flex: 1;
+    max-width: 860px;
+    width: 100%;
+    margin: 36px auto;
+    padding: 0 20px;
+}
+
+.bloco-texto {
+    background: var(--cor-pagina);
+    padding: 48px 44px;
+    border-radius: 12px;
+    box-shadow: var(--sombra);
+    position: relative;
+    margin-bottom: 24px;
+}
+
+.bloco-texto::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 20px;
+    bottom: 20px;
+    width: 4px;
+    background: linear-gradient(to bottom, var(--cor-dourado), var(--cor-roxo));
+    border-radius: 0 4px 4px 0;
+}
+
+.bloco-titulo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.3rem;
+    color: var(--cor-roxo);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e8dfd0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pagina-corpo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.1rem;
+    line-height: 1.95;
+    color: #3d3226;
+    text-align: justify;
+}
+
+.pagina-corpo p {
+    margin-bottom: 1.3em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  BLOCO DE EXPLICAÇÃO                                        */
+/* ────────────────────────────────────────────────────────── */
+
+.bloco-explicacao {
+    background: linear-gradient(135deg, #fffdf5, #faf5eb);
+    border-left: 5px solid var(--cor-dourado);
+    padding: 32px 40px;
+    border-radius: 0 12px 12px 0;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    margin-bottom: 24px;
+}
+
+.explicacao-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--cor-dourado);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 14px;
+}
+
+.explicacao-corpo {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #4a3c2c;
+}
+
+.explicacao-corpo p {
+    margin-bottom: 1em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO INFERIOR                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-inferior {
+    max-width: 860px;
+    width: 100%;
+    margin: 0 auto 40px;
+    padding: 0 20px;
+}
+
+.nav-buttons {
+    background: #fff;
+    padding: 18px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    box-shadow: var(--sombra);
+}
+
+.btn-primary {
+    flex: 1;
+    text-align: center;
+    padding: 13px 16px;
+    background: linear-gradient(135deg, var(--cor-roxo), #7a3eb5);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(91, 44, 131, 0.3);
+}
+
+.pagina-atual {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--cor-dourado);
+    min-width: 50px;
+    text-align: center;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RODAPÉ                                                     */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-footer {
+    background: #1a1a1a;
+    color: #888;
+    text-align: center;
+    padding: 22px 20px;
+    margin-top: auto;
+    font-size: 0.85rem;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RESPONSIVIDADE                                             */
+/* ────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+    .suma-header h1 {
+        font-size: 1.4rem;
+    }
+    
+    .bloco-texto {
+        padding: 28px 18px;
+    }
+    
+    .bloco-explicacao {
+        padding: 22px 18px;
+    }
+    
+    .navegacao-topo {
+        flex-wrap: wrap;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CABEÇALHO                                               -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="suma-header">
+  <a href="../../index.html" class="voltar-index">← Índice</a>
+  <h1>Suma Teológica</h1>
+  <p style="opacity:0.8; font-style:italic; margin-top:4px;">São Tomás de Aquino</p>
+  <span class="info-pagina">Página 2085 de 3000</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO SUPERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<nav class="navegacao-topo">
+  <a href="suma-pagina2084.html" class="btn-nav">← Anterior</a>
+  <span class="info-centena">Pág. 2085/3000</span>
+  <a href="suma-pagina2086.html" class="btn-nav">Próxima →</a>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CONTEÚDO PRINCIPAL                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<main class="pagina-conteudo">
+  
+  <!-- Texto Original -->
+  <div class="bloco-texto">
+    <div class="bloco-titulo">
+      <span>📜</span>
+      Questão 186, Artigo 4 — Se a perfeição religiosa exige a continência perpétua.
+    </div>
+    <div class="pagina-corpo">
+    <p>O quarto discute–se assim. – Parece que a perfeição religiosa não exige a continência perpétua. 1. – Pois, toda a perfeição da vida cristã começou com os Apóstolos. Ora, parece que os Apóstolos não conservavam a continência, pois, lemos no Evangelho que Pedro tinha uma sogra. Logo, parece que a perfeição religiosa não exige a continência perpétua. 2. Demais. – Abraão nos é apresentado como o exemplar da perfeição, a quem o Senhor disse: Anda em minha presença e sê perfeito. Ora, o exemplado não há de exceder o exemplar. Logo, a continência perpétua não é necessária para o estado de religião. 3. Demais. – As exigências da perfeição religiosa são as mesmas em todas as religiões. Ora, certos religiosos são casados. Logo, a perfeição religiosa não exige a continência perpétua.</p>
+    <p>Mas, em contrário, diz o Apóstolo: Purifiquemo–nos de toda a imundície da carne e do espírito, aperfeiçoando a nossa santificação o temor de Deus. Ora, a pureza da carne e do espírito se consegue pela continência, e por isso diz ainda o Apóstolo: A mulher solteira e a virgem cuida nas causas que são do Senhor, para ser santa no corpo e no espírito. Logo, a perfeição religiosa exige a continência. SOLUÇÃO. – O estado religioso requer a separação de tudo o que impede o cumprimento perfeito do serviço de Deus. Ora, a conjunção carnal impede a alma de dar–se totalmente ao serviço de Deus, de dois modos. – Primeiro, pela veemência do prazer, cujo exercício frequente aumenta a concupiscência, como também o ensina o Filósofo. Donde vem que as práticas venéreas afastam a alma da resolução de tender perfeitamente para Deus. E isso o diz Agostinho: Não conheço nada mais capaz de destruir a viril fortaleza da alma, do que as blandícias femininas e aquele contato corpóreo sem o qual não se pode ter uma esposa. – Segundo, por causa dos cuidados impostos ao homem pelo governo da mulher, dos filhos e dos bens temporais que lhes garantam o sustento. Donde o dizer o Apóstolo: O que está sem mulher está cuidadoso das causas que são do Senhor, de como há de agradar a Deus; mas o que está com mulher está cuidadoso das causas que são do mundo, de como há de dar gosto a sua mulher. – Por onde, a continência perpétua, assim como a pobreza voluntária, é exigida para a perfeição religiosa. Por isso, assim como foi condenado Vigilâncio, que igualou a riqueza à pobreza, assim também o foi Joviniano, que equiparou o matrimónio à virgindade.</p>
+    <p>DONDE A</p>
+    <p>RESPOSTA À PRIMEIRA OBJEÇÃO. – Não só a perfeição da pobreza mas também a da virgindade foi ensinada por Cristo, quando disse: Há uns castrados que a si mesmo se castraram por amor do reino dos céus; e acrescenta: O que é capaz de compreender isto compreenda–o. E para não tirar a ninguém a esperança de chegar à perfeição, tomou, para o estado dela, mesmo os que viviam a vida do matrimónio. Pois, não podiam os mandos, sem injustiça, abandonar as suas mulheres, como sem detrimento podiam abandonar todas as suas riquezas. Por isso Pedro, a quem encontrou unido pelo matrimónio, não o separou da sua mulher. Mas a João, que queria casar–se, dissuadiu que o fizesse.</p>
+    <p>RESPOSTA À SEGUNDA. – Como diz Agostinho, a castidade do celibatário é superior à dos casados; e dessas duas espécies de castidade, Abraão praticava uma realmente, e ambas, habitualmente. Pois, viveu casto no estado conjugal; mas também poderia ter sido casto fora do matrimônio, mas então não era conveniente que o fosse. Mas nem pelos antigos Patriarcas terem a perfeição de alma simultaneamente com as riquezas e o uso do matrimónio – o que reconstituía uma grande virtude – nem por isso os de menores forças devem, presumir–se de tanta virtude a ponto de poderem chegar à perfeição possuindo riquezas e usando do matrimónio; assim como ninguém presumiria poder atacar os inimigos, pelo fato de ter Sansão trucidado muitos dos seus com a queixada de um burro. Pois, os referidos Patriarcas, se tivessem vivido no tempo em que já se deviam observar a continência e a pobreza, mais aplicadamente cumpririam esses deveres.</p>
+    <p>RESPOSTA À TERCEIRA. – Os referidos géneros de vida em que os homens usam do matrimónio não constituem religiões, simples e absolutamente falando, mas só de certo modo; isto é, enquanto participam de certas cousas pertinentes ao estado de religião.</p>
+
+    </div>
+  </div>
+  
+  <!-- Bloco de Explicação (a ser preenchido) -->
+  <div class="bloco-explicacao">
+    <div class="explicacao-label">💡 Explicação e Contexto</div>
+    <div class="explicacao-corpo" id="explicacao">
+    <p><em>Explicação será adicionada em breve.</em></p>
+
+    </div>
+  </div>
+  
+</main>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO INFERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="navegacao-inferior">
+  <div class="nav-buttons">
+    <a href="suma-pagina2084.html" class="btn-primary">← Anterior</a>
+    <span class="pagina-atual">2085</span>
+    <a href="suma-pagina2086.html" class="btn-primary">Próxima →</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  RODAPÉ                                                  -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<footer class="suma-footer">
+  <p>Suma Teológica · São Tomás de Aquino | Biblioteca Lux Fidei</p>
+</footer>
+
+</body>
+</html>

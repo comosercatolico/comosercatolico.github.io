@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Questão 76, Artigo 2 — ― Se o princípio intelectivo se multiplica com a multiplicação dos | Suma Teológica</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+    --cor-fundo: #f5f0e8;
+    --cor-pagina: #fff;
+    --cor-texto: #2c1f17;
+    --cor-dourado: #d4af37;
+    --cor-roxo: #5b2c83;
+    --sombra: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cor-fundo);
+    color: var(--cor-texto);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CABEÇALHO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-header {
+    background: linear-gradient(135deg, #1a1a1a, #2c241b);
+    color: #f5f0e8;
+    padding: 32px 20px 24px;
+    text-align: center;
+    position: relative;
+}
+
+.voltar-index {
+    position: absolute;
+    top: 16px;
+    left: 20px;
+    color: var(--cor-dourado);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: opacity 0.2s;
+}
+
+.voltar-index:hover {
+    opacity: 0.8;
+}
+
+.suma-header h1 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.info-pagina {
+    display: inline-block;
+    background: rgba(212, 175, 55, 0.15);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    color: var(--cor-dourado);
+    margin-top: 8px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-topo {
+    background: #fff;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    gap: 10px;
+}
+
+.btn-nav {
+    display: inline-flex;
+    align-items: center;
+    padding: 9px 18px;
+    background: var(--cor-roxo);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.btn-nav:hover {
+    background: #4a246a;
+    transform: translateY(-1px);
+}
+
+.desabilitado {
+    background: #ddd !important;
+    color: #999 !important;
+    pointer-events: none;
+}
+
+.info-centena {
+    font-size: 0.85rem;
+    color: #888;
+    font-weight: 500;
+    padding: 0 10px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CONTEÚDO PRINCIPAL                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.pagina-conteudo {
+    flex: 1;
+    max-width: 860px;
+    width: 100%;
+    margin: 36px auto;
+    padding: 0 20px;
+}
+
+.bloco-texto {
+    background: var(--cor-pagina);
+    padding: 48px 44px;
+    border-radius: 12px;
+    box-shadow: var(--sombra);
+    position: relative;
+    margin-bottom: 24px;
+}
+
+.bloco-texto::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 20px;
+    bottom: 20px;
+    width: 4px;
+    background: linear-gradient(to bottom, var(--cor-dourado), var(--cor-roxo));
+    border-radius: 0 4px 4px 0;
+}
+
+.bloco-titulo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.3rem;
+    color: var(--cor-roxo);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e8dfd0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pagina-corpo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.1rem;
+    line-height: 1.95;
+    color: #3d3226;
+    text-align: justify;
+}
+
+.pagina-corpo p {
+    margin-bottom: 1.3em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  BLOCO DE EXPLICAÇÃO                                        */
+/* ────────────────────────────────────────────────────────── */
+
+.bloco-explicacao {
+    background: linear-gradient(135deg, #fffdf5, #faf5eb);
+    border-left: 5px solid var(--cor-dourado);
+    padding: 32px 40px;
+    border-radius: 0 12px 12px 0;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    margin-bottom: 24px;
+}
+
+.explicacao-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--cor-dourado);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 14px;
+}
+
+.explicacao-corpo {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #4a3c2c;
+}
+
+.explicacao-corpo p {
+    margin-bottom: 1em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO INFERIOR                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-inferior {
+    max-width: 860px;
+    width: 100%;
+    margin: 0 auto 40px;
+    padding: 0 20px;
+}
+
+.nav-buttons {
+    background: #fff;
+    padding: 18px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    box-shadow: var(--sombra);
+}
+
+.btn-primary {
+    flex: 1;
+    text-align: center;
+    padding: 13px 16px;
+    background: linear-gradient(135deg, var(--cor-roxo), #7a3eb5);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(91, 44, 131, 0.3);
+}
+
+.pagina-atual {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--cor-dourado);
+    min-width: 50px;
+    text-align: center;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RODAPÉ                                                     */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-footer {
+    background: #1a1a1a;
+    color: #888;
+    text-align: center;
+    padding: 22px 20px;
+    margin-top: auto;
+    font-size: 0.85rem;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RESPONSIVIDADE                                             */
+/* ────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+    .suma-header h1 {
+        font-size: 1.4rem;
+    }
+    
+    .bloco-texto {
+        padding: 28px 18px;
+    }
+    
+    .bloco-explicacao {
+        padding: 22px 18px;
+    }
+    
+    .navegacao-topo {
+        flex-wrap: wrap;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CABEÇALHO                                               -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="suma-header">
+  <a href="../../index.html" class="voltar-index">← Índice</a>
+  <h1>Suma Teológica</h1>
+  <p style="opacity:0.8; font-style:italic; margin-top:4px;">São Tomás de Aquino</p>
+  <span class="info-pagina">Página 369 de 3000</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO SUPERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<nav class="navegacao-topo">
+  <a href="suma-pagina368.html" class="btn-nav">← Anterior</a>
+  <span class="info-centena">Pág. 369/3000</span>
+  <a href="suma-pagina370.html" class="btn-nav">Próxima →</a>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CONTEÚDO PRINCIPAL                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<main class="pagina-conteudo">
+  
+  <!-- Texto Original -->
+  <div class="bloco-texto">
+    <div class="bloco-titulo">
+      <span>📜</span>
+      Questão 76, Artigo 2 — ― Se o princípio intelectivo se multiplica com a multiplicação dos
+    </div>
+    <div class="pagina-corpo">
+    <p>corpos, ou se há um só intelecto para todos os homens. (I Sent., disto VIII. q. 5,.a. 2, ad 6; II, disto XVII, q. 2, a. 1; IICont.Gent., cap. LXXIII, LXXV; De Spirit Creat., a. 9; Qu. De Anima, a .3, Compende. Theol., cap. LXXXV;De Ubit Intellec. Per tot). O segundo discute-se assim. ― Parece que o princípio intelectivo não se multiplica com a multiplicação dos corpos, mas há um só intelecto para todos os homens. 1. ― Pois, nenhuma substância imaterial se multiplica numericamente, numa mesma espécie. Ora, a alma humana é substância imaterial, pois, não é composta de matéria e forma, como já se demonstrou (q. 75, a. 5). Logo, não há muitas da mesma espécie; mas todos os homens o são e, portanto, todos têm um só intelecto. 2. Demais. ― Removida a causa, removido fica o efeito. Se, pois, com a multiplicação dos corpos, se multiplicassem as almas humanas, conseqüentemente, removidos aqueles, não permaneceria a multidão destas, restando só uma, de todas elas. O que é herético porque, então, desapareceria a diferença entre os prêmios e as penas. 3. Demais. ― Se o meu intelecto é diferente do teu, o meu é um certo indivíduo, bem como o teu; pois, seres particulares são os que, diferindo pelo número, convêm na mesma espécie. Ora, tudo o que noutro ser é recebido o é ao modo do que recebe. Logo, as espécies das coisas seriam recebidas, individualmente, pelo meu e pelo teu intelecto. O que é contra a natureza deste, que é cognoscitivo do universal. 4. Demais. ― O inteligido está no intelecto que intelige. Se, pois, o meu intelecto é diferente do teu, é necessário seja uma a coisa inteligida por mim e outra, a por ti; e, assim, o inteligido será multiplicado individualmente e será somente potencial. E será forçoso abstrair de um e outro o ato cognitivo comum; pois de dois seres diversos quaisquer é necessário abstrair o que neles haja de inteligível comum. O que vai contra a natureza do intelecto, pois que, então não se poderia distinguir o intelecto da virtude imaginativa. Logo, é forçoso concluir ser um só o intelecto para todos os homens. 5. Demais. ― Embora o discípulo receba a ciência do mestre, não se pode dizer que esta gera a daquele; porque, assim, também a ciência seria uma forma ativa, como o calor, o que evidentemente é falso. Portanto, numericamente a mesma é a ciência do mestre, comunicada ao discípulo; o que não é possível, a menos que ambos tenham o mesmo intelecto. Logo, um só é o intelecto do mestre e do discípulo e, por conseqüência, de todos os homens. 6. Demais. ― Agostinho diz: Se afirmar, que somente as almas humanas são muitas, a mim mesmo me tornarei ridículo. Ora, é sobretudo quanto ao intelecto que a alma humana é considerada una. Logo, há um só intelecto para todos os homens.</p>
+    <p>Mas, em contrário, diz o Filósofo: as causas universais estão para as coisas universais, como as particulares para as coisas particulares. Ora, é impossível a alma, especificamente una, ser a mesma para animais especificamente diversos. Logo, é impossível que a alma intelectiva, numericamente una, possa ser a de seres numericamente diversos. SOLUÇÃO. ― É absolutamente impossível haja um só intelecto para todos os homens. E isto é evidente se, segundo a opinião de Platão, o homem é o seu intelecto mesmo. Pois, daí resultaria que, se Sócrates e Platão têm o mesmo intelecto, ambos são o mesmo homem e não se distinguirão um do outro senão pelo que lhes for exterior à essência. E, assim, a distinção entre eles seria a mesma que entre um homem vestido de túnica e outro de capa, o que é completamente absurdo. ― Semelhantemente, também se verá a mesma impossibilidade se, conforme a opinião de Aristóteles, se admitir o intelecto como parte ou potência da alma, que é a forma do homem. Pois, é impossível que muitos seres, numericamente diversos, tenham a mesma forma; assim como o é tenham o mesmo ser, do qual a forma é o princípio. Do mesmo modo verá essa impossibilidade quem, de qualquer maneira que seja, admitir a união do intelecto com tal homem ou tal outro. Pois, é manifesto, dado um só princípio agente e dois instrumentos, pode haver um só agente, absolutamente, mas várias ações; assim, se o mesmo homem tocar coisas diversas com as duas mãos, haverá, certamente, vários agentes, mas uma só ação; como se muitos puxarem, com uma corda, uma embarcação, haverá muitos que puxam, mas uma só ação tratora. Se, porém, for um o agente principal e um o instrumento, haverá um só agente e uma só ação; assim, se um ferreiro percute com um martelo um é o percutidor e uma a percussão. Ora, é manifesto, que seja como for o modo por que o intelecto, esteja unido ou ligado a tal homem ou tal outro, ele têm, entre os demais atributos do homem, a principalidade, pois, as forças sensitivas lhe obedecem e servem. Se, pois, se admitissem, para dois homens, vários intelectos e um só sentido, e se, assim, dois homens tivessem os mesmos olhos, seriam dois a ver, com uma só visão. Se, portanto, o intelecto é um, embora sejam diversos os meios de que todo intelecto usa, como de instrumentos, de nenhum outro modo poderiam Sócrates e Platão ser considerados senão como um só e mesmo homem, que intelige. E se acrescentarmos que o ato mesmo de inteligir, próprio do intelecto, não se realiza por nenhum outro órgão a não ser pelo intelecto, resultará, mais, a unidade do agente e da ação, i. é., todos os homens serão um só ser inteligente, com o mesmo ato de inteligir, em relação ao mesmo inteligível. Porém, a minha ação intelectual poderia diversificar-se da tua, pela diversidade dos fantasmas, pois que um é o fantasma de uma pedra em mim e outro, em ti, se o fantasma mesmo, enquanto um, o meu e outro, o teu, fosse a forma do intelecto possível. Porque, o mesmo agente, segundo as diversas formas, produz diversas ações; assim, segundo são diversas as formas das coisas, em relação aos mesmos olhos, assim são diversas as visões. Mas, o fantasma não é a forma do intelecto possível, mas sim, a espécie inteligível, dele abstraída. Ora, num mesmo intelecto, de fantasmas diversos da mesma espécie só pode ser abstraída uma espécie inteligível. O que bem se vê, considerando-se um mesmo homem, no qual podem existir diversos fantasmas das coisas; e, todavia, de todos eles é abstraída uma só espécie inteligível da pedra, pela qual o seu intelecto, por operação una, intelige a natureza da pedra, não obstante a diversidade dos fantasmas. Se, pois, fosse um só o ’intelecto de todos os homens, as diversidades dos fantasmas, neles, não poderiam causar a diversidade da operação intelectual, neste ou naquele, como supõe o Comentador. Conclui-se, portanto, que é absolutamente impossível e inconveniente admitir que há um só intelecto para todos os homens.</p>
+    <p>DONDE A</p>
+    <p>RESPOSTA À PRIMEIRA OBJEÇÃO. . Embora nem a alma intelectiva, nem o anjo, tenham matéria de que provenham, aquela é, todavia, a forma de uma certa matéria. Por onde, conforme a divisão da matéria, assim há muitas almas da mesma espécie; ao passo que é absolutamente impossível assim existirem muitos anjos.</p>
+    <p>RESPOSTA À TERCEIRA. ― Cada ser tem a unidade do mesmo modo pelo qual tem o ser e, por conseqüência, o que se diz da multiplicação das coisas diz-se-lhes também do ser. Ora, é manifesto, a alma intelectual, está, por natureza, unida ao corpo, como forma; e contudo, destruído este, ela permanece no ser. E, pela mesma razão, a multidão das almas é relativa à dos corpos; contudo, destruídos estes, elas permanecem multiplicadas no seu ser.</p>
+    <p>RESPOSTA À TERCEIRA. ― A individuação do ser inteligente ou da espécie pela qual intelige, não exclui a inteligência dos universais; do contrário, sendo os intelectos separados substâncias subsistentes e, por conseqüência, particulares, não poderiam inteligir os universais. Mas, a materialidade do conhecente e da espécie, pela qual conhece, impede o conhecimento do universal. Pois, assim como toda ação é relativa ao modo da forma pela qual o agente age, como, p. ex., a cale facção é relativa ao modo do calor; assim, o conhecimento é relativo ao modo da espécie, pela qual o conhecente conhece. Ora, é manifesto que a natureza comum se distingue e multiplica segundo os princípios individuantes, que dependem da matéria. Se, pois, a forma, pela qual se faz o conhecimento, for material, não abstraída das condições da matéria, essa forma será a semelhança da natureza da espécie ou do gênero, porque será distinta e multiplicada, pelos princípios individuantes; e, então, não poderá ser conhecida à natureza da coisa, na sua comunidade. Se, porém, a espécie for abstraída das condições da matéria individual, haverá a semelhança da natureza sem aquilo que a distingue e multiplica; e, assim, será conhecido o universal. Nem importa, quanto a isto, se o intelecto for um só ou se forem muitos; porque, mesmo que fosse só um, seria necessário sê-lo determinadamente, e também deveria ser a espécie pela qual intelige uma espécie determinada.</p>
+    <p>RESPOSTA À QUARTA. ― Quer o intelecto seja um, quer sejam muitos, só uma e mesma coisa é o que é inteligido. Pois, isto não está no intelecto, conforme o que é, mas pela sua semelhança. Assim, não a pedra, mas sim a sua espécie é que está na alma como diz Aristóteles. E, contudo, é a pedra a inteligida, e não a sua espécie, a não ser pela reflexão do intelecto sobre si mesmo; do contrário, não haveria ciências das causas, mas só das espécies inteligíveis. Ora, forçosamente, se diversas coisas se assemelham ao mesmo ser, se-lo-á por formas diversas. E como o conhecimento se opera pela assimilação do conhecente com a causa conhecida, resulta que a mesma coisa pode ser conhecida por diversos conhecentes, como se dá com os sentidos. Assim, vários vêm à mesma cor, sob semelhanças diferentes; e, do mesmo modo, vários intelectos inteligem a mesma causa. Mas, na opinião de Aristóteles, entre os sentidos e o intelecto há só esta diferença: uma causa é sentida, conforme a disposição que tem, na sua particularidade, fora da alma; ao passo que a natureza da causa inteligida existindo, por certo, fora da alma, aí não tem, contudo, o modo de ser pelo qual é inteligida. Pois, o que é inteligido é a natureza comum, separada de todos os princípios individuantes. Ora, tal modo de existir, a causa não o tem fora da alma. Mas, conforme a opinião de Platão, que admitia serem as naturezas das causas separadas da matéria, a coisa inteligida está fora da alma do mesmo modo pelo qual é inteligida. RESPOSTA À QUINTA. ― De um modo está à ciência no mestre e, de outro, no discípulo. E a seguir se verá como ela é causada (q. 117, a. 1). RESPOSTA À SEXTA. ― Agostinho quer dizer que não há pluralidade de almas sem que estejam unidas sob a noção de uma mesma espécie.</p>
+
+    </div>
+  </div>
+  
+  <!-- Bloco de Explicação (a ser preenchido) -->
+  <div class="bloco-explicacao">
+    <div class="explicacao-label">💡 Explicação e Contexto</div>
+    <div class="explicacao-corpo" id="explicacao">
+    <p><em>Explicação será adicionada em breve.</em></p>
+
+    </div>
+  </div>
+  
+</main>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO INFERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="navegacao-inferior">
+  <div class="nav-buttons">
+    <a href="suma-pagina368.html" class="btn-primary">← Anterior</a>
+    <span class="pagina-atual">369</span>
+    <a href="suma-pagina370.html" class="btn-primary">Próxima →</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  RODAPÉ                                                  -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<footer class="suma-footer">
+  <p>Suma Teológica · São Tomás de Aquino | Biblioteca Lux Fidei</p>
+</footer>
+
+</body>
+</html>

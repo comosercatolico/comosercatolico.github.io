@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Questão 144, Artigo 2 — Se o objeto da vergonha é o ato desonesto. | Suma Teológica</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+    --cor-fundo: #f5f0e8;
+    --cor-pagina: #fff;
+    --cor-texto: #2c1f17;
+    --cor-dourado: #d4af37;
+    --cor-roxo: #5b2c83;
+    --sombra: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cor-fundo);
+    color: var(--cor-texto);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CABEÇALHO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-header {
+    background: linear-gradient(135deg, #1a1a1a, #2c241b);
+    color: #f5f0e8;
+    padding: 32px 20px 24px;
+    text-align: center;
+    position: relative;
+}
+
+.voltar-index {
+    position: absolute;
+    top: 16px;
+    left: 20px;
+    color: var(--cor-dourado);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: opacity 0.2s;
+}
+
+.voltar-index:hover {
+    opacity: 0.8;
+}
+
+.suma-header h1 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.info-pagina {
+    display: inline-block;
+    background: rgba(212, 175, 55, 0.15);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    color: var(--cor-dourado);
+    margin-top: 8px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-topo {
+    background: #fff;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    gap: 10px;
+}
+
+.btn-nav {
+    display: inline-flex;
+    align-items: center;
+    padding: 9px 18px;
+    background: var(--cor-roxo);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.btn-nav:hover {
+    background: #4a246a;
+    transform: translateY(-1px);
+}
+
+.desabilitado {
+    background: #ddd !important;
+    color: #999 !important;
+    pointer-events: none;
+}
+
+.info-centena {
+    font-size: 0.85rem;
+    color: #888;
+    font-weight: 500;
+    padding: 0 10px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CONTEÚDO PRINCIPAL                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.pagina-conteudo {
+    flex: 1;
+    max-width: 860px;
+    width: 100%;
+    margin: 36px auto;
+    padding: 0 20px;
+}
+
+.bloco-texto {
+    background: var(--cor-pagina);
+    padding: 48px 44px;
+    border-radius: 12px;
+    box-shadow: var(--sombra);
+    position: relative;
+    margin-bottom: 24px;
+}
+
+.bloco-texto::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 20px;
+    bottom: 20px;
+    width: 4px;
+    background: linear-gradient(to bottom, var(--cor-dourado), var(--cor-roxo));
+    border-radius: 0 4px 4px 0;
+}
+
+.bloco-titulo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.3rem;
+    color: var(--cor-roxo);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e8dfd0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pagina-corpo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.1rem;
+    line-height: 1.95;
+    color: #3d3226;
+    text-align: justify;
+}
+
+.pagina-corpo p {
+    margin-bottom: 1.3em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  BLOCO DE EXPLICAÇÃO                                        */
+/* ────────────────────────────────────────────────────────── */
+
+.bloco-explicacao {
+    background: linear-gradient(135deg, #fffdf5, #faf5eb);
+    border-left: 5px solid var(--cor-dourado);
+    padding: 32px 40px;
+    border-radius: 0 12px 12px 0;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    margin-bottom: 24px;
+}
+
+.explicacao-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--cor-dourado);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 14px;
+}
+
+.explicacao-corpo {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #4a3c2c;
+}
+
+.explicacao-corpo p {
+    margin-bottom: 1em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO INFERIOR                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-inferior {
+    max-width: 860px;
+    width: 100%;
+    margin: 0 auto 40px;
+    padding: 0 20px;
+}
+
+.nav-buttons {
+    background: #fff;
+    padding: 18px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    box-shadow: var(--sombra);
+}
+
+.btn-primary {
+    flex: 1;
+    text-align: center;
+    padding: 13px 16px;
+    background: linear-gradient(135deg, var(--cor-roxo), #7a3eb5);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(91, 44, 131, 0.3);
+}
+
+.pagina-atual {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--cor-dourado);
+    min-width: 50px;
+    text-align: center;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RODAPÉ                                                     */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-footer {
+    background: #1a1a1a;
+    color: #888;
+    text-align: center;
+    padding: 22px 20px;
+    margin-top: auto;
+    font-size: 0.85rem;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RESPONSIVIDADE                                             */
+/* ────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+    .suma-header h1 {
+        font-size: 1.4rem;
+    }
+    
+    .bloco-texto {
+        padding: 28px 18px;
+    }
+    
+    .bloco-explicacao {
+        padding: 22px 18px;
+    }
+    
+    .navegacao-topo {
+        flex-wrap: wrap;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CABEÇALHO                                               -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="suma-header">
+  <a href="../../index.html" class="voltar-index">← Índice</a>
+  <h1>Suma Teológica</h1>
+  <p style="opacity:0.8; font-style:italic; margin-top:4px;">São Tomás de Aquino</p>
+  <span class="info-pagina">Página 1894 de 3000</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO SUPERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<nav class="navegacao-topo">
+  <a href="suma-pagina1893.html" class="btn-nav">← Anterior</a>
+  <span class="info-centena">Pág. 1894/3000</span>
+  <a href="suma-pagina1895.html" class="btn-nav">Próxima →</a>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CONTEÚDO PRINCIPAL                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<main class="pagina-conteudo">
+  
+  <!-- Texto Original -->
+  <div class="bloco-texto">
+    <div class="bloco-titulo">
+      <span>📜</span>
+      Questão 144, Artigo 2 — Se o objeto da vergonha é o ato desonesto.
+    </div>
+    <div class="pagina-corpo">
+    <p>O segundo discute–se assim. – Parece que o objeto da vergonha não é o ato desonesto. 1. – Pois, diz o Filósofo, que a vergonha é o temor da confusão. Ora, às vezes, os que não praticaram nenhum ato desonesto sofrem confusão, segundo aquilo da Escritura: Por tua causa tenho sofrido afronta, foi coberto de confusão o meu rosto. Logo, a vergonha não tem propriamente por objeto o ato desonesto 2. Demais. – Só se considera desonesto o que inclui pecado. Ora, nós nos envergonhamos de certas coisas, por exemplo, de praticar obras servis, que não são pecados. Logo, parece que a vergonha não tem propriamente por objeto o ato desonesto. 3. Demais. – As obras virtuosas, longe de serem desonestas, são as mais belas, como diz Aristóteles. Ora, às vezes nos envergonhamos de praticar certas obras virtuosas, como diz o Evangelho: Se alguém se envergonhar de mim e das minhas palavras, também o Filho do homem se envergonhará a ele, etc. Logo, o objeto da vergonha não é o ato desonesto. 4. Demais. – Se a vergonha tivesse propriamente como objeto os atos desonestos, deveríamos nos envergonhar mais dos atos mais desonestos. Ora, às vezes, envergonhamo–nos mais de pecados menores e nos gloriamos de outros, que são gravíssimos, conforme a Escritura: Porque te glorias na malícia? Logo a vergonha não tem propriamente por objeto os atos desonestos,</p>
+    <p>Mas, em contrário, diz Damasceno, que a vergonha é o temor causado por um ato desonesto ou por uma desonestidade perpetua. SOLUÇÃO., – Como dissemos, quando tratamos da paixão do temor, o temor tem propriamente por objeto um mal árduo, isto é, dificilmente evitável. Ora, há duas sortes de desonestidade. – Uma, viciosa, e é a que consiste na deformidade de um ato voluntário e esta, propriamente falando, não é por natureza um mal difícil; pois, o que depende só da vontade não o consideramos difícil e superior às nossas forças; e por isso não é apreendido sob a noção de terrível. Donde o dizer o Filósofo, que c temor não tem por objeto esses males. Mas, há outra sorte de desonestidade, que é quase penal e consiste na censura dos outros do mesmo modo que uma certa refulgência da glória está em sermos honrados pelos outros. E como essa censura é, por natureza, um mal difícil, como a honra é por natureza um bem árduo, a vergonha, que é o temor da desonestidade, respeita primária e principalmente ao vitupério ou opróbrio. Ora, o vitupério, sendo propriamente devido ao vício, como a honra o é à virtude, daí resulta, por consequência, que a vergonha respeita à desonestidade viciosa. Por isso, Giz o Filósofo, nós nos envergonhamos menos dos defeitos que temos, sem culpa nossa. Ora, a vergonha se relaciona com a culpa de dois modos. Primeiro, por deixarmos de agir viciosamente por temor da censura. Segundo, por evitarmos, ao praticar ações desonestas, de sermos vistos publicamente, por temor da censura. Dessas duas relações, a primeira é, segundo Gregório Nisseno, a enrubescência; a segunda, a vergonha. Por isso, esse mesmo autor diz, que quem se envergonha oculta– se para agir; mas, quem enrubesce teme cair em confusão.</p>
+    <p>DONDE A</p>
+    <p>RESPOSTA À PRIMEIRA OBJEÇÃO. – A vergonha diz respeito propriamente à confusão, enquanto esta é devida à culpa, que é uma deficiência voluntária. Por isso o Filósofo diz, que nós não envergonhamos sobretudo daquilo de que somos a causa. Ora, as censuras feitas aos virtuosos, por causa da sua virtude, ele as despreza, por lhe serem irrogadas indignamente, como do magnânimo o diz Aristóteles e dos Apóstolos, a Escritura: Saíam os Apóstolos gozosos de diante do conselho, por terem sido achados dignos de sofrer afrontas pelo nome de Jesus. Mas, é a imperfeição da virtude, que nos leva a nos envergonharmos das censuras, que nos são feitas, pela nossa virtude; pois, quanto mais virtuosos formos, tanto mais desprezaremos os bens ou males exteriores. Por isso, diz a Escritura: Não temais o opróbrio dos homens.</p>
+    <p>RESPOSTA À SEGUNDA. – Assim como a honra, segundo dissemos, embora não seja devida verdadeiramente senão à virtude, implica uma certa excelência; assim também o vitupério, embora devido propriamente só à culpa, contudo implica, ao menos na opinião dos homens, um certo defeito. Por isso, certos se envergonham da pobreza, da ignobilidade, da escravidão e de cousas semelhantes.</p>
+    <p>RESPOSTA À TERCEIRA. – Só por acidente é que nos envergonhamos das obras virtuosas, que, em si mesmas consideradas, não podem constituir objeto de vergonha. E nos envergonhamos delas ou pelos termos como viciosas, segundo a opinião dos homens; ou por querermos evitar praticando obras virtuosas, a nota de presunção ou também a de simulação.</p>
+    <p>RESPOSTA À QUARTA. – As vezes acontece, que certos pecados mais graves são menos dignos de vergonha. Ou porque são, por natureza, menos desonestos e, assim, os pecados espirituais, menos que os carnais; ou por consistirem num certo excesso de bens temporais e, assim, mais nos envergonhamos da timidez, que da audácia; e do furto, que do roubo – por uma certa espécie de poder. E o mesmo se dá em casos semelhantes.</p>
+
+    </div>
+  </div>
+  
+  <!-- Bloco de Explicação (a ser preenchido) -->
+  <div class="bloco-explicacao">
+    <div class="explicacao-label">💡 Explicação e Contexto</div>
+    <div class="explicacao-corpo" id="explicacao">
+    <p><em>Explicação será adicionada em breve.</em></p>
+
+    </div>
+  </div>
+  
+</main>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO INFERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="navegacao-inferior">
+  <div class="nav-buttons">
+    <a href="suma-pagina1893.html" class="btn-primary">← Anterior</a>
+    <span class="pagina-atual">1894</span>
+    <a href="suma-pagina1895.html" class="btn-primary">Próxima →</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  RODAPÉ                                                  -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<footer class="suma-footer">
+  <p>Suma Teológica · São Tomás de Aquino | Biblioteca Lux Fidei</p>
+</footer>
+
+</body>
+</html>

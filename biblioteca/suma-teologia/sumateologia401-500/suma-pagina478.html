@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Questão 95, Artigo 3 — Se Adão tinha todas as virtudes. | Suma Teológica</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+    --cor-fundo: #f5f0e8;
+    --cor-pagina: #fff;
+    --cor-texto: #2c1f17;
+    --cor-dourado: #d4af37;
+    --cor-roxo: #5b2c83;
+    --sombra: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cor-fundo);
+    color: var(--cor-texto);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CABEÇALHO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-header {
+    background: linear-gradient(135deg, #1a1a1a, #2c241b);
+    color: #f5f0e8;
+    padding: 32px 20px 24px;
+    text-align: center;
+    position: relative;
+}
+
+.voltar-index {
+    position: absolute;
+    top: 16px;
+    left: 20px;
+    color: var(--cor-dourado);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: opacity 0.2s;
+}
+
+.voltar-index:hover {
+    opacity: 0.8;
+}
+
+.suma-header h1 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.info-pagina {
+    display: inline-block;
+    background: rgba(212, 175, 55, 0.15);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    color: var(--cor-dourado);
+    margin-top: 8px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-topo {
+    background: #fff;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    gap: 10px;
+}
+
+.btn-nav {
+    display: inline-flex;
+    align-items: center;
+    padding: 9px 18px;
+    background: var(--cor-roxo);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.btn-nav:hover {
+    background: #4a246a;
+    transform: translateY(-1px);
+}
+
+.desabilitado {
+    background: #ddd !important;
+    color: #999 !important;
+    pointer-events: none;
+}
+
+.info-centena {
+    font-size: 0.85rem;
+    color: #888;
+    font-weight: 500;
+    padding: 0 10px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CONTEÚDO PRINCIPAL                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.pagina-conteudo {
+    flex: 1;
+    max-width: 860px;
+    width: 100%;
+    margin: 36px auto;
+    padding: 0 20px;
+}
+
+.bloco-texto {
+    background: var(--cor-pagina);
+    padding: 48px 44px;
+    border-radius: 12px;
+    box-shadow: var(--sombra);
+    position: relative;
+    margin-bottom: 24px;
+}
+
+.bloco-texto::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 20px;
+    bottom: 20px;
+    width: 4px;
+    background: linear-gradient(to bottom, var(--cor-dourado), var(--cor-roxo));
+    border-radius: 0 4px 4px 0;
+}
+
+.bloco-titulo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.3rem;
+    color: var(--cor-roxo);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e8dfd0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pagina-corpo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.1rem;
+    line-height: 1.95;
+    color: #3d3226;
+    text-align: justify;
+}
+
+.pagina-corpo p {
+    margin-bottom: 1.3em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  BLOCO DE EXPLICAÇÃO                                        */
+/* ────────────────────────────────────────────────────────── */
+
+.bloco-explicacao {
+    background: linear-gradient(135deg, #fffdf5, #faf5eb);
+    border-left: 5px solid var(--cor-dourado);
+    padding: 32px 40px;
+    border-radius: 0 12px 12px 0;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    margin-bottom: 24px;
+}
+
+.explicacao-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--cor-dourado);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 14px;
+}
+
+.explicacao-corpo {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #4a3c2c;
+}
+
+.explicacao-corpo p {
+    margin-bottom: 1em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO INFERIOR                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-inferior {
+    max-width: 860px;
+    width: 100%;
+    margin: 0 auto 40px;
+    padding: 0 20px;
+}
+
+.nav-buttons {
+    background: #fff;
+    padding: 18px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    box-shadow: var(--sombra);
+}
+
+.btn-primary {
+    flex: 1;
+    text-align: center;
+    padding: 13px 16px;
+    background: linear-gradient(135deg, var(--cor-roxo), #7a3eb5);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(91, 44, 131, 0.3);
+}
+
+.pagina-atual {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--cor-dourado);
+    min-width: 50px;
+    text-align: center;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RODAPÉ                                                     */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-footer {
+    background: #1a1a1a;
+    color: #888;
+    text-align: center;
+    padding: 22px 20px;
+    margin-top: auto;
+    font-size: 0.85rem;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RESPONSIVIDADE                                             */
+/* ────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+    .suma-header h1 {
+        font-size: 1.4rem;
+    }
+    
+    .bloco-texto {
+        padding: 28px 18px;
+    }
+    
+    .bloco-explicacao {
+        padding: 22px 18px;
+    }
+    
+    .navegacao-topo {
+        flex-wrap: wrap;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CABEÇALHO                                               -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="suma-header">
+  <a href="../../index.html" class="voltar-index">← Índice</a>
+  <h1>Suma Teológica</h1>
+  <p style="opacity:0.8; font-style:italic; margin-top:4px;">São Tomás de Aquino</p>
+  <span class="info-pagina">Página 478 de 3000</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO SUPERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<nav class="navegacao-topo">
+  <a href="suma-pagina477.html" class="btn-nav">← Anterior</a>
+  <span class="info-centena">Pág. 478/3000</span>
+  <a href="suma-pagina479.html" class="btn-nav">Próxima →</a>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CONTEÚDO PRINCIPAL                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<main class="pagina-conteudo">
+  
+  <!-- Texto Original -->
+  <div class="bloco-texto">
+    <div class="bloco-titulo">
+      <span>📜</span>
+      Questão 95, Artigo 3 — Se Adão tinha todas as virtudes.
+    </div>
+    <div class="pagina-corpo">
+    <p>O terceiro discute–se assim. – Parece que Adão não tinha todas as virtudes. 1. – Pois, certas virtudes visam refreiar a imoderação das paixões; assim, a temperança refreia a concupiscência imoderada; e a fortaleza, o temor imoderado. Ora, não havia imoderação das paixões no estado de inocência. Logo, nem as sobreditas virtudes. 2. Demais. – Certas virtudes dizem respeito às más paixões; assim, a mansidão, refreia a ira e a fortaleza, o temor. Ora, como já se disse, tais paixões não existiam no estado de inocência. Logo, nem as sobreditas virtudes. 3. Demais. – A penitência é virtude atinente ao pecado anteriormente cometido. De seu lado, a misericórdia é virtude que diz respeito à miséria. Ora, no estado de inocência não havia pecado nem miséria. Logo, nem tais virtudes. 4. Demais. – A perseverança é uma virtude. Ora, Adão não a teve, como bem o mostra o pecado subsequente. Logo, não teve todas as virtudes. 5. Demais. – A fé é uma virtude. Ora, ela não existia no estado de inocência; pois, importa um conhecimento velado, que repugna à perfeição do primeiro estado.</p>
+    <p>Mas, em contrário, diz Agostinho: O príncipe dos vícios venceu Adão, feito do limo da terra à imagem de Deus, armado de pudicícia, formado na temperança, magnífico pelo esplendor. SOLUÇÃO. – O homem, no estado de inocência, teve, de certo modo, todas as virtudes; o que pode se tornar manifesto pelo que já ficou dito. Pois, como já se disse antes, era tal a retidão do primeiro estado, que a razão era submissa a Deus, e as virtudes inferiores, à razão. Ora, estas nada mais são que certas perfeições, pelas quais a razão se ordena para Deus; e as virtudes inferiores dispõem–se pela regra da razão, como se verá mais claramente quando se tratar das virtudes. Por onde, a retidão do primeiro estado exigia que o homem tivesse, de certo modo, todas as virtudes. Mas devemos considerar que há certas virtudes, como a caridade e a justiça que, por essência, não importam nenhuma imperfeição. E tais virtudes existiam, no estado de inocência, em si mesmas, habitual e atualmente. Há outras virtudes, porém, que, por essência, importam a imperfeição, ou quanto ao ato, ou quanto à matéria. E se tal imperfeição não repugna à perfeição do primeiro estado, então tais virtudes podiam existir nesse estado. Assim a fé, referente às coisas que se não vêm; e a esperança, às que não se tem. Pois, a perfeição do primeiro estado não chegava até à visão de Deus em essência e à posse dele com o gozo da beatitude final. Por onde, a fé e a esperança podiam existir, no primeiro estado, tanto habitual como atualmente. Se porém a imperfeição, da essência de uma determinada virtude repugna à perfeição do primeiro estado, então essa virtude podia nele existir, habitual, mas não atualmente. Como claramente se vê na penitência, que é a dor pelo pecado cometido; e na misericórdia, que é a dor pela miséria alheia. Pois, à perfeição do primeiro estado tanto repugna a dor como a culpa e a miséria. Por onde, tais virtudes existiam, no primeiro homem, habitual mas não atualmente. Pois, era o primeiro homem de tal modo disposto que, se precedesse o pecado, condoer–se–ia; e, semelhantemente, se visse a miséria alheia, socorrer–lhe–ia tanto quanto pudesse. E por isso o Filósofo diz: a vergonha, que se refere a um fato torpe, existe no virtuoso só condicionalmente; pois ele é de tal modo disposto que haveria de se envergonhar, se cometesse algo de torpe.</p>
+    <p>DONDE A</p>
+    <p>RESPOSTA À PRIMEIRA OBJEÇÃO. – A temperança e a fortaleza constituem a super abundância das paixões, só acidentalmente, enquanto encontram paixões super abundantes no sujeito. Mas por natureza é próprio dessas virtudes, moderar as paixões.</p>
+    <p>RESPOSTA À SEGUNDA. – Repugnam à perfeição do primeiro estado as paixões ordenadas ao mal, que dizem respeito a este enquanto existente em quem é afetado pela paixão, como o temor e a dor. Mas as paixões referentes ao mal, em outrem, não repugnam à perfeição do primeiro estado. Pois nesse estado o homem podia odiar a malícia dos demônios, bem como amar a bondade de Deus. E por isso as virtudes referentes a tais paixões podiam existir no sobredito estado, habitual e atualmente. As que são, porém referentes às paixões, que dizem respeito ao mal no mesmo sujeito, se se referirem só a tais paixões, não podiam ter existido atualmente no primeiro estado, mas só habitualmente, como já se disse no tocante à penitência e à misericórdia. Há porém certas virtudes referentes não só a essas, como às outras paixões; assim, a temperança, referente não só às dores, mas também aos prazeres; e a fortaleza, referente não só ao temor, como também à audácia e à esperança. Por onde, podia haver, no primeiro estado, o ato da temperança, enquanto moderador dos prazeres; e, semelhantemente, a fortaleza, enquanto moderadora da audácia ou da esperança. Não, porém enquanto moderam a tristeza e o temor.</p>
+    <p>RESPOSTA À TERCEIRA. – Deduz–se clara a resposta, do que foi dito.</p>
+    <p>RESPOSTA À QUARTA. – Em dupla acepção se entende a perseverança. – Como virtude e exprimindo um hábito, pelo qual alguém elege o perseverar no bem; nesse sentido Adão teve a perseverança. – Ou, noutra acepção, como circunstância da virtude, e exprimindo uma certa continuação da virtude, sem corrupção; e nesse, Adão não a teve. RESPOSTA À QUINTA. – Deduz–se clara a resposta, daquilo que acaba de ser dito.</p>
+
+    </div>
+  </div>
+  
+  <!-- Bloco de Explicação (a ser preenchido) -->
+  <div class="bloco-explicacao">
+    <div class="explicacao-label">💡 Explicação e Contexto</div>
+    <div class="explicacao-corpo" id="explicacao">
+    <p><em>Explicação será adicionada em breve.</em></p>
+
+    </div>
+  </div>
+  
+</main>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO INFERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="navegacao-inferior">
+  <div class="nav-buttons">
+    <a href="suma-pagina477.html" class="btn-primary">← Anterior</a>
+    <span class="pagina-atual">478</span>
+    <a href="suma-pagina479.html" class="btn-primary">Próxima →</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  RODAPÉ                                                  -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<footer class="suma-footer">
+  <p>Suma Teológica · São Tomás de Aquino | Biblioteca Lux Fidei</p>
+</footer>
+
+</body>
+</html>

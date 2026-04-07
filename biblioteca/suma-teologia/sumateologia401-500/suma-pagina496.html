@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Questão 102, Artigo 1 — Se o paraíso era um lugar material. | Suma Teológica</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+    --cor-fundo: #f5f0e8;
+    --cor-pagina: #fff;
+    --cor-texto: #2c1f17;
+    --cor-dourado: #d4af37;
+    --cor-roxo: #5b2c83;
+    --sombra: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cor-fundo);
+    color: var(--cor-texto);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CABEÇALHO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-header {
+    background: linear-gradient(135deg, #1a1a1a, #2c241b);
+    color: #f5f0e8;
+    padding: 32px 20px 24px;
+    text-align: center;
+    position: relative;
+}
+
+.voltar-index {
+    position: absolute;
+    top: 16px;
+    left: 20px;
+    color: var(--cor-dourado);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: opacity 0.2s;
+}
+
+.voltar-index:hover {
+    opacity: 0.8;
+}
+
+.suma-header h1 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.info-pagina {
+    display: inline-block;
+    background: rgba(212, 175, 55, 0.15);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    color: var(--cor-dourado);
+    margin-top: 8px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-topo {
+    background: #fff;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    gap: 10px;
+}
+
+.btn-nav {
+    display: inline-flex;
+    align-items: center;
+    padding: 9px 18px;
+    background: var(--cor-roxo);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.btn-nav:hover {
+    background: #4a246a;
+    transform: translateY(-1px);
+}
+
+.desabilitado {
+    background: #ddd !important;
+    color: #999 !important;
+    pointer-events: none;
+}
+
+.info-centena {
+    font-size: 0.85rem;
+    color: #888;
+    font-weight: 500;
+    padding: 0 10px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CONTEÚDO PRINCIPAL                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.pagina-conteudo {
+    flex: 1;
+    max-width: 860px;
+    width: 100%;
+    margin: 36px auto;
+    padding: 0 20px;
+}
+
+.bloco-texto {
+    background: var(--cor-pagina);
+    padding: 48px 44px;
+    border-radius: 12px;
+    box-shadow: var(--sombra);
+    position: relative;
+    margin-bottom: 24px;
+}
+
+.bloco-texto::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 20px;
+    bottom: 20px;
+    width: 4px;
+    background: linear-gradient(to bottom, var(--cor-dourado), var(--cor-roxo));
+    border-radius: 0 4px 4px 0;
+}
+
+.bloco-titulo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.3rem;
+    color: var(--cor-roxo);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e8dfd0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pagina-corpo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.1rem;
+    line-height: 1.95;
+    color: #3d3226;
+    text-align: justify;
+}
+
+.pagina-corpo p {
+    margin-bottom: 1.3em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  BLOCO DE EXPLICAÇÃO                                        */
+/* ────────────────────────────────────────────────────────── */
+
+.bloco-explicacao {
+    background: linear-gradient(135deg, #fffdf5, #faf5eb);
+    border-left: 5px solid var(--cor-dourado);
+    padding: 32px 40px;
+    border-radius: 0 12px 12px 0;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    margin-bottom: 24px;
+}
+
+.explicacao-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--cor-dourado);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 14px;
+}
+
+.explicacao-corpo {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #4a3c2c;
+}
+
+.explicacao-corpo p {
+    margin-bottom: 1em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO INFERIOR                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-inferior {
+    max-width: 860px;
+    width: 100%;
+    margin: 0 auto 40px;
+    padding: 0 20px;
+}
+
+.nav-buttons {
+    background: #fff;
+    padding: 18px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    box-shadow: var(--sombra);
+}
+
+.btn-primary {
+    flex: 1;
+    text-align: center;
+    padding: 13px 16px;
+    background: linear-gradient(135deg, var(--cor-roxo), #7a3eb5);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(91, 44, 131, 0.3);
+}
+
+.pagina-atual {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--cor-dourado);
+    min-width: 50px;
+    text-align: center;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RODAPÉ                                                     */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-footer {
+    background: #1a1a1a;
+    color: #888;
+    text-align: center;
+    padding: 22px 20px;
+    margin-top: auto;
+    font-size: 0.85rem;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RESPONSIVIDADE                                             */
+/* ────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+    .suma-header h1 {
+        font-size: 1.4rem;
+    }
+    
+    .bloco-texto {
+        padding: 28px 18px;
+    }
+    
+    .bloco-explicacao {
+        padding: 22px 18px;
+    }
+    
+    .navegacao-topo {
+        flex-wrap: wrap;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CABEÇALHO                                               -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="suma-header">
+  <a href="../../index.html" class="voltar-index">← Índice</a>
+  <h1>Suma Teológica</h1>
+  <p style="opacity:0.8; font-style:italic; margin-top:4px;">São Tomás de Aquino</p>
+  <span class="info-pagina">Página 496 de 3000</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO SUPERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<nav class="navegacao-topo">
+  <a href="suma-pagina495.html" class="btn-nav">← Anterior</a>
+  <span class="info-centena">Pág. 496/3000</span>
+  <a href="suma-pagina497.html" class="btn-nav">Próxima →</a>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CONTEÚDO PRINCIPAL                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<main class="pagina-conteudo">
+  
+  <!-- Texto Original -->
+  <div class="bloco-texto">
+    <div class="bloco-titulo">
+      <span>📜</span>
+      Questão 102, Artigo 1 — Se o paraíso era um lugar material.
+    </div>
+    <div class="pagina-corpo">
+    <p>O primeiro discute–se assim. – Parece que o paraíso não era um lugar corpóreo. 1. – Pois, diz Beda, que o paraíso chega até o círculo lunar. Ora, tal não pode se dar com nenhum lugar terreno; quer por que fosse contra a natureza da terra o elevar–se tanto; quer por existir, sob o globo lunar, uma região ígnea, que consumiria a terra. Logo, o paraíso não é um lugar material. 2. Demais. – A Escritura menciona quatro rios nascidos no paraíso. Ora, esses rios aí mencionados tem, em outros lugares, origens manifestas, como também se vê claramente no Filósofo. Logo, o paraíso não é um lugar material. 3. Demais. – Alguns perquiriram muito diligentemente todos os lugares da terra habitável, e todavia nenhuma menção fizeram da situação do paraíso. Logo não é um lugar material. 4. Demais. – Afirma–se que a árvore da vida estava no paraíso. Ora tal árvore é espiritual, conforme a Escritura: É árvore da vida para aqueles que lançarem mão dela. Logo também o paraíso não era um lugar material, mas espiritual. 5. Demais. – Se o paraíso fosse um lugar material, necessariarnente também seriam materiais as suas árvores. Ora, tal não podia ser, por terem elas sido produzidas no terceiro dia; pois, a Escritura menciona a plantação das árvores do paraíso depois das obras dos seis dias. Logo, o paraíso não é um lugar material.</p>
+    <p>Mas, em contrário, diz Agostinho: Há três como opiniões geral, a respeito do paraíso; uma a dos que o querem compreender somente como material; a outra, a dos que se espiritualmente o compreendem " a terceira, a dos que o concebem de ambos os modos ; e confesso que esta é a que me agrada. SOLUÇÃO. – Como diz Agostinho, o que se acomoda à concepção espiritual do paraíso nada impede que seja admitido; contanto que seja acreditada a verdade fidelíssima da história, confirmada pela narração dos factos passados; ora, o que a Escritura diz, do paraíso, é proposto como narração histórica. E assim, de tudo o que a Escritura historicamente nos transmite, deve–se ter como fundamento a verdade da história e, ulteriormente é que se devem procurar as exposições em sentido espiritual. E, pois o paraíso, como diz Isidoro, um lugar colocado nas partes do Oriente, cuja denominação, traduzida do grego para o latim, significa jardim. Por onde, convenientemente se considera situado na parte Oriental; pois há–se de crer que estava colocado no lugar mais nobre da terra toda. Ora, sendo o Oriente a dextra do céu, como se vê claramente no Filósofo, e sendo a dextra mais nobre que a esquerda, era conveniente que o paraíso terrestre fosse instituído por Deus na parte Oriental.</p>
+    <p>DONDE A</p>
+    <p>RESPOSTA À PRIMEIRA OBJEÇÃO. – As palavras de Beda não são verdadeiras, entendidas de uma situação manifesta. Podem contudo ser explicadas como significando que ascendia até o lugar do globo lunar, não pela eminência da situação, mas pela semelhança; pois, há nesse lugar uma perpétua tempérie de ar, como diz Isidoro; e por aí assemelha–se aos corpos celestes, que não têm contrariedade. Porém, é feita menção, antes do globo lunar, do que das outras esferas, porque esse globo é o limite dos corpos celestes, em relação a nós. E a lua também tem mais afinidades com a terra, do que todos os corpos celestes; sendo por isso que, sujeita a certas trevas nebulosas, chega a ser quase opaca. Outros, porém dizem que o paraíso chegava até o globo lunar, isto é, até o meio do intervalo do ar, onde são produzidas as chuvas, os ventos e fenômenos semelhantes; e isso porque a influência sobre tais evaporações se atribuem, sobretudo à lua. Mas, a se seguir esta opinião, tal lugar não seria conveniente para a habitação humana, quer porque nele há a máxima intempérie, quer por não ser apropriado à compleição humana, como o ar inferior, mais vizinho da terra.</p>
+    <p>RESPOSTA À SEGUNDA. – Como diz Agostinho, deve–se acreditar que o lugar do paraíso está muito longe do conhecimento dos homens; que os rios, cujas fontes se dizem conhecidas, afundiram–se, em outras partes, nas terras e, depois de haverem percorrido espaçosas regiões, prorromperam em outros lugares. Pois, quem ignora que isso costuma dar–se com alguns rios?</p>
+    <p>RESPOSTA À TERCEIRA. – O referido lugar ficou separado das partes que habitamos por certas balisas: montes, mares ou alguma região ardente, que não podem ser ultrapassados. E é por isso que os descritores dos lugares não fizeram menção de tal lugar.</p>
+    <p>RESPOSTA À QUARTA. – A árvore da vida é uma árvore material, assim chamada por terem os seus frutos a virtude de conservar a vida, como já se disse antes. E contudo também significava algo de espiritual; assim como a pedra, no deserto era uma cousa material e todavia simbolizava Cristo. Semelhantemente, também a árvore da ciência do bem e do mal era uma árvore material, assim chamada por causa do futuro acontecimento. Porque, após havê–la comido, o homem, experimentando a pena, compreendeu a diferença entre o bem da obediência e o mal da desobediência, Mas também espiritualmente essa árvore podia significar o livre arbítrio, como certos disseram. RESPOSTA Á QUINTA. – Segundo Agostinho, no terceiro dia foram produzidas as plantas, não atualmente. mas por certas razões seminais; mas, depois das obras dos seis dias, foram elas produzidas atualmente, tanto as do paraíso como as demais. – Porém, segundo outros Santos, necessário é dizer que todas as plantas foram produzidas, atualmente, no terceiro dia, e também as árvores do paraíso. E quanto à plantação das árvores do mesmo, depois das obras dos seis dias, isso se entende dito como recapitulação. E por isso em o nosso texto lê–se: O Senhor Deus tinha plantado desde o princípio um paraíso.</p>
+
+    </div>
+  </div>
+  
+  <!-- Bloco de Explicação (a ser preenchido) -->
+  <div class="bloco-explicacao">
+    <div class="explicacao-label">💡 Explicação e Contexto</div>
+    <div class="explicacao-corpo" id="explicacao">
+    <p><em>Explicação será adicionada em breve.</em></p>
+
+    </div>
+  </div>
+  
+</main>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO INFERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="navegacao-inferior">
+  <div class="nav-buttons">
+    <a href="suma-pagina495.html" class="btn-primary">← Anterior</a>
+    <span class="pagina-atual">496</span>
+    <a href="suma-pagina497.html" class="btn-primary">Próxima →</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  RODAPÉ                                                  -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<footer class="suma-footer">
+  <p>Suma Teológica · São Tomás de Aquino | Biblioteca Lux Fidei</p>
+</footer>
+
+</body>
+</html>

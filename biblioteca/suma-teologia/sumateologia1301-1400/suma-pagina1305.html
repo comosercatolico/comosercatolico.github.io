@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Questão 19, Artigo 11 — Se o temor subsiste na pátria. | Suma Teológica</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+    --cor-fundo: #f5f0e8;
+    --cor-pagina: #fff;
+    --cor-texto: #2c1f17;
+    --cor-dourado: #d4af37;
+    --cor-roxo: #5b2c83;
+    --sombra: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cor-fundo);
+    color: var(--cor-texto);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CABEÇALHO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-header {
+    background: linear-gradient(135deg, #1a1a1a, #2c241b);
+    color: #f5f0e8;
+    padding: 32px 20px 24px;
+    text-align: center;
+    position: relative;
+}
+
+.voltar-index {
+    position: absolute;
+    top: 16px;
+    left: 20px;
+    color: var(--cor-dourado);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: opacity 0.2s;
+}
+
+.voltar-index:hover {
+    opacity: 0.8;
+}
+
+.suma-header h1 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.info-pagina {
+    display: inline-block;
+    background: rgba(212, 175, 55, 0.15);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    color: var(--cor-dourado);
+    margin-top: 8px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-topo {
+    background: #fff;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    gap: 10px;
+}
+
+.btn-nav {
+    display: inline-flex;
+    align-items: center;
+    padding: 9px 18px;
+    background: var(--cor-roxo);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.btn-nav:hover {
+    background: #4a246a;
+    transform: translateY(-1px);
+}
+
+.desabilitado {
+    background: #ddd !important;
+    color: #999 !important;
+    pointer-events: none;
+}
+
+.info-centena {
+    font-size: 0.85rem;
+    color: #888;
+    font-weight: 500;
+    padding: 0 10px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CONTEÚDO PRINCIPAL                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.pagina-conteudo {
+    flex: 1;
+    max-width: 860px;
+    width: 100%;
+    margin: 36px auto;
+    padding: 0 20px;
+}
+
+.bloco-texto {
+    background: var(--cor-pagina);
+    padding: 48px 44px;
+    border-radius: 12px;
+    box-shadow: var(--sombra);
+    position: relative;
+    margin-bottom: 24px;
+}
+
+.bloco-texto::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 20px;
+    bottom: 20px;
+    width: 4px;
+    background: linear-gradient(to bottom, var(--cor-dourado), var(--cor-roxo));
+    border-radius: 0 4px 4px 0;
+}
+
+.bloco-titulo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.3rem;
+    color: var(--cor-roxo);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e8dfd0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pagina-corpo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.1rem;
+    line-height: 1.95;
+    color: #3d3226;
+    text-align: justify;
+}
+
+.pagina-corpo p {
+    margin-bottom: 1.3em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  BLOCO DE EXPLICAÇÃO                                        */
+/* ────────────────────────────────────────────────────────── */
+
+.bloco-explicacao {
+    background: linear-gradient(135deg, #fffdf5, #faf5eb);
+    border-left: 5px solid var(--cor-dourado);
+    padding: 32px 40px;
+    border-radius: 0 12px 12px 0;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    margin-bottom: 24px;
+}
+
+.explicacao-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--cor-dourado);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 14px;
+}
+
+.explicacao-corpo {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #4a3c2c;
+}
+
+.explicacao-corpo p {
+    margin-bottom: 1em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO INFERIOR                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-inferior {
+    max-width: 860px;
+    width: 100%;
+    margin: 0 auto 40px;
+    padding: 0 20px;
+}
+
+.nav-buttons {
+    background: #fff;
+    padding: 18px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    box-shadow: var(--sombra);
+}
+
+.btn-primary {
+    flex: 1;
+    text-align: center;
+    padding: 13px 16px;
+    background: linear-gradient(135deg, var(--cor-roxo), #7a3eb5);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(91, 44, 131, 0.3);
+}
+
+.pagina-atual {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--cor-dourado);
+    min-width: 50px;
+    text-align: center;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RODAPÉ                                                     */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-footer {
+    background: #1a1a1a;
+    color: #888;
+    text-align: center;
+    padding: 22px 20px;
+    margin-top: auto;
+    font-size: 0.85rem;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RESPONSIVIDADE                                             */
+/* ────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+    .suma-header h1 {
+        font-size: 1.4rem;
+    }
+    
+    .bloco-texto {
+        padding: 28px 18px;
+    }
+    
+    .bloco-explicacao {
+        padding: 22px 18px;
+    }
+    
+    .navegacao-topo {
+        flex-wrap: wrap;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CABEÇALHO                                               -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="suma-header">
+  <a href="../../index.html" class="voltar-index">← Índice</a>
+  <h1>Suma Teológica</h1>
+  <p style="opacity:0.8; font-style:italic; margin-top:4px;">São Tomás de Aquino</p>
+  <span class="info-pagina">Página 1305 de 3000</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO SUPERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<nav class="navegacao-topo">
+  <a href="suma-pagina1304.html" class="btn-nav">← Anterior</a>
+  <span class="info-centena">Pág. 1305/3000</span>
+  <a href="suma-pagina1306.html" class="btn-nav">Próxima →</a>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CONTEÚDO PRINCIPAL                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<main class="pagina-conteudo">
+  
+  <!-- Texto Original -->
+  <div class="bloco-texto">
+    <div class="bloco-titulo">
+      <span>📜</span>
+      Questão 19, Artigo 11 — Se o temor subsiste na pátria.
+    </div>
+    <div class="pagina-corpo">
+    <p>O undécimo discute-se assim. – Parece que o temor não subsiste na pátria. 1. – Pois, diz a Escritura: Gozará da abundância, sem temor de nenhum mal; o que se entende de quem já goza da sabedoria, na felicidade eterna. Ora, todo temor é relativo a algum mal, pois o mal é o seu objeto, como já se disse. Logo, nenhum temor haverá na pátria. 2. Demais. – Na pátria os homens se assemelharão a Deus, segundo aquilo da Escritura. Quando ele aparecer, seremos semelhantes a ele. Ora, Deus não teme nada. Logo, na pátria, os homens não terão nenhum temor. 3. Demais. – A esperança é mais perfeita que o temor, por ter por objeto um bem, ao passo que o objeto do temor é um mal. Ora, não haverá esperança na pátria. Logo, também não haverá temor.</p>
+    <p>Mas, em contrário, a Escritura. – O temor do Senhor é santo, que permanece por séculos de séculos. SOLUÇÃO. – O temor servil ou o da pena de nenhum modo existirá na pátria; pois tal temor fica excluído pela segurança da felicidade eterna, o que é da essência mesma da felicidade como já dissemos. Mas o temor filial, como aumenta com a caridade, também se aperfeiçoa com a caridade perfeita. Por onde, não terá na pátria exatamente o mesmo ato que tem na vida presente. Para evidenciá-lo cumpre saber que o objeto próprio do temor é um mal possível, assim como um bem possível é o objeto próprio da esperança. E sendo o movimento próprio do temor uma quase fuga, ele implica a fuga de um mal árduo possível, pois males pequenos não produzem o temor: Demais, como o bem de todo ser consiste em permanecer na sua ordem, assim o abandono dela constitui um mal. Ora, a ordem da criatura racional consiste na submissão a Deus e em dominar as outras criaturas. Por onde, assim como é um mal para a criatura racional submeter-se, por amor, a uma criatura inferior, assim também lho é não se submeter a Deus, mas ao contrário, insultá-lo presunçosamente ou desprezá-lo. Ora, esse mal é possível na criatura racional, considerada na sua natureza mesma, por causa da natural flexibilidade do livre arbítrio; mas não o é para os bem-aventurados, por causa da perfeição da glória. Portanto, a fuga do mal, consistente em pão submeter-se a Deus, mal possível à natureza, mas impossível à felicidade, subsistirá na pátria. Mas nesta vida, tal fuga é a de um mal absolutamente possível. E por isso, comentando aquilo da Escritura. - As colunas do céu estremecem e tremem ao seu aceno - Gregório diz: As próprias virtudes celestes, que contemplam a Deus sem cessar, tremem nessa contemplação mama. Mas esse tremer, longe de lha ser uma pena, provém-lhes, não do temor, mas da admiração; isto é, por admirarem a Deus na sua existência transcendental e para elas incompreensível. Por seu lado, Agostinho admite a existência de um tal temor, na pátria, embora deixe a questão duvidosa. Esse temor casto, diz, que permanece sempre, pelos séculos dos séculos, se tiver ainda de existir no século futuro, já não será o temor receioso de um mal possível, mas o que até fixo num bem impossível de perder. Pois, onde o amor do bem já alcançado é imutável, é certo, se podemos assim dizer, ser o temor do mal, contra o qual devemos nos acautelar, uma segurança. Ora, essa denominação de temor casto significa a vontade, que nos leva necessariamente a não querer pecar; e isso, não pela inquietação de uma fraqueza ainda temerosa de pecar, mas por uma tranquila caridade a salvo do pecado. Ou, se temor de gênero absolutamente nenhum pode existir na pátria, talvez se quisesse fazer a referência a um temor, subsistente sempre, por todos os séculos, para dizer que subsistirá até onde puder chegar.</p>
+    <p>DONDE A</p>
+    <p>RESPOSTA À PRIMEIRA OBJEÇÃO. – O lugar citado exclui dos bem-aventurados o temor cheio de inquietação e de cautelas contra o mal; não porém o fundado na segurança, como diz Agostinho.</p>
+    <p>RESPOSTA À SEGUNDA. – Como diz Dionísio tu mesmas causas são semelhantes e dissemelhantes a Deus; semelhantes, pela imitação contingente do inimitável, isto é, enquanto, na medida do possível, imitam a Deus, que não pode ser perfeitamente imitado. Dissemelhante, por ficarem as causas criadas aquém da sua causa, deficientes em relação às suas medidas infinitas e incomparáveis. Por onde, de não convir o temor a Deus, sem superior a quem deva submeter-se, não se segue não convenha aos bem- aventurados, cuja felicidade consiste na perfeita sujeição a Deus.</p>
+    <p>RESPOSTA À TERCEIRA. – A esperança implica uma certa falta, a saber, a de uma felicidade futura, que desaparece com a presença desta. Ao passo que o temor implica uma falta natural à criatura, por distar infinitamente de Deus, o que ainda continuará a se dar na pátria. E por isso, o temor não desaparecerá totalmente na pátria.</p>
+
+    </div>
+  </div>
+  
+  <!-- Bloco de Explicação (a ser preenchido) -->
+  <div class="bloco-explicacao">
+    <div class="explicacao-label">💡 Explicação e Contexto</div>
+    <div class="explicacao-corpo" id="explicacao">
+    <p><em>Explicação será adicionada em breve.</em></p>
+
+    </div>
+  </div>
+  
+</main>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO INFERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="navegacao-inferior">
+  <div class="nav-buttons">
+    <a href="suma-pagina1304.html" class="btn-primary">← Anterior</a>
+    <span class="pagina-atual">1305</span>
+    <a href="suma-pagina1306.html" class="btn-primary">Próxima →</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  RODAPÉ                                                  -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<footer class="suma-footer">
+  <p>Suma Teológica · São Tomás de Aquino | Biblioteca Lux Fidei</p>
+</footer>
+
+</body>
+</html>

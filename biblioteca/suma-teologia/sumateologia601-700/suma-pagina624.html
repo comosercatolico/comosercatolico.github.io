@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Questão 5, Artigo 8 — — Se todos desejam a beatitude. | Suma Teológica</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+    --cor-fundo: #f5f0e8;
+    --cor-pagina: #fff;
+    --cor-texto: #2c1f17;
+    --cor-dourado: #d4af37;
+    --cor-roxo: #5b2c83;
+    --sombra: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cor-fundo);
+    color: var(--cor-texto);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CABEÇALHO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-header {
+    background: linear-gradient(135deg, #1a1a1a, #2c241b);
+    color: #f5f0e8;
+    padding: 32px 20px 24px;
+    text-align: center;
+    position: relative;
+}
+
+.voltar-index {
+    position: absolute;
+    top: 16px;
+    left: 20px;
+    color: var(--cor-dourado);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: opacity 0.2s;
+}
+
+.voltar-index:hover {
+    opacity: 0.8;
+}
+
+.suma-header h1 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.info-pagina {
+    display: inline-block;
+    background: rgba(212, 175, 55, 0.15);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    color: var(--cor-dourado);
+    margin-top: 8px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-topo {
+    background: #fff;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    gap: 10px;
+}
+
+.btn-nav {
+    display: inline-flex;
+    align-items: center;
+    padding: 9px 18px;
+    background: var(--cor-roxo);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.btn-nav:hover {
+    background: #4a246a;
+    transform: translateY(-1px);
+}
+
+.desabilitado {
+    background: #ddd !important;
+    color: #999 !important;
+    pointer-events: none;
+}
+
+.info-centena {
+    font-size: 0.85rem;
+    color: #888;
+    font-weight: 500;
+    padding: 0 10px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CONTEÚDO PRINCIPAL                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.pagina-conteudo {
+    flex: 1;
+    max-width: 860px;
+    width: 100%;
+    margin: 36px auto;
+    padding: 0 20px;
+}
+
+.bloco-texto {
+    background: var(--cor-pagina);
+    padding: 48px 44px;
+    border-radius: 12px;
+    box-shadow: var(--sombra);
+    position: relative;
+    margin-bottom: 24px;
+}
+
+.bloco-texto::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 20px;
+    bottom: 20px;
+    width: 4px;
+    background: linear-gradient(to bottom, var(--cor-dourado), var(--cor-roxo));
+    border-radius: 0 4px 4px 0;
+}
+
+.bloco-titulo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.3rem;
+    color: var(--cor-roxo);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e8dfd0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pagina-corpo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.1rem;
+    line-height: 1.95;
+    color: #3d3226;
+    text-align: justify;
+}
+
+.pagina-corpo p {
+    margin-bottom: 1.3em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  BLOCO DE EXPLICAÇÃO                                        */
+/* ────────────────────────────────────────────────────────── */
+
+.bloco-explicacao {
+    background: linear-gradient(135deg, #fffdf5, #faf5eb);
+    border-left: 5px solid var(--cor-dourado);
+    padding: 32px 40px;
+    border-radius: 0 12px 12px 0;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    margin-bottom: 24px;
+}
+
+.explicacao-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--cor-dourado);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 14px;
+}
+
+.explicacao-corpo {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #4a3c2c;
+}
+
+.explicacao-corpo p {
+    margin-bottom: 1em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO INFERIOR                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-inferior {
+    max-width: 860px;
+    width: 100%;
+    margin: 0 auto 40px;
+    padding: 0 20px;
+}
+
+.nav-buttons {
+    background: #fff;
+    padding: 18px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    box-shadow: var(--sombra);
+}
+
+.btn-primary {
+    flex: 1;
+    text-align: center;
+    padding: 13px 16px;
+    background: linear-gradient(135deg, var(--cor-roxo), #7a3eb5);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(91, 44, 131, 0.3);
+}
+
+.pagina-atual {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--cor-dourado);
+    min-width: 50px;
+    text-align: center;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RODAPÉ                                                     */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-footer {
+    background: #1a1a1a;
+    color: #888;
+    text-align: center;
+    padding: 22px 20px;
+    margin-top: auto;
+    font-size: 0.85rem;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RESPONSIVIDADE                                             */
+/* ────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+    .suma-header h1 {
+        font-size: 1.4rem;
+    }
+    
+    .bloco-texto {
+        padding: 28px 18px;
+    }
+    
+    .bloco-explicacao {
+        padding: 22px 18px;
+    }
+    
+    .navegacao-topo {
+        flex-wrap: wrap;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CABEÇALHO                                               -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="suma-header">
+  <a href="../../index.html" class="voltar-index">← Índice</a>
+  <h1>Suma Teológica</h1>
+  <p style="opacity:0.8; font-style:italic; margin-top:4px;">São Tomás de Aquino</p>
+  <span class="info-pagina">Página 624 de 3000</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO SUPERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<nav class="navegacao-topo">
+  <a href="suma-pagina623.html" class="btn-nav">← Anterior</a>
+  <span class="info-centena">Pág. 624/3000</span>
+  <a href="suma-pagina625.html" class="btn-nav">Próxima →</a>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CONTEÚDO PRINCIPAL                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<main class="pagina-conteudo">
+  
+  <!-- Texto Original -->
+  <div class="bloco-texto">
+    <div class="bloco-titulo">
+      <span>📜</span>
+      Questão 5, Artigo 8 — — Se todos desejam a beatitude.
+    </div>
+    <div class="pagina-corpo">
+    <p>(IV Sent., dist. XLIX, q. 1, a . 3, q ª 1). O oitavo discute-se assim. — Parece nem todos desejam a beatitude.</p>
+    <p>1. — Pois, sendo o bem apreendido o objeto do apetite, como diz Aristóteles, ninguém pode desejar o que ignora. Ora, muitos ignoram o que seja a beatitude; e o evidência, como diz Agostinho, o terem uns posto a beatitude no prazer do corpo, outros, na virtude da alma, outros, em outras coisas. Logo, nem todos desejam a beatitude. 2. Demais. — Como já se disse, a essência da beatitude é a visão da essência divina. Ora, alguns dizem ser impossível ao homem ver a Deus em essência; e portanto, tal não desejam. Logo, nem todos os homens desejam a beatitude. 3. Demais. — Agostinho diz, que feliz é quem tem tudo o que quer e nada quer mal. Ora, nem todos querem tal, pois, uns querem mal certas coisas, e contudo consentem em querê-las. Logo, nem todos querem a beatitude.</p>
+    <p>Mas, em contrário, Agostinho: Se um comediante dissesse — Todos quereis ser felizes e não quereis ser miserável — diria algo que ninguém deixaria de confessar, na sua vontade.</p>
+    <p>SOLUÇÃO. — A beatitude pode ser considerada a dupla luz. — Quanto à sua essência comum, e então necessariamente todo homem a quer. Pois, a essência comum da beatitude está em ser ela o bem perfeito, como já se disse. Ora, sendo o bem o objeto da vontade, o bem perfeito de alguém é o que lhe satisfaz totalmente à vontade. Por onde, desejar a beatitude não é senão desejar que a vontade seja saciada, o que todos querem. — De outro modo, podemos considerar a beatitude quanto à sua noção especial, i. é, quanto ao em que ela consiste. E então, nem todos a conhecem porque não sabem a que coisa convenha à essência comum dela. E por conseguinte, nesta acepção nem todos a querem. Donde se deduz clara a</p>
+    <p>RESPOSTA À PRIMEIRA OBJEÇÃO.</p>
+    <p>RESPOSTA À SEGUNDA. — A vontade segue a apreensão do intelecto ou da razão; mas assim como acontece que uma coisa, idêntica na realidade, é todavia diversa quanto à consideração da razão; assim também se dá que uma coisa é idêntica, na realidade, e todavia, sob um aspecto, é desejada e, sob outro, não. A beatitude, portanto, pode ser considerada quanto à noção de bem final e perfeito, e nisso consiste a essência comum dela; e, então, a vontade tende para ela, necessariamente, como já se disse. E pode também ser considerada sob outros pontos de vista especiais quanto à operação mesma, ou quanto à potência operativa, ou quanto ao objeto; e então a vontade não tende para ela necessariamente.</p>
+    <p>RESPOSTA À TERCEIRA. — A definição de beatitude dada por certos — Feliz é quem tem tudo o que quer, ou, a quem tudo lhe sucede como deseja — entendida de um modo, é boa e suficiente; de outro modo, porém, é imperfeita. — Assim, se a entendermos, absolutamente, de todas as coisas que o homem quer com desejo natural, então é verdade que quem tem tudo o que quer é feliz. Pois nada sacia o apetite natural do homem, senão o bem perfeito, que é a beatitude. — Entendida, porém do que o homem quer pela apreensão da razão, então o possuir o homem certas coisas, que quer, é antes miséria que beatitude, enquanto tais coisas, possuídas impedem-no de possuir o que quer naturalmente; assim como a razão recebe como verdadeiras, às vezes, coisas que impedem o conhecimento da verdade. — E conforme este ponto de vista, Agostinho acrescenta, para a perfeição da beatitude, que nada quer mal. Embora a primeira expressão — feliz é quem tem tudo o que quer — bem entendida, já podia bastar. Tratado dos atos humanos Como é necessário, pois, chegar-se à beatitude por meio de certos atos, é preciso, conseqüentemente, tratar dos atos humanos, para conhecermos os que a ela conduzem ou dela desviam. Mas, como as operações e os atos dizem respeito ao singular, toda ciência operativa se completa, considerada em particular. Por onde, a ciência moral, que versa sobre os atos humanos há de ser tratada, primeiro, em universal e, segundo, em particular. Quanto à consideração universal dos atos humanos, há-se, primeiro de tratar deles, em si mesmos; segundo, dos seus princípios. Ora, desses atos, uns são próprios ao homem; outros são-lhe comuns com os animais. E como a beatitude é bem próprio do homem, conduzem a ela mais proximamente os atos propriamente humanos, que os que lhe são comuns com os animais. Portanto, há-se de tratar, primeiro, dos atos próprios ao homem. Segundo, dos que lhe são comuns com os animais, chamados paixões. Sobre o primeiro ponto duas considerações se apresentam: primeira, da condição dos atos humanos; segunda, da distinção deles. Mas como se chamam atos humanos propriamente ditos, aos voluntários, por ser a vontade o apetite racional próprio do homem, é preciso considerar os atos enquanto voluntários. E portanto, há de se tratar, primeiro, do voluntário e do involuntário em comum; segundo, dos atos voluntários elícitos da vontade mesma, dela procedente imediatamente; terceiro, dos atos voluntários imperados pela vontade, procedentes da vontade mediante outras potências. E como os atos voluntários têm certas circunstâncias pelas quais são julgados há-se de tratar, primeiro, do voluntário e do involuntário; e conseqüentemente, das circunstâncias dos atos em si, onde se manifesta o voluntário e o involuntário. Sobre o primeiro ponto oito artigos se discutem:</p>
+
+    </div>
+  </div>
+  
+  <!-- Bloco de Explicação (a ser preenchido) -->
+  <div class="bloco-explicacao">
+    <div class="explicacao-label">💡 Explicação e Contexto</div>
+    <div class="explicacao-corpo" id="explicacao">
+    <p><em>Explicação será adicionada em breve.</em></p>
+
+    </div>
+  </div>
+  
+</main>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO INFERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="navegacao-inferior">
+  <div class="nav-buttons">
+    <a href="suma-pagina623.html" class="btn-primary">← Anterior</a>
+    <span class="pagina-atual">624</span>
+    <a href="suma-pagina625.html" class="btn-primary">Próxima →</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  RODAPÉ                                                  -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<footer class="suma-footer">
+  <p>Suma Teológica · São Tomás de Aquino | Biblioteca Lux Fidei</p>
+</footer>
+
+</body>
+</html>

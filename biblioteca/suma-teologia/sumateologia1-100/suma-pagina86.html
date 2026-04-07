@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Questão 14, Artigo 6 — — Se Deus tem dos outros seres conhecimento próprio | Suma Teológica</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+    --cor-fundo: #f5f0e8;
+    --cor-pagina: #fff;
+    --cor-texto: #2c1f17;
+    --cor-dourado: #d4af37;
+    --cor-roxo: #5b2c83;
+    --sombra: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cor-fundo);
+    color: var(--cor-texto);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CABEÇALHO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-header {
+    background: linear-gradient(135deg, #1a1a1a, #2c241b);
+    color: #f5f0e8;
+    padding: 32px 20px 24px;
+    text-align: center;
+    position: relative;
+}
+
+.voltar-index {
+    position: absolute;
+    top: 16px;
+    left: 20px;
+    color: var(--cor-dourado);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: opacity 0.2s;
+}
+
+.voltar-index:hover {
+    opacity: 0.8;
+}
+
+.suma-header h1 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.info-pagina {
+    display: inline-block;
+    background: rgba(212, 175, 55, 0.15);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    color: var(--cor-dourado);
+    margin-top: 8px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-topo {
+    background: #fff;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    gap: 10px;
+}
+
+.btn-nav {
+    display: inline-flex;
+    align-items: center;
+    padding: 9px 18px;
+    background: var(--cor-roxo);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.btn-nav:hover {
+    background: #4a246a;
+    transform: translateY(-1px);
+}
+
+.desabilitado {
+    background: #ddd !important;
+    color: #999 !important;
+    pointer-events: none;
+}
+
+.info-centena {
+    font-size: 0.85rem;
+    color: #888;
+    font-weight: 500;
+    padding: 0 10px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CONTEÚDO PRINCIPAL                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.pagina-conteudo {
+    flex: 1;
+    max-width: 860px;
+    width: 100%;
+    margin: 36px auto;
+    padding: 0 20px;
+}
+
+.bloco-texto {
+    background: var(--cor-pagina);
+    padding: 48px 44px;
+    border-radius: 12px;
+    box-shadow: var(--sombra);
+    position: relative;
+    margin-bottom: 24px;
+}
+
+.bloco-texto::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 20px;
+    bottom: 20px;
+    width: 4px;
+    background: linear-gradient(to bottom, var(--cor-dourado), var(--cor-roxo));
+    border-radius: 0 4px 4px 0;
+}
+
+.bloco-titulo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.3rem;
+    color: var(--cor-roxo);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e8dfd0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pagina-corpo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.1rem;
+    line-height: 1.95;
+    color: #3d3226;
+    text-align: justify;
+}
+
+.pagina-corpo p {
+    margin-bottom: 1.3em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  BLOCO DE EXPLICAÇÃO                                        */
+/* ────────────────────────────────────────────────────────── */
+
+.bloco-explicacao {
+    background: linear-gradient(135deg, #fffdf5, #faf5eb);
+    border-left: 5px solid var(--cor-dourado);
+    padding: 32px 40px;
+    border-radius: 0 12px 12px 0;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    margin-bottom: 24px;
+}
+
+.explicacao-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--cor-dourado);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 14px;
+}
+
+.explicacao-corpo {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #4a3c2c;
+}
+
+.explicacao-corpo p {
+    margin-bottom: 1em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO INFERIOR                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-inferior {
+    max-width: 860px;
+    width: 100%;
+    margin: 0 auto 40px;
+    padding: 0 20px;
+}
+
+.nav-buttons {
+    background: #fff;
+    padding: 18px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    box-shadow: var(--sombra);
+}
+
+.btn-primary {
+    flex: 1;
+    text-align: center;
+    padding: 13px 16px;
+    background: linear-gradient(135deg, var(--cor-roxo), #7a3eb5);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(91, 44, 131, 0.3);
+}
+
+.pagina-atual {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--cor-dourado);
+    min-width: 50px;
+    text-align: center;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RODAPÉ                                                     */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-footer {
+    background: #1a1a1a;
+    color: #888;
+    text-align: center;
+    padding: 22px 20px;
+    margin-top: auto;
+    font-size: 0.85rem;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RESPONSIVIDADE                                             */
+/* ────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+    .suma-header h1 {
+        font-size: 1.4rem;
+    }
+    
+    .bloco-texto {
+        padding: 28px 18px;
+    }
+    
+    .bloco-explicacao {
+        padding: 22px 18px;
+    }
+    
+    .navegacao-topo {
+        flex-wrap: wrap;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CABEÇALHO                                               -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="suma-header">
+  <a href="../../index.html" class="voltar-index">← Índice</a>
+  <h1>Suma Teológica</h1>
+  <p style="opacity:0.8; font-style:italic; margin-top:4px;">São Tomás de Aquino</p>
+  <span class="info-pagina">Página 86 de 3000</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO SUPERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<nav class="navegacao-topo">
+  <a href="suma-pagina85.html" class="btn-nav">← Anterior</a>
+  <span class="info-centena">Pág. 86/3000</span>
+  <a href="suma-pagina87.html" class="btn-nav">Próxima →</a>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CONTEÚDO PRINCIPAL                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<main class="pagina-conteudo">
+  
+  <!-- Texto Original -->
+  <div class="bloco-texto">
+    <div class="bloco-titulo">
+      <span>📜</span>
+      Questão 14, Artigo 6 — — Se Deus tem dos outros seres conhecimento próprio
+    </div>
+    <div class="pagina-corpo">
+    <p>(I Sent., dist. XXXV, a. 3; I Cont. Gent., cap. I; De Pot., q. 6, a. 1; De Verit., q. 2, a. 4; De Causis, lect. X) O sexto discute-se assim. — Parece que Deus não tem dos outros seres conhecimento próprio.</p>
+    <p>1. — Pois, como já se disse, Deus conhece todas as coisas do modo pelo qual elas estão nele. Ora todas elas estão em Deus como na causa primeira comum e universal. Logo, todas são por ele conhecidas como pela causa primeira e universal. Ora, isto é conhecer em geral e não, por conhecimento próprio. Logo, Deus tem dos outros seres um conhecimento geral e não próprio. 2. Demais. — Quanto dista a essência da criatura, da essência divina, tanto esta dista daquela. Ora, pela essência da criatura não pode ser conhecida a essência divina, como já dissemos. Logo, também, pela essência divina, não pode ser conhecida a essência da criatura. E assim como Deus não conhece nada, senão pela sua essência, resulta que não conhece a essência, de modo a lhe apreender a quididade, o que é ter conhecimento próprio de uma coisa. 3. Demais. — Não é possível ter conhecimento próprio de uma coisa senão pela sua essência própria. Ora, como Deus conhece tudo pela sua essência, parece que não conhece a essência própria de cada coisa; porque uma mesma realidade não pode ser a essência própria de coisas múltiplas e diversas. Logo, Deus não tem um conhecimento próprio das coisas.</p>
+    <p>Mas, em contrário. — Ter conhecimento próprio das coisas é conhece-las, não só em geral, mas enquanto distintas umas das outras. Ora, é assim que Deus conhece as coisas, conforme a Escritura (Heb 4, 12): Ela penetra, a palavra de Deus, até o íntimo da alma e do espírito, também às juntas e medulas, e discerne os pensamentos e intenções do coração. E não há criatura que esteja encoberta à sua presença.</p>
+    <p>SOLUÇÃO. — Certos erraram, dizendo que Deus não tem, das coisas, senão conhecimento geral, isto é, enquanto entes. Pois, assim como o fogo, se se conhecesse a si mesmo como princípio do calor, conheceria a natureza do calor, e todas as coisas como cálidas, assim Deus, conhecendo-se a si mesmo como princípio do ser, conhece a natureza do ser e todas as outras coisas, enquanto seres. Mas, isto não é admissível; pois, inteligir uma coisa em geral e não, em particular, é inteligí-la imperfeitamente. Por onde, o nosso intelecto, quando passa da potência para o ato, antes de ter das coisas conhecimento próprio, tem conhecimento universal e confuso, como procedendo do imperfeito para o perfeito, segundo diz Aristóteles. Por onde, se Deus tivesse dos seres apenas conhecimento geral e não, especial, seguir-se-ia que o seu inteligir não seria absolutamente perfeito, e, por conseqüência, nem o seu ser; ora, isto vai contra o já demonstrado. Logo, devemos dizer, que Deus tem das coisas conhecimento próprio, não só por terem elas a comunidade do ser, mas, enquanto distintas umas das outras. E, para evidenciá-lo, devemos considerar, que certos, querendo demonstrar que Deus conhece muitas coisas, usam de exemplos como os seguintes: se um centro se conhecesse a si mesmo conheceria todas as linhas que dele partem; ou se a luz a si mesma se conhecesse, conheceria todas as cores. Mas, estes exemplos, embora tenham certa semelhança, a saber, quanto à causalidade universal, não colhem, se considerarmos que a multidão e a diversidade não são causadas pelo princípio universal uno, quanto ao que é princípio de distinção, mas só quanto àquilo pelo que elas têm de comum entre si. Assim, a diversidade das cores não é causada só pela luz, mas pelas disposições diversas do meio diáfano que a recebe; e, semelhantemente, a diversidade das linhas é causada pela diversidade das situações. E daqui vem que a diversidade e a multidão, de que se trata, não podem ser conhecidas no princípio delas, por conhecimento próprio, mas, só em geral. Mas, com Deus tal não se dá; pois, como já demonstramos, tudo o que de perfeição existe em qualquer criatura, preexiste e está contido totalmente nele, de modo excelente. Ora, não é só o que as criaturas têm de comum — o ser — que pertence à perfeição delas, mas também o pelo que se distinguem umas às outras, como, viver, inteligir, e outros caracteres pelos quais os seres vivos se distinguem dos não-vivos, e os inteligentes dos não- inteligentes. Demais, toda forma pela qual uma coisa é constituída na sua espécie própria é uma certa perfeição. Por onde, todas as coisas preexistem em Deus, não só pelo que é comum a todas, mas também no pelo que se distinguem. Assim, pois, contendo Deus em si todas as perfeições, a sua essência está para a essência de todas as coisas, não como o comum está para o próprio, ou a unidade para os números, ou o centro para as linhas, mas, como o ato perfeito, para os atos imperfeitos; como se, p. ex., disséssemos que o homem está para o animal, ou o senário, que é número perfeito, para os números imperfeitos, que ele contém. Ora, é manifesto que, pelo ato perfeito, podem ser conhecidos os atos imperfeitos, não só em geral, mas também por conhecimento próprio; assim, quem conhece o homem tem do animal conhecimento próprio; e quem conhece o número senário, tem do ternário conhecimento próprio. Por onde, encerrando a essência de Deus, em si, todas as perfeições que tem a essência de qualquer ser, e ainda mais, Deus em si mesmo pode ter de todas as coisas conhecimento próprio. Ora, a natureza própria de cada coisa consiste em, de algum modo, participar da perfeição divina. Logo, Deus não se conheceria perfeitamente a si mesmo, se não conhecesse todos os modos pelos quais a sua perfeição é suscetível de ser participada pelos outros seres. E, também não conheceria perfeitamente a natureza mesma do ser, se não conhecesse todos os modos de ser. E, portanto, é manifesto que Deus tem, de todas as coisas, conhecimento próprio, enquanto que cada uma se distingue das outras.</p>
+    <p>DONDE A</p>
+    <p>RESPOSTA À PRIMEIRA OBJEÇÃO. — O conhecimento de uma coisa como ela está no sujeito conhecente, podemos compreendê-lo de duas maneiras. De uma, o advérbio como implica o modo de conhecer relativamente à coisa conhecida, e, então, o sentido é falso. Pois, nem sempre o sujeito conhece o objeto conforme o ser que este tem naquele; assim os olhos não conhecem uma pedra, conforme o ser que esta tem neles; mas, pela espécie da pedra, que eles têm em si, é que os olhos conhecem a pedra, conforme o ser dela, em si mesma, fora dos olhos. O sujeito, pois, que conhece um objeto, conforme o ser que este tem, nele, não deixa, por isso, de conhecê-lo conforme o ser do objeto em si mesmo, fora do sujeito. Assim o intelecto conhece a pedra, conforme o ser inteligível, que esta tem nele, enquanto o sujeito sabe que conhece; mas, nem por isso, deixa de conhecer o ser que a pedra tem na sua natureza própria. Se, porém, entendemos que o advérbio como implica o modo pelo qual o sujeito conhece, então, é verdade que só o sujeito conhece o objeto do modo pelo qual este nele está; pois, quanto mais perfeitamente o objeto está no sujeito, tanto mais perfeito é o modo de conhecer. Por onde, devemos dizer, que Deus, não somente conhece que as coisas nele estão, mas também, porque em si as contém, conhece-lhes a natureza própria delas, e tanto mais perfeitamente, quanto mais perfeitamente cada uma nele estiver.</p>
+    <p>RESPOSTA À SEGUNDA. — A essência da criatura está para a essência de Deus, como o ato imperfeito, para o perfeito. Por onde, a essência da criatura não conduz suficientemente ao conhecimento da essência divina, mas, inversamente.</p>
+    <p>RESPOSTA À TERCEIRA. — Uma mesma realidade não pode ser considerada como a expressão adequada da essência de coisas diversas. Ora, a essência divina excede todas as criaturas. Por onde, pode ser considerada como a expressão própria de cada coisa, enquanto susceptível de ser diversamente participada ou imitada pelas diversas criaturas.</p>
+
+    </div>
+  </div>
+  
+  <!-- Bloco de Explicação (a ser preenchido) -->
+  <div class="bloco-explicacao">
+    <div class="explicacao-label">💡 Explicação e Contexto</div>
+    <div class="explicacao-corpo" id="explicacao">
+    <p><em>Explicação será adicionada em breve.</em></p>
+
+    </div>
+  </div>
+  
+</main>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO INFERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="navegacao-inferior">
+  <div class="nav-buttons">
+    <a href="suma-pagina85.html" class="btn-primary">← Anterior</a>
+    <span class="pagina-atual">86</span>
+    <a href="suma-pagina87.html" class="btn-primary">Próxima →</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  RODAPÉ                                                  -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<footer class="suma-footer">
+  <p>Suma Teológica · São Tomás de Aquino | Biblioteca Lux Fidei</p>
+</footer>
+
+</body>
+</html>

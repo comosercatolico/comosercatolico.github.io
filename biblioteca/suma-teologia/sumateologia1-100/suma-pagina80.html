@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Questão 13, Artigo 12 — — Se podemos formar sobre Deus proposições afirmativas. | Suma Teológica</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+    --cor-fundo: #f5f0e8;
+    --cor-pagina: #fff;
+    --cor-texto: #2c1f17;
+    --cor-dourado: #d4af37;
+    --cor-roxo: #5b2c83;
+    --sombra: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cor-fundo);
+    color: var(--cor-texto);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CABEÇALHO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-header {
+    background: linear-gradient(135deg, #1a1a1a, #2c241b);
+    color: #f5f0e8;
+    padding: 32px 20px 24px;
+    text-align: center;
+    position: relative;
+}
+
+.voltar-index {
+    position: absolute;
+    top: 16px;
+    left: 20px;
+    color: var(--cor-dourado);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: opacity 0.2s;
+}
+
+.voltar-index:hover {
+    opacity: 0.8;
+}
+
+.suma-header h1 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.info-pagina {
+    display: inline-block;
+    background: rgba(212, 175, 55, 0.15);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    color: var(--cor-dourado);
+    margin-top: 8px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-topo {
+    background: #fff;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    gap: 10px;
+}
+
+.btn-nav {
+    display: inline-flex;
+    align-items: center;
+    padding: 9px 18px;
+    background: var(--cor-roxo);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.btn-nav:hover {
+    background: #4a246a;
+    transform: translateY(-1px);
+}
+
+.desabilitado {
+    background: #ddd !important;
+    color: #999 !important;
+    pointer-events: none;
+}
+
+.info-centena {
+    font-size: 0.85rem;
+    color: #888;
+    font-weight: 500;
+    padding: 0 10px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CONTEÚDO PRINCIPAL                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.pagina-conteudo {
+    flex: 1;
+    max-width: 860px;
+    width: 100%;
+    margin: 36px auto;
+    padding: 0 20px;
+}
+
+.bloco-texto {
+    background: var(--cor-pagina);
+    padding: 48px 44px;
+    border-radius: 12px;
+    box-shadow: var(--sombra);
+    position: relative;
+    margin-bottom: 24px;
+}
+
+.bloco-texto::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 20px;
+    bottom: 20px;
+    width: 4px;
+    background: linear-gradient(to bottom, var(--cor-dourado), var(--cor-roxo));
+    border-radius: 0 4px 4px 0;
+}
+
+.bloco-titulo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.3rem;
+    color: var(--cor-roxo);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e8dfd0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pagina-corpo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.1rem;
+    line-height: 1.95;
+    color: #3d3226;
+    text-align: justify;
+}
+
+.pagina-corpo p {
+    margin-bottom: 1.3em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  BLOCO DE EXPLICAÇÃO                                        */
+/* ────────────────────────────────────────────────────────── */
+
+.bloco-explicacao {
+    background: linear-gradient(135deg, #fffdf5, #faf5eb);
+    border-left: 5px solid var(--cor-dourado);
+    padding: 32px 40px;
+    border-radius: 0 12px 12px 0;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    margin-bottom: 24px;
+}
+
+.explicacao-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--cor-dourado);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 14px;
+}
+
+.explicacao-corpo {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #4a3c2c;
+}
+
+.explicacao-corpo p {
+    margin-bottom: 1em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO INFERIOR                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-inferior {
+    max-width: 860px;
+    width: 100%;
+    margin: 0 auto 40px;
+    padding: 0 20px;
+}
+
+.nav-buttons {
+    background: #fff;
+    padding: 18px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    box-shadow: var(--sombra);
+}
+
+.btn-primary {
+    flex: 1;
+    text-align: center;
+    padding: 13px 16px;
+    background: linear-gradient(135deg, var(--cor-roxo), #7a3eb5);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(91, 44, 131, 0.3);
+}
+
+.pagina-atual {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--cor-dourado);
+    min-width: 50px;
+    text-align: center;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RODAPÉ                                                     */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-footer {
+    background: #1a1a1a;
+    color: #888;
+    text-align: center;
+    padding: 22px 20px;
+    margin-top: auto;
+    font-size: 0.85rem;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RESPONSIVIDADE                                             */
+/* ────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+    .suma-header h1 {
+        font-size: 1.4rem;
+    }
+    
+    .bloco-texto {
+        padding: 28px 18px;
+    }
+    
+    .bloco-explicacao {
+        padding: 22px 18px;
+    }
+    
+    .navegacao-topo {
+        flex-wrap: wrap;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CABEÇALHO                                               -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="suma-header">
+  <a href="../../index.html" class="voltar-index">← Índice</a>
+  <h1>Suma Teológica</h1>
+  <p style="opacity:0.8; font-style:italic; margin-top:4px;">São Tomás de Aquino</p>
+  <span class="info-pagina">Página 80 de 3000</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO SUPERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<nav class="navegacao-topo">
+  <a href="suma-pagina79.html" class="btn-nav">← Anterior</a>
+  <span class="info-centena">Pág. 80/3000</span>
+  <a href="suma-pagina81.html" class="btn-nav">Próxima →</a>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CONTEÚDO PRINCIPAL                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<main class="pagina-conteudo">
+  
+  <!-- Texto Original -->
+  <div class="bloco-texto">
+    <div class="bloco-titulo">
+      <span>📜</span>
+      Questão 13, Artigo 12 — — Se podemos formar sobre Deus proposições afirmativas.
+    </div>
+    <div class="pagina-corpo">
+    <p>(I Sent., dist. IV, q. 2, a. 1; dist. XXII, a. 2, ad 1; I Cont. Gent., cap. XXXVI; De Pot., q. 7, a. 5, ad 2). O duodécimo discute-se assim. — Parece que não podemos formar sobre Deus proposições afirmativas.</p>
+    <p>1. — Pois, diz Dionísio, que as negações, sobre Deus, são verdadeiras, mas, as afirmações são inconsistentes. 2. Demais. — Boécio diz, que a forma simples não pode ser sujeito. Ora, Deus é forma simples, por excelência, como já se demonstrou. Logo, não pode ser sujeito. Ora, todo o ser sobre o qual podemos formar uma proposição afirmativa é tomado como sujeito. Logo, não podemos formar sobre Deus proposições afirmativas. 3. Demais. — Todo o intelecto, que compreende as coisas diferentemente do que elas são, é falso. Ora, Deus tem o ser sem nenhuma composição, como já se provou. E, como todo intelecto, que afirmar alguma coisa, a intelige com composição, resulta que não podemos, verdadeiramente, formar sobre Deus proposições afirmativas.</p>
+    <p>Mas, em contrário, a fé não contém nada de falso. Ora, ela encerra certas proposições afirmativas, como: Deus é trino e uno, é onipotente. Logo, podemos formar, verdadeiramente, a respeito de Deus proposições afirmativas.</p>
+    <p>SOLUÇÃO. — Podemos formar, verdadeiramente, a respeito de Deus, proposições afirmativas. Para evidenciá-lo devemos considerar que, em qualquer proposição afirmativa verdadeira, é necessário que o predicado e o sujeito exprimam a mesma realidade, de certo modo, e coisas diversas, quanto à noção. E isto é claro, não só quanto às proposições em que a predicação é acidental, mas também em relação àquelas em que ela é substancial. Pois, é manifesto que — homem e branco — têm idêntico sujeito, mas representam noções diferentes; pois, uma é a noção de homem e outra, a de branco. E o mesmo se dá quando digo — o homem é um animal racional; pois, o homem é, em si mesmo e verdadeiramente, animal racional; porque o mesmo é o suposto da natureza sensível, em virtude da qual é chamado animal, e da natureza racional, em virtude da qual é chamado homem. Por onde, também neste caso, o predicado e o sujeito têm idêntico suposto mas, noções diversas. E ainda, isto mesmo se dá, de certo modo, com as proposições nas quais um sujeito é predicado de si mesmo; pois, então àquilo que a inteligência toma como sujeito ela o faz desempenhar o papel de suposto; e ao que toma como predicado dá a natureza de forma do suposto; e é isto que leva os lógicos a dizerem que os predicados são tomados formalmente e os sujeitos, materialmente. Ora, a esta diversidade racional corresponde a pluralidade de predicado e de sujeito; ao passo que a identidade real o intelecto a exprime pela composição mesma. — Ora, Deus, em si mesmo considerado, é absolutamente uno e simples; contudo, o nosso intelecto o conhece por meio de conceitos diversos, já que não pode vê-lo tal como em si mesmo é. Mas, embora o intelija sob noções diversas, sabe, contudo que a todas as suas noções corresponde um mesmo ser simples. Por onde, essa pluralidade racional ele o representa pela pluralidade de predicado e sujeito; e a unidade, por meio da composição.</p>
+    <p>DONDE A</p>
+    <p>RESPOSTA À PRIMEIRA OBJEÇÃO. — Dionísio diz, que as afirmações sobre Deus são inconsistentes; ou inconvenientes, segundo outra tradução, porque nenhum nome lhe convém quanto ao modo de significar, como já dissemos.</p>
+    <p>RESPOSTA À SEGUNDA. — O nosso intelecto não pode compreender as formas simples subsistentes, tais como elas em si mesmas são; mas, as apreende ao modo dos compostos, nos quais há um sujeito e o que a esse sujeito é inerente. Por onde, apreende a forma simples como se fosse sujeito e lhe atribui alguma coisa.</p>
+    <p>RESPOSTA À TERCEIRA. — A proposição — o intelecto que compreende as coisas diferentemente do que elas são é falso — tem duplo sentido, porque o advérbio diferentemente pode determinar o verbo compreende, em relação ao objeto compreendido, ou ao sujeito que compreende. No primeiro caso, a proposição é verdadeira e o seu sentido é: qualquer intelecto que compreende uma coisa diferentemente do que ela é, é falso. Ora, isto não se dá no caso vertente, porque o nosso intelecto, quando forma uma proposição sobre Deus, não diz que ele é composto, mas, simples. No segundo caso, porém, a proposição é falsa; pois, então, o modo pelo qual o intelecto compreende é diferente do pelo qual a coisa existe. Pois, é manifesto que o nosso intelecto intelige imaterialmente as coisas materiais que lhe são inferiores; não que as intelija como imateriais, mas, porque tem um modo imaterial de as inteligir. E, semelhantemente, quando intelige os seres simples, que lhe são superiores, intelige-os ao seu modo, como se fossem compostos, mas, sem pensar que sejam realmente compostos. E assim, o nosso intelecto não é falso, quando afirma em Deus alguma composição. Depois de termos considerado o que pertence à substância divina, resta considerarmos o que lhe pertence à operação. E como há duas espécies de operações, uma imanente no agente, e outra, que produz um efeito exterior, trataremos, primeiro, da ciência e da vontade, pois, o ato de inteligir é imanente no sujeito que intelige e o de querer, no sujeito que quer. E, em segundo lugar, trataremos do poder divino considerado como princípio de operação divina que produz um efeito exterior. — Como, porém, inteligir é viver, depois de considerarmos a divina essência, trataremos da vida divina. — E, como a ciência diz respeito à verdade, trataremos da verdade e da falsidade. — Enfim, como todo objeto conhecido está no sujeito que conhece; e como as razões das coisas, enquanto existentes em Deus, que as conhece, chamam-se idéias, quando tratarmos da ciência também, conjuntamente, trataremos das idéias. Ora, sobre a ciência discutem-se dezesseis artigos:</p>
+
+    </div>
+  </div>
+  
+  <!-- Bloco de Explicação (a ser preenchido) -->
+  <div class="bloco-explicacao">
+    <div class="explicacao-label">💡 Explicação e Contexto</div>
+    <div class="explicacao-corpo" id="explicacao">
+    <p><em>Explicação será adicionada em breve.</em></p>
+
+    </div>
+  </div>
+  
+</main>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO INFERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="navegacao-inferior">
+  <div class="nav-buttons">
+    <a href="suma-pagina79.html" class="btn-primary">← Anterior</a>
+    <span class="pagina-atual">80</span>
+    <a href="suma-pagina81.html" class="btn-primary">Próxima →</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  RODAPÉ                                                  -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<footer class="suma-footer">
+  <p>Suma Teológica · São Tomás de Aquino | Biblioteca Lux Fidei</p>
+</footer>
+
+</body>
+</html>

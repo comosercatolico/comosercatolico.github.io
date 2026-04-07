@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Questão 175, Artigo 6 — Se Paulo ignorava que a sua alma estava separada do corpo. | Suma Teológica</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+    --cor-fundo: #f5f0e8;
+    --cor-pagina: #fff;
+    --cor-texto: #2c1f17;
+    --cor-dourado: #d4af37;
+    --cor-roxo: #5b2c83;
+    --sombra: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cor-fundo);
+    color: var(--cor-texto);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CABEÇALHO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-header {
+    background: linear-gradient(135deg, #1a1a1a, #2c241b);
+    color: #f5f0e8;
+    padding: 32px 20px 24px;
+    text-align: center;
+    position: relative;
+}
+
+.voltar-index {
+    position: absolute;
+    top: 16px;
+    left: 20px;
+    color: var(--cor-dourado);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: opacity 0.2s;
+}
+
+.voltar-index:hover {
+    opacity: 0.8;
+}
+
+.suma-header h1 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.info-pagina {
+    display: inline-block;
+    background: rgba(212, 175, 55, 0.15);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    color: var(--cor-dourado);
+    margin-top: 8px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-topo {
+    background: #fff;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    gap: 10px;
+}
+
+.btn-nav {
+    display: inline-flex;
+    align-items: center;
+    padding: 9px 18px;
+    background: var(--cor-roxo);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.btn-nav:hover {
+    background: #4a246a;
+    transform: translateY(-1px);
+}
+
+.desabilitado {
+    background: #ddd !important;
+    color: #999 !important;
+    pointer-events: none;
+}
+
+.info-centena {
+    font-size: 0.85rem;
+    color: #888;
+    font-weight: 500;
+    padding: 0 10px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CONTEÚDO PRINCIPAL                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.pagina-conteudo {
+    flex: 1;
+    max-width: 860px;
+    width: 100%;
+    margin: 36px auto;
+    padding: 0 20px;
+}
+
+.bloco-texto {
+    background: var(--cor-pagina);
+    padding: 48px 44px;
+    border-radius: 12px;
+    box-shadow: var(--sombra);
+    position: relative;
+    margin-bottom: 24px;
+}
+
+.bloco-texto::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 20px;
+    bottom: 20px;
+    width: 4px;
+    background: linear-gradient(to bottom, var(--cor-dourado), var(--cor-roxo));
+    border-radius: 0 4px 4px 0;
+}
+
+.bloco-titulo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.3rem;
+    color: var(--cor-roxo);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e8dfd0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pagina-corpo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.1rem;
+    line-height: 1.95;
+    color: #3d3226;
+    text-align: justify;
+}
+
+.pagina-corpo p {
+    margin-bottom: 1.3em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  BLOCO DE EXPLICAÇÃO                                        */
+/* ────────────────────────────────────────────────────────── */
+
+.bloco-explicacao {
+    background: linear-gradient(135deg, #fffdf5, #faf5eb);
+    border-left: 5px solid var(--cor-dourado);
+    padding: 32px 40px;
+    border-radius: 0 12px 12px 0;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    margin-bottom: 24px;
+}
+
+.explicacao-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--cor-dourado);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 14px;
+}
+
+.explicacao-corpo {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #4a3c2c;
+}
+
+.explicacao-corpo p {
+    margin-bottom: 1em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO INFERIOR                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-inferior {
+    max-width: 860px;
+    width: 100%;
+    margin: 0 auto 40px;
+    padding: 0 20px;
+}
+
+.nav-buttons {
+    background: #fff;
+    padding: 18px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    box-shadow: var(--sombra);
+}
+
+.btn-primary {
+    flex: 1;
+    text-align: center;
+    padding: 13px 16px;
+    background: linear-gradient(135deg, var(--cor-roxo), #7a3eb5);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(91, 44, 131, 0.3);
+}
+
+.pagina-atual {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--cor-dourado);
+    min-width: 50px;
+    text-align: center;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RODAPÉ                                                     */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-footer {
+    background: #1a1a1a;
+    color: #888;
+    text-align: center;
+    padding: 22px 20px;
+    margin-top: auto;
+    font-size: 0.85rem;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RESPONSIVIDADE                                             */
+/* ────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+    .suma-header h1 {
+        font-size: 1.4rem;
+    }
+    
+    .bloco-texto {
+        padding: 28px 18px;
+    }
+    
+    .bloco-explicacao {
+        padding: 22px 18px;
+    }
+    
+    .navegacao-topo {
+        flex-wrap: wrap;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CABEÇALHO                                               -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="suma-header">
+  <a href="../../index.html" class="voltar-index">← Índice</a>
+  <h1>Suma Teológica</h1>
+  <p style="opacity:0.8; font-style:italic; margin-top:4px;">São Tomás de Aquino</p>
+  <span class="info-pagina">Página 2037 de 3000</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO SUPERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<nav class="navegacao-topo">
+  <a href="suma-pagina2036.html" class="btn-nav">← Anterior</a>
+  <span class="info-centena">Pág. 2037/3000</span>
+  <a href="suma-pagina2038.html" class="btn-nav">Próxima →</a>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CONTEÚDO PRINCIPAL                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<main class="pagina-conteudo">
+  
+  <!-- Texto Original -->
+  <div class="bloco-texto">
+    <div class="bloco-titulo">
+      <span>📜</span>
+      Questão 175, Artigo 6 — Se Paulo ignorava que a sua alma estava separada do corpo.
+    </div>
+    <div class="pagina-corpo">
+    <p>O sexto discute–se assim. – Parece que Paulo não ignorava, que a sua alma estava separada do corpo. 1. – Pois, ele próprio o diz: Conheço a um homem em Cristo, que foi arrebatado até ao terceiro céu. Ora, homem designa um composto de corpo e alma; e arrebatado difere de morto. Logo, parece que Paulo sabia, que a sua alma não estava separada do corpo pela morte; tanto mais quanto é esta a opinião comum dos doutores. 2. Demais. – Das palavras mesmo do Apóstolo resulta, que ele sabia ter sido arrebatado, pois, diz que o foi até ao terceiro céu. Donde se segue, que sabia se sua alma continuava unida ao corpo ou não. Pois, se sabia que o terceiro céu é um céu material, sabia por consequência que a alma não lhe ficou separada do corpo; porque a visão de uma coisa corpórea não pode dar–se senão por meio do corpo. Logo, parece que não ignorava de todo se a sua alma estava separada do corpo. 3. Demais. – Como diz Agostinho, Paulo, durante o rapto, viu a Deus pela visão com que os santos o contemplam na pátria. Ora, os santos, pelo fato mesmo de verem a Deus, sabem se a alma lhes está separada do corpo. Logo, também o sabia Paulo.</p>
+    <p>Mas, em contrário, Paulo mesmo diz: Se foi no corpo ou fora do corpo, não no sei, Deus o sabe. SOLUÇÃO. – A verdade, nesta questão, devemos hauri–la nas palavras mesmo do Apóstolo, quando diz que sabia ter sido arrebatado até ao terceiro céu, e não sabia se foi no corpo ou fora do corpo. O que de dois modos podemos entender. Num sentido, a expressão – se foi no corpo ou fora do corpo – não se refere ao ser mesmo do raptado, como se ignorasse o estar ou não a sua alma unida do corpo; mas, ao modo do rapto, isto é, que ignorava se o seu corpo foi raptado ao terceiro céu juntamente com a alma ou se assim não se deu, tendo sido só a alma a arrebatada; assim, Ezequiel diz que foi levado a Jerusalém em visão de Deus. E Jerônimo refere ser esta a interpretação de um certo judeu, quando escreve: Um judeu, finalmente, dizia que o nosso Apóstolo não ousou afirmar ter sido arrebatado em corpo, mas declarou – se foi no corpo ou fora do corpo, não no sei. Mas Agostinho refuta esta interpretação, fundado em o Apóstolo afirmar, que sabia ter sido arrebatado até ao terceiro céu. Portanto, sabia ser verdadeiramente o terceiro céu aquele a que foi arrebatado e não uma semelhança imaginária dele. Do contrário, se chamasse terceiro céu a uma imagem dele, pela mesma razão podia dizer que foi arrebatado em corpo, chamando corpo à imagem do próprio corpo, tal como ela aparece nos sonhos, – Se, pois, sabia que o terceiro céu verdadeiramente o era. sabia também por consequência se era um céu espiritual e incorpóreo; e assim o seu corpo não podia ter sido arrebatado até ele. Ou então, se material fosse tal céu, só a alma não poderia ter sido arrebatada até ele, com exclusão do corpo, sem se separar do corpo. Por onde, devemos entender essas palavras num outro sentido. E é que o Apóstolo sabia ter–lhe sido arrebatada só a alma e não o corpo; não sabia, contudo, em que relação se mantinha a alma com o corpo. isto é, se estava com ou sem corpo. Mas, neste ponto variam as opiniões. Assim, uns pensam que o Apóstolo sabia que a alma lhe estava unida ao corpo como forma, mas não sabia se havia sofrido separação dos sentidos, ou mesmo se ficou alheado às operações da alma vegetativa. – Mas, que houve separação dos sentidos, isso não o podia ele ignorar, desde que sabia ter sido arrebatado. – Quanto ao fato de ficar alheado da atividade da alma vegetativa, não era isso causa de tanta monta de que devesse fazer solícita menção. Donde se conclui, que o Apóstolo não sabia se a alma lhe continuava unida, como forma, ao corpo, ou se se separou dele pela morte. Outros porém, embora o concedam, dizem que o Apóstolo quando foi arrebatado, perdeu o discernimento, porque ficou totalmente enlevado em Deus; mas voltou depois a discernir, quando entrou a considerar o que viu. – Mas isto também contraria às palavras do Apóstolo, que distingue com as suas palavras o passado, do futuro. Pois, diz no presente, que não sabe se foi arrebatado catorze anos antes; e que, no presente, não sabe se foi no corpo ou fora do corpo. Por onde, devemos pensar, que tanto antes como depois do rapto não sabia se a alma lhe ficou separada do corpo. Por isso, após longo exame, Agostinho conclui: Resta portanto talvez, que Paulo ignorava, quando foi arrebatado ao terceiro céu, se a alma lhe estava no corpo como o está quando o corpo vive – quer esteja a pessoa acordada, quer dormindo, quer alheada dos sentidos corpóreos pelo êxtase – ou se de todo tinha se separado dele, de modo que ficasse o corpo sem vida.</p>
+    <p>DONDE A</p>
+    <p>RESPOSTA À PRIMEIRA OBJEÇÃO. – Por sinédoque, às vezes chamamos homem a uma parte dele; sobretudo à alma, que é a parte mais nobre do homem. – Embora também se possa entender, que aquele de quem o Apóstolo diz ter sido arrebatado, não era homem então quando sofreu o rapto, mas só o foi depois de catorze anos. E por isso diz: Eu conheço a este tal homem – e não – Eu conheço a este tal homem como tendo sido raptado. Mas também nada impediria chamar rapto à morte causada por Deus. Assim, Agostinho diz: Se o Apóstolo duvidava, quem de nós ousará dizer que tem certeza? Por isso, os que falam deste fato o fazem antes por conjecturas do que por estarem certos.</p>
+    <p>RESPOSTA À SEGUNDA. – O Apóstolo sabia ou que esse céu era de natureza imaterial, ou que nele viu algo de imaterial. Pois, isso lhe era accessível à inteligência, mesmo que a alma lhe não ficasse separada do corpo.</p>
+    <p>RESPOSTA À TERCEIRA. – A visão de Paulo, durante o rapto, em parte foi semelhante à visão dos bem– aventurados, isto é, quanto ao que viu. E em parte, dissemelhante, isto é, quanto ao modo de ver, pois não viu tão perfeitamente como o veem os santos na pátria. Por isso, diz Agostinho: Embora o Apóstolo fosse arrebatado ao terceiro céu, com o alheamento aos sentidos do corpo, não teve um conhecimento das coisas tão pleno e tão perfeito como o têm os anjos, pois, ignorava se estava no corpo ou fora dele; mas isto não se dará quando a alma se reunir ao corpo, depois da ressurreição dos mortos, tornando–se ele, imortal, de mortal que agora é. Em seguida devemos tratar das graças gratuitas relativas à língua. E primeiro, da graça das línguas. Segundo, da graça de falar com sabedoria ou com ciência. Na primeira questão discutem–se dois artigos:</p>
+
+    </div>
+  </div>
+  
+  <!-- Bloco de Explicação (a ser preenchido) -->
+  <div class="bloco-explicacao">
+    <div class="explicacao-label">💡 Explicação e Contexto</div>
+    <div class="explicacao-corpo" id="explicacao">
+    <p><em>Explicação será adicionada em breve.</em></p>
+
+    </div>
+  </div>
+  
+</main>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO INFERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="navegacao-inferior">
+  <div class="nav-buttons">
+    <a href="suma-pagina2036.html" class="btn-primary">← Anterior</a>
+    <span class="pagina-atual">2037</span>
+    <a href="suma-pagina2038.html" class="btn-primary">Próxima →</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  RODAPÉ                                                  -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<footer class="suma-footer">
+  <p>Suma Teológica · São Tomás de Aquino | Biblioteca Lux Fidei</p>
+</footer>
+
+</body>
+</html>

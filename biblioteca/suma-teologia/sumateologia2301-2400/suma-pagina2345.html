@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Questão 42, Artigo 1 — — Se Cristo devia pregar não só aos Judeus, mas também aos | Suma Teológica</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+    --cor-fundo: #f5f0e8;
+    --cor-pagina: #fff;
+    --cor-texto: #2c1f17;
+    --cor-dourado: #d4af37;
+    --cor-roxo: #5b2c83;
+    --sombra: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cor-fundo);
+    color: var(--cor-texto);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CABEÇALHO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-header {
+    background: linear-gradient(135deg, #1a1a1a, #2c241b);
+    color: #f5f0e8;
+    padding: 32px 20px 24px;
+    text-align: center;
+    position: relative;
+}
+
+.voltar-index {
+    position: absolute;
+    top: 16px;
+    left: 20px;
+    color: var(--cor-dourado);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: opacity 0.2s;
+}
+
+.voltar-index:hover {
+    opacity: 0.8;
+}
+
+.suma-header h1 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.info-pagina {
+    display: inline-block;
+    background: rgba(212, 175, 55, 0.15);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    color: var(--cor-dourado);
+    margin-top: 8px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-topo {
+    background: #fff;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    gap: 10px;
+}
+
+.btn-nav {
+    display: inline-flex;
+    align-items: center;
+    padding: 9px 18px;
+    background: var(--cor-roxo);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.btn-nav:hover {
+    background: #4a246a;
+    transform: translateY(-1px);
+}
+
+.desabilitado {
+    background: #ddd !important;
+    color: #999 !important;
+    pointer-events: none;
+}
+
+.info-centena {
+    font-size: 0.85rem;
+    color: #888;
+    font-weight: 500;
+    padding: 0 10px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CONTEÚDO PRINCIPAL                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.pagina-conteudo {
+    flex: 1;
+    max-width: 860px;
+    width: 100%;
+    margin: 36px auto;
+    padding: 0 20px;
+}
+
+.bloco-texto {
+    background: var(--cor-pagina);
+    padding: 48px 44px;
+    border-radius: 12px;
+    box-shadow: var(--sombra);
+    position: relative;
+    margin-bottom: 24px;
+}
+
+.bloco-texto::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 20px;
+    bottom: 20px;
+    width: 4px;
+    background: linear-gradient(to bottom, var(--cor-dourado), var(--cor-roxo));
+    border-radius: 0 4px 4px 0;
+}
+
+.bloco-titulo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.3rem;
+    color: var(--cor-roxo);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e8dfd0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pagina-corpo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.1rem;
+    line-height: 1.95;
+    color: #3d3226;
+    text-align: justify;
+}
+
+.pagina-corpo p {
+    margin-bottom: 1.3em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  BLOCO DE EXPLICAÇÃO                                        */
+/* ────────────────────────────────────────────────────────── */
+
+.bloco-explicacao {
+    background: linear-gradient(135deg, #fffdf5, #faf5eb);
+    border-left: 5px solid var(--cor-dourado);
+    padding: 32px 40px;
+    border-radius: 0 12px 12px 0;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    margin-bottom: 24px;
+}
+
+.explicacao-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--cor-dourado);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 14px;
+}
+
+.explicacao-corpo {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #4a3c2c;
+}
+
+.explicacao-corpo p {
+    margin-bottom: 1em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO INFERIOR                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-inferior {
+    max-width: 860px;
+    width: 100%;
+    margin: 0 auto 40px;
+    padding: 0 20px;
+}
+
+.nav-buttons {
+    background: #fff;
+    padding: 18px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    box-shadow: var(--sombra);
+}
+
+.btn-primary {
+    flex: 1;
+    text-align: center;
+    padding: 13px 16px;
+    background: linear-gradient(135deg, var(--cor-roxo), #7a3eb5);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(91, 44, 131, 0.3);
+}
+
+.pagina-atual {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--cor-dourado);
+    min-width: 50px;
+    text-align: center;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RODAPÉ                                                     */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-footer {
+    background: #1a1a1a;
+    color: #888;
+    text-align: center;
+    padding: 22px 20px;
+    margin-top: auto;
+    font-size: 0.85rem;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RESPONSIVIDADE                                             */
+/* ────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+    .suma-header h1 {
+        font-size: 1.4rem;
+    }
+    
+    .bloco-texto {
+        padding: 28px 18px;
+    }
+    
+    .bloco-explicacao {
+        padding: 22px 18px;
+    }
+    
+    .navegacao-topo {
+        flex-wrap: wrap;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CABEÇALHO                                               -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="suma-header">
+  <a href="../../index.html" class="voltar-index">← Índice</a>
+  <h1>Suma Teológica</h1>
+  <p style="opacity:0.8; font-style:italic; margin-top:4px;">São Tomás de Aquino</p>
+  <span class="info-pagina">Página 2345 de 3000</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO SUPERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<nav class="navegacao-topo">
+  <a href="suma-pagina2344.html" class="btn-nav">← Anterior</a>
+  <span class="info-centena">Pág. 2345/3000</span>
+  <a href="suma-pagina2346.html" class="btn-nav">Próxima →</a>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CONTEÚDO PRINCIPAL                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<main class="pagina-conteudo">
+  
+  <!-- Texto Original -->
+  <div class="bloco-texto">
+    <div class="bloco-titulo">
+      <span>📜</span>
+      Questão 42, Artigo 1 — — Se Cristo devia pregar não só aos Judeus, mas também aos
+    </div>
+    <div class="pagina-corpo">
+    <p>gentios. O primeiro discute-se assim. — Parece que Cristo devia pregar, não somente aos judeus, mas também aos gentios.</p>
+    <p>1. — Pois, diz a Escritura: Pouco é que tu sejas meu servo para suscitar as tribos de Israel e converter as fezes de Jacó. Eis aqui estou eu que te estabeleci para luz das gentes a fim de seres tu a salvação que eu envio até a última extremidade da terra. Ora, a luz e a salvação Cristo nos trouxe com a sua doutrina. Logo, parece que não devia ter pregado só, aos judeus, com exclusão dos gentios. 2. Demais. — Como diz o Evangelho, Ele os ensinava como quem tinha autoridade. Ora, maior necessidade havia de ensinar doutrina para a instrução daqueles que nunca o ouviram pregar, como' eram os gentios; donde o dizer o Apóstolo - Assim tenho anunciado este Evangelho, não onde se havia feito já menção de Cristo, por não edificar sobre fundamento de outro. Logo, com muito maior razão, Cristo devia pregar, antes, aos gentios que aos judeus. 3. Demais. — É mais útil a instrução de muitos que a de um só. Ora. Cristo instruiu certos gentios, como a mulher Samaritana e a Cananía. Logo, parece que Cristo devia com muito maior razão pregar à multidão dos gentios.</p>
+    <p>Mas, em contrário, o Senhor diz, no Evangelho: Eu não fui enviado senão às ovelhas que pereceram da casa de Israel. E o Apóstolo: Como pregarão eles se não forem enviados? Logo, Cristo não devia pregar aos gentios.</p>
+    <p>SOLUÇÃO. — Tanto Cristo como os Apóstolos deviam ter começado por pregar só aos Judeus. — Primeiro, para mostrar que, pelo seu advento, se cumpriram as promessas anteriormente feitas aos judeus e não aos gentios. Donde o dizer o Apóstolo: Digo que Jesus Cristo foi ministro da circunscrição, isto é, Apóstolo e pregador dos judeus, pela verdade de Deus, para confirmar as promessas dos pais. — Segundo, para provar que o seu advento procedia de Deus; pois, as coisas de Deus são ordenadas, como diz o Apóstolo. Ora, a ordem devida exigia que a doutrina de Cristo fosse proposta primeiro aos Judeus, mais próximos de Deus pela fé e pelo culto monoteísta, para ser depois, por meio deles, transmitida aos gentios; assim como também, na hierarquia celeste as iluminações divinas são transmitidas aos anjos inferiores pelos superiores. Por isso, àquilo do Evangelho — Eu não fui enviado senão às ovelhas que pereceram da casa de Israel — diz Jerônimo: Não quer isso significar que não foi mandado aos gentios, mas que o foi primeiro a Israel. Donde o dizer a Escritura: E os que dentre eles forem salvos, isto é, dos judeus, eu os enviarei às gentes de além mar e eles anunciarão a minha glória as gentes. — Terceiro, para tirar aos judeus a ocasião de caluniá-lo. Por isso, àquilo do Evangelho — Não ireis caminho de gentios, diz Jerônimo: O advento de Cristo devia ser anunciado primeiro aos judeus, para não terem justa excusa de dizer, que rejeitaram o Senhor, porque mandou os seus apóstolos aos gentios e aos samaritanos. — Quarto, porque Cristo, pela vitória da cruz, mereceu o poder e o domínio sobre as gentes. Por isso diz a Escritura: Aquele que vencer eu lhe darei poder sobre as nações, assim como também eu a recebi de meu Pai. E o Apóstolo diz que porque foi feito obediente até a morte da cruz, Deus o exaltou para que ao nome de Jesus se dobre todo o joelho e toda língua e confesse. E eis porque antes da paixão não quis pregar a sua doutrina aos gentios; mas depois dela disse aos discípulos: Ide e ensinai a todas as gentes. Por isso, como se lê no Evangelho, quando, na iminência da paixão, certos gentios queriam ver a Jesus, respondeu: Se o grão de trigo que cai na terra não morrer, fica ele só; mas se ele morrer produz muito fruto. E, como explica Agostinho, dizia de si que era um grão à ser morto, pela infidelidade dos judeus; e multiplicado, pela fé de todos os povos.</p>
+    <p>DONDE A</p>
+    <p>RESPOSTA À PRIMEIRA OBJEÇÃO. — Cristo foi a luz e a salvação das gentes por meio dos seus discípulos, que mandou a pregarem aos gentios.</p>
+    <p>RESPOSTA À SEGUNDA. — Agir antes por meio de outrem que por si mesmo é sinal, não de um poder inferior, mas de um poder maior. Por isso o poder divino de Cristo se manifestou sobretudo por ter conferido aos seus discípulos um tão grande poder de ensinar, que converteram para Cristo os gentios, que nunca tinham ouvido falar dele. — Ora, o poder de ensinar, que Cristo tinha, pode ser considerado quanto aos milagres, pelos quais confirmava a sua doutrina; quanto à eficácia de persuadir; e quanto à autoridade da sua palavra, porque falava como quem tinha o domínio sobre a lei, quando afirmava — Eu porém vos digo; e também quanto à virtude da retidão, que mostrava na sua vida isenta de pecados.</p>
+    <p>RESPOSTA À TERCEIRA. — Assim como Cristo não devia comunicar indiferentemente, desde o princípio, a sua doutrina aos gentios, a fim de mostrar que fora dado aos Judeus, como ao povo primogênito, assim também não devia repelir de todo os gentios, para não serem privados da esperança da salvação. E por isso certos gentios foram particularmente admitidos por causa da excelência da sua fé e devoção.</p>
+
+    </div>
+  </div>
+  
+  <!-- Bloco de Explicação (a ser preenchido) -->
+  <div class="bloco-explicacao">
+    <div class="explicacao-label">💡 Explicação e Contexto</div>
+    <div class="explicacao-corpo" id="explicacao">
+    <p><em>Explicação será adicionada em breve.</em></p>
+
+    </div>
+  </div>
+  
+</main>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO INFERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="navegacao-inferior">
+  <div class="nav-buttons">
+    <a href="suma-pagina2344.html" class="btn-primary">← Anterior</a>
+    <span class="pagina-atual">2345</span>
+    <a href="suma-pagina2346.html" class="btn-primary">Próxima →</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  RODAPÉ                                                  -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<footer class="suma-footer">
+  <p>Suma Teológica · São Tomás de Aquino | Biblioteca Lux Fidei</p>
+</footer>
+
+</body>
+</html>

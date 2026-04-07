@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Questão 19, Artigo 7 — — Se a vontade de Deus é mutável. | Suma Teológica</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+    --cor-fundo: #f5f0e8;
+    --cor-pagina: #fff;
+    --cor-texto: #2c1f17;
+    --cor-dourado: #d4af37;
+    --cor-roxo: #5b2c83;
+    --sombra: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cor-fundo);
+    color: var(--cor-texto);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CABEÇALHO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-header {
+    background: linear-gradient(135deg, #1a1a1a, #2c241b);
+    color: #f5f0e8;
+    padding: 32px 20px 24px;
+    text-align: center;
+    position: relative;
+}
+
+.voltar-index {
+    position: absolute;
+    top: 16px;
+    left: 20px;
+    color: var(--cor-dourado);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: opacity 0.2s;
+}
+
+.voltar-index:hover {
+    opacity: 0.8;
+}
+
+.suma-header h1 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.info-pagina {
+    display: inline-block;
+    background: rgba(212, 175, 55, 0.15);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    color: var(--cor-dourado);
+    margin-top: 8px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-topo {
+    background: #fff;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    gap: 10px;
+}
+
+.btn-nav {
+    display: inline-flex;
+    align-items: center;
+    padding: 9px 18px;
+    background: var(--cor-roxo);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.btn-nav:hover {
+    background: #4a246a;
+    transform: translateY(-1px);
+}
+
+.desabilitado {
+    background: #ddd !important;
+    color: #999 !important;
+    pointer-events: none;
+}
+
+.info-centena {
+    font-size: 0.85rem;
+    color: #888;
+    font-weight: 500;
+    padding: 0 10px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CONTEÚDO PRINCIPAL                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.pagina-conteudo {
+    flex: 1;
+    max-width: 860px;
+    width: 100%;
+    margin: 36px auto;
+    padding: 0 20px;
+}
+
+.bloco-texto {
+    background: var(--cor-pagina);
+    padding: 48px 44px;
+    border-radius: 12px;
+    box-shadow: var(--sombra);
+    position: relative;
+    margin-bottom: 24px;
+}
+
+.bloco-texto::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 20px;
+    bottom: 20px;
+    width: 4px;
+    background: linear-gradient(to bottom, var(--cor-dourado), var(--cor-roxo));
+    border-radius: 0 4px 4px 0;
+}
+
+.bloco-titulo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.3rem;
+    color: var(--cor-roxo);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e8dfd0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pagina-corpo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.1rem;
+    line-height: 1.95;
+    color: #3d3226;
+    text-align: justify;
+}
+
+.pagina-corpo p {
+    margin-bottom: 1.3em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  BLOCO DE EXPLICAÇÃO                                        */
+/* ────────────────────────────────────────────────────────── */
+
+.bloco-explicacao {
+    background: linear-gradient(135deg, #fffdf5, #faf5eb);
+    border-left: 5px solid var(--cor-dourado);
+    padding: 32px 40px;
+    border-radius: 0 12px 12px 0;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    margin-bottom: 24px;
+}
+
+.explicacao-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--cor-dourado);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 14px;
+}
+
+.explicacao-corpo {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #4a3c2c;
+}
+
+.explicacao-corpo p {
+    margin-bottom: 1em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO INFERIOR                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-inferior {
+    max-width: 860px;
+    width: 100%;
+    margin: 0 auto 40px;
+    padding: 0 20px;
+}
+
+.nav-buttons {
+    background: #fff;
+    padding: 18px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    box-shadow: var(--sombra);
+}
+
+.btn-primary {
+    flex: 1;
+    text-align: center;
+    padding: 13px 16px;
+    background: linear-gradient(135deg, var(--cor-roxo), #7a3eb5);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(91, 44, 131, 0.3);
+}
+
+.pagina-atual {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--cor-dourado);
+    min-width: 50px;
+    text-align: center;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RODAPÉ                                                     */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-footer {
+    background: #1a1a1a;
+    color: #888;
+    text-align: center;
+    padding: 22px 20px;
+    margin-top: auto;
+    font-size: 0.85rem;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RESPONSIVIDADE                                             */
+/* ────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+    .suma-header h1 {
+        font-size: 1.4rem;
+    }
+    
+    .bloco-texto {
+        padding: 28px 18px;
+    }
+    
+    .bloco-explicacao {
+        padding: 22px 18px;
+    }
+    
+    .navegacao-topo {
+        flex-wrap: wrap;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CABEÇALHO                                               -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="suma-header">
+  <a href="../../index.html" class="voltar-index">← Índice</a>
+  <h1>Suma Teológica</h1>
+  <p style="opacity:0.8; font-style:italic; margin-top:4px;">São Tomás de Aquino</p>
+  <span class="info-pagina">Página 122 de 3000</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO SUPERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<nav class="navegacao-topo">
+  <a href="suma-pagina121.html" class="btn-nav">← Anterior</a>
+  <span class="info-centena">Pág. 122/3000</span>
+  <a href="suma-pagina123.html" class="btn-nav">Próxima →</a>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CONTEÚDO PRINCIPAL                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<main class="pagina-conteudo">
+  
+  <!-- Texto Original -->
+  <div class="bloco-texto">
+    <div class="bloco-titulo">
+      <span>📜</span>
+      Questão 19, Artigo 7 — — Se a vontade de Deus é mutável.
+    </div>
+    <div class="pagina-corpo">
+    <p>I Sent., dist. XXXIX, q. 1, a. 1; dist. XLVIII, q. 2, a. 1, ad 2; I Cont. Gent., cap. LXXXII; III, cap. XCI, XCVI, XCVIII; De Verit., q. 12, a. 2, ad 3; Hebr., cap. VI, lect. IV. O sétimo discute-se assim. — Parece que a vontade de Deus é mutável.</p>
+    <p>1. — Pois, diz a Escritura (Gn 6, 7): Pesa-me de os ter feito. Ora, quem se arrependeu do que fez tem vontade mutável. 2. Demais. — A Escritura diz (Jr 18, 7), da pessoa do Senhor: Falarei contra uma gente e contra um reino, para desarraigá-lo e destruí-lo e arruiná-lo. Mas, se aquela gente se arrepender do seu mal, também eu me arrependerei do mal que tenho pensado fazer contra ela. Logo, Deus tem vontade mutável. 3. Demais. — Tudo o que Deus faz, voluntariamente o faz. Ora, Deus não faz sempre as mesmas coisas: assim, ora manda observar a lei, ora o proíbe. Logo, tem vontade mutável. 4. Demais. — Deus não quer necessariamente o que quer, como se disse antes. Logo, pode querer e não querer a mesma coisa. Mas, tudo o que tem poder em relação a dois contrários é mutável; assim o que pode ser e não ser é mutável, quanto à substância; e o que pode estar e não estar num lugar é mutável, quanto ao lugar.</p>
+    <p>Mas, em contrário, a Escritura (Nm 23, 19): Deus não é, como o homem, capaz de mentir, nem, como o filho do homem, sujeito à mudança.</p>
+    <p>SOLUÇÃO. — A vontade de Deus é absolutamente imutável. Mas, sobre este assunto, devemos considerar que, mudar-se a vontade, é diferente de querer a mutação de certas coisas. Pois, podemos querer que agora se faça tal coisa, e em seguida, o contrário, permanecendo a mesma vontade imóvel. Mas, a vontade se mudaria se começássemos a querer o que antes não queríamos ou deixássemos de querer o que queríamos. O que não se pode dar, sem pressupormos a mutação, por parte do conhecimento, ou quanto à disposição da substância mesma da pessoa que quer. Ora, como a vontade tem por objeto o bem, podemos começar a querer uma coisa de duplo modo. De um modo, se nos começar a ser bom o que dantes não nô-lo era; o que não vai sem mudança nossa. Assim, chegando o frio, começa-nos a ser bom assentarmo-nos ao fogo, o que, dantes, não nô-lo era. De outro modo, quando conhecemos como bom o que dantes ignorávamos que o fosse. Pois, deliberamos para sabermos o que nos é bom. Ora, já demonstramos que tanto a substância de Deus, como a sua ciência é absolutamente imutável. Logo, é forçoso que seja a sua vontade absolutamente imutável.</p>
+    <p>DONDE A</p>
+    <p>RESPOSTA À PRIMEIRA OBJEÇÃO. — Essa expressão do Senhor devemos entendê-la metaforicamente e por semelhança conosco. Assim, quando nos arrependemos, destruímos o que fizemos, embora isso possa fazer-se sem mutação da vontade; como quando às vezes queremos, sem mutação da nossa vontade, fazer algo com intenção simultânea de o destruir em seguida. Assim, pois, dizemos que Deus se arrependeu, por essa semelhança de agir, delindo da face da terra pelo dilúvio o homem que criara.</p>
+    <p>RESPOSTA À SEGUNDA. — A vontade de Deus, com ser a causa primeira e universal, não exclui as causas médias, a cuja virtude pertence produzir certos efeitos. Mas, porque todas as causas médias não podem adequar-se à virtude da causa primeira, muitas causas existem na virtude, na ciência, e na vontade divina, que não estão contidas na ordem das causas inferiores, como a ressurreição de Lázaro. Por onde, quem considerasse as causas inferiores poderia dizer: Lázaro não ressurgirá; — mas considerando a causa primeira divina, dizer: Lázaro ressurgirá. — E Deus quer tanto isto como aquilo, a saber, que alguma coisa haja de ser, segundo as causas inferiores; que, contudo, não será, segundo a causa superior; ou reciprocamente. Por onde, devemos concluir que Deus, por vezes, prenuncia um futuro, enquanto contido na ordem das causas inferiores — como, p. ex., segundo a disposição da natureza ou dos méritos — que, entretanto, não se realizará, porque existe de maneira diferente na causa superior divina. Assim, o que predisse a Ezequias, como refere a Escritura (Is 38, 1) — Dispõe da tua casa, porque tu morrerás e não viverás — não se realizou, porque estava determinado diferentemente e abeterno, pela ciência e pela vontade divina, que é imutável. E, por isso, diz Gregório: Deus muda a sentença, mas não o conselho, isto é, a sua vontade. Quando diz, pois — Também eu me arrependerei — isso deve entender-se metaforicamente, porque os homens, quando não cumprem o que prometeram, dizemos que se arrependeram.</p>
+    <p>RESPOSTA À TERCEIRA. — Da razão aduzida não podemos concluir, que Deus tem vontade mutável, mas que quer a mutação.</p>
+    <p>RESPOSTA À QUARTA. — Embora não seja necessário, absolutamente, querer Deus alguma coisa, contudo é necessário por suposição, por causa da imutabilidade da divina vontade, como dissemos.</p>
+
+    </div>
+  </div>
+  
+  <!-- Bloco de Explicação (a ser preenchido) -->
+  <div class="bloco-explicacao">
+    <div class="explicacao-label">💡 Explicação e Contexto</div>
+    <div class="explicacao-corpo" id="explicacao">
+    <p><em>Explicação será adicionada em breve.</em></p>
+
+    </div>
+  </div>
+  
+</main>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO INFERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="navegacao-inferior">
+  <div class="nav-buttons">
+    <a href="suma-pagina121.html" class="btn-primary">← Anterior</a>
+    <span class="pagina-atual">122</span>
+    <a href="suma-pagina123.html" class="btn-primary">Próxima →</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  RODAPÉ                                                  -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<footer class="suma-footer">
+  <p>Suma Teológica · São Tomás de Aquino | Biblioteca Lux Fidei</p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Questão 37, Artigo 4 — ─ Se as funções das ordens estão bem determinadas pelo Mestre | Suma Teológica</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+    --cor-fundo: #f5f0e8;
+    --cor-pagina: #fff;
+    --cor-texto: #2c1f17;
+    --cor-dourado: #d4af37;
+    --cor-roxo: #5b2c83;
+    --sombra: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cor-fundo);
+    color: var(--cor-texto);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CABEÇALHO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-header {
+    background: linear-gradient(135deg, #1a1a1a, #2c241b);
+    color: #f5f0e8;
+    padding: 32px 20px 24px;
+    text-align: center;
+    position: relative;
+}
+
+.voltar-index {
+    position: absolute;
+    top: 16px;
+    left: 20px;
+    color: var(--cor-dourado);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: opacity 0.2s;
+}
+
+.voltar-index:hover {
+    opacity: 0.8;
+}
+
+.suma-header h1 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.info-pagina {
+    display: inline-block;
+    background: rgba(212, 175, 55, 0.15);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    color: var(--cor-dourado);
+    margin-top: 8px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-topo {
+    background: #fff;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    gap: 10px;
+}
+
+.btn-nav {
+    display: inline-flex;
+    align-items: center;
+    padding: 9px 18px;
+    background: var(--cor-roxo);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.btn-nav:hover {
+    background: #4a246a;
+    transform: translateY(-1px);
+}
+
+.desabilitado {
+    background: #ddd !important;
+    color: #999 !important;
+    pointer-events: none;
+}
+
+.info-centena {
+    font-size: 0.85rem;
+    color: #888;
+    font-weight: 500;
+    padding: 0 10px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CONTEÚDO PRINCIPAL                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.pagina-conteudo {
+    flex: 1;
+    max-width: 860px;
+    width: 100%;
+    margin: 36px auto;
+    padding: 0 20px;
+}
+
+.bloco-texto {
+    background: var(--cor-pagina);
+    padding: 48px 44px;
+    border-radius: 12px;
+    box-shadow: var(--sombra);
+    position: relative;
+    margin-bottom: 24px;
+}
+
+.bloco-texto::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 20px;
+    bottom: 20px;
+    width: 4px;
+    background: linear-gradient(to bottom, var(--cor-dourado), var(--cor-roxo));
+    border-radius: 0 4px 4px 0;
+}
+
+.bloco-titulo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.3rem;
+    color: var(--cor-roxo);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e8dfd0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pagina-corpo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.1rem;
+    line-height: 1.95;
+    color: #3d3226;
+    text-align: justify;
+}
+
+.pagina-corpo p {
+    margin-bottom: 1.3em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  BLOCO DE EXPLICAÇÃO                                        */
+/* ────────────────────────────────────────────────────────── */
+
+.bloco-explicacao {
+    background: linear-gradient(135deg, #fffdf5, #faf5eb);
+    border-left: 5px solid var(--cor-dourado);
+    padding: 32px 40px;
+    border-radius: 0 12px 12px 0;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    margin-bottom: 24px;
+}
+
+.explicacao-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--cor-dourado);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 14px;
+}
+
+.explicacao-corpo {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #4a3c2c;
+}
+
+.explicacao-corpo p {
+    margin-bottom: 1em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO INFERIOR                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-inferior {
+    max-width: 860px;
+    width: 100%;
+    margin: 0 auto 40px;
+    padding: 0 20px;
+}
+
+.nav-buttons {
+    background: #fff;
+    padding: 18px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    box-shadow: var(--sombra);
+}
+
+.btn-primary {
+    flex: 1;
+    text-align: center;
+    padding: 13px 16px;
+    background: linear-gradient(135deg, var(--cor-roxo), #7a3eb5);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(91, 44, 131, 0.3);
+}
+
+.pagina-atual {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--cor-dourado);
+    min-width: 50px;
+    text-align: center;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RODAPÉ                                                     */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-footer {
+    background: #1a1a1a;
+    color: #888;
+    text-align: center;
+    padding: 22px 20px;
+    margin-top: auto;
+    font-size: 0.85rem;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RESPONSIVIDADE                                             */
+/* ────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+    .suma-header h1 {
+        font-size: 1.4rem;
+    }
+    
+    .bloco-texto {
+        padding: 28px 18px;
+    }
+    
+    .bloco-explicacao {
+        padding: 22px 18px;
+    }
+    
+    .navegacao-topo {
+        flex-wrap: wrap;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CABEÇALHO                                               -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="suma-header">
+  <a href="../../index.html" class="voltar-index">← Índice</a>
+  <h1>Suma Teológica</h1>
+  <p style="opacity:0.8; font-style:italic; margin-top:4px;">São Tomás de Aquino</p>
+  <span class="info-pagina">Página 2817 de 3000</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO SUPERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<nav class="navegacao-topo">
+  <a href="suma-pagina2816.html" class="btn-nav">← Anterior</a>
+  <span class="info-centena">Pág. 2817/3000</span>
+  <a href="suma-pagina2818.html" class="btn-nav">Próxima →</a>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CONTEÚDO PRINCIPAL                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<main class="pagina-conteudo">
+  
+  <!-- Texto Original -->
+  <div class="bloco-texto">
+    <div class="bloco-titulo">
+      <span>📜</span>
+      Questão 37, Artigo 4 — ─ Se as funções das ordens estão bem determinadas pelo Mestre
+    </div>
+    <div class="pagina-corpo">
+    <p>das Sentenças. O quarto discute-se assim. ─ Parece que as funções das ordens não estão bem determinadas pelo Mestre das Sentenças. 1. ─ Pois, a absolvição nos prepara a receber o corpo de Cristo. Ora, preparar os que devem receber o sacramento é função das ordens inferiores. Logo, a absolvição dos pecados não devia ser enumerada entre as funções do sacerdote. 2. Demais. ─ Pelo batismo imediatamente nos tornamos semelhantes a Deus, porque recebemos o caráter que obra essa semelhança. Ora, orar e oferecer oblações são atos ordenados imediatamente a Deus. Logo, todo batizado, e não só o sacerdote, pode praticar tais atos. 3. Demais. ─ Ordens diversas tem funções diversas. Ora, por as oferendas no altar e ler a epístola é função do subdiácono. Também os subdiáconos apresentam a cruz ao Papa. Logo não se devem considerar essas funções do diácono. 4. Demais. ─ Tanto o Testamento Velho como o Novo encerram a mesma verdade. Ora, ler o Testamento Velho é função dos leitores. Logo e pela mesma razão devem ler o Novo, não sendo pois, essa, função dos diáconos. 5. Demais. ─ Os Apóstolos nada mais pregaram senão o Evangelho de Cristo, como se vê na Escritura. Ora, publicar a doutrina dos Apóstolos é função dos subdiáconos. Logo, também a doutrina do Evangelho. 6. Demais. ─ Segundo Dionísio, funções de uma ordem superior não podem caber à inferior. Ora, lidar com as galhetas é função dos subdiáconos. Logo, não deve ser atribuída aos acólitos. 7. Demais. Os atos espirituais devem ter preeminência sobre os materiais. Ora, o acólito só exerce uma função material. Logo, o exorcista não pode exercer a função espiritual de expulsar os demônios, por ser inferior. 8. Demais. ─ Funções que convêm entre si devem ser postas juntas. Ora, ler o Velho Testamento deve ter conveniência máxima com a leitura do Novo, que cabe aos ministros superiores. Logo, a função de ler o Testamento Velho não deve ser atribuída ao leitor, mas antes, ao acólito, principalmente porque o lume corporal que o acólito apresenta, significa o lume da doutrina espiritual. 9. Demais. ─ Toda função de ordem espiritual implica uma virtude espiritual que, mais que os outros, desempenham os ordenados. Ora, a função que tem o ostiário de abrir e fechar as portas também outros a exercem. Logo, não deve ser essa uma função peculiar a eles. SOLUÇÃO. ─ Como a consagração conferida pelo sacramento da ordem se destina ao sacramento da Eucaristia, conforme dissemos, é ato principal de cada ordem aquele pelo qual ela mais proximamente tem por fim o sacramento da Eucaristia. Assim sendo, uma ordem é mais eminente que outra, na medida em que uma função mais proximamente tem por fim o referido sacramento, como ao sacramento da Eucaristia, quase digníssimo se ordenam muitas outras funções, por isso nenhum inconveniente há em abranger uma ordem muitas funções, além da sua principal; e tanto mais quanto mais nobre for, por que um poder, quanto mais superior, maior raio de ação tem.</p>
+    <p>DONDE A</p>
+    <p>RESPOSTA À PRIMEIRA OBJEÇÃO. ─ Dupla é a preparação que devem ter os que recebem um sacramento. Uma remota, e essa é dada pelos ministros. Outra, próxima, que os torna logo aptos a receberem os sacramentos. E esta é função dos sacerdotes. Assim também na ordem natural o mesmo agente dá à matéria a última disposição para receber a forma e a confere. E como estamos em disposição próxima para receber a Eucaristia quando já nos purificamos dos pecados, por isso é o sacerdote o ministro próprio de todos os sacramentos instituídos principalmente para purificar dos pecados ─ o batismo, a penitência e a extrema unção.</p>
+    <p>RESPOSTA À SEGUNDA. ─ Um ato pode ordenar-se imediatamente para Deus de dois modos. ─ Primeiro, por parte só de uma pessoa; assim fazer orações e votos em particular, e outros. E tal ato qualquer batizado pode praticá-lo. ─ De outro modo, por parte de toda a Igreja. E então só os atos praticados pelo sacerdote se ordenam imediatamente para Deus; porque só ele pode representar a pessoa de toda a Igreja, que consagra a Eucaristia, sacramento da Igreja universal.</p>
+    <p>RESPOSTA À TERCEIRA. ─ As oferendas feitas pelo povo o sacerdote é quem as oferece. Por isso é necessário um duplo ministério para a oferta dessas oblações. Um por parte do povo; e esse é próprio do subdiácono, que recebe do povo as oblações e as coloca no altar ou oferece ao diácono. Outra é o ministério do sacerdócio, próprio do diácono, que apresenta as oblações diretamente ao sacerdote. E nisso consiste a função principal de cada ordem. Donde vem que a ordem do diácono é superior. Quanto à leitura da epístola, não é ofício do diácono, senão enquanto as funções das ordens inferiores se atribuem às superiores. O mesmo se dá com a função de levar a cruz. Isso segundo o costume de certas Igrejas, porque não há inconveniente haver costumes diversos relativos a atos secundários.</p>
+    <p>RESPOSTA À QUARTA. ─ A doutrina é a preparação remota para a recepção dos sacramentos; por isso, a transmissão da doutrina é confiada aos ministros. Ora, a doutrina do Velho Testamento é ainda mais remota que a do Novo; porque não instrui senão figuradamente sobre o sacramento da ordem. Por isso, ensinar o Novo Testamento é função dos ministros superiores; ao passo que ensinar o Antigo pertence aos inferiores. Além disso, a doutrina do Novo Testamento, que o nosso Senhor mesmo ensinou, é mais perfeita que a sua divulgação por meio dos Apóstolos. Por isso ler o Evangelho é função confiada aos diáconos; e a epístola, aos subdiáconos. Donde se deduz a resposta à quinta objeção. RESPOSTA À SEXTA. - Os acólitos lidam só com as galhetas nenhuma ação tendo sobre o conteúdo delas. Mas o subdiácono tem ação sobre esse conteúdo, porque depõe a água e o vinho no cálice e além disso derrama a água nas mãos do sacerdote. Quanto ao diácono e ao subdiácono, tem ação só sobre o cálice, não sobre o conteúdo dele; ao passo que o sacerdote a tem sobre esse conteúdo. Por isso, assim como o subdiácono, quando se ordena, recebe o cálice vazio, e o sacerdote o recebe cheio, assim o acólito recebe as galhetas vazias, e cheias o subdiácono. De modo que há uma certa conexão entre as ordens. RESPOSTA À SÉTIMA. ─ As funções materiais do acólito se ordenam mais proximamente à das ordens sacras, que as dos exorcistas, embora seja esta de certo modo espiritual. Porque os acólitos exercem o seu ministério sobre os vasos que contêm a matéria do sacramento, quanto ao vinho, que, por causa da sua umidade, necessita um vaso que o contenha. Por isso, dentre todas as ordens menores a dos acólitos é a superior. RESPOSTA À OITAVA. ─ A função dos acólitos mais se aproxima das funções principais dos ministros superiores, que as funções das outras ordens, como é fácil de ver. E semelhantemente, quanto aos atos secundários, cujo objeto é preparar o povo por meio da instrução. Porque o acólito, portador do círio, simboliza visivelmente a doutrina do Novo Testamento; ao passo que o leitor, lendo, as outras figuras do Velho Testamento. Por isso, o acólito é superior. O mesmo se passa com o exorcista. Pois, assim como está a função do leitor para a função secundária do diácono e do subdiácono, assim a função do exorcista para a função secundária do sacerdote ─ a de ligar e absolver, que nos livra totalmente da escravidão do demônio. ─ E nisto se manifesta a regular progressão das ordens. Pois, com o ato principal do sacerdote - consagrar o corpo de Cristo ─ cooperam as três ordens superiores. E com o seu ato secundário, de absolver e ligar cooperam juntamente as superiores e as inferiores. RESPOSTA À NONA. ─ Alguns dizem que quando recebe a ordem, ao ostiário é conferido um certo poder divino, de impedir a outrem de entrar no templo, como o teve Cristo quando dele expulsou os ladrões. Mas isto mais é obra da graça gratuita, que da graça do sacramento. Por onde, devemos pensar que ele recebe o poder de assim agir como no exercício de uma função própria; embora também outros possam fazer o mesmo, mas não por ofício. O mesmo se dá com todas as funções das ordens menores, que podem ser licitamente exercidas por outros, não porém como função própria deles. Assim, também numa casa não consagrada pode-se dizer missa, embora a igreja seja consagrada para nela celebrar-se.</p>
+
+    </div>
+  </div>
+  
+  <!-- Bloco de Explicação (a ser preenchido) -->
+  <div class="bloco-explicacao">
+    <div class="explicacao-label">💡 Explicação e Contexto</div>
+    <div class="explicacao-corpo" id="explicacao">
+    <p><em>Explicação será adicionada em breve.</em></p>
+
+    </div>
+  </div>
+  
+</main>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO INFERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="navegacao-inferior">
+  <div class="nav-buttons">
+    <a href="suma-pagina2816.html" class="btn-primary">← Anterior</a>
+    <span class="pagina-atual">2817</span>
+    <a href="suma-pagina2818.html" class="btn-primary">Próxima →</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  RODAPÉ                                                  -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<footer class="suma-footer">
+  <p>Suma Teológica · São Tomás de Aquino | Biblioteca Lux Fidei</p>
+</footer>
+
+</body>
+</html>

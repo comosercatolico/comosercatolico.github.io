@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Questão 49, Artigo 3 — Se há um mal sumo, causa de todo mal. | Suma Teológica</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+    --cor-fundo: #f5f0e8;
+    --cor-pagina: #fff;
+    --cor-texto: #2c1f17;
+    --cor-dourado: #d4af37;
+    --cor-roxo: #5b2c83;
+    --sombra: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cor-fundo);
+    color: var(--cor-texto);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CABEÇALHO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-header {
+    background: linear-gradient(135deg, #1a1a1a, #2c241b);
+    color: #f5f0e8;
+    padding: 32px 20px 24px;
+    text-align: center;
+    position: relative;
+}
+
+.voltar-index {
+    position: absolute;
+    top: 16px;
+    left: 20px;
+    color: var(--cor-dourado);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: opacity 0.2s;
+}
+
+.voltar-index:hover {
+    opacity: 0.8;
+}
+
+.suma-header h1 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.info-pagina {
+    display: inline-block;
+    background: rgba(212, 175, 55, 0.15);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    color: var(--cor-dourado);
+    margin-top: 8px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-topo {
+    background: #fff;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    gap: 10px;
+}
+
+.btn-nav {
+    display: inline-flex;
+    align-items: center;
+    padding: 9px 18px;
+    background: var(--cor-roxo);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.btn-nav:hover {
+    background: #4a246a;
+    transform: translateY(-1px);
+}
+
+.desabilitado {
+    background: #ddd !important;
+    color: #999 !important;
+    pointer-events: none;
+}
+
+.info-centena {
+    font-size: 0.85rem;
+    color: #888;
+    font-weight: 500;
+    padding: 0 10px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CONTEÚDO PRINCIPAL                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.pagina-conteudo {
+    flex: 1;
+    max-width: 860px;
+    width: 100%;
+    margin: 36px auto;
+    padding: 0 20px;
+}
+
+.bloco-texto {
+    background: var(--cor-pagina);
+    padding: 48px 44px;
+    border-radius: 12px;
+    box-shadow: var(--sombra);
+    position: relative;
+    margin-bottom: 24px;
+}
+
+.bloco-texto::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 20px;
+    bottom: 20px;
+    width: 4px;
+    background: linear-gradient(to bottom, var(--cor-dourado), var(--cor-roxo));
+    border-radius: 0 4px 4px 0;
+}
+
+.bloco-titulo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.3rem;
+    color: var(--cor-roxo);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e8dfd0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pagina-corpo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.1rem;
+    line-height: 1.95;
+    color: #3d3226;
+    text-align: justify;
+}
+
+.pagina-corpo p {
+    margin-bottom: 1.3em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  BLOCO DE EXPLICAÇÃO                                        */
+/* ────────────────────────────────────────────────────────── */
+
+.bloco-explicacao {
+    background: linear-gradient(135deg, #fffdf5, #faf5eb);
+    border-left: 5px solid var(--cor-dourado);
+    padding: 32px 40px;
+    border-radius: 0 12px 12px 0;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    margin-bottom: 24px;
+}
+
+.explicacao-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--cor-dourado);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 14px;
+}
+
+.explicacao-corpo {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #4a3c2c;
+}
+
+.explicacao-corpo p {
+    margin-bottom: 1em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO INFERIOR                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-inferior {
+    max-width: 860px;
+    width: 100%;
+    margin: 0 auto 40px;
+    padding: 0 20px;
+}
+
+.nav-buttons {
+    background: #fff;
+    padding: 18px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    box-shadow: var(--sombra);
+}
+
+.btn-primary {
+    flex: 1;
+    text-align: center;
+    padding: 13px 16px;
+    background: linear-gradient(135deg, var(--cor-roxo), #7a3eb5);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(91, 44, 131, 0.3);
+}
+
+.pagina-atual {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--cor-dourado);
+    min-width: 50px;
+    text-align: center;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RODAPÉ                                                     */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-footer {
+    background: #1a1a1a;
+    color: #888;
+    text-align: center;
+    padding: 22px 20px;
+    margin-top: auto;
+    font-size: 0.85rem;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RESPONSIVIDADE                                             */
+/* ────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+    .suma-header h1 {
+        font-size: 1.4rem;
+    }
+    
+    .bloco-texto {
+        padding: 28px 18px;
+    }
+    
+    .bloco-explicacao {
+        padding: 22px 18px;
+    }
+    
+    .navegacao-topo {
+        flex-wrap: wrap;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CABEÇALHO                                               -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="suma-header">
+  <a href="../../index.html" class="voltar-index">← Índice</a>
+  <h1>Suma Teológica</h1>
+  <p style="opacity:0.8; font-style:italic; margin-top:4px;">São Tomás de Aquino</p>
+  <span class="info-pagina">Página 262 de 3000</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO SUPERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<nav class="navegacao-topo">
+  <a href="suma-pagina261.html" class="btn-nav">← Anterior</a>
+  <span class="info-centena">Pág. 262/3000</span>
+  <a href="suma-pagina263.html" class="btn-nav">Próxima →</a>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CONTEÚDO PRINCIPAL                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<main class="pagina-conteudo">
+  
+  <!-- Texto Original -->
+  <div class="bloco-texto">
+    <div class="bloco-titulo">
+      <span>📜</span>
+      Questão 49, Artigo 3 — Se há um mal sumo, causa de todo mal.
+    </div>
+    <div class="pagina-corpo">
+    <p>(II Sent., dist. I, q. 1, a. 1, ad 1; dist. XXXIV, a. 1, ad 4; II Cont. Gent., cap. XLI; III, cap. XV; De Pot., q. 3, a. 6; Compend. Theol., cap. CXVII; Opusc. XV, De Angelis, cap. XVI; De Div. Nom., cap. IV, lect. XXII). O terceiro discute-se assim. – Parece que há um mal sumo, causa de todo mal. 1. – Pois, efeitos contrários têm causas contrárias. Ora, há contrariedade nas coisas, segundo a Escritura (Ecle 33, 15): Contra o mal está o bem, e contra a morte a vida; assim também contra o homem justo o pecador.Logo, há dois princípios contrários, um do bem, outro do mal. 2. Demais. – Se um dos contrários está em a natureza das coisas, também o outro, como diz Aristóteles. Ora, o sumo bem está em a natureza das coisas, pois ele é a causa de todo bem, como já antes se demonstrou. Logo, também o mal sumo, que lhe é oposto, é causa de todo o mal. 3. Demais. – Como nas coisas há o bom e o melhor, assim também o mau e o pior. Ora, bem e o melhor se dizem pela relação com o ótimo. Logo, o mau e o pior pela relação com algum sumo mau. 4. Demais. – Tudo o que é por participação se reduz ao que é por essência. Ora, as coisas más para nós não são más por essência, mas por participação. Logo, deve haver algum mal sumo, causa de todo mal. 5. Demais. – Tudo o que é acidental se reduz ao que é essencial. Ora, o bem é causa do mal acidental. Logo, é necessário admitir algum mal sumo, causa essencial dos males. Nem se pode dizer que o mal não tenha causa por si, senão só acidente; porque daí resultaria que o mal não existe na maioria, mas só na minoria dos casos. 6. Demais. – O mal do efeito se reduz ao da causa, porque o efeito deficiente vem de causa deficiente, como já antes se disse. Ora, não se pode ir até o infinito. Logo, é necessário admitir um primeiro mal, causa de todo mal.</p>
+    <p>Mas, em contrário, o sumo bem é causa de todo ser, como já antes se demonstrou. Logo, não pode haver um princípio que lhe seja oposto e causa dos males. SOLUÇÃO. – Do já dito resulta que não há um primeiro principio do mal, como há um do bem. Primeiro, porque o primeiro princípio do bem é por essência bom, como antes já foi demonstrado. Ora, nada pode ser mau por essência, pois já se demonstrou que todo ser, como tal, é bom, e que o mal só pode existir no bem como no seu sujeito. Segundo, porque o primeiro principio do bem é o sumo e perfeito bem, que preencerra em si toda bondade, como antes ficou demonstrado. Porém, não pode haver um mal sumo, pois, segundo já se demonstrouembora o mal sempre diminua o bem, todavia não pode nunca consumi-lo totalmente, e, assim, sempre remanescendo o bem, nada pode haver íntegra e perfeitamente mau. Pelo que o Filósofo diz: o mal integral se destruirá a si mesmo, pois, destruído todo o bem, o que é exigido para a integridade do mal, elimina-se também o próprio mal, cujo sujeito é o bem. Terceiro, porque a essência do mal repugna à noção de princípio. Quer por ser o mal causado pelo bem, como antes já se demonstrou. Quer por não poder assim ser causa primeira; pois, a causa acidental é posterior à essencial, como está claro em Aristóteles. E os que admitiram dois princípios primeiros, um bom e outro mau, esses caíram em tal erro pelo mesmo fundamento por que professaram semelhantes opiniões estranhas aos antigos; a saber, por não considerarem a causa universal de todo ser, mas somente as causas particulares de efeitos particulares. E por isso, se verificavam ser nociva a outra uma coisa, em virtude da sua natureza, consideravam a natureza dessa coisa má, como se, por ex., disséssemos ser a natureza do fogo má porque queimou a casa de um pobre. Ora, o juízo sobre a bondade de uma coisa não se deve formar pela referência a algo de particular, mas por si mesmo e pela referência a todo o universo, no qual cada coisa tem o seu lugar mui ordenadamente, como se vê pelo já dito. E semelhantemente, os que pensaram que dois efeitos particulares contrários têm duas causas particulares contrárias, não souberam reduzir estas à causa universal comum. E por isso julgaram que até quanto aos primeiros princípios há contrariedade nas causas. Mas, como todos os contrários convêm em algo de comum, necessário é descobrir-lhes uma causa comum superior às causas contrárias próprias; assim, superior às qualidades contrárias dos elementos encontra-se a virtude do corpo celeste. E semelhantemente, superior a tudo o que de qualquer modo existe, encontra-se um primeiro principio de existir, como antes já se demonstrou.</p>
+    <p>DONDE A</p>
+    <p>RESPOSTA À PRIMEIRA OBJEÇÃO. – Os contrários convêm num mesmo gênero e também na razão de existirem. Por onde, embora tenham causasparticulares contrárias, todavia é necessário chegar-se a uma causa primeira comum.</p>
+    <p>RESPOSTA À SEGUNDA. – Da natureza da privação e do modo de ser (hábito) é que se refiram à mesma coisa. Ora, o sujeito da privação é o ser em potência, como já ficou dito. Por onde, sendo o mal a privação do bem, como resulta do já dito (ibid), o mal se opõe ao bem com o qual vai junta a potência; não porém ao sumo bem, que é ato puro.</p>
+    <p>RESPOSTA À TERCEIRA. – Cada coisa se considera segundo a sua noção própria. Ora, assim como a forma é uma perfeição, assim a privação é uma remoção. Por onde toda forma, toda perfeição e todo bem se consideram pela aproximação ao termo perfeito; porém a privação e o mal, pelo afastamento do termo. Por isso não se considera o mau e o pior pela aproximação ao mal sumo, como se considera o bom e o ótimo pela aproximação ao sumo bem.</p>
+    <p>RESPOSTA À QUARTA. – Não se considera mal nenhum ser, por participação, mas por privação da participação. Por onde, não é necessário fazer-se a redução a algo que seja por essência mau. RESPOSTA À QUINTA. – O mal não pode ter causa senão por acidente, como antes se demonstrou. Donde é impossível fazer-se a redução a algo que seja por si causa do mal. E o dizer-se que o mal existe na maioria dos casos é absolutamente falso. Pois, os seres geráveis e corruptíveis, em que unicamente consiste o mal da natureza, são pequena parte de todo o universo. E demais, em cada espécie, a deficiência da natureza se dá na minoria dos casos. Só nos homens o mal aparece na maioria, porque não o bem, quanto aos sentidos do corpo, é o bem do homem como homem, mas sim o bem racional; ora, são mais numerosos os sequazes dos sentidos que os da razão. RESPOSTA À SEXTA. – Nas causas do mal não se pode proceder até ao infinito; mas é mister reduzir todos os males a alguma causa boa, da qual resulta o mal por acidente. Tratado dos anjos Em seguida deve-se tratar da distinção entre a criatura corpórea e a espiritual. E, primeiro, da criatura puramente espiritual chamada anjo na Sagrada Escritura. Segundo, da criatura puramente corpórea. Terceiro, da criatura composta de corpo e espírito, que é o homem. Quanto aos anjos, pois, deve-se tratar primeiro, do que lhes pertence à substância. Segundo, do que lhes pertence ao intelecto. Terceiro, do que lhes pertence à vontade. Quarto, do que lhes pertence à criação. Quanto à substância, esta deve ser considerada em absoluto e por comparação com os corpos. Sobre a substância deles em absoluto cinco artigos se discutem:</p>
+
+    </div>
+  </div>
+  
+  <!-- Bloco de Explicação (a ser preenchido) -->
+  <div class="bloco-explicacao">
+    <div class="explicacao-label">💡 Explicação e Contexto</div>
+    <div class="explicacao-corpo" id="explicacao">
+    <p><em>Explicação será adicionada em breve.</em></p>
+
+    </div>
+  </div>
+  
+</main>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO INFERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="navegacao-inferior">
+  <div class="nav-buttons">
+    <a href="suma-pagina261.html" class="btn-primary">← Anterior</a>
+    <span class="pagina-atual">262</span>
+    <a href="suma-pagina263.html" class="btn-primary">Próxima →</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  RODAPÉ                                                  -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<footer class="suma-footer">
+  <p>Suma Teológica · São Tomás de Aquino | Biblioteca Lux Fidei</p>
+</footer>
+
+</body>
+</html>

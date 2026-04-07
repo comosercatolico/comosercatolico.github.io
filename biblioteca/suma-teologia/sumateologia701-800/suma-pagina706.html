@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Questão 19, Artigo 8 — ― Se o grau de bondade da vontade depende do grau de bondade | Suma Teológica</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+    --cor-fundo: #f5f0e8;
+    --cor-pagina: #fff;
+    --cor-texto: #2c1f17;
+    --cor-dourado: #d4af37;
+    --cor-roxo: #5b2c83;
+    --sombra: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cor-fundo);
+    color: var(--cor-texto);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CABEÇALHO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-header {
+    background: linear-gradient(135deg, #1a1a1a, #2c241b);
+    color: #f5f0e8;
+    padding: 32px 20px 24px;
+    text-align: center;
+    position: relative;
+}
+
+.voltar-index {
+    position: absolute;
+    top: 16px;
+    left: 20px;
+    color: var(--cor-dourado);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: opacity 0.2s;
+}
+
+.voltar-index:hover {
+    opacity: 0.8;
+}
+
+.suma-header h1 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.info-pagina {
+    display: inline-block;
+    background: rgba(212, 175, 55, 0.15);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    color: var(--cor-dourado);
+    margin-top: 8px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-topo {
+    background: #fff;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    gap: 10px;
+}
+
+.btn-nav {
+    display: inline-flex;
+    align-items: center;
+    padding: 9px 18px;
+    background: var(--cor-roxo);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.btn-nav:hover {
+    background: #4a246a;
+    transform: translateY(-1px);
+}
+
+.desabilitado {
+    background: #ddd !important;
+    color: #999 !important;
+    pointer-events: none;
+}
+
+.info-centena {
+    font-size: 0.85rem;
+    color: #888;
+    font-weight: 500;
+    padding: 0 10px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CONTEÚDO PRINCIPAL                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.pagina-conteudo {
+    flex: 1;
+    max-width: 860px;
+    width: 100%;
+    margin: 36px auto;
+    padding: 0 20px;
+}
+
+.bloco-texto {
+    background: var(--cor-pagina);
+    padding: 48px 44px;
+    border-radius: 12px;
+    box-shadow: var(--sombra);
+    position: relative;
+    margin-bottom: 24px;
+}
+
+.bloco-texto::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 20px;
+    bottom: 20px;
+    width: 4px;
+    background: linear-gradient(to bottom, var(--cor-dourado), var(--cor-roxo));
+    border-radius: 0 4px 4px 0;
+}
+
+.bloco-titulo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.3rem;
+    color: var(--cor-roxo);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e8dfd0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pagina-corpo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.1rem;
+    line-height: 1.95;
+    color: #3d3226;
+    text-align: justify;
+}
+
+.pagina-corpo p {
+    margin-bottom: 1.3em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  BLOCO DE EXPLICAÇÃO                                        */
+/* ────────────────────────────────────────────────────────── */
+
+.bloco-explicacao {
+    background: linear-gradient(135deg, #fffdf5, #faf5eb);
+    border-left: 5px solid var(--cor-dourado);
+    padding: 32px 40px;
+    border-radius: 0 12px 12px 0;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    margin-bottom: 24px;
+}
+
+.explicacao-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--cor-dourado);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 14px;
+}
+
+.explicacao-corpo {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #4a3c2c;
+}
+
+.explicacao-corpo p {
+    margin-bottom: 1em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO INFERIOR                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-inferior {
+    max-width: 860px;
+    width: 100%;
+    margin: 0 auto 40px;
+    padding: 0 20px;
+}
+
+.nav-buttons {
+    background: #fff;
+    padding: 18px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    box-shadow: var(--sombra);
+}
+
+.btn-primary {
+    flex: 1;
+    text-align: center;
+    padding: 13px 16px;
+    background: linear-gradient(135deg, var(--cor-roxo), #7a3eb5);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(91, 44, 131, 0.3);
+}
+
+.pagina-atual {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--cor-dourado);
+    min-width: 50px;
+    text-align: center;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RODAPÉ                                                     */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-footer {
+    background: #1a1a1a;
+    color: #888;
+    text-align: center;
+    padding: 22px 20px;
+    margin-top: auto;
+    font-size: 0.85rem;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RESPONSIVIDADE                                             */
+/* ────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+    .suma-header h1 {
+        font-size: 1.4rem;
+    }
+    
+    .bloco-texto {
+        padding: 28px 18px;
+    }
+    
+    .bloco-explicacao {
+        padding: 22px 18px;
+    }
+    
+    .navegacao-topo {
+        flex-wrap: wrap;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CABEÇALHO                                               -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="suma-header">
+  <a href="../../index.html" class="voltar-index">← Índice</a>
+  <h1>Suma Teológica</h1>
+  <p style="opacity:0.8; font-style:italic; margin-top:4px;">São Tomás de Aquino</p>
+  <span class="info-pagina">Página 706 de 3000</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO SUPERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<nav class="navegacao-topo">
+  <a href="suma-pagina705.html" class="btn-nav">← Anterior</a>
+  <span class="info-centena">Pág. 706/3000</span>
+  <a href="suma-pagina707.html" class="btn-nav">Próxima →</a>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CONTEÚDO PRINCIPAL                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<main class="pagina-conteudo">
+  
+  <!-- Texto Original -->
+  <div class="bloco-texto">
+    <div class="bloco-titulo">
+      <span>📜</span>
+      Questão 19, Artigo 8 — ― Se o grau de bondade da vontade depende do grau de bondade
+    </div>
+    <div class="pagina-corpo">
+    <p>da intenção. O oitavo discute-se assim. ― Parece que o grau de bondade da vontade depende do grau de bondade da intenção. 1. ― Pois, a propósito do passo de Mateus (12, 35) ― O homem bom do bom tesouro tira boas coisas ― diz a Glosa: Cada um faz tanto bem quanto tenciona fazer. Ora, a intenção dá a bondade não só ao ato externo como também à vontade, segundo já se disse. Logo, o grau da vontade boa é relativo ao da intenção. 2. Demais. ― Se a causa aumenta, o efeito também aumenta. Ora, a bondade da intenção é a causa de a vontade ser boa. Logo, quanto mais tivermos a intenção do bem tanto mais será a vontade boa. 3. Demais. ― Em relação ao mal, a intenção é a medida do pecado; assim, quem atirar uma pedra com a intenção do homicídio, do homicídio será réu. Logo, pela mesma razão, relativamente ao bem, a bondade será boa na medida em que tencionamos fazer o bem.</p>
+    <p>Mas, em contrário. ― A intenção pode ser boa e a vontade, má. Logo, pela mesma razão, aquela pode ser melhor que esta. SOLUÇÃO. ― De dois modos podemos considerar o grau dos atos e do fim intencional. Relativamente ao objeto, segundo queremos ou fazemos um bem maior; ou à intensidade do ato, segundo o agente quer ou age mais intensamente. Se pois tratamos do grau do querer ou da intenção, quanto ao objeto, é claro que o grau do ato não acompanha o da intenção; e isso pode dar-se de dois modos, relativamente ao ato externo. Primeiro, por não ser o objeto, que se ordena ao fim intencionado, proporcionando a este; assim, não poderia realizar a sua intenção quem, com dez libras, quisesse comprar o que vale cem. Segundo, por causa dos impedimentos, que podem se opor à realização do ato externo, e que nós não pudermos remover; assim, se quisermos ir a Roma e por impedidos, não o pudermos. Relativamente aos atos interiores da vontade porém, isto não pode dar-se senão de um modo, porque, ao contrário dos atos externos, estes dependem de nós. Mas a vontade pode querer um objeto não proporcionado, ao fim que intenciona e então absolutamente considerada, ela não é boa no mesmo grau que a intenção. Como porém esta, em si pertence de certo modo ao ato da vontade, do qual é a razão de ser, o grau da sua bondade redunda para este, pois que a vontade quer, como fim, um bem grande, embora o meio pelo qual visa consegui-lo, dele não seja digno. Se porém considerarmos o grau da intenção e do ato, quanto à intensidade de ambos, a da primeira redunda para o ato interior e exterior da vontade. Pois, a intenção se comporta como formalmente, em relação a ambos, segundo do sobredito resulta claro; embora materialmente falando, a intenção possa ter uma intensidade que não tem, no mesmo grau, o ato interior ou exterior; p. ex., quando não queremos tomar o remédio com a mesma intensidade com que queremos a saúde. Contudo, esse mesmo querer intensamente a saúde redunda formalmente na intensa vontade de tomar o remédio. È preciso porém considerar que a intensidade do ato interior ou exterior pode referir-se à intenção como objeto desta; p. ex., quando temos a intenção de querer ou fazer alguma coisa, intensamente. Mas, daí não se segue que queiramos ou operamos intensamente, porque o grau do bem visado não é correlativo à bondade do ato interior ou exterior, como já se disse. Por onde, não merecemos tanto quanto temos a intenção de merecer, porque o grau do mérito consiste na intensidade do ato, como a seguir se dirá.</p>
+    <p>DONDE A</p>
+    <p>RESPOSTA À PRIMEIRA OBJEÇÃO. ― A Glosa aduzida se refere ao juízo de Deus, que leva em conta principalmente o fim intencional. E por isso, outra Glosa diz, no mesmo passo, que o tesouro do coração é a intenção, pela qual Deus julga as obras. Pois, a bondade da intenção, como já dissemos, redunda de certo modo na bondade da vontade, que faz o mesmo ato exterior meritório, perante Deus.</p>
+    <p>RESPOSTA À SEGUNDA. ― A bondade da intenção não é a causa total de ser a vontade boa. Por onde, a objeção não colhe.</p>
+    <p>RESPOSTA À TERCEIRA. ― Para a malícia da vontade basta a da intenção; por isso, quanto esta é má, tanto o é aquela. Mas como dissemos, o mesmo não se dá com a bondade.</p>
+
+    </div>
+  </div>
+  
+  <!-- Bloco de Explicação (a ser preenchido) -->
+  <div class="bloco-explicacao">
+    <div class="explicacao-label">💡 Explicação e Contexto</div>
+    <div class="explicacao-corpo" id="explicacao">
+    <p><em>Explicação será adicionada em breve.</em></p>
+
+    </div>
+  </div>
+  
+</main>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO INFERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="navegacao-inferior">
+  <div class="nav-buttons">
+    <a href="suma-pagina705.html" class="btn-primary">← Anterior</a>
+    <span class="pagina-atual">706</span>
+    <a href="suma-pagina707.html" class="btn-primary">Próxima →</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  RODAPÉ                                                  -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<footer class="suma-footer">
+  <p>Suma Teológica · São Tomás de Aquino | Biblioteca Lux Fidei</p>
+</footer>
+
+</body>
+</html>

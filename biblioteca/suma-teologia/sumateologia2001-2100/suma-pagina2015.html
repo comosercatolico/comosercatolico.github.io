@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Questão 171, Artigo 6 — Se o que é conhecido ou anunciado profeticamente pode ser | Suma Teológica</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+    --cor-fundo: #f5f0e8;
+    --cor-pagina: #fff;
+    --cor-texto: #2c1f17;
+    --cor-dourado: #d4af37;
+    --cor-roxo: #5b2c83;
+    --sombra: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cor-fundo);
+    color: var(--cor-texto);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CABEÇALHO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-header {
+    background: linear-gradient(135deg, #1a1a1a, #2c241b);
+    color: #f5f0e8;
+    padding: 32px 20px 24px;
+    text-align: center;
+    position: relative;
+}
+
+.voltar-index {
+    position: absolute;
+    top: 16px;
+    left: 20px;
+    color: var(--cor-dourado);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: opacity 0.2s;
+}
+
+.voltar-index:hover {
+    opacity: 0.8;
+}
+
+.suma-header h1 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.info-pagina {
+    display: inline-block;
+    background: rgba(212, 175, 55, 0.15);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    color: var(--cor-dourado);
+    margin-top: 8px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-topo {
+    background: #fff;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    gap: 10px;
+}
+
+.btn-nav {
+    display: inline-flex;
+    align-items: center;
+    padding: 9px 18px;
+    background: var(--cor-roxo);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.btn-nav:hover {
+    background: #4a246a;
+    transform: translateY(-1px);
+}
+
+.desabilitado {
+    background: #ddd !important;
+    color: #999 !important;
+    pointer-events: none;
+}
+
+.info-centena {
+    font-size: 0.85rem;
+    color: #888;
+    font-weight: 500;
+    padding: 0 10px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CONTEÚDO PRINCIPAL                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.pagina-conteudo {
+    flex: 1;
+    max-width: 860px;
+    width: 100%;
+    margin: 36px auto;
+    padding: 0 20px;
+}
+
+.bloco-texto {
+    background: var(--cor-pagina);
+    padding: 48px 44px;
+    border-radius: 12px;
+    box-shadow: var(--sombra);
+    position: relative;
+    margin-bottom: 24px;
+}
+
+.bloco-texto::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 20px;
+    bottom: 20px;
+    width: 4px;
+    background: linear-gradient(to bottom, var(--cor-dourado), var(--cor-roxo));
+    border-radius: 0 4px 4px 0;
+}
+
+.bloco-titulo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.3rem;
+    color: var(--cor-roxo);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e8dfd0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pagina-corpo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.1rem;
+    line-height: 1.95;
+    color: #3d3226;
+    text-align: justify;
+}
+
+.pagina-corpo p {
+    margin-bottom: 1.3em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  BLOCO DE EXPLICAÇÃO                                        */
+/* ────────────────────────────────────────────────────────── */
+
+.bloco-explicacao {
+    background: linear-gradient(135deg, #fffdf5, #faf5eb);
+    border-left: 5px solid var(--cor-dourado);
+    padding: 32px 40px;
+    border-radius: 0 12px 12px 0;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    margin-bottom: 24px;
+}
+
+.explicacao-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--cor-dourado);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 14px;
+}
+
+.explicacao-corpo {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #4a3c2c;
+}
+
+.explicacao-corpo p {
+    margin-bottom: 1em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO INFERIOR                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-inferior {
+    max-width: 860px;
+    width: 100%;
+    margin: 0 auto 40px;
+    padding: 0 20px;
+}
+
+.nav-buttons {
+    background: #fff;
+    padding: 18px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    box-shadow: var(--sombra);
+}
+
+.btn-primary {
+    flex: 1;
+    text-align: center;
+    padding: 13px 16px;
+    background: linear-gradient(135deg, var(--cor-roxo), #7a3eb5);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(91, 44, 131, 0.3);
+}
+
+.pagina-atual {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--cor-dourado);
+    min-width: 50px;
+    text-align: center;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RODAPÉ                                                     */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-footer {
+    background: #1a1a1a;
+    color: #888;
+    text-align: center;
+    padding: 22px 20px;
+    margin-top: auto;
+    font-size: 0.85rem;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RESPONSIVIDADE                                             */
+/* ────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+    .suma-header h1 {
+        font-size: 1.4rem;
+    }
+    
+    .bloco-texto {
+        padding: 28px 18px;
+    }
+    
+    .bloco-explicacao {
+        padding: 22px 18px;
+    }
+    
+    .navegacao-topo {
+        flex-wrap: wrap;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CABEÇALHO                                               -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="suma-header">
+  <a href="../../index.html" class="voltar-index">← Índice</a>
+  <h1>Suma Teológica</h1>
+  <p style="opacity:0.8; font-style:italic; margin-top:4px;">São Tomás de Aquino</p>
+  <span class="info-pagina">Página 2015 de 3000</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO SUPERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<nav class="navegacao-topo">
+  <a href="suma-pagina2014.html" class="btn-nav">← Anterior</a>
+  <span class="info-centena">Pág. 2015/3000</span>
+  <a href="suma-pagina2016.html" class="btn-nav">Próxima →</a>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CONTEÚDO PRINCIPAL                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<main class="pagina-conteudo">
+  
+  <!-- Texto Original -->
+  <div class="bloco-texto">
+    <div class="bloco-titulo">
+      <span>📜</span>
+      Questão 171, Artigo 6 — Se o que é conhecido ou anunciado profeticamente pode ser
+    </div>
+    <div class="pagina-corpo">
+    <p>falso. O sexto discute–se assim – Parece que o conhecido ou anunciado profeticamente pode ser falso. 1. – Pois, a profecia tem por objeto os futuros contingentes, como se disse. Ora, os futuros contingentes podem não se realizar, do contrário se cumpririam necessariamente. Logo, a profecia é susceptível de falsidade. 2. Demais. – Isaías prenunciou profeticamente a Ezequias, quando disse: Ordena a tua casa, porque tu morrerás e não viverás. E contudo depois, foram–lhe acrescentados à vida ainda quinze anos, como se lê na Escritura. Semelhantemente, o Senhor disse a Jeremias: De repente falarei contra uma gente e contra um reino para desarraigá–la, destruí–la e arruiná–lo. Se aquela gente se arrepender do seu mal, de que eu a tenho repreendido, também eu me arrependerei do mal que tenho pensado fazer contra ela. E isto o manifesta o exemplo dos ninivitas, como se lê na Escritura: O Senhor compadeceuse deles para não lhes fazer o mal, que tinha resolvido fazer–lhes e com efeito lho não fez. Logo, uma profecia pode ser falsa. 3. Demais. – De roda condicional, cujo antecedente é necessário absolutamente, o consequente é também absolutamente necessário; porque numa condicional, o consequente está para o antecedente, como num silogismo, a conclusão, para as premissas. Ora, num siliogismo, não podemos deduzir, de premissas necessárias, senão o necessário, como o prova Aristóteles. Ora, se uma profecia não pode ser falsa, há de por força ser verdadeira esta condicional: O que foi profetizado há de realizar–se. Ora, nesta condicional, o antecedente é absolutamente necessário, porque ele se refere ao passado. Logo, também o consequente será absolutamente necessário. O que é inadmissível, porque então a profecia não teria como objeto os contingentes. Logo, é falso que uma profecia não seja susceptível de falsidade.</p>
+    <p>Mas, em contrário, diz Cassiodoro ser a profecia uma inspiração ou revelação divina, que anuncia, na imóvel verdade, os acontecimentos reais. Ora, a verdade da profecia não seria imóvel se pudesse ser inquinada de falsidade. Logo, não pode ser falsa. SOLUÇÃO. – Como do sobredito resulta, a profecia é um conhecimento impresso no intelecto do profeta, como um ensino, pela revelação divina. Ora, a verdade do conhecimento é a mesma, tanto no discente como no docente; pois, o conhecimento do discente é uma semelhança do conhecimento do docente; assim como também, nas formas naturais, a forma do gerado é uma certa semelhança da forma do gerador. E deste modo também Jerônimo diz, que a profecia é um certo sinal da presciência divina. Logo, a verdade há de ser a mesma, tanto do conhecimento como do enunciado profético, que é a do conhecimento divino, absolutamente insusceptível de falsidade, como estabelecemos na Primeira Parte. Logo, na profecia não pode haver falsidade.</p>
+    <p>DONDE A</p>
+    <p>RESPOSTA À PRIMEIRA OBJEÇÃO. Como dissemos na Primeira Parte, a certeza da presciência divina não exclui a contingência dos futuros contingentes particulares; porque recai sobre eles como estando presentes e já presos a uma determinação. Por isso, também a profecia, semelhança impressa da presciência divina ou sinal dela, não exclui, na sua imóvel verdade, os futuros contingentes.</p>
+    <p>RESPOSTA À SEGUNDA. – A presciência divina respeita os eventos futuros, de dois modos. Primeiro, em si mesmos, isto é, enquanto os conhece como se foram Presentes. Segundo, nas suas causas, isto é, enquanto os vê como uns efeitos dependentes das suas causas. E embora os futuros contingentes sejam em si mesmos, sujeitos a uma determinação, contudo, considerados nas suas causas, não são determinados de modo tal, que não se possam realizar de outra maneira. Não obstante, porém esses dois conhecimentos estarem sempre conjugados, no intelecto divino, não o estão sempre, contudo, na revelação profética, porque a impressão do agente nem sempre é adequada à capacidade do paciente. Por onde, às vezes a revelação profética é a impressão de uma certa semelhança da presciência divina, quando considera os futuros contingentes em si mesmos, que então se realizam como foram profetizados; assim aquilo de Isaías: Eis que uma virgem conceberá. Outras vezes, porém, a revelação profética é a impressão da semelhança da presciência divina, enquanto conhecedora da ligação entre as causas e os efeitos; e então os acontecimentos se realizam diversamente do que foram profetizados. E contudo não é falsa a profecia, pois, o sentido dela é que a disposição das causas inferiores ou naturais, ou a dos atos humanos implica a realização de um tal acontecimento. E tal é o sentido das palavras de Isaias: Tu morrerás e não viverás, isto é, a disposição do teu corpo se ordena para a morte. E o das palavras de Jonas: Daqui a quarenta dias será Ninive subvertida, isto é, ela merece ser subvertida. E também se diz, metaforicamente, que Deus se arrepende, por proceder como quem se arrepende, isto é, por mudar a sentença, embora não o conselho, como diz Gregório.</p>
+    <p>RESPOSTA À TERCEIRA. – Sendo a mesma a verdade da profecia e da presciência divina, corno dissemos, neste sentido é verdadeira a condicional – O que foi profetizado há de realizar–se – como o é estoutra – O que foi preconhecido há de realizar–se. Pois, em ambas é impossível deixar de ser o antecedente o que é. Portanto, também o consequente é necessário, não como futuro que é, para nós, mas, como considerado na qualidade de presente pela presciência divina, a que está sujeito, conforme explicamos na Primeira Parte. Em seguida devemos tratar da causa da profecia. E, nesta questão, discutem–se seis artigos:</p>
+
+    </div>
+  </div>
+  
+  <!-- Bloco de Explicação (a ser preenchido) -->
+  <div class="bloco-explicacao">
+    <div class="explicacao-label">💡 Explicação e Contexto</div>
+    <div class="explicacao-corpo" id="explicacao">
+    <p><em>Explicação será adicionada em breve.</em></p>
+
+    </div>
+  </div>
+  
+</main>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO INFERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="navegacao-inferior">
+  <div class="nav-buttons">
+    <a href="suma-pagina2014.html" class="btn-primary">← Anterior</a>
+    <span class="pagina-atual">2015</span>
+    <a href="suma-pagina2016.html" class="btn-primary">Próxima →</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  RODAPÉ                                                  -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<footer class="suma-footer">
+  <p>Suma Teológica · São Tomás de Aquino | Biblioteca Lux Fidei</p>
+</footer>
+
+</body>
+</html>

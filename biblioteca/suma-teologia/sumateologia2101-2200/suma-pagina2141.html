@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Questão 3, Artigo 8 — — Se era mais conveniente ter-se encarnado o Filho de Deus, que o | Suma Teológica</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+    --cor-fundo: #f5f0e8;
+    --cor-pagina: #fff;
+    --cor-texto: #2c1f17;
+    --cor-dourado: #d4af37;
+    --cor-roxo: #5b2c83;
+    --sombra: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cor-fundo);
+    color: var(--cor-texto);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CABEÇALHO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-header {
+    background: linear-gradient(135deg, #1a1a1a, #2c241b);
+    color: #f5f0e8;
+    padding: 32px 20px 24px;
+    text-align: center;
+    position: relative;
+}
+
+.voltar-index {
+    position: absolute;
+    top: 16px;
+    left: 20px;
+    color: var(--cor-dourado);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: opacity 0.2s;
+}
+
+.voltar-index:hover {
+    opacity: 0.8;
+}
+
+.suma-header h1 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.info-pagina {
+    display: inline-block;
+    background: rgba(212, 175, 55, 0.15);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    color: var(--cor-dourado);
+    margin-top: 8px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-topo {
+    background: #fff;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    gap: 10px;
+}
+
+.btn-nav {
+    display: inline-flex;
+    align-items: center;
+    padding: 9px 18px;
+    background: var(--cor-roxo);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.btn-nav:hover {
+    background: #4a246a;
+    transform: translateY(-1px);
+}
+
+.desabilitado {
+    background: #ddd !important;
+    color: #999 !important;
+    pointer-events: none;
+}
+
+.info-centena {
+    font-size: 0.85rem;
+    color: #888;
+    font-weight: 500;
+    padding: 0 10px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CONTEÚDO PRINCIPAL                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.pagina-conteudo {
+    flex: 1;
+    max-width: 860px;
+    width: 100%;
+    margin: 36px auto;
+    padding: 0 20px;
+}
+
+.bloco-texto {
+    background: var(--cor-pagina);
+    padding: 48px 44px;
+    border-radius: 12px;
+    box-shadow: var(--sombra);
+    position: relative;
+    margin-bottom: 24px;
+}
+
+.bloco-texto::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 20px;
+    bottom: 20px;
+    width: 4px;
+    background: linear-gradient(to bottom, var(--cor-dourado), var(--cor-roxo));
+    border-radius: 0 4px 4px 0;
+}
+
+.bloco-titulo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.3rem;
+    color: var(--cor-roxo);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e8dfd0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pagina-corpo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.1rem;
+    line-height: 1.95;
+    color: #3d3226;
+    text-align: justify;
+}
+
+.pagina-corpo p {
+    margin-bottom: 1.3em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  BLOCO DE EXPLICAÇÃO                                        */
+/* ────────────────────────────────────────────────────────── */
+
+.bloco-explicacao {
+    background: linear-gradient(135deg, #fffdf5, #faf5eb);
+    border-left: 5px solid var(--cor-dourado);
+    padding: 32px 40px;
+    border-radius: 0 12px 12px 0;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    margin-bottom: 24px;
+}
+
+.explicacao-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--cor-dourado);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 14px;
+}
+
+.explicacao-corpo {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #4a3c2c;
+}
+
+.explicacao-corpo p {
+    margin-bottom: 1em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO INFERIOR                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-inferior {
+    max-width: 860px;
+    width: 100%;
+    margin: 0 auto 40px;
+    padding: 0 20px;
+}
+
+.nav-buttons {
+    background: #fff;
+    padding: 18px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    box-shadow: var(--sombra);
+}
+
+.btn-primary {
+    flex: 1;
+    text-align: center;
+    padding: 13px 16px;
+    background: linear-gradient(135deg, var(--cor-roxo), #7a3eb5);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(91, 44, 131, 0.3);
+}
+
+.pagina-atual {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--cor-dourado);
+    min-width: 50px;
+    text-align: center;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RODAPÉ                                                     */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-footer {
+    background: #1a1a1a;
+    color: #888;
+    text-align: center;
+    padding: 22px 20px;
+    margin-top: auto;
+    font-size: 0.85rem;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RESPONSIVIDADE                                             */
+/* ────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+    .suma-header h1 {
+        font-size: 1.4rem;
+    }
+    
+    .bloco-texto {
+        padding: 28px 18px;
+    }
+    
+    .bloco-explicacao {
+        padding: 22px 18px;
+    }
+    
+    .navegacao-topo {
+        flex-wrap: wrap;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CABEÇALHO                                               -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="suma-header">
+  <a href="../../index.html" class="voltar-index">← Índice</a>
+  <h1>Suma Teológica</h1>
+  <p style="opacity:0.8; font-style:italic; margin-top:4px;">São Tomás de Aquino</p>
+  <span class="info-pagina">Página 2141 de 3000</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO SUPERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<nav class="navegacao-topo">
+  <a href="suma-pagina2140.html" class="btn-nav">← Anterior</a>
+  <span class="info-centena">Pág. 2141/3000</span>
+  <a href="suma-pagina2142.html" class="btn-nav">Próxima →</a>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CONTEÚDO PRINCIPAL                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<main class="pagina-conteudo">
+  
+  <!-- Texto Original -->
+  <div class="bloco-texto">
+    <div class="bloco-titulo">
+      <span>📜</span>
+      Questão 3, Artigo 8 — — Se era mais conveniente ter-se encarnado o Filho de Deus, que o
+    </div>
+    <div class="pagina-corpo">
+    <p>Padre ou o Espírito Santo. O oitavo discute-se assim. — Parece que não foi mais conveniente ter-se encarnado o Filho de Deus, que o Padre ou o Espírito Santo.</p>
+    <p>1. — Pois, pelo mistério da Encarnação os homens foram levados ao verdadeiro conhecimento de Deus, segundo aquilo do Evangelho. Eu para isso nasci e ao que vim ao mundo foi para dar testemunho da verdade. Ora, pelo fato da pessoa do Filho de Deus ter-se encarnado, muitos ficaram impedidos do verdadeiro conhecimento de Deus, porque referiam à pessoa mesma do Filho o que se predica da natureza humana dele. Tal Ario, que ensinou a desigualdade das Pessoas, fundado no dito do Evangelho: O Pai é maior do que eu. Ora, esse erro não teria surgido, se a Pessoa do Pai se tivesse encarnado ; pois, então, ninguém julgaria o Pai menor que o Filho. Por onde, parece teria sido mais conveniente ter-se a Pessoa do Pai encarnado, que a pessoa do Filho. 2. Demais. — Parece que o efeito da Encarnação foi uma certa e nova criação da natureza humana, segundo aquilo do Apóstolo : Em Jesus Cristo nem a circuncisão nem a incincuncisão valem nada, mas o ser uma nova criatura. Ora, o poder de criar é apropriado ao Pai. Logo, mais conveniente seria ter-se encarnado o Pai que o Filho. 3. Demais. — A Encarnação se ordena à remissão dos pecados, segundo aquilo do Evangelho: E lhe chamarás por nome Jesus, porque ele salvará o seu povo dos pecados deles. Ora, a remissão dos pecados é atribuída ao Espírito Santo, segundo ainda o Evangelho: Recebei o Espírito Santo: aos que vós perdoardes os pecados ser-lhes-ão perdoados. Logo, era mais conveniente ter-se encarnado a pessoa do Espírito Santo que a do Filho.</p>
+    <p>Mas, em contrário, diz Damasceno: O mistério da Encarnação manifestou a sabedoria e o poder de Deus; a sabedoria, porque descobria a melhor solução de um preço dificílimo; o poder, porque tornou de novo o vencido vencedor. Ora, a virtude e a sabedoria se apropriam ao Filho, segundo aquilo do Apóstolo: Cristo, virtude de Deus e sabedoria de Deus. Logo, foi conveniente ter-se encarnado a pessoa do Filho.</p>
+    <p>SOLUÇÃO. — Foi convenientíssinio que se tivesse encarnado a pessoa do Filho. Primeiro, quanto à união. Pois, convenientemente se unem as causas semelhantes. —Ora, de um modo, a pessoa mesma do Filho, que é o Verbo de Deus, tem uma conveniência comum com toda criatura. Porque a palavra do artífice, isto é, o seu conceito, é uma semelhança exemplar das obras feitas pelo artífice. Por onde, o Verbo de Deus, que é o seu eterno conceito, é uma semelhança exemplar de todas as criaturas. E portanto, assim como pela participação dessa semelhança as criaturas foram instituídas nas suas espécies próprias, mas de um modo mutável, assim também, pela união do Verbo com a criatura, não de modo participativo, mas pessoal, foi ela convenientemente reparada, em ordem à perfeição eterna e imutável; pois, também o artífice, pela forma artística concebida, por meio da qual fez a sua obra, por essa mesma também a refaz se ela se estragar. De outro modo, tem uma conveniência especial com a natureza humana por ser o Verbo o conceito da eterna sabedoria, donde deriva toda a sabedoria humana. Por isso, o homem se aperfeiçoa na sabedoria, que é a sua perfeição própria, enquanto racional, porque participa do Verbo de Deus, assim como o discípulo se instrui recebendo as palavras do mestre. Donde o dizer a Escritura: A fonte da sabedoria é o Verbo de Deus nas alturas. Por onde, para consumar-se a perfeição do homem, foi conveniente que o Verbo mesmo de Deus se unisse pessoalmente à natureza humana. Segundo, a razão dessa conveniência pode ser deduzida do fim da união, que é o implemento da predestinação, isto é, dos preordenados à herança celeste, que não é devida senão aos filhos, segundo aquilo do Apóstolo: Se somos filhos, também herdeiros. Por onde, era conveniente que, por meio daquele que é naturalmente Filho, os homens participassem, por adoção, da semelhança dessa filiação, como o Apóstolo o diz no mesmo lugar: Os que ele conheceu. na sua presciência também os predestinou para serem conformes à imagem de seu Filho. Em terceiro lugar, a razão dessa conveniência pode ser deduzida do pecado dos nossos primeiros pais, a que a Encarnação veio dar remédio. Pois, o primeiro homem pecou desejando a ciência do bem e do mal. Por isso foi conveniente que, pelo Verbo da Verdadeira sabedoria, o homem voltasse para Deus, ele que pelo desordenado desejo da ciência se afastara de Deus.</p>
+    <p>DONDE A</p>
+    <p>RESPOSTA À PRIMEIRA OBJEÇÃO. — Não há nada de que a malícia humana não possa abusar, pois abusa da própria bondade de Deus, segundo aquilo do Apóstolo: Acaso desprezas tu as riquezas da sua bondade? Por onde, mesmo se a pessoa do Padre fosse a encarnada, o homem poderia daí tirar alguma ocasião de erro, como se o Filho não pudesse ser suficiente para reparar a natureza humana.</p>
+    <p>RESPOSTA À SEGUNDA. — A primeira criação das coisas foi feita pelo poder de Deus Padre, pelo Verbo. Donde, a nova criação deveria ser feita pelo poder de Deus Padre, para que esta nova criação respondesse à criação conforme aquilo do Apóstolo: Deus estava em Cristo reconciliando o mundo consigo.</p>
+    <p>RESPOSTA À TERCEIRA. — É próprio ao Espírito Santo ser o dom do Pai e do Filho. Ora, a remissão dos pecados se faz pelo Espírito Santo, como pelo dom de Deus. Por isso foi conveniente, para a justificação dos homens, que se encarnasse o Filho, do qual o Espírito Santo é o dom. Em seguida devemos tratar da união relativamente ao assumido. E nesta parte, devemos primeiro tratar do que foi assumido pelo Verbo de Deus. Segundo, das coisas coassumidas, que são as perfeições e os defeitos. Ora, o Verbo de Deus assumiu a natureza humana e as suas partes. Por isso, sobre esse primeiro assunto, ocorre uma tríplice consideração. A primeira, relativa à natureza humana em si mesma. A segunda é relativa às suas partes. A terceira, à ordem da assunção. Na primeira questão discutem-se seis artigos:</p>
+
+    </div>
+  </div>
+  
+  <!-- Bloco de Explicação (a ser preenchido) -->
+  <div class="bloco-explicacao">
+    <div class="explicacao-label">💡 Explicação e Contexto</div>
+    <div class="explicacao-corpo" id="explicacao">
+    <p><em>Explicação será adicionada em breve.</em></p>
+
+    </div>
+  </div>
+  
+</main>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO INFERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="navegacao-inferior">
+  <div class="nav-buttons">
+    <a href="suma-pagina2140.html" class="btn-primary">← Anterior</a>
+    <span class="pagina-atual">2141</span>
+    <a href="suma-pagina2142.html" class="btn-primary">Próxima →</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  RODAPÉ                                                  -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<footer class="suma-footer">
+  <p>Suma Teológica · São Tomás de Aquino | Biblioteca Lux Fidei</p>
+</footer>
+
+</body>
+</html>

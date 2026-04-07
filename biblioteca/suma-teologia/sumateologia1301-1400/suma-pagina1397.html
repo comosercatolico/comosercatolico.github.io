@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Questão 33, Artigo 2 — Se a correção fraterna é de preceito. | Suma Teológica</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+    --cor-fundo: #f5f0e8;
+    --cor-pagina: #fff;
+    --cor-texto: #2c1f17;
+    --cor-dourado: #d4af37;
+    --cor-roxo: #5b2c83;
+    --sombra: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cor-fundo);
+    color: var(--cor-texto);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CABEÇALHO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-header {
+    background: linear-gradient(135deg, #1a1a1a, #2c241b);
+    color: #f5f0e8;
+    padding: 32px 20px 24px;
+    text-align: center;
+    position: relative;
+}
+
+.voltar-index {
+    position: absolute;
+    top: 16px;
+    left: 20px;
+    color: var(--cor-dourado);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: opacity 0.2s;
+}
+
+.voltar-index:hover {
+    opacity: 0.8;
+}
+
+.suma-header h1 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.info-pagina {
+    display: inline-block;
+    background: rgba(212, 175, 55, 0.15);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    color: var(--cor-dourado);
+    margin-top: 8px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-topo {
+    background: #fff;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    gap: 10px;
+}
+
+.btn-nav {
+    display: inline-flex;
+    align-items: center;
+    padding: 9px 18px;
+    background: var(--cor-roxo);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.btn-nav:hover {
+    background: #4a246a;
+    transform: translateY(-1px);
+}
+
+.desabilitado {
+    background: #ddd !important;
+    color: #999 !important;
+    pointer-events: none;
+}
+
+.info-centena {
+    font-size: 0.85rem;
+    color: #888;
+    font-weight: 500;
+    padding: 0 10px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CONTEÚDO PRINCIPAL                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.pagina-conteudo {
+    flex: 1;
+    max-width: 860px;
+    width: 100%;
+    margin: 36px auto;
+    padding: 0 20px;
+}
+
+.bloco-texto {
+    background: var(--cor-pagina);
+    padding: 48px 44px;
+    border-radius: 12px;
+    box-shadow: var(--sombra);
+    position: relative;
+    margin-bottom: 24px;
+}
+
+.bloco-texto::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 20px;
+    bottom: 20px;
+    width: 4px;
+    background: linear-gradient(to bottom, var(--cor-dourado), var(--cor-roxo));
+    border-radius: 0 4px 4px 0;
+}
+
+.bloco-titulo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.3rem;
+    color: var(--cor-roxo);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e8dfd0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pagina-corpo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.1rem;
+    line-height: 1.95;
+    color: #3d3226;
+    text-align: justify;
+}
+
+.pagina-corpo p {
+    margin-bottom: 1.3em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  BLOCO DE EXPLICAÇÃO                                        */
+/* ────────────────────────────────────────────────────────── */
+
+.bloco-explicacao {
+    background: linear-gradient(135deg, #fffdf5, #faf5eb);
+    border-left: 5px solid var(--cor-dourado);
+    padding: 32px 40px;
+    border-radius: 0 12px 12px 0;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    margin-bottom: 24px;
+}
+
+.explicacao-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--cor-dourado);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 14px;
+}
+
+.explicacao-corpo {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #4a3c2c;
+}
+
+.explicacao-corpo p {
+    margin-bottom: 1em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO INFERIOR                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-inferior {
+    max-width: 860px;
+    width: 100%;
+    margin: 0 auto 40px;
+    padding: 0 20px;
+}
+
+.nav-buttons {
+    background: #fff;
+    padding: 18px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    box-shadow: var(--sombra);
+}
+
+.btn-primary {
+    flex: 1;
+    text-align: center;
+    padding: 13px 16px;
+    background: linear-gradient(135deg, var(--cor-roxo), #7a3eb5);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(91, 44, 131, 0.3);
+}
+
+.pagina-atual {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--cor-dourado);
+    min-width: 50px;
+    text-align: center;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RODAPÉ                                                     */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-footer {
+    background: #1a1a1a;
+    color: #888;
+    text-align: center;
+    padding: 22px 20px;
+    margin-top: auto;
+    font-size: 0.85rem;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RESPONSIVIDADE                                             */
+/* ────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+    .suma-header h1 {
+        font-size: 1.4rem;
+    }
+    
+    .bloco-texto {
+        padding: 28px 18px;
+    }
+    
+    .bloco-explicacao {
+        padding: 22px 18px;
+    }
+    
+    .navegacao-topo {
+        flex-wrap: wrap;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CABEÇALHO                                               -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="suma-header">
+  <a href="../../index.html" class="voltar-index">← Índice</a>
+  <h1>Suma Teológica</h1>
+  <p style="opacity:0.8; font-style:italic; margin-top:4px;">São Tomás de Aquino</p>
+  <span class="info-pagina">Página 1397 de 3000</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO SUPERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<nav class="navegacao-topo">
+  <a href="suma-pagina1396.html" class="btn-nav">← Anterior</a>
+  <span class="info-centena">Pág. 1397/3000</span>
+  <a href="suma-pagina1398.html" class="btn-nav">Próxima →</a>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CONTEÚDO PRINCIPAL                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<main class="pagina-conteudo">
+  
+  <!-- Texto Original -->
+  <div class="bloco-texto">
+    <div class="bloco-titulo">
+      <span>📜</span>
+      Questão 33, Artigo 2 — Se a correção fraterna é de preceito.
+    </div>
+    <div class="pagina-corpo">
+    <p>O segundo discute-se assim. – Parece que não é de preceito a correção fraterna. 1. – Pois, o impossível não pode ser objeto de preceito, conforme aquilo de Jerônimo: Maldito quem diz ter Deus mandado algo de impossível. E a Escritura diz: Considera as obras de Deus, porque ninguém pode corrigir a quem ele desprezou, Logo, não é de preceito a correção fraterna. 2. Demais. – Todos os preceitos da lei divina se reduzem aos do Decálogo. Ora, a correção fraterna não se inclui em nenhum dos preceitos do Decálogo. Logo, não é de preceito. 3. Demais. – A omissão de um preceito divino é pecado mortal, que os varões santos não cometem. Ora, na vida dos santos e dos varões espirituais encontra-se a omissão da correção fraterna. Assim, Agostinho diz: não só os inferiores, mas também os que vivem num grau superior de vida, abstêm-se de repreender os outros, por causa de certos vínculos da cobiça e não por um dever de caridade. Logo, não é de preceito a correção fraterna. 4. Demais. – O que é de preceito é, por natureza, um dever. Se pois a correção fraterna fosse objeto de preceito, teríamos para com nossos irmãos o dever de corrigi-los quando pecassem. Ora, quem tem para com outro um débito material, por exemplo, de dinheiro, não deve esperar que o credor venha cobrá-lo, mas deve procurá-lo, e lhe pagar o devido. Donde resultaria devessemos buscar os que precisassem de correção para corrigi-los. O que é inadmissível quer por causa da multidão dos pecadores, para a correção dos quais um só homem não bastaria; quer também porque então seria forçoso saíssem os religiosos dos seus claustros para corrigir os homens, o que é inconveniente. Logo, não é de preceito a correção fraterna.</p>
+    <p>Mas, em contrário, Agostinho diz: Se deixares de corrigir, tornar-se-á pior quem pecar. Ora, isto não se daria se não omitissimos o preceito, por essa negligência. Logo, a correção fraterna é de preceito. SOLUÇÃO. – A correção fraterna constitui objeto de preceito. Mas devemos considerar que, assim como os preceitos negativos da lei proibem os atos pecaminosos, assim os afirmativos induzem aos atos virtuosos. Ora, os atos pecaminosos são em si mesmos maus e de nenhum modo podem vir a ser bons, em nenhum tempo ou lugar, pois em si mesmos, estão conexos com um mau fim, como diz Aristóteles. Por isso os preceitos negativos obrigam sempre e para sempre. Os atos virtuosos, porém, não devem ser feitos de qualquer modo, mas observadas as circunstâncias devidas, exigidas para que sejam tais; isto é, o precisamos praticá-los onde, quando e como devemos. Ora, dependendo a disposição dos meios, da ideia do fim, nessas circunstâncias dos atos virtuosos devemos levar em conta principalmente a referida ideia, que é o bem da virtude: Havendo portanto, no ato virtuoso, ausência tal de uma dessas circunstâncias que elimine totalmente o bem da virtude, essa omissão contraria o preceito. Se houver, porém, falta de uma delas, que não a elimine totalmente a virtude, essa falta, embora prive a virtude da sua perfeição, contudo, não é contra o preceito. Por isso, diz o Filósofo que o afastarmo-nos pouco do meio, não é contra a virtude; mas, se nos afastarmos muito, o ato mesmo virtuoso se corrompe. - Ora, a correção fraterna se ordena à emenda do nosso irmão. Logo, é de preceito na medida em que é necessária para tal fim; não porém, que em qualquer lugar ou tempo o irmão delinquente deva ser corrigido.</p>
+    <p>DONDE A</p>
+    <p>RESPOSTA À PRIMEIRA OBJEÇÃO. – Sem o auxílio divino o homem não é capaz de praticar nenhuma boa obra; e contudo, deve fazer tudo o que está ao seu alcance. Donde o dizer Agostinho: Não sabendo quem pertence e quem não pertence ao número dos predestinados, devemos nos deixar penetrar do afeto da caridade de modo a querermos a salvação de todos. Logo, devemos praticar para com todo o dever da correção fraterna, confiados no auxílio divino.</p>
+    <p>RESPOSTA À SEGUNDA. – Como já dissemos todos os preceitos, que nos ordenam beneficiar ao próximo, reduzem-se ao mandamento de honrar os pais.</p>
+    <p>RESPOSTA À TERCEIRA. – A correção fraterna pode ser omitida de três modos. - De um modo, meritoriamente, quando a omitimos, por caridade. Pois, diz Agostinho. Se deixarmos a repreensão e a correção dos pecadores para um tempo mais oportuno, ou por temermos não venham a ficar, com a correção, piores, ou a impedir a iniciação dos fracos na prática da piedade e a Virtude, oprimindo-os e desviando-os da fé, - não há ai ocasião de cobiças mas conselho da caridade. - De outro modo, a omissão da correção fraterna implica pecado mortal; isto é, quando tememos, como no mesmo lugar se diz, o juízo do vulgo, a tortura ou a morte da carne; de modo que esses temores nos dominem a alma a ponto de os antepormos à correção fraterna. E isto se dá quando presumimos como provável que poderíamos livrar um delinquente do pecado, e contudo, deixamos de fazê-lo por temor ou cobiça, - De terceiro modo, essa omissão constitui pecado venial; quando o temor ou a cobiça nos fazem tardar em corrigir o delito do nosso irmão. Não, porém, a ponto de o omitirmos, mesmo sabendo que poderíamos livrá-lo do pecado, Pois um temor e uma cobiça que anteporiarnos, em nosso coração, à caridade fraterna. E deste modo os varões santos deixam de corrigir os delinquentes.</p>
+    <p>RESPOSTA À QUARTA. – O que devemos a uma pessoa determinada e certa, seja débito material ou espiritual, devemos pagá-lo, sem esperar que venha nos cobrar, mas indo procurá-la com a solicitude devida. Por onde, assim como quem deve dinheiro a um credor, está obrigado a procurá-lo, quando for tempo para lhe pagar o devido; assim, também quem está obrigado a cuidar espiritualmente de outrem deve procurá-lo para corrigir-lhe o pecado. Quando porém, devemos benefícios materiais ou espirituais, não a pessoa certa, mas em geral, a todos os próximos, não estamos obrigados a procurá-los para lhos pagar; mas basta os pagarmos aos que nos ocorrerem. Pois, isto, devemos considerar uma como sorte, no dizer de Agostinho. E, por isso, diz ainda ele, Deus nosso Senhor nos adverte não negligenciarmos os pecados uns dos outros; não procurando o que repreender, mas vendo o que corrigir; do contrário, nos tornaríamos esmerilhadores da vida alheia, contra o que diz a Escritura: Não andes buscando a impiedade na casa do justo, nem perturbes o seu repouso. Por onde é claro, que nem os religiosos devem sair do claustro para corrigir os delinquentes.</p>
+
+    </div>
+  </div>
+  
+  <!-- Bloco de Explicação (a ser preenchido) -->
+  <div class="bloco-explicacao">
+    <div class="explicacao-label">💡 Explicação e Contexto</div>
+    <div class="explicacao-corpo" id="explicacao">
+    <p><em>Explicação será adicionada em breve.</em></p>
+
+    </div>
+  </div>
+  
+</main>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO INFERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="navegacao-inferior">
+  <div class="nav-buttons">
+    <a href="suma-pagina1396.html" class="btn-primary">← Anterior</a>
+    <span class="pagina-atual">1397</span>
+    <a href="suma-pagina1398.html" class="btn-primary">Próxima →</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  RODAPÉ                                                  -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<footer class="suma-footer">
+  <p>Suma Teológica · São Tomás de Aquino | Biblioteca Lux Fidei</p>
+</footer>
+
+</body>
+</html>

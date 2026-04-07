@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Questão 95, Artigo 3 — ─ Se também Cristo terá dotes. | Suma Teológica</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+    --cor-fundo: #f5f0e8;
+    --cor-pagina: #fff;
+    --cor-texto: #2c1f17;
+    --cor-dourado: #d4af37;
+    --cor-roxo: #5b2c83;
+    --sombra: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cor-fundo);
+    color: var(--cor-texto);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CABEÇALHO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-header {
+    background: linear-gradient(135deg, #1a1a1a, #2c241b);
+    color: #f5f0e8;
+    padding: 32px 20px 24px;
+    text-align: center;
+    position: relative;
+}
+
+.voltar-index {
+    position: absolute;
+    top: 16px;
+    left: 20px;
+    color: var(--cor-dourado);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: opacity 0.2s;
+}
+
+.voltar-index:hover {
+    opacity: 0.8;
+}
+
+.suma-header h1 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.info-pagina {
+    display: inline-block;
+    background: rgba(212, 175, 55, 0.15);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    color: var(--cor-dourado);
+    margin-top: 8px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-topo {
+    background: #fff;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    gap: 10px;
+}
+
+.btn-nav {
+    display: inline-flex;
+    align-items: center;
+    padding: 9px 18px;
+    background: var(--cor-roxo);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.btn-nav:hover {
+    background: #4a246a;
+    transform: translateY(-1px);
+}
+
+.desabilitado {
+    background: #ddd !important;
+    color: #999 !important;
+    pointer-events: none;
+}
+
+.info-centena {
+    font-size: 0.85rem;
+    color: #888;
+    font-weight: 500;
+    padding: 0 10px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CONTEÚDO PRINCIPAL                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.pagina-conteudo {
+    flex: 1;
+    max-width: 860px;
+    width: 100%;
+    margin: 36px auto;
+    padding: 0 20px;
+}
+
+.bloco-texto {
+    background: var(--cor-pagina);
+    padding: 48px 44px;
+    border-radius: 12px;
+    box-shadow: var(--sombra);
+    position: relative;
+    margin-bottom: 24px;
+}
+
+.bloco-texto::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 20px;
+    bottom: 20px;
+    width: 4px;
+    background: linear-gradient(to bottom, var(--cor-dourado), var(--cor-roxo));
+    border-radius: 0 4px 4px 0;
+}
+
+.bloco-titulo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.3rem;
+    color: var(--cor-roxo);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e8dfd0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pagina-corpo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.1rem;
+    line-height: 1.95;
+    color: #3d3226;
+    text-align: justify;
+}
+
+.pagina-corpo p {
+    margin-bottom: 1.3em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  BLOCO DE EXPLICAÇÃO                                        */
+/* ────────────────────────────────────────────────────────── */
+
+.bloco-explicacao {
+    background: linear-gradient(135deg, #fffdf5, #faf5eb);
+    border-left: 5px solid var(--cor-dourado);
+    padding: 32px 40px;
+    border-radius: 0 12px 12px 0;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    margin-bottom: 24px;
+}
+
+.explicacao-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--cor-dourado);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 14px;
+}
+
+.explicacao-corpo {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #4a3c2c;
+}
+
+.explicacao-corpo p {
+    margin-bottom: 1em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO INFERIOR                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-inferior {
+    max-width: 860px;
+    width: 100%;
+    margin: 0 auto 40px;
+    padding: 0 20px;
+}
+
+.nav-buttons {
+    background: #fff;
+    padding: 18px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    box-shadow: var(--sombra);
+}
+
+.btn-primary {
+    flex: 1;
+    text-align: center;
+    padding: 13px 16px;
+    background: linear-gradient(135deg, var(--cor-roxo), #7a3eb5);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(91, 44, 131, 0.3);
+}
+
+.pagina-atual {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--cor-dourado);
+    min-width: 50px;
+    text-align: center;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RODAPÉ                                                     */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-footer {
+    background: #1a1a1a;
+    color: #888;
+    text-align: center;
+    padding: 22px 20px;
+    margin-top: auto;
+    font-size: 0.85rem;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RESPONSIVIDADE                                             */
+/* ────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+    .suma-header h1 {
+        font-size: 1.4rem;
+    }
+    
+    .bloco-texto {
+        padding: 28px 18px;
+    }
+    
+    .bloco-explicacao {
+        padding: 22px 18px;
+    }
+    
+    .navegacao-topo {
+        flex-wrap: wrap;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CABEÇALHO                                               -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="suma-header">
+  <a href="../../index.html" class="voltar-index">← Índice</a>
+  <h1>Suma Teológica</h1>
+  <p style="opacity:0.8; font-style:italic; margin-top:4px;">São Tomás de Aquino</p>
+  <span class="info-pagina">Página 3073 de 3000</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO SUPERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<nav class="navegacao-topo">
+  <a href="suma-pagina3072.html" class="btn-nav">← Anterior</a>
+  <span class="info-centena">Pág. 3073/3000</span>
+  <a href="suma-pagina3074.html" class="btn-nav">Próxima →</a>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CONTEÚDO PRINCIPAL                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<main class="pagina-conteudo">
+  
+  <!-- Texto Original -->
+  <div class="bloco-texto">
+    <div class="bloco-titulo">
+      <span>📜</span>
+      Questão 95, Artigo 3 — ─ Se também Cristo terá dotes.
+    </div>
+    <div class="pagina-corpo">
+    <p>O terceiro discute-se assim. ─ Parece que também Cristo terá dotes. 1. ─ Pois, os santos se conformarão com Cristo pela glória; donde o dizer o Apóstolo ─ O qual reformará o nosso corpo abatido para o fazer conforme ao seu corpo glorioso. Logo, também Cristo terá dotes. 2. Demais. ─ No matrimônio espiritual dão-se dotes à semelhança do matrimônio corporal. Ora, em Cristo há de certo modo matrimônio espiritual que lhe é próprio ─ a das duas naturezas na unidade de pessoa; por isso se diz que nele a natureza humana foi desposada pelo Verbo, conforme o diz o Glosa aquilo da Escritura ─ No sol pôs o seu tabernáculo, etc. ─ E o Apocalipse: Eis aqui o tabernáculo de Deus com os homens. Logo, também Cristo deve ter dotes. 3. Demais. ─ Como diz Agostinho, Cristo, segundo a regra de Ticónio, por causa da unidade do corpo místico entre o corpo e os membros, também se denomina esposa e não só esposo, conforme aquilo da Escritura: Como o esposo aformoseado com a sua coroa e como a esposa ornada dos seus colares. Logo, como os dotes são devidos à esposa, como se sabe, também devemos atribuir dotes a Cristo. 4. Demais. ─ Todos os membros da Igreja devem ter dotes, porque a Igreja é a esposa. Ora, Cristo é membro da Igreja, segundo aquilo do Apóstolo: Vós outros sois corpo de Cristo e membros uns dos outros. E a Glosa: i. é, de Cristo. Logo, também Cristo deve ter dotes. 5. Demais. ─ Cristo goza da visão, da fruição e da deleitação perfeitos. Ora, são três dotes. Logo, etc.</p>
+    <p>Mas, em contrário. ─ Entre esposo e esposa há necessariamente distinção de pessoas. Ora, em Cristo nada é pessoalmente distinto do Filho de Deus, que é esposo, conforme aquilo do Evangelho: O que tem a esposa é o esposo. Logo, como os dotes são constituídos para a esposa, ou em favor dela, parece que Cristo não deve ter dotes. 2. Demais. ─ Não pode a mesma pessoa dar e receber dotes. Ora, Cristo é quem confere os dotes espirituais. Logo, não deve ter dotes. SOLUÇÃO. ─ Nesta matéria duas são as opiniões. Uns dizem que há em Cristo tríplice união: a consentânea, pela qual está unido a Deus pela união de amor; a dignativa, pela qual a natureza humana está unida à divina; e a terceira, pela qual Cristo está unido à Igreja. E assim, ensinam que pelas duas primeiras uniões Cristo deve ter dotes, no sentido próprio destes: mas pela, terceira união, embora Cristo possua em grau eminente o que constitui o dote, este não lhe cabe contudo no seu sentido próprio, porque, nessa união, Cristo é o como esposa da Igreja, a esposa: ora, o dote é dado à esposa para que tenha a propriedade e o domínio dele, embora seja constituído para o uso do esposo. ─ Mas esta opinião não é aceitável. Pois, essa união pela qual Cristo mesmo como Deus está unido ao Pai pelo consentimento do amor, não se pode considerar como matrimônio, porque não há aí nenhuma sujeição como a que deve haver entre esposa e esposo. Nem também pela união da natureza humana com a divina, que é uma união pessoal; nem pela conformidade da vontade, pode haver dote no seu sentido próprio, por três razões. ─ Primeiro, porque o matrimônio, em que se constituem dotes, exige a conformidade de natureza entre esposo e esposa; e isto não se dá na união da natureza humana com a divina. Segundo, porque é necessária a distinção de pessoas; e a natureza humana não é pessoalmente distinta do Verbo. Terceiro, porque o dote é dado na ocasião em que a esposa é levada para a casa do esposo; e assim vem a pertencer à esposa que, solteira antes, está doravante unida ao marido; ora a natureza humana assumida pelo Verbo na unidade de pessoa, nunca deixou de estar perfeitamente unida com ele. Por isso, segundo outros, ou se deve dizer que o dote, como tal, de nenhum modo se pode atribuir a Cristo; Ou não lhe deve atribuir no mesmo sentido em que o é aos santos. Mas os chamados dotes eles os têm em grau excelentíssimo.</p>
+    <p>DONDE A</p>
+    <p>RESPOSTA À PRIMEIRA OBJEÇÃO. ─ A referida conformação deve entender-se considerado o dote no seu sentido próprio, e não no sentido em que convém a Cristo. Pois aquilo por que nos conformamos com Cristo não é forçoso exista do mesmo modo em Cristo e em nós.</p>
+    <p>RESPOSTA À SEGUNDA. ─ Não é em sentido literal que a natureza humana é chamada esposa, na união com que está unida ao Verbo; pois não há nessa união a distinção de pessoas necessariamente existente entre esposo e esposa. Mas quando às vezes se diz que a natureza humana foi desposada pelo Verbo por se lhe ter este unido, isso só é porque, à semelhança do que se dá com a esposa, está com o Verbo inseparavelmente unida. E porque nessa união a natureza humana é inferior ao Verbo, e é por ele governada como o é a esposa pelo esposo.</p>
+    <p>RESPOSTA À TERCEIRA. ─ Quando às vezes se diz que Cristo é esposa, não significa isso que o seja no seu sentido próprio; mas enquanto para si assume a pessoa da Igreja, sua esposa, que lhe está espiritualmente unida. E assim, nada impede que, de conformidade com esse modo de falar, possamos dizer que Cristo tem dotes; não pelos ter ele, mas sim a Igreja.</p>
+    <p>RESPOSTA À QUARTA. ─ A palavra Igreja, é susceptível de dupla acepção. ─ Assim, às vezes designa somente o corpo unido a Cristo como cabeça. E então só a Igreja compete ser a esposa: e Cristo não é membro dela, mas a cabeça influente em todos os seus membros. ─ Noutra acepção, a Igreja designa a cabeça e os membros que lhe estão unidos. E assim dizemos que Cristo é membro da Igreja, enquanto tem uma função distinta de todos os outros membros e que é lhes influir a vida. Embora não possa ser chamado membro muito propriamente, porque membro implica a idéia de parte, e em Cristo bem espiritual não é parcial, mas totalmente íntegro. Por onde, é ele o bem total da Igreja; nem os outros membros juntos com ele são algo de maior que ele isoladamente. Ora, considerando assim a Igreja, ela não só designa a esposa, mas o esposo e a esposa enquanto deles resulta uma unida pela conjunção espiritual. Por onde, embora Cristo seja de certo modo considerado membro da Igreja, de maneira nenhuma podemos porém dizê-lo membro da esposa. Não lhe convém, pois, nesse sentido ter dote, na acepção própria deste. RESPOSTA À QUINTA. ─ Nessa sequência há o sofisma de acidente. Pois, essa enumeração não se aplica a Cristo senão enquanto constitui dotes, no sentido próprio deste.</p>
+
+    </div>
+  </div>
+  
+  <!-- Bloco de Explicação (a ser preenchido) -->
+  <div class="bloco-explicacao">
+    <div class="explicacao-label">💡 Explicação e Contexto</div>
+    <div class="explicacao-corpo" id="explicacao">
+    <p><em>Explicação será adicionada em breve.</em></p>
+
+    </div>
+  </div>
+  
+</main>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO INFERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="navegacao-inferior">
+  <div class="nav-buttons">
+    <a href="suma-pagina3072.html" class="btn-primary">← Anterior</a>
+    <span class="pagina-atual">3073</span>
+    <a href="suma-pagina3074.html" class="btn-primary">Próxima →</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  RODAPÉ                                                  -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<footer class="suma-footer">
+  <p>Suma Teológica · São Tomás de Aquino | Biblioteca Lux Fidei</p>
+</footer>
+
+</body>
+</html>

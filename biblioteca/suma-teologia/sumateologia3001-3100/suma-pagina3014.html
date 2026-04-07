@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Questão 80, Artigo 4 — ─ Se tudo o pertencente verdadeiramente à natureza humana | Suma Teológica</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+    --cor-fundo: #f5f0e8;
+    --cor-pagina: #fff;
+    --cor-texto: #2c1f17;
+    --cor-dourado: #d4af37;
+    --cor-roxo: #5b2c83;
+    --sombra: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cor-fundo);
+    color: var(--cor-texto);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CABEÇALHO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-header {
+    background: linear-gradient(135deg, #1a1a1a, #2c241b);
+    color: #f5f0e8;
+    padding: 32px 20px 24px;
+    text-align: center;
+    position: relative;
+}
+
+.voltar-index {
+    position: absolute;
+    top: 16px;
+    left: 20px;
+    color: var(--cor-dourado);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: opacity 0.2s;
+}
+
+.voltar-index:hover {
+    opacity: 0.8;
+}
+
+.suma-header h1 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.info-pagina {
+    display: inline-block;
+    background: rgba(212, 175, 55, 0.15);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    color: var(--cor-dourado);
+    margin-top: 8px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-topo {
+    background: #fff;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    gap: 10px;
+}
+
+.btn-nav {
+    display: inline-flex;
+    align-items: center;
+    padding: 9px 18px;
+    background: var(--cor-roxo);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.btn-nav:hover {
+    background: #4a246a;
+    transform: translateY(-1px);
+}
+
+.desabilitado {
+    background: #ddd !important;
+    color: #999 !important;
+    pointer-events: none;
+}
+
+.info-centena {
+    font-size: 0.85rem;
+    color: #888;
+    font-weight: 500;
+    padding: 0 10px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CONTEÚDO PRINCIPAL                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.pagina-conteudo {
+    flex: 1;
+    max-width: 860px;
+    width: 100%;
+    margin: 36px auto;
+    padding: 0 20px;
+}
+
+.bloco-texto {
+    background: var(--cor-pagina);
+    padding: 48px 44px;
+    border-radius: 12px;
+    box-shadow: var(--sombra);
+    position: relative;
+    margin-bottom: 24px;
+}
+
+.bloco-texto::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 20px;
+    bottom: 20px;
+    width: 4px;
+    background: linear-gradient(to bottom, var(--cor-dourado), var(--cor-roxo));
+    border-radius: 0 4px 4px 0;
+}
+
+.bloco-titulo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.3rem;
+    color: var(--cor-roxo);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e8dfd0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pagina-corpo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.1rem;
+    line-height: 1.95;
+    color: #3d3226;
+    text-align: justify;
+}
+
+.pagina-corpo p {
+    margin-bottom: 1.3em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  BLOCO DE EXPLICAÇÃO                                        */
+/* ────────────────────────────────────────────────────────── */
+
+.bloco-explicacao {
+    background: linear-gradient(135deg, #fffdf5, #faf5eb);
+    border-left: 5px solid var(--cor-dourado);
+    padding: 32px 40px;
+    border-radius: 0 12px 12px 0;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    margin-bottom: 24px;
+}
+
+.explicacao-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--cor-dourado);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 14px;
+}
+
+.explicacao-corpo {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #4a3c2c;
+}
+
+.explicacao-corpo p {
+    margin-bottom: 1em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO INFERIOR                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-inferior {
+    max-width: 860px;
+    width: 100%;
+    margin: 0 auto 40px;
+    padding: 0 20px;
+}
+
+.nav-buttons {
+    background: #fff;
+    padding: 18px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    box-shadow: var(--sombra);
+}
+
+.btn-primary {
+    flex: 1;
+    text-align: center;
+    padding: 13px 16px;
+    background: linear-gradient(135deg, var(--cor-roxo), #7a3eb5);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(91, 44, 131, 0.3);
+}
+
+.pagina-atual {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--cor-dourado);
+    min-width: 50px;
+    text-align: center;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RODAPÉ                                                     */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-footer {
+    background: #1a1a1a;
+    color: #888;
+    text-align: center;
+    padding: 22px 20px;
+    margin-top: auto;
+    font-size: 0.85rem;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RESPONSIVIDADE                                             */
+/* ────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+    .suma-header h1 {
+        font-size: 1.4rem;
+    }
+    
+    .bloco-texto {
+        padding: 28px 18px;
+    }
+    
+    .bloco-explicacao {
+        padding: 22px 18px;
+    }
+    
+    .navegacao-topo {
+        flex-wrap: wrap;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CABEÇALHO                                               -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="suma-header">
+  <a href="../../index.html" class="voltar-index">← Índice</a>
+  <h1>Suma Teológica</h1>
+  <p style="opacity:0.8; font-style:italic; margin-top:4px;">São Tomás de Aquino</p>
+  <span class="info-pagina">Página 3014 de 3000</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO SUPERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<nav class="navegacao-topo">
+  <a href="suma-pagina3013.html" class="btn-nav">← Anterior</a>
+  <span class="info-centena">Pág. 3014/3000</span>
+  <a href="suma-pagina3015.html" class="btn-nav">Próxima →</a>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CONTEÚDO PRINCIPAL                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<main class="pagina-conteudo">
+  
+  <!-- Texto Original -->
+  <div class="bloco-texto">
+    <div class="bloco-titulo">
+      <span>📜</span>
+      Questão 80, Artigo 4 — ─ Se tudo o pertencente verdadeiramente à natureza humana
+    </div>
+    <div class="pagina-corpo">
+    <p>ressurgirá com o corpo. O quarto discute-se assim. ─ Parece que nem tudo o pertencente verdadeiramente à natureza humana ressurgirá com o corpo. 1 ─ Pois, a alimentação converte-se verdadeiramente em a natureza humana. Ora, a carne do boi e dos outros animais nos servem de alimento. Se portanto ressurgir tudo quanto realmente nos constituiu a natureza, ressurgirá também a carne do boi e a dos outros animais. O que é inadmissível. 2. Demais. ─ A costela de Adão, que serviu para formar Eva, fazia realmente parte dele como a nossa, de nós. Ora, essa costela não ressurgirá em Adão, mas em Eva; aliás, Eva não ressurgiria, que foi formada da costela de Adão. Logo, não ressurgirá tudo quanto realmente fazia parte da natureza humana. 3. Demais. ─ Não pode uma mesma causa ressurgir em diversos homens. Ora, pode acontecer que uma mesma causa pertencesse realmente à natureza humana em diversos homens; assim se alguém se nutriu de carne humana, que lhe veio a fazer parte da substância. Logo, não ressurgirá em nós tudo quanto realmente fez parte da nossa natureza. 4. Demais. ─ Se se responder que a carne ingerida por manducação não fez total e realmente parte da natureza, sendo então possível ressuscitar uma parte dela em um e outra em outro, redarguimos o seguinte. Real e principalmente pertence à natureza humana o que foi herdado dos pais. Ora, quem só se nutrisse de carne humana e viesse a gerar um filho, necessariamente o que o filho recebeu do pai fazia parte da carne dos outros homens, que seu pai comeu; porque o sêmen é formado pelo supérfluo dos alimentos, segundo o Filósofo o prova. Logo, o que fizer realmente parte da natureza humana nessa criança fez também realmente parte da natureza humana de outros homens cujas carnes comeu o pai. 5. Demais. ─ Se se disser que aquilo que fazia realmente parte da natureza humana, na carne dos corpos humanos comidos, não se transforma em sêmen, senão aquilo que não fazia realmente parte dessa natureza, respondemos em contrário o seguinte. Suponhamos que alguém se alimentasse só do embrião, que nada contém que não constitua realmente a natureza humana, pois, tudo o existente nele vem dos pais. Se, portanto, o supérfluo do alimento se converte no sêmen, por força aquilo que encerrava realmente da natureza humana o embrião, que também há de ressurgir depois de ter recebido a alma racional, isso fará também realmente parte da natureza humana da criança gerada de tal sêmen. E assim, como uma causa não pode ressurgir em dois corpos, em nenhum poderá ressurgir tudo o que fazia realmente parte da natureza humana.</p>
+    <p>Mas, em contrário. ─ Tudo o que realmente fez parte da natureza humana recebeu da alma racional a sua perfeição. Ora, o corpo humano é destinado a ressurgir por ter recebido da alma racional a sua perfeição. Logo, em cada um ressurgirá tudo o que realmente lhe fez parte da natureza humana. 2. Demais. ─ Se um corpo humano for privado de algo que realmente lhe fazia parte da sua natureza humana, já não será perfeito. Ora, toda imperfeição do corpo desaparecerá com a ressurreição; salvo no dos eleitos, a quem foi prometido que não se lhes perderá um cabelo da cabeça. Logo, em cada corpo ressurgirá tudo o que realmente lhe fazia parte da natureza humana. SOLUÇÃO. ─ Todas as cousas tem com a verdade a mesma relação que tem com o ser, diz Aristóteles; pois, verdadeira é a causa que é tal como aparece a quem atualmente a vê. E por isso diz Avicena, que a verdade de uma cousa é uma propriedade constante do seu ser. Assim sendo, diremos que real e essencialmente pertence a natureza humana o que propriamente lhe pertence ao ser. E isso é o que lhe participa da forma; assim como verdadeiro ouro se chama ao que tem a forma verdadeira do ouro, da qual lhe resulta o seu ser próprio. Para sabermos, pois, o que verdadeiramente constitui a natureza humana, devemos saber que há sobre esta questão três opiniões. Assim, uns ensinaram que nada começa verdadeiramente a existir de novo em a natureza humana; mas tudo o que verdadeiramente lhe pertence, pertenceu-lhe total e verdadeiramente desde a sua instituição. E isso por si mesmo se multiplica, destacando-se do gerador o sêmen que vai formar o filho; e neste também se multiplica essa parte destacada do pai e chega ao desenvolvimento perfeito pelo crescimento, e assim por diante; sendo assim que se multiplicou todo o gênero humano. Por onde, segundo esta opinião, tudo o gerado dos alimentos, embora pareça ter a espécie da carne ou do sangue, não pertence contudo verdadeiramente à natureza humana. Outros porém opinaram que algum acréscimo verdadeiramente se faz em a natureza humana, pela transformação natural do alimento no corpo humano, considerada a realidade da natureza humana especificamente, a cuja conservação se ordena o ato da faculdade genésica. Se porém considerarmos essa natureza no indivíduo, a cuja conservação e perfeição se ordena o ato da função nutritiva, nenhum acréscimo faz a alimentação que pertença primariamente, senão só secundariamente, à verdadeira natureza humana desse indivíduo. Ensinam então que a natureza humana, verdadeira, primária e principalmente, consiste numa umidade radical, donde procede a constituição primeira do gênero humano. O que porém se converte, de alimento, verdadeiramente em carne e em sangue, não constitui principal e verdadeiramente, senão só secundariamente, a natureza desse indivíduo; mas pode verdadeira e principalmente constituir a natureza de outro indivíduo, gerado do sêmen do primeiro. Pois, consideram o sêmen como o supérfluo do alimento, quer adicionado a certos elementos pertencentes primária e verdadeiramente à natureza humana do gerador, como certos dizem, ou sem nenhuma adição dessa espécie, como pretendem outros. De modo que a umidade nutritiva em um se: torna umidade radical no outro. A terceira opinião professa que alguma causa começa a existir de novo, principal e verdadeiramente, em a natureza humana, mesmo individualmente considerada. Porque não se pode fazer nenhuma distinção de partes do corpo humano, de acordo com a qual haja certas determinadas, que hão de necessariamente permanecer durante toda a vida; mas qualquer parte que se considere em especial é indiferente a permanecer sempre no que tem de específica; mas desaparecer e retornar à existência pelo que tem de material. E assim, a umidade nutritiva não se distingue da radical pelo seu princípio, de modo que chamássemos radical ao gerado do sêmen, e nutritivo ao gerado do alimento. Mas se distingue, antes, pelo seu termo, chamando-se então radical ao que alcança o termo da geração pelo ato da virtude genésica ou também da nutritiva; e denominando-se nutritivo o que ainda não tendo atingido esse termo, está em via de nutrir. Essas três opiniões são mais plenamente examinadas e discutidas pelo Mestre no livro 2 das Sentenças. Não devemos por isso repeti-lo aqui senão enquanto vem a propósito. Devemos, pois, saber que segundo se adapta uma dessas três opiniões, diferente será a resposta a dar à questão formulada acima. Assim, a primeira opinião, por via da multiplicação que admite, pode explicar a perfeição verdadeira da natureza humana, tanto quanto ao número dos indivíduos como quanto ao crescimento próprio de cada um, sem recorrer ao gerado pela alimentação. O que não se acrescenta ao corpo senão para resistir à consumpção que poderia provir da ação do calor natural, como à prata se acrescenta o chumbo a fim de não se consumir liquefeita. Ora, na ressurreição há de a natureza humana reconstituir-se na sua perfeição, nem o calor natural terá então por função consumir a umidade natural. Por isso nenhuma necessidade haverá de ressurgir com o corpo nada de gerado por alimentação. Mas só ressurgirá aquilo que verdadeiramente fazia parte da natureza humana do indivíduo, e que a separação e a multiplicação levaram à perfeição referida, em o número e quantidade dos indivíduos. Quanto à segunda opinião, admitindo que o gerado por nutrição é necessário ao crescimento perfeito do indivíduo e a multiplicação resultante da geração, é levada forçosamente a fazer ressurgir certas cousas das produzidas no corpo pelo alimento; mas não todas, senão só as necessárias à perfeita reintegração da natureza humana em todos os seus indivíduos. Por isso ensina essa opinião que tudo o que constituía substancialmente o sêmen ressurgirá no corpo de tal sêmen gerado; por isso era o que principal e verdadeiramente lhe constituía a natureza humana. Quanto ao que se lhe acrescentou depois pela nutrição, isso ressurgirá na medida necessária à plenitude do crescimento; e não tudo, porque não lhe pertence verdadeiramente à natureza humana senão enquanto esta, como natureza, disso precisa para o crescimento perfeito. Mas como essa umidade nutritiva passa e volta, a reconstituição do corpo ressurrecto se fará na ordem seguinte. O que constituía primariamente a substância do corpo humano será totalmente restaurado; o que se lhe acrescentou em segundo, em terceiro lugar e assim por diante será refeito o quanto necessário para reintegrar-lhe o crescimento. E por duas razões. Primeiro, porque o acrescentado o foi para compensar as perdas anteriores; e assim não pertence principal e verdadeiramente à natureza humana como as cousas precedentes. Segundo, porque a adjunção de uma umidade estranha à umidade primeira radical faz com que o todo composto não participe tão perfeita e verdadeiramente da espécie como dela participa a substância primeira do corpo. E o Filósofo dá o exemplo da água misturada com vinho, que sempre enfraquece as qualidades deste, até acabar pelo transformar em água. Por onde, assim como a segunda água, embora apresente ainda a aparência do vinho, contudo não lhe participa da espécie tão perfeitamente como a água que em primeiro lugar foi nele posta; assim também parte do alimento posteriormente convertido em carne, não a forma especificamente de modo tão perfeito como o alimento que primeiro nela se converteu. E assim não constitui verdadeiramente a natureza humana nem participará da ressurreição. Por onde é claro que esta opinião admite a total ressurreição do que principal e verdadeiramente constitui a natureza humana; mas não a total ressurreição de tudo o que a constitui verdadeira mas secundariamente. A terceira opinião enfim em parte difere da segunda e em parte com ela convém. Difere em admitir que tudo o que tem forma de carne e de ossos pertence verdadeiramente e pela mesma razão à natureza humana. Porque não distingue, com a segunda opinião, entre o determinadamente permanente no homem durante todo o tempo da sua vida e que em si pertenceria primária e verdadeiramente a natureza humana; e o que, passando e tornando a voltar, pertenceria verdadeiramente a essa natureza só para o pleno desenvolvimento dela, e não pelo seu ser específico primário. Mas admite, que todas as partes não geradas contra a intenção da natureza pertencem verdadeiramente à natureza humana, pelo que tem de específico, porque como tais são permanentes. Mas não pelo que tem de material, porque como tais desaparecem e voltam, indiferentemente. De modo que também entendamos que se dá com as partes de cada homem em particular o que se passa com a população de uma cidade, onde aos que a deixam pela morte outros lhes vem ocupar o lugar; por isso as partes dela fluem e refluem materialmente, mas formalmente permanecem, porque nos mesmos ofícios e ordens os que partiram são substituídos por outros, o que nos leva a dizer que a república permanece numericamente a mesma. Também o mesmo se dá quando umas partes desaparecendo outras se lhes substituem, na mesma figura e situação; e assim todas vão e voltam materialmente, mas permanecem especificamente, não deixando por isso de permanecer o homem individualmente o mesmo. Enfim a terceira opinião convém com a segunda por admitir que as partes acrescidas em segundo lugar não constituem tão perfeita e verdadeiramente a espécie, como as que vieram em primeiro lugar. E assim o mesmo, que a segunda opinião diz ressurgir no homem, também o diz a terceira, mas não exatamente pela mesma razão. Pois afirma que ressurgirá tudo o gerado do sêmen, não por pertencer, por uma outra razão, à verdadeira natureza humana, do que aquilo que se lhe acresceu posteriormente; mas por participar mais perfeita e verdadeiramente da espécie. Ordem essa admitida pela segunda opinião em relação ao que se acrescenta por efeito do alimento. No que também esta opinião concorda com a terceira.</p>
+    <p>DONDE A</p>
+    <p>RESPOSTA À PRIMEIRA OBJEÇÃO. ─ Os seres naturais não são tais pela matéria, mas pela forma. Por onde, embora a matéria, antes unida à forma da carne bovina, ressurja no homem sob a forma de carne humana, daí não resulta que ressurja a carne do boi, mas a do homem. Do contrário, também podia concluir-se que ressurgiria o barro de que foi formado o corpo de Adão. Contudo, a primeira opinião concede a essa objeção.</p>
+    <p>RESPOSTA À SEGUNDA. ─ Essa costela não pertencia à perfeição individual de Adão, mas era ordenada à multiplicação da espécie. Por isso não ressurgirá em Adão, mas em Eva, assim como o sêmen não ressurgirá no gerador, mas no gerado.</p>
+    <p>RESPOSTA À TERCEIRA. ─ Se se adota a primeira opinião é fácil responder. Pois, as carnes ingeridas não fizeram nunca verdadeiramente parte da natureza humana de quem as comeu, mas fizeram realmente parte da natureza humana daquele curas carnes foram comidas. Por isso ressurgirão com este e não com aquele. Mas se adotarmos a segunda opinião e a terceira diremos que cada cousa ressurgirá naquele em quem mais perfeitamente participou da virtude da espécie. E se participou igualmente em ambos ressurgirá naquele em que existiu primeiro, pois neste primeiro se ordenou à ressurreição pela união com a sua alma racional. Por onde, se as carnes ingeridas continham alguma superfluidade que não pertencessem verdadeiramente à natureza humana do primeiro, poderá ressurgir no segundo. Mas se não continham nenhuma superfluidade. ressurgirá no primeiro o que lhe pertencia à ressurreição, e não no segundo. E para reparar esta perda no último, seria tomada uma parte das suas carnes em que se converteram outros alimentos, ou se nunca se nutriu de outra causa a não ser de carne humana, o poder divino suprirá de outro modo no suficiente à perfeição do crescimento, assim como supre nos mortos antes da idade perfeita. E tudo isso não causa nenhum detrimento à identidade numérica, do mesmo modo que não a destrói a disparição e a reaparição material das partes.</p>
+    <p>RESPOSTA À QUARTA. ─ De acordo com a primeira opinião é fácil resolver, pois afirma que o sêmen não provém de alimento supérfluo. Por isso a carne comida não se transforma no sêmen que causa a geração. Mas de acordo com as outras duas opiniões, devemos responder que não é possível as carnes comidas terem-se convertido totalmente no sêmen; porque, de uma longa depuração do alimento resulta a decocção do sêmen, que é o supérfluo do último alimento. Ora, o que das carnes ingeridas se converte em esperma, mais verdadeiramente pertence à natureza humana de quem dela nasce, do que daquele de cujas carnes foi gerado. Por onde, segundo a regra anteriormente dada, o que se converte em sêmen ressurgirá naquele que desse sêmen nasceu; e o que resta da matéria ressurgirá naquele que ingeriu as carnes de que o sêmen foi gerado. RESPOSTA À QUINTA. ─ Os embriões não se incluem na ressurreição antes de animados pela alma racional. E nesse estado recebe da alimentação muitas causas que se acrescentam à substância do esperma, porque o feto é nutrido no seio materno. Quem, pois, se nutre de embriões e engendra do supérfluo dessa alimentação, o que resultar da substância do sêmen ressuscitará naquele que deste foi gerado. Salvo se essa substância contiver alguma cousa que pertencesse à substância seminal daqueles que forneceram as carnes ingeridas; pois, então, elas ressuscitarão no primeiro que formou a substância e não no segundo que as comeu. Quanto ao resíduo das carnes comidas, que se não converteram em sêmen, ressuscitaria no primeiro, e a virtude divina supriria o que faltasse a um e a outro. Mas esta objeção não cria nenhuma dificuldade à primeira opinião, que não admite ser o sêmen formado do supérfluo dos alimentos; mas em compensação, presta o flanco a muitas outras objeções, como o mostra o Mestre.</p>
+
+    </div>
+  </div>
+  
+  <!-- Bloco de Explicação (a ser preenchido) -->
+  <div class="bloco-explicacao">
+    <div class="explicacao-label">💡 Explicação e Contexto</div>
+    <div class="explicacao-corpo" id="explicacao">
+    <p><em>Explicação será adicionada em breve.</em></p>
+
+    </div>
+  </div>
+  
+</main>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO INFERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="navegacao-inferior">
+  <div class="nav-buttons">
+    <a href="suma-pagina3013.html" class="btn-primary">← Anterior</a>
+    <span class="pagina-atual">3014</span>
+    <a href="suma-pagina3015.html" class="btn-primary">Próxima →</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  RODAPÉ                                                  -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<footer class="suma-footer">
+  <p>Suma Teológica · São Tomás de Aquino | Biblioteca Lux Fidei</p>
+</footer>
+
+</body>
+</html>

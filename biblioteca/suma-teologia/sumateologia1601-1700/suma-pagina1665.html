@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Questão 87, Artigo 1 — Se estamos obrigados a pagar dízimos por necessidade de | Suma Teológica</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+    --cor-fundo: #f5f0e8;
+    --cor-pagina: #fff;
+    --cor-texto: #2c1f17;
+    --cor-dourado: #d4af37;
+    --cor-roxo: #5b2c83;
+    --sombra: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cor-fundo);
+    color: var(--cor-texto);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CABEÇALHO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-header {
+    background: linear-gradient(135deg, #1a1a1a, #2c241b);
+    color: #f5f0e8;
+    padding: 32px 20px 24px;
+    text-align: center;
+    position: relative;
+}
+
+.voltar-index {
+    position: absolute;
+    top: 16px;
+    left: 20px;
+    color: var(--cor-dourado);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: opacity 0.2s;
+}
+
+.voltar-index:hover {
+    opacity: 0.8;
+}
+
+.suma-header h1 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.info-pagina {
+    display: inline-block;
+    background: rgba(212, 175, 55, 0.15);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    color: var(--cor-dourado);
+    margin-top: 8px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-topo {
+    background: #fff;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    gap: 10px;
+}
+
+.btn-nav {
+    display: inline-flex;
+    align-items: center;
+    padding: 9px 18px;
+    background: var(--cor-roxo);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.btn-nav:hover {
+    background: #4a246a;
+    transform: translateY(-1px);
+}
+
+.desabilitado {
+    background: #ddd !important;
+    color: #999 !important;
+    pointer-events: none;
+}
+
+.info-centena {
+    font-size: 0.85rem;
+    color: #888;
+    font-weight: 500;
+    padding: 0 10px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CONTEÚDO PRINCIPAL                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.pagina-conteudo {
+    flex: 1;
+    max-width: 860px;
+    width: 100%;
+    margin: 36px auto;
+    padding: 0 20px;
+}
+
+.bloco-texto {
+    background: var(--cor-pagina);
+    padding: 48px 44px;
+    border-radius: 12px;
+    box-shadow: var(--sombra);
+    position: relative;
+    margin-bottom: 24px;
+}
+
+.bloco-texto::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 20px;
+    bottom: 20px;
+    width: 4px;
+    background: linear-gradient(to bottom, var(--cor-dourado), var(--cor-roxo));
+    border-radius: 0 4px 4px 0;
+}
+
+.bloco-titulo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.3rem;
+    color: var(--cor-roxo);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e8dfd0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pagina-corpo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.1rem;
+    line-height: 1.95;
+    color: #3d3226;
+    text-align: justify;
+}
+
+.pagina-corpo p {
+    margin-bottom: 1.3em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  BLOCO DE EXPLICAÇÃO                                        */
+/* ────────────────────────────────────────────────────────── */
+
+.bloco-explicacao {
+    background: linear-gradient(135deg, #fffdf5, #faf5eb);
+    border-left: 5px solid var(--cor-dourado);
+    padding: 32px 40px;
+    border-radius: 0 12px 12px 0;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    margin-bottom: 24px;
+}
+
+.explicacao-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--cor-dourado);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 14px;
+}
+
+.explicacao-corpo {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #4a3c2c;
+}
+
+.explicacao-corpo p {
+    margin-bottom: 1em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO INFERIOR                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-inferior {
+    max-width: 860px;
+    width: 100%;
+    margin: 0 auto 40px;
+    padding: 0 20px;
+}
+
+.nav-buttons {
+    background: #fff;
+    padding: 18px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    box-shadow: var(--sombra);
+}
+
+.btn-primary {
+    flex: 1;
+    text-align: center;
+    padding: 13px 16px;
+    background: linear-gradient(135deg, var(--cor-roxo), #7a3eb5);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(91, 44, 131, 0.3);
+}
+
+.pagina-atual {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--cor-dourado);
+    min-width: 50px;
+    text-align: center;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RODAPÉ                                                     */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-footer {
+    background: #1a1a1a;
+    color: #888;
+    text-align: center;
+    padding: 22px 20px;
+    margin-top: auto;
+    font-size: 0.85rem;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RESPONSIVIDADE                                             */
+/* ────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+    .suma-header h1 {
+        font-size: 1.4rem;
+    }
+    
+    .bloco-texto {
+        padding: 28px 18px;
+    }
+    
+    .bloco-explicacao {
+        padding: 22px 18px;
+    }
+    
+    .navegacao-topo {
+        flex-wrap: wrap;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CABEÇALHO                                               -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="suma-header">
+  <a href="../../index.html" class="voltar-index">← Índice</a>
+  <h1>Suma Teológica</h1>
+  <p style="opacity:0.8; font-style:italic; margin-top:4px;">São Tomás de Aquino</p>
+  <span class="info-pagina">Página 1665 de 3000</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO SUPERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<nav class="navegacao-topo">
+  <a href="suma-pagina1664.html" class="btn-nav">← Anterior</a>
+  <span class="info-centena">Pág. 1665/3000</span>
+  <a href="suma-pagina1666.html" class="btn-nav">Próxima →</a>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CONTEÚDO PRINCIPAL                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<main class="pagina-conteudo">
+  
+  <!-- Texto Original -->
+  <div class="bloco-texto">
+    <div class="bloco-titulo">
+      <span>📜</span>
+      Questão 87, Artigo 1 — Se estamos obrigados a pagar dízimos por necessidade de
+    </div>
+    <div class="pagina-corpo">
+    <p>preceito. O primeiro discute–se assim. – Parece que não estamos obrigados por necessidade de preceito a pagar dízimos. 1. – Pois, o preceito sobre a solução dos dízimos está estabelecido na lei antiga: Todos os dízimos da terra, ou sejam de grão ou de frutas das árvores, são do Senhor; e mais adiante: De todos os dízimos de vacas, ovelhas e cabras que passam por baixo do cajado do pastor, tudo o que se contar décimo será contado ao Senhor. Ora, este preceito não pode ser considerado como um dos preceitos morais, pois, a razão natural não manda que devamos pagar antes a décima parte do que a nona ou a undécima. Logo, é um preceito judicial ou cerimonial. Ora, como já se disse, na vigência da lei da graça, não estamos obrigados aos preceitos cerimoniais nem aos judiciais da lei antiga. Logo, não estamos obrigados à solução dos dízimos. 2. Demais. – Sob a lei da graça estamos obrigados a observar só o que Cristo mandou por intermédio dos Apóstolos, conforme ao Evangelho: Ensinando–nos a observar todas as coisas que vos tenho mandado. E Paulo diz: Porque não tenho buscado subterfúgio para vos deixar de anunciar toda a disposição de Deus. Ora, nem na doutrina de Cristo nem na dos Apóstolos nenhuma disposição há sobre a solução dos dízimos. Pois. o que o Senhor diz sobre eles estas coisas eram as que vós devíeis praticar refere–se aos tempos passados da observância da lei, como o ensina Hilário: Não se devia omitir o dizimo dos legumes, porque tinha a vantagem de figurar o futuro. Logo, sob a lei da graça, não estamos obrigados à solução dos dízimos. 3. Demais. – Sob a lei da graça não estamos mais obrigados, que sob a lei antiga, a observar os preceitos legais. Ora, antes da lei atual, os dízimos não eram pagos em virtude de um preceito, mas só em virtude de um voto. Assim, lemos na Escritura, que Jacó também fez voto, dizendo: Se Deus for comigo e me guardar no caminho por que ando, etc., de todas as coisas que tu me deres te oferecerei o dízimo. Logo, nem no tempo da lei da graça estamos obrigados à solução dos dízimos. 4. Demais. – A lei antiga obrigava à solução de três espécies de dízimos. Uns pagavam–nos aos Levitas, como está na Escritura: Os Levitas se contentarão com as oblações dos dízimos, que separei para o seu uso e para o que lhes for necessário. Mas, também havia outros dízimos dos quais se lê: Porás cada ano à parte o dízimo de todos os teus frutos que nascem na terra; e conterás na presença do Senhor teu Deus no lugar que ele escolher. Havia ainda uma terceira espécie, a respeito dos quais no mesmo lugar se acrescenta: Todos os três anos separarás outro dízimo de tudo o que te nascer nesse tempo e pô– las–ás de reserva em tua casa e virão o Levita, que não tem outra porção nem herança contigo, e o peregrino e o órfão e a viúva, que estão das tuas portas adentro e comerão e se fartarão. Ora, à solução dos dízimos da segunda e da terceira espécie não estamos obrigados, sob a lei da graça. Logo, nem aos da primeira. 5. Demais. – O que devemos, sem prazo determinado, devemos pagá–la imediatamente, sob pena de pecado. Se, pois, sob a lei da graça, os homens estivessem obrigados, por necessidade de preceito, à solução dos dízimos, todos os habitantes das terras em que eles não foram pagos estariam em estado de pecado mortal, inclusive os ministros da Igreja, não fazendo cumprir essa obrigação; o que é inadmissível. Logo, sob a lei da graça, não estamos obrigados, de necessidade, à solução dos dízimos.</p>
+    <p>Mas, em contrário, Agostinho: Os dízimos são exigidos em virtude de um preceito; e os que não os quiserem pagar apoderam–se do alheio. SOLUÇÃO. – Sob a lei antiga os dízimos eram pagos para o sustento dos ministros de Deus, donde o dizer a Escritura: Levai todos os vossos dízimos ao meu celeiro e haja mantimento na minha casa. Por onde, o preceito de pagá–las era, em parte, moral, fundado na razão natural; e em parte, judicial, haurindo a sua força da instituição divina. Pois, a razão natural dita ao povo o dever de dar o sustento necessário aos ministros do culto divino, que oram pela salvação dos seus membros; assim como o povo também deve estipêndios, com que possam sustentar–se, aos chefes, soldados e outros, que zelam pela utilidade comum. Por isso, o Apóstolo, fundado nos costumes humanos diz: Quem jamais vai à guerra à sua custa? Quem planta uma vinha e não come do seu fruto? Mas, o direito natural não exige que demos aos ministros do culto divino uma contribuição determinada, o que foi introduzido por instituição divina, de acordo com as condições do povo a quem a lei foi dada. O qual, estando dividido em doze tribos, a tribo duodécima, que era a Levitica, e toda consagrada aos ministérios divinos, não tinha bens. Por isso, foi convenientemente instituído que as outras onze dessem aos Levitas a décima parte dos seus proventos, para que eles vivessem decentemente: e nisso já estavam previstas as negligências que haveriam de cometer muitos transgressores de tais disposições. Por isso, o preceito era judicial, quanto à determinação do dízimo; assim como o eram muitas outras instituições especialmente feitas nesse povo, para conservar a igualdade entre os seus membros, conforme à condição do mesmo. Por isso se chamavam preceitos judiciais, embora, secundáriamente, significassem acontecimentos futuros, como o significavam todos os feitos do povo judeu, segundo aquilo do Apóstolo: Todas estas causas lhes aconteciam a eles em figura. E isso tinham tais preceitos de comum com os cerimoniais, instituídos principalmente para significar fatos futuros. Por isso, também o preceito de pagar os dízimos encerrava alguma significação futura, que se explica a seguir. Quem dá a décima parte, que é um sinal de perfeição, reservando para si as nove outras confessa, por um como sinal, que é um ser imperfeito; pois o número dez é de certo modo um número perfeito, por ser como o primeiro limite dos números, além do qual eles não continuam, mas se repetem a partir da unidade. E quanto à perfeição, que haveria de se manifestar em Cristo, essa a esperaria de Deus. Mas, nem por isso esse preceito é cerimonial, senão, judicial, como se disse. Ora, a diferença entre os: preceitos cerimoniais da lei e os judiciais está, como já dissemos, em ser ilícito observar aqueles na vigência da lei nova; ao passo que estes, embora não obriguem na vigência dessa lei, podem contudo ser observados sem pecado. E a observá–los certos estão obrigados, se o determinar a autoridade do legislador. Assim, se um legislador estabelecer lei que deva ser obedecido o preceito judicial da lei antiga, em virtude do qual quem furtou uma ovelha estava obrigado a restituir quatro ovelhas, os súbitos do referido legislador devem observá–lo. Assim também a determinação de solver o dizimo foi instituída pela autoridade da Igreja, na vigência da lei nova, por uma certa equidade; isto é, para que o povo, sob a sua lei, não desse aos ministros do Novo Testamento menos do que o da lei antiga, aos do Antigo. Embora sejam maiores as obrigações dos súbditos da lei nova, conforme está no Evangelho: Se a vossa justiça não for maior do que a, dos escribas e dos fariseus, não entrareis no reino dos céus. E porque os ministros do Novo Testamento têm maior dignidade que os do antigo, como o prova o Apóstolo. Por onde é claro, que estamos obrigados à solução dos dízimos, em parte, por direito natural e em parte, por instituição da Igreja. Mas esta, pesada a oportunidade de tempos e de pessoas, podia mandar pagar outra parte. Donde se deduz clara a</p>
+    <p>RESPOSTA À PRIMEIRA OBJEÇÃO.</p>
+    <p>RESPOSTA À SEGUNDA. – O preceito da solução dos dízimos, quanto ao que tem de moral, o Senhor o estabeleceu no Evangelho, quando disse: Digno é o trabalhador do seu alimento; e também o Apóstolo. Mas, a determinação do que devia ser dado como dízimo foi reservado à determinação da Igreja.</p>
+    <p>RESPOSTA À TERCEIRA. – Nos tempos anteriores à lei antiga, não havia ministros do culto determinados: mas, diz–se que os primogênitos eram os sacerdotes, que recebiam uma porção dupla. E por isso não havia porção determinada a ser dada aos ministros do culto divino; mas, conforme à ocasião, cada um lhes dava espontaneamente o que lhe parecia. Assim, Abraão, por uma como inspiração profética, deu o dizimo a Melquisedeque, sacerdote do Altíssimo; semelhantemente, Jacó fez voto de pagá–lo, embora não o fizesse de pagar a certos e determinados ministros, mas, ao culto divino, isto é, para a consumação dos sacrifícios; sendo por isso que a Escritura diz sinaladamente: Eu te oferecerei o dízimo.</p>
+    <p>RESPOSTA À QUARTA. – A segunda espécie de dízimos, reservados a ser oferecidos em sacrifício, não mais existem sob a lei nova, com o cessar dos sacrifícios. Mas, a terceira espécie, a dos que se deviam comer com os pobres, a lei nova os aumentou, por mandar o Senhor darmos aos pobres não só a décima parte, mas todo o supérfluo, como se lê no Evangelho: Dai esmola do que é nosso supérfluo. E também o dízimo dado aos ministros da Igreja deve ser dispensado, por meio deles, ao uso dos pobres. RESPOSTA À QUINTA. – Os ministros da Igreja devem ter maior empenho em procurar o bem espiritual do povo, do que em levá–lo à busca dos bens temporais. Por isso o Apóstolo não quis usar do poder que o Senhor lhe deu, de receber estipêndios, para se sustentar, daqueles a quem pregava o Evangelho, para não opor nenhum obstáculo à propagação do Evangelho de Cristo. Mas nem por isso pecavam os que não lhe vinham em auxílio; do contrário o Apóstolo não teria deixado ele adverti–los. Do mesmo modo e louvavelmente, os ministros da Igreja não exigem os dízimos, onde, por terem caído em desuso ou por outra qualquer causa, não o poderiam fazer sem escândalo. Donde, não se acham em estado de danação os habitantes dos lugares, onde não pagam os dízimos, pelos não exigir a Igreja. Salvo se, com obstinação de espírito, tivessem a intenção de não os pagar, mesmo se lh'os exigissem.</p>
+
+    </div>
+  </div>
+  
+  <!-- Bloco de Explicação (a ser preenchido) -->
+  <div class="bloco-explicacao">
+    <div class="explicacao-label">💡 Explicação e Contexto</div>
+    <div class="explicacao-corpo" id="explicacao">
+    <p><em>Explicação será adicionada em breve.</em></p>
+
+    </div>
+  </div>
+  
+</main>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO INFERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="navegacao-inferior">
+  <div class="nav-buttons">
+    <a href="suma-pagina1664.html" class="btn-primary">← Anterior</a>
+    <span class="pagina-atual">1665</span>
+    <a href="suma-pagina1666.html" class="btn-primary">Próxima →</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  RODAPÉ                                                  -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<footer class="suma-footer">
+  <p>Suma Teológica · São Tomás de Aquino | Biblioteca Lux Fidei</p>
+</footer>
+
+</body>
+</html>

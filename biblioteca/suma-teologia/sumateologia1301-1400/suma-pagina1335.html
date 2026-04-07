@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Questão 24, Artigo 11 — Se a caridade, uma vez possuída, pode perder-se. | Suma Teológica</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+    --cor-fundo: #f5f0e8;
+    --cor-pagina: #fff;
+    --cor-texto: #2c1f17;
+    --cor-dourado: #d4af37;
+    --cor-roxo: #5b2c83;
+    --sombra: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cor-fundo);
+    color: var(--cor-texto);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CABEÇALHO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-header {
+    background: linear-gradient(135deg, #1a1a1a, #2c241b);
+    color: #f5f0e8;
+    padding: 32px 20px 24px;
+    text-align: center;
+    position: relative;
+}
+
+.voltar-index {
+    position: absolute;
+    top: 16px;
+    left: 20px;
+    color: var(--cor-dourado);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: opacity 0.2s;
+}
+
+.voltar-index:hover {
+    opacity: 0.8;
+}
+
+.suma-header h1 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.info-pagina {
+    display: inline-block;
+    background: rgba(212, 175, 55, 0.15);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    color: var(--cor-dourado);
+    margin-top: 8px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-topo {
+    background: #fff;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    gap: 10px;
+}
+
+.btn-nav {
+    display: inline-flex;
+    align-items: center;
+    padding: 9px 18px;
+    background: var(--cor-roxo);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.btn-nav:hover {
+    background: #4a246a;
+    transform: translateY(-1px);
+}
+
+.desabilitado {
+    background: #ddd !important;
+    color: #999 !important;
+    pointer-events: none;
+}
+
+.info-centena {
+    font-size: 0.85rem;
+    color: #888;
+    font-weight: 500;
+    padding: 0 10px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CONTEÚDO PRINCIPAL                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.pagina-conteudo {
+    flex: 1;
+    max-width: 860px;
+    width: 100%;
+    margin: 36px auto;
+    padding: 0 20px;
+}
+
+.bloco-texto {
+    background: var(--cor-pagina);
+    padding: 48px 44px;
+    border-radius: 12px;
+    box-shadow: var(--sombra);
+    position: relative;
+    margin-bottom: 24px;
+}
+
+.bloco-texto::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 20px;
+    bottom: 20px;
+    width: 4px;
+    background: linear-gradient(to bottom, var(--cor-dourado), var(--cor-roxo));
+    border-radius: 0 4px 4px 0;
+}
+
+.bloco-titulo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.3rem;
+    color: var(--cor-roxo);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e8dfd0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pagina-corpo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.1rem;
+    line-height: 1.95;
+    color: #3d3226;
+    text-align: justify;
+}
+
+.pagina-corpo p {
+    margin-bottom: 1.3em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  BLOCO DE EXPLICAÇÃO                                        */
+/* ────────────────────────────────────────────────────────── */
+
+.bloco-explicacao {
+    background: linear-gradient(135deg, #fffdf5, #faf5eb);
+    border-left: 5px solid var(--cor-dourado);
+    padding: 32px 40px;
+    border-radius: 0 12px 12px 0;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    margin-bottom: 24px;
+}
+
+.explicacao-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--cor-dourado);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 14px;
+}
+
+.explicacao-corpo {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #4a3c2c;
+}
+
+.explicacao-corpo p {
+    margin-bottom: 1em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO INFERIOR                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-inferior {
+    max-width: 860px;
+    width: 100%;
+    margin: 0 auto 40px;
+    padding: 0 20px;
+}
+
+.nav-buttons {
+    background: #fff;
+    padding: 18px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    box-shadow: var(--sombra);
+}
+
+.btn-primary {
+    flex: 1;
+    text-align: center;
+    padding: 13px 16px;
+    background: linear-gradient(135deg, var(--cor-roxo), #7a3eb5);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(91, 44, 131, 0.3);
+}
+
+.pagina-atual {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--cor-dourado);
+    min-width: 50px;
+    text-align: center;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RODAPÉ                                                     */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-footer {
+    background: #1a1a1a;
+    color: #888;
+    text-align: center;
+    padding: 22px 20px;
+    margin-top: auto;
+    font-size: 0.85rem;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RESPONSIVIDADE                                             */
+/* ────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+    .suma-header h1 {
+        font-size: 1.4rem;
+    }
+    
+    .bloco-texto {
+        padding: 28px 18px;
+    }
+    
+    .bloco-explicacao {
+        padding: 22px 18px;
+    }
+    
+    .navegacao-topo {
+        flex-wrap: wrap;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CABEÇALHO                                               -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="suma-header">
+  <a href="../../index.html" class="voltar-index">← Índice</a>
+  <h1>Suma Teológica</h1>
+  <p style="opacity:0.8; font-style:italic; margin-top:4px;">São Tomás de Aquino</p>
+  <span class="info-pagina">Página 1335 de 3000</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO SUPERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<nav class="navegacao-topo">
+  <a href="suma-pagina1334.html" class="btn-nav">← Anterior</a>
+  <span class="info-centena">Pág. 1335/3000</span>
+  <a href="suma-pagina1336.html" class="btn-nav">Próxima →</a>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CONTEÚDO PRINCIPAL                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<main class="pagina-conteudo">
+  
+  <!-- Texto Original -->
+  <div class="bloco-texto">
+    <div class="bloco-titulo">
+      <span>📜</span>
+      Questão 24, Artigo 11 — Se a caridade, uma vez possuída, pode perder-se.
+    </div>
+    <div class="pagina-corpo">
+    <p>O undécimo discute-se assim. – Parece que a caridade, uma vez possuída, não pode perder-se. 1. – Pois, perdida não pode sê-lo senão pelo pecado. Ora, quem tem a caridade não pode pecar, conforme o diz a Escritura: Todo o que é nascido de Deus não com ele o pecado, porque a semente de Deus permanece nele; e não pode pecar porque é nascido de Deus. Ora, só os filhos de Deus tem caridade, pois, é ela a que distingue os filhos do reino, dos da perdição, como diz Agostinho. Logo, quem tem a caridade não pode perdê-la. 2. Demais. – Agostinho diz: o amor, se não for verdadeiro, não deve ser considerado como tal. Ora, como ainda ele próprio o diz, a caridade que pode ser abandonada, nunca foi verdadeira. Logo, nunca foi caridade; e portanto aquela que foi vez possuída não pode nunca vir a perder-se. 3. Demais. – Gregório diz: O amor de Deus obra grandes coisas, se existe, se deixar de obrar, não é caridade. Ora, ninguém que obre grandes coisas perde a caridade. Logo, uma vez existente em alguém, a caridade não pode ser perdida. 4. Demais. – O livre arbítrio não se inclina ao pecado senão por algum motivo de pecar. Ora, a caridade exclui todos os motivos de pecar, tais como o amor de si, a cobiça e outros. Logo, a caridade não pode ser perdida.</p>
+    <p>Mas, em contrário, a Escritura: Tenho contra ti que deixaste a tua primeira caridade. SOLUÇÃO. – Pela caridade o Espírito Santo habita em nós como do sobredito resulta. Logo, podemos considerá-la a uma tríplice luz. Primeiro, em relação ao Espírito Santo que move a alma a amar a Deus. E então a caridade tem a impecabilidade por virtude do Espírito Santo, que opera infalivelmente tudo quanto quer. Por onde é impossível seja ao mesmo tempo verdadeiro que, de um lado, o Espírito queira mover alguém a um ato de caridade e, por outro, que essa pessoa a perca, pecando. Pois, o dom da perseverança conta-se entre os benefícios de Deus, com os quais certissimamente se salvam os que se salvam, como diz Agostinho. De outro modo, podemos considerar a caridade na sua essência mesmo. E então ela não pode senão o que se lhe inclui na essência. E portanto de nenhum modo pode pecar, assim como o calor não pode esfriar e nem a injustiça, fazer o bem, no dizer de Agostinho. De um terceiro modo, a caridade pode ser considerada relativamente ao sujeito, capaz de decidir-se, pelo livre arbítrio. Ora, ela pode referir-se ao seu sujeito, por uma razão universal, como aquela pela qual a forma é referida à matéria; ou por uma razão particular, como aquela pela qual o hábito se refere à potência. Ora, é da essência da forma existir num sujeito que pode, todavia vir a perdê-la, quando era não atualiza toda a potencialidade da matéria. Tal o caso das formas dos seres sujeitos à geração e à corrupção cuja matéria recebe uma forma, mas conservando a possibilidade de receber outra, por não ficar atualizada por uma só forma toda a potencialidade da matéria. E por isso, pode uma forma desaparecer com o advento de outra. Mas a forma do corpo celeste, que atualiza toda a potencialidade da matéria, de modo a não mais existir nela a possibilidade de receber outra forma, permanece inamissivelrnente. Assim, pois a caridade da pátria, que atualiza toda a potencialidade da alma racional, porque todos os seus movimentos dirigem-se atualmente para Deus, permanece inamissivelmente no sujeito. A caridade da via porém não atualiza desse modo a potencialidade do sujeito, por não ser dirigida sempre e atualmente para Deus. Por isso, quando não o busca, em ato, pode sobrevir alguma ocorrência que leve o sujeito a perdê-la. Ao hábito, por seu lado, é próprio inclinar a potência para o ato, fazendo-a considerar como bom aquilo que lhe convém, e como mal, o que lhe repugna. Pois, assim como o gosto julga dos sabores conforme a sua disposição, assim a mente do homem julga do que deve fazer, segundo a sua disposição habitual. Por isso, o Filósofo diz, que assim como somos, assim consideramos o fim. Portanto, a caridade não pode ser perdida, quando o que lhe convém não lhe pode parecer senão bom; o que se dá na pátria, onde Deus, que é essencialmente bom, é contemplado em essência. Logo, a caridade da pátria não pode ser perdida. Pode-o, porém, sê-lo a da via, em que não vemos a essência de Deus, que é a essência da bondade.</p>
+    <p>DONDE A</p>
+    <p>RESPOSTA À PRIMEIRA OBJEÇÃO. – A autoridade aduzida refere-se ao poder do Espírito Santo, pela conservação do qual tornam-se imunes do pecado os que ele move quanto quer.</p>
+    <p>RESPOSTA À SEGUNDA. – A caridade que pode afastar-se da essência mesma da caridade, não é verdadeira. E tal seria o caso se o seu amor consistisse em amar durante algum tempo e, depois, deixa, de fazê-lo: o que não seria verdadeiro amor. Mas, o perder-se a caridade pela mudança do sujeito, fazendo consistir o seu ato em agir contra o que ela propõe isso não repugna à verdade da mesma.</p>
+    <p>RESPOSTA À TERCEIRA. – O amor de Deus propõe-se sempre a obrar grandes coisas, o que pertence à essência da caridade. Nem sempre, porém, obra grandes coisas, em ato, por causa da condição do sujeito.</p>
+    <p>RESPOSTA À QUARTA. – A caridade, pela essência mesma do seu ato, exclui todo motivo de pecar. Mas, às vezes, acontece que ela não age atualmente. E então pode intervir algum motivo que leve a pecar e, se consentirmos nele, perderemos a caridade.</p>
+
+    </div>
+  </div>
+  
+  <!-- Bloco de Explicação (a ser preenchido) -->
+  <div class="bloco-explicacao">
+    <div class="explicacao-label">💡 Explicação e Contexto</div>
+    <div class="explicacao-corpo" id="explicacao">
+    <p><em>Explicação será adicionada em breve.</em></p>
+
+    </div>
+  </div>
+  
+</main>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO INFERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="navegacao-inferior">
+  <div class="nav-buttons">
+    <a href="suma-pagina1334.html" class="btn-primary">← Anterior</a>
+    <span class="pagina-atual">1335</span>
+    <a href="suma-pagina1336.html" class="btn-primary">Próxima →</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  RODAPÉ                                                  -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<footer class="suma-footer">
+  <p>Suma Teológica · São Tomás de Aquino | Biblioteca Lux Fidei</p>
+</footer>
+
+</body>
+</html>

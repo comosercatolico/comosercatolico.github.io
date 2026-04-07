@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Questão 87, Artigo 7 — — Se toda pena tem como causa uma culpa. | Suma Teológica</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+    --cor-fundo: #f5f0e8;
+    --cor-pagina: #fff;
+    --cor-texto: #2c1f17;
+    --cor-dourado: #d4af37;
+    --cor-roxo: #5b2c83;
+    --sombra: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cor-fundo);
+    color: var(--cor-texto);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CABEÇALHO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-header {
+    background: linear-gradient(135deg, #1a1a1a, #2c241b);
+    color: #f5f0e8;
+    padding: 32px 20px 24px;
+    text-align: center;
+    position: relative;
+}
+
+.voltar-index {
+    position: absolute;
+    top: 16px;
+    left: 20px;
+    color: var(--cor-dourado);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: opacity 0.2s;
+}
+
+.voltar-index:hover {
+    opacity: 0.8;
+}
+
+.suma-header h1 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.info-pagina {
+    display: inline-block;
+    background: rgba(212, 175, 55, 0.15);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    color: var(--cor-dourado);
+    margin-top: 8px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-topo {
+    background: #fff;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    gap: 10px;
+}
+
+.btn-nav {
+    display: inline-flex;
+    align-items: center;
+    padding: 9px 18px;
+    background: var(--cor-roxo);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.btn-nav:hover {
+    background: #4a246a;
+    transform: translateY(-1px);
+}
+
+.desabilitado {
+    background: #ddd !important;
+    color: #999 !important;
+    pointer-events: none;
+}
+
+.info-centena {
+    font-size: 0.85rem;
+    color: #888;
+    font-weight: 500;
+    padding: 0 10px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CONTEÚDO PRINCIPAL                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.pagina-conteudo {
+    flex: 1;
+    max-width: 860px;
+    width: 100%;
+    margin: 36px auto;
+    padding: 0 20px;
+}
+
+.bloco-texto {
+    background: var(--cor-pagina);
+    padding: 48px 44px;
+    border-radius: 12px;
+    box-shadow: var(--sombra);
+    position: relative;
+    margin-bottom: 24px;
+}
+
+.bloco-texto::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 20px;
+    bottom: 20px;
+    width: 4px;
+    background: linear-gradient(to bottom, var(--cor-dourado), var(--cor-roxo));
+    border-radius: 0 4px 4px 0;
+}
+
+.bloco-titulo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.3rem;
+    color: var(--cor-roxo);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e8dfd0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pagina-corpo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.1rem;
+    line-height: 1.95;
+    color: #3d3226;
+    text-align: justify;
+}
+
+.pagina-corpo p {
+    margin-bottom: 1.3em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  BLOCO DE EXPLICAÇÃO                                        */
+/* ────────────────────────────────────────────────────────── */
+
+.bloco-explicacao {
+    background: linear-gradient(135deg, #fffdf5, #faf5eb);
+    border-left: 5px solid var(--cor-dourado);
+    padding: 32px 40px;
+    border-radius: 0 12px 12px 0;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    margin-bottom: 24px;
+}
+
+.explicacao-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--cor-dourado);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 14px;
+}
+
+.explicacao-corpo {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #4a3c2c;
+}
+
+.explicacao-corpo p {
+    margin-bottom: 1em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO INFERIOR                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-inferior {
+    max-width: 860px;
+    width: 100%;
+    margin: 0 auto 40px;
+    padding: 0 20px;
+}
+
+.nav-buttons {
+    background: #fff;
+    padding: 18px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    box-shadow: var(--sombra);
+}
+
+.btn-primary {
+    flex: 1;
+    text-align: center;
+    padding: 13px 16px;
+    background: linear-gradient(135deg, var(--cor-roxo), #7a3eb5);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(91, 44, 131, 0.3);
+}
+
+.pagina-atual {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--cor-dourado);
+    min-width: 50px;
+    text-align: center;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RODAPÉ                                                     */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-footer {
+    background: #1a1a1a;
+    color: #888;
+    text-align: center;
+    padding: 22px 20px;
+    margin-top: auto;
+    font-size: 0.85rem;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RESPONSIVIDADE                                             */
+/* ────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+    .suma-header h1 {
+        font-size: 1.4rem;
+    }
+    
+    .bloco-texto {
+        padding: 28px 18px;
+    }
+    
+    .bloco-explicacao {
+        padding: 22px 18px;
+    }
+    
+    .navegacao-topo {
+        flex-wrap: wrap;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CABEÇALHO                                               -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="suma-header">
+  <a href="../../index.html" class="voltar-index">← Índice</a>
+  <h1>Suma Teológica</h1>
+  <p style="opacity:0.8; font-style:italic; margin-top:4px;">São Tomás de Aquino</p>
+  <span class="info-pagina">Página 1048 de 3000</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO SUPERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<nav class="navegacao-topo">
+  <a href="suma-pagina1047.html" class="btn-nav">← Anterior</a>
+  <span class="info-centena">Pág. 1048/3000</span>
+  <a href="suma-pagina1049.html" class="btn-nav">Próxima →</a>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CONTEÚDO PRINCIPAL                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<main class="pagina-conteudo">
+  
+  <!-- Texto Original -->
+  <div class="bloco-texto">
+    <div class="bloco-titulo">
+      <span>📜</span>
+      Questão 87, Artigo 7 — — Se toda pena tem como causa uma culpa.
+    </div>
+    <div class="pagina-corpo">
+    <p>(IIª-IIªª, q. 108, a. 4; III, q. 14, a. 1, ad 3; II Sent., dist. XXX, q. 1, a 2; dist. XXXVI, a. 4; IV, dist. XV, q. 1, a. 4, qª 2, ad 3; dist. XLVI, q. 1, a. 2, qª 3 ; III Cont. Gent., cap. CXLI; De Malo, q. 1, a. 4; q. 5, a. 4; In Ioan., cap. IX, lect. I). O sétimo discute-se assim. — Parece que nem toda pena tem como causa uma culpa.</p>
+    <p>1. — Pois, diz o Evangelho, do cego de nascença (Jo 9, 3): Para que nascesse cego, nem este pecou, nem os seus pais. E semelhantemente, vemos muitas crianças, mesmo batizadas, sofrerem graves penas, como febres, opressões dos demônios e muitas outras, apesar de, depois de batizadas, nelas não haver pecado. E antes de batizadas, não há nelas pecado, mais que nas outras crianças, que não sofrem tais penas. Logo, nem toda pena tem como causa o pecado. 2. Demais. — Segundo parece, a razão de prosperarem os pecadores é a mesma de serem alguns inocentes punidos. Pois, tanto um fato como o outro freqüentemente se dão na ordem humana. Assim, a Escritura diz, dos maus (Sl 72, 5): Não participam dos trabalhos dos homens, nem com os homens serão flagelados; e ainda (Jó 21, 7): Os ímpios vivem, são exaltados e crescem em riquezas; e por fim (Hab 1, 13): porque razão olhas tu para os que cometem injustiças, e te conservas em silêncio, entretanto que o ímpio, devora os que são mais justos que ele? Logo, nem toda pena é infligida por causa de uma culpa. 3. Demais. — De Cristo diz S. Pedro (1 Pd 2, 22): O qual não cometeu pecado, nem foi achado engano na sua boca. E contudo, no mesmo lugar, diz que padeceu por nós. Logo, nem sempre a pena Deus a comina por causa de alguma culpa.</p>
+    <p>Mas, em contrário, diz a Escritura (Jó 4, 7 ss): que inocente pereceu jamais? ou quando foram os frutos destruídos? Antes bem tenho visto que os que obram iniqüidade pereceram a um sopro de Deus. E Agostinho: toda pena é justa e infligida por causa de algum pecado.</p>
+    <p>SOLUÇÃO. — Como dissemos (a. 6), a pena pode ser considerada à dupla luz: absolutamente, e como satisfatória. — A satisfatória é de certo modo voluntária. E como os que diferem pelo reato da pena podem se unificar, pela vontade, na união do amor, às vezes, quem não pecou pode assumir voluntariamente a pena, em lugar de outrem. Assim vemos, na ordem das coisas humanas, uma pessoa assumir para si a pena devida por outra. — Se porém, considerarmos a pena absoluta e essencialmente então sempre é relativa à culpa própria. Mas umas vezes, à culpa atual, como quando alguém é punido, por Deus ou pelos homens, por um pecado cometido; outras, é relativa à culpa original. E isto, principal ou conseqüentemente. Principalmente, a pena do pecado original consiste no abandono da natureza humana a si própria, privada do auxílio da justiça original. Donde resultam todas as penalidades procedentes da corrupção da natureza humana. Devemos porém saber que às vezes uma imposição é penal, sem contudo, implicar de modo absoluto a essência da pena. Pois esta é uma espécie de mal, como dissemos na Primeira Parte (q. 48, a. 5); e o mal é a privação do bem. Ora, sendo vários os bens do homem — os da alma, os do corpo e das coisas exteriores — pode ele, às vezes sofrer detrimento num bem menor para aumentar o maior. Assim, quando sofre detrimento no dinheiro, pela saúde do corpo; ou em qualquer desses dois bens, pela saúde da alma e da glória de Deus. E em tal caso, esse detrimento não lhe é ao homem um mal, absolutamente, senão só, relativamente. E portanto, não implica, em absoluto, a essência da pena, mas a de remédio; pois, também os médicos propinam poções austeras aos doentes, para recuperarem a saúde. E como essas não são essencialmente penas, não dependem da culpa, como de causa, senão em parte. Pois, o mesmo ter necessidade de remédios penais a natureza humana lhe provém da sua corrupção, pena do pecado original. Assim, no estado de inocência, não seria necessário estimular ninguém para adiantar na virtude, por meio de comunicações penais. Por isso, o que neste caso haja de penal se reduz à culpa original como à causa.</p>
+    <p>DONDE A</p>
+    <p>RESPOSTA À PRIMEIRA OBJEÇÃO. — Esses defeitos, dos que os tem de nascença ou mesmo das crianças, são efeitos e penas do pecado original, como dissemos (q. 85, a. 5). E subsistem mesmo depois do batismo, pela causa já referida. E se não são iguais para todos, isso provém da diversidade da natureza abandonada a si própria, como já estabelecemos (q. 85, a. 5 ad 1). Mas esses defeitos os ordena a Divina Providência à salvação do homem: ou dos que sofrem, ou dos advertidos pelas penas; ou ainda à glória de Deus.</p>
+    <p>RESPOSTA À SEGUNDA. — Os bens temporais e corpóreos são por certo bens do homem; mas pequenos. Ao contrário, os bens espirituais são os seus grandes bens. Donde vem a dar a Divina Justiça aos virtuosos os bens espirituais; e dos bens temporais ou dos males, dar-lhes somente o suficiente para a virtude. Pois, como diz Dionísio, é próprio da divina justiça não enfraquecer a fortaleza dos melhores com dons materiais. Ao contrário, aos outros, o mesmo serem galardoados com bens temporais se lhes converte em mal espiritual. Por isso, a Escritura conclui (Sl 72, 6): Portanto os possui a soberba.</p>
+    <p>RESPOSTA À TERCEIRA. — Cristo padeceu a pena satisfatória por pecados não seus, mas nossos.</p>
+
+    </div>
+  </div>
+  
+  <!-- Bloco de Explicação (a ser preenchido) -->
+  <div class="bloco-explicacao">
+    <div class="explicacao-label">💡 Explicação e Contexto</div>
+    <div class="explicacao-corpo" id="explicacao">
+    <p><em>Explicação será adicionada em breve.</em></p>
+
+    </div>
+  </div>
+  
+</main>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO INFERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="navegacao-inferior">
+  <div class="nav-buttons">
+    <a href="suma-pagina1047.html" class="btn-primary">← Anterior</a>
+    <span class="pagina-atual">1048</span>
+    <a href="suma-pagina1049.html" class="btn-primary">Próxima →</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  RODAPÉ                                                  -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<footer class="suma-footer">
+  <p>Suma Teológica · São Tomás de Aquino | Biblioteca Lux Fidei</p>
+</footer>
+
+</body>
+</html>

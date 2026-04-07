@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Questão 103, Artigo 2 — — Se as cerimônias da lei antiga tinham a virtude de justificar no | Suma Teológica</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+    --cor-fundo: #f5f0e8;
+    --cor-pagina: #fff;
+    --cor-texto: #2c1f17;
+    --cor-dourado: #d4af37;
+    --cor-roxo: #5b2c83;
+    --sombra: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cor-fundo);
+    color: var(--cor-texto);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CABEÇALHO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-header {
+    background: linear-gradient(135deg, #1a1a1a, #2c241b);
+    color: #f5f0e8;
+    padding: 32px 20px 24px;
+    text-align: center;
+    position: relative;
+}
+
+.voltar-index {
+    position: absolute;
+    top: 16px;
+    left: 20px;
+    color: var(--cor-dourado);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: opacity 0.2s;
+}
+
+.voltar-index:hover {
+    opacity: 0.8;
+}
+
+.suma-header h1 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.info-pagina {
+    display: inline-block;
+    background: rgba(212, 175, 55, 0.15);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    color: var(--cor-dourado);
+    margin-top: 8px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-topo {
+    background: #fff;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    gap: 10px;
+}
+
+.btn-nav {
+    display: inline-flex;
+    align-items: center;
+    padding: 9px 18px;
+    background: var(--cor-roxo);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.btn-nav:hover {
+    background: #4a246a;
+    transform: translateY(-1px);
+}
+
+.desabilitado {
+    background: #ddd !important;
+    color: #999 !important;
+    pointer-events: none;
+}
+
+.info-centena {
+    font-size: 0.85rem;
+    color: #888;
+    font-weight: 500;
+    padding: 0 10px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CONTEÚDO PRINCIPAL                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.pagina-conteudo {
+    flex: 1;
+    max-width: 860px;
+    width: 100%;
+    margin: 36px auto;
+    padding: 0 20px;
+}
+
+.bloco-texto {
+    background: var(--cor-pagina);
+    padding: 48px 44px;
+    border-radius: 12px;
+    box-shadow: var(--sombra);
+    position: relative;
+    margin-bottom: 24px;
+}
+
+.bloco-texto::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 20px;
+    bottom: 20px;
+    width: 4px;
+    background: linear-gradient(to bottom, var(--cor-dourado), var(--cor-roxo));
+    border-radius: 0 4px 4px 0;
+}
+
+.bloco-titulo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.3rem;
+    color: var(--cor-roxo);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e8dfd0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pagina-corpo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.1rem;
+    line-height: 1.95;
+    color: #3d3226;
+    text-align: justify;
+}
+
+.pagina-corpo p {
+    margin-bottom: 1.3em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  BLOCO DE EXPLICAÇÃO                                        */
+/* ────────────────────────────────────────────────────────── */
+
+.bloco-explicacao {
+    background: linear-gradient(135deg, #fffdf5, #faf5eb);
+    border-left: 5px solid var(--cor-dourado);
+    padding: 32px 40px;
+    border-radius: 0 12px 12px 0;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    margin-bottom: 24px;
+}
+
+.explicacao-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--cor-dourado);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 14px;
+}
+
+.explicacao-corpo {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #4a3c2c;
+}
+
+.explicacao-corpo p {
+    margin-bottom: 1em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO INFERIOR                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-inferior {
+    max-width: 860px;
+    width: 100%;
+    margin: 0 auto 40px;
+    padding: 0 20px;
+}
+
+.nav-buttons {
+    background: #fff;
+    padding: 18px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    box-shadow: var(--sombra);
+}
+
+.btn-primary {
+    flex: 1;
+    text-align: center;
+    padding: 13px 16px;
+    background: linear-gradient(135deg, var(--cor-roxo), #7a3eb5);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(91, 44, 131, 0.3);
+}
+
+.pagina-atual {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--cor-dourado);
+    min-width: 50px;
+    text-align: center;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RODAPÉ                                                     */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-footer {
+    background: #1a1a1a;
+    color: #888;
+    text-align: center;
+    padding: 22px 20px;
+    margin-top: auto;
+    font-size: 0.85rem;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RESPONSIVIDADE                                             */
+/* ────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+    .suma-header h1 {
+        font-size: 1.4rem;
+    }
+    
+    .bloco-texto {
+        padding: 28px 18px;
+    }
+    
+    .bloco-explicacao {
+        padding: 22px 18px;
+    }
+    
+    .navegacao-topo {
+        flex-wrap: wrap;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CABEÇALHO                                               -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="suma-header">
+  <a href="../../index.html" class="voltar-index">← Índice</a>
+  <h1>Suma Teológica</h1>
+  <p style="opacity:0.8; font-style:italic; margin-top:4px;">São Tomás de Aquino</p>
+  <span class="info-pagina">Página 1134 de 3000</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO SUPERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<nav class="navegacao-topo">
+  <a href="suma-pagina1133.html" class="btn-nav">← Anterior</a>
+  <span class="info-centena">Pág. 1134/3000</span>
+  <a href="suma-pagina1135.html" class="btn-nav">Próxima →</a>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CONTEÚDO PRINCIPAL                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<main class="pagina-conteudo">
+  
+  <!-- Texto Original -->
+  <div class="bloco-texto">
+    <div class="bloco-titulo">
+      <span>📜</span>
+      Questão 103, Artigo 2 — — Se as cerimônias da lei antiga tinham a virtude de justificar no
+    </div>
+    <div class="pagina-corpo">
+    <p>tempo dessa lei. (Supra, q. 100, a. 12; q. 102, a. 5, ad 4; III, q. 62, a. 6; IV Sent., dist. I, q. 1, a. 5, qª 1, 3; Ad Gatal., cap. II, lect. IV; cap. III, lect. IV; Ad Hebr., cap. IX, lect, II). O segundo discute-se assim. — Parece que as cerimônias da lei antiga tinham a virtude de justificar, no tempo dessa lei.</p>
+    <p>1. — Pois, a expiação do pecado e a consagração do homem pertencem à justificação. Ora, a Escritura diz (Ex 39, 21) que pela aspersão do sangue e unção com o óleo eram consagrados os sacerdotes e as suas vestes. E noutro lugar diz (Lv 16, 16), que o sacerdote, pela aspersão do sangue do bezerro, expiava o santuário das impuridades dos filhos de Israel e das suas prevaricações e dos seus pecados. Logo, as cerimônias da lei antiga tinham a virtude de justificar. 2. Demais. — Aquilo pelo que o homem agrada a Deus pertence à justificação, conforme a Escritura (Sl 10, 8): O Senhor é justo e amou a justiça. Ora, pelas cerimônias certos agradavam a Deus, conforme ainda a Escritura (Lv 10, 19): Como poderia eu agradar ao Senhor nas cerimônias, achando-me com o coração tão penalizado? Logo, as cerimônias da lei antiga tinha o poder de justificar. 3. Demais. — O que é do culto divino mais pertence à alma que ao corpo, conforme a Escritura (Sl 18, 8): A lei do Senhor, que é imaculada, converte as almas. Ora, pelas cerimônias da lei antiga, purificavam- se os leprosos. Logo, com maior razão, essas cerimônias podiam purificar a alma, justificando.</p>
+    <p>Mas, em contrário, diz o Apóstolo (Gl 2): Se tivesse sido dada uma lei que pudesse justificar, Cristo morreu em vão, i. é, sem causa. Ora, isto é inadmissível. Logo, as cerimônias da lei antiga não justificavam.</p>
+    <p>SOLUÇÃO. — Como já dissemos (q. 102, a. 5 ad 4), a lei antiga estabelecia uma dupla imundice: a espiritual, i. é, a da culpa; e a corporal, que privava da idoneidade para o culto divino. Assim como era considerado imundo o leproso, ou aquele que tocava algum cadáver: Por onde, a imundice não era senão uma certa irregularidade. Ora, as cerimônias da lei antiga tinham a virtude de purificar dela. Pois, eram uns remédios determinados por ordenação da lei, para purificar da referida imundice, estatuída pela própria lei. Por isso, o Apóstolo diz (Heb 9, 13): o sangue dos bodes e dos touros, e a cinza espalhada duma novilha, santifica aos imundos para purificação da carne. E assim como a imundice de que se era purificado, por essas cerimônias, era mais da carne que da mente, assim também as cerimônias mesmas da justiça da carne o Apóstolo as considera como justiças da carne postas até ao tempo da correção. Elas porém não tinham a virtude de expiar a imundice da mente, que é imundice da culpa. E isto porque a expiação dos pecados só pode ser feita por Cristo, que tira os pecados do mundo, como diz o Evangelho (Jo 1, 29). E como o mistério da encarnação e da paixão de Cristo ainda não estava totalmente consumado, as cerimônias da lei antiga não podiam conter realmente em si uma virtude profluente dessa encarnação e dessa paixão, como a contêm os sacramentos da lei nova. E por isso não podiam purificar do pecado, como diz o Apóstolo (Heb 10, 4): é impossível que com sangue de touros e de bodes se tirem os pecados. E a isto o Apóstolo chama elementos fracos e pobres; fracos, porque não podem purificar dos pecados; fraqueza essa proveniente de serem pobres, i. é, de não conterem em si a graça. A mente dos fiéis contudo podia, na vigência da lei, unir-se a Cristo, que se encarnou e sofreu a paixão, e assim justificar-se pela fé em Cristo. Da qual era uma afirmação a observância dessas cerimônias, enquanto figura de Cristo. Por isso, no regime da lei antiga ofereciam-se certos sacrifícios pelos pecados; não que por si mesmos eles purificassem do pecado, mas por serem uma afirmação de fé, que dele purificava. E isso mesmo a lei o indica pelo modo de exprimir-se. Pois, determina que, na oblação das hóstias pelo pecado, o sacerdote rogará por ele (pelo príncipe) e o seu pecado lhe será perdoado; como se o pecado fosse perdoado, não por força dos sacrifícios, mas pela fé e devoção dos oferentes. Deve-se contudo saber, que a expiação, pela cerimônia da lei antiga, das imundices corpóreas, era figura da expiação dos pecados operada por Cristo. Por onde é claro, que as cerimônias, no regime da lei antiga; não tinham a virtude de justificar.</p>
+    <p>DONDE A</p>
+    <p>RESPOSTA À PRIMEIRA OBJEÇÃO. — Essa santificação do sacerdote, dos seus filhos, das suas vestes e de tudo o mais, pela aspersão do sangue, não passava de uma preparação ao culto divino e remoção dos impedimentos, para a purificação da carne, como diz o Apóstolo (Heb 9, 13). E prefigurava a outra purificação, pela qual Jesus, pelo seu sangue, santificou o povo. Ora, a expiação deve referir-se à remoção dessas imundices corpóreas, e não à da culpa. Donde a referência à expiação do santuário, que entretanto não podia ser sujeito de culpa.</p>
+    <p>RESPOSTA À SEGUNDA. — Os sacerdotes agradavam a Deus, nas cerimônias, pela obediência, devoção e fé no que prefiguravam; não porém por elas, em si mesmas consideradas.</p>
+    <p>RESPOSTA À TERCEIRA. — As cerimônias instituídas para a purificação dos leprosos não se ordenavam a tirar a imundice da enfermidade da lepra; o que se patenteia por se aplicarem só ao que já estava limpo. Por isso, diz a Escritura (Lv 14, 3-4): o sacerdote, saindo fora do arraial, vendo que a lepra está curada, mandará ao que se purifica, que ofereça, etc. Por onde é claro que era constituído juiz da lepra já curada e não, da que devia selo. E as cerimônias de que se trata foram estabelecidas para tirar a imundice da irregularidade. Diz-se contudo que às vezes se acontecesse o sacerdote errar no juízo, o leproso era limpo miraculosamente por Deus, por virtude divina e não por virtude dos sacrifícios. Assim também, milagrosamente, apodrecia a coxa de uma mulher adúltera, depois de ter bebido a água que o sacerdote carregou de maldições, como está na Escritura (Nm 5, 19-27).</p>
+
+    </div>
+  </div>
+  
+  <!-- Bloco de Explicação (a ser preenchido) -->
+  <div class="bloco-explicacao">
+    <div class="explicacao-label">💡 Explicação e Contexto</div>
+    <div class="explicacao-corpo" id="explicacao">
+    <p><em>Explicação será adicionada em breve.</em></p>
+
+    </div>
+  </div>
+  
+</main>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO INFERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="navegacao-inferior">
+  <div class="nav-buttons">
+    <a href="suma-pagina1133.html" class="btn-primary">← Anterior</a>
+    <span class="pagina-atual">1134</span>
+    <a href="suma-pagina1135.html" class="btn-primary">Próxima →</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  RODAPÉ                                                  -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<footer class="suma-footer">
+  <p>Suma Teológica · São Tomás de Aquino | Biblioteca Lux Fidei</p>
+</footer>
+
+</body>
+</html>

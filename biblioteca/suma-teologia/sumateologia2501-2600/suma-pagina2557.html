@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Questão 75, Artigo 3 — — Se a substância do pão, depois da consagração deste | Suma Teológica</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+    --cor-fundo: #f5f0e8;
+    --cor-pagina: #fff;
+    --cor-texto: #2c1f17;
+    --cor-dourado: #d4af37;
+    --cor-roxo: #5b2c83;
+    --sombra: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cor-fundo);
+    color: var(--cor-texto);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CABEÇALHO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-header {
+    background: linear-gradient(135deg, #1a1a1a, #2c241b);
+    color: #f5f0e8;
+    padding: 32px 20px 24px;
+    text-align: center;
+    position: relative;
+}
+
+.voltar-index {
+    position: absolute;
+    top: 16px;
+    left: 20px;
+    color: var(--cor-dourado);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: opacity 0.2s;
+}
+
+.voltar-index:hover {
+    opacity: 0.8;
+}
+
+.suma-header h1 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.info-pagina {
+    display: inline-block;
+    background: rgba(212, 175, 55, 0.15);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    color: var(--cor-dourado);
+    margin-top: 8px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-topo {
+    background: #fff;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    gap: 10px;
+}
+
+.btn-nav {
+    display: inline-flex;
+    align-items: center;
+    padding: 9px 18px;
+    background: var(--cor-roxo);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.btn-nav:hover {
+    background: #4a246a;
+    transform: translateY(-1px);
+}
+
+.desabilitado {
+    background: #ddd !important;
+    color: #999 !important;
+    pointer-events: none;
+}
+
+.info-centena {
+    font-size: 0.85rem;
+    color: #888;
+    font-weight: 500;
+    padding: 0 10px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CONTEÚDO PRINCIPAL                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.pagina-conteudo {
+    flex: 1;
+    max-width: 860px;
+    width: 100%;
+    margin: 36px auto;
+    padding: 0 20px;
+}
+
+.bloco-texto {
+    background: var(--cor-pagina);
+    padding: 48px 44px;
+    border-radius: 12px;
+    box-shadow: var(--sombra);
+    position: relative;
+    margin-bottom: 24px;
+}
+
+.bloco-texto::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 20px;
+    bottom: 20px;
+    width: 4px;
+    background: linear-gradient(to bottom, var(--cor-dourado), var(--cor-roxo));
+    border-radius: 0 4px 4px 0;
+}
+
+.bloco-titulo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.3rem;
+    color: var(--cor-roxo);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e8dfd0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pagina-corpo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.1rem;
+    line-height: 1.95;
+    color: #3d3226;
+    text-align: justify;
+}
+
+.pagina-corpo p {
+    margin-bottom: 1.3em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  BLOCO DE EXPLICAÇÃO                                        */
+/* ────────────────────────────────────────────────────────── */
+
+.bloco-explicacao {
+    background: linear-gradient(135deg, #fffdf5, #faf5eb);
+    border-left: 5px solid var(--cor-dourado);
+    padding: 32px 40px;
+    border-radius: 0 12px 12px 0;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    margin-bottom: 24px;
+}
+
+.explicacao-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--cor-dourado);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 14px;
+}
+
+.explicacao-corpo {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #4a3c2c;
+}
+
+.explicacao-corpo p {
+    margin-bottom: 1em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO INFERIOR                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-inferior {
+    max-width: 860px;
+    width: 100%;
+    margin: 0 auto 40px;
+    padding: 0 20px;
+}
+
+.nav-buttons {
+    background: #fff;
+    padding: 18px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    box-shadow: var(--sombra);
+}
+
+.btn-primary {
+    flex: 1;
+    text-align: center;
+    padding: 13px 16px;
+    background: linear-gradient(135deg, var(--cor-roxo), #7a3eb5);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(91, 44, 131, 0.3);
+}
+
+.pagina-atual {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--cor-dourado);
+    min-width: 50px;
+    text-align: center;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RODAPÉ                                                     */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-footer {
+    background: #1a1a1a;
+    color: #888;
+    text-align: center;
+    padding: 22px 20px;
+    margin-top: auto;
+    font-size: 0.85rem;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RESPONSIVIDADE                                             */
+/* ────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+    .suma-header h1 {
+        font-size: 1.4rem;
+    }
+    
+    .bloco-texto {
+        padding: 28px 18px;
+    }
+    
+    .bloco-explicacao {
+        padding: 22px 18px;
+    }
+    
+    .navegacao-topo {
+        flex-wrap: wrap;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CABEÇALHO                                               -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="suma-header">
+  <a href="../../index.html" class="voltar-index">← Índice</a>
+  <h1>Suma Teológica</h1>
+  <p style="opacity:0.8; font-style:italic; margin-top:4px;">São Tomás de Aquino</p>
+  <span class="info-pagina">Página 2557 de 3000</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO SUPERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<nav class="navegacao-topo">
+  <a href="suma-pagina2556.html" class="btn-nav">← Anterior</a>
+  <span class="info-centena">Pág. 2557/3000</span>
+  <a href="suma-pagina2558.html" class="btn-nav">Próxima →</a>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CONTEÚDO PRINCIPAL                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<main class="pagina-conteudo">
+  
+  <!-- Texto Original -->
+  <div class="bloco-texto">
+    <div class="bloco-titulo">
+      <span>📜</span>
+      Questão 75, Artigo 3 — — Se a substância do pão, depois da consagração deste
+    </div>
+    <div class="pagina-corpo">
+    <p>sacramento, se aniquila, ou se resolve na matéria primitiva. O terceiro discute-se assim. — Parece que a substância do pão, depois da consagração deste sacramento, se aniquila ou se resolve na matéria primitiva.</p>
+    <p>1. — Pois, tudo o que é corpóreo deve estar em algum lugar. Ora, a substância do pão, que é corpórea, não permanece neste sacramento, como se disse; mas não se lhe pode assinalar nenhum lugar onde esteja. Logo, nada mais é depois da consagração. Portanto, ou se aniquilou ou se resolveu na primitiva matéria. 2. Demais. — O termo de origem de uma mudança não permanece, senão só na potência da matéria. Assim, quando do ar nasce o fogo, a forma do ar não permanece senão na potência da matéria; e o mesmo se dá quando do branco procede o preto. Ora, neste sacramento a substância do pão e a do vinho se comportam como termo de origem, e o corpo ou o sangue de Cristo, como termo de chegada. Assim, diz Ambrósio: Antes da consagração há uma espécie, depois, o corpo de Cristo. Logo, feita a consagração, a substância do pão ou do vinho não permanece, salvo talvez resoluta na sua matéria. 3. Demais. — Necessàriamente um dos contraditórios é verdadeiro. Ora, esta proposição é falsa: Feita a consagração, a substância do pão ou do vinho é uma realidade. Logo, é verdadeira a proposição: A substância do pão ou do vinho não é nada.</p>
+    <p>Mas, em contrário, Agostinho diz: Deus não é causa da tendência para o não-ser. Ora, este sacramento se consuma pela virtude divina. Logo, neste sacramento não fica aniquilada a substância do pão ou do vinho.</p>
+    <p>SOLUÇÃO. — Porque a substância do pão ou do vinho não permanece neste sacramento, certos, reputando impossível a conversão da substância do pão ou do vinho no corpo ou no sangue de Cristo afirmaram que pela consagração a substância do pão ou do vinho ou se resolve na matéria primitiva ou se aniquila. (Cf. Guilherme de Paris, de Euch. cap. I). Ora, a matéria primitiva, em que os corpos mistos podem resolver-se, são os quatro elementos. Pois, a resolução não pode fazer-se na matéria-prima, de modo a existir sem a forma, porque a matéria não pode existir sem a forma. Ora, como depois da consagração, nada permanece sob as espécies do sacramento, a não ser o corpo e o sangue de Cristo, será necessário concluir que os elementos, em que se resolveu a substância do pão ou do vinho, daí se separaram pelo movimento local, o que os sentidos perceberiam. - Semelhantemente, também a substância do pão ou do vinho permanece até o último instante da consagração. Ora, no último instante da consagração, já aí existe a substância do corpo ou do sangue de Cristo, assim como no último instante da geração já existe a forma. Por onde não se pode admitir nenhum instante no qual aí exista a matéria primitiva. Pois, não se pode dizer que a substância do pão ou do vinho se resolva aos poucos na matéria primitiva, ou saia sucessivamente do lugar das espécies. Porque, se isso começasse a realizar-se no último instante da sua consagração, simultaneamente existiria numa mesma parte da hóstia o corpo de Cristo e a substância do pão, o que vai contra o já dito. Se porem isso começasse a realizar-se antes da consagração, deveríamos admitir um tempo em que numa mesma parte da hóstia não existiria nem a substância do pão nem o corpo de cristo - o que é inadmissível. E essa conseqüência eles próprios a ponderaram. E por isso à dijunctiva acrescentaram a hipótese da aniquilação da substância do pão. - Mas isto também não pode sustentar-se. Porque não podemos admitir nenhum modo pelo qual o corpo de Cristo comece a estar verdadeiramente neste sacramento, senão pela conversão nele da substância do pão. Conversão que fica anulada, posta a aniquilação da substância do pão ou a resolução na primitiva matéria. – Semelhantemente, também não podemos descobrir a causa de tal resolução ou aniquilação neste sacramento, pois que o efeito do sacramento é significado pela forma, e nem a resolução nem a significação pelas palavras da forma - Isto é o meu corpo. Por onde é clara a falsidade da opinião referida.</p>
+    <p>DONDE A</p>
+    <p>RESPOSTA À PRIMEIRA OBJEÇÃO. — A substância do pão ou do vinho, feita a consagração, não permanece nem sob as espécies do sacramento, nem em nenhum outro lugar. Mas dai não se segue que fique aniquilada, pois se converte no corpo de Cristo. Como não se segue que o ar, donde se gera o fogo, desapareça, porque não ocupa o lugar onde está o fogo, nem nenhum outro.</p>
+    <p>RESPOSTA À SEGUNDA. — A forma termo de origem, não se converte noutra forma, mas uma sucede à outra, no sujeito; e portanto a primeira forma não permanece senão na potência da matéria. Ora, no caso vertente, a substância do pão se converte no corpo de Cristo, como dissemos. Logo, a objeção não colhe.</p>
+    <p>RESPOSTA À TERCEIRA. — Embora depois da consagração seja falsa a proposição - A substância do pão é uma realidade - contudo o em que a substância do pão se converteu é uma realidade. E, portanto a substância do pão não ficou aniquilada.</p>
+
+    </div>
+  </div>
+  
+  <!-- Bloco de Explicação (a ser preenchido) -->
+  <div class="bloco-explicacao">
+    <div class="explicacao-label">💡 Explicação e Contexto</div>
+    <div class="explicacao-corpo" id="explicacao">
+    <p><em>Explicação será adicionada em breve.</em></p>
+
+    </div>
+  </div>
+  
+</main>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO INFERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="navegacao-inferior">
+  <div class="nav-buttons">
+    <a href="suma-pagina2556.html" class="btn-primary">← Anterior</a>
+    <span class="pagina-atual">2557</span>
+    <a href="suma-pagina2558.html" class="btn-primary">Próxima →</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  RODAPÉ                                                  -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<footer class="suma-footer">
+  <p>Suma Teológica · São Tomás de Aquino | Biblioteca Lux Fidei</p>
+</footer>
+
+</body>
+</html>

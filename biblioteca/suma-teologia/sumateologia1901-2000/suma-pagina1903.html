@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Questão 147, Artigo 1 — Se o jejum é ato de virtude. | Suma Teológica</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+    --cor-fundo: #f5f0e8;
+    --cor-pagina: #fff;
+    --cor-texto: #2c1f17;
+    --cor-dourado: #d4af37;
+    --cor-roxo: #5b2c83;
+    --sombra: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cor-fundo);
+    color: var(--cor-texto);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CABEÇALHO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-header {
+    background: linear-gradient(135deg, #1a1a1a, #2c241b);
+    color: #f5f0e8;
+    padding: 32px 20px 24px;
+    text-align: center;
+    position: relative;
+}
+
+.voltar-index {
+    position: absolute;
+    top: 16px;
+    left: 20px;
+    color: var(--cor-dourado);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: opacity 0.2s;
+}
+
+.voltar-index:hover {
+    opacity: 0.8;
+}
+
+.suma-header h1 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.info-pagina {
+    display: inline-block;
+    background: rgba(212, 175, 55, 0.15);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    color: var(--cor-dourado);
+    margin-top: 8px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-topo {
+    background: #fff;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    gap: 10px;
+}
+
+.btn-nav {
+    display: inline-flex;
+    align-items: center;
+    padding: 9px 18px;
+    background: var(--cor-roxo);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.btn-nav:hover {
+    background: #4a246a;
+    transform: translateY(-1px);
+}
+
+.desabilitado {
+    background: #ddd !important;
+    color: #999 !important;
+    pointer-events: none;
+}
+
+.info-centena {
+    font-size: 0.85rem;
+    color: #888;
+    font-weight: 500;
+    padding: 0 10px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CONTEÚDO PRINCIPAL                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.pagina-conteudo {
+    flex: 1;
+    max-width: 860px;
+    width: 100%;
+    margin: 36px auto;
+    padding: 0 20px;
+}
+
+.bloco-texto {
+    background: var(--cor-pagina);
+    padding: 48px 44px;
+    border-radius: 12px;
+    box-shadow: var(--sombra);
+    position: relative;
+    margin-bottom: 24px;
+}
+
+.bloco-texto::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 20px;
+    bottom: 20px;
+    width: 4px;
+    background: linear-gradient(to bottom, var(--cor-dourado), var(--cor-roxo));
+    border-radius: 0 4px 4px 0;
+}
+
+.bloco-titulo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.3rem;
+    color: var(--cor-roxo);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e8dfd0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pagina-corpo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.1rem;
+    line-height: 1.95;
+    color: #3d3226;
+    text-align: justify;
+}
+
+.pagina-corpo p {
+    margin-bottom: 1.3em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  BLOCO DE EXPLICAÇÃO                                        */
+/* ────────────────────────────────────────────────────────── */
+
+.bloco-explicacao {
+    background: linear-gradient(135deg, #fffdf5, #faf5eb);
+    border-left: 5px solid var(--cor-dourado);
+    padding: 32px 40px;
+    border-radius: 0 12px 12px 0;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    margin-bottom: 24px;
+}
+
+.explicacao-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--cor-dourado);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 14px;
+}
+
+.explicacao-corpo {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #4a3c2c;
+}
+
+.explicacao-corpo p {
+    margin-bottom: 1em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO INFERIOR                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-inferior {
+    max-width: 860px;
+    width: 100%;
+    margin: 0 auto 40px;
+    padding: 0 20px;
+}
+
+.nav-buttons {
+    background: #fff;
+    padding: 18px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    box-shadow: var(--sombra);
+}
+
+.btn-primary {
+    flex: 1;
+    text-align: center;
+    padding: 13px 16px;
+    background: linear-gradient(135deg, var(--cor-roxo), #7a3eb5);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(91, 44, 131, 0.3);
+}
+
+.pagina-atual {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--cor-dourado);
+    min-width: 50px;
+    text-align: center;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RODAPÉ                                                     */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-footer {
+    background: #1a1a1a;
+    color: #888;
+    text-align: center;
+    padding: 22px 20px;
+    margin-top: auto;
+    font-size: 0.85rem;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RESPONSIVIDADE                                             */
+/* ────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+    .suma-header h1 {
+        font-size: 1.4rem;
+    }
+    
+    .bloco-texto {
+        padding: 28px 18px;
+    }
+    
+    .bloco-explicacao {
+        padding: 22px 18px;
+    }
+    
+    .navegacao-topo {
+        flex-wrap: wrap;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CABEÇALHO                                               -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="suma-header">
+  <a href="../../index.html" class="voltar-index">← Índice</a>
+  <h1>Suma Teológica</h1>
+  <p style="opacity:0.8; font-style:italic; margin-top:4px;">São Tomás de Aquino</p>
+  <span class="info-pagina">Página 1903 de 3000</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO SUPERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<nav class="navegacao-topo">
+  <a href="suma-pagina1902.html" class="btn-nav">← Anterior</a>
+  <span class="info-centena">Pág. 1903/3000</span>
+  <a href="suma-pagina1904.html" class="btn-nav">Próxima →</a>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CONTEÚDO PRINCIPAL                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<main class="pagina-conteudo">
+  
+  <!-- Texto Original -->
+  <div class="bloco-texto">
+    <div class="bloco-titulo">
+      <span>📜</span>
+      Questão 147, Artigo 1 — Se o jejum é ato de virtude.
+    </div>
+    <div class="pagina-corpo">
+    <p>O primeiro discute–se assim. – Parece que o jejum não é ato de virtude. 1. – Pois, todo ato de virtude é aceito por Deus. Ora, o jejum nem sempre é aceito de Deus, conforme àquilo da Escritura: Por que jejuamos e tu não olhaste para nós? Logo, não é o jejum ato de virtude. 2. Demais. – Nenhum ato virtuoso pode afastar–se da mediedade da virtude. Ora, o jejum se afasta da mediedade da virtude, a qual existe na virtude da obstinência quando ela obvia às necessidades da natureza, a que o jejum impõe uma privação; do contrário, os que não jejuam não praticariam a virtude da abstinência. Logo, o jejum não é ato de virtude. 3. Demais. – O que comumente convém a todos, tanto aos bons como aos maus, não é ato de virtude. Ora, tal é o jejum; pois, todos antes de comermos, estamos em jejum. Logo, o jejum não é ato de virtude.</p>
+    <p>Mas, em contrário, é enumerado entre os outros atos de virtude, quando o Apóstolo diz: Nos jejuns, na castidade, na ciência, etc. SOLUÇÃO. – Um ato é virtuoso quando ordenado pela razão a um bem honesto. Ora, tal se dá.com o jejum. Pois, por três motivos o praticamos. – Primeiro, para reprimir as concupiscências da carne. Donde o dizer o Apóstolo, no lugar citado: Nos jejuns, na necessidade, porque o jejum conserva a castidade. Pois, como diz Jerónimo, sem Ceres e Baco Vênus esfria, isto é, pela abstinência da comida e da bebida a luxúria se amortece. – Segundo, pra ticamos o Jejum para mais livremente se nos elevar a alma na contemplação das sublimes verdades. Por isso, refere a Escritura que Daniel, depois de ter jejuado três semanas, recebeu de Deus a revelação. – Em terceiro lugar para satisfazer pelos nossos pecados. Por isso, diz a Escritura: Converteivos a mim de todo o vosso coração em jejum e em lágrimas e em gemido. E é o que ensina Agostinho num sermão: O jejum purifica a alma eleva os sentidos, sujeita a carne ao espírito, faz–nos contrito e humilhado o coração, dissipa o nevoeiro da concupiscência, extingue os oradores tia sensualidade acende a verdadeira luz da castidade. Por onde é claro, que o jejum é ato de virtude.</p>
+    <p>DONDE A</p>
+    <p>RESPOSTA À PRIMEIRA OBJEÇÃO. – Pode acontecer que um ato genericamente virtuoso venha a tornar–se vicioso por certas circunstâncias sobrevenientes. Por isso, no mesmo lugar citado, diz a Escritura: Eis que no dia do vosso jejum se acha a vossa vontade; e pouco adiante acrescenta: Vós jejuais para prosseguirdes demandas a contendas e feris com o punho sem piedade. O que Gregório explica: A vontade exprimia a alegria; o punho, a ira. Por isso, em vão mortificamos a carne pela penitência se, presa de movimentos desordenados, a alma se nos dissipa pelos vícios. E Agostinho, no sermão citado, ensina, que o jejum não ama a verbosidade, julga superfluidade as riquezas, despreza a soberba, recomenda a humildade, faznos descobrir em nós o que temos de enfermo e frágil.</p>
+    <p>RESPOSTA À SEGUNDA. – A mediedade da virtude não se funda na sua quantidade, mas, em ser segundo a razão reta, como diz Aristóteles. Ora, a razão julga que, por uma causa especial, a levamos tomar menos alimento do que devíamos, segundo o costume geral; assim, para evitarmos uma doença ou para fazermos mais expeditamente certas obras corporais. E, com muito maior fundamento, a razão assim o ordena, para evitarmos os males espirituais e praticarmos o bem. Mas, a razão reta não nos priva a tal ponto dos alimentos, que a natureza não nos possa subsistir; pois, como diz Jerónimo, não há diferença entre nos matarmos logo ou pouco a pouco; é oferecer um holocausto roubado destruir o nosso corpo, privando–o com excesso de alimento ou de sono. Semelhantemente, a razão reta não manda nos privemos de comida a ponto de nos tornarmos incapazes de cumprir o nosso dever; por isso, diz Jerónimo, que o homem racional perde a dignidade que prefere o jejum à caridade ou as vigílias dos sentidos, à integridade do espírito.</p>
+    <p>RESPOSTA À TERCEIRA. – O jejum natural, em que estamos, antes de comer, é uma pura negação. Por isso, não pode ser considerado ato de virtude; senão só aquele jejum pelo qual, com propósito racional, de certo modo nos abstemos de comer. Por isso, o primeiro se chama jejum do homem em jejum e o segundo, jejum do jejuador, como praticado por quem age intencionalmente.</p>
+
+    </div>
+  </div>
+  
+  <!-- Bloco de Explicação (a ser preenchido) -->
+  <div class="bloco-explicacao">
+    <div class="explicacao-label">💡 Explicação e Contexto</div>
+    <div class="explicacao-corpo" id="explicacao">
+    <p><em>Explicação será adicionada em breve.</em></p>
+
+    </div>
+  </div>
+  
+</main>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO INFERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="navegacao-inferior">
+  <div class="nav-buttons">
+    <a href="suma-pagina1902.html" class="btn-primary">← Anterior</a>
+    <span class="pagina-atual">1903</span>
+    <a href="suma-pagina1904.html" class="btn-primary">Próxima →</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  RODAPÉ                                                  -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<footer class="suma-footer">
+  <p>Suma Teológica · São Tomás de Aquino | Biblioteca Lux Fidei</p>
+</footer>
+
+</body>
+</html>

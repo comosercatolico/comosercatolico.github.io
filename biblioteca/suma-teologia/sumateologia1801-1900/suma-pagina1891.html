@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Questão 142, Artigo 3 — Se a timidez é maior vício que a intemperança. | Suma Teológica</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+    --cor-fundo: #f5f0e8;
+    --cor-pagina: #fff;
+    --cor-texto: #2c1f17;
+    --cor-dourado: #d4af37;
+    --cor-roxo: #5b2c83;
+    --sombra: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cor-fundo);
+    color: var(--cor-texto);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CABEÇALHO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-header {
+    background: linear-gradient(135deg, #1a1a1a, #2c241b);
+    color: #f5f0e8;
+    padding: 32px 20px 24px;
+    text-align: center;
+    position: relative;
+}
+
+.voltar-index {
+    position: absolute;
+    top: 16px;
+    left: 20px;
+    color: var(--cor-dourado);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: opacity 0.2s;
+}
+
+.voltar-index:hover {
+    opacity: 0.8;
+}
+
+.suma-header h1 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.info-pagina {
+    display: inline-block;
+    background: rgba(212, 175, 55, 0.15);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    color: var(--cor-dourado);
+    margin-top: 8px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-topo {
+    background: #fff;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    gap: 10px;
+}
+
+.btn-nav {
+    display: inline-flex;
+    align-items: center;
+    padding: 9px 18px;
+    background: var(--cor-roxo);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.btn-nav:hover {
+    background: #4a246a;
+    transform: translateY(-1px);
+}
+
+.desabilitado {
+    background: #ddd !important;
+    color: #999 !important;
+    pointer-events: none;
+}
+
+.info-centena {
+    font-size: 0.85rem;
+    color: #888;
+    font-weight: 500;
+    padding: 0 10px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CONTEÚDO PRINCIPAL                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.pagina-conteudo {
+    flex: 1;
+    max-width: 860px;
+    width: 100%;
+    margin: 36px auto;
+    padding: 0 20px;
+}
+
+.bloco-texto {
+    background: var(--cor-pagina);
+    padding: 48px 44px;
+    border-radius: 12px;
+    box-shadow: var(--sombra);
+    position: relative;
+    margin-bottom: 24px;
+}
+
+.bloco-texto::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 20px;
+    bottom: 20px;
+    width: 4px;
+    background: linear-gradient(to bottom, var(--cor-dourado), var(--cor-roxo));
+    border-radius: 0 4px 4px 0;
+}
+
+.bloco-titulo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.3rem;
+    color: var(--cor-roxo);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e8dfd0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pagina-corpo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.1rem;
+    line-height: 1.95;
+    color: #3d3226;
+    text-align: justify;
+}
+
+.pagina-corpo p {
+    margin-bottom: 1.3em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  BLOCO DE EXPLICAÇÃO                                        */
+/* ────────────────────────────────────────────────────────── */
+
+.bloco-explicacao {
+    background: linear-gradient(135deg, #fffdf5, #faf5eb);
+    border-left: 5px solid var(--cor-dourado);
+    padding: 32px 40px;
+    border-radius: 0 12px 12px 0;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    margin-bottom: 24px;
+}
+
+.explicacao-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--cor-dourado);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 14px;
+}
+
+.explicacao-corpo {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #4a3c2c;
+}
+
+.explicacao-corpo p {
+    margin-bottom: 1em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO INFERIOR                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-inferior {
+    max-width: 860px;
+    width: 100%;
+    margin: 0 auto 40px;
+    padding: 0 20px;
+}
+
+.nav-buttons {
+    background: #fff;
+    padding: 18px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    box-shadow: var(--sombra);
+}
+
+.btn-primary {
+    flex: 1;
+    text-align: center;
+    padding: 13px 16px;
+    background: linear-gradient(135deg, var(--cor-roxo), #7a3eb5);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(91, 44, 131, 0.3);
+}
+
+.pagina-atual {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--cor-dourado);
+    min-width: 50px;
+    text-align: center;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RODAPÉ                                                     */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-footer {
+    background: #1a1a1a;
+    color: #888;
+    text-align: center;
+    padding: 22px 20px;
+    margin-top: auto;
+    font-size: 0.85rem;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RESPONSIVIDADE                                             */
+/* ────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+    .suma-header h1 {
+        font-size: 1.4rem;
+    }
+    
+    .bloco-texto {
+        padding: 28px 18px;
+    }
+    
+    .bloco-explicacao {
+        padding: 22px 18px;
+    }
+    
+    .navegacao-topo {
+        flex-wrap: wrap;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CABEÇALHO                                               -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="suma-header">
+  <a href="../../index.html" class="voltar-index">← Índice</a>
+  <h1>Suma Teológica</h1>
+  <p style="opacity:0.8; font-style:italic; margin-top:4px;">São Tomás de Aquino</p>
+  <span class="info-pagina">Página 1891 de 3000</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO SUPERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<nav class="navegacao-topo">
+  <a href="suma-pagina1890.html" class="btn-nav">← Anterior</a>
+  <span class="info-centena">Pág. 1891/3000</span>
+  <a href="suma-pagina1892.html" class="btn-nav">Próxima →</a>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CONTEÚDO PRINCIPAL                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<main class="pagina-conteudo">
+  
+  <!-- Texto Original -->
+  <div class="bloco-texto">
+    <div class="bloco-titulo">
+      <span>📜</span>
+      Questão 142, Artigo 3 — Se a timidez é maior vício que a intemperança.
+    </div>
+    <div class="pagina-corpo">
+    <p>O terceiro discute–se assim. – Parece que a timidez é maior vício que a intemperança. 1. – Pois, um vício é censurado, por ser contrário ao bem da virtude. Ora, a timidez se opõe à fortaleza, virtude mais nobre que a temperança, à qual se opõe a intemperança, como do sobredito resulta. Logo, a timidez é maior vício que a, intemperança. 2. Demais. – Menos repreensíveis somos quando sucumbimos ao que é difícil de vencer. Por isso diz o Filósofo, que quem é vencido por prazeres ou por sofrimentos fortes e muito intensos não é digno de admiração, mas, de perdão. Ora, parece mais difícil vencer os prazeres sensíveis do que as outras paixões: donde o dizer Aristóteles, que é mais difícil lutar contra o prazer do que contra a ira, considerada mais forte que o temor. Logo, a intemperança, que é superada pelo prazer, é menor pecado que a timidez, que é vencida pela ira. 3. Demais. – É da natureza do pecado ser voluntário. Ora, a timidez é mais voluntária que a intemperança; pois, ao passo que ninguém deseja ser intemperante, certos desejam fugir ao perigo da morte, o que constitui a timidez. Logo, a timidez é mais grave pecado que a intemperança.</p>
+    <p>Mas, em contrário, diz o Filósofo, que há mais de voluntário na intemperança que na timidez. Logo, constitui mais naturalmente um pecado. SOLUÇÃO. – Um vício pode ser comparado com outro de dois modos: relativamente à sua matéria mesma ou ao seu objeto, e relativamente ao pecador. E de ambos os modos a intemperança é mais grave pecado que a timidez. Assim, primeiro, quanto à matéria. Pois, a timidez evita os perigos mortais, ao que a induz a necessidade máxima de conservar a vida. Ora, a intemperança tem por objeto os prazeres, o desejo dos quais não é do mesmo modo necessário à conservação da vida; pois, como já dissemos, a intemperança tem como objeto, antes, certas deleitações ou concupiscências acrescentadas, do que as concupiscências ou deleites naturais. Ora, quanto mais o incitamento ao pecado é mais necessário, tanto mais leve é o pecado. Por onde, a intemperança é mais grave vício que a timidez, quanto ao objeto ou à matéria, que a provoca. E o mesmo se dá se considerarmos o pecador. E isso por três razões. A primeira é que quanto mais o pecador tem consciência do seu pecado, tanto mais gravemente peca; por isso os alienados não se consideram pecadores. Ora, os temores e as tristezas graves, sobretudo se há perigo de morte, travam a razão do homem. O que não produz o prazer, que provoca à intemperança. A segunda é que quanto mais voluntário o pecado tanto mais grave. Ora, a intemperança tem mais de voluntário, que a timidez. E isto por duas razões. – Primeiro, porque o princípio das ações· que praticamos por temor vem de um impulso externo; por isso tais ações não são voluntárias, absolutamente falando, mas, mistas, como diz Aristóteles. Ao passo que as ações praticadas por prazer são absolutamente voluntárias. – Segundo, porque os atos do intemperante são mais voluntários, em particular, e menos, em geral. Pois, ninguém quer ser intemperante; porém, somos aliciados por prazeres particulares, que nos tornam intemperante. Por isso o melhor remédio para evitarmos a intemperança é não nos demorarmos na consideração de particularidades. Ora, o contrário se dá com a timidez. Pois, um ato particular, que somos levados inopinadamente a praticar, é menos voluntário, como o de lançarmos de nós o escudo e outras semelhantes; ao contrário; o ato considerado em geral, como por exemplo, o de nos salvarmos fugindo, é mais voluntário. Ora, é absolutamente mais voluntário o que o é em particular, pois, cada ato é particular. Logo, a intemperança, sendo absolutamente mais voluntária que a timidez, é um vício maior. A terceira é que a intemperança podemos mais facilmente remediar que a timidez; pois, aos prazeres da mesa e do sexo, objeto da intemperança, somos provocados durante toda a nossa vida e podemos, sem perigo, nos exercitar para sermos temperante, em relação a eles: ao contrário; os perigos de morte ocorrem mais raramente e é mais perigoso nos exercitarmos neles, para fugirmos à timidez. Logo, a intemperança é absolutamente, um pecado maior que a timidez.</p>
+    <p>DONDE A</p>
+    <p>RESPOSTA À PRIMEIRA OBJEÇÃO. – A excelência da fortaleza sobre a timidez pode ser considerada a dupla luz. – Primeiro; quanto ao fim, que implica a noção de bem; pois, a fortaleza se ordena, mais que a temperança, à ideia do bem comum. E também por esse lado a timidez tem uma certa excelência sobre a intemperança; pois, a timidez leva certos a deixarem· de agir em benefício do bem comum. – Segundo, quanto à dificuldade; por ser mais difícil arrostarmos os perigos de morte do que nos abstermos de certos prazeres. E, por aqui, não há de forçosamente a timidez superar a intemperança. Pois, assim como é necessária uma virtude maior para não nos deixarmos vencer de um obstáculo mais forte, assim também, ao contrário, um vício menor só pode ser superado por uma oposição mais forte, e um maior, por uma oposição mais fraca.</p>
+    <p>RESPOSTA À SEGUNDA. – O amor pela conservação da vida, que nos leva a evitarmos os perigos de morte, é–nos muito mais conatural que quaisquer prazeres da: mesa ou do sexo, ordenados à essa conservação. Por isso, é mais difícil vencer o temor dos perigos de morte, que o desejo dos prazeres proporcionados pela mesa e pelo sexo. Aos quais, porém é mais difícil resistir do que à ira; à tristeza e ao temor de quaisquer outros males.</p>
+    <p>RESPOSTA À TERCEIRA. – Na timidez consideramos o voluntário, mais em universal, e menos, em particular. Por isso ela implica o voluntário, mais relativamente do que absolutamente.</p>
+
+    </div>
+  </div>
+  
+  <!-- Bloco de Explicação (a ser preenchido) -->
+  <div class="bloco-explicacao">
+    <div class="explicacao-label">💡 Explicação e Contexto</div>
+    <div class="explicacao-corpo" id="explicacao">
+    <p><em>Explicação será adicionada em breve.</em></p>
+
+    </div>
+  </div>
+  
+</main>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO INFERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="navegacao-inferior">
+  <div class="nav-buttons">
+    <a href="suma-pagina1890.html" class="btn-primary">← Anterior</a>
+    <span class="pagina-atual">1891</span>
+    <a href="suma-pagina1892.html" class="btn-primary">Próxima →</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  RODAPÉ                                                  -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<footer class="suma-footer">
+  <p>Suma Teológica · São Tomás de Aquino | Biblioteca Lux Fidei</p>
+</footer>
+
+</body>
+</html>

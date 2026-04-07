@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Questão 95, Artigo 7 — Se a adivinhação feita por meio de augúrios, agouros e | Suma Teológica</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+    --cor-fundo: #f5f0e8;
+    --cor-pagina: #fff;
+    --cor-texto: #2c1f17;
+    --cor-dourado: #d4af37;
+    --cor-roxo: #5b2c83;
+    --sombra: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cor-fundo);
+    color: var(--cor-texto);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CABEÇALHO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-header {
+    background: linear-gradient(135deg, #1a1a1a, #2c241b);
+    color: #f5f0e8;
+    padding: 32px 20px 24px;
+    text-align: center;
+    position: relative;
+}
+
+.voltar-index {
+    position: absolute;
+    top: 16px;
+    left: 20px;
+    color: var(--cor-dourado);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: opacity 0.2s;
+}
+
+.voltar-index:hover {
+    opacity: 0.8;
+}
+
+.suma-header h1 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.info-pagina {
+    display: inline-block;
+    background: rgba(212, 175, 55, 0.15);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    color: var(--cor-dourado);
+    margin-top: 8px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-topo {
+    background: #fff;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    gap: 10px;
+}
+
+.btn-nav {
+    display: inline-flex;
+    align-items: center;
+    padding: 9px 18px;
+    background: var(--cor-roxo);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.btn-nav:hover {
+    background: #4a246a;
+    transform: translateY(-1px);
+}
+
+.desabilitado {
+    background: #ddd !important;
+    color: #999 !important;
+    pointer-events: none;
+}
+
+.info-centena {
+    font-size: 0.85rem;
+    color: #888;
+    font-weight: 500;
+    padding: 0 10px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CONTEÚDO PRINCIPAL                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.pagina-conteudo {
+    flex: 1;
+    max-width: 860px;
+    width: 100%;
+    margin: 36px auto;
+    padding: 0 20px;
+}
+
+.bloco-texto {
+    background: var(--cor-pagina);
+    padding: 48px 44px;
+    border-radius: 12px;
+    box-shadow: var(--sombra);
+    position: relative;
+    margin-bottom: 24px;
+}
+
+.bloco-texto::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 20px;
+    bottom: 20px;
+    width: 4px;
+    background: linear-gradient(to bottom, var(--cor-dourado), var(--cor-roxo));
+    border-radius: 0 4px 4px 0;
+}
+
+.bloco-titulo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.3rem;
+    color: var(--cor-roxo);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e8dfd0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pagina-corpo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.1rem;
+    line-height: 1.95;
+    color: #3d3226;
+    text-align: justify;
+}
+
+.pagina-corpo p {
+    margin-bottom: 1.3em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  BLOCO DE EXPLICAÇÃO                                        */
+/* ────────────────────────────────────────────────────────── */
+
+.bloco-explicacao {
+    background: linear-gradient(135deg, #fffdf5, #faf5eb);
+    border-left: 5px solid var(--cor-dourado);
+    padding: 32px 40px;
+    border-radius: 0 12px 12px 0;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    margin-bottom: 24px;
+}
+
+.explicacao-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--cor-dourado);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 14px;
+}
+
+.explicacao-corpo {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #4a3c2c;
+}
+
+.explicacao-corpo p {
+    margin-bottom: 1em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO INFERIOR                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-inferior {
+    max-width: 860px;
+    width: 100%;
+    margin: 0 auto 40px;
+    padding: 0 20px;
+}
+
+.nav-buttons {
+    background: #fff;
+    padding: 18px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    box-shadow: var(--sombra);
+}
+
+.btn-primary {
+    flex: 1;
+    text-align: center;
+    padding: 13px 16px;
+    background: linear-gradient(135deg, var(--cor-roxo), #7a3eb5);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(91, 44, 131, 0.3);
+}
+
+.pagina-atual {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--cor-dourado);
+    min-width: 50px;
+    text-align: center;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RODAPÉ                                                     */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-footer {
+    background: #1a1a1a;
+    color: #888;
+    text-align: center;
+    padding: 22px 20px;
+    margin-top: auto;
+    font-size: 0.85rem;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RESPONSIVIDADE                                             */
+/* ────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+    .suma-header h1 {
+        font-size: 1.4rem;
+    }
+    
+    .bloco-texto {
+        padding: 28px 18px;
+    }
+    
+    .bloco-explicacao {
+        padding: 22px 18px;
+    }
+    
+    .navegacao-topo {
+        flex-wrap: wrap;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CABEÇALHO                                               -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="suma-header">
+  <a href="../../index.html" class="voltar-index">← Índice</a>
+  <h1>Suma Teológica</h1>
+  <p style="opacity:0.8; font-style:italic; margin-top:4px;">São Tomás de Aquino</p>
+  <span class="info-pagina">Página 1710 de 3000</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO SUPERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<nav class="navegacao-topo">
+  <a href="suma-pagina1709.html" class="btn-nav">← Anterior</a>
+  <span class="info-centena">Pág. 1710/3000</span>
+  <a href="suma-pagina1711.html" class="btn-nav">Próxima →</a>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CONTEÚDO PRINCIPAL                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<main class="pagina-conteudo">
+  
+  <!-- Texto Original -->
+  <div class="bloco-texto">
+    <div class="bloco-titulo">
+      <span>📜</span>
+      Questão 95, Artigo 7 — Se a adivinhação feita por meio de augúrios, agouros e
+    </div>
+    <div class="pagina-corpo">
+    <p>semelhantes observações de causas externas é ilícita. O sétimo discute–se assim. – Parece que a adivinhação feita por meio de augúrios, agouros e observações semelhantes das causas externas, não é ilícita. 1. – Pois, se fossem ilícitos, os varões santos não recorreriam a eles. Ora, lemos de José, que recorreu aos augúrios. Assim, narra a Escritura que o dispenseiro lhe disse: A taça que furtastes é a mesma por que bebe meu senhor, da qual se serve para as suas adivinhações. E o próprio José disse aos seus irmãos: Por ventura ignorais que não há semelhante a mim na ciência de adivinhar logo, recorrer à adivinhação não é ilícito. 2. Demais. – As aves naturalmente conhecem certos sinais futuros dos tempos, conforme aquilo da Escritura: O milhafre no céu conheceu a sua estação; a rôla e a andorinha e a cegonha observam a conjuntura da sua arribação. Ora, o conhecimento natural é infalível e vem de Deus. Logo, augurar, isto é, servir–se do conhecimento das aves para prever o futuro, parece que não é ilícito. 3. Demais. – Gedeão é contado em o número dos santos, como se lê no Apóstolo. Ora, Gedeão recorreu ao agouro, por ter ouvido a narração e a interpretação de um sonho, como o refere a Escritura. E diz também ter feito o mesmo, Eliezer, servo de Abraão, Logo, parece que tal adivinhação não é ilícita.</p>
+    <p>Mas, em contrário, a Escritura: Nem se ache entre vós quem observe agouros. SOLUÇÃO. – É claro que o movimento, o garrir das aves ou quaisquer disposições observadas em matéria de agouros, não são causa dos acontecimentos futuros. Portanto, não podemos tirar de tais fenômenos o conhecimento do futuro como se fossem as causas dele. Donde se conclui, que se por meio deles o conhecemos, é por serem efeitos de certas causas produtoras ou conhecedoras dos acontecimentos futuros. Ora, a causa da atividade dos brutos é um certo instinto que os faz moverem–se por um movimento natural; pois, não são senhores dos seus atos. E esse instinto pode proceder de duas causas. Uma é causa corpórea. Pois, não tendo os brutos senão a alma sensitiva, todas as faculdades da qual são atos de órgãos corpóreos, a alma deles sofre a influência dos corpos ambientes e sobretudo dos celestes. Por isso nada impede que algumas das suas operações prenunciem o futuro, por se conformarem às disposições dos corpos celestes e do ar ambiente, dos quais procedem certos eventos futuros. Mas, temos aqui duas coisas a considerar. Primeiro, que essas operações não as apliquemos senão para conhecermos o futuro causado pelo movimento dos corpos celestes, como já dissemos. Segundo, que não vão além do que podem, de algum modo, esses animais. Pois, por influência dos corpos celestes, tem um certo conhecimento natural e um instinto que os leva a buscar o necessário à vida; assim, conhecem as mudanças de tempo causadas pelas chuvas, pelos ventos e por fenômenos semelhantes. À outra luz, esses instintos tem causa espiritual. Essa é Deus, como no caso da pomba que desceu sobre Cristo, no do corvo que trazia comida a Elias, na da baleia, que engoliu e deitou na praia Jonas. Ou são também os demônios que se servem da atividade dos animais irracionais para enredar as almas humanas em vãs opiniões. E o mesmo se dá com outras coisas semelhantes, exceto os agouros, porque as palavras humanas consideradas como agouro não estão sujeitas à influência das estrelas; pois, são dispostas pela providência divina e às vezes por obra dos demônios. Assim, pois, devemos concluir que todas essas espécies de adivinhação, se pretenderem ir além do que é possível alcançar, na ordem da natureza ou da providência divina, são supersticiosas e ilícitas.</p>
+    <p>DONDE A</p>
+    <p>RESPOSTA À PRIMEIRA OBJEÇÃO. – O dito de José, que ninguém lhe era comparável na arte de adivinhar, tinha sentido jocoso, segundo Agostinho, e não, sério, referindo–o por ventura ao que o vulgo pensava dele. E nesse mesmo sentido falou o seu dispenseiro.</p>
+    <p>RESPOSTA À SEGUNDA. – O lugar citado se refere ao conhecimento das aves quanto ao que lhes concerne. E, para prevê–lo, não é ilícito observar–lhes as vozes e os movimentos; por exemplo, se alguém predissesse chuva por ter observado o repetido crocitar da gralha.</p>
+    <p>RESPOSTA À TERCEIRA. – Gedeão escutou a narração e a interpretação do sonho, tomando–o como agouro ordenado à sua instrução pela divina providência. E do mesmo modo, Eliezer atendeu às palavras da donzela, depois de ter feito oração a Deus.</p>
+
+    </div>
+  </div>
+  
+  <!-- Bloco de Explicação (a ser preenchido) -->
+  <div class="bloco-explicacao">
+    <div class="explicacao-label">💡 Explicação e Contexto</div>
+    <div class="explicacao-corpo" id="explicacao">
+    <p><em>Explicação será adicionada em breve.</em></p>
+
+    </div>
+  </div>
+  
+</main>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO INFERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="navegacao-inferior">
+  <div class="nav-buttons">
+    <a href="suma-pagina1709.html" class="btn-primary">← Anterior</a>
+    <span class="pagina-atual">1710</span>
+    <a href="suma-pagina1711.html" class="btn-primary">Próxima →</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  RODAPÉ                                                  -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<footer class="suma-footer">
+  <p>Suma Teológica · São Tomás de Aquino | Biblioteca Lux Fidei</p>
+</footer>
+
+</body>
+</html>

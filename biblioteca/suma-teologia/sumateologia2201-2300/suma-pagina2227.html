@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Questão 17, Artigo 1 — — Se em Cristo há unidade ou dualidade. | Suma Teológica</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+    --cor-fundo: #f5f0e8;
+    --cor-pagina: #fff;
+    --cor-texto: #2c1f17;
+    --cor-dourado: #d4af37;
+    --cor-roxo: #5b2c83;
+    --sombra: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cor-fundo);
+    color: var(--cor-texto);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CABEÇALHO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-header {
+    background: linear-gradient(135deg, #1a1a1a, #2c241b);
+    color: #f5f0e8;
+    padding: 32px 20px 24px;
+    text-align: center;
+    position: relative;
+}
+
+.voltar-index {
+    position: absolute;
+    top: 16px;
+    left: 20px;
+    color: var(--cor-dourado);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: opacity 0.2s;
+}
+
+.voltar-index:hover {
+    opacity: 0.8;
+}
+
+.suma-header h1 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.info-pagina {
+    display: inline-block;
+    background: rgba(212, 175, 55, 0.15);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    color: var(--cor-dourado);
+    margin-top: 8px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-topo {
+    background: #fff;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    gap: 10px;
+}
+
+.btn-nav {
+    display: inline-flex;
+    align-items: center;
+    padding: 9px 18px;
+    background: var(--cor-roxo);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.btn-nav:hover {
+    background: #4a246a;
+    transform: translateY(-1px);
+}
+
+.desabilitado {
+    background: #ddd !important;
+    color: #999 !important;
+    pointer-events: none;
+}
+
+.info-centena {
+    font-size: 0.85rem;
+    color: #888;
+    font-weight: 500;
+    padding: 0 10px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CONTEÚDO PRINCIPAL                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.pagina-conteudo {
+    flex: 1;
+    max-width: 860px;
+    width: 100%;
+    margin: 36px auto;
+    padding: 0 20px;
+}
+
+.bloco-texto {
+    background: var(--cor-pagina);
+    padding: 48px 44px;
+    border-radius: 12px;
+    box-shadow: var(--sombra);
+    position: relative;
+    margin-bottom: 24px;
+}
+
+.bloco-texto::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 20px;
+    bottom: 20px;
+    width: 4px;
+    background: linear-gradient(to bottom, var(--cor-dourado), var(--cor-roxo));
+    border-radius: 0 4px 4px 0;
+}
+
+.bloco-titulo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.3rem;
+    color: var(--cor-roxo);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e8dfd0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pagina-corpo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.1rem;
+    line-height: 1.95;
+    color: #3d3226;
+    text-align: justify;
+}
+
+.pagina-corpo p {
+    margin-bottom: 1.3em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  BLOCO DE EXPLICAÇÃO                                        */
+/* ────────────────────────────────────────────────────────── */
+
+.bloco-explicacao {
+    background: linear-gradient(135deg, #fffdf5, #faf5eb);
+    border-left: 5px solid var(--cor-dourado);
+    padding: 32px 40px;
+    border-radius: 0 12px 12px 0;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    margin-bottom: 24px;
+}
+
+.explicacao-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--cor-dourado);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 14px;
+}
+
+.explicacao-corpo {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #4a3c2c;
+}
+
+.explicacao-corpo p {
+    margin-bottom: 1em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO INFERIOR                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-inferior {
+    max-width: 860px;
+    width: 100%;
+    margin: 0 auto 40px;
+    padding: 0 20px;
+}
+
+.nav-buttons {
+    background: #fff;
+    padding: 18px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    box-shadow: var(--sombra);
+}
+
+.btn-primary {
+    flex: 1;
+    text-align: center;
+    padding: 13px 16px;
+    background: linear-gradient(135deg, var(--cor-roxo), #7a3eb5);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(91, 44, 131, 0.3);
+}
+
+.pagina-atual {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--cor-dourado);
+    min-width: 50px;
+    text-align: center;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RODAPÉ                                                     */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-footer {
+    background: #1a1a1a;
+    color: #888;
+    text-align: center;
+    padding: 22px 20px;
+    margin-top: auto;
+    font-size: 0.85rem;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RESPONSIVIDADE                                             */
+/* ────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+    .suma-header h1 {
+        font-size: 1.4rem;
+    }
+    
+    .bloco-texto {
+        padding: 28px 18px;
+    }
+    
+    .bloco-explicacao {
+        padding: 22px 18px;
+    }
+    
+    .navegacao-topo {
+        flex-wrap: wrap;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CABEÇALHO                                               -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="suma-header">
+  <a href="../../index.html" class="voltar-index">← Índice</a>
+  <h1>Suma Teológica</h1>
+  <p style="opacity:0.8; font-style:italic; margin-top:4px;">São Tomás de Aquino</p>
+  <span class="info-pagina">Página 2227 de 3000</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO SUPERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<nav class="navegacao-topo">
+  <a href="suma-pagina2226.html" class="btn-nav">← Anterior</a>
+  <span class="info-centena">Pág. 2227/3000</span>
+  <a href="suma-pagina2228.html" class="btn-nav">Próxima →</a>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CONTEÚDO PRINCIPAL                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<main class="pagina-conteudo">
+  
+  <!-- Texto Original -->
+  <div class="bloco-texto">
+    <div class="bloco-titulo">
+      <span>📜</span>
+      Questão 17, Artigo 1 — — Se em Cristo há unidade ou dualidade.
+    </div>
+    <div class="pagina-corpo">
+    <p>O primeiro discute-se assim. — Parece que em Cristo não há unidade, mas dualidade. 1 — Pois, diz Agostinho: A forma de Deus assumiu a forma de servo; ambos Deus, por causa do Deus assumente; ambos homem, por causa do homem assumido. Ora, ambas essas afirmações não se podem fazer senão por serem dois. Logo, em Cristo há dualidade. 2. Demais. — Onde quer que haja uma coisa e outra coisa, aí há duas coisas. Ora, Cristo é uma coisa e outra coisa, conforme o diz Agostinho: Sendo a forma de Deus, tomou a forma de servo, essas duas coisas reduzidas à unidade; mas é uma coisa por causa do Verbo e outra, por causa do homem. Logo, em Cristo há duas coisas. 3. Demais. — Cristo não é só homem, porque se fosse um puro homem não seria Deus. Logo, é ainda algo mais, além de homem. E assim há em Cristo uma coisa e outra coisa. Logo, em Cristo há dualidade. 4. Demais. — Cristo é algo, que é o Pai, e algo, que não é o Pai. Logo, Cristo é uma coisa e outra coisa. Logo, em Cristo há dualidade. 5. Demais. — Assim como no mistério da Trindade há três pessoas numa só natureza, assim no mistério da Encarnação há duas naturezas numa só pessoa. Ora, por causa da unidade da natureza, não obstante a distinção da pessoa, o Pai e o Filho são um só, segundo aquilo do Evangelho: Eu e o pai somos uma mesma coisa. Logo, não obstante a unidade de pessoa, por causa da dualidade das naturezas, em Cristo há dualidade, 6. Demais. — O Filósofo diz, que unidade e dualidade são predicações denominativas. Ora, Cristo tem dualidade de naturezas. Logo, em Cristo há dualidade. 7. Demais. — Assim como a forma acidental é causa da alteridade, assim a forma substancial, da aliedade, como diz Porfírio. Ora, em Cristo há duas naturezas substanciais — a humana e a divina. Logo, Cristo é uma coisa e outra coisa e portanto há nele dualidade.</p>
+    <p>Mas, em contrário, Boécio diz: Tudo o que é, enquanto é, é um. Ora, nós confessamos ser Cristo uno. Logo, é Cristo uno.</p>
+    <p>SOLUÇÃO. — A natureza, em si mesma considerada, em significação abstrata, não pode ser verdadeiramente predicada do suposto ou pessoa, a não ser de Deus em quem não difere a existência (quod est) e a essência (quo est), como demonstramos na Primeira Parte. Mas, havendo em Cristo duas naturezas, a divina e a humana, uma delas, a divina, pode ser predicada de Deus em abstrato e em concreto. Assim, dizemos que o Filho de Deus, suposto em o nome de Cristo, é a natureza divina e é Deus. A natureza humana, porém, não pode ser, em si mesma, predicada de Cristo, em abstrato, mas só em concreto, isto é, enquanto significada no suposto. Pois, não podemos verdadeiramente dizer que Cristo é a natureza humana, por não ser próprio da natureza humana predicar-se do seu suposto. Mas dizemos que Cristo é homem, assim como — Cristo é Deus. Ora, Deus significa quem tem a divindade e homem, quem tem a humanidade. Mas, uma coisa é ter a humanidade, expressa pela palavra homem; e outra, o tê-la, significada pelos vocábulos Jesus ou Pedro. Pois, a palavra homem significa ter a humanidade indistintamente, assim como o nome de Deus implica em ter indistintamente a divindade. Ao passo que o nome de Pedro ou o de Jesus implica em ter a humanidade distintamente, isto é, com certas propriedades individuais; assim como o nome de Filho de Deus importa em ter a divindade com uma determinada propriedade pessoal. Ora, a dualidade numérica existe em Cristo em relação às naturezas mesmas. Por onde, se ambas as naturezas fossem predicadas de Cristo em abstrato, resultaria a existência de dois Cristos. Mas, como as duas naturezas não se predicam de Cristo, senão enquanto significa das no suposto, é forçoso dizer- se, em razão do suposto, que em Cristo há unidade ou dualidade. — Ora, certos atribuíram a Cristo dois supostos, mas uma só peso soa, a qual, na opinião deles, desempenha o papel de suposto completo, perfeitamente completo. Por onde, os que introduziram em Cristo dois supostos atribuíam- lhe a dualidade, em sentido neutro; mas como lhe atribuíam uma só pessoa, admitiam nele a unidade em sentido masculino. Porque o gênero neutro designa uma realidade informe e imperfeita; ao passo que o gênero masculino designa um ser formado e perfeito. - Os Nestorianos, por seu lado, atribuindo a Cristo duas pessoas, diziam que Cristo encerra uma dualidade, não só em sentido neutro, mas ainda masculino. — Nós, porém, que admitimos em Cristo uma só pessoa e um suposto, como do sobredito se colige, temos também que admitir a unidade de Cristo, não só em sentido masculino, mas ainda em sentido neutro.</p>
+    <p>DONDE A</p>
+    <p>RESPOSTA À PRIMEIRA OBJEÇÃO. — Nas palavras citadas de Agostinho a expressão ambos não deve ser entendida como aplicada ao predicado e quase significando que Cristo é ambos, mas, como aplicada ao sujeito. E então o vocábulo ambos é tomado, não quase significando os dois supostos, mas sim, os dois nomes expressivos das duas naturezas em concreto. E também podemos dizer que ambos, isto é, Deus e homem, são Deus, por causa do Deus assumente; e ambos, isto é, Deus e homem, são homem, por causa do homem assumido.</p>
+    <p>RESPOSTA À SEGUNDA. — Quando se diz — Cristo é uma causa e outra causa — devemos tomar essa expressão como significando que tem uma e outra natureza. Tal é a exposição de Agostinho quando, depois de ter dito — no mediador entre Deus e os homens, uma causa é o Filho de Deus e outra, o Filho do homem — acrescenta: Digo uma coisa — para distinguir as substâncias; não digo outro – por causa da unidade de pessoa. Donde o dizer Gregório Nazianzeno: Se devemos nos exprimir compendiosamente, o Salvador é uma coisa e outra coisa quanto às duas substâncias de que é composto; entendendo-se que não quero identificar o invisível com o visível, e o atemporal com o temporal. Mas longe de mim o querer ver nele um ser e outro ser; pois, ambos não fazer mais que um.</p>
+    <p>RESPOSTA À TERCEIRA. — É falsa a proposição — Cristo é somente homem — porque não exclui outro suposto, mas, a outra natureza; pois, os termos postos no predicado são tomados formalmente. Mas, um acréscimo, que os fizesse aplicar ao suposto; tornaria verdadeira a proposição — Cristo é somente aquilo que é o homem. Donde porém não se segue seja algo outro que o homem, porque sendo – outro – um relativo, que exprime a diversidade de substância, refere-se propriamente ao suposto, como todos os relativos expressivos de uma relação pessoal. Mas a consequência é: Logo, tem outra natureza.</p>
+    <p>RESPOSTA À QUARTA. — Quando dizemos — Cristo é algo, que é o Pai — algo é aí tomado pela natureza divina, que mesmo em abstrato se predica do Pai e do Filho. Mas, quando dizemos — Cristo é algo que não o Pai — algo é tomado, não pela natureza humana mesmo enquanto significada em abstrato, mas enquanto significada em concreto. Não, certo, segundo um suposto distinto, mas segundo um suposto indistinto; isto é, segundo sub-está à natureza e não, às propriedades individuantes. E por isso, daí não se segue que Cristo seja uma e outra coisa, ou que seja dois; pois, o suposto da natureza humana em Cristo, que é a pessoa do Filho de Deus, não faz número com a natureza divina, predicada do Pai e do Filho. RESPOSTA À QUINTA. — No mistério da divina Trindade, a natureza divina é predicada, mesmo em abstrato, das três Pessoas; e por isso podemos dizer, absolutamente falando, que as três Pessoas são uma só realidade. Mas, no mistério da Encarnação, ambas as naturezas não são predicadas, em abstrato, de Cristo; e por isso não podemos dizer, em sentido absoluto, que Cristo seja dois. RESPOSTA À SEXTA. — Dois significa dualidade, não num outro ser, mas no ser mesmo de que é predicado. Ora, a predicação é feita, do suposto, implicado em o nome de Cristo. Embora, pois, Cristo tenha dualidade de naturezas, como porém não tem dualidade de supostos, não podemos dizer que seja dois. RESPOSTA À SÉTIMA. — A alteridade implica diversidade acidental. Por onde, a diversidade acidental basta para que o vocábulo outro se aplique em sentido absoluto, a um ser. Ao passo que a aliedade implica diversidade substancial. Ora, a substância designa não só a natureza, mas também o suposto, como diz Aristóteles. Por onde, a diversidade de natureza não basta para se atribuir a aliedade a um ser, em sentido absoluto, salvo se houver diversidade quanto ao suposto. A diversidade de natureza porém é causa da aliedade relativa, isto é, segundo a natureza, se não houver diversidade do suposto.</p>
+
+    </div>
+  </div>
+  
+  <!-- Bloco de Explicação (a ser preenchido) -->
+  <div class="bloco-explicacao">
+    <div class="explicacao-label">💡 Explicação e Contexto</div>
+    <div class="explicacao-corpo" id="explicacao">
+    <p><em>Explicação será adicionada em breve.</em></p>
+
+    </div>
+  </div>
+  
+</main>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO INFERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="navegacao-inferior">
+  <div class="nav-buttons">
+    <a href="suma-pagina2226.html" class="btn-primary">← Anterior</a>
+    <span class="pagina-atual">2227</span>
+    <a href="suma-pagina2228.html" class="btn-primary">Próxima →</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  RODAPÉ                                                  -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<footer class="suma-footer">
+  <p>Suma Teológica · São Tomás de Aquino | Biblioteca Lux Fidei</p>
+</footer>
+
+</body>
+</html>

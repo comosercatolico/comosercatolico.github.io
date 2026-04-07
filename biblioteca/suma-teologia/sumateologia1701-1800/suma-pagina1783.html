@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Questão 114, Artigo 1 — Se a amizade é uma virtude especial. | Suma Teológica</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+    --cor-fundo: #f5f0e8;
+    --cor-pagina: #fff;
+    --cor-texto: #2c1f17;
+    --cor-dourado: #d4af37;
+    --cor-roxo: #5b2c83;
+    --sombra: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cor-fundo);
+    color: var(--cor-texto);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CABEÇALHO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-header {
+    background: linear-gradient(135deg, #1a1a1a, #2c241b);
+    color: #f5f0e8;
+    padding: 32px 20px 24px;
+    text-align: center;
+    position: relative;
+}
+
+.voltar-index {
+    position: absolute;
+    top: 16px;
+    left: 20px;
+    color: var(--cor-dourado);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: opacity 0.2s;
+}
+
+.voltar-index:hover {
+    opacity: 0.8;
+}
+
+.suma-header h1 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.info-pagina {
+    display: inline-block;
+    background: rgba(212, 175, 55, 0.15);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    color: var(--cor-dourado);
+    margin-top: 8px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-topo {
+    background: #fff;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    gap: 10px;
+}
+
+.btn-nav {
+    display: inline-flex;
+    align-items: center;
+    padding: 9px 18px;
+    background: var(--cor-roxo);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.btn-nav:hover {
+    background: #4a246a;
+    transform: translateY(-1px);
+}
+
+.desabilitado {
+    background: #ddd !important;
+    color: #999 !important;
+    pointer-events: none;
+}
+
+.info-centena {
+    font-size: 0.85rem;
+    color: #888;
+    font-weight: 500;
+    padding: 0 10px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CONTEÚDO PRINCIPAL                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.pagina-conteudo {
+    flex: 1;
+    max-width: 860px;
+    width: 100%;
+    margin: 36px auto;
+    padding: 0 20px;
+}
+
+.bloco-texto {
+    background: var(--cor-pagina);
+    padding: 48px 44px;
+    border-radius: 12px;
+    box-shadow: var(--sombra);
+    position: relative;
+    margin-bottom: 24px;
+}
+
+.bloco-texto::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 20px;
+    bottom: 20px;
+    width: 4px;
+    background: linear-gradient(to bottom, var(--cor-dourado), var(--cor-roxo));
+    border-radius: 0 4px 4px 0;
+}
+
+.bloco-titulo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.3rem;
+    color: var(--cor-roxo);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e8dfd0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pagina-corpo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.1rem;
+    line-height: 1.95;
+    color: #3d3226;
+    text-align: justify;
+}
+
+.pagina-corpo p {
+    margin-bottom: 1.3em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  BLOCO DE EXPLICAÇÃO                                        */
+/* ────────────────────────────────────────────────────────── */
+
+.bloco-explicacao {
+    background: linear-gradient(135deg, #fffdf5, #faf5eb);
+    border-left: 5px solid var(--cor-dourado);
+    padding: 32px 40px;
+    border-radius: 0 12px 12px 0;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    margin-bottom: 24px;
+}
+
+.explicacao-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--cor-dourado);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 14px;
+}
+
+.explicacao-corpo {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #4a3c2c;
+}
+
+.explicacao-corpo p {
+    margin-bottom: 1em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO INFERIOR                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-inferior {
+    max-width: 860px;
+    width: 100%;
+    margin: 0 auto 40px;
+    padding: 0 20px;
+}
+
+.nav-buttons {
+    background: #fff;
+    padding: 18px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    box-shadow: var(--sombra);
+}
+
+.btn-primary {
+    flex: 1;
+    text-align: center;
+    padding: 13px 16px;
+    background: linear-gradient(135deg, var(--cor-roxo), #7a3eb5);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(91, 44, 131, 0.3);
+}
+
+.pagina-atual {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--cor-dourado);
+    min-width: 50px;
+    text-align: center;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RODAPÉ                                                     */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-footer {
+    background: #1a1a1a;
+    color: #888;
+    text-align: center;
+    padding: 22px 20px;
+    margin-top: auto;
+    font-size: 0.85rem;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RESPONSIVIDADE                                             */
+/* ────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+    .suma-header h1 {
+        font-size: 1.4rem;
+    }
+    
+    .bloco-texto {
+        padding: 28px 18px;
+    }
+    
+    .bloco-explicacao {
+        padding: 22px 18px;
+    }
+    
+    .navegacao-topo {
+        flex-wrap: wrap;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CABEÇALHO                                               -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="suma-header">
+  <a href="../../index.html" class="voltar-index">← Índice</a>
+  <h1>Suma Teológica</h1>
+  <p style="opacity:0.8; font-style:italic; margin-top:4px;">São Tomás de Aquino</p>
+  <span class="info-pagina">Página 1783 de 3000</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO SUPERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<nav class="navegacao-topo">
+  <a href="suma-pagina1782.html" class="btn-nav">← Anterior</a>
+  <span class="info-centena">Pág. 1783/3000</span>
+  <a href="suma-pagina1784.html" class="btn-nav">Próxima →</a>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CONTEÚDO PRINCIPAL                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<main class="pagina-conteudo">
+  
+  <!-- Texto Original -->
+  <div class="bloco-texto">
+    <div class="bloco-titulo">
+      <span>📜</span>
+      Questão 114, Artigo 1 — Se a amizade é uma virtude especial.
+    </div>
+    <div class="pagina-corpo">
+    <p>O primeiro discute–se assim. – Parece que a amizade não é uma virtude especial. 1. – Pois, o Filósofo diz, que a amizade perfeita se funda na virtude. Ora, qualquer virtude é causa da amizade, pois, todos amam o bem, como diz Dionísio. Logo, a amizade não é uma virtude especial, mas, a consequência de toda virtude. 2. Demais. – O Filósofo diz de uma determinada espécie de amigo, que não é nem por amor, nem por ódio que se determina a receber as causas como convém. Ora, mostramos sinais de amizade para com aqueles que não amamos constitui simulação, que repugna à virtude. Logo, essa forma de amizade não é virtude. 3. Demais. – A virtude consiste numa mediedade, como a determinara o sábio, segundo Aristóteles. Ora, a Escritura diz: O coração dos sábios está onde se acha a tristeza, e o coração dos insensatos, onde se acha a alegria; por onde, o virtuoso sobretudo deve abster–se do prazer, como diz Aristóteles. Ora, a amizade de que se trata faz os amigos buscarem o prazer mútuo e evitarem de se contristar, no dizer do Filósofo. Logo, tal amizade não é virtude.</p>
+    <p>Mas, em contrário. – Os preceitos da lei são dados para regular os atos virtuosos. Ora, a Escritura diz: Faze–te afável ao ajuntamento dos pobres. Logo, a afabilidade, na questão vertente, chamada amizade, é uma virtude especial. SOLUÇÃO. – Como já dissemos a virtude, ordenando–se para o bem a uma ideia especial de bem, necessariamente corresponde uma ideia especial de virtude. Ora, o bem consiste na ordem, como dissemos. Logo, na convivência geral, havemos de nos ordenar convenientemente para os outros, tanto pelas nossas obras como pelas nossas palavras, comportando–nos para com cada um conforme ele o exige. E portanto deve haver uma virtude especial que observe essa conveniência de ordem. E essa se chama amizade ou afabilidade.</p>
+    <p>DONDE A</p>
+    <p>RESPOSTA À PRIMEIRA OBJEÇÃO. – O Filósofo, no lugar aduzido, trata de duas espécies de amizade. – Uma consiste principalmente no afeto com que um ama a outro. E essa pode ser resultante de qualquer virtude. Quanto ao que respeita à essa espécie de amizade, já o dissemos ao tratar da caridade. – Mas há outra espécie de amizade que consiste só em palavras ou. atos externos. Essa não realiza a ideia perfeita de amizade, mas uma certa semelhança dela, que consiste em nos portarmos convenientemente para com aqueles com quem convivemos.</p>
+    <p>RESPOSTA À SEGUNDA. – Por um amor universal todo homem é naturalmente amigo de outro; como também o diz a Escritura: Todo animal ama o seu semelhante. E esse amor o representam os sinais de amizade, que manifestamos exteriormente por palavras ou obras, mesmo para com os estranhos ou desconhecidos. Portanto, não há aí simulação. Pois, não lhes manifestamos sinais de perfeita amizade; porque não nos comportamos familiarmente para com os estranhos, como o fazemos para com aqueles aos quais estamos unidos por uma amizade especial.</p>
+    <p>RESPOSTA À TERCEIRA. – Quando a Escritura diz que o coração dos sábios está onde se acha a tristeza, não quer significar que o sábio infunda a tristeza no próximo. Pois, diz o Apóstolo: Se por causa da comida entristeces tu a teu irmão, já não andas segundo a caridade. Mas, a Escritura quer dizer que levemos a consolação aos tristes, segundo aquele outro lugar: Não faltes a consolar os que se achem em pranto e andam com os que choram. Quanto ao coração dos insensatos, ele está onde demora a alegria, não para alegrar os outros, mas, para gozar da alegria deles. Por onde, é próprio do sábio causar prazer aqueles com quem vive; não o lascivo, que a virtude condena, mas o honesto, segundo aquilo da Escritura: Ó quão bom e quão suave é habitarem os irmãos em união. Mas, às vezes, por conseguir um bem ou excluir algum mal, não evitará o virtuoso contristar aqueles com quem convive, como adverte o Filósofo. Por isso, diz o Apóstolo: Ainda que vos entristeci com a minha carta, não me arrependo disso. E em seguida: Folgo, não de vos haver entristecido, mas de que a Vossa tristeza vos trouxe à penitência. Por onde, aos que são propensos ao pecado não lhes devemos fazer rosto agradável para o agradar não pareça que lhes consentimos no pecado e de certo modo lhes insuflemos a audácia no pecar. Donde o dizer da Escritura: Tens filhas? Conserva a pureza dos seus corpos e não mostres para elas o teu rosto risonho.</p>
+
+    </div>
+  </div>
+  
+  <!-- Bloco de Explicação (a ser preenchido) -->
+  <div class="bloco-explicacao">
+    <div class="explicacao-label">💡 Explicação e Contexto</div>
+    <div class="explicacao-corpo" id="explicacao">
+    <p><em>Explicação será adicionada em breve.</em></p>
+
+    </div>
+  </div>
+  
+</main>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO INFERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="navegacao-inferior">
+  <div class="nav-buttons">
+    <a href="suma-pagina1782.html" class="btn-primary">← Anterior</a>
+    <span class="pagina-atual">1783</span>
+    <a href="suma-pagina1784.html" class="btn-primary">Próxima →</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  RODAPÉ                                                  -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<footer class="suma-footer">
+  <p>Suma Teológica · São Tomás de Aquino | Biblioteca Lux Fidei</p>
+</footer>
+
+</body>
+</html>

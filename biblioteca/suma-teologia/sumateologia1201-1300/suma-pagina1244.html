@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Questão 8, Artigo 6 — Se o dom do intelecto se distingue dos outros dons. | Suma Teológica</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+    --cor-fundo: #f5f0e8;
+    --cor-pagina: #fff;
+    --cor-texto: #2c1f17;
+    --cor-dourado: #d4af37;
+    --cor-roxo: #5b2c83;
+    --sombra: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cor-fundo);
+    color: var(--cor-texto);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CABEÇALHO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-header {
+    background: linear-gradient(135deg, #1a1a1a, #2c241b);
+    color: #f5f0e8;
+    padding: 32px 20px 24px;
+    text-align: center;
+    position: relative;
+}
+
+.voltar-index {
+    position: absolute;
+    top: 16px;
+    left: 20px;
+    color: var(--cor-dourado);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: opacity 0.2s;
+}
+
+.voltar-index:hover {
+    opacity: 0.8;
+}
+
+.suma-header h1 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.info-pagina {
+    display: inline-block;
+    background: rgba(212, 175, 55, 0.15);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    color: var(--cor-dourado);
+    margin-top: 8px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-topo {
+    background: #fff;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    gap: 10px;
+}
+
+.btn-nav {
+    display: inline-flex;
+    align-items: center;
+    padding: 9px 18px;
+    background: var(--cor-roxo);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.btn-nav:hover {
+    background: #4a246a;
+    transform: translateY(-1px);
+}
+
+.desabilitado {
+    background: #ddd !important;
+    color: #999 !important;
+    pointer-events: none;
+}
+
+.info-centena {
+    font-size: 0.85rem;
+    color: #888;
+    font-weight: 500;
+    padding: 0 10px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CONTEÚDO PRINCIPAL                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.pagina-conteudo {
+    flex: 1;
+    max-width: 860px;
+    width: 100%;
+    margin: 36px auto;
+    padding: 0 20px;
+}
+
+.bloco-texto {
+    background: var(--cor-pagina);
+    padding: 48px 44px;
+    border-radius: 12px;
+    box-shadow: var(--sombra);
+    position: relative;
+    margin-bottom: 24px;
+}
+
+.bloco-texto::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 20px;
+    bottom: 20px;
+    width: 4px;
+    background: linear-gradient(to bottom, var(--cor-dourado), var(--cor-roxo));
+    border-radius: 0 4px 4px 0;
+}
+
+.bloco-titulo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.3rem;
+    color: var(--cor-roxo);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e8dfd0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pagina-corpo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.1rem;
+    line-height: 1.95;
+    color: #3d3226;
+    text-align: justify;
+}
+
+.pagina-corpo p {
+    margin-bottom: 1.3em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  BLOCO DE EXPLICAÇÃO                                        */
+/* ────────────────────────────────────────────────────────── */
+
+.bloco-explicacao {
+    background: linear-gradient(135deg, #fffdf5, #faf5eb);
+    border-left: 5px solid var(--cor-dourado);
+    padding: 32px 40px;
+    border-radius: 0 12px 12px 0;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    margin-bottom: 24px;
+}
+
+.explicacao-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--cor-dourado);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 14px;
+}
+
+.explicacao-corpo {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #4a3c2c;
+}
+
+.explicacao-corpo p {
+    margin-bottom: 1em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO INFERIOR                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-inferior {
+    max-width: 860px;
+    width: 100%;
+    margin: 0 auto 40px;
+    padding: 0 20px;
+}
+
+.nav-buttons {
+    background: #fff;
+    padding: 18px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    box-shadow: var(--sombra);
+}
+
+.btn-primary {
+    flex: 1;
+    text-align: center;
+    padding: 13px 16px;
+    background: linear-gradient(135deg, var(--cor-roxo), #7a3eb5);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(91, 44, 131, 0.3);
+}
+
+.pagina-atual {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--cor-dourado);
+    min-width: 50px;
+    text-align: center;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RODAPÉ                                                     */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-footer {
+    background: #1a1a1a;
+    color: #888;
+    text-align: center;
+    padding: 22px 20px;
+    margin-top: auto;
+    font-size: 0.85rem;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RESPONSIVIDADE                                             */
+/* ────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+    .suma-header h1 {
+        font-size: 1.4rem;
+    }
+    
+    .bloco-texto {
+        padding: 28px 18px;
+    }
+    
+    .bloco-explicacao {
+        padding: 22px 18px;
+    }
+    
+    .navegacao-topo {
+        flex-wrap: wrap;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CABEÇALHO                                               -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="suma-header">
+  <a href="../../index.html" class="voltar-index">← Índice</a>
+  <h1>Suma Teológica</h1>
+  <p style="opacity:0.8; font-style:italic; margin-top:4px;">São Tomás de Aquino</p>
+  <span class="info-pagina">Página 1244 de 3000</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO SUPERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<nav class="navegacao-topo">
+  <a href="suma-pagina1243.html" class="btn-nav">← Anterior</a>
+  <span class="info-centena">Pág. 1244/3000</span>
+  <a href="suma-pagina1245.html" class="btn-nav">Próxima →</a>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CONTEÚDO PRINCIPAL                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<main class="pagina-conteudo">
+  
+  <!-- Texto Original -->
+  <div class="bloco-texto">
+    <div class="bloco-titulo">
+      <span>📜</span>
+      Questão 8, Artigo 6 — Se o dom do intelecto se distingue dos outros dons.
+    </div>
+    <div class="pagina-corpo">
+    <p>O sexto discute-se assim. – Parece que o dom do intelecto não se distingue dos outros dons. 1 – Coisas com contrários iguais são iguais. Ora, a sabedoria se opõe à estultícia; ao embotamento, o intelecto; à precipitação, o conselho; à ignorância, a ciência, como está claro em Gregório Ora, a estultícia, o embotamento, a ignorância e a precipitação não diferem entre si. Logo, nem o intelecto se distingue dos demais dons. 2. Demais. – O intelecto, enquanto virtude intelectual difere das outras virtudes intelectuais, por lhe ser próprio versar sobre os princípios evidentes. Ora, o dom do intelecto não versa sobre nenhum princípio evidente. Pois, para conhecer o que naturalmente e em si mesmo é cognoscível basta o hábito natural dos primeiros princípios. E, para o sobrenatural, basta a fé, porque os artigos de fé versam sobre os como que primeiros princípios do conhecimento sobrenatural conforme se disse. Logo, o dom do intelecto não se distingue dos outros dons intelectuais. 3. Demais. – Todo conhecimento intelectual é especulativo ou prático. Ora, o dom do intelecto diz respeito a um e outro, como se disse. Logo, não se distingue dos outros dons intelectuais, mas os abrange a todos.</p>
+    <p>Mas, em contrário, todos os membros de uma enumeração devem, de certo modo, distinguir-se uns dos outros, pois a distinção é o princípio do numero. Ora, o dom do intelecto é enumerado entre os outros dons, segundo se vê na Escritura. Logo, o dom do intelecto é distinto dos outros. SOLUÇÃO. – É manifesta a distinção entre o dom do intelecto e os outros três dons - a piedade, a fortaleza e o temor. Porque aquele pertence à potência cognitiva, ao passo que estes três, à potência apetitiva. Mas a diferença entre o dom do intelecto e os três seguintes - o da sabedoria, da ciência e do conselho, - que também pertencem à potência cognoscitiva, não é do mesmo modo manifesta. Assim, certos distinguem o dom do intelecto do da ciência e do conselho, por pertencerem os dois últimos ao conhecimento prático, e o primeiro, ao especulativo. E por outro lado, distinguem-no do dom da sabedoria, que também versa sobre o conhecimento especulativo, por versar sobre o juízo, ao passo que o intelecto respeita à capacidade de inteligir os objetos que lhe são propostos, ou, de lhes penetrar o íntimo. a esta luz fizemos antes a enumeração dos dons. – Mas quem considerar diligentemente verá que o dom do intelecto versa, não só sobre a especulação, mas ainda sobre as ações, como dissemos. E semelhantemente, também o dom da ciência versa sobre aquela e sobre estas, como a seguir se dirá. Por onde, é preciso fundar de outro modo a distinção entre os dons. Pois todos os quatro dons referidos se ordenam ao conhecimento sobrenatural, infundido em nós pela fé. Ora, como diz a Escritura, a fé é pelo ouvido Por onde, certas verdades devem ser propostas a serem cridas pelo homem, não enquanto objetos de intuição, mas, enquanto ouvidas e às quais ele adere pela fé. Ora, a fé, primária e principalmente, versa sobre a verdade primeira; secundariamente, sobre certas verdades relativas às criaturas; e enfim, também se estende à direção das ações humanas, enquanto praticadas pela caridade, como do sobredito e colhe. Por onde, em relação aos artigos propostos a serem cridos pela fé, duas condições são exigidas de nós. Primeiro, que sejam penetradas ou apreendidas pela inteligência; e isto constitui o dom do intelecto. Segundo, que as julguemos retamente, considerando que lhes devemos aderir, afastando-nos do que lhes é oposto. Ora, esse juízo, no concernente às coisas divinas, pertence ao dom da sabedoria; no relativo às coisas criadas, ao dom da ciência; e enfim, quanto à aplicação às ações particulares, ao dom do conselho.</p>
+    <p>DONDE A</p>
+    <p>RESPOSTA À PRIMEIRA OBJEÇÃO. – A referida diferença entre os quatro dons convém manifestamente à distinção entre as oposições aos mesmos, segundo Gregório. - Pois, o embotamento se opõe à acuidade. Por isso, se chama por semelhança, agudo ao intelecto, quando pode penetrar o íntimo dos objetos que lhes são propostos; ao contrário, o embotamento faz com que a mente não lhes possa penetrar esse íntimo. - Em seguida, estulto se chama ao intelecto, que julga erradamente sobre o fim comum da vida. Por isso, opõe-se propriamente à sabedoria, que torna reto o juízo sobre a causa universal. - A ignorância, por seu lado, implica deficiência da mente, mesmo em relação a quaisquer particularidades. Por isso se opõe à ciência, que possibilite ao homem o juízo reto sobre as causas particulares, isto é, sobre as criaturas. - A precipitação, enfim, manifestamente se opõe ao conselho, que nos leva a não agirmos antes da deliberação racional.</p>
+    <p>RESPOSTA À SEGUNDA. – O dom do intelecto é relativo aos primeiros princípios do conhecimento gratuito. De modo diferente, porém, que a fé. Pois, esta faz assentir neles; ao passo que ao dom do intelecto pertence penetrar pela mente o que é dito.</p>
+    <p>RESPOSTA À TERCEIRA. – O dom do intelecto versa tanto sobre o conhecimento especulativo como sobre o prático. Não, quanto ao juízo, mas quanto à apreensão, para que seja compreendido o que é dito.</p>
+
+    </div>
+  </div>
+  
+  <!-- Bloco de Explicação (a ser preenchido) -->
+  <div class="bloco-explicacao">
+    <div class="explicacao-label">💡 Explicação e Contexto</div>
+    <div class="explicacao-corpo" id="explicacao">
+    <p><em>Explicação será adicionada em breve.</em></p>
+
+    </div>
+  </div>
+  
+</main>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO INFERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="navegacao-inferior">
+  <div class="nav-buttons">
+    <a href="suma-pagina1243.html" class="btn-primary">← Anterior</a>
+    <span class="pagina-atual">1244</span>
+    <a href="suma-pagina1245.html" class="btn-primary">Próxima →</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  RODAPÉ                                                  -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<footer class="suma-footer">
+  <p>Suma Teológica · São Tomás de Aquino | Biblioteca Lux Fidei</p>
+</footer>
+
+</body>
+</html>

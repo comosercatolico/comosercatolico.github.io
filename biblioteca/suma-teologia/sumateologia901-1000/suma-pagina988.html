@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Questão 74, Artigo 10 — Se na razão superior, como tal, i. é, enquanto contempla as | Suma Teológica</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+    --cor-fundo: #f5f0e8;
+    --cor-pagina: #fff;
+    --cor-texto: #2c1f17;
+    --cor-dourado: #d4af37;
+    --cor-roxo: #5b2c83;
+    --sombra: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cor-fundo);
+    color: var(--cor-texto);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CABEÇALHO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-header {
+    background: linear-gradient(135deg, #1a1a1a, #2c241b);
+    color: #f5f0e8;
+    padding: 32px 20px 24px;
+    text-align: center;
+    position: relative;
+}
+
+.voltar-index {
+    position: absolute;
+    top: 16px;
+    left: 20px;
+    color: var(--cor-dourado);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: opacity 0.2s;
+}
+
+.voltar-index:hover {
+    opacity: 0.8;
+}
+
+.suma-header h1 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.info-pagina {
+    display: inline-block;
+    background: rgba(212, 175, 55, 0.15);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    color: var(--cor-dourado);
+    margin-top: 8px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-topo {
+    background: #fff;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    gap: 10px;
+}
+
+.btn-nav {
+    display: inline-flex;
+    align-items: center;
+    padding: 9px 18px;
+    background: var(--cor-roxo);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.btn-nav:hover {
+    background: #4a246a;
+    transform: translateY(-1px);
+}
+
+.desabilitado {
+    background: #ddd !important;
+    color: #999 !important;
+    pointer-events: none;
+}
+
+.info-centena {
+    font-size: 0.85rem;
+    color: #888;
+    font-weight: 500;
+    padding: 0 10px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CONTEÚDO PRINCIPAL                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.pagina-conteudo {
+    flex: 1;
+    max-width: 860px;
+    width: 100%;
+    margin: 36px auto;
+    padding: 0 20px;
+}
+
+.bloco-texto {
+    background: var(--cor-pagina);
+    padding: 48px 44px;
+    border-radius: 12px;
+    box-shadow: var(--sombra);
+    position: relative;
+    margin-bottom: 24px;
+}
+
+.bloco-texto::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 20px;
+    bottom: 20px;
+    width: 4px;
+    background: linear-gradient(to bottom, var(--cor-dourado), var(--cor-roxo));
+    border-radius: 0 4px 4px 0;
+}
+
+.bloco-titulo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.3rem;
+    color: var(--cor-roxo);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e8dfd0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pagina-corpo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.1rem;
+    line-height: 1.95;
+    color: #3d3226;
+    text-align: justify;
+}
+
+.pagina-corpo p {
+    margin-bottom: 1.3em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  BLOCO DE EXPLICAÇÃO                                        */
+/* ────────────────────────────────────────────────────────── */
+
+.bloco-explicacao {
+    background: linear-gradient(135deg, #fffdf5, #faf5eb);
+    border-left: 5px solid var(--cor-dourado);
+    padding: 32px 40px;
+    border-radius: 0 12px 12px 0;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    margin-bottom: 24px;
+}
+
+.explicacao-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--cor-dourado);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 14px;
+}
+
+.explicacao-corpo {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #4a3c2c;
+}
+
+.explicacao-corpo p {
+    margin-bottom: 1em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO INFERIOR                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-inferior {
+    max-width: 860px;
+    width: 100%;
+    margin: 0 auto 40px;
+    padding: 0 20px;
+}
+
+.nav-buttons {
+    background: #fff;
+    padding: 18px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    box-shadow: var(--sombra);
+}
+
+.btn-primary {
+    flex: 1;
+    text-align: center;
+    padding: 13px 16px;
+    background: linear-gradient(135deg, var(--cor-roxo), #7a3eb5);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(91, 44, 131, 0.3);
+}
+
+.pagina-atual {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--cor-dourado);
+    min-width: 50px;
+    text-align: center;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RODAPÉ                                                     */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-footer {
+    background: #1a1a1a;
+    color: #888;
+    text-align: center;
+    padding: 22px 20px;
+    margin-top: auto;
+    font-size: 0.85rem;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RESPONSIVIDADE                                             */
+/* ────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+    .suma-header h1 {
+        font-size: 1.4rem;
+    }
+    
+    .bloco-texto {
+        padding: 28px 18px;
+    }
+    
+    .bloco-explicacao {
+        padding: 22px 18px;
+    }
+    
+    .navegacao-topo {
+        flex-wrap: wrap;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CABEÇALHO                                               -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="suma-header">
+  <a href="../../index.html" class="voltar-index">← Índice</a>
+  <h1>Suma Teológica</h1>
+  <p style="opacity:0.8; font-style:italic; margin-top:4px;">São Tomás de Aquino</p>
+  <span class="info-pagina">Página 988 de 3000</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO SUPERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<nav class="navegacao-topo">
+  <a href="suma-pagina987.html" class="btn-nav">← Anterior</a>
+  <span class="info-centena">Pág. 988/3000</span>
+  <a href="suma-pagina989.html" class="btn-nav">Próxima →</a>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CONTEÚDO PRINCIPAL                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<main class="pagina-conteudo">
+  
+  <!-- Texto Original -->
+  <div class="bloco-texto">
+    <div class="bloco-titulo">
+      <span>📜</span>
+      Questão 74, Artigo 10 — Se na razão superior, como tal, i. é, enquanto contempla as
+    </div>
+    <div class="pagina-corpo">
+    <p>razões eternas, pode haver pecado venial. (II Sent., dist. XXIV, q. 6, a. 5; De Verit., q. 15, a. 5; De Malo, q. 7, a. 5) O décimo discute-se assim. ― Parece que na razão superior, como tal, i. é, enquanto contemplativa das razões eternas, não pode haver pecado venial. 1. ― Pois, o ato da potência não vem a ser deficiente senão porque se comporta desordenadamente em relação ao seu objeto. Ora, o objeto da razão superior são as razões eternas, das quais não é possível afastar-se sem pecado mortal. Logo, na razão superior, como tal, não pode haver pecado venial. 2. Demais. ― Sendo a razão uma potência deliberativa, o seu ato é sempre acompanhado de deliberação. Ora, todo ato deliberadamente desordenado, relativo às coisas de Deus, é pecado mortal. Logo, na razão superior como tal não há nunca pecado venial. 3. Demais. ― Às vezes se dá que o pecado subreptício é venial. É mortal, ao contrário, o que implica deliberação, porque a razão deliberante se apóia num bem maior, agindo contra o qual peca mais gravemente. Assim, se a razão, consentindo deliberadamente num ato deleitável desordenado e contrário à lei de Deus, pecará mais gravemente do que se considerar que esse ato só é contrário a uma virtude moral. Ora, a razão superior não pode se apoiar em nada mais elevado do que o seu objeto. Logo, se a moção subreptícia não for pecado mortal, nem o fará tal a deliberação superveniente, o que é evidentemente falso. Logo, na razão superior, como tal, não pode haver pecado venial.</p>
+    <p>Mas, em contrário. ―A moção subreptícia de infidelidade é pecado venial. Ora, é próprio à razão superior como tal. Logo, nela, como tal, pode haver pecado venial. SOLUÇÃO. ― A razão superior é levada, de um modo, para o seu objeto, e, de outro, para os objetos das potências inferiores, dirigidas por ela. ― Ora, não é levada para os objetos dessas potências, senão na medida em que consulta, sobre eles, as razões eternas. Portanto não é levado para eles senão por deliberação. Ora, o consentimento deliberado no pecado genericamente mortal, constitui pecado mortal. Logo, a razão superior sempre peca mortalmente, se forem pecados mortais os atos das potências inferiores em que consente. Por outro lado, ela é capaz de dois atos, relativamente ao seu objeto próprio, a saber: a simples intuição; e a deliberação, pela qual, mesmo relativamente ao seu objeto próprio, consulta as razões eternas. Ora, por simples intuição, ela é suscetível a uma moção desordenada relativa às coisas divinas; assim, quando nos sobrevém uma súbita moção de infidelidade. E embora esta seja genericamente, pecado mortal, contudo a sua súbita adveniência só o é venial. Porque se não há pecado mortal senão contra a lei de Deus, pode contudo uma verdade de fé aparecer subitamente à razão sob um aspecto diferente, antes de, no caso, ser ou poder ser consultada a razão eterna, i. é, a lei de Deus. Assim, se tivermos o súbito pensamento de ser impossível na ordem natural a ressurreição dos mortos, e subitamente rejeitá-la antes de ter tempo de deliberar que nos foi transmitida, para nela crermos, pela lei divina. Se porém, depois dessa deliberação, permanecer a moção de infidelidade, haverá pecado mortal. E portanto, em relação ao seu objeto próprio, a razão superior pode, nos movimentos súbitos, pecar venialmente, ou mesmo mortalmente, por consentimento deliberado, embora o pecado seja, no seu gênero, mortal. No atinente, porém, às potências inferiores, sempre peca mortalmente, quanto ao pecado genericamente mortal; mas não quanto aos genericamente veniais.</p>
+    <p>DONDE A</p>
+    <p>RESPOSTA À PRIMEIRA OBJEÇÃO. ― O pecado contra as razões eternas, embora mortal só genericamente, pode contudo ser venial, por causa da imperfeição da moção súbita, como já se disse.</p>
+    <p>RESPOSTA À SEGUNDA. ― Na ordem dos atos, a razão a que pertence a deliberação pertence também a simples intuição daquilo de que a deliberação procede; assim como também, na ordem especulativa, à razão pertence formar tanto os silogismos como as proposições. E portanto, a razão também pode ser suscetível de movimentos súbitos.</p>
+    <p>RESPOSTA À TERCEIRA. ― Um mesmo objeto pode ser suscetível de considerações diversas, dos quais seja um superior ao outro. Assim, Deus pode ser considerado, ou enquanto cognoscível pela razão humana, ou enquanto ensinado pela revelação divina, que é consideração mais alta. E portanto, embora o objeto da razão superior seja algo de altíssimo, por natureza, pode contudo ser reduzido a uma consideração mais alta. E por esta razão, aquilo que, no movimento súbito, não era pecado mortal, vem a sê-lo, pela deliberação redutora a uma consideração mais alta, como ficou exposto. Em seguida devemos tratar das causas dos pecados. E, primeiro, em geral. Segundo, em especial. Sobre a primeira questão discutem-se quatro artigos:</p>
+
+    </div>
+  </div>
+  
+  <!-- Bloco de Explicação (a ser preenchido) -->
+  <div class="bloco-explicacao">
+    <div class="explicacao-label">💡 Explicação e Contexto</div>
+    <div class="explicacao-corpo" id="explicacao">
+    <p><em>Explicação será adicionada em breve.</em></p>
+
+    </div>
+  </div>
+  
+</main>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO INFERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="navegacao-inferior">
+  <div class="nav-buttons">
+    <a href="suma-pagina987.html" class="btn-primary">← Anterior</a>
+    <span class="pagina-atual">988</span>
+    <a href="suma-pagina989.html" class="btn-primary">Próxima →</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  RODAPÉ                                                  -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<footer class="suma-footer">
+  <p>Suma Teológica · São Tomás de Aquino | Biblioteca Lux Fidei</p>
+</footer>
+
+</body>
+</html>

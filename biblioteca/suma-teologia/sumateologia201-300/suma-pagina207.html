@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Questão 39, Artigo 5 — Se os nomes essenciais tomados em abstrato podem ser supostos | Suma Teológica</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+    --cor-fundo: #f5f0e8;
+    --cor-pagina: #fff;
+    --cor-texto: #2c1f17;
+    --cor-dourado: #d4af37;
+    --cor-roxo: #5b2c83;
+    --sombra: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cor-fundo);
+    color: var(--cor-texto);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CABEÇALHO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-header {
+    background: linear-gradient(135deg, #1a1a1a, #2c241b);
+    color: #f5f0e8;
+    padding: 32px 20px 24px;
+    text-align: center;
+    position: relative;
+}
+
+.voltar-index {
+    position: absolute;
+    top: 16px;
+    left: 20px;
+    color: var(--cor-dourado);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: opacity 0.2s;
+}
+
+.voltar-index:hover {
+    opacity: 0.8;
+}
+
+.suma-header h1 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.info-pagina {
+    display: inline-block;
+    background: rgba(212, 175, 55, 0.15);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    color: var(--cor-dourado);
+    margin-top: 8px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-topo {
+    background: #fff;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    gap: 10px;
+}
+
+.btn-nav {
+    display: inline-flex;
+    align-items: center;
+    padding: 9px 18px;
+    background: var(--cor-roxo);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.btn-nav:hover {
+    background: #4a246a;
+    transform: translateY(-1px);
+}
+
+.desabilitado {
+    background: #ddd !important;
+    color: #999 !important;
+    pointer-events: none;
+}
+
+.info-centena {
+    font-size: 0.85rem;
+    color: #888;
+    font-weight: 500;
+    padding: 0 10px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CONTEÚDO PRINCIPAL                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.pagina-conteudo {
+    flex: 1;
+    max-width: 860px;
+    width: 100%;
+    margin: 36px auto;
+    padding: 0 20px;
+}
+
+.bloco-texto {
+    background: var(--cor-pagina);
+    padding: 48px 44px;
+    border-radius: 12px;
+    box-shadow: var(--sombra);
+    position: relative;
+    margin-bottom: 24px;
+}
+
+.bloco-texto::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 20px;
+    bottom: 20px;
+    width: 4px;
+    background: linear-gradient(to bottom, var(--cor-dourado), var(--cor-roxo));
+    border-radius: 0 4px 4px 0;
+}
+
+.bloco-titulo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.3rem;
+    color: var(--cor-roxo);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e8dfd0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pagina-corpo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.1rem;
+    line-height: 1.95;
+    color: #3d3226;
+    text-align: justify;
+}
+
+.pagina-corpo p {
+    margin-bottom: 1.3em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  BLOCO DE EXPLICAÇÃO                                        */
+/* ────────────────────────────────────────────────────────── */
+
+.bloco-explicacao {
+    background: linear-gradient(135deg, #fffdf5, #faf5eb);
+    border-left: 5px solid var(--cor-dourado);
+    padding: 32px 40px;
+    border-radius: 0 12px 12px 0;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    margin-bottom: 24px;
+}
+
+.explicacao-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--cor-dourado);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 14px;
+}
+
+.explicacao-corpo {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #4a3c2c;
+}
+
+.explicacao-corpo p {
+    margin-bottom: 1em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO INFERIOR                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-inferior {
+    max-width: 860px;
+    width: 100%;
+    margin: 0 auto 40px;
+    padding: 0 20px;
+}
+
+.nav-buttons {
+    background: #fff;
+    padding: 18px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    box-shadow: var(--sombra);
+}
+
+.btn-primary {
+    flex: 1;
+    text-align: center;
+    padding: 13px 16px;
+    background: linear-gradient(135deg, var(--cor-roxo), #7a3eb5);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(91, 44, 131, 0.3);
+}
+
+.pagina-atual {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--cor-dourado);
+    min-width: 50px;
+    text-align: center;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RODAPÉ                                                     */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-footer {
+    background: #1a1a1a;
+    color: #888;
+    text-align: center;
+    padding: 22px 20px;
+    margin-top: auto;
+    font-size: 0.85rem;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RESPONSIVIDADE                                             */
+/* ────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+    .suma-header h1 {
+        font-size: 1.4rem;
+    }
+    
+    .bloco-texto {
+        padding: 28px 18px;
+    }
+    
+    .bloco-explicacao {
+        padding: 22px 18px;
+    }
+    
+    .navegacao-topo {
+        flex-wrap: wrap;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CABEÇALHO                                               -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="suma-header">
+  <a href="../../index.html" class="voltar-index">← Índice</a>
+  <h1>Suma Teológica</h1>
+  <p style="opacity:0.8; font-style:italic; margin-top:4px;">São Tomás de Aquino</p>
+  <span class="info-pagina">Página 207 de 3000</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO SUPERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<nav class="navegacao-topo">
+  <a href="suma-pagina206.html" class="btn-nav">← Anterior</a>
+  <span class="info-centena">Pág. 207/3000</span>
+  <a href="suma-pagina208.html" class="btn-nav">Próxima →</a>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CONTEÚDO PRINCIPAL                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<main class="pagina-conteudo">
+  
+  <!-- Texto Original -->
+  <div class="bloco-texto">
+    <div class="bloco-titulo">
+      <span>📜</span>
+      Questão 39, Artigo 5 — Se os nomes essenciais tomados em abstrato podem ser supostos
+    </div>
+    <div class="pagina-corpo">
+    <p>pela Pessoa, de modo a ser verdadeira a proposição: a essência gera a essência. (I Sent., dist. V, q. 1, a. 1, 2; De Um. Verb., a. 1, ad 12; Contra Errores Graec., cap. IV; in Decretal., II). O quinto discute-se assim. – Parece que os nomes essenciais, tomados em abstrato, podem ser supostos pela pessoa, de modo a ser verdadeira a proposição – a essência gera a essência. 1. – Pois, Agostinho diz: O Pai e o Filho são uma mesma sabedoria porque são uma mesma essência; e, em particular, a sabedoria da sabedoria, como a essência da essência. 2. Demais. – As coisas, que em nós estão, geram-se ou corrompem-se com a nossa geração ou a nossa corrupção. Ora, o Filho é gerado. Logo, estando no Filho à essência divina, parece que esta é gerada. 3. Demais. – Deus é o mesmo que a essência divina, como do sobredito resulta. Ora, como se viu, é verdadeira a proposição – Deus gera a Deus. Logo, também o é esta outra – a essência gera a essência. 4. Demais. – O que é predicado de um sujeito pode ser suposto por ele. Ora, a essência divina é o Pai. Logo, ela pode supor-se pela pessoa do Pai. E, portanto, a essência gera. 5. Demais. – A essência é um princípio gerador, pois é o Pai, que é gerador. Se, portanto, a essência não for um princípio de geração, será a essência geratriz e não geratriz, o que é impossível. 6. Demais. – Agostinho diz: O Pai é o princípio de toda a divindade. Ora, só e princípio, gerando ou espirando. Logo, o Pai gera ou espira a divindade.</p>
+    <p>Mas, em contrário, diz Agostinho, que nada se gera a si mesmo. Ora, se a essência gera a essência, não gera senão a si mesma; pois, não há nada em Deus, que se distinga da essência divina. Logo, a essência não gera a essência. SOLUÇÃO. – Nesta matéria, errou o abade Joaquim quando asseverou, que, como se diz – Deus gerou a Deus, também se pode dizer – a essência gerou a essência; considerando, que, por causa da divina simplicidade, não se distingue Deus, da divina essência. – Mas, nisto se enganou, pois que, para haver verdade numa proposição, devemos considerar não somente a coisa significada, senão também o modo de significar, como já vimos. Por onde, embora, na realidade, seja Deus o mesmo que a divindade, contudo, o modo de significar não é o mesmo em ambos os casos. Pois, o nome de Deus, significando a essência divina, no ser que a tem, pelo modo da sua significação é-lhe natural poder ser suposto pela pessoa. E assim, as propriedades das pessoas podem ser predicadas do nome de Deus, podendo dizer-se que Deus é gerado ou gerador, como vimos. Mas, o nome de essência não pode, pelo modo da sua signi- ficação, ser suposto pela pessoa; porque significa a essência como forma abstrata. Logo, as pro- priedades das Pessoas, pelas quais se distinguem umas das outras, não podem ser atribuídas à essência; o que significaria, que há uma distinção na essência divina, como há distinção nos supostos.</p>
+    <p>DONDE A</p>
+    <p>RESPOSTA À PRIMEIRA OBJEÇÃO. – Para nos fazer entender a unidade da essência e da pessoa, os santos Doutores por vezes manifestaram o seu pensamento de modo mais expressivo do que o permite a natureza do assunto. Por isso, as suas expressões não se devem amplificar, mas, explicar; por ex., os nomes abstratos, pelos concretos, ou mesmo pelos nomes pessoais. Assim, quando dizem – essência da essência, – ou – sabedoria da sabedoria, o sentido é – o Filho, que é essência e sabedoria, vem do Pai, que é essência e sabedoria. Demais, nesses nomes abstratos devemos atender a uma certa ordem. Assim, o que é próprio do ato mais proximamente se refere às pessoas; porque os atos se atribuem aos supostos. Por onde, menos imprópria é a proposição – natureza da natureza, ou – sabedoria da sabedoria, do que esta – essência da essência.</p>
+    <p>RESPOSTA À SEGUNDA. – Nas criaturas, o gerado não recebe a mesma natureza, numericamente, que a do gerador; mas diversa, numericamente, que começa no gerado, de novo, pela geração e extingue-se pela corrupção. Portanto, o gerado gera-se e corrompe-se por acidente. Ora, o Deus gerado tem a mesma natureza, numericamente, que o gerador. Logo, a natureza divina do Filho não é gerada, nem por essência nem por acidente.</p>
+    <p>RESPOSTA À TERCEIRA. – Embora Deus e a divina essência sejam realmente idênticos, contudo, em razão do modo de significar de uma e da outra, devemos nos referir a cada qual, de modo diverso.</p>
+    <p>RESPOSTA À QUARTA. – A essência divina é predicada do Pai por modo de identidade, por causa da divina simplicidade. Mas, daí se não segue, que possa ser suposta pelo Pai, por causa do modo diverso de significar. A objeção seria porém procedente, relativamente aos conceitos, que se predicam uns dos outros, como o universal, do particular. RESPOSTA À QUINTA. – A diferença entre os nomes substantivos e adjetivos está em implicarem aqueles o seu suposto; ao passo que estes não, pois ligam a realidade significada ao substantivo. Por isso, dizem os lógicos que os nomes substantivos supõem, ao passo que os adjetivos não supõem, mas copulam. Portanto, os nomes pessoais substantivos podem ser predicados da essência por causa da identidade. Nem de tal resulta, que a propriedade pessoal determine uma essência distinta. Mas é atribuída ao suposto implicado pelo nome substantivo. Ao passo que os adjetivos nocionais e os pessoais não podem ser predicados da essência, senão com um substantivo adjunto. Por isso, não podemos dizer que a essência é geratriz. Podemos, porém, dizer que a essência é uma realidade geratriz, ou Deus gerador, supondo-se realidade e Deus pela pessoa; mas não, se forem supostos pela essência. Assim não hácontradição em dizer-se, que a essência é uma realidade geratriz e uma realidade não geratriz; porque, no primeiro caso, realidade é tomada como pessoa; no segundo, como essência. RESPOSTA À SEXTA. – A divindade, enquanto é a mesma em várias pessoas, tem certa conveniência com a forma do nome coletivo. Por isso, quando dizemos – O Pai é o princípio de toda divindade, isso pode significar a universalidade das Pessoas, por ser ele de todas as Pessoas divinas o princípio. Nem por isso há de necessariamente ser o princípio de si mesmo, do mesmo modo que um indivíduo do povo é chamado guia de todo o povo, não, porém de si mesmo. Ou podemos dizer que o Pai é o princípio de toda divindade, não por gerá-la ou espirá-la, mas, porque a comunica, gerando-a e espirando-a.</p>
+
+    </div>
+  </div>
+  
+  <!-- Bloco de Explicação (a ser preenchido) -->
+  <div class="bloco-explicacao">
+    <div class="explicacao-label">💡 Explicação e Contexto</div>
+    <div class="explicacao-corpo" id="explicacao">
+    <p><em>Explicação será adicionada em breve.</em></p>
+
+    </div>
+  </div>
+  
+</main>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO INFERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="navegacao-inferior">
+  <div class="nav-buttons">
+    <a href="suma-pagina206.html" class="btn-primary">← Anterior</a>
+    <span class="pagina-atual">207</span>
+    <a href="suma-pagina208.html" class="btn-primary">Próxima →</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  RODAPÉ                                                  -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<footer class="suma-footer">
+  <p>Suma Teológica · São Tomás de Aquino | Biblioteca Lux Fidei</p>
+</footer>
+
+</body>
+</html>

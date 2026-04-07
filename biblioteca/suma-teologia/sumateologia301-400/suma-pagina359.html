@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Questão 74, Artigo 2 — Se todos esses dias são um só dia. | Suma Teológica</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+    --cor-fundo: #f5f0e8;
+    --cor-pagina: #fff;
+    --cor-texto: #2c1f17;
+    --cor-dourado: #d4af37;
+    --cor-roxo: #5b2c83;
+    --sombra: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cor-fundo);
+    color: var(--cor-texto);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CABEÇALHO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-header {
+    background: linear-gradient(135deg, #1a1a1a, #2c241b);
+    color: #f5f0e8;
+    padding: 32px 20px 24px;
+    text-align: center;
+    position: relative;
+}
+
+.voltar-index {
+    position: absolute;
+    top: 16px;
+    left: 20px;
+    color: var(--cor-dourado);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: opacity 0.2s;
+}
+
+.voltar-index:hover {
+    opacity: 0.8;
+}
+
+.suma-header h1 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.info-pagina {
+    display: inline-block;
+    background: rgba(212, 175, 55, 0.15);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    color: var(--cor-dourado);
+    margin-top: 8px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-topo {
+    background: #fff;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    gap: 10px;
+}
+
+.btn-nav {
+    display: inline-flex;
+    align-items: center;
+    padding: 9px 18px;
+    background: var(--cor-roxo);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.btn-nav:hover {
+    background: #4a246a;
+    transform: translateY(-1px);
+}
+
+.desabilitado {
+    background: #ddd !important;
+    color: #999 !important;
+    pointer-events: none;
+}
+
+.info-centena {
+    font-size: 0.85rem;
+    color: #888;
+    font-weight: 500;
+    padding: 0 10px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CONTEÚDO PRINCIPAL                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.pagina-conteudo {
+    flex: 1;
+    max-width: 860px;
+    width: 100%;
+    margin: 36px auto;
+    padding: 0 20px;
+}
+
+.bloco-texto {
+    background: var(--cor-pagina);
+    padding: 48px 44px;
+    border-radius: 12px;
+    box-shadow: var(--sombra);
+    position: relative;
+    margin-bottom: 24px;
+}
+
+.bloco-texto::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 20px;
+    bottom: 20px;
+    width: 4px;
+    background: linear-gradient(to bottom, var(--cor-dourado), var(--cor-roxo));
+    border-radius: 0 4px 4px 0;
+}
+
+.bloco-titulo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.3rem;
+    color: var(--cor-roxo);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e8dfd0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pagina-corpo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.1rem;
+    line-height: 1.95;
+    color: #3d3226;
+    text-align: justify;
+}
+
+.pagina-corpo p {
+    margin-bottom: 1.3em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  BLOCO DE EXPLICAÇÃO                                        */
+/* ────────────────────────────────────────────────────────── */
+
+.bloco-explicacao {
+    background: linear-gradient(135deg, #fffdf5, #faf5eb);
+    border-left: 5px solid var(--cor-dourado);
+    padding: 32px 40px;
+    border-radius: 0 12px 12px 0;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    margin-bottom: 24px;
+}
+
+.explicacao-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--cor-dourado);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 14px;
+}
+
+.explicacao-corpo {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #4a3c2c;
+}
+
+.explicacao-corpo p {
+    margin-bottom: 1em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO INFERIOR                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-inferior {
+    max-width: 860px;
+    width: 100%;
+    margin: 0 auto 40px;
+    padding: 0 20px;
+}
+
+.nav-buttons {
+    background: #fff;
+    padding: 18px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    box-shadow: var(--sombra);
+}
+
+.btn-primary {
+    flex: 1;
+    text-align: center;
+    padding: 13px 16px;
+    background: linear-gradient(135deg, var(--cor-roxo), #7a3eb5);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(91, 44, 131, 0.3);
+}
+
+.pagina-atual {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--cor-dourado);
+    min-width: 50px;
+    text-align: center;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RODAPÉ                                                     */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-footer {
+    background: #1a1a1a;
+    color: #888;
+    text-align: center;
+    padding: 22px 20px;
+    margin-top: auto;
+    font-size: 0.85rem;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RESPONSIVIDADE                                             */
+/* ────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+    .suma-header h1 {
+        font-size: 1.4rem;
+    }
+    
+    .bloco-texto {
+        padding: 28px 18px;
+    }
+    
+    .bloco-explicacao {
+        padding: 22px 18px;
+    }
+    
+    .navegacao-topo {
+        flex-wrap: wrap;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CABEÇALHO                                               -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="suma-header">
+  <a href="../../index.html" class="voltar-index">← Índice</a>
+  <h1>Suma Teológica</h1>
+  <p style="opacity:0.8; font-style:italic; margin-top:4px;">São Tomás de Aquino</p>
+  <span class="info-pagina">Página 359 de 3000</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO SUPERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<nav class="navegacao-topo">
+  <a href="suma-pagina358.html" class="btn-nav">← Anterior</a>
+  <span class="info-centena">Pág. 359/3000</span>
+  <a href="suma-pagina360.html" class="btn-nav">Próxima →</a>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CONTEÚDO PRINCIPAL                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<main class="pagina-conteudo">
+  
+  <!-- Texto Original -->
+  <div class="bloco-texto">
+    <div class="bloco-titulo">
+      <span>📜</span>
+      Questão 74, Artigo 2 — Se todos esses dias são um só dia.
+    </div>
+    <div class="pagina-corpo">
+    <p>O segundo discute–se assim. – Parece que todos esses dias são um só dia. 1. – Pois, diz a Escritura: Tal foi a origem do céu e da terra, quando foram criados, no dia em que o Senhor Deus fez o céu e a terra e toda a planta do campo antes que nascesse na terra. Logo um é o dia em que fez o céu e a terra e toda a planta do campo. Mas, fez o céu e a terra no primeiro dia, ou melhor, antes de qualquer dia; e fez os arbustos do campo no terceiro dia. Logo, um só dia são o primeiro, o terceiro e, por igual razão, todos os outros. 2. Demais. – Diz a Escritura: Aquele que vive eternamente, criou todas as coisas juntas. Ora, isto não se daria se os dias dessas obras fossem vários, porque vários dias não são simultâneos. Logo, não há vários dias, mas um só. 3. Demais. – No sétimo dia Deus cessou de fazer novas obras. Se, pois, o sétimo dia é dia diferente dos outros, segue–se que ele não fez esse dia, o que é inconveniente. 4. Demais. – Deus fez num instante a obra de cada dia, pois, de cada obra se diz: Disse e se fez. Se, pois, a obra seguinte a reservasse para outro dia, resultaria que, na parte restante do dia anterior teria cessado as obras; o que seria supérfluo. Logo, não há nenhum dia seguinte ao da obra precedente.</p>
+    <p>Mas, em contrário, diz a Escritura: Fez–se tarde e manhã e segundo dia e o terceiro dia, e assim por diante. Ora, não se pode falar de segundo e terceiro onde só há um. Logo, não houve só um dia. SOLUÇÃO. – Neste assunto, Agostinho dissente dos outros expositores. Pois, ensina que todos os chamados sete dias não são mais do que um só dia, que se apresenta sete vezes. Porém, os outros expositores sentem que foram sete dias diversos e não um só. Ora, estas duas opiniões, referidas à exposição da letra da Escritura, têm entre si grande diversidade. – Assim, segundo Agostinho, por dia se entende o conhecimento da mente angélica; de modo que o primeiro dia é o conhecimento da primeira obra divina; o segundo, o da segunda, e assim por diante. Daí o dizer–se que cada obra teve o seu dia, porque Deus não produziu nada, nas coisas da natureza, que não imprimisse na mente angélica, podendo esta conhecer simultaneamente muitas coisas, sobretudo no Verbo, em quem todo conhecimento angélico se termina e aperfeiçoa. De modo que os dias se distinguem pela ordem natural das coisas conhecidas e não pela sucessão do conhecimento ou pela da produção das coisas. Ora, o conhecimento angélico pode, própria e verdadeiramente, ser denominado dia, porque a luz, causa do dia, se encontra propriamente, segundo Agostinho, nos seres espirituais. Porém, segundo os outros, por esses dias se entende tanto a sucessão dos dias temporais como a da produção das coisas. Se contudo, essas duas opiniões se referirem ao modo da produção das coisas, não há entre elas grande diferença. E isto por dois motivos, cujas exposições diversificam Agostinho dos outros, como resulta claro do que já se disse antes. – E o primeiro é que Agostinho pela terra e água, primeiramente criadas, entende a matéria totalmente informe; e pela produção do firmamento, congregação das águas e aparecimento da terra árida entende a impressão das formas na matéria corporal. Os outros Santos Padres, porém, pela terra e água primeiramente criadas, entendem os elementos mesmos do mundo existentes com formas próprias; e pelas obras seguintes entendem alguma distinção nos corpos, já antes existentes, como antes se disse. – Em segundo lugar, difere Agostinho dos outros quanto à produção das plantas e dos animais, por admitirem estes que, na obra dos seis dias, umas e outros foram produzidos atualmente; ao passo que, para Agostinho, o foram apenas potencialmente. Assim, o admitir este que as obras dos seis dias foram feitas simultaneamente, importa em terem as coisas o mesmo modo de produção. De modo que, segundo todos, a matéria, na produção primeira das coisas, existia sob as formas substanciais dos elementos; e demais, nessa primeira instituição não havia animais nem plantas, em ato. Mas Agostinho difere dos outros em quatro pontos; pois, segundo os outros Santos Padres, depois da produção primeira da criatura, houve tempo em que não existia a luz; não havia Um firmamento formado; a terra não estava a descoberto das águas; e não estavam formados os astros do céu, que é o quarto ponto; coisas todas que não admite Agostinho. Por onde, para não ficar prejudicada nenhuma dessas opiniões, devem–se responder as objecções de uns e de outros.</p>
+    <p>DONDE A</p>
+    <p>RESPOSTA À PRIMEIRA OBJEÇÃO. No mesmo dia em que Deus criou o céu e a terra, criou também todos os arbustos do campo, não em ato, mas antes que nascessem na terra, isto é, em potência; o que Agostinho atribui ao terceiro dia e, os outros, à instituição primeira das coisas.</p>
+    <p>RESPOSTA À SEGUNDA. – Deus criou todas as coisas simultaneamente, quanto à substância delas, de certo modo informe; mas não simultaneamente, quanto à formação feita pela distinção e pelo ornato; e por isso se usa, expressamente, da palavra criação.</p>
+    <p>RESPOSTA À TERCEIRA. – No sétimo dia, Deus cessou de fazer novas obras; não, porém, de propagar certas delas; e essa propagação é causa de sucederem outros dias, ao primeiro.</p>
+    <p>RESPOSTA À QUARTA. – Não é por impotência de Deus, como se precisasse de tempo para operar, que todas as coisas não foram simultaneamente distintas e ornadas; mas para que se conservasse a ordem, na instituição delas. Por onde, era necessário servissem diversos dias aos diversos estados do mundo. Assim sempre cada uma das obras seguintes acrescentava ao mundo um novo estado de perfeição. RESPOSTA À QUINTA. – Segundo Agostinho, essa ordem dos dias deve referir–se à ordem natural das obras a eles atribuídas.</p>
+
+    </div>
+  </div>
+  
+  <!-- Bloco de Explicação (a ser preenchido) -->
+  <div class="bloco-explicacao">
+    <div class="explicacao-label">💡 Explicação e Contexto</div>
+    <div class="explicacao-corpo" id="explicacao">
+    <p><em>Explicação será adicionada em breve.</em></p>
+
+    </div>
+  </div>
+  
+</main>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO INFERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="navegacao-inferior">
+  <div class="nav-buttons">
+    <a href="suma-pagina358.html" class="btn-primary">← Anterior</a>
+    <span class="pagina-atual">359</span>
+    <a href="suma-pagina360.html" class="btn-primary">Próxima →</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  RODAPÉ                                                  -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<footer class="suma-footer">
+  <p>Suma Teológica · São Tomás de Aquino | Biblioteca Lux Fidei</p>
+</footer>
+
+</body>
+</html>

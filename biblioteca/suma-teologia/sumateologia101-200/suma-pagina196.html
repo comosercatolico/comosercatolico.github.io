@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Questão 36, Artigo 2 — Se o Espírito Santo procede do Filho. | Suma Teológica</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+    --cor-fundo: #f5f0e8;
+    --cor-pagina: #fff;
+    --cor-texto: #2c1f17;
+    --cor-dourado: #d4af37;
+    --cor-roxo: #5b2c83;
+    --sombra: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cor-fundo);
+    color: var(--cor-texto);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CABEÇALHO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-header {
+    background: linear-gradient(135deg, #1a1a1a, #2c241b);
+    color: #f5f0e8;
+    padding: 32px 20px 24px;
+    text-align: center;
+    position: relative;
+}
+
+.voltar-index {
+    position: absolute;
+    top: 16px;
+    left: 20px;
+    color: var(--cor-dourado);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: opacity 0.2s;
+}
+
+.voltar-index:hover {
+    opacity: 0.8;
+}
+
+.suma-header h1 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.info-pagina {
+    display: inline-block;
+    background: rgba(212, 175, 55, 0.15);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    color: var(--cor-dourado);
+    margin-top: 8px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-topo {
+    background: #fff;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    gap: 10px;
+}
+
+.btn-nav {
+    display: inline-flex;
+    align-items: center;
+    padding: 9px 18px;
+    background: var(--cor-roxo);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.btn-nav:hover {
+    background: #4a246a;
+    transform: translateY(-1px);
+}
+
+.desabilitado {
+    background: #ddd !important;
+    color: #999 !important;
+    pointer-events: none;
+}
+
+.info-centena {
+    font-size: 0.85rem;
+    color: #888;
+    font-weight: 500;
+    padding: 0 10px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CONTEÚDO PRINCIPAL                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.pagina-conteudo {
+    flex: 1;
+    max-width: 860px;
+    width: 100%;
+    margin: 36px auto;
+    padding: 0 20px;
+}
+
+.bloco-texto {
+    background: var(--cor-pagina);
+    padding: 48px 44px;
+    border-radius: 12px;
+    box-shadow: var(--sombra);
+    position: relative;
+    margin-bottom: 24px;
+}
+
+.bloco-texto::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 20px;
+    bottom: 20px;
+    width: 4px;
+    background: linear-gradient(to bottom, var(--cor-dourado), var(--cor-roxo));
+    border-radius: 0 4px 4px 0;
+}
+
+.bloco-titulo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.3rem;
+    color: var(--cor-roxo);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e8dfd0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pagina-corpo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.1rem;
+    line-height: 1.95;
+    color: #3d3226;
+    text-align: justify;
+}
+
+.pagina-corpo p {
+    margin-bottom: 1.3em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  BLOCO DE EXPLICAÇÃO                                        */
+/* ────────────────────────────────────────────────────────── */
+
+.bloco-explicacao {
+    background: linear-gradient(135deg, #fffdf5, #faf5eb);
+    border-left: 5px solid var(--cor-dourado);
+    padding: 32px 40px;
+    border-radius: 0 12px 12px 0;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    margin-bottom: 24px;
+}
+
+.explicacao-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--cor-dourado);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 14px;
+}
+
+.explicacao-corpo {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #4a3c2c;
+}
+
+.explicacao-corpo p {
+    margin-bottom: 1em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO INFERIOR                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-inferior {
+    max-width: 860px;
+    width: 100%;
+    margin: 0 auto 40px;
+    padding: 0 20px;
+}
+
+.nav-buttons {
+    background: #fff;
+    padding: 18px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    box-shadow: var(--sombra);
+}
+
+.btn-primary {
+    flex: 1;
+    text-align: center;
+    padding: 13px 16px;
+    background: linear-gradient(135deg, var(--cor-roxo), #7a3eb5);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(91, 44, 131, 0.3);
+}
+
+.pagina-atual {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--cor-dourado);
+    min-width: 50px;
+    text-align: center;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RODAPÉ                                                     */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-footer {
+    background: #1a1a1a;
+    color: #888;
+    text-align: center;
+    padding: 22px 20px;
+    margin-top: auto;
+    font-size: 0.85rem;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RESPONSIVIDADE                                             */
+/* ────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+    .suma-header h1 {
+        font-size: 1.4rem;
+    }
+    
+    .bloco-texto {
+        padding: 28px 18px;
+    }
+    
+    .bloco-explicacao {
+        padding: 22px 18px;
+    }
+    
+    .navegacao-topo {
+        flex-wrap: wrap;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CABEÇALHO                                               -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="suma-header">
+  <a href="../../index.html" class="voltar-index">← Índice</a>
+  <h1>Suma Teológica</h1>
+  <p style="opacity:0.8; font-style:italic; margin-top:4px;">São Tomás de Aquino</p>
+  <span class="info-pagina">Página 196 de 3000</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO SUPERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<nav class="navegacao-topo">
+  <a href="suma-pagina195.html" class="btn-nav">← Anterior</a>
+  <span class="info-centena">Pág. 196/3000</span>
+  <a href="suma-pagina197.html" class="btn-nav">Próxima →</a>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CONTEÚDO PRINCIPAL                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<main class="pagina-conteudo">
+  
+  <!-- Texto Original -->
+  <div class="bloco-texto">
+    <div class="bloco-titulo">
+      <span>📜</span>
+      Questão 36, Artigo 2 — Se o Espírito Santo procede do Filho.
+    </div>
+    <div class="pagina-corpo">
+    <p>(I Sent., dist. XI, a. 1; IV Cont. Gent., cap. XXIV, XXV; De port., q. 10, a. 4, 5; Contra errores Graec., parte II, cap. XXVII usque ad XXXII; Compend. Theol., cap. XLIX; Contra Graecos, Armenos, etc., cap. IV; in Ioan., cap. XV, lect. VI; cap. XVI, lect IV). O segundo discute-se assim. – Parece que o Espírito Santo não procede do Filho. 1. – Pois, segundo Dionísio, não devemos ousar dizer nada da divindade substancial, além do que nos foi devidamente expresso nas Sagradas Letras. Ora, a Sagrada Escritura não diz que o Espírito Santo procede do Filho, mas só, que procede do Pai (Jo 15, 26): O espírito de verdade que procede do Pai. Logo, o Espírito Santo não procede do Filho. 2. Demais. – No símbolo do Sínodo Constantinopolitano lê-se: Cremos no Espírito Santo, Senhor e vivificador, procedente do Pai, e que deve ser com o Pai e o Filho adorado e glorificado. Logo, de nenhum modo se devia acrescentar, em o nosso símbolo, que o Espírito Santo procede do Filho; mas devem se considerar réus de anátema os que o fizeram. 3. Demais. – Damasceno diz: dizemos que o Espírito Santo procede do Pai e lhe chamamos Espírito do Pai; porém não dizemos que procede do Filho, embora lhe chamemos Espírito do Filho. Logo, o Espírito Santo não procede do Filho. 4. Demais. – Nada procede do ser em que repousa. Ora, o Espírito Santo repousa no Filho, pois diz a legenda de Santo André: A paz convosco e com todos os que crêem em um Deus Padre, e num só seu Filho, único Senhor Jesus Cristo, e em um Espírito Santo procedente do Pai e que permanece no Filho. Logo, o Espírito Santo não procede do Filho. 5. Demais. – O Filho procede como Verbo. Ora, o nosso espírito parece que não procede, em nós, do nosso verbo. Logo, nem o Espírito Santo procede do Verbo. 6. Demais. – O Espírito Santo procede perfeitamente do Pai. Logo, é supérfluo dizer que procede do Filho. 7. Demais. – No que é perfeito não difere o ser, do poder, como diz o Filósofo; e, muito menos em Deus. Ora, o Espírito Santo pode se distinguir do Filho, mesmo se deste não procede; pois, diz Anselmo: O Filho e o Espírito Santo têm certamente o ser do Pai, mas de diverso modo; um nascendo, o outro, procedendo, de maneira que ambos entre si se distinguem. E depois acrescenta: Pois, se por outra razão não se diversificassem o Filho e o Espírito Santo, só por aí se diversificariam. Logo, o Espírito Santo, não existindo pelo Filho, deste se distingue.</p>
+    <p>Mas, em contrário, diz Atanásio: O Espírito Santo não é feito, nem criado, nem gerado pelo Pai e pelo Filho, mas é deles procedente. SOLUÇÃO. – É necessário admitir-se que o Espírito Santo procede do Filho. Pois, se deste não procedesse, dele não poderia de modo nenhum pessoalmente distinguir-se, o que resulta claro do que já dissemos. Nem é possível dizer-se que as Pessoas divinas se distingam entre si, absolutamente falando, pois, daí seguir-se-ia não ser uma a essência das três, porquanto tudo o que de Deus absolutamente se predica pertence à unidade de essência. Donde se conclui, que só pelas relações se distinguem, entre si as Pessoas divinas. Ora, as relações só como opostas é que podem distinguir as Pessoas, o que assim se demonstra: tem o Pai duas relações; uma referente ao Filho e outra, ao Espírito Santo; as quais todavia, por não serem opostas, não constituem duas pessoas, mas pertencem unicamente à só pessoa do Pai. Se, portanto, no Filho e no Espírito Santo só houvesse duas relações, pelas quais um e outro se referissem ao Pai, elas não seriam opostas entre si, como não o são as duas pelas quais o Pai a eles se refere. Por onde, como a pessoa do Pai é una, seguir-se-ia também ser una a pessoa do Filho com a do Espírito Santo, tendo duas relações opostas às duas do Pai. Ora, isto é herético porque destrói a fé na Trindade. Logo, é necessário refiram-se entre si o Filho e o Espírito Santo por opostas relações senão as de origem, como já provamos. Mas as relações opostas de origem se fundam no princípio e no que provém do princípio. Logo, e necessariamente, ou o Filho procede do Espírito Santo, o que ninguém diz, ou o Espírito Santo procede do Filho, como nós confessamos. Com o que também está de acordo a razão da processão de um e outro. Pois, já dissemos que o Filho, como Verbo, procede a modo de intelecto; porém, o Espírito Santo a modo de vontade, como Amor. Ora, necessariamente, do verbo procede o amor. Pois não amamos senão a quem apreendemos pela concepção mental. Por onde, desta maneira, é manifesto que o Espírito Santo procede do Filho. Mas também a própria ordem das coisas assim o ensina. Pois, nunca vemos de um ser procederem desordenadamente outros, salvo quando diferem só materialmente; assim, um ferreiro faz muito cutelos materialmente distintos entre si, sem nenhuma ordem mútua. Porém as coisas, que se distinguem não só pela distinção material, sempre mantém uma certa ordem entre si. Por isso, também a ordem das criaturas manifesta o esplendor da divina sabedoria. Se pois de uma mesma pessoa, a do Pai, procedem duas outras, o Filho e o Espírito Santo, é necessário tenham elas entre si uma certa ordem, e esta não pode ser outra senão a de natureza, por cuja ordem um procede do outro. Logo, não é possível dizer-se, que o Filho e o Espírito Santo procedem do Pai de modo tal que nenhum deles proceda do outro; a menos que introduzamos entre eles uma distinção material, o que é impossível. Por isso, também os próprios Gregos admitem certa ordem relativa ao Filho, na processão do Espírito Santo; pois concedem que o Espírito Santo é Espírito do Filho e que procede do Pai pelo Filho. E diz-se que alguns deles concedem, que o Espírito Santo vem do Filho, ou dele promana; não, porém, que proceda. O que provém da ignorância ou da petulância. Pois quem refletir atentamente verá que é generalíssimo o vocábulo processão, dentre todos os que exprimem uma origem qualquer. Assim, dele usamos para designar qualquer origem, dizendo, p. ex., que a linha procede do ponto; o raio, do sol; o rio, da fonte, e em outros casos semelhantes. Por onde, de tudo o que se refere à origem podemos concluir, que o Espírito Santo procede do Filho.</p>
+    <p>DONDE A</p>
+    <p>RESPOSTA À PRIMEIRA OBJEÇÃO. – Não devemos dizer de Deus o que não se acha na Sagrada Escritura textualmente ou pelo sentido. Embora pois nela não leiamos textualmente, que o Espírito Santo procede do Filho, encontramo-lo todavia, quanto ao sentido e precipuamente onde diz o Filho, falando do Espírito Santo (Jo 16, 14): Ele me clarificará porque há de receber do que é meu. E também de ordinário devemos entender na Sagrada Escritura, como necessariamente dito, do Filho, o que diz do Pai, mesmo quando acrescentar a locução exclusiva, exceto quando o Pai e o Filho se distinguem segundo relações opostas. Assim, as palavras do Senhor (Mt 11, 27): Ninguém conhece o Filho senão o Pai – não impedem o Filho de se conhecer a si mesmo. Logo, quando se diz que o Espírito Santo procede do Pai, mesmo acrescentando que só do Pai procede, isso não exclui o Filho; pois, como princípio do Espírito Santo, não se opõem Pai e Filho, senão somente enquanto um é Pai e outro Filho.</p>
+    <p>RESPOSTA À SEGUNDA. – Cada Concílio instituiu algum símbolo, por causa de algum erro que condenava. Por isso, o Concílio seguinte não constituía símbolo diferente do primeiro, mas apenas o explanava, contra os heréticos insurgentes, desenvolvendo o que já implicitamente continha o primeiro. Assim, o Sínodo Calcedonense determinou que os membros do Concílio Constantinopolitano transmitiriam a doutrina do Espírito Santo, não inferindo ser insuficiente o que estabeleceu o Concílio anterior, reunido em Nicéia, mas declarando-lhe o sentido, contra os heréticos. Pois, como no tempo dos antigos Concílios ainda não era nascido o erro dos que dizem não proceder o Espírito Santo, do Filho, não foi necessária referência explicita a este erro. Mas, quando ele mais tarde apareceu, foi expresso em certo Concílio reunido no ocidente por autoridade do Romano Pontífice, por cuja autoridade também foram reunidos e confirmados os antigos Concílios. – Ora, que o Espírito Santo procede do Filho já estava implícito no dizer-se que procede do Pai.</p>
+    <p>RESPOSTA À TERCEIRA. – Foram os Nestorianos os primeiros a ensinarem que o Espírito Santo não procede do Filho, como se vê por um símbolo deles, condenado no Sínodo Efesino. E tal erro foi seguido por Teodoreto Nestoriano e vários depois deles, entre os quais também Damasceno; razão pela qual a opinião deste não a devemos seguir, nesta matéria. Embora certos digam que Damasceno, se não confessa que o Espírito Santo procede do Filho, também não o nega, pelas palavras citadas.</p>
+    <p>RESPOSTA À QUARTA. – O dizer-se que o Espírito Santo repousa ou permanece no Filho, não exclui que dele proceda; pois, também dizemos que o Filho permanece no Pai, e todavia dele procede. E também dizemos que o Espírito Santo repousa no Filho, ou como o amor do amante, no amado, ou considerando a natureza humana de Cristo, em virtude do que diz a Escritura (Jo 1, 33): Aquele sobre que tu vires descer o Espírito e repousar sobre ele, esse é o que batiza no Espírito Santo. RESPOSTA À QUINTA. – O Verbo divino não é comparável ao verbo vocal, do qual não procede o espírito; porque então o Verbo divino teria sentido metafórico. Mas é comparável ao verbo mental, do qual procede o amor. RESPOSTA À SEXTA. – Por proceder perfeitamente do Pai, não somente não é supérfluo dizer-se que o Espírito Santo procede do Filho, mas antes, é absolutamente necessário. Pois sendo uma mesma a virtude do Pai e do Filho, tudo quanto procede do Pai há de necessariamente proceder do Filho, salvo o que repugnar à propriedade da filiação. Assim o Filho não procede de si mesmo, embora proceda do Pai. RESPOSTA À SÉTIMA. – O Espírito Santo distingue-se pessoalmente do Filho porque a origem de um se distingue da do outro. Mas a diferença mesma da origem consiste em proceder o Filho só do Pai, ao passo que o Espírito Santo, do Pai e do Filho. E nem de outro modo se distinguiriam as processões, como já ficou antes demonstrado.</p>
+
+    </div>
+  </div>
+  
+  <!-- Bloco de Explicação (a ser preenchido) -->
+  <div class="bloco-explicacao">
+    <div class="explicacao-label">💡 Explicação e Contexto</div>
+    <div class="explicacao-corpo" id="explicacao">
+    <p><em>Explicação será adicionada em breve.</em></p>
+
+    </div>
+  </div>
+  
+</main>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO INFERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="navegacao-inferior">
+  <div class="nav-buttons">
+    <a href="suma-pagina195.html" class="btn-primary">← Anterior</a>
+    <span class="pagina-atual">196</span>
+    <a href="suma-pagina197.html" class="btn-primary">Próxima →</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  RODAPÉ                                                  -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<footer class="suma-footer">
+  <p>Suma Teológica · São Tomás de Aquino | Biblioteca Lux Fidei</p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Questão 158, Artigo 1 — Se irar–se pode ser lícito. | Suma Teológica</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+    --cor-fundo: #f5f0e8;
+    --cor-pagina: #fff;
+    --cor-texto: #2c1f17;
+    --cor-dourado: #d4af37;
+    --cor-roxo: #5b2c83;
+    --sombra: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cor-fundo);
+    color: var(--cor-texto);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CABEÇALHO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-header {
+    background: linear-gradient(135deg, #1a1a1a, #2c241b);
+    color: #f5f0e8;
+    padding: 32px 20px 24px;
+    text-align: center;
+    position: relative;
+}
+
+.voltar-index {
+    position: absolute;
+    top: 16px;
+    left: 20px;
+    color: var(--cor-dourado);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: opacity 0.2s;
+}
+
+.voltar-index:hover {
+    opacity: 0.8;
+}
+
+.suma-header h1 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.info-pagina {
+    display: inline-block;
+    background: rgba(212, 175, 55, 0.15);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    color: var(--cor-dourado);
+    margin-top: 8px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-topo {
+    background: #fff;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    gap: 10px;
+}
+
+.btn-nav {
+    display: inline-flex;
+    align-items: center;
+    padding: 9px 18px;
+    background: var(--cor-roxo);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.btn-nav:hover {
+    background: #4a246a;
+    transform: translateY(-1px);
+}
+
+.desabilitado {
+    background: #ddd !important;
+    color: #999 !important;
+    pointer-events: none;
+}
+
+.info-centena {
+    font-size: 0.85rem;
+    color: #888;
+    font-weight: 500;
+    padding: 0 10px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CONTEÚDO PRINCIPAL                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.pagina-conteudo {
+    flex: 1;
+    max-width: 860px;
+    width: 100%;
+    margin: 36px auto;
+    padding: 0 20px;
+}
+
+.bloco-texto {
+    background: var(--cor-pagina);
+    padding: 48px 44px;
+    border-radius: 12px;
+    box-shadow: var(--sombra);
+    position: relative;
+    margin-bottom: 24px;
+}
+
+.bloco-texto::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 20px;
+    bottom: 20px;
+    width: 4px;
+    background: linear-gradient(to bottom, var(--cor-dourado), var(--cor-roxo));
+    border-radius: 0 4px 4px 0;
+}
+
+.bloco-titulo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.3rem;
+    color: var(--cor-roxo);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e8dfd0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pagina-corpo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.1rem;
+    line-height: 1.95;
+    color: #3d3226;
+    text-align: justify;
+}
+
+.pagina-corpo p {
+    margin-bottom: 1.3em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  BLOCO DE EXPLICAÇÃO                                        */
+/* ────────────────────────────────────────────────────────── */
+
+.bloco-explicacao {
+    background: linear-gradient(135deg, #fffdf5, #faf5eb);
+    border-left: 5px solid var(--cor-dourado);
+    padding: 32px 40px;
+    border-radius: 0 12px 12px 0;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    margin-bottom: 24px;
+}
+
+.explicacao-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--cor-dourado);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 14px;
+}
+
+.explicacao-corpo {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #4a3c2c;
+}
+
+.explicacao-corpo p {
+    margin-bottom: 1em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO INFERIOR                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-inferior {
+    max-width: 860px;
+    width: 100%;
+    margin: 0 auto 40px;
+    padding: 0 20px;
+}
+
+.nav-buttons {
+    background: #fff;
+    padding: 18px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    box-shadow: var(--sombra);
+}
+
+.btn-primary {
+    flex: 1;
+    text-align: center;
+    padding: 13px 16px;
+    background: linear-gradient(135deg, var(--cor-roxo), #7a3eb5);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(91, 44, 131, 0.3);
+}
+
+.pagina-atual {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--cor-dourado);
+    min-width: 50px;
+    text-align: center;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RODAPÉ                                                     */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-footer {
+    background: #1a1a1a;
+    color: #888;
+    text-align: center;
+    padding: 22px 20px;
+    margin-top: auto;
+    font-size: 0.85rem;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RESPONSIVIDADE                                             */
+/* ────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+    .suma-header h1 {
+        font-size: 1.4rem;
+    }
+    
+    .bloco-texto {
+        padding: 28px 18px;
+    }
+    
+    .bloco-explicacao {
+        padding: 22px 18px;
+    }
+    
+    .navegacao-topo {
+        flex-wrap: wrap;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CABEÇALHO                                               -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="suma-header">
+  <a href="../../index.html" class="voltar-index">← Índice</a>
+  <h1>Suma Teológica</h1>
+  <p style="opacity:0.8; font-style:italic; margin-top:4px;">São Tomás de Aquino</p>
+  <span class="info-pagina">Página 1964 de 3000</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO SUPERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<nav class="navegacao-topo">
+  <a href="suma-pagina1963.html" class="btn-nav">← Anterior</a>
+  <span class="info-centena">Pág. 1964/3000</span>
+  <a href="suma-pagina1965.html" class="btn-nav">Próxima →</a>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CONTEÚDO PRINCIPAL                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<main class="pagina-conteudo">
+  
+  <!-- Texto Original -->
+  <div class="bloco-texto">
+    <div class="bloco-titulo">
+      <span>📜</span>
+      Questão 158, Artigo 1 — Se irar–se pode ser lícito.
+    </div>
+    <div class="pagina-corpo">
+    <p>O primeiro discute–se assim. – Parece que irar–se não pode ser justo. 1 – Pois, Jerônimo, expondo aquilo do Evangelho – Todo o que se ira contra seu irmão – diz: Certos códices acrescentam – sem causa; e demais, o princípio estabelecido é verdadeiro e a ira é absolutamente proibida. Logo, de nenhum modo é lícito irar–se. 2. Demais. – Segundo Dionísio, o mal da alma consiste em desobedecer à razão. Ora, a ira é sempre contrária à razão; pois, ensina o Filósofo, a ira não obedece perfeitamente à razão. E Gregório diz: A ira destrói a tranquilidade da alma, que era de certo modo dilacera e despedaça. E Cassiano: O movimento da iracúndia, que referve por qualquer causa, cega os olhos da alma. Logo, irar–se é sempre mau. 3. Demais. – A ira é o desejo da vindicta, como diz a Glosa àquilo da Escritura: Não aborrecerás a teu irmão no teu coração. Ora, desejar a vingança não parece lícito, a qual só a Deus é reservada, conforme a Escritura: Minha é a vingança. Logo, parece que irar–se é sempre pecado. 4. Demais. – Tudo o que nos impede de imitar a Deus é mau. Ora, a ira sempre nos impede de imitar a Deus; pois, Deus julga com tranquilidade, segundo a Escritura. Logo irarse é sempre mau.</p>
+    <p>Mas, em contrário, diz Crisóstomo: Quem se ira sem causa será réu, quem o fizer com causa não será réu – pois, sem a ira não aproveita a doutrina, a justiça não triunfa nem se reprimem os crimes. Logo, irar–se nem sempre é mau. SOLUÇÃO. – A ira, propriamente falando, é uma paixão do apetite sensitivo, e dela é que tira a sua denominação o apetite irascível, como dissemos quando tratámos das paixões. Ora, devemos considerar, em matéria de paixões. da alma, que de dois modos elas podem implicar o mal. – Primeiro, pela espécie mesma da paixão; e essa espécie é considerada segundo o objeto da paixão. Assim, a inveja, pela sua espécie mesma, implica um certo mal, pois, é a tristeza causada pelo bem de outrem, o que por si repugna a razão. Por isso, a inveja basta nomeá–la para despertar a ideia do mal, como diz o Filósofo. Ora, tal não se dá com a ira, que é o desejo da vingança; pois a vindicta podemos desejá–la como um bem ou como um mal. – De outro modo, há mal numa paixão, quantitativamente, isto é, por excesso ou defeito da mesma. E assim, a ira pode ser má, quando alguém se ira mais ou menos do que o exigiria a razão reta. Mas, o irar–se de acordo com a razão reta é meritório.</p>
+    <p>DONDE A</p>
+    <p>RESPOSTA À PRIMEIRA OBJEÇÃO. – Os Estóicos consideravam a ira e todas as paixões como uns afetos existentes em desacordo com a ordem da razão; e, assim, tinham a ira e todas as demais paixões como más, como dissemos quando tratamos das paixões. E é nesse sentido que Jerônimo considera a ira, pois, ele se refere àquela pela qual nos iramos contra o próximo, querendo–lhe mal. Mas, segundo os Peripatéticos, cuja doutrina é sobretudo a que segue Agostinho, a ira e as outras paixões consideram–se movimentos do apetite sensitivo, quer moderados pela razão, quer não. E, neste sentido, a ira nem sempre é pecado.</p>
+    <p>RESPOSTA À SEGUNDA. – A ira pode se relacionar de dois modos com a razão. Primeiro, antecedentemente e, então, a desvia da sua retidão e por isso constitui um mal. De outro modo, consequentemente, quando o apetite sensitivo move–se contra os vícios segundo a ordem da razão. E esta ira é boa e se chama ira por zelo. Por isso, diz Gregório: Devemos ter sumo cuidado para que a ira, tomada como instrumento da virtude, não nos domine a alma nem tome a dianteira como senhora, mas que seja como uma escrava, pronta para servir, e nunca se ajuste da submissão à razão. Ora, esta ira, embora na execução mesma do ato impida de certo modo o juízo da razão, não lhe elimina contudo a retidão. Donde o dizer Gregório, no mesmo lugar, que a ira por zelo turva a vista da razão, mas, a ira por vício, cega–a. Nem é contra a sua essência que a deliberação racional sofra um eclipse na execução do que foi por ela determinada; pois, do contrário, também a atividade artística ficaria impedida se, devendo agir, tivesse que deliberar sobre o que devia fazer.</p>
+    <p>RESPOSTA À TERCEIRA. – Desejar a vingança como um mal daquele a quem infligimos um castigo, é ilícito. Mas, desejar a vingança, para corrigir um vício e salvar o bem da justiça, é meritório. Ora, tal pode ser o fim do apetite sensitivo, enquanto movido pela razão. E quando a vindicta se realiza segundo a ordem racional, ela vem de Deus, de quem é ministro o poder de castigar, como diz o Apóstolo.</p>
+    <p>RESPOSTA À QUARTA. – Devemos imitar a Deus e o podemos, pelo desejo do bem; mas, não o podemos de nenhum modo, pelo modo de desejar; porque em Deus não há apetite sensitivo, como o há em nós, cujos movimentos devem obedecer à razão. Por isso, diz Gregório, que tanto mais fortemente a ira se levanta contra os vícios, quanto mais o faz em obediência à razão.</p>
+
+    </div>
+  </div>
+  
+  <!-- Bloco de Explicação (a ser preenchido) -->
+  <div class="bloco-explicacao">
+    <div class="explicacao-label">💡 Explicação e Contexto</div>
+    <div class="explicacao-corpo" id="explicacao">
+    <p><em>Explicação será adicionada em breve.</em></p>
+
+    </div>
+  </div>
+  
+</main>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO INFERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="navegacao-inferior">
+  <div class="nav-buttons">
+    <a href="suma-pagina1963.html" class="btn-primary">← Anterior</a>
+    <span class="pagina-atual">1964</span>
+    <a href="suma-pagina1965.html" class="btn-primary">Próxima →</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  RODAPÉ                                                  -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<footer class="suma-footer">
+  <p>Suma Teológica · São Tomás de Aquino | Biblioteca Lux Fidei</p>
+</footer>
+
+</body>
+</html>

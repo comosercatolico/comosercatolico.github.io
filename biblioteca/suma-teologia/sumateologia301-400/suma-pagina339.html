@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Questão 65, Artigo 4 — — Se as formas dos corpos procedem dos anjos. | Suma Teológica</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+    --cor-fundo: #f5f0e8;
+    --cor-pagina: #fff;
+    --cor-texto: #2c1f17;
+    --cor-dourado: #d4af37;
+    --cor-roxo: #5b2c83;
+    --sombra: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cor-fundo);
+    color: var(--cor-texto);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CABEÇALHO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-header {
+    background: linear-gradient(135deg, #1a1a1a, #2c241b);
+    color: #f5f0e8;
+    padding: 32px 20px 24px;
+    text-align: center;
+    position: relative;
+}
+
+.voltar-index {
+    position: absolute;
+    top: 16px;
+    left: 20px;
+    color: var(--cor-dourado);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: opacity 0.2s;
+}
+
+.voltar-index:hover {
+    opacity: 0.8;
+}
+
+.suma-header h1 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.info-pagina {
+    display: inline-block;
+    background: rgba(212, 175, 55, 0.15);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    color: var(--cor-dourado);
+    margin-top: 8px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-topo {
+    background: #fff;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    gap: 10px;
+}
+
+.btn-nav {
+    display: inline-flex;
+    align-items: center;
+    padding: 9px 18px;
+    background: var(--cor-roxo);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.btn-nav:hover {
+    background: #4a246a;
+    transform: translateY(-1px);
+}
+
+.desabilitado {
+    background: #ddd !important;
+    color: #999 !important;
+    pointer-events: none;
+}
+
+.info-centena {
+    font-size: 0.85rem;
+    color: #888;
+    font-weight: 500;
+    padding: 0 10px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CONTEÚDO PRINCIPAL                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.pagina-conteudo {
+    flex: 1;
+    max-width: 860px;
+    width: 100%;
+    margin: 36px auto;
+    padding: 0 20px;
+}
+
+.bloco-texto {
+    background: var(--cor-pagina);
+    padding: 48px 44px;
+    border-radius: 12px;
+    box-shadow: var(--sombra);
+    position: relative;
+    margin-bottom: 24px;
+}
+
+.bloco-texto::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 20px;
+    bottom: 20px;
+    width: 4px;
+    background: linear-gradient(to bottom, var(--cor-dourado), var(--cor-roxo));
+    border-radius: 0 4px 4px 0;
+}
+
+.bloco-titulo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.3rem;
+    color: var(--cor-roxo);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e8dfd0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pagina-corpo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.1rem;
+    line-height: 1.95;
+    color: #3d3226;
+    text-align: justify;
+}
+
+.pagina-corpo p {
+    margin-bottom: 1.3em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  BLOCO DE EXPLICAÇÃO                                        */
+/* ────────────────────────────────────────────────────────── */
+
+.bloco-explicacao {
+    background: linear-gradient(135deg, #fffdf5, #faf5eb);
+    border-left: 5px solid var(--cor-dourado);
+    padding: 32px 40px;
+    border-radius: 0 12px 12px 0;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    margin-bottom: 24px;
+}
+
+.explicacao-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--cor-dourado);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 14px;
+}
+
+.explicacao-corpo {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #4a3c2c;
+}
+
+.explicacao-corpo p {
+    margin-bottom: 1em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO INFERIOR                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-inferior {
+    max-width: 860px;
+    width: 100%;
+    margin: 0 auto 40px;
+    padding: 0 20px;
+}
+
+.nav-buttons {
+    background: #fff;
+    padding: 18px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    box-shadow: var(--sombra);
+}
+
+.btn-primary {
+    flex: 1;
+    text-align: center;
+    padding: 13px 16px;
+    background: linear-gradient(135deg, var(--cor-roxo), #7a3eb5);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(91, 44, 131, 0.3);
+}
+
+.pagina-atual {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--cor-dourado);
+    min-width: 50px;
+    text-align: center;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RODAPÉ                                                     */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-footer {
+    background: #1a1a1a;
+    color: #888;
+    text-align: center;
+    padding: 22px 20px;
+    margin-top: auto;
+    font-size: 0.85rem;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RESPONSIVIDADE                                             */
+/* ────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+    .suma-header h1 {
+        font-size: 1.4rem;
+    }
+    
+    .bloco-texto {
+        padding: 28px 18px;
+    }
+    
+    .bloco-explicacao {
+        padding: 22px 18px;
+    }
+    
+    .navegacao-topo {
+        flex-wrap: wrap;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CABEÇALHO                                               -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="suma-header">
+  <a href="../../index.html" class="voltar-index">← Índice</a>
+  <h1>Suma Teológica</h1>
+  <p style="opacity:0.8; font-style:italic; margin-top:4px;">São Tomás de Aquino</p>
+  <span class="info-pagina">Página 339 de 3000</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO SUPERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<nav class="navegacao-topo">
+  <a href="suma-pagina338.html" class="btn-nav">← Anterior</a>
+  <span class="info-centena">Pág. 339/3000</span>
+  <a href="suma-pagina340.html" class="btn-nav">Próxima →</a>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CONTEÚDO PRINCIPAL                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<main class="pagina-conteudo">
+  
+  <!-- Texto Original -->
+  <div class="bloco-texto">
+    <div class="bloco-titulo">
+      <span>📜</span>
+      Questão 65, Artigo 4 — — Se as formas dos corpos procedem dos anjos.
+    </div>
+    <div class="pagina-corpo">
+    <p>O quarto discute-se assim. — Parece que as formas dos corpos procedem dos anjos.</p>
+    <p>1. — Pois, Boécio diz, que das formas que são sem matéria procedem as que são na matéria. Ora, aquelas são substâncias espirituais, ao passo que estas são as dos corpos; logo, provém das primeiras. 2. Demais. — O que é participado se reduz ao que é essencialmente. Ora, as substâncias espirituais são, por essência, formas; ao passo que as criaturas corpóreas participam das formas. Logo, as formas das coisas corpóreas são derivadas das substâncias espirituais. 3. Demais. — As substâncias espirituais têm maior virtude causal que os corpos celestes. Ora, estes causam as formas dos seres inferiores, que vemos, e, por isso, são considerados a causa da geração e da corrupção. Logo, muito mais, as formas existentes na matéria são derivadas das substâncias espirituais.</p>
+    <p>Mas, em contrário, diz Agostinho, que não se deve pensar que a matéria corporal serve à vontade dos anjos; mas, antes, à de Deus. Pois, diz-se que a matéria corporal serve à vontade daquele do qual recebeu a espécie. Logo, as formas corporais não procedem dos anjos, mas de Deus.</p>
+    <p>SOLUÇÃO. — Certos foram de opinião que todas as formas corporais são derivadas das substâncias espirituais chamadas anjos. E esta opinião se subdivide em dois ramos. — Assim, Platão ensinava que as formas subsistentes na matéria corporal são derivadas das subsistentes sem matéria, ao modo de uma certa participação. Admitia, pois, a subsistência imaterial do homem, e semelhantemente, a do cavalo e dos outros seres, de cujas substâncias se constituem os correspondentes seres singulares sensíveis; de modo que permanece na matéria corporal, certa impressão das tais formas separadas, por uma como assimilação, a que chamavam participação. E ensinavam os Platônicos que a ordem das formas corresponde à das substâncias separadas. Assim, a substância separada, que é cavalo, é a causa de todos os cavalos; acima dessa há a vida separada, chamada a vida em si e causa de toda vida; e, por fim, estava a substância, a que chamavam o ser em si, causa de todo o ser. — Avicena porém e certos outros ensinavam que as formas das coisas corporais não subsistem, por si, na matéria, mas só no intelecto. Assim, todas as formas existentes na matéria corporal procedem das existentes no intelecto das criaturas espirituais, a que uns chamam inteligências e nós chamamos anjos; do mesmo modo que das formas existentes na mente do artífice procedem as formas dos artefatos. — E esta opinião vem a cair na de alguns modernos heréticos, que admitem, por certo, um Deus criador acima de tudo, mas dizem que a matéria corporal foi formada pelo diabo e por ele distribuída em várias espécies. Ora, todas essas opiniões procedem da mesma raiz. Pois, procuravam a causa das formas, como se estas, em si mesmas, fossem feitas. — Mas, como Aristóteles o prova, tudo o que é propriamente feito é composto. Ora, às formas das coisas corruptíveis é natural ora serem, ora não serem, não sendo elas mesmas as geradas ou corrompidas, senão os seus compostos; e pois, as formas não têm o ser, senão os compostos; e do modo pelo qual a alguma coisa convém o vir-a-ser, desse mesmo lhe convém o ser. E, portanto, como o semelhante é feito pelo semelhante, não se deve considerar como causa das formas corporais nenhuma forma imaterial, mas algum composto; assim um fogo é gerado por outro. De maneira que, as formas corporais são causadas, não de alguma forma imaterial, mas por ser a matéria quase reduzida da potência ao ato, por algum agente composto. Mas, como o agente composto, que é corpo, é movido pela substância espiritual criada, conforme diz Agostinho, segue-se ulteriormente, que também as formas corporais derivam das substâncias espirituais; não que estas infundam formas, senão que movem para elas. Finalmente, se reduzem a Deus, como à causa primeira, mesmo as espécies do intelecto angélico, que são umas como razões seminais das formas corpóreas. Ora, na criação primeira da criatura corporal não há a considerar nenhuma transmutação da potência para o ato. Por onde, as formas corporais que os corpos, na primeira criação, tiveram, foram imediatamente produzidas por Deus, a cuja única vontade a matéria obedece como à causa própria. Por isso, para o significar, Moisés antes de narrar as obras de cada um dos dias, diz: — Deus disse: faça-se isto ou aquilo; querendo exprimir que a formação das coisas foi feita pelo Verbo de Deus, do qual, conforme Agostinho, procede toda forma, toda união e concórdia das partes.</p>
+    <p>DONDE A</p>
+    <p>RESPOSTA À PRIMEIRA OBJEÇÃO. — Boécio entende por formas sem matéria as razões das coisas existentes na mente divina, como também diz o Apóstolo: Pela fé reconhecemos que os séculos foram formados pela palavra de Deus; de sorte que o visível fosse feito do invisível. Se, porém, por formas sem matéria entende os anjos, deve-se concluir que deles vêm as formas existentes na matéria, não por influxo, mas por movimento.</p>
+    <p>RESPOSTA À SEGUNDA. — As formas participadas pela matéria reduzem-se, não a certas formas da mesma natureza, por si subsistentes, como queriam os Platônicos, mas às formas inteligíveis ou do intelecto angélico, donde procedem pelo movimento; ou, ulteriormente, das razões do intelecto divino, pelas quais também as sementes das formas são infundidas nas coisas criadas, de modo que possam ser reduzidas ao ato , pelo movimento.</p>
+    <p>RESPOSTA À TERCEIRA. — Os corpos celestes causam as formas nos seres inferiores deste mundo, não influindo, mas movendo. Em seguida, devemos tratar da obra da distinção. E, primeiro, da ordem da criação, quanto à distinção. Segundo, da distinção em si mesma.</p>
+
+    </div>
+  </div>
+  
+  <!-- Bloco de Explicação (a ser preenchido) -->
+  <div class="bloco-explicacao">
+    <div class="explicacao-label">💡 Explicação e Contexto</div>
+    <div class="explicacao-corpo" id="explicacao">
+    <p><em>Explicação será adicionada em breve.</em></p>
+
+    </div>
+  </div>
+  
+</main>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO INFERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="navegacao-inferior">
+  <div class="nav-buttons">
+    <a href="suma-pagina338.html" class="btn-primary">← Anterior</a>
+    <span class="pagina-atual">339</span>
+    <a href="suma-pagina340.html" class="btn-primary">Próxima →</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  RODAPÉ                                                  -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<footer class="suma-footer">
+  <p>Suma Teológica · São Tomás de Aquino | Biblioteca Lux Fidei</p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Questão 9, Artigo 1 — — Se Cristo tinha alguma ciência além da divina. | Suma Teológica</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+    --cor-fundo: #f5f0e8;
+    --cor-pagina: #fff;
+    --cor-texto: #2c1f17;
+    --cor-dourado: #d4af37;
+    --cor-roxo: #5b2c83;
+    --sombra: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cor-fundo);
+    color: var(--cor-texto);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CABEÇALHO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-header {
+    background: linear-gradient(135deg, #1a1a1a, #2c241b);
+    color: #f5f0e8;
+    padding: 32px 20px 24px;
+    text-align: center;
+    position: relative;
+}
+
+.voltar-index {
+    position: absolute;
+    top: 16px;
+    left: 20px;
+    color: var(--cor-dourado);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: opacity 0.2s;
+}
+
+.voltar-index:hover {
+    opacity: 0.8;
+}
+
+.suma-header h1 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.info-pagina {
+    display: inline-block;
+    background: rgba(212, 175, 55, 0.15);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    color: var(--cor-dourado);
+    margin-top: 8px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-topo {
+    background: #fff;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    gap: 10px;
+}
+
+.btn-nav {
+    display: inline-flex;
+    align-items: center;
+    padding: 9px 18px;
+    background: var(--cor-roxo);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.btn-nav:hover {
+    background: #4a246a;
+    transform: translateY(-1px);
+}
+
+.desabilitado {
+    background: #ddd !important;
+    color: #999 !important;
+    pointer-events: none;
+}
+
+.info-centena {
+    font-size: 0.85rem;
+    color: #888;
+    font-weight: 500;
+    padding: 0 10px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CONTEÚDO PRINCIPAL                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.pagina-conteudo {
+    flex: 1;
+    max-width: 860px;
+    width: 100%;
+    margin: 36px auto;
+    padding: 0 20px;
+}
+
+.bloco-texto {
+    background: var(--cor-pagina);
+    padding: 48px 44px;
+    border-radius: 12px;
+    box-shadow: var(--sombra);
+    position: relative;
+    margin-bottom: 24px;
+}
+
+.bloco-texto::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 20px;
+    bottom: 20px;
+    width: 4px;
+    background: linear-gradient(to bottom, var(--cor-dourado), var(--cor-roxo));
+    border-radius: 0 4px 4px 0;
+}
+
+.bloco-titulo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.3rem;
+    color: var(--cor-roxo);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e8dfd0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pagina-corpo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.1rem;
+    line-height: 1.95;
+    color: #3d3226;
+    text-align: justify;
+}
+
+.pagina-corpo p {
+    margin-bottom: 1.3em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  BLOCO DE EXPLICAÇÃO                                        */
+/* ────────────────────────────────────────────────────────── */
+
+.bloco-explicacao {
+    background: linear-gradient(135deg, #fffdf5, #faf5eb);
+    border-left: 5px solid var(--cor-dourado);
+    padding: 32px 40px;
+    border-radius: 0 12px 12px 0;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    margin-bottom: 24px;
+}
+
+.explicacao-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--cor-dourado);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 14px;
+}
+
+.explicacao-corpo {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #4a3c2c;
+}
+
+.explicacao-corpo p {
+    margin-bottom: 1em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO INFERIOR                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-inferior {
+    max-width: 860px;
+    width: 100%;
+    margin: 0 auto 40px;
+    padding: 0 20px;
+}
+
+.nav-buttons {
+    background: #fff;
+    padding: 18px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    box-shadow: var(--sombra);
+}
+
+.btn-primary {
+    flex: 1;
+    text-align: center;
+    padding: 13px 16px;
+    background: linear-gradient(135deg, var(--cor-roxo), #7a3eb5);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(91, 44, 131, 0.3);
+}
+
+.pagina-atual {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--cor-dourado);
+    min-width: 50px;
+    text-align: center;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RODAPÉ                                                     */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-footer {
+    background: #1a1a1a;
+    color: #888;
+    text-align: center;
+    padding: 22px 20px;
+    margin-top: auto;
+    font-size: 0.85rem;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RESPONSIVIDADE                                             */
+/* ────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+    .suma-header h1 {
+        font-size: 1.4rem;
+    }
+    
+    .bloco-texto {
+        padding: 28px 18px;
+    }
+    
+    .bloco-explicacao {
+        padding: 22px 18px;
+    }
+    
+    .navegacao-topo {
+        flex-wrap: wrap;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CABEÇALHO                                               -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="suma-header">
+  <a href="../../index.html" class="voltar-index">← Índice</a>
+  <h1>Suma Teológica</h1>
+  <p style="opacity:0.8; font-style:italic; margin-top:4px;">São Tomás de Aquino</p>
+  <span class="info-pagina">Página 2179 de 3000</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO SUPERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<nav class="navegacao-topo">
+  <a href="suma-pagina2178.html" class="btn-nav">← Anterior</a>
+  <span class="info-centena">Pág. 2179/3000</span>
+  <a href="suma-pagina2180.html" class="btn-nav">Próxima →</a>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CONTEÚDO PRINCIPAL                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<main class="pagina-conteudo">
+  
+  <!-- Texto Original -->
+  <div class="bloco-texto">
+    <div class="bloco-titulo">
+      <span>📜</span>
+      Questão 9, Artigo 1 — — Se Cristo tinha alguma ciência além da divina.
+    </div>
+    <div class="pagina-corpo">
+    <p>O primeiro discute-se assim. — Parece que Cristo não tinha uma ciência, além da divina. 1 — Pois, a ciência é necessária para, por meio dela, adquirirmos certos conhecimentos. Ora, Cristo, pela ciência divina, conhecia todas as coisas. Portanto, era-lhe supérflua outra ciência. 2. Demais. — A luz maior ofusca a menor. Ora, toda ciência criada está para a ciência de Deus incriada como a luz menor, para a maior. Logo, em Cristo não refulgiu outra ciência além da divina. 3. Demais. — A união da natureza humana com a divina fez-se na pessoa, como do sobredito resulta. Ora, segundo alguns, Cristo teve uma certa ciência de união, pela qual sabia o atinente ao mistério da Encarnação, mais plenamente que qualquer outro. Ora, como a união pessoal contém duas naturezas, parece que não havia em Cristo duas ciências, mas uma só, pertinente a uma e outra natureza.</p>
+    <p>Mas, em contrário, diz Ambrósio: Deus assumiu, na carne, a perfeição da natureza humana; assumiu a alma sensitiva do homem, mas não a entumescida pela soberba da carne. Logo, Cristo teve uma ciência criada.</p>
+    <p>SOLUÇÃO. — Como do sobredito resulta, o Filho de Deus assumiu a natureza humana criada; isto é, não só o corpo, mas também a alma, não só a sensitiva, mas também a racional. Logo, tinha necessariamente a ciência criada, por três razões. — Primeiro, por causa da perfeição da alma. Pois, em si mesma considerada, a alma é potencial em relação ao conhecimento dos inteligíveis; pois, é como uma tábua em que nada está escrito; e contudo. é possível escrever nela, por meio do intelecto possível, pelo qual pode tornar-se todas as causas, como diz Aristóteles. Pois, o potencial é imperfeito, se não for reduzido ao ato. Ora, não era conveniente que o Filho de Deus assumisse a natureza humana imperfeita, mas, a perfeita, como a mediante a qual todo o gênero humano devesse ser reduzido à perfeição. E por isso era necessário fosse a alma de Cristo perfeita, por meio de uma ciência, que fosse a perfeição própria dele. Logo, também devia necessariamente ter uma outra ciência além da divina. Do contrário, a alma de Cristo seria mais imperfeita que a dos outros homens. — Segundo, como todas as causas existem em vista das suas operações, conforme diz Aristóteles, teria em vão Cristo a alma intelectiva, se não inteligisse por ela. O que constitui a ciência criada. — Terceiro, porque, há uma ciência criada própria da natureza da alma humana, e é a pela qual naturalmente conhecemos os primeiros princípios; pois, aqui tomamos a palavra ciência em sentido lato, por qualquer conhecimento do intelecto humano. Ora, nada de natural faltou a Cristo, porque assumiu toda a natureza humana, como dissemos. Por isso, no Sexto Sínodo foi condenada a opinião dos que negavam tivesse Cristo duas ciências ou duas sabedorias.</p>
+    <p>DONDE A</p>
+    <p>RESPOSTA À PRIMEIRA OBJEÇÃO. — Cristo conhecia todas as coisas pela sua ciência divina por operação incriada, que é a essência mesma de Deus; pois, inteligir é a própria substância de Deus, como o prova Aristóteles. Por onde, esse ato, sendo de outra natureza, não podia pertencer à alma humana de Cristo. Se, pois, a alma de Cristo não tivesse outra ciência, além da divina, nada conheceria. E então teria sido assumida em vão, pois, as coisas existem em vista das suas operações.</p>
+    <p>RESPOSTA À SEGUNDA. — De duas luzes consideradas da mesma ordem, a menor é ofuscada pela maior; assim, a luz do sol ofusca a da candeia, pertencendo uma e a outra à ordem do corpo que iluminam. Mas, se considerarmos a maior como a que ilumina e a menor com a iluminada, o menor lume não é ofuscado pelo maior, mas ao contrário, é aumentado; assim a luz do ar não é ofuscada pela do sol. E, deste modo, a luz da ciência não é ofuscada, mas antes, mais se esclarece na alma de Cristo, pelo lume da ciência divina, que é a luz verdadeira, que alumia a todo o homem que vem a este, mundo no dizer do Evangelho.</p>
+    <p>RESPOSTA À TERCEIRA. — Quanto às coisas unidas, tem ciência, em Cristo, tanto a natureza divina como a humana; assim que, por causa da união, pela qual o Deus e o homem tem a mesma hipóstase, o que é de Deus se atribui ao homem e o que é do homem se atribui a Deus, como se disse. Mas, quanto à união mesma, não podemos admitir em Cristo nenhuma ciência. Pois aquela união refere-se ao ser pessoal; a ciência, porém, não convém à pessoa senão em razão de alguma natureza.</p>
+
+    </div>
+  </div>
+  
+  <!-- Bloco de Explicação (a ser preenchido) -->
+  <div class="bloco-explicacao">
+    <div class="explicacao-label">💡 Explicação e Contexto</div>
+    <div class="explicacao-corpo" id="explicacao">
+    <p><em>Explicação será adicionada em breve.</em></p>
+
+    </div>
+  </div>
+  
+</main>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO INFERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="navegacao-inferior">
+  <div class="nav-buttons">
+    <a href="suma-pagina2178.html" class="btn-primary">← Anterior</a>
+    <span class="pagina-atual">2179</span>
+    <a href="suma-pagina2180.html" class="btn-primary">Próxima →</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  RODAPÉ                                                  -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<footer class="suma-footer">
+  <p>Suma Teológica · São Tomás de Aquino | Biblioteca Lux Fidei</p>
+</footer>
+
+</body>
+</html>

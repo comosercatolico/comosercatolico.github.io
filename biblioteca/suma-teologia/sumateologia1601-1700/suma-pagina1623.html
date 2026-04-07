@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Questão 79, Artigo 3 — Se a omissão é um pecado especial. | Suma Teológica</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+    --cor-fundo: #f5f0e8;
+    --cor-pagina: #fff;
+    --cor-texto: #2c1f17;
+    --cor-dourado: #d4af37;
+    --cor-roxo: #5b2c83;
+    --sombra: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cor-fundo);
+    color: var(--cor-texto);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CABEÇALHO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-header {
+    background: linear-gradient(135deg, #1a1a1a, #2c241b);
+    color: #f5f0e8;
+    padding: 32px 20px 24px;
+    text-align: center;
+    position: relative;
+}
+
+.voltar-index {
+    position: absolute;
+    top: 16px;
+    left: 20px;
+    color: var(--cor-dourado);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: opacity 0.2s;
+}
+
+.voltar-index:hover {
+    opacity: 0.8;
+}
+
+.suma-header h1 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.info-pagina {
+    display: inline-block;
+    background: rgba(212, 175, 55, 0.15);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    color: var(--cor-dourado);
+    margin-top: 8px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-topo {
+    background: #fff;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    gap: 10px;
+}
+
+.btn-nav {
+    display: inline-flex;
+    align-items: center;
+    padding: 9px 18px;
+    background: var(--cor-roxo);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.btn-nav:hover {
+    background: #4a246a;
+    transform: translateY(-1px);
+}
+
+.desabilitado {
+    background: #ddd !important;
+    color: #999 !important;
+    pointer-events: none;
+}
+
+.info-centena {
+    font-size: 0.85rem;
+    color: #888;
+    font-weight: 500;
+    padding: 0 10px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CONTEÚDO PRINCIPAL                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.pagina-conteudo {
+    flex: 1;
+    max-width: 860px;
+    width: 100%;
+    margin: 36px auto;
+    padding: 0 20px;
+}
+
+.bloco-texto {
+    background: var(--cor-pagina);
+    padding: 48px 44px;
+    border-radius: 12px;
+    box-shadow: var(--sombra);
+    position: relative;
+    margin-bottom: 24px;
+}
+
+.bloco-texto::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 20px;
+    bottom: 20px;
+    width: 4px;
+    background: linear-gradient(to bottom, var(--cor-dourado), var(--cor-roxo));
+    border-radius: 0 4px 4px 0;
+}
+
+.bloco-titulo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.3rem;
+    color: var(--cor-roxo);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e8dfd0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pagina-corpo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.1rem;
+    line-height: 1.95;
+    color: #3d3226;
+    text-align: justify;
+}
+
+.pagina-corpo p {
+    margin-bottom: 1.3em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  BLOCO DE EXPLICAÇÃO                                        */
+/* ────────────────────────────────────────────────────────── */
+
+.bloco-explicacao {
+    background: linear-gradient(135deg, #fffdf5, #faf5eb);
+    border-left: 5px solid var(--cor-dourado);
+    padding: 32px 40px;
+    border-radius: 0 12px 12px 0;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    margin-bottom: 24px;
+}
+
+.explicacao-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--cor-dourado);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 14px;
+}
+
+.explicacao-corpo {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #4a3c2c;
+}
+
+.explicacao-corpo p {
+    margin-bottom: 1em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO INFERIOR                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-inferior {
+    max-width: 860px;
+    width: 100%;
+    margin: 0 auto 40px;
+    padding: 0 20px;
+}
+
+.nav-buttons {
+    background: #fff;
+    padding: 18px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    box-shadow: var(--sombra);
+}
+
+.btn-primary {
+    flex: 1;
+    text-align: center;
+    padding: 13px 16px;
+    background: linear-gradient(135deg, var(--cor-roxo), #7a3eb5);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(91, 44, 131, 0.3);
+}
+
+.pagina-atual {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--cor-dourado);
+    min-width: 50px;
+    text-align: center;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RODAPÉ                                                     */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-footer {
+    background: #1a1a1a;
+    color: #888;
+    text-align: center;
+    padding: 22px 20px;
+    margin-top: auto;
+    font-size: 0.85rem;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RESPONSIVIDADE                                             */
+/* ────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+    .suma-header h1 {
+        font-size: 1.4rem;
+    }
+    
+    .bloco-texto {
+        padding: 28px 18px;
+    }
+    
+    .bloco-explicacao {
+        padding: 22px 18px;
+    }
+    
+    .navegacao-topo {
+        flex-wrap: wrap;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CABEÇALHO                                               -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="suma-header">
+  <a href="../../index.html" class="voltar-index">← Índice</a>
+  <h1>Suma Teológica</h1>
+  <p style="opacity:0.8; font-style:italic; margin-top:4px;">São Tomás de Aquino</p>
+  <span class="info-pagina">Página 1623 de 3000</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO SUPERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<nav class="navegacao-topo">
+  <a href="suma-pagina1622.html" class="btn-nav">← Anterior</a>
+  <span class="info-centena">Pág. 1623/3000</span>
+  <a href="suma-pagina1624.html" class="btn-nav">Próxima →</a>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CONTEÚDO PRINCIPAL                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<main class="pagina-conteudo">
+  
+  <!-- Texto Original -->
+  <div class="bloco-texto">
+    <div class="bloco-titulo">
+      <span>📜</span>
+      Questão 79, Artigo 3 — Se a omissão é um pecado especial.
+    </div>
+    <div class="pagina-corpo">
+    <p>O terceiro discute-se assim. – Parece que a omissão não é um pecado especial. 1. – Pois, todo pecado ou é original ou atual. Ora, a omissão não é pecado original, porque não foi contraído desde a origem; nem atual, porque pode existir independente de qualquer ato, como já se demonstrou, quando se tratou dos pecados em geral. Logo, a omissão não é um pecado especial. 2. Demais. – Todo pecado é voluntário. Ora, a omissão às vezes não é voluntária, mas, necessária. Assim, quando já é corrompida a mulher que fez voto de virgindade; ou quando alguém perde uma coisa que devia restituir; ou quando um sacerdote está obrigado a celebrar e tem algum impedimento. Logo, a omissão nem sempre é pecado. 3. Demais. – A todo pecado podemos determinar um tempo desde que começou a existir. Ora, não podemos determiná-lo no caso da omissão, porque todos os modos de omitirmos são semelhantes e nem sempre, fazendo-o, pecamos. Logo, a omissão não é um pecado especial. 4. Demais. – Todo pecado especial se opõe a uma virtude especial. Ora, não se pode determinar nenhuma virtude especial a que a omissão se opõe. Quer porque o bem de qualquer virtude pode ser omitido; quer porque a justiça, a que ela parece mais especialmente se opor, sempre supõe algum ato, mesmo que seja o de desviar-se do mal, como se disse. Ao passo que a omissão pode não implicar nenhum ato. Logo, a omissão não é um pecado especial.</p>
+    <p>Mas, em contrário, a Escritura: Aquele, que sabe fazer o bem e não no faz, peca. SOLUÇÃO. – Toda omissão implica a preterição de uni bem; não porém de qualquer, mas, do bem devido. Ora, o bem enquanto correlato da noção de dever é propriamente objeto da justiça. Da legal, se o dever for relativo à lei divina ou humana; da especial, se o dever disser respeito ao próximo. Por onde, do modo pelo qual a justiça é uma virtude especial, como já demonstramos desse mesmo também a omissão é um pecado especial, distinto dos pecados que se opõem às outras virtudes. Ora, do modo pelo qual fazer o bem, ao que se opõe a omissão é uma certa e especial parte da justiça, distinto do ato de desviar-se do mal, a que se opõe a transgressão, desse mesmo também a omissão se distingue da transgressão.</p>
+    <p>DONDE A</p>
+    <p>RESPOSTA À PRIMEIRA OBJEÇÃO. – A omissão não é pecado original, mas, atual. Não por implicar algum ato que lhe seja essencial, mas porque a negação de um ato reduz-se ao gênero desse ato. E, sendo assim, não agir é considerado como um certo agir; conforme já dissemos</p>
+    <p>RESPOSTA À SEGUNDA. – A omissão como dissemos, só pode ser relativa a um bem devido, a que nos liga uma obrigação. Ora, não estando obrigado ao impossível, não pecamos por omissão se não fazemos o que não podemos. Por onde, a mulher corrompida, que fez voto de virgindade, não omite a virgindade por não a ter, mas sim, por não se penitenciar do pecado passado, ou por não fazer o que pode para cumprir o seu voto pela observação da continência. E também um sacerdote não está obrigado a dizer missa, senão suposta a oportunidade devida; e se esta não se oferecer, não comete nenhuma omissão. Semelhantemente, está obrigado a restituir quem tem a faculdade de fazê-lo ; mas se não a tem e nem pode tê-la, não comete nenhuma omissão se faz o que pode. E o mesmo se deve dizer em casos semelhantes.</p>
+    <p>RESPOSTA À TERCEIRA. – Assim como o pecado de transgressão se opõe aos preceitos negativos, que nos mandam desviar do mal, assim também o pecado de omissão se opõe aos preceitos afirmativos, que ordenam à prática do bem. Ora, os preceitos positivos não obrigam sempre, mas por um tempo determinado; e dentro desse tempo é que pode começar a existir o pecado de omissão. Pode, porém, dar-se que, nesse tempo, sejamos incapazes de fazer o que devemos. O que se for sem nossa culpa não cometemos, nenhuma omissão do dever, como dissemos. Se porém for por uma culpa precedente, por exemplo, no caso de quem se embriagou tarde e não pode levantar-se em horas matinais, como deve, então certos dizem que o pecado de omissão começa quando houve a prática do ato ilícito, que não pode coexistir com a obrigação. Mas, esta opinião não parece verdadeira, porque, se forçado a levantar- se, fosse cumprir as suas obrigações matinais, não cometeria omissão. Por onde, é claro que a embriaguez precedente não foi uma omissão, mas, causa desta. Por isso, devemos concluir que a omissão começa a lhe ser imputada como culpa, quando era já o tempo de agir; mas, por uma causa precedente que torna voluntária a omissão consequente.</p>
+    <p>RESPOSTA À QUARTA. – A omissão opõe-se diretamente à justiça, como se disse; pois, não há omissão do bem de nenhuma virtude senão suposta a ideia de dever; o que é próprio da justiça. Ora, o ato de virtude exige, para ser meritório, mais, que o da culpa para ser demeritório; porque o bem procede de uma causa integral, mas o mal, de qualquer defeito por onde, o mérito da justiça exige um ato; mas, não a omissão.</p>
+
+    </div>
+  </div>
+  
+  <!-- Bloco de Explicação (a ser preenchido) -->
+  <div class="bloco-explicacao">
+    <div class="explicacao-label">💡 Explicação e Contexto</div>
+    <div class="explicacao-corpo" id="explicacao">
+    <p><em>Explicação será adicionada em breve.</em></p>
+
+    </div>
+  </div>
+  
+</main>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO INFERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="navegacao-inferior">
+  <div class="nav-buttons">
+    <a href="suma-pagina1622.html" class="btn-primary">← Anterior</a>
+    <span class="pagina-atual">1623</span>
+    <a href="suma-pagina1624.html" class="btn-primary">Próxima →</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  RODAPÉ                                                  -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<footer class="suma-footer">
+  <p>Suma Teológica · São Tomás de Aquino | Biblioteca Lux Fidei</p>
+</footer>
+
+</body>
+</html>

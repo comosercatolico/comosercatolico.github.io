@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Questão 17, Artigo 9 — ― Se os membros do corpo obedecem à razão. | Suma Teológica</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+    --cor-fundo: #f5f0e8;
+    --cor-pagina: #fff;
+    --cor-texto: #2c1f17;
+    --cor-dourado: #d4af37;
+    --cor-roxo: #5b2c83;
+    --sombra: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cor-fundo);
+    color: var(--cor-texto);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CABEÇALHO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-header {
+    background: linear-gradient(135deg, #1a1a1a, #2c241b);
+    color: #f5f0e8;
+    padding: 32px 20px 24px;
+    text-align: center;
+    position: relative;
+}
+
+.voltar-index {
+    position: absolute;
+    top: 16px;
+    left: 20px;
+    color: var(--cor-dourado);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: opacity 0.2s;
+}
+
+.voltar-index:hover {
+    opacity: 0.8;
+}
+
+.suma-header h1 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.info-pagina {
+    display: inline-block;
+    background: rgba(212, 175, 55, 0.15);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    color: var(--cor-dourado);
+    margin-top: 8px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-topo {
+    background: #fff;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    gap: 10px;
+}
+
+.btn-nav {
+    display: inline-flex;
+    align-items: center;
+    padding: 9px 18px;
+    background: var(--cor-roxo);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.btn-nav:hover {
+    background: #4a246a;
+    transform: translateY(-1px);
+}
+
+.desabilitado {
+    background: #ddd !important;
+    color: #999 !important;
+    pointer-events: none;
+}
+
+.info-centena {
+    font-size: 0.85rem;
+    color: #888;
+    font-weight: 500;
+    padding: 0 10px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CONTEÚDO PRINCIPAL                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.pagina-conteudo {
+    flex: 1;
+    max-width: 860px;
+    width: 100%;
+    margin: 36px auto;
+    padding: 0 20px;
+}
+
+.bloco-texto {
+    background: var(--cor-pagina);
+    padding: 48px 44px;
+    border-radius: 12px;
+    box-shadow: var(--sombra);
+    position: relative;
+    margin-bottom: 24px;
+}
+
+.bloco-texto::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 20px;
+    bottom: 20px;
+    width: 4px;
+    background: linear-gradient(to bottom, var(--cor-dourado), var(--cor-roxo));
+    border-radius: 0 4px 4px 0;
+}
+
+.bloco-titulo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.3rem;
+    color: var(--cor-roxo);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e8dfd0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pagina-corpo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.1rem;
+    line-height: 1.95;
+    color: #3d3226;
+    text-align: justify;
+}
+
+.pagina-corpo p {
+    margin-bottom: 1.3em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  BLOCO DE EXPLICAÇÃO                                        */
+/* ────────────────────────────────────────────────────────── */
+
+.bloco-explicacao {
+    background: linear-gradient(135deg, #fffdf5, #faf5eb);
+    border-left: 5px solid var(--cor-dourado);
+    padding: 32px 40px;
+    border-radius: 0 12px 12px 0;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    margin-bottom: 24px;
+}
+
+.explicacao-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--cor-dourado);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 14px;
+}
+
+.explicacao-corpo {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #4a3c2c;
+}
+
+.explicacao-corpo p {
+    margin-bottom: 1em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO INFERIOR                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-inferior {
+    max-width: 860px;
+    width: 100%;
+    margin: 0 auto 40px;
+    padding: 0 20px;
+}
+
+.nav-buttons {
+    background: #fff;
+    padding: 18px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    box-shadow: var(--sombra);
+}
+
+.btn-primary {
+    flex: 1;
+    text-align: center;
+    padding: 13px 16px;
+    background: linear-gradient(135deg, var(--cor-roxo), #7a3eb5);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(91, 44, 131, 0.3);
+}
+
+.pagina-atual {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--cor-dourado);
+    min-width: 50px;
+    text-align: center;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RODAPÉ                                                     */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-footer {
+    background: #1a1a1a;
+    color: #888;
+    text-align: center;
+    padding: 22px 20px;
+    margin-top: auto;
+    font-size: 0.85rem;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RESPONSIVIDADE                                             */
+/* ────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+    .suma-header h1 {
+        font-size: 1.4rem;
+    }
+    
+    .bloco-texto {
+        padding: 28px 18px;
+    }
+    
+    .bloco-explicacao {
+        padding: 22px 18px;
+    }
+    
+    .navegacao-topo {
+        flex-wrap: wrap;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CABEÇALHO                                               -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="suma-header">
+  <a href="../../index.html" class="voltar-index">← Índice</a>
+  <h1>Suma Teológica</h1>
+  <p style="opacity:0.8; font-style:italic; margin-top:4px;">São Tomás de Aquino</p>
+  <span class="info-pagina">Página 687 de 3000</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO SUPERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<nav class="navegacao-topo">
+  <a href="suma-pagina686.html" class="btn-nav">← Anterior</a>
+  <span class="info-centena">Pág. 687/3000</span>
+  <a href="suma-pagina688.html" class="btn-nav">Próxima →</a>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CONTEÚDO PRINCIPAL                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<main class="pagina-conteudo">
+  
+  <!-- Texto Original -->
+  <div class="bloco-texto">
+    <div class="bloco-titulo">
+      <span>📜</span>
+      Questão 17, Artigo 9 — ― Se os membros do corpo obedecem à razão.
+    </div>
+    <div class="pagina-corpo">
+    <p>(I, q. 81, a . 3 ad 2; infra, q. 56 a . 4, ad 3; q. 58, a . 2; II Sent., dist. XX, q. 1, a . 2, ad 3; De Pot., q. 3, a . 15, ad 4). O nono discute-se assim. ― Parece que os membros do corpo não obedecem à razão. 1. ― Pois como se sabe, distam mais da razão que as virtudes da alma vegetativa. Ora, estas não obedecem à razão, como já se disse. Logo, muito menos os membros do corpo. 2. Demais. ― O coração é o princípio do movimento animal. Ora, os movimentos do coração não estão sujeitos ao império da razão; pois, como diz Gregório Nisseno (Nemésio), seu pulsar não é regulado pela razão. Logo, o movimento dos membros corpóreos não está sujeito ao império da razão. 3. Demais. ― Como diz Agostinho, o movimento dos órgãos da geração, ora, é importuno e involuntário; ora, não obedece à vontade, quando querido e o corpo fica frígido quando a concupiscência ferve na alma. Logo, o movimento dos membros não obedece à razão.</p>
+    <p>Mas, em contrário, diz Agostinho: A alma ordena que a mão se mova e esta o faz com tanta felicidade, que apenas se distingue a ordem, da execução. SOLUÇÃO. ― Os membros do corpo são por assim dizer os órgãos das potências da alma; e portanto, do modo por que estas obedecem à razão, desse mesmo também obedecem aqueles. Ora, como as virtudes sensitivas estão sujeitas ao império da razão, mas não as naturais, assim também, todos os movimentos dos membros resultantes das potências sensitivas estão sujeitos ao sobredito império; não o estão porém, os resultantes das virtudes naturais.</p>
+    <p>DONDE A</p>
+    <p>RESPOSTA À PRIMEIRA OBJEÇÃO. — Os membros não se movem a si mesmos mas são movidos pelas potências da alma, das quais certas mais se aproximam da razão que as virtudes da alma vegetativa.</p>
+    <p>RESPOSTA À SEGUNDA. ― No que respeita ao intelecto e à vontade, primeiro encontramos o que é natural, donde o mais deriva; assim, do conhecimento natural dos primeiros princípios deriva o conhecimento das conclusões; do fim naturalmente desejado pela vontade resulta a eleição dos meios. Assim também, nos movimentos corpóreos, o princípio é natural. Pois, o princípio do movimento corpóreo procede do movimento do coração; e por isso este é natural e não voluntário, resultando, como acidente próprio, da vida, que procede da união do corpo com a alma. Semelhantemente, o movimento dos corpos graves e leves resulta da forma substancial dos mesmos, e por isso se diz que são movidos pelo gerador, conforme o Filósofo. E daqui vem que esse movimento se chama vital. Por onde, diz Gregório Nisseno (Nemésio), que assim como a potência geratriz e a nutritiva não obedecem à razão, assim também não obedece o movimento pulsativo, que é vital, assim designado essa expressão o movimento do coração, que se manifesta pelas veias pulsáteis.</p>
+    <p>RESPOSTA À TERCEIRA. ― Como diz Agostinho, é por pena do pecado que o movimento dos membros genitais não obedece a razão; de modo que a alma sofra a pena da sua desobediência a Deus, precisamente no membro pelo qual o pecado original se transmite aos descendentes. Mas como pelo pecado dos nossos primeiros pais, conforme a seguir se dirá, a natureza foi abandonada a si mesma, privada do dom sobrenatural, que fora divinamente conferido ao homem, vejamos qual a razão natural por que, em particular, o movimento desses membros não obedece à razão. Aristóteles, no livro De causis motus animalium descobre a causa em os movimentos do coração e dos membros pudendos serem involuntários; pois, estes se movem em conseqüência de alguma apreensão, em virtude da qual o intelecto e a fantasia representam algo de que resultam paixões da alma, provocadoras de tal movimento. E não se movem conforme a injunção da razão ou do intelecto porque para o movimento de tais membros é necessária alguma alteração natural ― a calidez ou a frieza ― que não está sujeita ao império da razão. ― E isso se dá especialmente com esses dois membros porque cada um deles é como que um animal separado, enquanto princípio de vida; ora, o princípio é, virtualmente, o todo. Assim, o coração é o princípio dos sentidos; e do membro genial procede a virtude seminal que constitui, virtualmente, todo o animal. E por isso tem naturalmente movimentos próprios, por ser necessário que os princípios sejam naturais, como já se disse. Em seguida devemos tratar da bondade e da malícia dos atos humanos. Primeiro, de como é uma ação humana boa ou má. Segundo, do que resulta da bondade ou da malícia dos atos humanos, p. ex., o mérito ou o demérito, o pecado e a culpa. Sobre o primeiro ponto ocorre tríplice consideração. A primeira é sobre a bondade e a malícia dos atos humanos em geral. A segunda, da bondade e da malícia dos atos interiores. A terceira, da bondade e da malícia dos atos externos. Sobre a primeira questão onze artigos se discutem:</p>
+
+    </div>
+  </div>
+  
+  <!-- Bloco de Explicação (a ser preenchido) -->
+  <div class="bloco-explicacao">
+    <div class="explicacao-label">💡 Explicação e Contexto</div>
+    <div class="explicacao-corpo" id="explicacao">
+    <p><em>Explicação será adicionada em breve.</em></p>
+
+    </div>
+  </div>
+  
+</main>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO INFERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="navegacao-inferior">
+  <div class="nav-buttons">
+    <a href="suma-pagina686.html" class="btn-primary">← Anterior</a>
+    <span class="pagina-atual">687</span>
+    <a href="suma-pagina688.html" class="btn-primary">Próxima →</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  RODAPÉ                                                  -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<footer class="suma-footer">
+  <p>Suma Teológica · São Tomás de Aquino | Biblioteca Lux Fidei</p>
+</footer>
+
+</body>
+</html>

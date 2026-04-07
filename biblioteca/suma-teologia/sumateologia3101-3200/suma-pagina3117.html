@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Questão 2, Artigo 6 — ─ Se a pena do purgatório expia a culpa do pecado venial. | Suma Teológica</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+    --cor-fundo: #f5f0e8;
+    --cor-pagina: #fff;
+    --cor-texto: #2c1f17;
+    --cor-dourado: #d4af37;
+    --cor-roxo: #5b2c83;
+    --sombra: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cor-fundo);
+    color: var(--cor-texto);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CABEÇALHO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-header {
+    background: linear-gradient(135deg, #1a1a1a, #2c241b);
+    color: #f5f0e8;
+    padding: 32px 20px 24px;
+    text-align: center;
+    position: relative;
+}
+
+.voltar-index {
+    position: absolute;
+    top: 16px;
+    left: 20px;
+    color: var(--cor-dourado);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: opacity 0.2s;
+}
+
+.voltar-index:hover {
+    opacity: 0.8;
+}
+
+.suma-header h1 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.info-pagina {
+    display: inline-block;
+    background: rgba(212, 175, 55, 0.15);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    color: var(--cor-dourado);
+    margin-top: 8px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-topo {
+    background: #fff;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    gap: 10px;
+}
+
+.btn-nav {
+    display: inline-flex;
+    align-items: center;
+    padding: 9px 18px;
+    background: var(--cor-roxo);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.btn-nav:hover {
+    background: #4a246a;
+    transform: translateY(-1px);
+}
+
+.desabilitado {
+    background: #ddd !important;
+    color: #999 !important;
+    pointer-events: none;
+}
+
+.info-centena {
+    font-size: 0.85rem;
+    color: #888;
+    font-weight: 500;
+    padding: 0 10px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CONTEÚDO PRINCIPAL                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.pagina-conteudo {
+    flex: 1;
+    max-width: 860px;
+    width: 100%;
+    margin: 36px auto;
+    padding: 0 20px;
+}
+
+.bloco-texto {
+    background: var(--cor-pagina);
+    padding: 48px 44px;
+    border-radius: 12px;
+    box-shadow: var(--sombra);
+    position: relative;
+    margin-bottom: 24px;
+}
+
+.bloco-texto::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 20px;
+    bottom: 20px;
+    width: 4px;
+    background: linear-gradient(to bottom, var(--cor-dourado), var(--cor-roxo));
+    border-radius: 0 4px 4px 0;
+}
+
+.bloco-titulo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.3rem;
+    color: var(--cor-roxo);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e8dfd0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pagina-corpo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.1rem;
+    line-height: 1.95;
+    color: #3d3226;
+    text-align: justify;
+}
+
+.pagina-corpo p {
+    margin-bottom: 1.3em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  BLOCO DE EXPLICAÇÃO                                        */
+/* ────────────────────────────────────────────────────────── */
+
+.bloco-explicacao {
+    background: linear-gradient(135deg, #fffdf5, #faf5eb);
+    border-left: 5px solid var(--cor-dourado);
+    padding: 32px 40px;
+    border-radius: 0 12px 12px 0;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    margin-bottom: 24px;
+}
+
+.explicacao-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--cor-dourado);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 14px;
+}
+
+.explicacao-corpo {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #4a3c2c;
+}
+
+.explicacao-corpo p {
+    margin-bottom: 1em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO INFERIOR                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-inferior {
+    max-width: 860px;
+    width: 100%;
+    margin: 0 auto 40px;
+    padding: 0 20px;
+}
+
+.nav-buttons {
+    background: #fff;
+    padding: 18px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    box-shadow: var(--sombra);
+}
+
+.btn-primary {
+    flex: 1;
+    text-align: center;
+    padding: 13px 16px;
+    background: linear-gradient(135deg, var(--cor-roxo), #7a3eb5);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(91, 44, 131, 0.3);
+}
+
+.pagina-atual {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--cor-dourado);
+    min-width: 50px;
+    text-align: center;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RODAPÉ                                                     */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-footer {
+    background: #1a1a1a;
+    color: #888;
+    text-align: center;
+    padding: 22px 20px;
+    margin-top: auto;
+    font-size: 0.85rem;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RESPONSIVIDADE                                             */
+/* ────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+    .suma-header h1 {
+        font-size: 1.4rem;
+    }
+    
+    .bloco-texto {
+        padding: 28px 18px;
+    }
+    
+    .bloco-explicacao {
+        padding: 22px 18px;
+    }
+    
+    .navegacao-topo {
+        flex-wrap: wrap;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CABEÇALHO                                               -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="suma-header">
+  <a href="../../index.html" class="voltar-index">← Índice</a>
+  <h1>Suma Teológica</h1>
+  <p style="opacity:0.8; font-style:italic; margin-top:4px;">São Tomás de Aquino</p>
+  <span class="info-pagina">Página 3117 de 3000</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO SUPERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<nav class="navegacao-topo">
+  <a href="suma-pagina3116.html" class="btn-nav">← Anterior</a>
+  <span class="info-centena">Pág. 3117/3000</span>
+  <a href="suma-pagina3118.html" class="btn-nav">Próxima →</a>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CONTEÚDO PRINCIPAL                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<main class="pagina-conteudo">
+  
+  <!-- Texto Original -->
+  <div class="bloco-texto">
+    <div class="bloco-titulo">
+      <span>📜</span>
+      Questão 2, Artigo 6 — ─ Se a pena do purgatório expia a culpa do pecado venial.
+    </div>
+    <div class="pagina-corpo">
+    <p>O sexto discute-se assim. ─ Parece que a pena do purgatório não expia a culpa do pecado venial. 1. ─ Pois, àquilo de João ─ É o seu pecado para morte, etc., diz a Glosa: O pecado não delido nesta vida em vão se lhe pede perdão na outra. Logo, nenhum pecado tem a sua culpa perdoada depois desta vida. 2. Demais. ─ Quem pode cair no pecado é que também pode ser livrado dele. Ora, a alma depois da morte não pode pecar venialmente. Logo, nem ser absolvida do pecado do venial. 3. Demais. ─ Gregório diz, que cada alma se apresentará ao juízo, no estado em que se separou do corpo; porque, como diz a Escritura, a árvore, em qualquer lugar onde cair, aí ficará. Portanto, quem sair desta vida, em estado de pecado venial, no mesmo estado se encontrará quando comparecer ao juízo. Logo, no purgatório ninguém expia a culpa venial. 4. Demais. ─ Como se disse, a culpa atual não se apaga senão pela contrição. Ora, depois desta vida não haverá contrição, que é um ato meritório; porque então não haverá mérito nem demérito, pois, segundo Damasceno, é para os homens a morte o que foi para os anjos a queda. Logo, depois desta vida não será perdoada no purgatório a culpa do pecado venial. 5. Demais. ─ O pecado venial tem a sua raiz na concupiscência. Por isso, no seu primeiro estado, Adão não podia pecar venialmente, como se disse. Ora, depois desta vida, não haverá na alma separada, que sofre no purgatório, nenhuma sensualidade, já desaparecida a concupiscência; pois, esta é chamada a lei da carne. Logo, não haverá no purgatório culpa venial. E portanto não poderá ser expiada pelo fogo do purgatório.</p>
+    <p>Mas, em contrário, diz Gregório e Agostinho, que certas culpas leves são perdoadas na vida futura. Mas não se pode entender que o sejam quanto à pena; porque então todas as culpas, por graves que fossem quanto ao reato da pena, seriam expiadas pelo fogo do purgatório. Logo, a culpa dos pecados veniais é expiada pelo fogo do purgatório. 2. Demais. ─ Pelas expressões do Apóstolo ─ madeira, feno e palha ─ entendem-se os pecados veniais, como se disse. Ora, a madeira, o feno e a palha consomem-se no purgatório. Logo, também as culpas veniais serão perdoadas depois desta vida SOLUÇÃO. ─ Certos disseram que depois desta vida não é perdoada a culpa de nenhum pecado. E quem morrer em culpa mortal será condenado, por não ser susceptível de nenhum perdão. Ora, não pode ninguém morrer só com pecado venial, sem mortal, porque a graça final purifica da culpa venial. Pois, o pecado venial resulta de amarmos demasiado os bens temporais, sem nem por isso nos separarmo-nos de Cristo. E esse amor excessivo tem a sua raiz na concupiscência. Por onde, quem estiver de todo isento da corrupção da concupiscência, como a S. S. Virgem, nenhum lugar pode dar ao pecado venial. E portanto, como a morte se extingue e desaparece totalmente essa concupiscência, as potências da alma ficam totalmente sob a ação da graça e isentas do pecado venial. Mas esta opinião é frívola tanto em si como na sua causa. ─ Em si, porque contraria à doutrina dos santos Padres e dos Evangelistas, que não pode entender-se da remissão da pena dos pecados veniais, como diz o Mestre. Porque, do contrário, tanto os pecados leves como os graves seriam perdoados na vida futura. Ora, diz Gregório que só as culpas leves podem ser perdoadas depois de esta vida. Nem basta dizerem que se os santos Padres se referem especialmente às culpas leves, é para prevenir a opinião que o pecado venial não seria passível na outra vida de nenhuma pena grave; pois, a remissão da pena antes destrói a gravidade das penas do que a determina. Na sua causa é frívola a referida opinião, porque o abatimento do corpo, nos últimos instantes da vida, não expele a corrupção da concupiscência nem a diminuem na sua raiz senão só quanto ao seu ato; como o demonstram os gravemente enfermos. Nem acalma as potências da alma, sujeitando-as à ação da graça; porque a tranquilidade das potências e a sujeição delas à graça consiste em as potências inferiores obedecerem às superiores que se deleitam na lei de Deus. O que não pode dar-se no estado supra-referido, quando ficam impedidos os atos de todas essas potências. Salvo se se considerar como tranquilidade a ausência da luta, conforme se dá com os adormecidos; mas nem por isso dizemos que o sono diminui a concupiscência, nem que acalma as potências da alma ou as sujeita à ação da graça. Além disso, dado que esse abatimento diminuísse a concupiscência na sua raiz e sujeitasse as potências da alma à ação da graça, ainda isso não bastaria à purificação da culpa venial já cometida, embora bastasse a evitar os pecados futuros. Porque a, culpa atual, mesmo venial, não fica perdoada sem a cooperação atual da contrição, como se disse, por maior intensidade habitual que tenha essa contrição. Assim, pode um morrer durante o sono, estando em graça, apesar de adormecido com pecado venial; e esse tal não poderia fazer um ato de contrição pelo pecado venial, antes de morto. Nem colhe afirmar, como afirmam, que se esse tal não se arrependeu, atual ou intencionalmente, em geral ou em especial, caiu em pecado mortal, porque a complacência no pecado venial o transforma em mortal. Pois, não é qualquer complacência no pecado venial que o transforma em mortal ─ aliás todo pecado venial seria mortal, porque em todos, como voluntários que são, pomos complacência; mas uma complacência tal que tem em vista o prazer, no qual consiste toda a perversidade humana, quando fruimos do que só deveríamos usar. E assim, a complacência constitutiva do pecado mortal é a atual, porque todo pecado mortal consiste num ato. Ora, pode acontecer que uma pessoa, depois de ter cometido um pecado venial, não pense mais nele, se deve ser perdoado ou não: mas pense, talvez, que um triângulo tem os três ângulos iguais a dois retos e nesse pensamento adormeça e morra. Por onde se vê que a referida opinião é de todo irracional. Por isso, devemos pensar com outros, que a culpa venial, de quem morre em graça, é perdoada depois desta vida pelo fogo do purgatório; porque essa pena, de certo modo voluntária, por virtude da graça terá a força de expiar totalmente a culpa, que puder coexistir com a graça.</p>
+    <p>DONDE A</p>
+    <p>RESPOSTA À PRIMEIRA OBJEÇÃO. ─ A Glosa se refere ao pecado mortal. ─ Ou podemos responder que, embora o pecado não seja apagado nesta vida, em si mesmo, sê-lo-á contudo no seu mérito, por ter o pecador merecido nesta vida que a pena do purgatório lhe seja meritória.</p>
+    <p>RESPOSTA À SEGUNDA. ─ O pecado venial procede da corrupção da concupiscência, que não existirá na alma separada padecente no purgatório; que portanto não poderá pecar venialmente. Mas a remissão da culpa venial resulta da vontade informada pela graça, e esta a terá a alma separada, no purgatório. Logo, não colhe o símil.</p>
+    <p>RESPOSTA À TERCEIRA. - Os pecados veniais não mudam o estado do homem, porque nem eliminam nem diminuem a caridade, pela qual se mede a bondade que a graça confere à alma. Por onde, perdoados ou sentidos os pecados veniais praticados, a alma permanece tal como era antes.</p>
+    <p>RESPOSTA À QUARTA. ─ Depois de esta vida não pode haver mérito em relação ao prêmio essencial. Mas o pode em relação a um prêmio acidental, enquanto o homem de certo modo ainda continua viandante. Por onde, no purgatório pode haver ato meritório quanto à remissão da culpa venial. RESPOSTA À QUINTA. ─ Embora o pecado venial resulte da inclinação da concupiscência, contudo a culpa procede da intenção. Por isso, mesmo desaparecida a concupiscência, ainda pode subsistir a culpa.</p>
+
+    </div>
+  </div>
+  
+  <!-- Bloco de Explicação (a ser preenchido) -->
+  <div class="bloco-explicacao">
+    <div class="explicacao-label">💡 Explicação e Contexto</div>
+    <div class="explicacao-corpo" id="explicacao">
+    <p><em>Explicação será adicionada em breve.</em></p>
+
+    </div>
+  </div>
+  
+</main>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO INFERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="navegacao-inferior">
+  <div class="nav-buttons">
+    <a href="suma-pagina3116.html" class="btn-primary">← Anterior</a>
+    <span class="pagina-atual">3117</span>
+    <a href="suma-pagina3118.html" class="btn-primary">Próxima →</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  RODAPÉ                                                  -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<footer class="suma-footer">
+  <p>Suma Teológica · São Tomás de Aquino | Biblioteca Lux Fidei</p>
+</footer>
+
+</body>
+</html>

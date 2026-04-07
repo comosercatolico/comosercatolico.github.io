@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Questão 109, Artigo 1 — — Se sem a graça o homem pode conhecer a verdade. | Suma Teológica</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+    --cor-fundo: #f5f0e8;
+    --cor-pagina: #fff;
+    --cor-texto: #2c1f17;
+    --cor-dourado: #d4af37;
+    --cor-roxo: #5b2c83;
+    --sombra: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cor-fundo);
+    color: var(--cor-texto);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CABEÇALHO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-header {
+    background: linear-gradient(135deg, #1a1a1a, #2c241b);
+    color: #f5f0e8;
+    padding: 32px 20px 24px;
+    text-align: center;
+    position: relative;
+}
+
+.voltar-index {
+    position: absolute;
+    top: 16px;
+    left: 20px;
+    color: var(--cor-dourado);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: opacity 0.2s;
+}
+
+.voltar-index:hover {
+    opacity: 0.8;
+}
+
+.suma-header h1 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.info-pagina {
+    display: inline-block;
+    background: rgba(212, 175, 55, 0.15);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    color: var(--cor-dourado);
+    margin-top: 8px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-topo {
+    background: #fff;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    gap: 10px;
+}
+
+.btn-nav {
+    display: inline-flex;
+    align-items: center;
+    padding: 9px 18px;
+    background: var(--cor-roxo);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.btn-nav:hover {
+    background: #4a246a;
+    transform: translateY(-1px);
+}
+
+.desabilitado {
+    background: #ddd !important;
+    color: #999 !important;
+    pointer-events: none;
+}
+
+.info-centena {
+    font-size: 0.85rem;
+    color: #888;
+    font-weight: 500;
+    padding: 0 10px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CONTEÚDO PRINCIPAL                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.pagina-conteudo {
+    flex: 1;
+    max-width: 860px;
+    width: 100%;
+    margin: 36px auto;
+    padding: 0 20px;
+}
+
+.bloco-texto {
+    background: var(--cor-pagina);
+    padding: 48px 44px;
+    border-radius: 12px;
+    box-shadow: var(--sombra);
+    position: relative;
+    margin-bottom: 24px;
+}
+
+.bloco-texto::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 20px;
+    bottom: 20px;
+    width: 4px;
+    background: linear-gradient(to bottom, var(--cor-dourado), var(--cor-roxo));
+    border-radius: 0 4px 4px 0;
+}
+
+.bloco-titulo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.3rem;
+    color: var(--cor-roxo);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e8dfd0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pagina-corpo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.1rem;
+    line-height: 1.95;
+    color: #3d3226;
+    text-align: justify;
+}
+
+.pagina-corpo p {
+    margin-bottom: 1.3em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  BLOCO DE EXPLICAÇÃO                                        */
+/* ────────────────────────────────────────────────────────── */
+
+.bloco-explicacao {
+    background: linear-gradient(135deg, #fffdf5, #faf5eb);
+    border-left: 5px solid var(--cor-dourado);
+    padding: 32px 40px;
+    border-radius: 0 12px 12px 0;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    margin-bottom: 24px;
+}
+
+.explicacao-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--cor-dourado);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 14px;
+}
+
+.explicacao-corpo {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #4a3c2c;
+}
+
+.explicacao-corpo p {
+    margin-bottom: 1em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO INFERIOR                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-inferior {
+    max-width: 860px;
+    width: 100%;
+    margin: 0 auto 40px;
+    padding: 0 20px;
+}
+
+.nav-buttons {
+    background: #fff;
+    padding: 18px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    box-shadow: var(--sombra);
+}
+
+.btn-primary {
+    flex: 1;
+    text-align: center;
+    padding: 13px 16px;
+    background: linear-gradient(135deg, var(--cor-roxo), #7a3eb5);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(91, 44, 131, 0.3);
+}
+
+.pagina-atual {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--cor-dourado);
+    min-width: 50px;
+    text-align: center;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RODAPÉ                                                     */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-footer {
+    background: #1a1a1a;
+    color: #888;
+    text-align: center;
+    padding: 22px 20px;
+    margin-top: auto;
+    font-size: 0.85rem;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RESPONSIVIDADE                                             */
+/* ────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+    .suma-header h1 {
+        font-size: 1.4rem;
+    }
+    
+    .bloco-texto {
+        padding: 28px 18px;
+    }
+    
+    .bloco-explicacao {
+        padding: 22px 18px;
+    }
+    
+    .navegacao-topo {
+        flex-wrap: wrap;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CABEÇALHO                                               -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="suma-header">
+  <a href="../../index.html" class="voltar-index">← Índice</a>
+  <h1>Suma Teológica</h1>
+  <p style="opacity:0.8; font-style:italic; margin-top:4px;">São Tomás de Aquino</p>
+  <span class="info-pagina">Página 1157 de 3000</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO SUPERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<nav class="navegacao-topo">
+  <a href="suma-pagina1156.html" class="btn-nav">← Anterior</a>
+  <span class="info-centena">Pág. 1157/3000</span>
+  <a href="suma-pagina1158.html" class="btn-nav">Próxima →</a>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CONTEÚDO PRINCIPAL                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<main class="pagina-conteudo">
+  
+  <!-- Texto Original -->
+  <div class="bloco-texto">
+    <div class="bloco-titulo">
+      <span>📜</span>
+      Questão 109, Artigo 1 — — Se sem a graça o homem pode conhecer a verdade.
+    </div>
+    <div class="pagina-corpo">
+    <p>(II Sent., dist. XXVIII, a. 5; Cor., cap. XII, lect. I) O primeiro discute-se assim. — Parece, que sem a graça o homem não pode conhecer a verdade.</p>
+    <p>1. — Pois, sobre aquilo da Escritura. — Ninguém pode dizer Senhor Jesus, senão pelo Espírito Santo — diz a Glosa de Ambrósio: Quem quer que diga a verdade, pelo Espírito Santo a diz. Ora, o Espírito Santo habita em nós pela graça. Logo, sem esta não podemos conhecer a verdade. 2. Demais. — Agostinho diz: As mais certas doutrinas são as por assim dizer, iluminadas pelo sol, de modo a serem vistas. Deus, porém é que ilumina, sendo a razão, para o espírito, o que é a vista para os olhos; mas os olhos do espírito são os sentidos da alma. Ora, os sentidos do corpo, por mais puros que sejam, não podem ver nada sem a luz do sol. Logo, também a mente humana, por perfeita que seja, não pode, raciocinando, conhecer a verdade, sem a iluminação divina, que é auxílio da graça. 3. Demais. — Não pode a mente humana conhecer a verdade, senão pensando, como claro está em Agostinho. Ora, o Apóstolo diz (2 Cor 3, 5): Não que sejamos capazes de nós mesmos de ter algum pensamento como de nós mesmos. Logo, o homem não pode conhecer a verdade, por si mesmo, sem auxílio da graça.</p>
+    <p>Mas, em contrário, diz Agostinho: Não aprovo o que disse numa oração — Deus, que só aos puros permitiste conhecer a verdade. Pois, poderia alguém objetar, que muitos, embora impuros, conhecem muitas verdades.Ora, pela graça, o homem se torna puro, conforme a Escritura (Sl 50, 12): Cria em mim, ó Deus, um coração puro, e renova nas minhas entranhas um espírito reto. Logo, sem a graça, o homem pode, por si mesmo, conhecer a verdade.</p>
+    <p>SOLUÇÃO. — Pelo uso ou por um ato da luz intelectual, é que conhecemos a verdade; pois, segundo o Apóstolo (Ef 5, 13), tudo o que se manifesta é luz. Ora, qualquer uso implica movimento, tomando o movimento em acepção lata, no qual se consideram movimentos o inteligir e o querer, segundo o Filósofo claramente o diz. Vemos porém, que o movimento dos seres corpóreos implica, não só a forma, que é o princípio dele ou da ação, mas também a moção do primeiro móvel. Ora, o primeiro móvel, na ordem material, é o corpo celeste. Assim, por perfeito que seja o calor do fogo, não poderia aquecer senão pela moção do corpo celeste. Ora, é manifesto, que todos os movimentos corpóreos se reduzem ao do corpo celeste, como ao primeiro motor corpóreo. Pois, assim também todos os movimentos, tanto os corpóreos como os espirituais, reduzem-se ao primeiro móvel absoluto, que é Deus. E portanto, por perfeita que se suponha uma natureza corpórea ou espiritual, ela não pode se atualizar se não for movida por Deus. E esse movimento depende da ordem da sua providência e não, da necessidade natural, como o do corpo celeste. Nem só, porém todo movimento procede de Deus, como primeiro motor; mas também dele, como do ato primeiro, procede toda perfeição formal. Por onde, o ato intelectual, bem como o de todo ser criado, depende de Deus, de dois modos: por haurir nele a perfeição ou a forma pela qual age; e por ser movido por ele à ação. Mas, toda forma inerente às coisas criadas por Deus tem a sua eficiência relativa a um ato determinado, que lhe é próprio, e além do qual não pode ir senão reforçado por outra forma superveniente. Assim, a água não pode aquecer senão aquecida pelo fogo. Ora, a forma do intelecto humano é o lume inteligível, suficiente, em si mesmo, para conhecer certos inteligíveis, a saber, aqueles cujo conhecimento podemos obter por meio dos sensíveis. O que porém é superior à sua capacidade o intelecto humano não pode conhecer senão fortalecido pelo lume da graça; p. ex., pelo lume da fé ou da profecia, chamado lume da graça, por ser acrescentado à natureza. Por onde, devemos dizer que para conhecer qualquer verdade o homem precisa do auxílio de Deus que o move ao seu ato. Não precisa porém, para conhecer a verdade, em todos os casos, de nova iluminação acrescentada à iluminação natural, mas só nos casos que lhe excedem o conhecimento natural. E contudo, algumas vezes milagrosamente, pela sua graça, instrui a certos, relativamente ao que podem conhecer pela razão natural; assim como, algumas vezes, faz milagrosamente certas coisas que a natureza pode fazer.</p>
+    <p>DONDE A</p>
+    <p>RESPOSTA À PRIMEIRA OBJEÇÃO. — Toda verdade, seja dita por quem for, provém do Espírito Santo, como lume, que naturalmente a infunde e move a compreender e falar a verdade. Não porém como habitando na pessoa pela graça santificante ou como conferindo algum dom habitual acrescentando ao da natureza. Pois isto só se dá no conhecimento e na expressão de certas verdades e, sobretudo, nas que respeitam à fé, ao que se refere o texto citado do Apóstolo.</p>
+    <p>RESPOSTA À SEGUNDA. — O sol material ilumina exteriormente, ao passo que o sol inteligível, que é Deus, interiormente. Por onde, o lume natural infuso na alma é, em si mesmo, iluminação de Deus, que permite ao conhecimento natural atingir o seu objeto. E para isto não é necessária outra iluminação, senão só para os objetos excedentes ao conhecimento natural.</p>
+    <p>RESPOSTA À TERCEIRA. — Sempre precisamos, para qualquer pensamento, do auxílio divino que move o intelecto à ação; pois inteligir alguma coisa, atualmente, é pensar, como claramente o diz Agostinho.</p>
+
+    </div>
+  </div>
+  
+  <!-- Bloco de Explicação (a ser preenchido) -->
+  <div class="bloco-explicacao">
+    <div class="explicacao-label">💡 Explicação e Contexto</div>
+    <div class="explicacao-corpo" id="explicacao">
+    <p><em>Explicação será adicionada em breve.</em></p>
+
+    </div>
+  </div>
+  
+</main>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO INFERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="navegacao-inferior">
+  <div class="nav-buttons">
+    <a href="suma-pagina1156.html" class="btn-primary">← Anterior</a>
+    <span class="pagina-atual">1157</span>
+    <a href="suma-pagina1158.html" class="btn-primary">Próxima →</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  RODAPÉ                                                  -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<footer class="suma-footer">
+  <p>Suma Teológica · São Tomás de Aquino | Biblioteca Lux Fidei</p>
+</footer>
+
+</body>
+</html>

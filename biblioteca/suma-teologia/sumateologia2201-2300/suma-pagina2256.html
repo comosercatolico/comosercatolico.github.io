@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Questão 24, Artigo 2 — — Se é falsa a proposição – Cristo, enquanto homem, foi | Suma Teológica</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+    --cor-fundo: #f5f0e8;
+    --cor-pagina: #fff;
+    --cor-texto: #2c1f17;
+    --cor-dourado: #d4af37;
+    --cor-roxo: #5b2c83;
+    --sombra: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cor-fundo);
+    color: var(--cor-texto);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CABEÇALHO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-header {
+    background: linear-gradient(135deg, #1a1a1a, #2c241b);
+    color: #f5f0e8;
+    padding: 32px 20px 24px;
+    text-align: center;
+    position: relative;
+}
+
+.voltar-index {
+    position: absolute;
+    top: 16px;
+    left: 20px;
+    color: var(--cor-dourado);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: opacity 0.2s;
+}
+
+.voltar-index:hover {
+    opacity: 0.8;
+}
+
+.suma-header h1 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.info-pagina {
+    display: inline-block;
+    background: rgba(212, 175, 55, 0.15);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    color: var(--cor-dourado);
+    margin-top: 8px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-topo {
+    background: #fff;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    gap: 10px;
+}
+
+.btn-nav {
+    display: inline-flex;
+    align-items: center;
+    padding: 9px 18px;
+    background: var(--cor-roxo);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.btn-nav:hover {
+    background: #4a246a;
+    transform: translateY(-1px);
+}
+
+.desabilitado {
+    background: #ddd !important;
+    color: #999 !important;
+    pointer-events: none;
+}
+
+.info-centena {
+    font-size: 0.85rem;
+    color: #888;
+    font-weight: 500;
+    padding: 0 10px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CONTEÚDO PRINCIPAL                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.pagina-conteudo {
+    flex: 1;
+    max-width: 860px;
+    width: 100%;
+    margin: 36px auto;
+    padding: 0 20px;
+}
+
+.bloco-texto {
+    background: var(--cor-pagina);
+    padding: 48px 44px;
+    border-radius: 12px;
+    box-shadow: var(--sombra);
+    position: relative;
+    margin-bottom: 24px;
+}
+
+.bloco-texto::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 20px;
+    bottom: 20px;
+    width: 4px;
+    background: linear-gradient(to bottom, var(--cor-dourado), var(--cor-roxo));
+    border-radius: 0 4px 4px 0;
+}
+
+.bloco-titulo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.3rem;
+    color: var(--cor-roxo);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e8dfd0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pagina-corpo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.1rem;
+    line-height: 1.95;
+    color: #3d3226;
+    text-align: justify;
+}
+
+.pagina-corpo p {
+    margin-bottom: 1.3em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  BLOCO DE EXPLICAÇÃO                                        */
+/* ────────────────────────────────────────────────────────── */
+
+.bloco-explicacao {
+    background: linear-gradient(135deg, #fffdf5, #faf5eb);
+    border-left: 5px solid var(--cor-dourado);
+    padding: 32px 40px;
+    border-radius: 0 12px 12px 0;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    margin-bottom: 24px;
+}
+
+.explicacao-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--cor-dourado);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 14px;
+}
+
+.explicacao-corpo {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #4a3c2c;
+}
+
+.explicacao-corpo p {
+    margin-bottom: 1em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO INFERIOR                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-inferior {
+    max-width: 860px;
+    width: 100%;
+    margin: 0 auto 40px;
+    padding: 0 20px;
+}
+
+.nav-buttons {
+    background: #fff;
+    padding: 18px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    box-shadow: var(--sombra);
+}
+
+.btn-primary {
+    flex: 1;
+    text-align: center;
+    padding: 13px 16px;
+    background: linear-gradient(135deg, var(--cor-roxo), #7a3eb5);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(91, 44, 131, 0.3);
+}
+
+.pagina-atual {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--cor-dourado);
+    min-width: 50px;
+    text-align: center;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RODAPÉ                                                     */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-footer {
+    background: #1a1a1a;
+    color: #888;
+    text-align: center;
+    padding: 22px 20px;
+    margin-top: auto;
+    font-size: 0.85rem;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RESPONSIVIDADE                                             */
+/* ────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+    .suma-header h1 {
+        font-size: 1.4rem;
+    }
+    
+    .bloco-texto {
+        padding: 28px 18px;
+    }
+    
+    .bloco-explicacao {
+        padding: 22px 18px;
+    }
+    
+    .navegacao-topo {
+        flex-wrap: wrap;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CABEÇALHO                                               -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="suma-header">
+  <a href="../../index.html" class="voltar-index">← Índice</a>
+  <h1>Suma Teológica</h1>
+  <p style="opacity:0.8; font-style:italic; margin-top:4px;">São Tomás de Aquino</p>
+  <span class="info-pagina">Página 2256 de 3000</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO SUPERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<nav class="navegacao-topo">
+  <a href="suma-pagina2255.html" class="btn-nav">← Anterior</a>
+  <span class="info-centena">Pág. 2256/3000</span>
+  <a href="suma-pagina2257.html" class="btn-nav">Próxima →</a>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CONTEÚDO PRINCIPAL                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<main class="pagina-conteudo">
+  
+  <!-- Texto Original -->
+  <div class="bloco-texto">
+    <div class="bloco-titulo">
+      <span>📜</span>
+      Questão 24, Artigo 2 — — Se é falsa a proposição – Cristo, enquanto homem, foi
+    </div>
+    <div class="pagina-corpo">
+    <p>predestinado para Filho de Deus. O segundo discute-se assim — Parece falsa a proposição: Cristo, enquanto homem, foi predestinado para Filho de Deus.</p>
+    <p>1. — Pois, cada qual é num determinado tempo, o para que foi predestinado, porque a predestinação de Deus não falha. Se, portanto, Cristo, enquanto homem, foi predestinado para Filho de Deus, resulta que é Filho de Deus, enquanto homem. Ora, isto é falso. Logo, também a primeira proposição. 2. Demais. — O que convém a Cristo, enquanto homem, convém a qualquer homem, pois, ele é da mesma espécie que os outros homens. Se, pois, Cristo, enquanto homem, foi predestinado Filho de Deus, resulta que isso também cabe a qualquer homem. Ora, tal é falso. Logo, também a primeira proposição. 3. Demais. — O que se fará no tempo foi predestinado abeterno. Ora, a proposição — O Filho de Deus foi feito homem — é mais verdadeira que a outra — O homem foi feito filho de Deus. Logo, a proposição — Cristo, enquanto Filho de Deus foi predestinado para ser homem — é mais verdadeira que a sua inversa — Cristo, enquanto homem, foi predestinado para Filho de Deus.</p>
+    <p>Mas, em contrário, Agostinho: Dizemos que foi predestinado o próprio Senhor da glória, por ter sido feito homem o Filho de Deus.</p>
+    <p>SOLUÇÃO. — Duas coisas podemos considerar na predestinação. Uma, relativa à própria predestinação eterna; que, então, implica uma certa anterioridade relativa ao suposto da predestinação. Noutro sentido, pode ser considerada quanto ao seu efeito temporal, dom gratuito de Deus. Por onde, devemos concluir que, de ambos estes modos a predestinação é atribuída a Cristo em razão da só natureza humana. Pois, a natureza humana nem sempre esteve unida ao Verbo; e também lhe foi conferido pela graça, que se unisse à pessoa do Filho de Deus. E portanto, só em razão da natureza humana é que a predestinação convém a Cristo. Donde o dizer Agostinho: Uma elevação tão grande, tão alta e tão sublime foi predestinada à natureza humana, que não podia, assim, ser mais exaltada. Ora, dizemos que convém a alguém, enquanto homem, o que lhe convém em razão da natureza humana. Donde, pois, devemos concluir, que Cristo, enquanto homem, foi predestinado para Filho de Deus.</p>
+    <p>DONDE A</p>
+    <p>RESPOSTA À PRIMEIRA OBJEÇÃO. — Na proposição — Cristo, enquanto homem, foi predestinado para Filho de Deus — a restritiva — enquanto homem, pode referir-se ao ato significado pelo particípio, de dois modos. — Primeiro, quanto ao que está materialmente incluído na predestinação. E então é falsa. Pois, o sentido é: ter sido predestinado que Cristo, enquanto homem fosse Filho de Deus. E neste sentido a objeção colhe. De outro modo, pode referir-se à razão mesma do ato; isto é, enquanto que a predestinação implica, por natureza, anterioridade e efeito gratuito. E, neste sentido, a predestinação convém a Cristo em razão da natureza humana, como se disse; é considerado então predestinado, enquanto homem.</p>
+    <p>RESPOSTA À SEGUNDA. — Uma causa pode convir a um homem, em razão da natureza humana, de dois modos. — Primeiro, por ser dela a causa a natureza humana; assim a faculdade de rir convém a Sócrates em razão da natureza humana, de cujos princípios procede essa faculdade. E, neste sentido, ser predestinado não convém a Cristo nem a nenhum homem, em razão da natureza humana. Neste sentido, pois, procede a objeção. — De outro modo, dizemos que uma causa convém a alguém, em razão da natureza humana, quando a natureza humana é susceptível de tal causa. E então dizemos que Cristo foi predestinado em razão da natureza humana porque a predestinação se refere à exaltação da natureza humana em Cristo, como dissemos.</p>
+    <p>RESPOSTA À TERCEIRA. — O Verbo de Deus assumiu a natureza humana de um modo tão inefavelmente singular, que simultaneamente se chamassem Deus — o filho do homem por causa da natureza humana assumida; e o Filho de Deus, por causa do Unigênito, assumente — como diz Agostinho. E portanto, como essa assunção se inclui na predestinação, como gratuita, podemos dizer tanto que o Filho de Deus foi predestinado para ser homem, como que o foi o Filho do Homem, para ser Filho de Deus. Mas, como não foi ao Filho de Deus a graça de ser homem, mas antes, à natureza humana, para que se unisse ao Filho de Deus, podemos mais propriamente dizer, que Cristo, enquanto homem, foi predestinado para ser Filho de Deus, do que: Cristo, enquanto Filho de Deus, foi predestinado para ser homem.</p>
+
+    </div>
+  </div>
+  
+  <!-- Bloco de Explicação (a ser preenchido) -->
+  <div class="bloco-explicacao">
+    <div class="explicacao-label">💡 Explicação e Contexto</div>
+    <div class="explicacao-corpo" id="explicacao">
+    <p><em>Explicação será adicionada em breve.</em></p>
+
+    </div>
+  </div>
+  
+</main>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO INFERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="navegacao-inferior">
+  <div class="nav-buttons">
+    <a href="suma-pagina2255.html" class="btn-primary">← Anterior</a>
+    <span class="pagina-atual">2256</span>
+    <a href="suma-pagina2257.html" class="btn-primary">Próxima →</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  RODAPÉ                                                  -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<footer class="suma-footer">
+  <p>Suma Teológica · São Tomás de Aquino | Biblioteca Lux Fidei</p>
+</footer>
+
+</body>
+</html>

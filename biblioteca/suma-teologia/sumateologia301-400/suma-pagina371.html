@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Questão 76, Artigo 4 — ― Se há, no homem, além da alma intelectiva, outra forma. | Suma Teológica</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+    --cor-fundo: #f5f0e8;
+    --cor-pagina: #fff;
+    --cor-texto: #2c1f17;
+    --cor-dourado: #d4af37;
+    --cor-roxo: #5b2c83;
+    --sombra: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cor-fundo);
+    color: var(--cor-texto);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CABEÇALHO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-header {
+    background: linear-gradient(135deg, #1a1a1a, #2c241b);
+    color: #f5f0e8;
+    padding: 32px 20px 24px;
+    text-align: center;
+    position: relative;
+}
+
+.voltar-index {
+    position: absolute;
+    top: 16px;
+    left: 20px;
+    color: var(--cor-dourado);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: opacity 0.2s;
+}
+
+.voltar-index:hover {
+    opacity: 0.8;
+}
+
+.suma-header h1 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.info-pagina {
+    display: inline-block;
+    background: rgba(212, 175, 55, 0.15);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    color: var(--cor-dourado);
+    margin-top: 8px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-topo {
+    background: #fff;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    gap: 10px;
+}
+
+.btn-nav {
+    display: inline-flex;
+    align-items: center;
+    padding: 9px 18px;
+    background: var(--cor-roxo);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.btn-nav:hover {
+    background: #4a246a;
+    transform: translateY(-1px);
+}
+
+.desabilitado {
+    background: #ddd !important;
+    color: #999 !important;
+    pointer-events: none;
+}
+
+.info-centena {
+    font-size: 0.85rem;
+    color: #888;
+    font-weight: 500;
+    padding: 0 10px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CONTEÚDO PRINCIPAL                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.pagina-conteudo {
+    flex: 1;
+    max-width: 860px;
+    width: 100%;
+    margin: 36px auto;
+    padding: 0 20px;
+}
+
+.bloco-texto {
+    background: var(--cor-pagina);
+    padding: 48px 44px;
+    border-radius: 12px;
+    box-shadow: var(--sombra);
+    position: relative;
+    margin-bottom: 24px;
+}
+
+.bloco-texto::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 20px;
+    bottom: 20px;
+    width: 4px;
+    background: linear-gradient(to bottom, var(--cor-dourado), var(--cor-roxo));
+    border-radius: 0 4px 4px 0;
+}
+
+.bloco-titulo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.3rem;
+    color: var(--cor-roxo);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e8dfd0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pagina-corpo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.1rem;
+    line-height: 1.95;
+    color: #3d3226;
+    text-align: justify;
+}
+
+.pagina-corpo p {
+    margin-bottom: 1.3em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  BLOCO DE EXPLICAÇÃO                                        */
+/* ────────────────────────────────────────────────────────── */
+
+.bloco-explicacao {
+    background: linear-gradient(135deg, #fffdf5, #faf5eb);
+    border-left: 5px solid var(--cor-dourado);
+    padding: 32px 40px;
+    border-radius: 0 12px 12px 0;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    margin-bottom: 24px;
+}
+
+.explicacao-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--cor-dourado);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 14px;
+}
+
+.explicacao-corpo {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #4a3c2c;
+}
+
+.explicacao-corpo p {
+    margin-bottom: 1em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO INFERIOR                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-inferior {
+    max-width: 860px;
+    width: 100%;
+    margin: 0 auto 40px;
+    padding: 0 20px;
+}
+
+.nav-buttons {
+    background: #fff;
+    padding: 18px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    box-shadow: var(--sombra);
+}
+
+.btn-primary {
+    flex: 1;
+    text-align: center;
+    padding: 13px 16px;
+    background: linear-gradient(135deg, var(--cor-roxo), #7a3eb5);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(91, 44, 131, 0.3);
+}
+
+.pagina-atual {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--cor-dourado);
+    min-width: 50px;
+    text-align: center;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RODAPÉ                                                     */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-footer {
+    background: #1a1a1a;
+    color: #888;
+    text-align: center;
+    padding: 22px 20px;
+    margin-top: auto;
+    font-size: 0.85rem;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RESPONSIVIDADE                                             */
+/* ────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+    .suma-header h1 {
+        font-size: 1.4rem;
+    }
+    
+    .bloco-texto {
+        padding: 28px 18px;
+    }
+    
+    .bloco-explicacao {
+        padding: 22px 18px;
+    }
+    
+    .navegacao-topo {
+        flex-wrap: wrap;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CABEÇALHO                                               -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="suma-header">
+  <a href="../../index.html" class="voltar-index">← Índice</a>
+  <h1>Suma Teológica</h1>
+  <p style="opacity:0.8; font-style:italic; margin-top:4px;">São Tomás de Aquino</p>
+  <span class="info-pagina">Página 371 de 3000</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO SUPERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<nav class="navegacao-topo">
+  <a href="suma-pagina370.html" class="btn-nav">← Anterior</a>
+  <span class="info-centena">Pág. 371/3000</span>
+  <a href="suma-pagina372.html" class="btn-nav">Próxima →</a>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CONTEÚDO PRINCIPAL                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<main class="pagina-conteudo">
+  
+  <!-- Texto Original -->
+  <div class="bloco-texto">
+    <div class="bloco-titulo">
+      <span>📜</span>
+      Questão 76, Artigo 4 — ― Se há, no homem, além da alma intelectiva, outra forma.
+    </div>
+    <div class="pagina-corpo">
+    <p>(IV. Sent., dist. XLIV, q; 1, a. 1, qª 1, ad 4; IV Cont. Gent., cap LXXX De Spirit. Creat., a. 3; Qu. De Anima, a. 9; QuodI. I, q. 4, a.1; XI, q. 5; Compend. Theol., cap. XC). O quarto discute-se assim. ― Parece que há, no homem, outra forma, além da alma intelectiva. 1. ― Pois, diz o Filósofo, a alma é o ato do corpo físico que tem a vida em potência. Ora, a alma está para o corpo como a forma para a matéria. Mas, o corpo tem uma forma substancial pela qual é corpo. Logo, à alma precede, no corpo outra forma substancial. 2. Demais. ― O homem, bem como qualquer animal, move-se a si mesmo. Ora, todo ser que se move a si mesmo divide-se em duas partes, uma motora e, outra, movida, como o prova Aristóteles28. Ora, a parte motora sendo a alma, é necessário que a outra parte seja tal, que possa ser movida. Mas, a matéria prima não pode ser movida, por ser potencial apenas, como o prova Aristóteles; e, tudo o que é movido é corpo. Logo, é necessário que, no homem e em qualquer animal, haja outra forma substancial pela qual seja constituído o corpo. 3. Demais. ― A ordem das formas depende da tendência delas para a matéria prima; pois, anterior e posterior se dizem por comparação com algum princípio. Se, portanto, não houvesse, no homem, nenhuma forma substancial, além da alma racional, mas esta aderisse imediatamente à matéria prima, daí resultaria que a alma pertence à ordem das formas as mais imperfeitas, que aderem imediatamente à matéria. 4. Demais. ― O corpo humano é um corpo misto. Ora, a missão não se opera só pela matéria, porque, então, só haveria corrupção. Logo, é necessário que permaneçam as formas dos elementos, no corpo misto, que são as formas substanciais. Portanto, no corpo humano, há outras formas substanciais, além da alma intelectiva.</p>
+    <p>Mas, em contrário. ― Uma mesma coisa tem um só ser substancial. Ora, como a forma substancial é que dá o ser substancial, cada coisa tem só uma forma substancial. Logo, é impossível que haja, no homem, alguma outra forma substancial, além da alma intelectiva. SOLUÇÃO. ― Se se admitisse, com os Platônicos, que a alma intelectiva não está unida ao corpo, como forma, mas só corno motor, seria necessário admitir, no homem, outra forma substancial que constituísse, no seu ser, o corpo, movido pela alma. Mas se, como já dissemos antes (a. 1), a alma intelectiva está unida ao corpo como forma substancial, é impossível haja, no homem, qualquer outra forma substancial, além dela. Para a evidência do que devemos considerar que a forma substancial difere da acidental, por não dar esta o ser absolutamente mas o ser sob certo aspecto; assim, o calor faz o seu objeto ser, não absolutamente, mas ser quente. Por onde, pela adveniência da forma acidental, um ser não é feito ou gerado, absolutamente, senão sob certo aspecto ou de determinado modo; e, semelhantemente, desaparecida a forma acidental, um corpo não .se corrompe absolutamente, mas só de certo modo. Ao passo que a forma substancial dá o ser absoluto. Por isso, com a sua adveniência, um ser é gerado, pura e simplesmente; e, pelo seu desaparecimento, fica pura e simplesmente, concorrido. E, por essa razão, os antigos Filósofos da natureza, admitindo a matéria prima como um ser atual, ao modo do fogo, do ar ou corpos semelhantes, diziam que nenhum ser é, pura e simplesmente, gerado nem corrompido, mas que todo o vir a ser é alteração, como se vê em Aristóteles. Se, portanto além da alma intelectiva, preexistisse, na matéria, qualquer outra forma substancial, que tornasse atual o sujeito da alma, resultaria daí que a alma não dá o ser, pura e simplesmente e, por conseqüência não é forma substancial; e que, advindo à alma ou separando-se, não haveria geração nem corrupção, pura e simplesmente, mas só sob certo aspecto. Coisas manifestamente falsas. Por onde, deve-se admitir que, além da alma intelectiva, nenhuma outra forma substancial há no homem; e que esta, assim como, na sua virtude, contém a alma sensitiva e a nutritiva, assim também contém todas as formas inferiores, fazendo, ela só, tudo o que as formas menos imperfeitas fazem nos outros seres. E o mesmo se deve dizer da alma sensitiva, nos brutos, da nutritiva, nas plantas e, universalmente, de todas as formas mais perfeitas, em relação às mais imperfeitas.</p>
+    <p>DONDE A</p>
+    <p>RESPOSTA À PRIMEIRA OBJEÇÃO. . Aristóteles não diz que a alma é o ato do corpo somente, mas o ato do corpo físico orgânico tendo a vida em potência e, que tal potência não exclui a alma. Por onde, é manifesto, a alma também está incluída no ser de que ela é ato, do mesmo modo que o calor é o ato do que é cálido, a luz do que é lúcido; não que, separadamente, haja corpo lúcido sem luz, senão que é lúcido por ela. E, semelhantemente, se diz, que a alma é o ato do corpo, etc., porque, pela alma, é que há corpo, e esse, orgânico com vida potencial. Mas, o ato primeiro é assim chamado em relação ao ato segundo, que é a operação. Portanto, tal potência não rejeita, i. é., não exclui a alma.</p>
+    <p>RESPOSTA À SEGUNDA. ― A alma não move o corpo pelo seu ser, enquanto unida a este como forma. Mas, pela potência motora, cujo ato pressupõe o corpo já atualizado pela alma; de modo que esta, pela força motora, é a parte que move, sendo o corpo animado, a parte motora.</p>
+    <p>RESPOSTA À TERCEIRA. ― Na matéria, consideram-se diversos graus de perfeição, como, ser, viver, sentir e inteligir. Mas, sempre, o que sobrevém, em segundo lugar, é mais perfeito do que o que existe em primeiro. Por onde, a forma, que dá só o primeiro grau da perfeição da matéria, é imperfeitíssima; mas, a que dá o primeiro, o segundo e o terceiro, e assim por diante, é perfeitÍssima e, contudo imediata à matéria.</p>
+    <p>RESPOSTA À QUARTA. ― Avicena ensinava que as formas substanciais dos elementos permanecem integras no misto; e a mistão se faz pela redução das qualidades contrárias dos elementos à média. ― Mas isto é impossível. Pois, as diversas formas dos elementos só podem existir nas diversas partes da matéria e, para essas diversidades, é necessário se suporem as dimensões, sem as quais a matéria não pode ser divisível. Ora, matéria sujeita à dimensão só se encontra no corpo. E, como corpos diversos não podem ocupar o mesmo lugar, segue-se que os elementos estão, no misto, distintos pela situação e, assim, não haverá verdadeira micção, em relação à totalidade, mas só em relação aos nossos sentidos, o que se dá quando corpos mínimos estão justapostos. ― Porém Averróisensinava que as formas dos elementos, pela sua imperfeição, são médias entre as formas acidentais e as substanciais e, portanto, admitindo o mais e o menos, ficando, mitigadas, na micção, reduzem-se ao médio e, deles, se compõe uma só fôrma. ― Mas, isto ainda é mais impossível. Porque o ser substancial de qualquer coisa é indivisível; e toda adição ou subtração varia a espécie, como nos números, conforme diz Aristóteles. Por onde, é impossível que qualquer forma substancial seja susceptível de mais e de menos. Nem é menos impossível que haja um meio entre a substância e o acidente. ― E, portanto, deve-sê admitir, com o Filósofo, a permanência, não atual, mas virtual, das formas dos elementos, no misto. Permanecem, assim, as qualidades próprias dos elementos, embora mitigados e nas quais está a virtude das formas elementares. E, deste modo, a qualidade da mistão é a disposição própria para receber a forma substancial do corpo misto, p. ex., a forma da pedra ou de qualquer ser animado.</p>
+
+    </div>
+  </div>
+  
+  <!-- Bloco de Explicação (a ser preenchido) -->
+  <div class="bloco-explicacao">
+    <div class="explicacao-label">💡 Explicação e Contexto</div>
+    <div class="explicacao-corpo" id="explicacao">
+    <p><em>Explicação será adicionada em breve.</em></p>
+
+    </div>
+  </div>
+  
+</main>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO INFERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="navegacao-inferior">
+  <div class="nav-buttons">
+    <a href="suma-pagina370.html" class="btn-primary">← Anterior</a>
+    <span class="pagina-atual">371</span>
+    <a href="suma-pagina372.html" class="btn-primary">Próxima →</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  RODAPÉ                                                  -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<footer class="suma-footer">
+  <p>Suma Teológica · São Tomás de Aquino | Biblioteca Lux Fidei</p>
+</footer>
+
+</body>
+</html>

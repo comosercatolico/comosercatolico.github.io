@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Questão 189, Artigo 10 — Se é louvável que alguém entre em religião sem ouvir o | Suma Teológica</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+    --cor-fundo: #f5f0e8;
+    --cor-pagina: #fff;
+    --cor-texto: #2c1f17;
+    --cor-dourado: #d4af37;
+    --cor-roxo: #5b2c83;
+    --sombra: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cor-fundo);
+    color: var(--cor-texto);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CABEÇALHO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-header {
+    background: linear-gradient(135deg, #1a1a1a, #2c241b);
+    color: #f5f0e8;
+    padding: 32px 20px 24px;
+    text-align: center;
+    position: relative;
+}
+
+.voltar-index {
+    position: absolute;
+    top: 16px;
+    left: 20px;
+    color: var(--cor-dourado);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: opacity 0.2s;
+}
+
+.voltar-index:hover {
+    opacity: 0.8;
+}
+
+.suma-header h1 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.info-pagina {
+    display: inline-block;
+    background: rgba(212, 175, 55, 0.15);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    color: var(--cor-dourado);
+    margin-top: 8px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-topo {
+    background: #fff;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    gap: 10px;
+}
+
+.btn-nav {
+    display: inline-flex;
+    align-items: center;
+    padding: 9px 18px;
+    background: var(--cor-roxo);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.btn-nav:hover {
+    background: #4a246a;
+    transform: translateY(-1px);
+}
+
+.desabilitado {
+    background: #ddd !important;
+    color: #999 !important;
+    pointer-events: none;
+}
+
+.info-centena {
+    font-size: 0.85rem;
+    color: #888;
+    font-weight: 500;
+    padding: 0 10px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CONTEÚDO PRINCIPAL                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.pagina-conteudo {
+    flex: 1;
+    max-width: 860px;
+    width: 100%;
+    margin: 36px auto;
+    padding: 0 20px;
+}
+
+.bloco-texto {
+    background: var(--cor-pagina);
+    padding: 48px 44px;
+    border-radius: 12px;
+    box-shadow: var(--sombra);
+    position: relative;
+    margin-bottom: 24px;
+}
+
+.bloco-texto::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 20px;
+    bottom: 20px;
+    width: 4px;
+    background: linear-gradient(to bottom, var(--cor-dourado), var(--cor-roxo));
+    border-radius: 0 4px 4px 0;
+}
+
+.bloco-titulo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.3rem;
+    color: var(--cor-roxo);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e8dfd0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pagina-corpo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.1rem;
+    line-height: 1.95;
+    color: #3d3226;
+    text-align: justify;
+}
+
+.pagina-corpo p {
+    margin-bottom: 1.3em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  BLOCO DE EXPLICAÇÃO                                        */
+/* ────────────────────────────────────────────────────────── */
+
+.bloco-explicacao {
+    background: linear-gradient(135deg, #fffdf5, #faf5eb);
+    border-left: 5px solid var(--cor-dourado);
+    padding: 32px 40px;
+    border-radius: 0 12px 12px 0;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    margin-bottom: 24px;
+}
+
+.explicacao-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--cor-dourado);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 14px;
+}
+
+.explicacao-corpo {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #4a3c2c;
+}
+
+.explicacao-corpo p {
+    margin-bottom: 1em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO INFERIOR                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-inferior {
+    max-width: 860px;
+    width: 100%;
+    margin: 0 auto 40px;
+    padding: 0 20px;
+}
+
+.nav-buttons {
+    background: #fff;
+    padding: 18px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    box-shadow: var(--sombra);
+}
+
+.btn-primary {
+    flex: 1;
+    text-align: center;
+    padding: 13px 16px;
+    background: linear-gradient(135deg, var(--cor-roxo), #7a3eb5);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(91, 44, 131, 0.3);
+}
+
+.pagina-atual {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--cor-dourado);
+    min-width: 50px;
+    text-align: center;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RODAPÉ                                                     */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-footer {
+    background: #1a1a1a;
+    color: #888;
+    text-align: center;
+    padding: 22px 20px;
+    margin-top: auto;
+    font-size: 0.85rem;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RESPONSIVIDADE                                             */
+/* ────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+    .suma-header h1 {
+        font-size: 1.4rem;
+    }
+    
+    .bloco-texto {
+        padding: 28px 18px;
+    }
+    
+    .bloco-explicacao {
+        padding: 22px 18px;
+    }
+    
+    .navegacao-topo {
+        flex-wrap: wrap;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CABEÇALHO                                               -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="suma-header">
+  <a href="../../index.html" class="voltar-index">← Índice</a>
+  <h1>Suma Teológica</h1>
+  <p style="opacity:0.8; font-style:italic; margin-top:4px;">São Tomás de Aquino</p>
+  <span class="info-pagina">Página 2115 de 3000</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO SUPERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<nav class="navegacao-topo">
+  <a href="suma-pagina2114.html" class="btn-nav">← Anterior</a>
+  <span class="info-centena">Pág. 2115/3000</span>
+  <a href="suma-pagina2116.html" class="btn-nav">Próxima →</a>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CONTEÚDO PRINCIPAL                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<main class="pagina-conteudo">
+  
+  <!-- Texto Original -->
+  <div class="bloco-texto">
+    <div class="bloco-titulo">
+      <span>📜</span>
+      Questão 189, Artigo 10 — Se é louvável que alguém entre em religião sem ouvir o
+    </div>
+    <div class="pagina-corpo">
+    <p>conselho de muitos e sem diuturna deliberação. O décimo discute–se assim. – Parece que não é louvável alguém entrar em religião sem ouvir o conselho de muitos e sem diuturna deliberação. 1. – Pois, diz a Escritura: Não creiais a todo espírito, mas provai se os espíritos são de Deus. Ora, às vezes, o propósito de entrar em religião não vem de Deus e por isso frequentemente desaparece com a saída da mesma. Assim, diz a Escritura, noutro lugar: Se vem de Deus este conselho ou esta obra não o podereis dissolver. Logo, parece que só depois de um maduro exame deve um entrar em religião. 2. Demais. – A Escritura diz: Trata do teu negócio com o teu amigo. Ora, segundo parece, o negócio mais importante do homem é o que implica a mudança de estado. Logo, parece que ninguém deve entrar em religião senão depois de deliberar com os amigos. 3. Demais. – O Evangelho traz a comparação de um homem que queria edificar uma torre e que põe primeiro muito do seu vagar a fazer conta dos gastos que são necessários, para ver se tem com que acabar, para não se expor a que façam zombaria dele dizendo: este homem principiou o edifício e não no pôde acabar. Ora, os gastos para edificar uma torre, como diz Agostinho, não são outra coisa senão a renúncia que cada um deve fazer de todos os seus bens. Ora, pode suceder às vezes que muitos não o possam fazer, bem como não poderão suportar outras observâncias religiosas. E isso está figurado na Escritura quando diz, que Davi não podia vestir as armas de Saul por não estar acostumado a elas. Logo, parece que ninguém deve entrar em religião senão depois de feita uma diuturna deliberação e pedido o conselho de muitos.</p>
+    <p>Mas, em contrário, diz o Evangelho que, ao chamado do Senhor, Pedro e André, sem mais detença, deixadas as redes, o seguiram. O que comenta Crisóstomo: Cristo exige de nós uma tão grande obediência, que não procrastinemos nem um instante do tempo. SOLUÇÃO. – A diuturna deliberação e o ouvir os conselhos de muito são necessários em matéria importante e duvidosa, como diz o Filósofo. Mas, em matéria certa e determinada, não há necessidade de conselho. Ora, em se tratando da entrada em religião três pontos se podem considerar. – Primeiro, o ingresso em religião é o melhor bem; e quem disso duvidar vai diretamente contra a palavra de Cristo, que o aconselhou. Por isso diz Agostinho: Chama–te o Oriente, isto é, Cristo e tu olhas para o Ocidente, para o homem mortal e inquinado de erro. – De outro modo podemos considerar o ingresso em religião relativamente às forças de quem nela pretende entrar. E nesse caso, também não há lugar para dúvidas; pois, os que entram em religião não confiam nas suas forças para nela perseverarem, mas no auxílio do poder divino, segundo aquilo da Escritura: Os que esperam no Senhor terão sempre novas forças, tomarão asas como de águia, correrão e não se fatigarão, andarão e não desfalecerão. Mas se houver algum impedimento especial, por exemplo, fraqueza do corpo ou ônus de dívidas ou obstáculo semelhante, há então necessidade de deliberação e de conselhos com aqueles de que se espera ajuda e não obstáculo. Por isso diz a Escritura: Vai tratar de santidade com um homem sem religião e com um injusto sobre a justiça, quase se dissesse: Não. Donde se segue: "Não atendas a estes em nenhum dos mencionados conselhos, mas acha–te de contínuo com o varão santo. No que, porém, não há necessidade de diuturna deliberação. Donde o dizer Jerónimo: Apressa–te, eu topeço; e antes corta que desata a corda que te prende a nau à terra. – Em terceiro lugar, podemos considerar o modo de entrar em religião, e em que religião se deva entrar. E, nessa matéria, pode–se também tomar conselho com aqueles que não sejam um impedimento.</p>
+    <p>DONDE A</p>
+    <p>RESPOSTA À PRIMEIRA OBJEÇÃO. – Quando a Escritura diz – provai se os espíritos são de Deus – essas palavras se referem ao caso de ser duvidoso se o espírito é de Deus. Assim como pode ser duvidoso aos que já vivem numa religião se aqueles que se oferecem a ela são levados pelo Espírito de Deus ou se o fazem simuladamente. Por isso, devem provar o recém–vindo, para saberem se é movido pelo espírito divino. Mas, aquele que entra em religião não pode ser duvidoso se o propósito de nela entrar, que traz no coração, vem do Espírito de Deus, a que é próprio conduzir o homem à terra da retidão. Mas nem por isso fica demonstrado que não seja por inspiração de Deus, que certos retrocedem. Pois, nem tudo o que vem de Deus é incorruptível; do contrário as criaturas corruptíveis não viriam de Deus, como dizem os Maniqueus; e nem aqueles que têm a graça de Deus poderiam perdê–la – o que também é herético. Mas, o conselho de Deus é indissolúvel, pelo qual faz também as cousas corruptíveis e mutáveis, segundo aquilo da Escritura: O meu conselho subsistirá e toda a minha vontade se fará. Portanto, o propósito de entrar em religião não precisa de ser provado para se saber se vem de Deus, porque as coisas certas não precisam de discussão, no dizer da Glosa a um texto do Apóstolo.</p>
+    <p>RESPOSTA À SEGUNDA. – Assim como a carne deseja contra o espírito, no dizer do Apóstolo, assim também frequentemente os amigos carnais são um obstáculo ao progresso espiritual, segundo aquilo da Escritura: Os inimigos do homem são os seus mesmos domésticos. Por isso Cirilo, expondo aquilo do Evangelho Permite–me que me despida dos de minha casa – diz: O querer despedir–se dos de casa mostra estar dividido de certo modo; pois, comunicar ainda com os próximos e consultar os que não querem pensar com sabedoria, indica que quem o faz ainda está vacilante e capaz de retroceder. E por isso ouça as palavras do Senhor: Nenhum que mete a sua mão ao arado e olha para trás é apto para o reino de Deus. Pois, olha para trás quem a pretexto de tornar à casa e consultar os parentes, busca uma dilação.</p>
+    <p>RESPOSTA À TERCEIRA. – A edificação da torre significa a perfeição da vida cristã. A renúncia aos bens próprios são os gastos com a edificação dela. Ora, ninguém duvida ou delibera se quer fazer os gastos, ou se, tendo meios, quer fazer a torre; mas, só é objeto de deliberação saber se se têm os meios. Semelhantemente, não pode constituir objeto de deliberação, o saber alguém se deve renunciar a tudo quanto possui ou se, assim agindo, poderá chegar à perfeição; mas pode ser objeto de deliberação o saber se o que faz é dar de mão a tudo o que possui; pois, se não der de mão, o que é o fazer gastos, não pode, como no mesmo lugar se diz, ser discípulo de Cristo, o que é o edificar a torre. Quanto ao temor dos que duvidam se, entrando em religião, poderão chegar à perfeição, esse temor é irracional, como o prova o exemplo de muitos. E por isso diz Agostinho: Do lado para onde tinha dirigido os meus olhares e por onde tremia de passar, mostrava–se–me a doce majestade da continência, que com casto sorriso convidava–me a me aproximar sem temor; e estendia, para me receber e abraçar, suas piedosas mãos, cheias de sem número de bons exemplos. Aí, muitos jovens e donzelas, aí uma juventude numerosa e reunindo as mais diversas idades, graves viúvas e virgens encanecidas estimulavam–me com as suas doces exortações, como se dissessem: Não poderás tu o que estes e estas puderam? Porventura estes e estas o puderam pelas suas próprias forças ou pela graça do Senhor seu Deus? Por que te fechas em ti mesmo e de ti mesmo foges? Atira–te nos seus braços, não temas; não irá ele retirar–se para que tu caias; arroja–te a ele com confiança e ele te receberá e te salvará! Quanto ao exemplo citado, de Davi, não vem a propósito. Porque as armas de Saul, como diz a Glosa, são os sacramentos da lei antiga, que eram um pesado fardo. Ora, a religião é o suave jugo de Cristo; pois, pergunta Gregório, que de pesado impõe à nossa alma aquele que nos manda evitar todo desejo que perturba e nos adverte a fugir todos os caminhos penosos deste mundo? E esse suave jugo aos que o tomarem sobre os ombros o Senhor promete a felicidade de gozar a Deus e o sempiterno repouso da alma. A ela nos conduza o mesmo que nô–lo prometeu. NOSSO SENHOR JESUS CRISTO, DEUS BENDITO SOBRE TODAS AS COISAS E POR TODOS OS SÉCULOS. AMÉM. Tertia Pars O Senhor Jesus Cristo, Salvador nosso, salvando o seu povo dos pecados deles, conforme o testemunho do anjo (Mt 1, 21), se nos mostrou como o caminho da verdade, pelo qual pudessemos, ressurgindo, chegar à beatitude da vida imortal. Por isso, havemos necessariamente de, para esgotar toda a matéria teológica, passar a tratar do Salvador de todos, em si mesmo considerado, e dos benefícios que fez ao gênero humano, depois que já examinamos o fim último da vida humana e estudamos as virtudes e os vícios. E neste assunto devemos tratar, primeiro, do Salvador, em si mesmo; segundo, dos seus sacramentos, pelos quais alcançamos a Salvação; terceiro, do fim da vida imortal, à qual, por meio dele, chegaremos, pela ressurreição. Em relação ao primeiro ponto, duas considerações temos a fazer. A primeira, sobre o mistério mesmo da Encarnação, pelo qual Deus se fez homem, para a nossa salvação. A segunda, das ações e dos sofrimentos do nosso Salvador, i. é, do Deus encarnado. Nesta parte será tratada os seguintes temas:  Tratado do verbo encarnado  A vida de Cristo  Os Sacramentos em geral  O Batismo  O Sacramento da Confirmação  O Sacramento da Eucaristia  O Sacramento da Penitência Tratado do verbo encarnado No primeiro ponto três questões devem ser tratadas. A primeira, sobre a conveniência da Encarnação de Cristo. A segunda, do modo de união do Verbo encarnado. A terceira, dos resultados dessa união. Na primeira questão discutem-se seis artigos:</p>
+
+    </div>
+  </div>
+  
+  <!-- Bloco de Explicação (a ser preenchido) -->
+  <div class="bloco-explicacao">
+    <div class="explicacao-label">💡 Explicação e Contexto</div>
+    <div class="explicacao-corpo" id="explicacao">
+    <p><em>Explicação será adicionada em breve.</em></p>
+
+    </div>
+  </div>
+  
+</main>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO INFERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="navegacao-inferior">
+  <div class="nav-buttons">
+    <a href="suma-pagina2114.html" class="btn-primary">← Anterior</a>
+    <span class="pagina-atual">2115</span>
+    <a href="suma-pagina2116.html" class="btn-primary">Próxima →</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  RODAPÉ                                                  -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<footer class="suma-footer">
+  <p>Suma Teológica · São Tomás de Aquino | Biblioteca Lux Fidei</p>
+</footer>
+
+</body>
+</html>

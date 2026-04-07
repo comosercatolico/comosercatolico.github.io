@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Questão 24, Artigo 1 — ― Se as paixões do irascível tem prioridade sobre as do | Suma Teológica</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+    --cor-fundo: #f5f0e8;
+    --cor-pagina: #fff;
+    --cor-texto: #2c1f17;
+    --cor-dourado: #d4af37;
+    --cor-roxo: #5b2c83;
+    --sombra: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cor-fundo);
+    color: var(--cor-texto);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CABEÇALHO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-header {
+    background: linear-gradient(135deg, #1a1a1a, #2c241b);
+    color: #f5f0e8;
+    padding: 32px 20px 24px;
+    text-align: center;
+    position: relative;
+}
+
+.voltar-index {
+    position: absolute;
+    top: 16px;
+    left: 20px;
+    color: var(--cor-dourado);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: opacity 0.2s;
+}
+
+.voltar-index:hover {
+    opacity: 0.8;
+}
+
+.suma-header h1 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.info-pagina {
+    display: inline-block;
+    background: rgba(212, 175, 55, 0.15);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    color: var(--cor-dourado);
+    margin-top: 8px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-topo {
+    background: #fff;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    gap: 10px;
+}
+
+.btn-nav {
+    display: inline-flex;
+    align-items: center;
+    padding: 9px 18px;
+    background: var(--cor-roxo);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.btn-nav:hover {
+    background: #4a246a;
+    transform: translateY(-1px);
+}
+
+.desabilitado {
+    background: #ddd !important;
+    color: #999 !important;
+    pointer-events: none;
+}
+
+.info-centena {
+    font-size: 0.85rem;
+    color: #888;
+    font-weight: 500;
+    padding: 0 10px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CONTEÚDO PRINCIPAL                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.pagina-conteudo {
+    flex: 1;
+    max-width: 860px;
+    width: 100%;
+    margin: 36px auto;
+    padding: 0 20px;
+}
+
+.bloco-texto {
+    background: var(--cor-pagina);
+    padding: 48px 44px;
+    border-radius: 12px;
+    box-shadow: var(--sombra);
+    position: relative;
+    margin-bottom: 24px;
+}
+
+.bloco-texto::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 20px;
+    bottom: 20px;
+    width: 4px;
+    background: linear-gradient(to bottom, var(--cor-dourado), var(--cor-roxo));
+    border-radius: 0 4px 4px 0;
+}
+
+.bloco-titulo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.3rem;
+    color: var(--cor-roxo);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e8dfd0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pagina-corpo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.1rem;
+    line-height: 1.95;
+    color: #3d3226;
+    text-align: justify;
+}
+
+.pagina-corpo p {
+    margin-bottom: 1.3em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  BLOCO DE EXPLICAÇÃO                                        */
+/* ────────────────────────────────────────────────────────── */
+
+.bloco-explicacao {
+    background: linear-gradient(135deg, #fffdf5, #faf5eb);
+    border-left: 5px solid var(--cor-dourado);
+    padding: 32px 40px;
+    border-radius: 0 12px 12px 0;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    margin-bottom: 24px;
+}
+
+.explicacao-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--cor-dourado);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 14px;
+}
+
+.explicacao-corpo {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #4a3c2c;
+}
+
+.explicacao-corpo p {
+    margin-bottom: 1em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO INFERIOR                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-inferior {
+    max-width: 860px;
+    width: 100%;
+    margin: 0 auto 40px;
+    padding: 0 20px;
+}
+
+.nav-buttons {
+    background: #fff;
+    padding: 18px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    box-shadow: var(--sombra);
+}
+
+.btn-primary {
+    flex: 1;
+    text-align: center;
+    padding: 13px 16px;
+    background: linear-gradient(135deg, var(--cor-roxo), #7a3eb5);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(91, 44, 131, 0.3);
+}
+
+.pagina-atual {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--cor-dourado);
+    min-width: 50px;
+    text-align: center;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RODAPÉ                                                     */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-footer {
+    background: #1a1a1a;
+    color: #888;
+    text-align: center;
+    padding: 22px 20px;
+    margin-top: auto;
+    font-size: 0.85rem;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RESPONSIVIDADE                                             */
+/* ────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+    .suma-header h1 {
+        font-size: 1.4rem;
+    }
+    
+    .bloco-texto {
+        padding: 28px 18px;
+    }
+    
+    .bloco-explicacao {
+        padding: 22px 18px;
+    }
+    
+    .navegacao-topo {
+        flex-wrap: wrap;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CABEÇALHO                                               -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="suma-header">
+  <a href="../../index.html" class="voltar-index">← Índice</a>
+  <h1>Suma Teológica</h1>
+  <p style="opacity:0.8; font-style:italic; margin-top:4px;">São Tomás de Aquino</p>
+  <span class="info-pagina">Página 726 de 3000</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO SUPERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<nav class="navegacao-topo">
+  <a href="suma-pagina725.html" class="btn-nav">← Anterior</a>
+  <span class="info-centena">Pág. 726/3000</span>
+  <a href="suma-pagina727.html" class="btn-nav">Próxima →</a>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CONTEÚDO PRINCIPAL                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<main class="pagina-conteudo">
+  
+  <!-- Texto Original -->
+  <div class="bloco-texto">
+    <div class="bloco-titulo">
+      <span>📜</span>
+      Questão 24, Artigo 1 — ― Se as paixões do irascível tem prioridade sobre as do
+    </div>
+    <div class="pagina-corpo">
+    <p>concupiscível. (III Sent., dist. XXVI, q. 1, a . 3; q.2 a . 3, qª 2; De Verit;. Q. 25, a . 2). O primeiro discute-se assim. ― Parece que as paixões do irascível tem prioridade sobre as do concupiscível. 1. ― Pois, a ordem das paixões depende da dos objetos. Ora, o objeto do irascível é o bem árduo que, parece, é o supremo entre os outros bens. Logo, as paixões do irascível tem prioridade sobre as do concupiscível. 2. Demais. ― O motor é anterior ao movido, Ora, o irascível está para o concupiscível como o motor para o movido, pois foi dado aos animais para vencerem os obstáculos que se opõem a que o concupiscível goze do seu objeto, conforme já dissemos; ou, na linguagem de Aristóteles, o que remove o obstáculo exerce a função de motor. Logo, as paixões do irascível tem anterioridade sobre as do concupiscível. 3. Demais. ― A alegria e a tristeza são paixões do concupiscível. Ora, resultam das do irascível, pois, diz o Filósofo, que a punição acalma o ímpeto da ira, produzindo a deleitação em lugar da tristeza. Logo, as paixões do irascível tem prioridade sobre as do concupiscível.</p>
+    <p>Mas, em contrário. ― As paixões do concupiscível visam o bem absoluto; as do irascível porém, o bem restrito, i. é, árduo. Ora, como o bem absoluto tem prioridade sobre o restrito, as paixões do concupiscível tem prioridade sobre as do irascível. SOLUÇÃO. ― As paixões do concupiscível abrangem um domínio mais vasto que as do irascível, pois há nelas algo relativo ao movimento, como o desejo, e algo relativo ao repouso, como a alegria e a tristeza; ao passo que as do irascível nada tem de relativo ao repouso mas só ao movimento. E a razão é que, aquilo em que repousamos nada contém de difícil ou árduo, que é o objeto do irascível. Ora, o repouso, sendo o termo do movimento, é anterior na intenção, mas posterior na execução. Se pois compararmos as paixões do irascível com as do concupiscível, que supõem o repouso no bem, manifestamente aquelas precedem a estas, na ordem da execução; assim, a esperança precede à alegria e por isso a causa, conforme aquilo na Escritura (Rm 12, 12): na esperança alegres. A paixão concupiscível porém, que implica o repouso no mal, a saber, a tristeza, é média entre as duas paixões do concupiscível pois, sendo causada pelo ocorrer do mal que era temido, resulta do temor; mas precede ao movimento da ira, causa de nos arrojarmos à vingança. E como vingar-se do mal é apreendido como bom, o irado se alegra, após havê-lo conseguido. Por onde é manifesto, que toda paixão do irascível termina numa paixão do concupiscível que implica repouso, a saber, a alegria ou a tristeza. Se porém compararmos as paixões do irascível com as do concupiscível, que importam o movimento, estas são manifestamente primeiras, porque aquelas lhe acrescentam algo, assim como o objeto do irascível acrescenta algo ao do concupiscível, a saber, o árduo ou a dificuldade. Assim, a esperança acrescenta ao desejo um certo esforço e uma certa elevação do ânimo para conseguir o bem árduo. Semelhantemente, o temor acrescenta à aversão ou abominação uma certa depressão do ânimo por causa da dificuldade do mal. Por onde, as paixões do irascível são médias entre as do concupiscível, que importam movimento para o bem ou para o mal, e as que importam repouso no bem ou no mal. Logo, é claro que as do irascível tem princípio e termo nas do concupiscível.</p>
+    <p>DONDE A</p>
+    <p>RESPOSTA À PRIMEIRA OBJEÇÃO. ― A objeção procederia se da essência do objeto do concupiscível fosse algo de oposto ao árduo, como é da essência do objeto do irascível ser árduo. Ora, o concupiscível, tendo o bem absoluto, como objeto, este é naturalmente anterior ao do irascível, como o comum é anterior ao próprio.</p>
+    <p>RESPOSTA À SEGUNDA. ― O que remove o obstáculo não é motor por si mesmo, mas por acidente. Ora, no caso, trata-se da ordem em si mesma entre as paixões. E além disso, o irascível remove o obstáculo ao repouso do concupiscível no seu objeto. Donde não resulta senão que as paixões do irascível precedem as do concupiscível, que se referem ao repouso. E é nisto que se funda a TERCEIRA OBJEÇÃO.</p>
+
+    </div>
+  </div>
+  
+  <!-- Bloco de Explicação (a ser preenchido) -->
+  <div class="bloco-explicacao">
+    <div class="explicacao-label">💡 Explicação e Contexto</div>
+    <div class="explicacao-corpo" id="explicacao">
+    <p><em>Explicação será adicionada em breve.</em></p>
+
+    </div>
+  </div>
+  
+</main>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO INFERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="navegacao-inferior">
+  <div class="nav-buttons">
+    <a href="suma-pagina725.html" class="btn-primary">← Anterior</a>
+    <span class="pagina-atual">726</span>
+    <a href="suma-pagina727.html" class="btn-primary">Próxima →</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  RODAPÉ                                                  -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<footer class="suma-footer">
+  <p>Suma Teológica · São Tomás de Aquino | Biblioteca Lux Fidei</p>
+</footer>
+
+</body>
+</html>

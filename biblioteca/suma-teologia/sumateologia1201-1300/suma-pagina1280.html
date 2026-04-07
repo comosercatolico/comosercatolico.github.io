@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Questão 16, Artigo 1 — Se a lei antiga devia estabelecer preceitos relativos à crença. | Suma Teológica</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+    --cor-fundo: #f5f0e8;
+    --cor-pagina: #fff;
+    --cor-texto: #2c1f17;
+    --cor-dourado: #d4af37;
+    --cor-roxo: #5b2c83;
+    --sombra: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cor-fundo);
+    color: var(--cor-texto);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CABEÇALHO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-header {
+    background: linear-gradient(135deg, #1a1a1a, #2c241b);
+    color: #f5f0e8;
+    padding: 32px 20px 24px;
+    text-align: center;
+    position: relative;
+}
+
+.voltar-index {
+    position: absolute;
+    top: 16px;
+    left: 20px;
+    color: var(--cor-dourado);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: opacity 0.2s;
+}
+
+.voltar-index:hover {
+    opacity: 0.8;
+}
+
+.suma-header h1 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.info-pagina {
+    display: inline-block;
+    background: rgba(212, 175, 55, 0.15);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    color: var(--cor-dourado);
+    margin-top: 8px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-topo {
+    background: #fff;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    gap: 10px;
+}
+
+.btn-nav {
+    display: inline-flex;
+    align-items: center;
+    padding: 9px 18px;
+    background: var(--cor-roxo);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.btn-nav:hover {
+    background: #4a246a;
+    transform: translateY(-1px);
+}
+
+.desabilitado {
+    background: #ddd !important;
+    color: #999 !important;
+    pointer-events: none;
+}
+
+.info-centena {
+    font-size: 0.85rem;
+    color: #888;
+    font-weight: 500;
+    padding: 0 10px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CONTEÚDO PRINCIPAL                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.pagina-conteudo {
+    flex: 1;
+    max-width: 860px;
+    width: 100%;
+    margin: 36px auto;
+    padding: 0 20px;
+}
+
+.bloco-texto {
+    background: var(--cor-pagina);
+    padding: 48px 44px;
+    border-radius: 12px;
+    box-shadow: var(--sombra);
+    position: relative;
+    margin-bottom: 24px;
+}
+
+.bloco-texto::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 20px;
+    bottom: 20px;
+    width: 4px;
+    background: linear-gradient(to bottom, var(--cor-dourado), var(--cor-roxo));
+    border-radius: 0 4px 4px 0;
+}
+
+.bloco-titulo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.3rem;
+    color: var(--cor-roxo);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e8dfd0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pagina-corpo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.1rem;
+    line-height: 1.95;
+    color: #3d3226;
+    text-align: justify;
+}
+
+.pagina-corpo p {
+    margin-bottom: 1.3em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  BLOCO DE EXPLICAÇÃO                                        */
+/* ────────────────────────────────────────────────────────── */
+
+.bloco-explicacao {
+    background: linear-gradient(135deg, #fffdf5, #faf5eb);
+    border-left: 5px solid var(--cor-dourado);
+    padding: 32px 40px;
+    border-radius: 0 12px 12px 0;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    margin-bottom: 24px;
+}
+
+.explicacao-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--cor-dourado);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 14px;
+}
+
+.explicacao-corpo {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #4a3c2c;
+}
+
+.explicacao-corpo p {
+    margin-bottom: 1em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO INFERIOR                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-inferior {
+    max-width: 860px;
+    width: 100%;
+    margin: 0 auto 40px;
+    padding: 0 20px;
+}
+
+.nav-buttons {
+    background: #fff;
+    padding: 18px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    box-shadow: var(--sombra);
+}
+
+.btn-primary {
+    flex: 1;
+    text-align: center;
+    padding: 13px 16px;
+    background: linear-gradient(135deg, var(--cor-roxo), #7a3eb5);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(91, 44, 131, 0.3);
+}
+
+.pagina-atual {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--cor-dourado);
+    min-width: 50px;
+    text-align: center;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RODAPÉ                                                     */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-footer {
+    background: #1a1a1a;
+    color: #888;
+    text-align: center;
+    padding: 22px 20px;
+    margin-top: auto;
+    font-size: 0.85rem;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RESPONSIVIDADE                                             */
+/* ────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+    .suma-header h1 {
+        font-size: 1.4rem;
+    }
+    
+    .bloco-texto {
+        padding: 28px 18px;
+    }
+    
+    .bloco-explicacao {
+        padding: 22px 18px;
+    }
+    
+    .navegacao-topo {
+        flex-wrap: wrap;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CABEÇALHO                                               -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="suma-header">
+  <a href="../../index.html" class="voltar-index">← Índice</a>
+  <h1>Suma Teológica</h1>
+  <p style="opacity:0.8; font-style:italic; margin-top:4px;">São Tomás de Aquino</p>
+  <span class="info-pagina">Página 1280 de 3000</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO SUPERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<nav class="navegacao-topo">
+  <a href="suma-pagina1279.html" class="btn-nav">← Anterior</a>
+  <span class="info-centena">Pág. 1280/3000</span>
+  <a href="suma-pagina1281.html" class="btn-nav">Próxima →</a>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CONTEÚDO PRINCIPAL                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<main class="pagina-conteudo">
+  
+  <!-- Texto Original -->
+  <div class="bloco-texto">
+    <div class="bloco-titulo">
+      <span>📜</span>
+      Questão 16, Artigo 1 — Se a lei antiga devia estabelecer preceitos relativos à crença.
+    </div>
+    <div class="pagina-corpo">
+    <p>O primeiro discute-se assim. – Parece que a lei antiga devia estabelecer preceitos relativos à crença. 1. – Pois, um preceito é relativo ao que é devido e necessário. Ora, sobretudo é necessário ao homem crer, conforme aquilo da Escritura: sem fé é impossível agradar a Deus. Logo, era muito necessário dar preceitos sobre a fé. 2. Demais. – O Novo Testamento está contido no Velho, como o figurado, na figura, segundo já se viu. Ora, o Novo Testamento estabelece expressamente mandamentos sobre a fé, como se vê claro pelo lugar seguinte: Credes em Deus, crede também a mim. Logo, a Lei Antiga devia também dai preceitos sobre a fé. 3. Demais. – Pela mesma razão por que se ordena um ato de virtude, proíbem-se os vícios opostos. Ora, a Lei Antiga estabelece muitos preceitos que proíbem a infidelidade, como, por exemplo: Não terás deuses estrangeiros diante de mim. E noutro lugar manda que os judeus não ouçam as palavras de profeta, ou de sonhador que os queira desviar da fidelidade a Deus. Logo, a Lei Antiga também devia dar preceitos sobre a fé. 4. Demais. – A confissão é um ato de fé, como se disse. Ora, a Lei Antiga dá preceitos sobre a confissão e a promulgação dos artigos da fé. Assim, manda que, os judeus deem aos filhos que interrogarem, a razão da observância pascal; que seja morto quem disseminar doutrinas contra a fé. Logo, a Lei Antiga devia conter preceitos de fé. 5. Demais. – Todos os livros do Antigo Testamento estão contidos na Lei Antiga. Por isso, o Senhor diz que está escrito na Lei: Com ódio injusto me tem em aborrecimento; o que está de fato na Escritura. Ora, na mesma se diz. Vós os que temeis ao Senhor, crede-o. Logo, a Lei Antiga deu preceitos sobre a fé.</p>
+    <p>Mas, em contrário, o Apóstolo chama à Lei Antiga Lei das obras, e a divide, por oposição, da Lei da fé. Logo, a Lei Antiga não deu preceitos sobre a fé. SOLUÇÃO. – Só para os seus súditos é que um senhor dá leis; por onde, os preceitos de qualquer lei pressupõem a sujeição de quem recebe a quem dá. Ora, o homem está sujeito a Deus, primeiramente, pela fé, conforme aquilo da Escritura. É necessário que o que se chega a Deus creia que há Deus, Logo, os preceitos da lei pressupõem a fé. E por isso que é de fé vem antes, dos preceitos da Lei, segundo está dito: Eu sou o Senhor teu Deus, que te tirei da terra do Egito; e, semelhantemente outro lugar diz primeiro: Ouve, ó Israel, o Senhor nosso Deus é o único Senhor; e logo em seguida começa a dar os preceitos. Ora, a fé contém muitos ensinamentos ordenados à crença em Deus, em quem devemos acima de tudo crer, primária e principalmente, conforme já dissemos Por onde, pressuposta a fé em Deus, pela qual a nossa mente se lhe sujeita, podem ser dados preceitos sobre as outras matérias de fé. Assim, Agostinho diz que muitos mandamentos nos foram dados sobre a fé, explicando aquele lugar: Ele é o meu mandamento. Mas no regime da Lei Antiga as verdades ocultas da fé não deviam ser reveladas ao povo. Por isso, suposta a fé num Deus único, a Lei Antiga não estabeleceu mais nenhum preceito sobre o que se devia crer.</p>
+    <p>DONDE A</p>
+    <p>RESPOSTA À PRIMEIRA OBJEÇÃO. – E a fé necessária, como princípio da vida espiritual. Por isso, deve ser pressuposta ao recebimento da Lei.</p>
+    <p>RESPOSTA À SEGUNDA. – No lugar citado também o Senhor pressupõe algo da fé, a saber, a crença em um só Deus, quando diz – Credes em Deus: mas ordena ainda que se tenha fé na encarnação, pela qual um mesmo Deus é homem; fé que se tomou explícita pela do Novo Testamento. Por isso acrescenta: Crede também a mim.</p>
+    <p>RESPOSTA À TERCEIRA. – Os preceitos proibitivos dizem respeito aos pecados, que corrompem a virtude. Ora esta se corrompe por defeitos particulares como já dissemos. Por onde, pressuposta a fé num Deus único, a Lei Antiga estabeleceu preceitos proibitivos para afastar os homens desses defeitos particulares, que poderiam corromper a fé.</p>
+    <p>RESPOSTA À QUARTA. – Mesmo a confissão ou a doutrina da fé pressupõe, por esta, o homem sujeito a Deus. Por isso foi possível à Lei Antiga estabelecer preceitos relativos, antes, à confissão ou à doutrina da fé, do que a esta em si mesma. RESPOSTA À QUINTA. – Também o lugar aduzido pressupõe a fé, pela qual cremos na existência de Deus. Por isso, o texto começa dizendo – Vós, os que temeis o Senhor - o que não poderia ser sem a fé. E o que se segue crede-o - refere-se a certas e especiais verdades da fé e sobretudo à promessa de Deus aos que lhe obedecerem. Por isso, acrescenta: E não vos faltará a vossa recompensa.</p>
+
+    </div>
+  </div>
+  
+  <!-- Bloco de Explicação (a ser preenchido) -->
+  <div class="bloco-explicacao">
+    <div class="explicacao-label">💡 Explicação e Contexto</div>
+    <div class="explicacao-corpo" id="explicacao">
+    <p><em>Explicação será adicionada em breve.</em></p>
+
+    </div>
+  </div>
+  
+</main>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO INFERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="navegacao-inferior">
+  <div class="nav-buttons">
+    <a href="suma-pagina1279.html" class="btn-primary">← Anterior</a>
+    <span class="pagina-atual">1280</span>
+    <a href="suma-pagina1281.html" class="btn-primary">Próxima →</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  RODAPÉ                                                  -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<footer class="suma-footer">
+  <p>Suma Teológica · São Tomás de Aquino | Biblioteca Lux Fidei</p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Questão 185, Artigo 6 — Se o bispo pode possuir algo de próprio. | Suma Teológica</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+    --cor-fundo: #f5f0e8;
+    --cor-pagina: #fff;
+    --cor-texto: #2c1f17;
+    --cor-dourado: #d4af37;
+    --cor-roxo: #5b2c83;
+    --sombra: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cor-fundo);
+    color: var(--cor-texto);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CABEÇALHO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-header {
+    background: linear-gradient(135deg, #1a1a1a, #2c241b);
+    color: #f5f0e8;
+    padding: 32px 20px 24px;
+    text-align: center;
+    position: relative;
+}
+
+.voltar-index {
+    position: absolute;
+    top: 16px;
+    left: 20px;
+    color: var(--cor-dourado);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: opacity 0.2s;
+}
+
+.voltar-index:hover {
+    opacity: 0.8;
+}
+
+.suma-header h1 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.info-pagina {
+    display: inline-block;
+    background: rgba(212, 175, 55, 0.15);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    color: var(--cor-dourado);
+    margin-top: 8px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-topo {
+    background: #fff;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    gap: 10px;
+}
+
+.btn-nav {
+    display: inline-flex;
+    align-items: center;
+    padding: 9px 18px;
+    background: var(--cor-roxo);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.btn-nav:hover {
+    background: #4a246a;
+    transform: translateY(-1px);
+}
+
+.desabilitado {
+    background: #ddd !important;
+    color: #999 !important;
+    pointer-events: none;
+}
+
+.info-centena {
+    font-size: 0.85rem;
+    color: #888;
+    font-weight: 500;
+    padding: 0 10px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CONTEÚDO PRINCIPAL                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.pagina-conteudo {
+    flex: 1;
+    max-width: 860px;
+    width: 100%;
+    margin: 36px auto;
+    padding: 0 20px;
+}
+
+.bloco-texto {
+    background: var(--cor-pagina);
+    padding: 48px 44px;
+    border-radius: 12px;
+    box-shadow: var(--sombra);
+    position: relative;
+    margin-bottom: 24px;
+}
+
+.bloco-texto::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 20px;
+    bottom: 20px;
+    width: 4px;
+    background: linear-gradient(to bottom, var(--cor-dourado), var(--cor-roxo));
+    border-radius: 0 4px 4px 0;
+}
+
+.bloco-titulo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.3rem;
+    color: var(--cor-roxo);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e8dfd0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pagina-corpo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.1rem;
+    line-height: 1.95;
+    color: #3d3226;
+    text-align: justify;
+}
+
+.pagina-corpo p {
+    margin-bottom: 1.3em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  BLOCO DE EXPLICAÇÃO                                        */
+/* ────────────────────────────────────────────────────────── */
+
+.bloco-explicacao {
+    background: linear-gradient(135deg, #fffdf5, #faf5eb);
+    border-left: 5px solid var(--cor-dourado);
+    padding: 32px 40px;
+    border-radius: 0 12px 12px 0;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    margin-bottom: 24px;
+}
+
+.explicacao-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--cor-dourado);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 14px;
+}
+
+.explicacao-corpo {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #4a3c2c;
+}
+
+.explicacao-corpo p {
+    margin-bottom: 1em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO INFERIOR                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-inferior {
+    max-width: 860px;
+    width: 100%;
+    margin: 0 auto 40px;
+    padding: 0 20px;
+}
+
+.nav-buttons {
+    background: #fff;
+    padding: 18px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    box-shadow: var(--sombra);
+}
+
+.btn-primary {
+    flex: 1;
+    text-align: center;
+    padding: 13px 16px;
+    background: linear-gradient(135deg, var(--cor-roxo), #7a3eb5);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(91, 44, 131, 0.3);
+}
+
+.pagina-atual {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--cor-dourado);
+    min-width: 50px;
+    text-align: center;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RODAPÉ                                                     */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-footer {
+    background: #1a1a1a;
+    color: #888;
+    text-align: center;
+    padding: 22px 20px;
+    margin-top: auto;
+    font-size: 0.85rem;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RESPONSIVIDADE                                             */
+/* ────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+    .suma-header h1 {
+        font-size: 1.4rem;
+    }
+    
+    .bloco-texto {
+        padding: 28px 18px;
+    }
+    
+    .bloco-explicacao {
+        padding: 22px 18px;
+    }
+    
+    .navegacao-topo {
+        flex-wrap: wrap;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CABEÇALHO                                               -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="suma-header">
+  <a href="../../index.html" class="voltar-index">← Índice</a>
+  <h1>Suma Teológica</h1>
+  <p style="opacity:0.8; font-style:italic; margin-top:4px;">São Tomás de Aquino</p>
+  <span class="info-pagina">Página 2079 de 3000</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO SUPERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<nav class="navegacao-topo">
+  <a href="suma-pagina2078.html" class="btn-nav">← Anterior</a>
+  <span class="info-centena">Pág. 2079/3000</span>
+  <a href="suma-pagina2080.html" class="btn-nav">Próxima →</a>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CONTEÚDO PRINCIPAL                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<main class="pagina-conteudo">
+  
+  <!-- Texto Original -->
+  <div class="bloco-texto">
+    <div class="bloco-titulo">
+      <span>📜</span>
+      Questão 185, Artigo 6 — Se o bispo pode possuir algo de próprio.
+    </div>
+    <div class="pagina-corpo">
+    <p>O sexto discute–se assim. – Parece que o bispo não pode possuir nada de próprio. 1. – Pois, o Senhor diz: Se queres ser perfeito, vai, vende o que tens e dá–o aos pobres; depois vem e segue–me. Por onde parece que a pobreza voluntária é de necessidade para a perfeição. Ora, os bispos foram feitos tais para o estado de perfeição. Logo, parece que não lhes é lícito possuir nenhuma propriedade. 2. Demais. – Os bispos têm na Igreja o lugar dos Apóstolos, como diz a Glosa. Ora, o Senhor mandou que os Apóstolos nada possuíssem de seu, conforme está no Evangelho: Não possuais ouro nem prata nem tragais dinheiro nas vossas cintas. E por isso Pedro disse por si e pelos outros Apóstolos: Eis aqui estamos nós que deixámos tudo e te seguimos. Logo, parece que os bispos estão obrigados a observar o mandamento de nada possuírem de próprio. 3. Demais. – Jerônimo diz: A palavra grega – cleros – significa em latim – sorte. Por isso se chamam clérigos os que por sorte pertencem ao Senhor; ou porque o próprio Senhor é a sorte, isto é, a parte dos clérigos. Pois, quem o possui nada mais pode possuir além dele. Se portanto, o clérigo que possuir ouro ou prata; que tiver posses, ou alfaias, com tais propriedades não pode fazer ao Senhor a sua parte. Logo, parece que não só os bispos, mas também os clérigos, não devem ter nenhuma propriedade.</p>
+    <p>Mas, em contrário, determina um cânone, que os bispos poderão, se quiserem deixar aos seus herdeiros os bens próprios adquiridos ou que de qualquer modo possuem. SOLUÇÃO. – Ninguém está obrigado ao superrogatório, salvo se a este se obrigou especialmente por meio de um voto. Por isso diz Agostinho: Desde que fizeste voto, já te obrigaste e não te é lícito proceder de outro modo. Mas, antes de te teres ligado pelo voto, estavas livres de viver de outra maneira. Ora, é claro que viver sem propriedade é superrogatório, pois, não é matéria de preceito, mas de conselho. Por isso o Senhor, depois de ter dito ao adolescente: Se tu queres entrar na vida guarda os meus mandamentos – acrescentou: Se queres ser perfeito vai, vende tudo o que tens e dá–o aos pobres. Mas, os bispos, na sua ordenação, não se obrigam a viver sem nada de próprio; nem o ofício pastoral, a que se dedicaram, os obriga necessariamente a viver sem nenhuma propriedade. Logo, não estão obrigados os bispos a viver sem possuir nada.</p>
+    <p>DONDE A</p>
+    <p>RESPOSTA À PRIMEIRA OBJEÇÃO. – Como estabelecemos, a perfeição da vida cristã não consiste essencialmente na pobreza voluntária; mas, a pobreza voluntária coopera como instrumento da vida perfeita. Por onde, não há de necessariamente haver maior perfeição onde há maior pobreza. Ao contrário, a suma perfeição pode coexistir com uma grande opulência; assim, lemos na Escritura que Abraão foi rico depois de o Senhor lhe ter dito: Anda em minha presença e sê perfeito.</p>
+    <p>RESPOSTA À SEGUNDA. – As palavras citadas do Senhor são susceptíveis de um tríplice sentido. – Um, místico, significando então que não possuamos nem ouro nem prata, isto é, que os pregadores não se fundem principalmente na sabedoria e na eloquência temporais, como explica Jerónimo. – Noutro sentido, como expõe Agostinho, significa que o Senhor as proferiu não como mandando mas, antes, como exprimindo uma permissão. Pois, permitiu–lhes que, sem ouro e prata e outros recursos, fossem pregar, recebendo o sustento da vida daqueles a quem pregavam. Por isso acrescenta: Digno é o trabalhador do seu alimento. Mas de modo que o pregador que vivesse de seus bens próprios praticaria uma obra superrogatória, como diz Paulo falando de si mesmo. – Num terceiro sentido, como expõe Crisóstomo, entende–se que com as referidas palavras o Senhor ordenou aos discípulos sobre a missão que lhes cometeu de pregarem aos Judeus; de modo a confiarem no poder daquele que velava pela subsistência deles. O que porém não os obrigava a eles nem aos seus sucessores a pregarem o Evangelho sem bens próprios com que vivessem. Assim, lemos na Escritura que Paulo recebia das outras Igrejas um estipêndio para pregar aos Coríntios; por onde é claro que possuía certos bens que os outros lhe mandavam. E é, demais, estulto dizer que tantos santos pontífices, como Atanásio, Ambrósio, Agostinho, tenham transgredido o referido preceito, se se consideravam obrigados a observá–lo.</p>
+    <p>RESPOSTA À TERCEIRA. – Toda parte é menor que o todo. Aquele portanto reparte com Deus, que emprega nas coisas de Deus menos estudo, por buscar as coisas do mundo. Assim, pois, não devem nem os bispos nem os clérigos possuir nada de próprio, por ficarem expostos a deixar de lado o que respeita ao culto divino, para curarem dos bens próprios.</p>
+
+    </div>
+  </div>
+  
+  <!-- Bloco de Explicação (a ser preenchido) -->
+  <div class="bloco-explicacao">
+    <div class="explicacao-label">💡 Explicação e Contexto</div>
+    <div class="explicacao-corpo" id="explicacao">
+    <p><em>Explicação será adicionada em breve.</em></p>
+
+    </div>
+  </div>
+  
+</main>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO INFERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="navegacao-inferior">
+  <div class="nav-buttons">
+    <a href="suma-pagina2078.html" class="btn-primary">← Anterior</a>
+    <span class="pagina-atual">2079</span>
+    <a href="suma-pagina2080.html" class="btn-primary">Próxima →</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  RODAPÉ                                                  -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<footer class="suma-footer">
+  <p>Suma Teológica · São Tomás de Aquino | Biblioteca Lux Fidei</p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Questão 65, Artigo 1 — — Se devem ser sete os sacramentos. | Suma Teológica</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+    --cor-fundo: #f5f0e8;
+    --cor-pagina: #fff;
+    --cor-texto: #2c1f17;
+    --cor-dourado: #d4af37;
+    --cor-roxo: #5b2c83;
+    --sombra: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cor-fundo);
+    color: var(--cor-texto);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CABEÇALHO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-header {
+    background: linear-gradient(135deg, #1a1a1a, #2c241b);
+    color: #f5f0e8;
+    padding: 32px 20px 24px;
+    text-align: center;
+    position: relative;
+}
+
+.voltar-index {
+    position: absolute;
+    top: 16px;
+    left: 20px;
+    color: var(--cor-dourado);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: opacity 0.2s;
+}
+
+.voltar-index:hover {
+    opacity: 0.8;
+}
+
+.suma-header h1 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.info-pagina {
+    display: inline-block;
+    background: rgba(212, 175, 55, 0.15);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    color: var(--cor-dourado);
+    margin-top: 8px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-topo {
+    background: #fff;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    gap: 10px;
+}
+
+.btn-nav {
+    display: inline-flex;
+    align-items: center;
+    padding: 9px 18px;
+    background: var(--cor-roxo);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.btn-nav:hover {
+    background: #4a246a;
+    transform: translateY(-1px);
+}
+
+.desabilitado {
+    background: #ddd !important;
+    color: #999 !important;
+    pointer-events: none;
+}
+
+.info-centena {
+    font-size: 0.85rem;
+    color: #888;
+    font-weight: 500;
+    padding: 0 10px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CONTEÚDO PRINCIPAL                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.pagina-conteudo {
+    flex: 1;
+    max-width: 860px;
+    width: 100%;
+    margin: 36px auto;
+    padding: 0 20px;
+}
+
+.bloco-texto {
+    background: var(--cor-pagina);
+    padding: 48px 44px;
+    border-radius: 12px;
+    box-shadow: var(--sombra);
+    position: relative;
+    margin-bottom: 24px;
+}
+
+.bloco-texto::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 20px;
+    bottom: 20px;
+    width: 4px;
+    background: linear-gradient(to bottom, var(--cor-dourado), var(--cor-roxo));
+    border-radius: 0 4px 4px 0;
+}
+
+.bloco-titulo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.3rem;
+    color: var(--cor-roxo);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e8dfd0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pagina-corpo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.1rem;
+    line-height: 1.95;
+    color: #3d3226;
+    text-align: justify;
+}
+
+.pagina-corpo p {
+    margin-bottom: 1.3em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  BLOCO DE EXPLICAÇÃO                                        */
+/* ────────────────────────────────────────────────────────── */
+
+.bloco-explicacao {
+    background: linear-gradient(135deg, #fffdf5, #faf5eb);
+    border-left: 5px solid var(--cor-dourado);
+    padding: 32px 40px;
+    border-radius: 0 12px 12px 0;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    margin-bottom: 24px;
+}
+
+.explicacao-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--cor-dourado);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 14px;
+}
+
+.explicacao-corpo {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #4a3c2c;
+}
+
+.explicacao-corpo p {
+    margin-bottom: 1em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO INFERIOR                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-inferior {
+    max-width: 860px;
+    width: 100%;
+    margin: 0 auto 40px;
+    padding: 0 20px;
+}
+
+.nav-buttons {
+    background: #fff;
+    padding: 18px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    box-shadow: var(--sombra);
+}
+
+.btn-primary {
+    flex: 1;
+    text-align: center;
+    padding: 13px 16px;
+    background: linear-gradient(135deg, var(--cor-roxo), #7a3eb5);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(91, 44, 131, 0.3);
+}
+
+.pagina-atual {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--cor-dourado);
+    min-width: 50px;
+    text-align: center;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RODAPÉ                                                     */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-footer {
+    background: #1a1a1a;
+    color: #888;
+    text-align: center;
+    padding: 22px 20px;
+    margin-top: auto;
+    font-size: 0.85rem;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RESPONSIVIDADE                                             */
+/* ────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+    .suma-header h1 {
+        font-size: 1.4rem;
+    }
+    
+    .bloco-texto {
+        padding: 28px 18px;
+    }
+    
+    .bloco-explicacao {
+        padding: 22px 18px;
+    }
+    
+    .navegacao-topo {
+        flex-wrap: wrap;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CABEÇALHO                                               -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="suma-header">
+  <a href="../../index.html" class="voltar-index">← Índice</a>
+  <h1>Suma Teológica</h1>
+  <p style="opacity:0.8; font-style:italic; margin-top:4px;">São Tomás de Aquino</p>
+  <span class="info-pagina">Página 2475 de 3000</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO SUPERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<nav class="navegacao-topo">
+  <a href="suma-pagina2474.html" class="btn-nav">← Anterior</a>
+  <span class="info-centena">Pág. 2475/3000</span>
+  <a href="suma-pagina2476.html" class="btn-nav">Próxima →</a>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CONTEÚDO PRINCIPAL                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<main class="pagina-conteudo">
+  
+  <!-- Texto Original -->
+  <div class="bloco-texto">
+    <div class="bloco-titulo">
+      <span>📜</span>
+      Questão 65, Artigo 1 — — Se devem ser sete os sacramentos.
+    </div>
+    <div class="pagina-corpo">
+    <p>O primeiro discute-se assim. — Parece que não devem ser sete os sacramentos.</p>
+    <p>1. — Pois, os sacramentos tiram a sua eficácia da virtude divina e da virtude da paixão de Cristo. Ora, uma só é a virtude divina, e uma só a paixão de Cristo; pois, no dizer do Apóstolo, com uma só oferenda fez perfeitos para sempre os que têm santificados. Logo, devia haver só um sacramento. 2. Demais. — O sacramento se ordena a sanar a falta do pecado. Ora, esta é dupla: a pena e a culpa. Logo, bastavam dois sacramentos. 3. Demais. — Os sacramentos são relativos aos atos da hierarquia eclesiástica, como está claro em Dionísio. Ora como diz ainda Dionísio, três são as ações hierárquicas: a purgação, a iluminação e a perfeição. Logo, não deve haver senão três sacramentos. 4. Demais. — Agostinho diz que os sacramentos da lei nova são em menor número que os da velha. Ora, na lei velha nenhum sacramento havia correspondente à confirmação e à extrema unção. Logo, não devem também estes ser contados entre os sacramentos da lei nova. 5. Demais. — A luxúria não é mais grave que os outros pecados, como se infere do dito na segunda Parte. Ora, para remédio dos outros pecados não se instituem nenhum sacramento. Logo, nem contra a luxúria devia ser instituído o sacramento do matrimônio.</p>
+    <p>Mas, em contrário. — Parece que são mais de sete os sacramentos. 6. — Demais. — Os sacramentos assim se chamam por serem uns quase sinais sagrados. Ora, muitas outras santificações se fazem na Igreja por meio de sinais sensíveis; assim, a água benta, a consagração dos altares e outras semelhantes. Logo, há mais de sete sacramentos. 7. Demais. — Hugo de S. Vitor diz que os sacramentos da lei velha eram as oferendas os dízimos e os sacrifícios. Ora, o sacrifício da Igreja é um sacramento e se chama Eucaristia. Logo, também as oferendas e os dízimos devem considerar-se sacramentos. 8. Demais. — Três são os gêneros de pecados: o original, o mortal e o venial. Ora, contra o pecado original foi instituído o batismo; e contra o mortal, a penitência. Logo, deveria haver mais um sacramento, além dos sete, ordenado contra o pecado venial.</p>
+    <p>SOLUÇÃO. — Como dissemos, os sacramentos da Igreja se ordenam a dois fins: à perfeição do homem no concernente ao culto de Deus, segundo a religião da vida cristã; e também como remédio contra a falta do pecado. Ora, em relação a esses dois fins foram convenientemente instituídos sete sacramentos. Pois, a vida espiritual tem uma certa conformidade com a vida do corpo; assim como também as coisas materiais têm uma certa conformidade com as espirituais. Ora, a vida do nosso corpo é susceptível de dupla perfeição; quanto à nossa própria pessoa e quanto à toda a comunidade da sociedade em que vivemos, porque o homem é um animal naturalmente social. Ora, em relação a si mesmo a nossa vida corpórea é susceptível de dupla perfeição. Uma consiste em adquirirmos uma perfeição vital, essencialmente falando. Outra é acidental e consiste na remoção dos obstáculos à vida, como a doença e outras semelhantes. Ora, essencialmente falando, a vida do nosso corpo é capaz de tríplice perfeição. — A primeira, é a geração, pela qual começa a nossa existência e a nossa vida. E a esta corresponde, na ordem espiritual, o batismo, que é uma regeneração espiritual, segundo o Apóstolo: Pelo batismo da regeneração etc. — A segunda é o crescimento, pelo qual chegamos à perfeição da estatura e da robustez. E a esta corresponde, na vida espiritual, a confirmação, pela qual o Espírito Santo nos fortifica. Por isso, Jesus diz aos discípulos já batizados: Ficai vós de assento na cidade, até que sejais revestidos da virtude lá do alto. — Terceiro, a nutrição pela qual conservamos a vida e vigor. E a esta corresponde na vida espiritual, a Eucaristia. Por isso disse Jesus: Se não comerdes a carne do Filho do homem e beberdes o seu sangue, não tereis vida em vós. E isto nos bastaria se tivéssemos corporal e espiritualmente falando, uma vida impassível. Mas, como às vezes sofremos a doença do corpo, e a do espírito, que é o pecado, é nos necessário curarmo-nos dela. E essa cura é dupla. Uma nos sana, de modo a nos restituir a saúde. E li essa corresponde, na ordem espiritual, a penitência, segundo aquilo da Escritura: Sara a minha alma porque pequei contra ti. — Outra é a restauração da nossa saúde anterior por um regime e exercício convenientes. E a isto corresponde, na vida espiritual a extrema unção, que dele os resíduos do pecado e nos torna preparados para a glória final. Donde o dizer a Escritura: E se estiver em alguns pecados, ser- lhe-hão perdoados. Quanto à universal comunidade, no seu total nós nos aperfeiçoamos de dois modos. — Primeiro, recebendo o poder de governar o povo e de exercer atos públicos. E a isto corresponde, na ordem espiritual, o sacramento da ordem, segundo o dito do Apóstolo, que os sacerdotes oferecem as vítimas não só por si, mas ainda por todo o povo. — Segundo, quanto à propagação natural da espécie. O que se dá pelo matrimônio tanto na vida do corpo como na espiritual: pois, não só é um sacramento mas uma função da natureza. Do que acabamos de dizer também resulta claro o número dos sacramentos, enquanto têm a finalidade de reparar as faltas introduzidas pelo pecado. Assim, o batismo supre à privação da vida espiritual; a confirmação se ordena a fortalecer a alma fraca dos que têm pouca idade; a Eucaristia é contra a inclinação da alma ao pecado; a penitência, contra o pecado atual cometido depois do batismo; a extrema unção, contra os resíduos dos pecados que, por negligência ou ignorância, não foram suficientemente delidos pela penitência; a ordem contra a indisciplina do povo; o matrimônio, como remédio contra a concupiscência individual e contra a diminuição da população, causada pela morte. Certos porém consideram o número dos sacramentos por uma adaptação às virtudes e aos defeitos das culpas e das penas. E dizem que à fé corresponde o batismo, que é dado como remédio à culpa original; à esperança, a extrema unção, aplicada contra a culpa venial; à caridade, a Eucaristia, para obviar à penalidade da malícia; à prudência, a ordem, remédio à ignorância; à justiça, a penitência; remédio contra o pecado mortal; à temperança, o matrimônio, remédio contra a concupiscência; à fortaleza, a confirmação, remédio para a fraqueza.</p>
+    <p>DONDE A</p>
+    <p>RESPOSTA À PRIMEIRA OBJEÇÃO. Um mesmo agente principal pode servir—se de diversos instrumentos para efeitos diversos, conforme a exigência da obra. Semelhantemente, a virtude divina e a paixão de Cristo obram em nós pelos diversos sacramentos, quase como por instrumentos diversos.</p>
+    <p>RESPOSTA À SEGUNDA. — A culpa e a pena são diversas, pela espécie, por serem diversas as espécies de culpas e de penas, e também os estados e as relações dos homens. E por isso era necessário multiplicarem-se os sacramentos, como do sobredito resulta.</p>
+    <p>RESPOSTA À TERCEIRA. — Nas ações hierárquicas consideram—se os agentes, os que recebem e as ações. — Quanto aos agentes, são os ministros da Igreja, a quem concerne o sacramento da ordem. — Os que recebem são os que se achegam ao sacramento, e são produzidos pelo matrimônio. — As ações são: a purgação, a iluminação e a perfeição. Mas só a purgação não pode ser sacramento da lei nova, que confere a graça; mas se inclui em certos sacramentais que são a catequese e o exorcismo. Quanto à purgação e à iluminação, pertencem simultâneamente, segundo Dionísio, ao batismo; e, por causa das recidivas, incluem-se secundàriamente na penitência e na extrema unção. A perfeição enfim — quanto à sua virtude, que é uma quase perfeição formal, pertence à confirmação: e quanto à consecução do fim pertence à Eucaristia.</p>
+    <p>RESPOSTA À QUARTA. — O sacramento da confirmação dá—nos a força pela plenitude do Espírito Santo; e pela extrema unção preparamo-nos a receber imediatamente a glória. Nada do que podia existir no tempo do Testamento Velho. Por isso, na lei Velha nada podia corresponder a esses sacramentos. Nem por isso porem os sacramentos da lei Velha deixaram de ser mais numerosos, por causa da diversidade dos sacrifícios e das cerimônias. RESPOSTA À QUINTA. — Contra a concupiscência da carne era necessário instituir um sacramento que fosse especialmente um remédio para tal. Primeiro, porque essa concupiscência não só contamina o individuo pessoalmente mas, também a natureza. Segundo, por causa da sua veemência, que priva da razão. RESPOSTA À SEXTA. — A água benta e as outras coisas consagradas não se chamam sacramentos, por não produzirem o efeito do sacramento, que é a consecução da graça. Mas são umas disposições para o sacramento. Ou porque removem os obstáculos, como a água benta eficaz contra as insídias dos demônios e contra os pecados veniais. Ou produzem maior dignidade à solenidade do sacramento; assim, consagra-se o altar e os vasos pela reverência para com a Eucaristia. RESPOSTA À SÉTIMA. — As oferendas e os dízimos eram, tanto na lei da natureza como na de Moisés, ordenadas não só ao subsídio dos ministros e dos pobres, mas também para serem figuras; e por isso eram sacramentos. Mas não ficaram, até ao presente como figuras que eram e por isso já não são sacramentos. RESPOSTA À OITAVA. — Para delir o pecado venial não é necessária a infusão da graça. Por onde, como por qualquer dos sacramentos da lei nova se infunde a graça, nenhum sacramento dessa lei é instituído diretamente contra o pecado venial, que é delido por certos sacramentais, como a água benta e outros semelhantes. — Mas certos, dizem que a extrema unção vale contra o pecado venial. Disto porem trataremos em seu lugar.</p>
+
+    </div>
+  </div>
+  
+  <!-- Bloco de Explicação (a ser preenchido) -->
+  <div class="bloco-explicacao">
+    <div class="explicacao-label">💡 Explicação e Contexto</div>
+    <div class="explicacao-corpo" id="explicacao">
+    <p><em>Explicação será adicionada em breve.</em></p>
+
+    </div>
+  </div>
+  
+</main>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO INFERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="navegacao-inferior">
+  <div class="nav-buttons">
+    <a href="suma-pagina2474.html" class="btn-primary">← Anterior</a>
+    <span class="pagina-atual">2475</span>
+    <a href="suma-pagina2476.html" class="btn-primary">Próxima →</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  RODAPÉ                                                  -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<footer class="suma-footer">
+  <p>Suma Teológica · São Tomás de Aquino | Biblioteca Lux Fidei</p>
+</footer>
+
+</body>
+</html>

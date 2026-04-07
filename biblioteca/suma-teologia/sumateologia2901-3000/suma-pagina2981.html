@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Questão 72, Artigo 2 — ─ Se devemos invocar os santos para orarem por nós. | Suma Teológica</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+    --cor-fundo: #f5f0e8;
+    --cor-pagina: #fff;
+    --cor-texto: #2c1f17;
+    --cor-dourado: #d4af37;
+    --cor-roxo: #5b2c83;
+    --sombra: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cor-fundo);
+    color: var(--cor-texto);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CABEÇALHO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-header {
+    background: linear-gradient(135deg, #1a1a1a, #2c241b);
+    color: #f5f0e8;
+    padding: 32px 20px 24px;
+    text-align: center;
+    position: relative;
+}
+
+.voltar-index {
+    position: absolute;
+    top: 16px;
+    left: 20px;
+    color: var(--cor-dourado);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: opacity 0.2s;
+}
+
+.voltar-index:hover {
+    opacity: 0.8;
+}
+
+.suma-header h1 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.info-pagina {
+    display: inline-block;
+    background: rgba(212, 175, 55, 0.15);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    color: var(--cor-dourado);
+    margin-top: 8px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-topo {
+    background: #fff;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    gap: 10px;
+}
+
+.btn-nav {
+    display: inline-flex;
+    align-items: center;
+    padding: 9px 18px;
+    background: var(--cor-roxo);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.btn-nav:hover {
+    background: #4a246a;
+    transform: translateY(-1px);
+}
+
+.desabilitado {
+    background: #ddd !important;
+    color: #999 !important;
+    pointer-events: none;
+}
+
+.info-centena {
+    font-size: 0.85rem;
+    color: #888;
+    font-weight: 500;
+    padding: 0 10px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CONTEÚDO PRINCIPAL                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.pagina-conteudo {
+    flex: 1;
+    max-width: 860px;
+    width: 100%;
+    margin: 36px auto;
+    padding: 0 20px;
+}
+
+.bloco-texto {
+    background: var(--cor-pagina);
+    padding: 48px 44px;
+    border-radius: 12px;
+    box-shadow: var(--sombra);
+    position: relative;
+    margin-bottom: 24px;
+}
+
+.bloco-texto::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 20px;
+    bottom: 20px;
+    width: 4px;
+    background: linear-gradient(to bottom, var(--cor-dourado), var(--cor-roxo));
+    border-radius: 0 4px 4px 0;
+}
+
+.bloco-titulo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.3rem;
+    color: var(--cor-roxo);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e8dfd0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pagina-corpo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.1rem;
+    line-height: 1.95;
+    color: #3d3226;
+    text-align: justify;
+}
+
+.pagina-corpo p {
+    margin-bottom: 1.3em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  BLOCO DE EXPLICAÇÃO                                        */
+/* ────────────────────────────────────────────────────────── */
+
+.bloco-explicacao {
+    background: linear-gradient(135deg, #fffdf5, #faf5eb);
+    border-left: 5px solid var(--cor-dourado);
+    padding: 32px 40px;
+    border-radius: 0 12px 12px 0;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    margin-bottom: 24px;
+}
+
+.explicacao-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--cor-dourado);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 14px;
+}
+
+.explicacao-corpo {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #4a3c2c;
+}
+
+.explicacao-corpo p {
+    margin-bottom: 1em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO INFERIOR                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-inferior {
+    max-width: 860px;
+    width: 100%;
+    margin: 0 auto 40px;
+    padding: 0 20px;
+}
+
+.nav-buttons {
+    background: #fff;
+    padding: 18px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    box-shadow: var(--sombra);
+}
+
+.btn-primary {
+    flex: 1;
+    text-align: center;
+    padding: 13px 16px;
+    background: linear-gradient(135deg, var(--cor-roxo), #7a3eb5);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(91, 44, 131, 0.3);
+}
+
+.pagina-atual {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--cor-dourado);
+    min-width: 50px;
+    text-align: center;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RODAPÉ                                                     */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-footer {
+    background: #1a1a1a;
+    color: #888;
+    text-align: center;
+    padding: 22px 20px;
+    margin-top: auto;
+    font-size: 0.85rem;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RESPONSIVIDADE                                             */
+/* ────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+    .suma-header h1 {
+        font-size: 1.4rem;
+    }
+    
+    .bloco-texto {
+        padding: 28px 18px;
+    }
+    
+    .bloco-explicacao {
+        padding: 22px 18px;
+    }
+    
+    .navegacao-topo {
+        flex-wrap: wrap;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CABEÇALHO                                               -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="suma-header">
+  <a href="../../index.html" class="voltar-index">← Índice</a>
+  <h1>Suma Teológica</h1>
+  <p style="opacity:0.8; font-style:italic; margin-top:4px;">São Tomás de Aquino</p>
+  <span class="info-pagina">Página 2981 de 3000</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO SUPERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<nav class="navegacao-topo">
+  <a href="suma-pagina2980.html" class="btn-nav">← Anterior</a>
+  <span class="info-centena">Pág. 2981/3000</span>
+  <a href="suma-pagina2982.html" class="btn-nav">Próxima →</a>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CONTEÚDO PRINCIPAL                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<main class="pagina-conteudo">
+  
+  <!-- Texto Original -->
+  <div class="bloco-texto">
+    <div class="bloco-titulo">
+      <span>📜</span>
+      Questão 72, Artigo 2 — ─ Se devemos invocar os santos para orarem por nós.
+    </div>
+    <div class="pagina-corpo">
+    <p>O segundo discute-se assim. ─ Parece que não devemos invocar os santos para orarem por nós. 1. ─ Pois, não invocamos os amigos de outrem a pedirem por nós, senão por pensarmos que eles tem junto dessa pessoa o poder de alcançar mais facilmente a graça almejada. Ora, Deus é infinitamente mais misericordioso que qualquer santo; e assim a sua vontade com maior facilidade se inclina a nos ouvir, que a vontade de qualquer santo. Logo, parece supérfluo constituirmos os santos em mediadores entre nós e Deus, para intercederem por nós. 2. Demais. ─ Se devemos invocá-las para orarem por nós, tal não serão senão por sabermos que a sua oração é aceita de Deus. Ora, o mais santo dos santos terá a sua oração mais aceita de Deus, que todos os outros. Logo, deveríamos sempre constituir os santos superiores, e nunca os menores, nossos intercessores perante Deus. 3. Demais. ─ Cristo, mesmo como homem, é chamado o Santo dos Santos; e a ele devemos orar como homem. Ora, nunca invocamos a Cristo para orar por nós. Logo, também não devemos invocar os outros santos. 4. Demais. ─ Quem intercede por outrem, apresenta as orações do seu protegido aquele junto de quem intercede. Ora, é inútil fazer representação a quem tudo é presente. Logo, é inútil constituirmos os santos nossos intercessores perante Deus. 5. Demais. ─ Aquilo é supérfluo que, feito em vista de um fim, este independentemente disso se realizaria ou não. Ora, quer lhes oremos quer não, os santos rezarão ou não por nós. Pois, sendo dignos de orarem por nós, por nós rezarão mesmo sem lh'o pedirmos; sendo, ao contrário, indignos, não rezarão, ainda que lh'o peçamos. Logo, é absolutamente supérfluo invocá-las para orarem por nós.</p>
+    <p>Mas, em contrário, a Escritura: Chama, se há alguém que te responda, e volta-te para algum dos santos. Ora, chamar, é para nós, como diz Gregório, jazer humildes preces a Deus. Logo, querendo orar a Deus, devemos invocar os santos, para que peçam a Deus por nós. 2. Demais. ─ Os santos na pátria são mais queridas de Deus, que quando viviam neste mundo. Ora, devemos constituir nossos intercessores, perante Deus, os santos que estão na pátria, a exemplo do Apóstolo, que dizia: Rogo-vos, ó irmãos, por Nosso Senhor Jesus Cristo e pelo amor do Espírito Santo, que me ajudeis com as vossas orações por mim a Deus. Logo, e com maior razão, também nós devemos pedir aos santos que estão na pátria, que nos ajudem com as suas orações a Deus. 3. Demais. ─ É costume comum da Igreja pedir, nas suas ladainhas, a oração dos santos. SOLUÇÃO. ─ Deus estabeleceu uma ordem tal no universo, que os seres inferiores dele dependam mediante outros que são médios entre esses e ele; segundo diz Dionísio. Ora, como os santos na pátria estão mui próximos de Deus, e segundo a ordem da lei divina requer, nós que, enquanto estamos no corpo, vivemos ausentes do Senhor, a ele havemos de chegar mediante os santos. E isso se dá quando Deus nos distribui os seus dons pelo ministério deles. Ora, a nossa volta para Deus deve corresponder aos benefícios da sua bondade para conosco. Por onde, assim como por meio das orações dos santos é que recebemos esses benefícios, assim devemos corresponder-lhes, recebendo-os sempre pela intercessão deles. Por isso os constituímos nossos intercessores perante Deus, e como uns mediadores, pedindo-lhes orarem por nós.</p>
+    <p>DONDE A</p>
+    <p>RESPOSTA À PRIMEIRA OBJEÇÃO. ─ Não é por falta de poder que Deus age mediante as ações das causas segundas. Mas para, completando a ordem do universo, nele difundir mais amplamente a sua bondade, fazendo com que todos os seres não recebam só dele os seus bens próprios, mas ainda de outras cousas. Ora, assim também, não é por falta de misericórdia, que Deus quer exercer a sua clemência para conosco mediante as orações dos santos, mas para observar a referida ordem universal.</p>
+    <p>RESPOSTA À SEGUNDA. ─ Embora os santos superiores tenham mais influência perante Deus, que os inferiores, poderá contudo ser útil fazermos orações a estes, por cinco razões. ─ Primeiro, porque pode um ter maior devoção para com um santo inferior do que para com um superior. Ora, da devoção depende sobretudo o efeito da oração. ─ Segundo, para evitar o tédio, gerado pela repetição dos mesmos atos. Ora, rezando a santos diversos, a nossa devoção se afervora pela novidade de cada invocação. ─ Terceiro, porque certos santos nos patrocinam particularmente contra determinados males; assim, Santo Antonio, contra o fogo do inferno. ─ Quarto, para prestarmos a honra devida a todos os santos. ─ Quinto, para obtermos, pelas orações de vários santos, o que não obteríamos pelas de um só.</p>
+    <p>RESPOSTA À TERCEIRA. ─ A oração é um ato. Ora, os atos concernem às pessoas. Por onde, se rezássemos ─ Cristo, ora por nós ─ sem mais nada, parece que dirigiríamos essas palavras à pessoa de Cristo. E assim cairíamos no erro de Nestório, que distinguia em Cristo a pessoa do Filho do homem, da do Filho de Deus. Ou no erro de Ario, que ensinava ser a pessoa do Filho menor que a do Pai. E, para evitar esses erros, a Igreja não diz ─ Cristo ora por nós; mas ─ Cristo, ouve-nos; ou ─ Tem compaixão de nós.</p>
+    <p>RESPOSTA À QUARTA. ─ Como a seguir diremos, os santos não apresentam a Deus os nossos pedidos, como se lhe fossem desconhecidos. Mas lhe pedem que os ouça, ou o consultam sobre a verdade dessas preces, para saber como determina a sua providência, sobre o procedimento que hão de ter. RESPOSTA À QUINTA. ─ Por isso mesmo nos tornamos dignos de um santo orar por nós, que lhe a ele recorremos com pura devoção nas nossas necessidades. E assim não é supérfluo rezarmos aos santos.</p>
+
+    </div>
+  </div>
+  
+  <!-- Bloco de Explicação (a ser preenchido) -->
+  <div class="bloco-explicacao">
+    <div class="explicacao-label">💡 Explicação e Contexto</div>
+    <div class="explicacao-corpo" id="explicacao">
+    <p><em>Explicação será adicionada em breve.</em></p>
+
+    </div>
+  </div>
+  
+</main>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO INFERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="navegacao-inferior">
+  <div class="nav-buttons">
+    <a href="suma-pagina2980.html" class="btn-primary">← Anterior</a>
+    <span class="pagina-atual">2981</span>
+    <a href="suma-pagina2982.html" class="btn-primary">Próxima →</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  RODAPÉ                                                  -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<footer class="suma-footer">
+  <p>Suma Teológica · São Tomás de Aquino | Biblioteca Lux Fidei</p>
+</footer>
+
+</body>
+</html>

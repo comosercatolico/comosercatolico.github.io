@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Questão 17, Artigo 1 — — Se há falsidade nas coisas. | Suma Teológica</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+    --cor-fundo: #f5f0e8;
+    --cor-pagina: #fff;
+    --cor-texto: #2c1f17;
+    --cor-dourado: #d4af37;
+    --cor-roxo: #5b2c83;
+    --sombra: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cor-fundo);
+    color: var(--cor-texto);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CABEÇALHO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-header {
+    background: linear-gradient(135deg, #1a1a1a, #2c241b);
+    color: #f5f0e8;
+    padding: 32px 20px 24px;
+    text-align: center;
+    position: relative;
+}
+
+.voltar-index {
+    position: absolute;
+    top: 16px;
+    left: 20px;
+    color: var(--cor-dourado);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: opacity 0.2s;
+}
+
+.voltar-index:hover {
+    opacity: 0.8;
+}
+
+.suma-header h1 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.info-pagina {
+    display: inline-block;
+    background: rgba(212, 175, 55, 0.15);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    color: var(--cor-dourado);
+    margin-top: 8px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-topo {
+    background: #fff;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    gap: 10px;
+}
+
+.btn-nav {
+    display: inline-flex;
+    align-items: center;
+    padding: 9px 18px;
+    background: var(--cor-roxo);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.btn-nav:hover {
+    background: #4a246a;
+    transform: translateY(-1px);
+}
+
+.desabilitado {
+    background: #ddd !important;
+    color: #999 !important;
+    pointer-events: none;
+}
+
+.info-centena {
+    font-size: 0.85rem;
+    color: #888;
+    font-weight: 500;
+    padding: 0 10px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CONTEÚDO PRINCIPAL                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.pagina-conteudo {
+    flex: 1;
+    max-width: 860px;
+    width: 100%;
+    margin: 36px auto;
+    padding: 0 20px;
+}
+
+.bloco-texto {
+    background: var(--cor-pagina);
+    padding: 48px 44px;
+    border-radius: 12px;
+    box-shadow: var(--sombra);
+    position: relative;
+    margin-bottom: 24px;
+}
+
+.bloco-texto::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 20px;
+    bottom: 20px;
+    width: 4px;
+    background: linear-gradient(to bottom, var(--cor-dourado), var(--cor-roxo));
+    border-radius: 0 4px 4px 0;
+}
+
+.bloco-titulo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.3rem;
+    color: var(--cor-roxo);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e8dfd0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pagina-corpo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.1rem;
+    line-height: 1.95;
+    color: #3d3226;
+    text-align: justify;
+}
+
+.pagina-corpo p {
+    margin-bottom: 1.3em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  BLOCO DE EXPLICAÇÃO                                        */
+/* ────────────────────────────────────────────────────────── */
+
+.bloco-explicacao {
+    background: linear-gradient(135deg, #fffdf5, #faf5eb);
+    border-left: 5px solid var(--cor-dourado);
+    padding: 32px 40px;
+    border-radius: 0 12px 12px 0;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    margin-bottom: 24px;
+}
+
+.explicacao-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--cor-dourado);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 14px;
+}
+
+.explicacao-corpo {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #4a3c2c;
+}
+
+.explicacao-corpo p {
+    margin-bottom: 1em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO INFERIOR                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-inferior {
+    max-width: 860px;
+    width: 100%;
+    margin: 0 auto 40px;
+    padding: 0 20px;
+}
+
+.nav-buttons {
+    background: #fff;
+    padding: 18px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    box-shadow: var(--sombra);
+}
+
+.btn-primary {
+    flex: 1;
+    text-align: center;
+    padding: 13px 16px;
+    background: linear-gradient(135deg, var(--cor-roxo), #7a3eb5);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(91, 44, 131, 0.3);
+}
+
+.pagina-atual {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--cor-dourado);
+    min-width: 50px;
+    text-align: center;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RODAPÉ                                                     */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-footer {
+    background: #1a1a1a;
+    color: #888;
+    text-align: center;
+    padding: 22px 20px;
+    margin-top: auto;
+    font-size: 0.85rem;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RESPONSIVIDADE                                             */
+/* ────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+    .suma-header h1 {
+        font-size: 1.4rem;
+    }
+    
+    .bloco-texto {
+        padding: 28px 18px;
+    }
+    
+    .bloco-explicacao {
+        padding: 22px 18px;
+    }
+    
+    .navegacao-topo {
+        flex-wrap: wrap;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CABEÇALHO                                               -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="suma-header">
+  <a href="../../index.html" class="voltar-index">← Índice</a>
+  <h1>Suma Teológica</h1>
+  <p style="opacity:0.8; font-style:italic; margin-top:4px;">São Tomás de Aquino</p>
+  <span class="info-pagina">Página 108 de 3000</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO SUPERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<nav class="navegacao-topo">
+  <a href="suma-pagina107.html" class="btn-nav">← Anterior</a>
+  <span class="info-centena">Pág. 108/3000</span>
+  <a href="suma-pagina109.html" class="btn-nav">Próxima →</a>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CONTEÚDO PRINCIPAL                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<main class="pagina-conteudo">
+  
+  <!-- Texto Original -->
+  <div class="bloco-texto">
+    <div class="bloco-titulo">
+      <span>📜</span>
+      Questão 17, Artigo 1 — — Se há falsidade nas coisas.
+    </div>
+    <div class="pagina-corpo">
+    <p>I Sent., dist. XIX, q. 5, a. 1; De Verit., q. 1, a. 10; V Metaph., lect. XXII; VI lect. IV. O primeiro discute-se assim. — Parece que não há falsidade nas coisas.</p>
+    <p>1. — Pois, diz Agostinho: Se a verdade é o que é, havemos de concluir, que o falso em nenhuma parte existe, quem quer que a isso repugne. 2. Demais. — Falso vem de falir (enganar). Ora, as coisas não enganam, como diz Agostinho, porque não manifestam senão a sua espécie. Logo, nelas não há falsidade. 3. Demais. — Como se disse, as coisas chamam-se verdadeiras relativamente ao intelecto divino, enquanto o imitam. Ora, qualquer coisa, como tal, imita a Deus. Logo, é verdadeira e sem falsidade. Portanto, nenhuma coisa é falsa.</p>
+    <p>Mas, em contrário, diz Agostinho: Todo corpo é verdadeiro corpo e falsa unidade; porque imita a unidade mas não é unidade. Ora, todas as coisas imitam a divina unidade, mas deficientemente. Logo, em todas há falsidade.</p>
+    <p>SOLUÇÃO. — Como o verdadeiro e o falso se opõem, e os contrários têm o mesmo sujeito, necessariamente há de existir, em primeiro lugar, a falsidade, na potência onde, em primeiro, existe a verdade, isto é, no intelecto. Ora, nas coisas não há verdade nem falsidade, senão pela relação delas com o intelecto. E como um ser se nomeia, absolutamente, segundo o que lhe convém, por essência, e, relativamente, segundo o que lhe convém, por acidente, uma coisa se pode chamar falsa, absolutamente, pela relação essencial com o intelecto de que depende e a que se compara por si. Porém, relativamente a outro intelecto, com o qual se relacione acidentalmente, só se pode chamar falsa relativamente. Ora, as coisas naturais dependem do intelecto divino como as artificiais do humano. E estas chamam-se falsas, absolutamente e em si mesmas, quando lhes falta a forma da arte; e por isso dizemos que um artífice fez obra falsa quando falhou na operação da sua arte. Assim, pois, nas coisas dependentes de Deus, não pode haver falsidade, relativamente ao intelecto divino, porque tudo o que existe, nelas, procede da ordenação desse intelecto. Exceto, talvez os agentes voluntários, que têm o poder de se subtrair a tal ordenação, nisso consistindo o mal da culpa. E, em tal sentido, os pecados chamam-se na Escritura, falsidades e mentiras, segundo aquilo (Sl 4, 3): Por que amais a vaidade e buscais a mentira? Assim também, e ao contrário, a operação virtuosa se chama verdade da vida, enquanto se subordina à ordem do divino intelecto, conforme a Escritura (Jo 3, 21): Aquele que obra a verdade chega-se para a luz. Mas, relativamente ao nosso intelecto, com o qual as coisas naturais têm relação acidental, podem chamar-se falsas, não simples, mas: Chamamos falsas às coisas que apreendemos como verossímeis. E o Filósofo dizrelativamente, e isto de dois modos. Primeiro, em razão do significado; chamando-se, assim, falso nas coisas, ao que é significado ou representado por palavra ou pensamento falso. E deste primeiro modo, qualquer coisa pode chamar-se falsa, relativamente ao que nela não existe. Assim, como se dissermos que é falso o diâmetro comensurável, segundo o Filósofo; ou se dissermos, com Agostinho, que um trágico é um falso Heitor. E, ao contrário, uma coisa pode chamar-se verdadeira, pelo que lhe convém. Segundo, em razão da causa. E, assim, chama-se falsa a uma coisa, que é causa de se formar dela uma opinião falsa. Pois, é-nos natural julgar das coisas pela aparência exterior, porque o nosso conhecimento, atingindo, primeiramente e em si mesmo, os acidentes exteriores, tem a sua origem nos sentidos. Por isso, as coisas que, pelos seus acidentes externos, se assemelham a outras, chamam-se falsas por comparação com estas últimas; assim, o fel é um falso mel e o estanho, uma falsa prata. E, deste modo, diz Agostinho, que se chamam falsas todas as coisas a que é natural mostrarem-se quais não são ou o que não são. E também, deste modo, chama-se falso ao homem amante das opiniões ou locuções falsas. Mas, não pelas poder formar, porque, então, também os sapientes e os sábios se chamariam falsos, como diz Aristóteles.</p>
+    <p>DONDE A</p>
+    <p>RESPOSTA À PRIMEIRA OBJEÇÃO. — A realidade, relativamente ao intelecto, chama-se verdadeira, pelo que é; falsa, pelo que não é. Por onde, um verdadeiro ator trágico é um falso Heitor, como diz Agostinho. Assim pois, como há um certo não-ser, nas coisas existentes, assim também há nelas uma certa razão de falsidade.</p>
+    <p>RESPOSTA À SEGUNDA. — As coisas nos enganam, não por si mesmas, mas, por acidente, oferecendo ocasião à falsidade, por terem a semelhança com outras coisas, de que não têm a existência.</p>
+    <p>RESPOSTA À TERCEIRA. — Relativamente ao intelecto divino, não se chamam falsas as coisas. Porque, então, seriam absolutamente falsas; mas, relativamente ao nosso intelecto, sendo então, falsas por acidente.</p>
+    <p>RESPOSTA À QUARTA. — A semelhança ou representação deficiente não induz razão de falsidade, senão quando dá ocasião à falsa opinião: por isso, não é qualquer semelhança que torna falsa uma realidade, mas, uma semelhança tal que seja capaz de causar opinião falsa, e isso, não a toda pessoa, mas em geral.</p>
+
+    </div>
+  </div>
+  
+  <!-- Bloco de Explicação (a ser preenchido) -->
+  <div class="bloco-explicacao">
+    <div class="explicacao-label">💡 Explicação e Contexto</div>
+    <div class="explicacao-corpo" id="explicacao">
+    <p><em>Explicação será adicionada em breve.</em></p>
+
+    </div>
+  </div>
+  
+</main>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO INFERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="navegacao-inferior">
+  <div class="nav-buttons">
+    <a href="suma-pagina107.html" class="btn-primary">← Anterior</a>
+    <span class="pagina-atual">108</span>
+    <a href="suma-pagina109.html" class="btn-primary">Próxima →</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  RODAPÉ                                                  -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<footer class="suma-footer">
+  <p>Suma Teológica · São Tomás de Aquino | Biblioteca Lux Fidei</p>
+</footer>
+
+</body>
+</html>

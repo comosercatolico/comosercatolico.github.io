@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Questão 84, Artigo 4 — — Se as espécies inteligíveis efluem, para a alma, de algumas foras | Suma Teológica</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+    --cor-fundo: #f5f0e8;
+    --cor-pagina: #fff;
+    --cor-texto: #2c1f17;
+    --cor-dourado: #d4af37;
+    --cor-roxo: #5b2c83;
+    --sombra: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cor-fundo);
+    color: var(--cor-texto);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CABEÇALHO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-header {
+    background: linear-gradient(135deg, #1a1a1a, #2c241b);
+    color: #f5f0e8;
+    padding: 32px 20px 24px;
+    text-align: center;
+    position: relative;
+}
+
+.voltar-index {
+    position: absolute;
+    top: 16px;
+    left: 20px;
+    color: var(--cor-dourado);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: opacity 0.2s;
+}
+
+.voltar-index:hover {
+    opacity: 0.8;
+}
+
+.suma-header h1 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.info-pagina {
+    display: inline-block;
+    background: rgba(212, 175, 55, 0.15);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    color: var(--cor-dourado);
+    margin-top: 8px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-topo {
+    background: #fff;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    gap: 10px;
+}
+
+.btn-nav {
+    display: inline-flex;
+    align-items: center;
+    padding: 9px 18px;
+    background: var(--cor-roxo);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.btn-nav:hover {
+    background: #4a246a;
+    transform: translateY(-1px);
+}
+
+.desabilitado {
+    background: #ddd !important;
+    color: #999 !important;
+    pointer-events: none;
+}
+
+.info-centena {
+    font-size: 0.85rem;
+    color: #888;
+    font-weight: 500;
+    padding: 0 10px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CONTEÚDO PRINCIPAL                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.pagina-conteudo {
+    flex: 1;
+    max-width: 860px;
+    width: 100%;
+    margin: 36px auto;
+    padding: 0 20px;
+}
+
+.bloco-texto {
+    background: var(--cor-pagina);
+    padding: 48px 44px;
+    border-radius: 12px;
+    box-shadow: var(--sombra);
+    position: relative;
+    margin-bottom: 24px;
+}
+
+.bloco-texto::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 20px;
+    bottom: 20px;
+    width: 4px;
+    background: linear-gradient(to bottom, var(--cor-dourado), var(--cor-roxo));
+    border-radius: 0 4px 4px 0;
+}
+
+.bloco-titulo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.3rem;
+    color: var(--cor-roxo);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e8dfd0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pagina-corpo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.1rem;
+    line-height: 1.95;
+    color: #3d3226;
+    text-align: justify;
+}
+
+.pagina-corpo p {
+    margin-bottom: 1.3em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  BLOCO DE EXPLICAÇÃO                                        */
+/* ────────────────────────────────────────────────────────── */
+
+.bloco-explicacao {
+    background: linear-gradient(135deg, #fffdf5, #faf5eb);
+    border-left: 5px solid var(--cor-dourado);
+    padding: 32px 40px;
+    border-radius: 0 12px 12px 0;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    margin-bottom: 24px;
+}
+
+.explicacao-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--cor-dourado);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 14px;
+}
+
+.explicacao-corpo {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #4a3c2c;
+}
+
+.explicacao-corpo p {
+    margin-bottom: 1em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO INFERIOR                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-inferior {
+    max-width: 860px;
+    width: 100%;
+    margin: 0 auto 40px;
+    padding: 0 20px;
+}
+
+.nav-buttons {
+    background: #fff;
+    padding: 18px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    box-shadow: var(--sombra);
+}
+
+.btn-primary {
+    flex: 1;
+    text-align: center;
+    padding: 13px 16px;
+    background: linear-gradient(135deg, var(--cor-roxo), #7a3eb5);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(91, 44, 131, 0.3);
+}
+
+.pagina-atual {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--cor-dourado);
+    min-width: 50px;
+    text-align: center;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RODAPÉ                                                     */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-footer {
+    background: #1a1a1a;
+    color: #888;
+    text-align: center;
+    padding: 22px 20px;
+    margin-top: auto;
+    font-size: 0.85rem;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RESPONSIVIDADE                                             */
+/* ────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+    .suma-header h1 {
+        font-size: 1.4rem;
+    }
+    
+    .bloco-texto {
+        padding: 28px 18px;
+    }
+    
+    .bloco-explicacao {
+        padding: 22px 18px;
+    }
+    
+    .navegacao-topo {
+        flex-wrap: wrap;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CABEÇALHO                                               -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="suma-header">
+  <a href="../../index.html" class="voltar-index">← Índice</a>
+  <h1>Suma Teológica</h1>
+  <p style="opacity:0.8; font-style:italic; margin-top:4px;">São Tomás de Aquino</p>
+  <span class="info-pagina">Página 418 de 3000</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO SUPERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<nav class="navegacao-topo">
+  <a href="suma-pagina417.html" class="btn-nav">← Anterior</a>
+  <span class="info-centena">Pág. 418/3000</span>
+  <a href="suma-pagina419.html" class="btn-nav">Próxima →</a>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CONTEÚDO PRINCIPAL                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<main class="pagina-conteudo">
+  
+  <!-- Texto Original -->
+  <div class="bloco-texto">
+    <div class="bloco-titulo">
+      <span>📜</span>
+      Questão 84, Artigo 4 — — Se as espécies inteligíveis efluem, para a alma, de algumas foras
+    </div>
+    <div class="pagina-corpo">
+    <p>separadas. (De Verit., q. 10 a. 6; q. 11, a. 1; Qu. De Anima, a. 15 ). O quarto discute-se assim. ― Parece que as espécies inteligíveis efluem, para a alma, de algumas formas separadas. 1. ― Todo ser participado é causado por um ser essencial; assim, um corpo ígneo se reduz ao fogo, como à sua causa. Ora, a alma intelectiva, enquanto intelige em ato, participa dos inteligíveis; pois, o intelecto em ato é, de certo modo, a coisa inteligida em ato. Logo, as coisas que, em si e por essência, são inteligidas em ato, são as causas de a alma intelectiva inteligir em ato. Ora, as coisas inteligidas em ato, por essência, são formas agentes, sem matéria. Logo, as espécies inteligíveis, pelas quais a alma intelige, são causadas por certas formas separadas. 2. Demais. ― Os inteligíveis estão para a coisa inteligida como os sensíveis para o sentido. Ora, os sensíveis, que estão em ato, fora da alma, são as causas dos mesmos sensíveis que estão no sentido e pelos quais sentimos. Logo, as espécies inteligíveis, pelas quais o nosso intelecto intelige, são causadas por certos inteligíveis em ato existentes fora da alma. Ora, estes não são senão formas separadas da matéria. Logo, as formas inteligíveis do nosso intelecto efluem de certas substâncias separadas. 3. Demais. ― Tudo o que está em potência se reduz ao ato por aquilo que já está em ato. Portanto, a causa de o nosso intelecto, ser primeiramente potencial, e em seguida inteligir em ato, é algum intelecto sempre atual. Ora, este é o intelecto separado. Logo, é por certas substâncias separadas que são causadas as espécies inteligíveis, pelas quais inteligimos em ato.</p>
+    <p>Mas, em contrário, se fosse assim, não precisaríamos dos sentidos para inteligir. O que é evidentemente falso, principalmente pelo fato de não poder, de nenhum modo, quem carece de um sentido ter ciência dos sensíveis desse sentido. SOLUÇÃO. ― Alguns ensinaram que as espécies inteligíveis do nosso intelecto procedem de certas formas ou substâncias separadas. E isso, de duplo modo. Assim, para Platão, como já se disse, as formas das coisas sensíveis são subsistentes por si, sem matéria; p. ex., a forma do homem a que chamava homem em si, a forma ou idéia do cavalo, a que chamava cavalo em si, e assim por diante. Ora, tais formas separadas, ensinava, são participadas tanto pela nossa alma como pela matéria corpórea; por aquela, a fim de conhecer; por esta, a fim de existir. Pois, assim como a matéria corpórea, participando da idéia da pedra, faz-se pedra, assim o nosso intelecto, participando dessa mesma idéia intelige a pedra. E a participação da idéia faz-se por uma certa semelhança da idéia mesma, naquele que dela participa, ao modo pelo qual o exemplar é participado pelo exemplado. Portanto, ensinando que as formas sensíveis, existentes na matéria corpórea, efluem das idéias, como certas semelhanças delas que são, ensinava também que as espécies inteligíveis do nosso intelecto são certas semelhanças das idéias das quais efluem. E por isso, como se disse antes, Platão referia as ciências e as definições às idéias. Mas, sendo contra – essência das coisas sensíveis que as formas delas subsista sem as matérias, como Aristóteles o prova super abundantemente, por isso Avicena, rejeitando tal posição, ensinou que as espécies inteligíveis de todas as coisas, não subsistem, por certo, sem matéria, mas preexistem imaterialmente, nos intelectos separados. E destes derivam, primariamente, tais espécies para o intelecto seguinte; e assim por diante, até o último intelecto separado, a que chamava intelecto agente, do qual, como dizia, efluem as espécies inteligíveis para as nossas almas, e as formas sensíveis, para a matéria corpórea. ― E assim, Avicena concorda com Platão em que as espécies inteligíveis do nosso intelecto efluem de certas formas separadas; ao passo que, para Platão, elas subsistem por si, como o refere Aristóteles, para Avicena elas existem no intelecto agente. E ainda Avicena, diferindo de Platão, ensina que as espécies inteligíveis não permanecem em o nosso intelecto, depois de ter este acabado de inteligir em ato, sendo preciso que o intelecto se converta a recebê-las de novo, reiteradamente. Por onde, não admite que a ciência seja naturalmente inata na alma, como Platão, que ensinava permanecerem na alma, imovelmente, as participações das idéias. Mas, segundo tal posição, não se poderia dar a razão suficiente porque a nossa alma está unida ao corpo. Pois, não se poderia dizer que a alma intelectiva está unida ao corpo, por causa do corpo; porque, nem a forma existe para a matéria, nem o motor para o móvel, mas antes, ao contrário. Mas, principalmente, o corpo é necessário à alma intelectiva para a operação própria dela, que é o inteligir, pois, pela sua essência, não depende do corpo. Se, pois, a alma fosse apta, por natureza, a receber as espécies inteligíveis, por influência somente de certos princípios separados, sem que as recebesse pelos sentidos, não precisaria, então, de corpo para inteligir e estaria unida ao corpo em vão. E nem é suficiente dizer que a nossa alma precisa dos sentidos para inteligir, sendo por eles excitada, de certo modo, à consideração das coisas, cujas espécies inteligíveis recebe, dos princípios separados. Porque tal excitação não é necessária à alma, senão por estar de certo modo adormecida, segundo os Platônicos, e esquecida, por causa da união com, o corpo. De modo que então, os sentidos só serviriam à alma intelectiva para eliminar o impedimento que lhe advém da união com o corpo. Logo, resta indagar qual a causa da união da alma com o corpo. Ora, não basta admitir, com Avicena, que os sentidos são necessários à alma, para, excitada por eles, converter-se à inteligência agente, da qual recebe as espécies. Porque, se estivesse em a natureza da alma inteligir por espécies influídas da inteligência agente, seguir-se-ia que, às vezes; a alma poderia converter-se à inteligência agente, por inclinação da sua natureza; ou ainda, excitada por um sentido, poderia converter-se a tal inteligência para receber as espécies de sensíveis próprios a outro sentido de que, p. ex., alguém estivesse privado. E, então, o cego de nascença poderia ter ciência das cores, coisa manifestamente falsa. ― Por onde, deve-se concluir que as espécies inteligíveis, pelas quais a nossa alma intelige, não efluem de formas separadas.</p>
+    <p>DONDE A</p>
+    <p>RESPOSTA À PRIMEIRA OBJEÇÃO. ― As espécies inteligíveis, participadas pelo nosso intelecto, reduzem-se, como à causa primeira, a algum princípio inteligível por sua essência, que é Deus. E desse princípio procedem elas, mediante as formas das coisas sensíveis e materiais, das quais obtemos a ciência, como diz Dionísio.</p>
+    <p>RESPOSTA À SEGUNDA. ― As coisas materiais, segundo o ser que têm fora da alma, podem ser sensíveis em ato, não porém, inteligíveis em ato. Por onde não há símile entre o sentido e o intelecto.</p>
+    <p>RESPOSTA À TERCEIRA. ― O nosso intelecto possível reduz-se da potência ao ato por algum ser em ato, i. é., pelo intelecto agente, que é uma virtude da nossa alma, como já se disse; e não por algum intelecto separado, como pela causa próxima, embora talvez como pela causa remota.</p>
+
+    </div>
+  </div>
+  
+  <!-- Bloco de Explicação (a ser preenchido) -->
+  <div class="bloco-explicacao">
+    <div class="explicacao-label">💡 Explicação e Contexto</div>
+    <div class="explicacao-corpo" id="explicacao">
+    <p><em>Explicação será adicionada em breve.</em></p>
+
+    </div>
+  </div>
+  
+</main>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO INFERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="navegacao-inferior">
+  <div class="nav-buttons">
+    <a href="suma-pagina417.html" class="btn-primary">← Anterior</a>
+    <span class="pagina-atual">418</span>
+    <a href="suma-pagina419.html" class="btn-primary">Próxima →</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  RODAPÉ                                                  -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<footer class="suma-footer">
+  <p>Suma Teológica · São Tomás de Aquino | Biblioteca Lux Fidei</p>
+</footer>
+
+</body>
+</html>

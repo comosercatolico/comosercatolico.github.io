@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Questão 99, Artigo 1 — ─ Se a justiça divina inflige aos pecadores uma pena eterna. | Suma Teológica</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+    --cor-fundo: #f5f0e8;
+    --cor-pagina: #fff;
+    --cor-texto: #2c1f17;
+    --cor-dourado: #d4af37;
+    --cor-roxo: #5b2c83;
+    --sombra: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cor-fundo);
+    color: var(--cor-texto);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CABEÇALHO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-header {
+    background: linear-gradient(135deg, #1a1a1a, #2c241b);
+    color: #f5f0e8;
+    padding: 32px 20px 24px;
+    text-align: center;
+    position: relative;
+}
+
+.voltar-index {
+    position: absolute;
+    top: 16px;
+    left: 20px;
+    color: var(--cor-dourado);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: opacity 0.2s;
+}
+
+.voltar-index:hover {
+    opacity: 0.8;
+}
+
+.suma-header h1 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.info-pagina {
+    display: inline-block;
+    background: rgba(212, 175, 55, 0.15);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    color: var(--cor-dourado);
+    margin-top: 8px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-topo {
+    background: #fff;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    gap: 10px;
+}
+
+.btn-nav {
+    display: inline-flex;
+    align-items: center;
+    padding: 9px 18px;
+    background: var(--cor-roxo);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.btn-nav:hover {
+    background: #4a246a;
+    transform: translateY(-1px);
+}
+
+.desabilitado {
+    background: #ddd !important;
+    color: #999 !important;
+    pointer-events: none;
+}
+
+.info-centena {
+    font-size: 0.85rem;
+    color: #888;
+    font-weight: 500;
+    padding: 0 10px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CONTEÚDO PRINCIPAL                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.pagina-conteudo {
+    flex: 1;
+    max-width: 860px;
+    width: 100%;
+    margin: 36px auto;
+    padding: 0 20px;
+}
+
+.bloco-texto {
+    background: var(--cor-pagina);
+    padding: 48px 44px;
+    border-radius: 12px;
+    box-shadow: var(--sombra);
+    position: relative;
+    margin-bottom: 24px;
+}
+
+.bloco-texto::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 20px;
+    bottom: 20px;
+    width: 4px;
+    background: linear-gradient(to bottom, var(--cor-dourado), var(--cor-roxo));
+    border-radius: 0 4px 4px 0;
+}
+
+.bloco-titulo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.3rem;
+    color: var(--cor-roxo);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e8dfd0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pagina-corpo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.1rem;
+    line-height: 1.95;
+    color: #3d3226;
+    text-align: justify;
+}
+
+.pagina-corpo p {
+    margin-bottom: 1.3em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  BLOCO DE EXPLICAÇÃO                                        */
+/* ────────────────────────────────────────────────────────── */
+
+.bloco-explicacao {
+    background: linear-gradient(135deg, #fffdf5, #faf5eb);
+    border-left: 5px solid var(--cor-dourado);
+    padding: 32px 40px;
+    border-radius: 0 12px 12px 0;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    margin-bottom: 24px;
+}
+
+.explicacao-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--cor-dourado);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 14px;
+}
+
+.explicacao-corpo {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #4a3c2c;
+}
+
+.explicacao-corpo p {
+    margin-bottom: 1em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO INFERIOR                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-inferior {
+    max-width: 860px;
+    width: 100%;
+    margin: 0 auto 40px;
+    padding: 0 20px;
+}
+
+.nav-buttons {
+    background: #fff;
+    padding: 18px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    box-shadow: var(--sombra);
+}
+
+.btn-primary {
+    flex: 1;
+    text-align: center;
+    padding: 13px 16px;
+    background: linear-gradient(135deg, var(--cor-roxo), #7a3eb5);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(91, 44, 131, 0.3);
+}
+
+.pagina-atual {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--cor-dourado);
+    min-width: 50px;
+    text-align: center;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RODAPÉ                                                     */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-footer {
+    background: #1a1a1a;
+    color: #888;
+    text-align: center;
+    padding: 22px 20px;
+    margin-top: auto;
+    font-size: 0.85rem;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RESPONSIVIDADE                                             */
+/* ────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+    .suma-header h1 {
+        font-size: 1.4rem;
+    }
+    
+    .bloco-texto {
+        padding: 28px 18px;
+    }
+    
+    .bloco-explicacao {
+        padding: 22px 18px;
+    }
+    
+    .navegacao-topo {
+        flex-wrap: wrap;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CABEÇALHO                                               -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="suma-header">
+  <a href="../../index.html" class="voltar-index">← Índice</a>
+  <h1>Suma Teológica</h1>
+  <p style="opacity:0.8; font-style:italic; margin-top:4px;">São Tomás de Aquino</p>
+  <span class="info-pagina">Página 3105 de 3000</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO SUPERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<nav class="navegacao-topo">
+  <a href="suma-pagina3104.html" class="btn-nav">← Anterior</a>
+  <span class="info-centena">Pág. 3105/3000</span>
+  <a href="suma-pagina3106.html" class="btn-nav">Próxima →</a>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CONTEÚDO PRINCIPAL                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<main class="pagina-conteudo">
+  
+  <!-- Texto Original -->
+  <div class="bloco-texto">
+    <div class="bloco-titulo">
+      <span>📜</span>
+      Questão 99, Artigo 1 — ─ Se a justiça divina inflige aos pecadores uma pena eterna.
+    </div>
+    <div class="pagina-corpo">
+    <p>O primeiro discute-se assim. ─ Parece que a divina justiça não inflige aos pecadores uma pena eterna. 1. ─ Pois, a pena não deve exceder a culpa, segundo aquilo da Escritura: O número dos golpes regular- se-á pela qualidade do pecado. Ora, a culpa é temporal. Logo, não deve a pena ser eterna. 2. Demais. ─ De dois modos mortais um há de ser mais grave que outro. Logo, deve um ser punido com uma pena mais intensa que a do outro. Ora, nenhuma pena é mais intensa, que a eterna, que é infinita. Portanto, a nem todo pecado é devida uma pena eterna. E se não é devida a um, não o é a nenhum, pois não é infinita a distância entre um pecado e outro. 3. Demais. ─ Um juiz justo não aplica senão penas corretivas, por isso diz Aristóteles, que as penas são uns remédios. Ora, o serem os ímpios punidos com pena eterna não lhes pode servir de correção a eles nem a ninguém mais, porque então já não haverá quem possa ser corrigido. Logo, a divina justiça não aplicará aos pecados uma pena eterna. 4. Demais. ─ Uma cousa que não queremos por si mesma só por alguma utilidade sua podemos querê- la. Ora, as penas Deus, que não se alegra com os nossos sofrimentos, não as quer por si mesmas. Logo, como nenhuma utilidade pode provir de uma pena eterna, parece que tal pena não deve ser aplicada pelo pecado. 5. Demais. ─ Nada do que é acidental é perpétuo, como diz Aristóteles. Ora, a pena, sendo contra a natureza, é acidental. Logo, não pode ser perpétua. 6. Demais. ─ A justiça de Deus parece exigir que os pecados sejam reduzidos ao nada. Porque os ingratos merecem ser privados dos benefícios recebidos. Ora, a existência é um dos benefícios de Deus. Por onde, parece justo que o pecador, um ingrato para com Deus, perca a própria existência. Mas se os pecadores fossem reduzidos ao nada, a sua pena não poderá ser perpétua. Logo, não parece consentâneo com a justiça divina serem os pecados punidos eternamente.</p>
+    <p>Mas, em contrário, o Evangelho: Irão estes, i. é, os pecadores, para o suplício eterno. 2. Demais. ─ Assim está o prêmio para o mérito, como a pena para a culpa. Ora, pela divina justiça, a um mérito temporal é devido um prêmio eterno, conforme o Evangelho: Todo o que vê o Filho e crê nele tem a vida eterna. Logo, também à culpa temporal é devida, pela divina justiça, uma pena eterna. 3. Demais. ─ Segundo o Filósofo, a pena é determinada de conformidade com a dignidade de aquele contra quem se pecou; e assim, com maior pena é punido quem deu um tapa no príncipe, que se o fez em qualquer outro. Ora, todo o que peca mortalmente peca contra Deus, cujos mandamentos transgride, e cuja honra atribui aquilo em que constituiu o seu fim. Mas a majestade de Deus é infinita. Logo, todo aquele que peca mortalmente é digno de uma pena infinita. Portanto, parece justo sofrer uma pena eterna quem cometeu um pecado mortal. SOLUÇÃO. ─ A pena é susceptível de uma dupla grandeza: a da intensidade da sua crueza e a da sua duração temporal. Ora, a grandeza da pena, quanto à intensidade da sua crueza, corresponde à gravidade da culpa, de modo que a quem mais gravemente pecou maior pena lhe será infligida, segundo aquilo da Escritura: Quanto ela se tem glorificado e vivido em deleites, tanto lhe dai de tormentos e prantos. Não corresponde porém a duração da pena à duração da culpa, como diz Agostinho; assim, um adultério, perpetrado num momento do tempo não é punido com uma pena momentânea, mesmo pelas leis humanas. Mas a duração da pena concerne à disposição do pecador. Assim, umas vezes quem comete um crime, numa cidade, pela própria natureza dele pode tornar-se digno de ser expulso totalmente da sociedade dos seus co-cidadãos, quer pelo exílio perpétuo, quer pela morte. Outras vezes, porém, não se torna digno de ser totalmente excluído da convivência com os seus co-cidadãos: e por isso, para poder ser um membro útil à cidade, prolonga-se-lhe ou se lhe abrevia a pena, conforme o necessário à sua correção, de modo que possa viver na cidade conveniente e pacificamente. Assim também, pela divina justiça pode um se tornar, em virtude do pecado cometido, digno de ser completamente segregado da convivência com os cidadãos da cidade de Deus; o que se dá por todo pecado contrário à caridade vínculo que dá união aos membros dessa cidade. Portanto, quem comete um pecado mortal, que é contrário à caridade, é-lhe aplicada a pena eterna de ficar para sempre excluído da sociedade dos santos. Pois, como diz Agostinho, do mesmo modo que se é excluído da cidade temporal pelo suplício da primeira morte, assim se é excluído da cidade imortal pelo suplício da segunda morte. E se a pena infligida pela cidade temporal não é considerada perpétua, é por acidente ou porque o homem não vive eternamente; ou ainda porque a cidade pode perder a existência. Mas, se o homem vivesse eternamente, a pena do exílio ou de escravidão, infligida pela lei humana, duraria eternamente. ─ Os que pecam porém sem contudo merecerem ser completamente segregados do consórcio com os cidadãos da cidade santa, como os que pecam venialmente, tanto mais breve ou diuturna lhes será a pena, quanto mais ou menos precisarem de purificação, na medida em que mais ou menos se afeiçoaram ao pecado. Regra que, pela divina justiça, se observa no aplicar as penas deste mundo ou as do purgatório. Mas há ainda outras razões dadas pelos Santos Padres, para justificar a pena eterna com que é punido o pecador, por um pecado temporal. Uma é, que, desprezando a vida eterna, pecaram contra o bem eterno. E é o que também diz Agostinho na obra supra-citada: O pecador é digno de um mal eterno por ter-se privado de um bem, que poderia ser eterno. Outra é que o homem peca pelo que tem de eterno. Donde o dizer Gregório: Pertence à justiça do soberano Juiz sujeitar a um suplício eterno quem nesta vida não quis nunca separar-se do pecado. ─ E se se objeta que certos, que pecam mortalmente, tem a intenção de um dia melhorar de vida, e assim não seriam, parece, dignos de um suplício eterno, devemos responder, segundo alguns, que Gregório se refere à vontade que se manifesta por obras. Pois, quem de própria vontade cai em pecado mortal coloca-se num estado donde não pode ser retirado senão com o auxílio divino. Portanto, o fato mesmo de querer pecar revela, por consequência, que quer permanecer perpetuamente no pecado; pois, o homem é um espírito que passa i. é, ao pecado, e não torna, por si mesmo. Como se alguém se atirasse num poço donde não pudesse sair senão ajudado, desse poderíamos dizer que aí quereria ficar eternamente, embora pensasse o contrário. ─ Ou podemos responder, e melhor, quem peca mortalmente por isso mesmo põe o seu fim na criatura. E como a nossa vida se ordena totalmente para um fim, por isso, o pecador faz do seu pecado o fim da sua vida; e quereria ficar perpetuamente em estado de pecado mortal, se isso lhe ficasse impune. Por isso, aquilo da Escritura ─ Reputará o abismo como cheio de cans, etc., diz Gregório: Se os pecados dos iníquos tiveram um fim é porque também fim lhes teve a vida. Pois, quereriam viver sem fim para que sem fim pudessem permanecer nos seus pecados; porque mais desejam pecar que viver. Mas pode-se também dar outra razão de ser eterna a pena da culpa mortal; é que por ela se peca contra Deus, que é infinito. Por onde, não podendo a pena ter uma intensidade infinita, por não ser a criatura capaz de nenhuma qualidade infinita, é necessário que pelo menos seja infinita na duração. Enfim, para o explicar, há ainda uma quarta razão. E é que a culpa permanece eternamente, pois, não pode ser perdoada sem a graça, e esta ninguém pode mais adquirir depois da morte. Ora, não deve a pena cessar enquanto permanece a culpa.</p>
+    <p>DONDE A</p>
+    <p>RESPOSTA À PRIMEIRA OBJEÇÃO. ─ Não deve a pena equiparar-se à culpa na quantidade da duração, como o vemos mesmo estabelecido pelas leis humanas. ─ Ou devemos responder, como o faz Gregório, que embora a culpa seja temporal no seu ato, é eterna na vontade que a quis.</p>
+    <p>RESPOSTA À SEGUNDA. ─ A gravidade do pecado corresponde a intensidade da pena. Por isso, pecados mortais de gravidade desigual terão penas de intensidade desigual, mas de duração igual.</p>
+    <p>RESPOSTA À TERCEIRA. ─ As penas infligidas aos que não foram totalmente segregados da sociedade civil se lhes ordenam à correção. Mas não são para a correção do delinquente as que a eliminam totalmente da comunidade social. Podem porém servir à correção e à tranquilidade dos mais membros da cidade. Assim também, a condenação eterna dos ímpios serve para a correção dos membros remanescentes da Igreja. Pois, as penas não são corretivas só quando infligidas, mas também quando determinadas por lei.</p>
+    <p>RESPOSTA À QUARTA. ─ Não é, absolutamente, inútil que as penas dos ímpios durem eternamente. Pois, tem uma dupla utilidade. ─ Primeiro, porque mantém sobre os culpados o reino da justiça divina, a qual em si mesma faz parte dos planos de Deus. Por isso diz Gregório: Deus onipotente, por ser bondoso, não se compraz com o suplício dos condenados. Como porém é justo, não pode deixar de se vingar eternamente aos maus. ─ Segundo, são úteis para com elas se alegrarem os eleitos, adorando nelas a justiça divina, e rejubilando por lhes ter escapado. Por isso diz a Escritura: Alegrar-se-á o justo quando vir a vingança. E noutro lugar: Os ímpios servirão de espetáculo até à saciedade, i. é, aos santos, como explica a Glosa. E isto é o que diz Gregório: Todos os maus, condenados ao suplício eterno, são punidos pela sua iniquidade. E contudo arderão para alguma utilidade: para todos os justos verem em Deus a felicidade que alcançaram, e nos condenados os suplícios de que se livraram. De tal sorte que tanto mais se reconheçam eternamente devedores da graça divina, quanto virem para sempre punido o mal que ela os ajudou vencer. RESPOSTA À QUINTA. ─ Embora a pena só acidentalmente se aplique à alma, contudo se aplica essencialmente à alma contaminada pela culpa. E como a culpa nela permanecerá perpetuamente, por isso perpétua também será a pena. RESPOSTA À SEXTA. ─ A pena corresponde à culpa, propriamente falando, pela desordem que esta implica, e não pela dignidade daquele contra quem se pecou. Porque, do contrário, a qualquer pecado corresponderia uma pena de intensidade infinita. Embora, pois, se quem peca contra Deus, autor da existência, merece por isso perdê-la, contudo não a deve perder considerada a desordem do seu ato. Porque a existência é um pressuposto para o mérito e o demérito; nem a desordem do pecado priva da existência ou a corrompe. Por onde, não pode ser a pena devida a nenhuma culpa o ficar o seu autor privado da existência.</p>
+
+    </div>
+  </div>
+  
+  <!-- Bloco de Explicação (a ser preenchido) -->
+  <div class="bloco-explicacao">
+    <div class="explicacao-label">💡 Explicação e Contexto</div>
+    <div class="explicacao-corpo" id="explicacao">
+    <p><em>Explicação será adicionada em breve.</em></p>
+
+    </div>
+  </div>
+  
+</main>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO INFERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="navegacao-inferior">
+  <div class="nav-buttons">
+    <a href="suma-pagina3104.html" class="btn-primary">← Anterior</a>
+    <span class="pagina-atual">3105</span>
+    <a href="suma-pagina3106.html" class="btn-primary">Próxima →</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  RODAPÉ                                                  -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<footer class="suma-footer">
+  <p>Suma Teológica · São Tomás de Aquino | Biblioteca Lux Fidei</p>
+</footer>
+
+</body>
+</html>

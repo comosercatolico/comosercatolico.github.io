@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Questão 102, Artigo 2 — Se o paraíso era lugar conveniente à habitação humana. | Suma Teológica</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+    --cor-fundo: #f5f0e8;
+    --cor-pagina: #fff;
+    --cor-texto: #2c1f17;
+    --cor-dourado: #d4af37;
+    --cor-roxo: #5b2c83;
+    --sombra: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cor-fundo);
+    color: var(--cor-texto);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CABEÇALHO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-header {
+    background: linear-gradient(135deg, #1a1a1a, #2c241b);
+    color: #f5f0e8;
+    padding: 32px 20px 24px;
+    text-align: center;
+    position: relative;
+}
+
+.voltar-index {
+    position: absolute;
+    top: 16px;
+    left: 20px;
+    color: var(--cor-dourado);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: opacity 0.2s;
+}
+
+.voltar-index:hover {
+    opacity: 0.8;
+}
+
+.suma-header h1 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.info-pagina {
+    display: inline-block;
+    background: rgba(212, 175, 55, 0.15);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    color: var(--cor-dourado);
+    margin-top: 8px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-topo {
+    background: #fff;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    gap: 10px;
+}
+
+.btn-nav {
+    display: inline-flex;
+    align-items: center;
+    padding: 9px 18px;
+    background: var(--cor-roxo);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.btn-nav:hover {
+    background: #4a246a;
+    transform: translateY(-1px);
+}
+
+.desabilitado {
+    background: #ddd !important;
+    color: #999 !important;
+    pointer-events: none;
+}
+
+.info-centena {
+    font-size: 0.85rem;
+    color: #888;
+    font-weight: 500;
+    padding: 0 10px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CONTEÚDO PRINCIPAL                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.pagina-conteudo {
+    flex: 1;
+    max-width: 860px;
+    width: 100%;
+    margin: 36px auto;
+    padding: 0 20px;
+}
+
+.bloco-texto {
+    background: var(--cor-pagina);
+    padding: 48px 44px;
+    border-radius: 12px;
+    box-shadow: var(--sombra);
+    position: relative;
+    margin-bottom: 24px;
+}
+
+.bloco-texto::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 20px;
+    bottom: 20px;
+    width: 4px;
+    background: linear-gradient(to bottom, var(--cor-dourado), var(--cor-roxo));
+    border-radius: 0 4px 4px 0;
+}
+
+.bloco-titulo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.3rem;
+    color: var(--cor-roxo);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e8dfd0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pagina-corpo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.1rem;
+    line-height: 1.95;
+    color: #3d3226;
+    text-align: justify;
+}
+
+.pagina-corpo p {
+    margin-bottom: 1.3em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  BLOCO DE EXPLICAÇÃO                                        */
+/* ────────────────────────────────────────────────────────── */
+
+.bloco-explicacao {
+    background: linear-gradient(135deg, #fffdf5, #faf5eb);
+    border-left: 5px solid var(--cor-dourado);
+    padding: 32px 40px;
+    border-radius: 0 12px 12px 0;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    margin-bottom: 24px;
+}
+
+.explicacao-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--cor-dourado);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 14px;
+}
+
+.explicacao-corpo {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #4a3c2c;
+}
+
+.explicacao-corpo p {
+    margin-bottom: 1em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO INFERIOR                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-inferior {
+    max-width: 860px;
+    width: 100%;
+    margin: 0 auto 40px;
+    padding: 0 20px;
+}
+
+.nav-buttons {
+    background: #fff;
+    padding: 18px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    box-shadow: var(--sombra);
+}
+
+.btn-primary {
+    flex: 1;
+    text-align: center;
+    padding: 13px 16px;
+    background: linear-gradient(135deg, var(--cor-roxo), #7a3eb5);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(91, 44, 131, 0.3);
+}
+
+.pagina-atual {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--cor-dourado);
+    min-width: 50px;
+    text-align: center;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RODAPÉ                                                     */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-footer {
+    background: #1a1a1a;
+    color: #888;
+    text-align: center;
+    padding: 22px 20px;
+    margin-top: auto;
+    font-size: 0.85rem;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RESPONSIVIDADE                                             */
+/* ────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+    .suma-header h1 {
+        font-size: 1.4rem;
+    }
+    
+    .bloco-texto {
+        padding: 28px 18px;
+    }
+    
+    .bloco-explicacao {
+        padding: 22px 18px;
+    }
+    
+    .navegacao-topo {
+        flex-wrap: wrap;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CABEÇALHO                                               -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="suma-header">
+  <a href="../../index.html" class="voltar-index">← Índice</a>
+  <h1>Suma Teológica</h1>
+  <p style="opacity:0.8; font-style:italic; margin-top:4px;">São Tomás de Aquino</p>
+  <span class="info-pagina">Página 497 de 3000</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO SUPERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<nav class="navegacao-topo">
+  <a href="suma-pagina496.html" class="btn-nav">← Anterior</a>
+  <span class="info-centena">Pág. 497/3000</span>
+  <a href="suma-pagina498.html" class="btn-nav">Próxima →</a>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CONTEÚDO PRINCIPAL                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<main class="pagina-conteudo">
+  
+  <!-- Texto Original -->
+  <div class="bloco-texto">
+    <div class="bloco-titulo">
+      <span>📜</span>
+      Questão 102, Artigo 2 — Se o paraíso era lugar conveniente à habitação humana.
+    </div>
+    <div class="pagina-corpo">
+    <p>O segundo discute–se assim. – Parece que ri paraíso não era lugar conveniente à habitação humana. 1. – Pois, o homem e o anjo ordenam–se, semelhantemente para a felicidade. Ora, o anjo logo, desde o princípio, foi constituído habitante do lugar dos bem–aventurados, isto é, do céu empireo, Logo, também essa devia ser a habitação humana. 2. Demais. – Ao homem deve ser assinalado um lugar, por causa da alma ou por causa do corpo. Por causa daquela, devido lhe é o céu, lugar natural da alma, desde que a todos é ínsito o desejo do mesmo. Por causa deste, devido lhe é o mesmo lugar dos outros animais. Logo, o paraíso de nenhum modo era lugar conveniente à habitação humana. 3. Demais. – É inútil o lugar em que nada está localizado. Ora, depois do pecado, o paraíso já não era lugar da habitação humana. Logo, se era lugar congruente à habitação humana, Deus o instituiu inutilmente. 4. Demais. – Ao homem, de compleição temperada, congruente lhe é um lugar de clima temperado. Ora, tal não era o paraíso; pois, diz–se que estava sob o círculo equinoxial, lugar calidíssimo, segundo parece; porque, duas vezes no ano, o sol passa pelo alto das cabeças dos que aí habitam. Logo, o paraíso não era lugar congruente à habitação humana.</p>
+    <p>Mas, em contrário, Damasceno diz, que o paraíso era uma região divina e digna morada de quem foi jeito à imagem de Deus. SOLUÇÃO. – Como já se disse antes, o homem era incorruptível e imortal, não porque o seu corpo tivesse disposição incorruptível, mas por lhe ser inerente uma certa virtude da alma que preservava o corpo da corrupção. Ora, o corpo humano pode ser corrompido interior e exteriormente. Inferiormente, pela consumpção da umidade e pela velhice, como já se disse antes; e esta corrupção o homem podia evitar, usando de alimentos. Por outro lado, o ar corrupto, principal causa da corrupção externa, se evita pela tempérie do mesmo. Ora, de ambos esses modos se podia evitar a corrupção, no paraíso; pois, como diz Damasceno, era lugar esplêndido pelo ar temperado, tenuissimo e purissimo, sempre coberto de plantas floridas, Por onde, é manifesto que o paraíso era lugar conveniente à habitação humana, no estado da primitiva imortalidade.</p>
+    <p>DONDE A</p>
+    <p>RESPOSTA À PRIMEIRA OBJEÇÃO. – O céu ernpíreo é o mais elevado, dos lugares materiais e está fora de toda mutabilidade. Pela primeira qualidade, era lugar congruente à natureza angélica: pois, como diz Agostinho, Deus rege a criatura corpórea pela espiritual. E por isso é conveniente que a natureza espiritual seja constituída superior a toda a corpórea, como que presidindo–a. A segunda convém ao estado de beatitude, firmado em suma estabilidade. E, portanto o lugar da beatitude, sendo congruente ao anjo pela sua natureza, aí foi ele criado. Mas não era congruente ao homem pela sua natureza, pois ele não preside a todas as criaturas corpóreas, governando–as, o que só lhe compete em razão da beatitude. Por onde, não foi colocado, desde o princípio, no céu empireo, mas para ele devia ser transferido, no estado final da beatitude.</p>
+    <p>RESPOSTA À SEGUNDA. – É ridículo dizer que a alma, ou qualquer substância espiritual, tenha algum lugar natural; mas, por uma certa congruência, um lugar especial é atribuído à criatura espiritual. O paraíso terrestre, porém, era lugar congruente ao homem, quanto à alma e quanto ao corpo; e isso porque. a alma tinha a virtude de preservar o corpo humano, da corrupção, o que não cabia aos outros animais. E, por isso, como diz Damasceno, nenhum irracional habitava o paraíso; embora, por dispensação divina, os animais fossem para ali conduzidos a Adão, e a serpente nele penetrasse, por obra do diabo.</p>
+    <p>RESPOSTA À TERCEIRA. – O referido lugar não foi inútil, por não ter sido a habitação dos homens, depois do pecado; como também não foi inútilrnente atribuída ao homem a imortalidade, que não havia de conservar. Mas por aí se manifesta a bondade de Deus para com o homem e o que este, pecando, perdeu. Embora seja dito que, atualmente, Enoque e Elias habitem o paraíso.</p>
+    <p>RESPOSTA À QUARTA. – Os que colocam o paraíso sob o círculo equinoxial, opinam que há, sob tal circulo, um lugar temperadíssimo. E isso por causa da contínua igualdade dos dias e das noites; e porque o sol nunca se afasta muito, de modo que os habitantes viessem a ter excesso de frio. Nem sofrem eles, segundo dizem, excesso de calor, pois embora o sol lhes passe por sobre as cabeças, contudo não se demora muito nessa posição. Aristóteles porém diz expressamente que a dita região é inabitável, por causa do calor. E isso parece mais provável; porque as terras onde o sol nunca passa diretamente por sobre as cabeças sofrem calor imoderado, só pela vizinhança do mesmo. Seja como for, devemos crer que o paraíso foi constituído num lugar temperadissimo, sob o círculo equinoxial ou algures.</p>
+
+    </div>
+  </div>
+  
+  <!-- Bloco de Explicação (a ser preenchido) -->
+  <div class="bloco-explicacao">
+    <div class="explicacao-label">💡 Explicação e Contexto</div>
+    <div class="explicacao-corpo" id="explicacao">
+    <p><em>Explicação será adicionada em breve.</em></p>
+
+    </div>
+  </div>
+  
+</main>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO INFERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="navegacao-inferior">
+  <div class="nav-buttons">
+    <a href="suma-pagina496.html" class="btn-primary">← Anterior</a>
+    <span class="pagina-atual">497</span>
+    <a href="suma-pagina498.html" class="btn-primary">Próxima →</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  RODAPÉ                                                  -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<footer class="suma-footer">
+  <p>Suma Teológica · São Tomás de Aquino | Biblioteca Lux Fidei</p>
+</footer>
+
+</body>
+</html>

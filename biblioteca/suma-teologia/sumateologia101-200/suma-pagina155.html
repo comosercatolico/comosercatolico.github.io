@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Questão 25, Artigo 5 — — Se Deus só pode fazer o que faz. | Suma Teológica</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+    --cor-fundo: #f5f0e8;
+    --cor-pagina: #fff;
+    --cor-texto: #2c1f17;
+    --cor-dourado: #d4af37;
+    --cor-roxo: #5b2c83;
+    --sombra: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cor-fundo);
+    color: var(--cor-texto);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CABEÇALHO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-header {
+    background: linear-gradient(135deg, #1a1a1a, #2c241b);
+    color: #f5f0e8;
+    padding: 32px 20px 24px;
+    text-align: center;
+    position: relative;
+}
+
+.voltar-index {
+    position: absolute;
+    top: 16px;
+    left: 20px;
+    color: var(--cor-dourado);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: opacity 0.2s;
+}
+
+.voltar-index:hover {
+    opacity: 0.8;
+}
+
+.suma-header h1 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.info-pagina {
+    display: inline-block;
+    background: rgba(212, 175, 55, 0.15);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    color: var(--cor-dourado);
+    margin-top: 8px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-topo {
+    background: #fff;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    gap: 10px;
+}
+
+.btn-nav {
+    display: inline-flex;
+    align-items: center;
+    padding: 9px 18px;
+    background: var(--cor-roxo);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.btn-nav:hover {
+    background: #4a246a;
+    transform: translateY(-1px);
+}
+
+.desabilitado {
+    background: #ddd !important;
+    color: #999 !important;
+    pointer-events: none;
+}
+
+.info-centena {
+    font-size: 0.85rem;
+    color: #888;
+    font-weight: 500;
+    padding: 0 10px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CONTEÚDO PRINCIPAL                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.pagina-conteudo {
+    flex: 1;
+    max-width: 860px;
+    width: 100%;
+    margin: 36px auto;
+    padding: 0 20px;
+}
+
+.bloco-texto {
+    background: var(--cor-pagina);
+    padding: 48px 44px;
+    border-radius: 12px;
+    box-shadow: var(--sombra);
+    position: relative;
+    margin-bottom: 24px;
+}
+
+.bloco-texto::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 20px;
+    bottom: 20px;
+    width: 4px;
+    background: linear-gradient(to bottom, var(--cor-dourado), var(--cor-roxo));
+    border-radius: 0 4px 4px 0;
+}
+
+.bloco-titulo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.3rem;
+    color: var(--cor-roxo);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e8dfd0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pagina-corpo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.1rem;
+    line-height: 1.95;
+    color: #3d3226;
+    text-align: justify;
+}
+
+.pagina-corpo p {
+    margin-bottom: 1.3em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  BLOCO DE EXPLICAÇÃO                                        */
+/* ────────────────────────────────────────────────────────── */
+
+.bloco-explicacao {
+    background: linear-gradient(135deg, #fffdf5, #faf5eb);
+    border-left: 5px solid var(--cor-dourado);
+    padding: 32px 40px;
+    border-radius: 0 12px 12px 0;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    margin-bottom: 24px;
+}
+
+.explicacao-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--cor-dourado);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 14px;
+}
+
+.explicacao-corpo {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #4a3c2c;
+}
+
+.explicacao-corpo p {
+    margin-bottom: 1em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO INFERIOR                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-inferior {
+    max-width: 860px;
+    width: 100%;
+    margin: 0 auto 40px;
+    padding: 0 20px;
+}
+
+.nav-buttons {
+    background: #fff;
+    padding: 18px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    box-shadow: var(--sombra);
+}
+
+.btn-primary {
+    flex: 1;
+    text-align: center;
+    padding: 13px 16px;
+    background: linear-gradient(135deg, var(--cor-roxo), #7a3eb5);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(91, 44, 131, 0.3);
+}
+
+.pagina-atual {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--cor-dourado);
+    min-width: 50px;
+    text-align: center;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RODAPÉ                                                     */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-footer {
+    background: #1a1a1a;
+    color: #888;
+    text-align: center;
+    padding: 22px 20px;
+    margin-top: auto;
+    font-size: 0.85rem;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RESPONSIVIDADE                                             */
+/* ────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+    .suma-header h1 {
+        font-size: 1.4rem;
+    }
+    
+    .bloco-texto {
+        padding: 28px 18px;
+    }
+    
+    .bloco-explicacao {
+        padding: 22px 18px;
+    }
+    
+    .navegacao-topo {
+        flex-wrap: wrap;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CABEÇALHO                                               -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="suma-header">
+  <a href="../../index.html" class="voltar-index">← Índice</a>
+  <h1>Suma Teológica</h1>
+  <p style="opacity:0.8; font-style:italic; margin-top:4px;">São Tomás de Aquino</p>
+  <span class="info-pagina">Página 155 de 3000</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO SUPERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<nav class="navegacao-topo">
+  <a href="suma-pagina154.html" class="btn-nav">← Anterior</a>
+  <span class="info-centena">Pág. 155/3000</span>
+  <a href="suma-pagina156.html" class="btn-nav">Próxima →</a>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CONTEÚDO PRINCIPAL                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<main class="pagina-conteudo">
+  
+  <!-- Texto Original -->
+  <div class="bloco-texto">
+    <div class="bloco-titulo">
+      <span>📜</span>
+      Questão 25, Artigo 5 — — Se Deus só pode fazer o que faz.
+    </div>
+    <div class="pagina-corpo">
+    <p>(I Sent., dist. XLIII, q. 2; II Cont. Gent., cap. XXIII. XXVI, XXVII; III, cap. XCVIII, De Pot., q. 1, a. 5). O quinto discute-se assim. — Parece que Deus só pode fazer o que faz.</p>
+    <p>1. — Pois, não pode fazer o que não previu nem preordenou que devia fazer. Ora, só previu e preordenou que havia de fazer o que faz. Logo, só pode fazer o que faz. 2. Demais. — Deus só pode o que deve e o que é justo que se faça. Ora, nem deve nem é justo fazer o que não faz. Logo, só pode fazer o que faz. 3. Demais. — Deus só pode fazer o bom e conveniente às coisas feitas. Ora, não lhes é bom nem conveniente às coisas feitas por Deus, o que existirem diferentemente do que existem. Logo, Deus só pode fazer o que faz.</p>
+    <p>Mas, em contrário, o Evangelho (Mt 26, 53): Acaso cuidas tu que eu não posso rogar a meu pai, e que ele me não porá aqui logo pronto mais de doze legiões de anjos? Mas nem ele rogava, nem o pai mandava, para repelir os Judeus. Logo, Deus pode fazer o que não faz.</p>
+    <p>SOLUÇÃO. — Sobre este assunto houve duas sortes de erros. Uns disseram que Deus age como por necessidade de natureza. Pois, assim como da ação dos seres naturais só podem provir os efeitos dela provenientes, p. ex. do sêmen humano, o homem, e da semente da oliveira, a oliveira, assim também, da ação divina não poderiam resultar outros seres ou outra ordem de seres diferentes dos atualmente existentes. — Mas, como já demonstramos, Deus não age por necessidade de natureza, senão que a sua vontade é a causa de todas as coisas; e nem a sua vontade, natural e necessariamente, está determinada a produzi-las. Por onde, de nenhum modo a ordem atual das coisas provém de Deus necessariamente e de maneira tal, que não possa provir outra. Outros, porém, disseram que o poder divino se determinou à ordem atual dos seres, por causa da ordem da sapiência e da justiça divinas, sem as quais Deus nada faz. — Mas, a potência, que é a essência de Deus, não difere da sua sabedoria. Por onde, podemos dizer, com razão, que nada está no poder de Deus, que não esteja na ordem da divina sabedoria; pois, esta compreende todo o poder da potência. Contudo, a ordem que a divina sabedoria infundiu nas coisas, e na qual está o fundamento da justiça, como dissemos, não condiz de modo tal com a sabedoria divina, que esta fique limitada a tal ordem. Pois é manifesto que todo o fundamento da ordem que o sábio infunde nas coisas que faz, deriva do fim. Quando, pois, o fim se proporciona às coisas feitas em vista dele, a sabedoria de quem as fez se limita a uma ordem determinada. Mas a divina bondade é um fim que excede, sem proporções, a todas as criaturas. Portanto não está a divina sabedoria determinada a nenhuma ordem de seres com exclusão de qualquer outra. Por onde, devemos concluir que Deus pode, absolutamente falando, fazer coisas diferentes do que faz.</p>
+    <p>DONDE A</p>
+    <p>RESPOSTA À PRIMEIRA OBJEÇÃO. — Em nós, a potência e a essência diferem da vontade e do intelecto; o intelecto, da sapiência; à vontade, da justiça. Por isso, o que está na potência pode não estar na vontade justa ou no intelecto sábio. Mas, em Deus, identificam-se a potência, a essência, a vontade, o intelecto, a sapiência e a justiça. Portanto, nada pode lhe estar na potência que também não o possa na vontade justa e no intelecto sábio. Contudo, a sua vontade, como vimos, não está necessàriamente determinada a esta ou àquela coisa, a não ser talvez por suposição. Nem a sabedoria de Deus e a sua justiça estão determinadas a essa ordem, como dissemos. Pois, nada impede esteja alguma coisa no poder divino, que Deus não quer e não está incluído na ordem de coisas que estabeleceu. E compreendendo nós o poder como exeqüente, a vontade, como imperante, e o intelecto e a sapiência, como dirigentes, dizemos que Deus pode,por potência absoluta, tudo o que é atribuído ao seu poder, em si mesmo considerado. E isto abrange tudo o que tem natureza de ser, como vimos. Dizemos, porém, que Deus pode, por potência ordenada o que a esta é atribuído, enquanto executora da ordem da vontade justa. Por onde, devemos concluir, que, pela potência absoluta, Deus pode fazer coisas diversas das que previu e preordenou que haveria de fazer. Não é possível, porém, faça coisas diversas das que previu e predeterminou que haveria de fazer. Pois, o seu próprio fazer está sujeito à presciência e à preordenação; não porém o seu poder, que lhe é natural. Por onde, Deus faz o que quer; porém, o que pode não é porque o queira, mas, porque está na sua natureza.</p>
+    <p>RESPOSTA À SEGUNDA. — Deus nada deve a ninguém, senão a si próprio. Por isso, dizer que Deus só pode fazer o que deve é dizer que só pode o que lhe é conveniente e justo. Mas, duplo é o sentido da expressão conveniente e justo. Considerando a expressão — conveniente e justo — como ligada, primeiro, com o verbo é, de modo que se restrinja ela às causas presentes e, assim, se refira à potência, essa expressão é falsa e o seu sentido é: Deus só pode fazer o que presentemente é conveniente e justo. Mas, se a ligarmos, primeiramente, ao verbo pode — que tem força ampliativa, e, depois, ao verbo — é — significará algo de presente e confuso; e, então, será verdadeira neste sentido: Deus só pode fazer aquilo que, se o fizesse, seria conveniente e justo.</p>
+    <p>RESPOSTA À TERCEIRA. — Não obstante a ordem atual das causas determinadas às existências, contudo a tal ordem não ficam limitadas a sapiência nem o poder divino. Donde, embora às coisas existentes nenhuma outra ordem seja boa e conveniente, entretanto Deus poderia fazer outras e lhes impor outra ordem.</p>
+
+    </div>
+  </div>
+  
+  <!-- Bloco de Explicação (a ser preenchido) -->
+  <div class="bloco-explicacao">
+    <div class="explicacao-label">💡 Explicação e Contexto</div>
+    <div class="explicacao-corpo" id="explicacao">
+    <p><em>Explicação será adicionada em breve.</em></p>
+
+    </div>
+  </div>
+  
+</main>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO INFERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="navegacao-inferior">
+  <div class="nav-buttons">
+    <a href="suma-pagina154.html" class="btn-primary">← Anterior</a>
+    <span class="pagina-atual">155</span>
+    <a href="suma-pagina156.html" class="btn-primary">Próxima →</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  RODAPÉ                                                  -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<footer class="suma-footer">
+  <p>Suma Teológica · São Tomás de Aquino | Biblioteca Lux Fidei</p>
+</footer>
+
+</body>
+</html>

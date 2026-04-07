@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Questão 66, Artigo 1 — — Se a informidade da matéria precedeu, no tempo, à formação da | Suma Teológica</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+    --cor-fundo: #f5f0e8;
+    --cor-pagina: #fff;
+    --cor-texto: #2c1f17;
+    --cor-dourado: #d4af37;
+    --cor-roxo: #5b2c83;
+    --sombra: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cor-fundo);
+    color: var(--cor-texto);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CABEÇALHO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-header {
+    background: linear-gradient(135deg, #1a1a1a, #2c241b);
+    color: #f5f0e8;
+    padding: 32px 20px 24px;
+    text-align: center;
+    position: relative;
+}
+
+.voltar-index {
+    position: absolute;
+    top: 16px;
+    left: 20px;
+    color: var(--cor-dourado);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: opacity 0.2s;
+}
+
+.voltar-index:hover {
+    opacity: 0.8;
+}
+
+.suma-header h1 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.info-pagina {
+    display: inline-block;
+    background: rgba(212, 175, 55, 0.15);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    color: var(--cor-dourado);
+    margin-top: 8px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-topo {
+    background: #fff;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    gap: 10px;
+}
+
+.btn-nav {
+    display: inline-flex;
+    align-items: center;
+    padding: 9px 18px;
+    background: var(--cor-roxo);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.btn-nav:hover {
+    background: #4a246a;
+    transform: translateY(-1px);
+}
+
+.desabilitado {
+    background: #ddd !important;
+    color: #999 !important;
+    pointer-events: none;
+}
+
+.info-centena {
+    font-size: 0.85rem;
+    color: #888;
+    font-weight: 500;
+    padding: 0 10px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CONTEÚDO PRINCIPAL                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.pagina-conteudo {
+    flex: 1;
+    max-width: 860px;
+    width: 100%;
+    margin: 36px auto;
+    padding: 0 20px;
+}
+
+.bloco-texto {
+    background: var(--cor-pagina);
+    padding: 48px 44px;
+    border-radius: 12px;
+    box-shadow: var(--sombra);
+    position: relative;
+    margin-bottom: 24px;
+}
+
+.bloco-texto::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 20px;
+    bottom: 20px;
+    width: 4px;
+    background: linear-gradient(to bottom, var(--cor-dourado), var(--cor-roxo));
+    border-radius: 0 4px 4px 0;
+}
+
+.bloco-titulo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.3rem;
+    color: var(--cor-roxo);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e8dfd0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pagina-corpo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.1rem;
+    line-height: 1.95;
+    color: #3d3226;
+    text-align: justify;
+}
+
+.pagina-corpo p {
+    margin-bottom: 1.3em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  BLOCO DE EXPLICAÇÃO                                        */
+/* ────────────────────────────────────────────────────────── */
+
+.bloco-explicacao {
+    background: linear-gradient(135deg, #fffdf5, #faf5eb);
+    border-left: 5px solid var(--cor-dourado);
+    padding: 32px 40px;
+    border-radius: 0 12px 12px 0;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    margin-bottom: 24px;
+}
+
+.explicacao-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--cor-dourado);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 14px;
+}
+
+.explicacao-corpo {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #4a3c2c;
+}
+
+.explicacao-corpo p {
+    margin-bottom: 1em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO INFERIOR                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-inferior {
+    max-width: 860px;
+    width: 100%;
+    margin: 0 auto 40px;
+    padding: 0 20px;
+}
+
+.nav-buttons {
+    background: #fff;
+    padding: 18px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    box-shadow: var(--sombra);
+}
+
+.btn-primary {
+    flex: 1;
+    text-align: center;
+    padding: 13px 16px;
+    background: linear-gradient(135deg, var(--cor-roxo), #7a3eb5);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(91, 44, 131, 0.3);
+}
+
+.pagina-atual {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--cor-dourado);
+    min-width: 50px;
+    text-align: center;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RODAPÉ                                                     */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-footer {
+    background: #1a1a1a;
+    color: #888;
+    text-align: center;
+    padding: 22px 20px;
+    margin-top: auto;
+    font-size: 0.85rem;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RESPONSIVIDADE                                             */
+/* ────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+    .suma-header h1 {
+        font-size: 1.4rem;
+    }
+    
+    .bloco-texto {
+        padding: 28px 18px;
+    }
+    
+    .bloco-explicacao {
+        padding: 22px 18px;
+    }
+    
+    .navegacao-topo {
+        flex-wrap: wrap;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CABEÇALHO                                               -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="suma-header">
+  <a href="../../index.html" class="voltar-index">← Índice</a>
+  <h1>Suma Teológica</h1>
+  <p style="opacity:0.8; font-style:italic; margin-top:4px;">São Tomás de Aquino</p>
+  <span class="info-pagina">Página 340 de 3000</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO SUPERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<nav class="navegacao-topo">
+  <a href="suma-pagina339.html" class="btn-nav">← Anterior</a>
+  <span class="info-centena">Pág. 340/3000</span>
+  <a href="suma-pagina341.html" class="btn-nav">Próxima →</a>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CONTEÚDO PRINCIPAL                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<main class="pagina-conteudo">
+  
+  <!-- Texto Original -->
+  <div class="bloco-texto">
+    <div class="bloco-titulo">
+      <span>📜</span>
+      Questão 66, Artigo 1 — — Se a informidade da matéria precedeu, no tempo, à formação da
+    </div>
+    <div class="pagina-corpo">
+    <p>mesma. O primeiro discute-se assim. — Parece que a informidade da matéria precedeu, no tempo, à formação da mesma.</p>
+    <p>1. — Pois, diz a Escritura: A terra, porém, estava informe e vazia, ou, invisível e descomposta, segundo outra letra; pelo que se designa a informidade da matéria, conforme Agostinho. Logo, houve um tempo em que a matéria, antes de ser formada, foi informe. 2. Demais. — O operar da natureza imita o de Deus, assim como a causa segunda imita a primeira. Ora, na operação da natureza, a informidade precede, no tempo, à formação. Logo, também na de Deus. 3. Demais. — Como parte da substância, a matéria tem preponderância sobre o acidente. Ora, Deus pode fazer existir o acidente sem o sujeito, como se vê no Sacramento do Altar. Logo, podia ter feito a matéria existir sem a forma.</p>
+    <p>Mas, em contrário. A imperfeição do efeito atesta a do agente. Ora, Deus é agente perfeitíssimo, pelo que dele se diz: As obras de Deus são perfeitas. Logo, a obra por ele criada nunca foi informe. Demais. — a formação da criatura corporal foi realizada pela obra da distinção. Ora, à esta se opõe a confusão como, à formação, a informidade. Se, pois, a informidade precedeu no tempo à formação da matéria, segue-se que, no princípio, houve a confusão, na criatura corporal, a qual os antigos chamavam Caos.</p>
+    <p>SOLUÇÃO. — Neste assunto diversas são as opiniões dos Santos Padres. Agostinho pretende que a informidade da matéria corporal não precedeu, no tempo, mas só pela origem ou pela ordem da natureza, à formação da mesma. Outros porém, como Basílio, Ambrósio e Crisóstomo, opinam que a informidade precedeu, no tempo, à formação. E embora essas opiniões pareçam contrárias, contudo pouco entre si diferem. Pois, Agostinho compreende a informidade da matéria diferentemente dos outros. Para ele, essa informidade significa carência de qualquer forma; sendo, portanto, impossível dizer-se que tal informidade precedeu, no tempo, quer à formação, quer à distinção da matéria. O que é manifesto, quanto à formação; pois, se precedeu, na duração, a matéria informe já era atual, porque a duração, sendo termo da criação, importa o ato e este, em si mesmo, é forma. Dizer, portanto, que a matéria precedeu, sem forma, é idêntico a dizer que o ser atual não o é, o que implica contradição. Nem mesmo se pode dizer que tinha alguma forma comum, sobrevindo-lhe, depois, formas diversas, pelas quais se tornou distinta. Pois, tal opinião seria idêntica à dos antigos físicos, que ensinavam ser a matéria prima algum corpo em ato, como o fogo, o ar, a água ou um corpo médio. Donde resultaria que o vir-a-ser não seria senão o alterar-se. Porque essa forma precedente, dando o ser atual, no gênero da substância, e tornando o ser tal e não tal outro, resultaria que a forma superveniente não causaria simplesmente o ser atual, mas um ser atual, o que é próprio à forma acidental; e portanto, as formas seguintes seriam acidentes, em relação aos quais não há geração, mas alteração. Portanto, deve-se dizer que a matéria prima nem foi criada completamente sem forma, nem com forma comum, senão com formas distintas. Por onde, se a informidade da matéria, se refere à condição da matéria prima, que, de si mesma, nenhuma forma tem, tal informidade não precedeu à formação ou à distinção da mesma, no tempo, como diz Agostinho; senão somente pela origem ou pela natureza, do modo pelo qual a potência é anterior ao ato e a parte, ao todo. Outros Santos Padres, porém, compreendem a informidade como exclusiva, não de qualquer forma, mas só da formosura e da beleza que, atualmente, se manifesta na criatura corpórea. E, assim, sentem que tal informidade da matéria corporal precedeu, pela duração, à formação da mesma. Por onde, neste sentido, Agostinho concorda com eles, em parte, e, em parte, discorda, como a seguir se virá. Quanto à expressão do Gênesis, ela pode significar que, faltando-lhe uma tríplice formosura, por isso informe era chamada a criatura corporal. Assim, faltando ao corpo diáfano total, chamado céu, a beleza da luz, por isso se diz que as trevas cobriam a face do abismo. Faltava também, à terra, dupla beleza. Uma, a que tem por estar descoberta das águas e, por isso, se diz que a terra estava informe ou invisível; pois, o seu aspecto corporal não podia aparecer, por causa das águas que de todos os lados a cobriam. Outra, a que tem, por estar ornada de ervas e plantas, dizendo-se, por isso, que era vazia ou descomposta, i. é., não ornada, segundo diferente lição. E assim, tendo preestabelecido duas naturezas criadas, o céu e a terra, exprimiu a informidade do céu dizendo: as trevas cobriam a face do abismo, incluindo no céu também o ar; e a informidade da terra, dizendo:A terra estava informe e vazia.</p>
+    <p>DONDE A</p>
+    <p>RESPOSTA À PRIMEIRA OBJEÇÃO. — Terra, aqui, é tomada em sentidos diferentes por Agostinho e pelos outros Santos Padres. Conforme Agostinho, pelos nomes terra e água, deve se entender neste passo a matéria prima em si mesma. Porque Moisés não podia dar a compreender a matéria prima a um povo rude, a não ser por semelhança com coisas desse povo conhecidas. Por isso, exprimiu-a sob multíplice semelhança, não a denominando somente água, ou somente terra, para não parecer que, na verdade das coisas, a matéria prima fosse a terra ou a água. Se bem tenha semelhança com a terra, como fundamento que é das formas; e com a água, como apta a ser informada por diversas formas. Assim, neste sentido, é chamada a terra informe e vazia,ou invisível e descomposta, pois a matéria é conhecida pela forma. Por onde, em si mesma considerada, é chamada invisível, ou vazia, completando-se a sua potência pela forma. Por isso também Platão chamou à matéria lugar. — Outros Santos Padres porém, entendem por terra o elemento mesmo da terra, e a opinião deles sobre a sua informidade, já a referimos.</p>
+    <p>RESPOSTA À SEGUNDA. — A natureza produz o efeito atual, do ser em potência; sendo, portanto, necessário que, na sua operação, a potência preceda ao ato, no tempo; assim como a informidade, à formação. Mas Deus produz do nada o ser atual; e, portanto pode produzir imediatamente um ser perfeito, pela magnitude do seu poder.</p>
+    <p>RESPOSTA À TERCEIRA. — O acidente, sendo forma, é um certo ato; porém a matéria, em si mesma, é ser em potência. Por onde, mais repugna à matéria existir em ato, sem a forma, do que ao acidente sem o sujeito.</p>
+    <p>RESPOSTA À PRIMEIRA OBJEÇÃO EM CONTRÁRIO. — Se, segundo outros Santos Padres a informidade precedeu, no tempo, à formação da matéria, isso não foi por impotência de Deus, mas pela sua sapiência, para que se conservasse a ordem na condição das coisas, de modo a que fossem levadas do imperfeito ao perfeito.</p>
+    <p>RESPOSTA À SEGUNDA. — Alguns físicos antigos ensinavam a confusão, exclusiva de toda distinção, salvo Anaxágoras que admitia somente o intelecto como distinto e sem imisção. Mas, antes da obra da distinção, a Escritura Sagrada coloca múltiplas distinções. — Assim, primeiro, a do céu e da terra, na qual também se mostra a distinção quanto à matéria, como a seguir se verá; e tudo isto, quando diz: No princípio criou Deus o céu e a terra. — Segundo, a distinção dos elementos, quanto às suas formas, nomeando a terra e a água, sem nomear o ar e o fogo, por não ser claro aos rudes, aos quais Moisés falava, que tais seres são corpos, como manifestamente o são a terra e a água. Embora Platão (no Timeu) entendesse, pelo ar, o espírito do Senhor, porque o ar também se chama espírito, e, pelo fogo, o céu, porque dizia ser este de natureza ígnea, como refere Agostinho. Mas Rabbi Moisés, concordando em outros pontos com Platão, diz que o fogo é expresso pelas trevas; pois, como afirma, o fogo não luz na esfera própria. Porém, parece mais conveniente o que já antes ficou dito, a saber, que, na Escritura, Espírito do Senhor costuma ser tomado pelo Espírito Santo, do qual se diz que é conduzido na superfície das águas, não corporalmente, mas do mesmo modo que a vontade do artífice é conduzida na superfície da matéria a que quer dar forma. — A terceira distinção é expressa em relação à situação, porque a terra estava debaixo das águas, que a tornavam invisível; e quanto ao ar, sujeito das trevas, dele se afirma que estava sobre as águas, quando se diz as trevas cobriam a face do abismo. E o que restava a distinguir, pelo que se segue se verá.</p>
+
+    </div>
+  </div>
+  
+  <!-- Bloco de Explicação (a ser preenchido) -->
+  <div class="bloco-explicacao">
+    <div class="explicacao-label">💡 Explicação e Contexto</div>
+    <div class="explicacao-corpo" id="explicacao">
+    <p><em>Explicação será adicionada em breve.</em></p>
+
+    </div>
+  </div>
+  
+</main>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO INFERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="navegacao-inferior">
+  <div class="nav-buttons">
+    <a href="suma-pagina339.html" class="btn-primary">← Anterior</a>
+    <span class="pagina-atual">340</span>
+    <a href="suma-pagina341.html" class="btn-primary">Próxima →</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  RODAPÉ                                                  -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<footer class="suma-footer">
+  <p>Suma Teológica · São Tomás de Aquino | Biblioteca Lux Fidei</p>
+</footer>
+
+</body>
+</html>

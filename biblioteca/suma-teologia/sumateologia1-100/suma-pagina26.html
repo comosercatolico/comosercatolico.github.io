@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Questão 5, Artigo 2 — — Se o bem é logicamente anterior ao ser. | Suma Teológica</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+    --cor-fundo: #f5f0e8;
+    --cor-pagina: #fff;
+    --cor-texto: #2c1f17;
+    --cor-dourado: #d4af37;
+    --cor-roxo: #5b2c83;
+    --sombra: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cor-fundo);
+    color: var(--cor-texto);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CABEÇALHO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-header {
+    background: linear-gradient(135deg, #1a1a1a, #2c241b);
+    color: #f5f0e8;
+    padding: 32px 20px 24px;
+    text-align: center;
+    position: relative;
+}
+
+.voltar-index {
+    position: absolute;
+    top: 16px;
+    left: 20px;
+    color: var(--cor-dourado);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: opacity 0.2s;
+}
+
+.voltar-index:hover {
+    opacity: 0.8;
+}
+
+.suma-header h1 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.info-pagina {
+    display: inline-block;
+    background: rgba(212, 175, 55, 0.15);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    color: var(--cor-dourado);
+    margin-top: 8px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-topo {
+    background: #fff;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    gap: 10px;
+}
+
+.btn-nav {
+    display: inline-flex;
+    align-items: center;
+    padding: 9px 18px;
+    background: var(--cor-roxo);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.btn-nav:hover {
+    background: #4a246a;
+    transform: translateY(-1px);
+}
+
+.desabilitado {
+    background: #ddd !important;
+    color: #999 !important;
+    pointer-events: none;
+}
+
+.info-centena {
+    font-size: 0.85rem;
+    color: #888;
+    font-weight: 500;
+    padding: 0 10px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CONTEÚDO PRINCIPAL                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.pagina-conteudo {
+    flex: 1;
+    max-width: 860px;
+    width: 100%;
+    margin: 36px auto;
+    padding: 0 20px;
+}
+
+.bloco-texto {
+    background: var(--cor-pagina);
+    padding: 48px 44px;
+    border-radius: 12px;
+    box-shadow: var(--sombra);
+    position: relative;
+    margin-bottom: 24px;
+}
+
+.bloco-texto::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 20px;
+    bottom: 20px;
+    width: 4px;
+    background: linear-gradient(to bottom, var(--cor-dourado), var(--cor-roxo));
+    border-radius: 0 4px 4px 0;
+}
+
+.bloco-titulo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.3rem;
+    color: var(--cor-roxo);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e8dfd0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pagina-corpo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.1rem;
+    line-height: 1.95;
+    color: #3d3226;
+    text-align: justify;
+}
+
+.pagina-corpo p {
+    margin-bottom: 1.3em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  BLOCO DE EXPLICAÇÃO                                        */
+/* ────────────────────────────────────────────────────────── */
+
+.bloco-explicacao {
+    background: linear-gradient(135deg, #fffdf5, #faf5eb);
+    border-left: 5px solid var(--cor-dourado);
+    padding: 32px 40px;
+    border-radius: 0 12px 12px 0;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    margin-bottom: 24px;
+}
+
+.explicacao-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--cor-dourado);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 14px;
+}
+
+.explicacao-corpo {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #4a3c2c;
+}
+
+.explicacao-corpo p {
+    margin-bottom: 1em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO INFERIOR                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-inferior {
+    max-width: 860px;
+    width: 100%;
+    margin: 0 auto 40px;
+    padding: 0 20px;
+}
+
+.nav-buttons {
+    background: #fff;
+    padding: 18px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    box-shadow: var(--sombra);
+}
+
+.btn-primary {
+    flex: 1;
+    text-align: center;
+    padding: 13px 16px;
+    background: linear-gradient(135deg, var(--cor-roxo), #7a3eb5);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(91, 44, 131, 0.3);
+}
+
+.pagina-atual {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--cor-dourado);
+    min-width: 50px;
+    text-align: center;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RODAPÉ                                                     */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-footer {
+    background: #1a1a1a;
+    color: #888;
+    text-align: center;
+    padding: 22px 20px;
+    margin-top: auto;
+    font-size: 0.85rem;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RESPONSIVIDADE                                             */
+/* ────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+    .suma-header h1 {
+        font-size: 1.4rem;
+    }
+    
+    .bloco-texto {
+        padding: 28px 18px;
+    }
+    
+    .bloco-explicacao {
+        padding: 22px 18px;
+    }
+    
+    .navegacao-topo {
+        flex-wrap: wrap;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CABEÇALHO                                               -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="suma-header">
+  <a href="../../index.html" class="voltar-index">← Índice</a>
+  <h1>Suma Teológica</h1>
+  <p style="opacity:0.8; font-style:italic; margin-top:4px;">São Tomás de Aquino</p>
+  <span class="info-pagina">Página 26 de 3000</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO SUPERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<nav class="navegacao-topo">
+  <a href="suma-pagina25.html" class="btn-nav">← Anterior</a>
+  <span class="info-centena">Pág. 26/3000</span>
+  <a href="suma-pagina27.html" class="btn-nav">Próxima →</a>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CONTEÚDO PRINCIPAL                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<main class="pagina-conteudo">
+  
+  <!-- Texto Original -->
+  <div class="bloco-texto">
+    <div class="bloco-titulo">
+      <span>📜</span>
+      Questão 5, Artigo 2 — — Se o bem é logicamente anterior ao ser.
+    </div>
+    <div class="pagina-corpo">
+    <p>(I. Sent., dist. VIII, q.1, a.3; III Cont. Gent., cap. XX; De Verit., q. 21. a.2, ad 5; a. 3) O segundo discute-se assim. — Parece que o bem é logicamente anterior ao ser.</p>
+    <p>1. — Pois a ordem dos nomes é relativa ao que significam. Ora, entre os nomes de Deus, Dionísio coloca o bem, antes do ser. Logo, aquele é logicamente anterior a este. 2. Demais. — Devemos considerar como primeira a noção que se estende a maior número de objetos. Ora, o bem tem maior extensão que o ser; pois, como diz Dionísio, o bem se estende ao que existe e ao que não existe, ao passo que o ser, só ao que existe. Logo, o bem é logicamente anterior ao ser. 3. Demais. — O que é mais universal tem, logicamente prioridade. Ora, o bem é mais universal que o ser, porque é, por natureza, desejável, e certos desejam mesmo o não-ser, como diz a Escritura (Mt 26,24): Melhor fora ao tal homem não haver nascido, etc. logo, o bem é logicamente anterior ao ser. 4. Demais. — não só o ser é desejável, mas também a vida, a sabedoria e coisas semelhantes. Por onde se vê, que o ser é um caso particular do desejável, do qual o bem exprime o aspecto universal. Logo, o bem é logicamente anterior ao ser.</p>
+    <p>Mas, em contrário, diz o livro De Causis: A primeira das coisas criadas é o ser.</p>
+    <p>SOLUÇÃO. — O ser é logicamente anterior ao bem. Pois a noção que o nome significa é aquilo que a inteligência concebe a respeito do objeto e que exprime pela palavra. Ora, é anterior logicamente aquilo que o intelecto concebe em primeiro lugar; e isto é o ser, porque uma coisa é cognoscível na medida em que é atual, como diz Aristóteles. Por onde, o ser é o objeto próprio do intelecto e, portanto, é o primeiro inteligível, assim como o som é o primeiro audível. Logo, logicamente o ser é anterior ao bem.</p>
+    <p>DONDE A</p>
+    <p>RESPOSTA À PRIMEIRA OBJEÇÃO. — Dionísio considera os nomes divinos e os classifica enquanto se referem à causalidade divina; pois diz, designamos a Deus pelas criaturas, como a causa, pelos efeitos. Ora, o bem, sendo de natureza desejável, implica relação de causa final, cuja causalidade é a primeira de todas; pois o fim é considerado causa das causas porque faz agir o agente, que, por sua vez, move a matéria para a forma. E assim, no causar, o bem é anterior ao ser, como o fim, à forma; e é por isso que, entre os nomes designativos da causalidade divina, o bem vem antes do ser. — Por outro lado, os Platônicos, não distinguindo a matéria da privação, e considerando-a não-ser, davam maior extensão à participação do bem que à do ser; mas como a matéria prima participa do bem, para o qual tende, e como nada tende senão para o semelhante, a matéria dos platônicos, sendo não-ser, não participa do ser. E por isso diz Dionísio que o bem se estende ao que não existe. Donde se deduz clara a</p>
+    <p>RESPOSTA À SEGUNDA OBJEÇÃO— Ou também se pode dizer que o bem se estende ao existente e ao não-existente; não, pela predicação, mas, pela causalidade; e, assim, devemos entender por não-existente, não o que absolutamente não existe, mas o que, sendo potencial, está privado da atualidade. Pois o bem exerce a função de fim, no qual repousa o que já é atual e para o qual se move o que, ainda não estando atualizado, é potencia pura. O ser, porém, implica somente a relação de causa formal e inerente ou exemplar; ora, essa causalidade só se estende ao que já é atual.</p>
+    <p>RESPOSTA À TERCEIRA. — O não-ser é desejável, não por si, mas acidentalmente, enquanto é desejável a suspensão de um mal, a qual se dá pelo não-ser. — Mas, a eliminação do mal só é desejável por privar de algum ser; e, portanto, este é que é desejável em si, ao passo que o não-ser o é só acidentalmente, enquanto o homem deseja um certo ser cuja privação não suporta. E, neste sentido, se diz que o não-ser é um bem acidentalmente.</p>
+    <p>RESPOSTA À QUARTA. — A vida, a sabedoria e causas semelhantes são desejadas enquanto atuais; o que em tudo isso se deseja é um certo ser. E assim, só o ser é desejável e, por conseqüência, só ele é bom.</p>
+
+    </div>
+  </div>
+  
+  <!-- Bloco de Explicação (a ser preenchido) -->
+  <div class="bloco-explicacao">
+    <div class="explicacao-label">💡 Explicação e Contexto</div>
+    <div class="explicacao-corpo" id="explicacao">
+    <p><em>Explicação será adicionada em breve.</em></p>
+
+    </div>
+  </div>
+  
+</main>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO INFERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="navegacao-inferior">
+  <div class="nav-buttons">
+    <a href="suma-pagina25.html" class="btn-primary">← Anterior</a>
+    <span class="pagina-atual">26</span>
+    <a href="suma-pagina27.html" class="btn-primary">Próxima →</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  RODAPÉ                                                  -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<footer class="suma-footer">
+  <p>Suma Teológica · São Tomás de Aquino | Biblioteca Lux Fidei</p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Questão 76, Artigo 5 — ― Se a alma intelectiva deve estar unida a um corpo humano. | Suma Teológica</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+    --cor-fundo: #f5f0e8;
+    --cor-pagina: #fff;
+    --cor-texto: #2c1f17;
+    --cor-dourado: #d4af37;
+    --cor-roxo: #5b2c83;
+    --sombra: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cor-fundo);
+    color: var(--cor-texto);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CABEÇALHO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-header {
+    background: linear-gradient(135deg, #1a1a1a, #2c241b);
+    color: #f5f0e8;
+    padding: 32px 20px 24px;
+    text-align: center;
+    position: relative;
+}
+
+.voltar-index {
+    position: absolute;
+    top: 16px;
+    left: 20px;
+    color: var(--cor-dourado);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: opacity 0.2s;
+}
+
+.voltar-index:hover {
+    opacity: 0.8;
+}
+
+.suma-header h1 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.info-pagina {
+    display: inline-block;
+    background: rgba(212, 175, 55, 0.15);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    color: var(--cor-dourado);
+    margin-top: 8px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-topo {
+    background: #fff;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    gap: 10px;
+}
+
+.btn-nav {
+    display: inline-flex;
+    align-items: center;
+    padding: 9px 18px;
+    background: var(--cor-roxo);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.btn-nav:hover {
+    background: #4a246a;
+    transform: translateY(-1px);
+}
+
+.desabilitado {
+    background: #ddd !important;
+    color: #999 !important;
+    pointer-events: none;
+}
+
+.info-centena {
+    font-size: 0.85rem;
+    color: #888;
+    font-weight: 500;
+    padding: 0 10px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CONTEÚDO PRINCIPAL                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.pagina-conteudo {
+    flex: 1;
+    max-width: 860px;
+    width: 100%;
+    margin: 36px auto;
+    padding: 0 20px;
+}
+
+.bloco-texto {
+    background: var(--cor-pagina);
+    padding: 48px 44px;
+    border-radius: 12px;
+    box-shadow: var(--sombra);
+    position: relative;
+    margin-bottom: 24px;
+}
+
+.bloco-texto::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 20px;
+    bottom: 20px;
+    width: 4px;
+    background: linear-gradient(to bottom, var(--cor-dourado), var(--cor-roxo));
+    border-radius: 0 4px 4px 0;
+}
+
+.bloco-titulo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.3rem;
+    color: var(--cor-roxo);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e8dfd0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pagina-corpo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.1rem;
+    line-height: 1.95;
+    color: #3d3226;
+    text-align: justify;
+}
+
+.pagina-corpo p {
+    margin-bottom: 1.3em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  BLOCO DE EXPLICAÇÃO                                        */
+/* ────────────────────────────────────────────────────────── */
+
+.bloco-explicacao {
+    background: linear-gradient(135deg, #fffdf5, #faf5eb);
+    border-left: 5px solid var(--cor-dourado);
+    padding: 32px 40px;
+    border-radius: 0 12px 12px 0;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    margin-bottom: 24px;
+}
+
+.explicacao-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--cor-dourado);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 14px;
+}
+
+.explicacao-corpo {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #4a3c2c;
+}
+
+.explicacao-corpo p {
+    margin-bottom: 1em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO INFERIOR                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-inferior {
+    max-width: 860px;
+    width: 100%;
+    margin: 0 auto 40px;
+    padding: 0 20px;
+}
+
+.nav-buttons {
+    background: #fff;
+    padding: 18px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    box-shadow: var(--sombra);
+}
+
+.btn-primary {
+    flex: 1;
+    text-align: center;
+    padding: 13px 16px;
+    background: linear-gradient(135deg, var(--cor-roxo), #7a3eb5);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(91, 44, 131, 0.3);
+}
+
+.pagina-atual {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--cor-dourado);
+    min-width: 50px;
+    text-align: center;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RODAPÉ                                                     */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-footer {
+    background: #1a1a1a;
+    color: #888;
+    text-align: center;
+    padding: 22px 20px;
+    margin-top: auto;
+    font-size: 0.85rem;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RESPONSIVIDADE                                             */
+/* ────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+    .suma-header h1 {
+        font-size: 1.4rem;
+    }
+    
+    .bloco-texto {
+        padding: 28px 18px;
+    }
+    
+    .bloco-explicacao {
+        padding: 22px 18px;
+    }
+    
+    .navegacao-topo {
+        flex-wrap: wrap;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CABEÇALHO                                               -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="suma-header">
+  <a href="../../index.html" class="voltar-index">← Índice</a>
+  <h1>Suma Teológica</h1>
+  <p style="opacity:0.8; font-style:italic; margin-top:4px;">São Tomás de Aquino</p>
+  <span class="info-pagina">Página 372 de 3000</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO SUPERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<nav class="navegacao-topo">
+  <a href="suma-pagina371.html" class="btn-nav">← Anterior</a>
+  <span class="info-centena">Pág. 372/3000</span>
+  <a href="suma-pagina373.html" class="btn-nav">Próxima →</a>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CONTEÚDO PRINCIPAL                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<main class="pagina-conteudo">
+  
+  <!-- Texto Original -->
+  <div class="bloco-texto">
+    <div class="bloco-titulo">
+      <span>📜</span>
+      Questão 76, Artigo 5 — ― Se a alma intelectiva deve estar unida a um corpo humano.
+    </div>
+    <div class="pagina-corpo">
+    <p>(II. Sent., dist. 1, q. 2, a. 5; De Malo, q. 5, a. 5; Qu. De Anima, a. 8). O quinto discute-se assim. ― Parece que a alma intelectiva não deve estar unida a um corpo humano. 1. ― Pois, a matéria deve ser proporcionada à forma. Ora, a alma intelectiva é forma incorruptível. Logo, não deve estar unida a um corpo corruptível. 2. Demais. ― A alma intelectiva é uma forma imaterial em sumo grau; e a prova é que tem operações que não participam da matéria corpórea. Ora, quanto mais sutil é o corpo tanto menos tem de material. Logo, a alma deveria estar unida a um corpo sutilíssimo, como o fogo, e não a um corpo misto e, sobretudo, terrestre. 3. Demais. ― Sendo a forma o princípio da espécie, de uma só forma não podem provir diversas espécies. Ora, a alma intelectiva é forma una. Logo, não deve estar unida a um corpo composto de partes de espécies dessemelhantes. 4. Demais. ― Uma forma mais perfeita deve estar unida a um corpo mais perfeito. Ora, a alma intelectiva é a mais perfeita das almas. Se pois, os corpos dos outros animais têm proteções naturais, como os pêlos, que lhes servem de vestes, e as unhas, de calçado; e se têm, também, armas naturais, como as unhas, os dentes e os chifres; conclui-se que a alma intelectiva não deveria estar unida a um corpo tão imperfeito, privado de tais auxílios.</p>
+    <p>Mas, em contrário, diz o Filósofo: a alma é o ato do corpo físico orgânico tendo a vida em potência. SOLUÇÃO. ― Não existindo a forma pela matéria, mas, antes, a matéria pela forma, deve-se buscar, na forma, a razão de existir a matéria de tal ou tal modo, e não inversamente. Ora, a alma intelectiva, como já se estabeleceu antes (q. 55, a. 2), tem por ordem da natureza, o grau ínfimo, entre as substâncias intelectuais; pois, não tendo naturalmente infuso o conhecimento da verdade, como os anjos, deve hauri-la nas coisas divisíveis, por via dos sentidos, como diz Dionísio. Ora, a natureza não falta com o necessário a nenhum ser. E, por isso, a alma intelectiva deve ter não só a faculdade de inteligir, mas também a de sentir. E, como a ação dos sentidos não se realiza sem o instrumento corpóreo, é necessário esteja a alma intelectiva unida a um corpo, que possa ser o órgão conveniente dos sentidos. Ora, é necessário que o órgão do tacto seja o meio entre os contrários que ele apreende, a saber, o cálido e o frio, úmido e o seco e semelhantes; por isso, o tacto é potencial em relação a eles e pode senti-los. Donde, quanto maior igualdade de compleição tiver, tanto mais capaz de perceber será. Mas, a alma intelectiva tem, da maneira a mais completa, a virtude sensitiva, porque o inferior preexiste, mais perfeitamente, no superior, como diz Dionísio. Por onde, é necessário seja misto o corpo ao qual está unida a alma intelectiva, e possuindo, entre todos os outros, maior unidade de compleição. E é por isso que, entre todos os outros animais, o homem tem o melhor tacto; e, dentre os homens, os que têm melhor tacto têm melhor intelecto, sendo a prova que, os que são delicados de carne vemos serem bem dotados de inteligência, como diz o Filósofo.</p>
+    <p>DONDE A</p>
+    <p>RESPOSTA À PRIMEIRA OBJEÇÃO. . Talvez alguém quisesse responder a esta objeção, dizendo que o corpo do homem era incorruptível, antes do pecado. ― Mas essa resposta não seria suficiente; porque o corpo do homem era imortal, antes do pecado, não por natureza, mas pela graça divina; pois, do contrário, o pecado não o privaria da imortalidade, como não privou os demônios. ― E, portanto, deve-se responder diferentemente, que, na matéria, há uma dupla condição: uma escolhida para torná- la apta à forma, outra resultante necessariamente da disposição anterior. Assim, o artífice, para a forma da serra, escolhe matéria férrea, apta para cortar corpos duros; mas resulta necessariamente da matéria, que os dentes da serra possam embotar-se e ser roídos pela ferrugem. Assim, pois, à alma intelectiva é necessário um corpo de compleição uniforme. E, quanto a ser corruptível, isso resulta necessariamente da matéria. ― E, se alguém dissesse que Deus poderia ter evitado essa necessidade, responde-se que, na constituição das coisas naturais, não se considera o que Deus poderia fazer, mas sim o que exige a natureza das coisas, como diz Agostinho. Contudo, Deus proviu, ministrando, com o dom da graça, remédio contra a morte.</p>
+    <p>RESPOSTA À SEGUNDA. ― À alma intelectiva não é necessário o corpo para a operação intelectual em si mesma, mas para a virtude sensitiva, que exige um órgão de compleição uniforme. Por onde, é necessário seja a alma intelectiva unida ao corpo humano e não ao simples elemento ou ao corpo misto, no qual seria excessivo, quantitativamente, o fogo e não poderia haver uniformidade de compleição, por causa dessa virtude ígnea excessiva. Ora, o corpo humano, de uniforme compleição, tem uma certa dignidade, por estar longe dos contrários; e, por aí, assimila-se, de algum modo, ao corpo celeste.</p>
+    <p>RESPOSTA À TERCEIRA. ― As partes do animal, como os olhos, as mãos, a carne, os ossos e semelhantes, não estão especificamente no animal, mas sim o todo; e, por isso, propriamente falando, não se pode dizer que pertençam a espécies diferentes mas sim, a disposições diferentes. Ora, sendo a alma intelectiva, embora una em essência, múltipla em virtudes; por causa da sua perfeição, precisa, para as suas diversas operações, de disposições diversas, nas partes do corpo ao qual está unida. Por isso, vemos que a diversidade das partes é maior nos animais perfeitos do que nos imperfeitos e, nestes, que nas plantas.</p>
+    <p>RESPOSTA À QUARTA. ― A alma intelectiva, sendo compreensiva dos universais, tem faculdade para infinitas causas. E, por isso, a natureza não lhe podia estabelecer determinados conhecimentos naturais, ou ainda, determinados auxílios de defesa ou de proteção, como para os outros animais, cujas almas tem apreensão e virtudes determinadas para causas particulares. Mas, em lugar de tudo isso, o homem tem naturalmente a razão; e as mãos, órgãos dos órgãos, e com elas pode preparar para si instrumentos de modos infinitos e com infinitos efeitos.</p>
+
+    </div>
+  </div>
+  
+  <!-- Bloco de Explicação (a ser preenchido) -->
+  <div class="bloco-explicacao">
+    <div class="explicacao-label">💡 Explicação e Contexto</div>
+    <div class="explicacao-corpo" id="explicacao">
+    <p><em>Explicação será adicionada em breve.</em></p>
+
+    </div>
+  </div>
+  
+</main>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO INFERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="navegacao-inferior">
+  <div class="nav-buttons">
+    <a href="suma-pagina371.html" class="btn-primary">← Anterior</a>
+    <span class="pagina-atual">372</span>
+    <a href="suma-pagina373.html" class="btn-primary">Próxima →</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  RODAPÉ                                                  -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<footer class="suma-footer">
+  <p>Suma Teológica · São Tomás de Aquino | Biblioteca Lux Fidei</p>
+</footer>
+
+</body>
+</html>

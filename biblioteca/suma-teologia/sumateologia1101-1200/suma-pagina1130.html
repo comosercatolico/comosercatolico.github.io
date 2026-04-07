@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Questão 102, Artigo 4 — — Se se pode dar razão suficiente das cerimônias da lei antiga | Suma Teológica</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+    --cor-fundo: #f5f0e8;
+    --cor-pagina: #fff;
+    --cor-texto: #2c1f17;
+    --cor-dourado: #d4af37;
+    --cor-roxo: #5b2c83;
+    --sombra: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cor-fundo);
+    color: var(--cor-texto);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CABEÇALHO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-header {
+    background: linear-gradient(135deg, #1a1a1a, #2c241b);
+    color: #f5f0e8;
+    padding: 32px 20px 24px;
+    text-align: center;
+    position: relative;
+}
+
+.voltar-index {
+    position: absolute;
+    top: 16px;
+    left: 20px;
+    color: var(--cor-dourado);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: opacity 0.2s;
+}
+
+.voltar-index:hover {
+    opacity: 0.8;
+}
+
+.suma-header h1 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.info-pagina {
+    display: inline-block;
+    background: rgba(212, 175, 55, 0.15);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    color: var(--cor-dourado);
+    margin-top: 8px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-topo {
+    background: #fff;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    gap: 10px;
+}
+
+.btn-nav {
+    display: inline-flex;
+    align-items: center;
+    padding: 9px 18px;
+    background: var(--cor-roxo);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.btn-nav:hover {
+    background: #4a246a;
+    transform: translateY(-1px);
+}
+
+.desabilitado {
+    background: #ddd !important;
+    color: #999 !important;
+    pointer-events: none;
+}
+
+.info-centena {
+    font-size: 0.85rem;
+    color: #888;
+    font-weight: 500;
+    padding: 0 10px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CONTEÚDO PRINCIPAL                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.pagina-conteudo {
+    flex: 1;
+    max-width: 860px;
+    width: 100%;
+    margin: 36px auto;
+    padding: 0 20px;
+}
+
+.bloco-texto {
+    background: var(--cor-pagina);
+    padding: 48px 44px;
+    border-radius: 12px;
+    box-shadow: var(--sombra);
+    position: relative;
+    margin-bottom: 24px;
+}
+
+.bloco-texto::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 20px;
+    bottom: 20px;
+    width: 4px;
+    background: linear-gradient(to bottom, var(--cor-dourado), var(--cor-roxo));
+    border-radius: 0 4px 4px 0;
+}
+
+.bloco-titulo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.3rem;
+    color: var(--cor-roxo);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e8dfd0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pagina-corpo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.1rem;
+    line-height: 1.95;
+    color: #3d3226;
+    text-align: justify;
+}
+
+.pagina-corpo p {
+    margin-bottom: 1.3em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  BLOCO DE EXPLICAÇÃO                                        */
+/* ────────────────────────────────────────────────────────── */
+
+.bloco-explicacao {
+    background: linear-gradient(135deg, #fffdf5, #faf5eb);
+    border-left: 5px solid var(--cor-dourado);
+    padding: 32px 40px;
+    border-radius: 0 12px 12px 0;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    margin-bottom: 24px;
+}
+
+.explicacao-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--cor-dourado);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 14px;
+}
+
+.explicacao-corpo {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #4a3c2c;
+}
+
+.explicacao-corpo p {
+    margin-bottom: 1em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO INFERIOR                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-inferior {
+    max-width: 860px;
+    width: 100%;
+    margin: 0 auto 40px;
+    padding: 0 20px;
+}
+
+.nav-buttons {
+    background: #fff;
+    padding: 18px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    box-shadow: var(--sombra);
+}
+
+.btn-primary {
+    flex: 1;
+    text-align: center;
+    padding: 13px 16px;
+    background: linear-gradient(135deg, var(--cor-roxo), #7a3eb5);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(91, 44, 131, 0.3);
+}
+
+.pagina-atual {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--cor-dourado);
+    min-width: 50px;
+    text-align: center;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RODAPÉ                                                     */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-footer {
+    background: #1a1a1a;
+    color: #888;
+    text-align: center;
+    padding: 22px 20px;
+    margin-top: auto;
+    font-size: 0.85rem;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RESPONSIVIDADE                                             */
+/* ────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+    .suma-header h1 {
+        font-size: 1.4rem;
+    }
+    
+    .bloco-texto {
+        padding: 28px 18px;
+    }
+    
+    .bloco-explicacao {
+        padding: 22px 18px;
+    }
+    
+    .navegacao-topo {
+        flex-wrap: wrap;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CABEÇALHO                                               -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="suma-header">
+  <a href="../../index.html" class="voltar-index">← Índice</a>
+  <h1>Suma Teológica</h1>
+  <p style="opacity:0.8; font-style:italic; margin-top:4px;">São Tomás de Aquino</p>
+  <span class="info-pagina">Página 1130 de 3000</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO SUPERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<nav class="navegacao-topo">
+  <a href="suma-pagina1129.html" class="btn-nav">← Anterior</a>
+  <span class="info-centena">Pág. 1130/3000</span>
+  <a href="suma-pagina1131.html" class="btn-nav">Próxima →</a>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CONTEÚDO PRINCIPAL                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<main class="pagina-conteudo">
+  
+  <!-- Texto Original -->
+  <div class="bloco-texto">
+    <div class="bloco-titulo">
+      <span>📜</span>
+      Questão 102, Artigo 4 — — Se se pode dar razão suficiente das cerimônias da lei antiga
+    </div>
+    <div class="pagina-corpo">
+    <p>relativas às coisas sagradas. (Ad Coloss., cap. II, lect. IV; Ad Hebr., cap. IX,lect. I). O quarto discute-se assim. — Parece que das cerimônias da lei antiga, relativas às coisas sagradas, não se pode dar razão suficiente.</p>
+    <p>1. — Pois, diz Paulo (At 17, 24): Deus, que fez o mundo, e tudo o que nele há, sendo ele o Senhor do céu e da terra, não habita em templos feitos pelos homens. Logo, a lei antiga institui inconvenientemente, para o culto de Deus, o tabernáculo ou templo. 2. Demais. — A estrutura da lei antiga não foi mudada senão por Cristo. — Ora, o tabernáculo designava a estrutura dessa lei. Logo, não devia ser mudado pela edificação de nenhum templo. 3. Demais. — A lei divina deve sobretudo induzir os homens ao culto divino. Ora, para o desenvolver-se do culto divino é necessário fazerem-se muitos altares e templos, como claramente se vê na lei nova. Logo, mesmo no regime da lei antiga, não devia haver só um templo ou tabernáculo, mas muitos. 4. Demais. — O tabernáculo ou templo ordenava-se ao culto de Deus. Ora, em Deus devemos venerar sobretudo a unidade e a simplicidade. Logo, não era conveniente que o tabernáculo ou templo se distinguisse por certos véus. 5. Demais. — A virtude do primeiro motor, que é Deus, se manifesta primeiro na parte do Oriente, onde começa o primeiro movimento. Ora, o tabernáculo foi instituído para a adoração de Deus. Logo, devia estar voltado mais para o Oriente que para o Ocidente. 6. Demais. — O Senhor mandou (Ex 20, 4) não se fizesse imagem de escultura, nem figura alguma. Logo, inconvenientemente se esculpiram, no tabernáculo ou templo, imagens de querubins. Semelhantemente, aí se viam, sem causa racional, a arca, o propiciatório, o candelabro, a mesa e o altar duplo. 7. Demais. — O Senhor mandou (Ex 20, 24): Far-me-eis um altar de terra. — E ainda (Ex 20, 26): Não subirás por degraus ao meu altar. Logo, inconvenientemente se mandou, depois, fazer um altar de ma- deira, ouro ou cobre, e de tanta altura, que só por degraus se podia subir a ele. Pois, diz a Escritura (Ex 27, 1-2): Farás também um altar de pau setim, o qual terá cinco côvados ao cumprimento e outros tantos de largura, e terá três côvados de alto, e o cobrirás de cobre. E (Ex 30, 1-3): Farás um altar de madeira de setim para queimar os perfumes. E o cobrirás de puríssimo ouro. 8. Demais. — Nas obras de Deus nada deve ser supérfluo, porque nem nas da natureza isso se dá. Ora, a um tabernáculo ou casa basta uma coberta. Logo, era inconveniente se lhe sobre-porem muitas cobertas, a saber: cortinas, cobertas de pele de cabra, peles de carneiro tintas de vermelho e peles tintas de roxo. 9. Demais. — A consagração exterior significava a interior, cujo sujeito é a alma. Logo, inconvenientemente era consagrado o tabernáculo e os seus vasos, que eram corpos inanimados. 10. Demais. — A Escritura diz (Sl 33, 2): Bendirei o Senhor em todo o tempo; seu louvor será semprena minha boca. Ora, as solenidades são instituídas para louvar a Deus. Logo, não era conveniente se estatuírem certos dias para realizar as solenidades. — De tudo isso resulta, que as cerimônias das coisas sagradas não tinham causas convenientes.</p>
+    <p>Mas, em contrário, diz o Apóstolo (Heb 8, 4): os que oferecem os dons segundo a lei servem de modelo e sombra das coisas celestiais; como foi respondido a Moisés quando estava para acabar o tabernáculo: Olha, disse, faze todas as coisas conforme o modelo que te foi mostrado no monte. Ora, é muito racional o que representa a imagem das coisas celestes. Logo, as cerimônias das coisas sagradas tinham causa racional.</p>
+    <p>SOLUÇÃO. — Todo o culto externo de Deus se ordena principalmente a os homens o reverenciarem. Ora, é próprio do afeto humano reverenciar menos o que é comum e sem distinção particular; e prestar mais reverência e admiração ao que tem alguma excelência e se distingue do comum. E daí vem ter o costume humano estabelecido, que os reis e os príncipes, que devem ser reverenciados pelos súbditos, sejam ornados de vestes mais preciosas e também possuam habitações mais amplas e mais belas. E por isso, era necessário fossem ordenados ao culto de Deus, certos tempos especiais, um tabernáculo especial, vasos especiais e ministros especiais, para assim provocarem o espírito dos homens à maior reverência d'Ele. — Semelhantemente, como já dissemos (a. 2; q. 100, a. 12; q. 101, a. 2), a estrutura da lei antiga tinha por fim figurar o mistério de Cristo. Ora, é forçoso seja algo de determinado aquilo que deve figurar alguma coisa; de modo que representa uma semelhança dela. Por onde, também era necessário se observassem certas disposições especiais concernentes ao culto de Deus.</p>
+    <p>DONDE A</p>
+    <p>RESPOSTA À PRIMEIRA OBJEÇÃO. — O culto de Deus implica duas condições: o Deus adorado e os homens que o adoram. Ora, Deus, que é adorado, não se encerra em nenhum lugar material e por isso, não era preciso se lhe construísse um tabernáculo especial ou um templo. Ao contrário, os homens que o adoram, são seres corpóreos; e, por causa deles, era necessário se construísse um tabernáculo especial ou um templo, para o culto de Deus. E isto por duas razões. — A primeira, que os homens, reunidos nesse lugar, com o pensamento de serem destinados a adorar a Deus, o fizessem com maior reverência. — A segunda, que a disposição desse templo ou do tabernáculo significasse algo de condescende com a excelência da divindade ou humanidade de Cristo. E é o que diz Salomão (1 Rs 8, 27): se o céu e céu dos céus te não podem compreender, quanto menos esta casa que eu edifiquei? E, em seguida acrescenta (1 Rs 8, 29-30): os teus olhos estejam abertos de noite e de dia sobre esta casa da qual disseste: O meu nome estará nela; para ouvires a oração do teu servo e do teu povo de Israel. Por onde é claro, que a casa do santuário não foi instituída para compreender a Deus, como se nela habitasse localmente;mas para que aí habitasse o nome de Deus. Isto é, para que o conhecimento de Deus se manifestasse pelo que se aí fazia e dizia; e para, pela reverência ao lugar, as orações se tornarem mais dignas de serem ouvidas, pela devoção dos que oravam.</p>
+    <p>RESPOSTA À SEGUNDA. — A estrutura da lei antiga, quanto ao seu cumprimento, não foi mudada antes de Cristo; mas só por Cristo isso se fez. Foi mudada, porém, quanto à condição do povo que ela regia. Pois, primeiro, esteve no deserto, sem morada certa; depois, teve várias guerras com as nações vizinhas; ultimamente, no tempo de Davi e de Salomão, viveu tempos tranqüilos. E então foi, pela primeira vez, edificado o templo no lugar designado por Abraão, por indicação divina, para se aí fazerem as imolações. Pois, como diz a Escritura (Gn 22, 2), o Senhor mandou a Abraão oferecesse o seu filho em holocausto sobre um dos montes que eu te mostrar; e depois disse (Gn 22, 14), que pôs por nome aquele lugar: O Senhor vê, quase, por previsão de Deus, fosse aquele lugar escolhido para o culto divino. Pelo que diz a Escritura (Dt 12, 5-6): Vireis ao lugar que o Senhor vosso Deus escolher e oferecereis os vossos holocaustos e vítimas. Ora, esse lugar, para a edificação do templo, não devia ser designado antes do tempo predito, por duas razões dadas pelo Rabbi Moisés. A primeira, para que os gentios se não apropriassem desse lugar. A segunda, para que não o destruíssem. A terceira enfim, para que qualquer das tribos não pretendesse tê-lo como seu lote, donde nascessem demandas e litígios. Por isso, não se devia edificar o templo enquanto não houvesse um rei, capaz de impedir esses litígios. E, antes dessa edificação, ordenava-se ao culto de Deus um tabernáculo portátil por diversos lugares, quase ainda não existente um lugar determinado para o culto divino. E esta é a razão literal da diversidade do tabernáculo e do templo. — A razão figurada pode ser que essas duas coisas significavam um duplo estado. O tabernáculo, que era mutável, significa o regime da vida presente também mutável. O templo, por seu lado, fixo e permanente, o regime da vida futura, absolutamente invariável. E por isto, na edificação do templo, diz a Escritura, que não se ouvia o som de martelo nem machado, para significar que toda atividade perturbadora era estranha ao estado futuro. Ou, o tabernáculo significava o regime da lei antiga; e o templo, construído por Salomão, o da lei nova. Por onde, na construção do tabernáculo, só os judeus trabalharam; ao passo que, na do templo, cooperavam também os tírios e sidónios, que eram gentios.</p>
+    <p>RESPOSTA À TERCEIRA. — A razão da unidade do templo ou do tabernáculo pode ser literal e figurada. — A literal era a exclusão da idolatria; porque os gentios atribuíam templos diversos aos diversos deuses. Por onde, para que se radicasse no espírito dos homens a fé na unidade divina, quis Deus se lhe oferecesse sacrifício só num lugar. Ademais disso, para assim mostrar que o culto material não lhe é em si mesmo aceito. Pelo que, impedia se oferecessem sacrifícios a cada passo e em toda parte. Ao contrário, o culto da lei nova, em cujo sacrifício está contida a graça espiritual, é, em si mesmo, aceito de Deus. Por isso, a lei nova admite a multiplicação dos altares e dos templos. Quanto ao pertencente ao culto espiritual de Deus, que consistia na doutrina da lei e dos profetas, havia ainda, na lei antiga, diversos lugares determinados, chamados sinagogas, em que o povo se reunia para louvar a Deus. Assim, chamam-se também agora igrejas os lugares em que para louvá-Lo, se congrega o povo cristão. Por onde, a nossa Igreja tomou o lugar do templo e da sinagoga; porque, sendo o seu sacrifício espiritual, não distinguimos agora o lugar do sacrifício do lugar da doutrina. — A razão figurada pode ser, que o templo e o tabernáculo significam a unidade da Igreja, militante, ou triunfante.</p>
+    <p>RESPOSTA À QUARTA. — Assim como a unidade do templo ou do tabernáculo representam a de Deus ou da Igreja, assim também, a distinção entre um e outro representa a distinção entre as coisas sujeitas a Deus, e que nos elevam a venerá-Lo. Pois, distinguiam-se no tabernáculo duas partes: a ocidental chamada o Santo dos Santos; e a oriental, chamada Santo. E, enfim, ante ele, havia o átrio. Ora, esta distinção se fundava em dupla razão. — Uma, pela qual o tabernáculo se ordenava ao culto de Deus. E assim, as diversas partes do mundo estavam figuradas nas duas partes do tabernáculo. Pois, a chamada Santo dos Santos simbolizava o mundo superior, que é o das substâncias espirituais; e a chamada Santo, o mundo corpóreo. Por onde, o Santo se separava do Santo dos Santos por um véu, pin- tado de quatro cores, símbolos dos quatro elementos. Essas eram: o bisso, símbolo da terra, porque o bisso, i. é, o linho nasce da terra; a púrpura, símbolo da água, porque a cor purpúrea era feita de certas conchas que se encontram no mar; o jacinto, que significava o ar, que tem cor de ouro; e a escarlata duas vezes tinta, que designava o fogo. E isto era assim porque a matéria dos quatro elementos é um impedimento que nos vela as substâncias incorpóreas. Por onde, no tabernáculo interior, i. é, no Santo dos Santos, só o sumo sacerdote entrava, e uma só vez no ano, para significar que a perfeição final do homem é a entrada no mundo espiritual. No tabernáculo exterior, i. é, no Santo, o sacerdote entrava todos os dias, não porém o povo, que tinha acesso só ao átrio. Porque as coisas corpóreas o povo pode percebê-las, mas as razões internas delas só os sapientes, refletindo, podem atingi-las. Quanto à razão figurada, o tabernáculo exterior, chamado Santo simboliza o regime da lei antiga, como diz o Apóstolo (Heb 9, 6 ss). Porque nele sempre entravam os sacerdotes para cumprirem o ofício de sacrificar. Enquanto o tabernáculo interior, chamado Santo dos Santos significa a glória celeste, ou também o regime espiritual da lei nova, que é um quase começo da glória futura, estado, em que Cristo nos introduziu. E era figurado pela entrada só do sumo sacerdote, uma vez no ano, no Santo dos Santos. — O véu, por seu lado, significava a ocultação dos sacrifícios antigos; e era ornado de quatro cores signifi- cativas. O bisso, símbolo da pureza da carne; a púrpura, dos sofrimentos que os santos padeceram por Deus; a escarlata duas vezes tinta, da dupla caridade para com Deus e o próximo; o jacinto, da meditação celeste. — Mas o povo e os sacerdotes tinham relações diferentes com a lei antiga. Pois, aquele assistia aos sacrifícios corporais que se ofereciam no átrio; ao passo que os sacerdotes meditavam na essência deles, com fé mais explícita nos mistérios de Cristo. Por isso entravam no tabernáculo exterior, que também estava separado do átrio por um véu, porque certas coisas, sobre o mistério de Cristo eram veladas ao povo e conhecidas dos sacerdotes. Mas não lhes eram plenamente reveladas, como depois, no Novo Testamento, conforme a Escritura (Ef 3, 5). RESPOSTA À QUINTA. — Os judeus adoravam com a cara voltada para o ocidente; o que foi introduzido na lei para excluir a idolatria, pois, todos os gentios, em reverência ao sol, adoravam voltados para o oriente. Donde o dizer a Escritura (Ez 8, 16), que certos tinham as costas voltadas para o templo do Senhor e as caras viradas para o oriente, e adoravam o sol nascendo. E era para excluir isso, que o tabernáculo tinha o Santo dos Santos voltado para o ocidente, para o adorarem voltados para esse ponto. — Quanto à razão figurada, pode ser que a estrutura do antigo tabernáculo se ordenava a significar a morte de Cristo, figurada pelo ocaso, conforme a Escritura (Sl 67, 5): Aquele que sobe sobre o ocidente, o Senhor é o seu nome. RESPOSTA À SEXTA. — Pode-se dar uma razão literal e, outra, figurada do que se continha no tabernáculo. — A literal é relativa ao culto divino. Ora, como já dissemos (ad 4), o tabernáculo interior, chamado Santo dos Santos, significa o mundo superior das substâncias espirituais. Por isso, três coisas continha esse tabernáculo: a arca do testamento, na qual havia uma urna de ouro, que continha o maná, e a vara de Aarão, que tinha florescido, e as tábuas do testamento, nas quais estavam escritos os dez preceitos do decálogo. — E essa arca estava situada entre dois querubins, olhando um para outro. — Sobre a arca havia uma tábua, chamada propiciatório, apoiada nas azas dos querubins, como se fosse levada por eles, e levando a imaginar que essa tábua fosse o assento de Deus. E se chamava propiciatório, querendo significar que Deus, daí, se tornava propício ao povo, pelas preces do sumo sacerdote. E era conduzido pelos querubins, como sendo os que seguem a Deus. Quanto à arca do testamento, era um como escabelo de quem estava sentado no propiciatório. Ora, essas três coisas simbolizam três outras existentes no referido mundo superior. — Deus, que está acima de todas as coisas e é incompreensível a todas as criaturas. E por isso, não punham nenhuma figura que lhe representasse a invisibilidade, mas sim, a do seu assento, porque concebemos criatura enquanto sujeita a Deus, como o assento a quem se assenta. — Há também, nesse mundo superior, substâncias espirituais chamadas anjos. E estes eram simbolizados pelos dois querubins, olhando um para o outro, para designar a concórdia dos anjos entre si, conforme àquilo da Escritura (Jó 25, 2): aquele que mantém a concórdia nas alturas. Também não havia um só querubim, para que se de- signasse a multidão dos espíritos celestes, e se impedisse o culto deles aqueles a quem foi ordenado adorassem um só Deus. — Demais, nesse mundo inteligível, estão de certo modo, encerradas as razões eternas do que neste mundo fazemos, assim como as razões dos efeitos estão encerradas nas suas causas, e, no artífice, as das coisas artificiadas. O que é simbolizado pela arca, que continha três coisas representativas das três coisas humanas de maior valor, a saber: a sabedoria, simbolizada nas tábuas do testamento; o poder governamental, na vara de Aarão; e a vida, representada pelo maná, que foi o sustento dela. Ou ainda, essas três coisas significam os três atributos de Deus: as tábuas, a sabedoria; a vara, o poder; o maná, a bondade, quer pela sua doçura, quer porque Deus o deu ao seu povo, por misericórdia, sendo, por isso, conservado, em memória dessa misericórdia. Essas três coisas também estão figuradas na visão de Isaías. Viu ele ao Senhor sentado num sólio excelso e elevado, assistido de Serafins, e o templo cheio da glória de Deus. Por isso, clamavam os Serafins: Cheia está toda a terra da sua glória (Is 6, 1-3). E assim, as imagens dos Serafins não foram aí postas para receberem culto, o que era proibido pelo primeiro preceito da lei, mas como sinal de ministério, conforme dissemos. Por seu lado, o tabernáculo exterior, significativo do século presente, também continha três coisas: o altar do timiama, posto diretamente contra a arca; a mesa da proposição, na qual se punham os doze pães, colocada na parte norte; e o candelabro, na parte sul. E essas três coisas são consideradas como correspondentes às três encerradas na arca, representando, mas mais manifestamente, o mesmo que elas. Pois é necessário seja, das razões eternas das coisas, dada mais clara manifestação da existência que têm na mente divina e dos anjos, para poderem os sábios conhecê-las, sábios simbolizados nos sacerdotes que entram no tabernáculo. — Por isso, o candelabro designa como em sinal sensível, a sabedoria, expressa nas tábuas por palavras inteligíveis. — O altar do timiama, o ofício dos sacerdotes, a quem pertence trazer o povo para Deus; o que também é significado pela vara. Pois, nesse altar se queimava o timiama do bom odor, que significa a santidade do povo, agradável a Deus; porque, como diz a Escritura (Ap 8, 3), o fumo dos aromas exprime as justificações dos santos. A dignidade sacerdotal é significada, na arca, pela vara, e no tabernáculo exterior, pelo altar do timiama. Porque o sacerdote é o mediador entre Deus e o povo, que governa por poder divino, simbolizado pela vara; e oferecia a Deus, quase no altar do timiama, o fruto do seu governo, i. é, a santidade do povo. — A mesa, bem como o maná, significam o sustento temporal da vida; mas o que estava naquela era um alimento mais comum e grosseiro, ao passo que o maná era mais suave e delicado. O candelabro estava convenientemente colocado na parte austral, e a mesa, na aqui- lonar; porque aquela é a parte direita do mundo, ao passo que esta é a esquerda, como diz Aristóteles. A sabedoria pertencia à parte direita, assim como os outros bens espirituais; enquanto que a nutrição temporal, à esquerda, conforme a Escritura (Pr 3, 16): Na sua esquerda, as riquezas e a glória. Enfim, o poder sacerdotal é um meio termo entre as coisas temporais e a sabedoria espiritual, pois por ela é dispensada a sabedoria espiritual e as coisas temporais. Mas também se pode dar dessas coisas outra razão, mais literal. — Na arca estavam contidas as tábuas da lei, para impedir o esquecimento dela; donde o dizer a Escritura (Ex 24, 12): dar-te-ei duas tábuas de pedra e a lei e os mandamentos, que eu escrevi para ensinares os filhos de Israel. — A vara de Aarão estava aí colocada para reprimir a dissensão entre o povo e o sacerdócio do mesmo, conforme a Escritura (Nm 17, 10):Torna a levar a vara de Aarão para o tabernáculo do testemunho, para se guardar ali em memória dos rebeldes filhos de Israel. — O maná era conservado na arca, para comemorar o benefício que Deus fez aos filhos de Israel no deserto, e por isso, diz a Escritura (Ex 16, 32): Enche um gomor dele e guarde-se para todas as gerações futuras, para que saibam qual foi o manjar com que eu vos sustentei no deserto. — O candelabro foi instituído para a honorificência do tabernáculo; pois importa à magnificência da casa o ser bem iluminada. Tinha sete ramos, como diz Josefo, para significar os sete planetas, que iluminam todo o mundo. E foi colocado na parte austral, porque dela é que se movem os planetas, em relação a nós. — O altar, do timiama foi instituído para que sempre houvesse no tabernáculo o fumo do bom odor, quer para veneração do tabernáculo, quer também para remédio contra o mau cheiro, que necessariamente resultava do sangue derramado e da imolação dos animais. Pois, o fétido é desprezado como vil; ao passo que todos apreciam muito o que tem bom odor. — A mesa foi posta para significar que os sacerdotes, servidores do templo, deviam nele se alimentar. Por isso, só eles podiam comer dos doze pães superpostos na mesa, em memória das doze tribos, conforme se lê na Escritura (Mt 12, 4). E não estava colocada diretamente no meio, diante do propiciatório, para excluir o rito da idolatria. Porque os gentios, nos sacrifícios à lua, colocavam a mesa em frente do ídolo da lua; donde o dizer a Escritura (Jr 7, 18): as mulheres misturam a manteiga para fazerem tortas à rainha do céu. — O átrio, fora do tabernáculo, continha o altar dos holocaustos, onde se ofereciam a Deus, em sacrifício, das coisas pertencentes ao povo. E por isso, este podia ficar no átrio, e oferecia os seus bens a Deus, por mãos dos sacerdotes. Mas só os sacerdotes, a quem competia oferecer o povo a Deus, é que podiam ter acesso ao altar interior, no qual era oferecida a devoção e a santidade do povo. E esse altar estava colocado no átrio, fora do tabernáculo, para impedir o culto da idolatria; pois os gentios levantavam altares, dentro dos templos, para imolar aos ídolos. Quanto à razão figurada de todas essas coisas, pode ser descoberta na relação do tabernáculo com Cristo, a quem figura. Por onde, devemos considerar que, para designar a imperfeição das figuras legais, instituíram-se, no templo, diversas figuras significativas de Cristo. — Assim, é significado pelo propiciatório, porque ele é a propiciação pelos nossos pecados, como diz a Escritura (1 Jo 2, 2). E era conveniente fosse o propi- ciatório levado pelos Querubins, porque de Cristo foi escrito (Heb 1, 6): E todos os anjos de Deus o adorem. — Também a arca significa a Cristo, porque, assim como era construída de pau setim, assim, o corpo de Cristo é composto de membros puríssimos. Era dourada, porque Cristo é cheio de sabedoria e caridade, simbolizadas pelo ouro. Dentro da arca havia uma urna de ouro, isto é, a alma santa, que encerra o maná, i. é, toda a plenitude da divindade. E ainda nela estava a vara, i. é, o poder sacerdotal, porque Cristo foi constituído pontífice eterno. Também nelas estavam as tábuas do testamento, para significar que Cristo mesmo é legislador. — Demais, Cristo é simbolizado pelo candelabro, porque, ele próprio o disse (Jo 8, 12): Eu sou a luz do mundo. As sete lâmpadas significam os sete dons do Espírito Santo. — É também simbolizado pela mesa, porque Ele é o alimento espiritual, conforme a Escritura (Jo 6, 41-51): Eu sou o pão vivo; os doze pães significam os doze apóstolos ou a doutrina deles. Ou então, o candelabro e a mesa podem significar a doutrina e a fé da Igreja, que ilumina e refaz ao mesmo tempo. Também Cristo é simbolizado no duplo altar, o das holocaustos e o do timiama. Porque, por Ele, devemos oferecer a Deus todas as obras virtuosas, tanto aquelas pelas quais mortificamos a carne, como que oferecidas no altar dos holocaustos; como as que, com maior perfeição da mente, pelos desejos espirituais dos perfeitos, oferecemos a Deus em Cristo, como que no altar do timiama, conforme a Escritura (Heb 13, 15): Ofereçamos, pois, por ele a Deus sem cessar sacrifício de louvor. RESPOSTA À SÉTIMA. — O Senhor mandou se construísse um altar onde se deviam oferecer os sacrifícios e os dons, em honra de Deus e para sustento dos ministros, que serviam no tabernáculo. E sobre a construção desse altar, o Senhor deu duplo preceito. Um, no princípio da lei, quando mandou que fizessem um altar de terra, ou ao menos, de pedras não lavradas; e demais, que não fizessem um altar elevado onde devessem subir por degraus. E isto para detestarem o culto da idolatria. Pois os gentios construíam aos ídolos altares ornados e altos, onde acreditavam haver algo da santidade e da divindade. Razão pela qual também o Senhor mandou (Ex 20, 24 ss): Não plantarás bosque nem árvore alguma ao pé do altar do Senhor teu Deus; porque os idólatras costumavam sacrificar debaixo das árvores, por causa da amenidade do lugar e da sombra. — E destes preceitos também há uma razão figurada. Pois, em Cristo, que é o nosso altar, devemos admitir a verda- deira natureza da carne, quanto à sua humanidade — e isso significa o construir um altar de terra; e também, quanto à divindade, devemos admitir nele a igualdade com o Pai — e isso significa o não subir por degraus ao altar. E nem devemos, ao lado de Cristo, admitir a doutrina dos gentios, que provoca a lascívia. Feito porém o tabernáculo em honra de Deus, não eram para temer tais ocasiões de idolatria. Por isso, o Senhor mandou se fizesse, para os holocaustos, um altar de bronze, que estivesse patente a todo o povo; e de ouro, o altar do timiama, que só os sacerdotes viam. Assim, não era tanta a preciosidade do bronze, que provocasse o povo a alguma idolatria. Mas, a Escritura dá como razão do preceito (Ex 20, 26) — não subirás por degraus ao meu altar — o que logo acrescenta: para que se não descubra a tua torpeza. Por onde, devemos considerar que também isso foi instituído para excluir a idolatria; pois, nos sacrifícios a Priapo, os gentios descobriam as partes pudendas. Mas depois, foi ordenado aos sacerdotes usassem calções que lhes cobrissem essas partes. E, assim, sem perigo, podia ser determinada uma altura tal do altar que, para oferecer os sacrifícios, a ele subissem por uns degraus de madeira, não permanentes, mas trazidos na hora do sacrifício. RESPOSTA À OITAVA. — O corpo do tabernáculo constava de umas tábuas eretas no sentido do comprimento, cobertas por dentro de umas cortinas de quatro cores variadas, o saber, de bisso retorcido, de cor de jacinto, de púrpura e de escarlata tinta duas vezes. Mas, essas cortinas cobriam só os lados do tabernáculo. No teto do mesmo havia uma coberta de peles tintas de roxo; e, sobre esta, outra de peles de carneiro tintas de vermelho; e por cima uma terceira, de umas peles de cabra, que cobriam, não só o teto do tabernáculo, mas desciam até a terra e cobriam, exteriormente, as tábuas do mesmo. Ora, desta coberta, a razão literal, em comum, era servir de ornato e proteção do tabernáculo, de modo que este fosse reverenciado. Em especial, porém, segundo alguns, as cortinas designam o céu sidéreo, cheio de diversas e variegadas estrelas. As peles de cabra, as águas que estão sobre o firmamento; as tintas de vermelho, o céu empíreo, em que estão os anjos; as tintas de roxo, o céu da santa Trindade. A razão figurada dessas coisas é a seguinte. As tábuas, de que o tabernáculo era construído, significavam os fiéis de Cristo, de que é a Igreja construída. O tabernáculo era coberto por dentro de tábuas de quatro cores, porque os fiéis são ornados interiormente de quatro virtudes. Pois, como diz a Glosa, o bisso retorcido significa a carne resplendente pela castidade; o jacinto, a mente desejosa das coisas celestes; a púrpura, a carne sujeita ao sofrimento; a escarlata tinta duas vezes, a mente refulgente entre os sofrimentos por amor de Deus e o amor do próximo. As cobertas do teto designam os prelados e os doutores, que devem brilhar pela vida repassada das coisas celestes, o que é simbolizado pelas peles de cor de jacinto; pela prontidão para o martírio, simbolizado pelas de escarlata tintas duas vezes; pela austeridade de vida e a paciência nas adversidades, simbolizado pelas de cabra, que estavam expostas aos ventos e às chuvas, como diz a Glosa. RESPOSTA À NONA. — A santificação do tabernáculo e dos seus vasos tem uma causa literal, que era fazer com que fossem tidos na maior reverência, como destinados que eram ao culto divino por essa consagração. — A razão figurada é que essa santificação significa a espiritual, do tabernáculo vivo, i. é, dos fiéis, que constituem a Igreja de Cristo. RESPOSTA À DÉCIMA. — Na lei antiga havia sete solenidades temporais e uma contínua, como se pode coligir da Escritura (Nm 28; 29). — Havia uma festividade quase contínua, porque todos os dias, de manhã e de tarde, era imolado o cordeiro. E essa contínua festividade de um sacrifício perene representa a perpetuidade da beatitude divina. Das festas temporais, a primeira era a que se renovava em cada semana. E essa era a solenidade do Sábado, celebrada em memória da criação das coisas, como já se disse. — Outra a que se repetia cada mês, era a da Neomenia, celebrada para comemorar a obra do governo divino. Pois, as coisas do nosso mundo inferior variam principalmente conforme o movimento da lua. Por isso, celebrava-se essa festa na lua nova; e não no plenilúnio, para evitar o culto dos idólatras, que, nesse tempo, prestavam à lua. — E como esses dois referidos benefícios são comuns a todo o gênero humano, essas festas se repetiam mais freqüentemente. As outras cinco festas celebravam-se uma vez por ano, e nelas se rememoravam os benefícios especialmente feitos ao povo judeu. — Assim, celebrava-se a festa da Fase, no primeiro mês, para comemorar o benefício da libertação do Egito. — A de Pentecostes, depois de cinqüenta dias, para rememorar o benefício da lei que lhes foi dada. As outras três festas eram celebradas no sétimo mês, que, como o sétimo dia, era quase inteiramente solene, para os judeus. — Assim, no primeiro dia do sétimo mês, havia a festa das Trombetas, em memória da liberação de Isaac, quando Abraão encontrou o carneiro preso pelos chifres, o qual representavam pelas cornetas em que buzinavam. — E era a festa das Trombetas um quase convite para se prepararem para a festa seguinte, celebrada no décimo dia. Era essa a da Expiação, em memória do benefício de ter-se Deus tornado propício ao povo, a pedido de Moisés, depois do pecado da adoração do bezerro. — A seguir, celebravam a da Scenopegia, i. é, dos Tabernáculos, durante sete dias, para comemorar o benefício da divina proteção, guiando-os pelo deserto, onde habitaram em tabernáculos. Por isso, nesse dia, deviam tomar o fruto da árvore mais formosa, i. é, do limoeiro; e uma árvore de densas folhas, i. é, a murta, cujas folhas são odoríferas; e folhas de palmeira; e salgueiros da torrente, que conservam por muito tempo o verdor. Tudo isso se encontra na terra da promissão, e era para significar que Deus os conduziu através da terra árida do deserto, para uma terra deliciosa. — No oitavo dia celebrava-se outra festa, a da Congregação e do Ajuntamento, em que se recebia do povo o necessário para as despesas com o culto divino. E significava a união do povo e a paz concedida na terra da promissão. As razões figuradas dessas festas são as seguintes. O sacrifício perene do cordeiro figura a perpetuidade de Cristo, que é o Cordeiro de Deus, conforme a Escritura (Heb 13, 8): Jesus Cristo era ontem e é hoje; o mesmo será também por todos os séculos. — O Sábado designa a réquie espiritual, que Cristo nos deu, como se lê na Escritura (Heb 4). — A Neomênia, começo da lua nova, significa a iluminação da primitiva Igreja por Cristo, quando pregava e fazia milagres. — A festa de Pentecostes simboliza a descida do Espírito Santo sobre os Apóstolos. — A das Trombetas, a pregação dos Apóstolos. — A da Expiação, a purificação dos pecados do povo cristão. — A dos Tabernáculos, a peregrinação dos cristãos neste mundo, onde passam progredindo nas virtudes. — A da Congregação e do Ajuntamento, a congregação dos fiéis no reino celeste; e por isso essa festa era considerada santíssima. E essas três festas eram contínuas, umas em relação às outras; porque é necessário progridam na virtude os que expiaram os vícios, até chegarem à visão de Deus, como diz a Escritura (Sl 83, 8).</p>
+
+    </div>
+  </div>
+  
+  <!-- Bloco de Explicação (a ser preenchido) -->
+  <div class="bloco-explicacao">
+    <div class="explicacao-label">💡 Explicação e Contexto</div>
+    <div class="explicacao-corpo" id="explicacao">
+    <p><em>Explicação será adicionada em breve.</em></p>
+
+    </div>
+  </div>
+  
+</main>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO INFERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="navegacao-inferior">
+  <div class="nav-buttons">
+    <a href="suma-pagina1129.html" class="btn-primary">← Anterior</a>
+    <span class="pagina-atual">1130</span>
+    <a href="suma-pagina1131.html" class="btn-primary">Próxima →</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  RODAPÉ                                                  -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<footer class="suma-footer">
+  <p>Suma Teológica · São Tomás de Aquino | Biblioteca Lux Fidei</p>
+</footer>
+
+</body>
+</html>

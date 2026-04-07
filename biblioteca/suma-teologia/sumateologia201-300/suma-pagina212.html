@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Questão 40, Artigo 2 — Se as Pessoas se distinguem pelas relações. | Suma Teológica</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+    --cor-fundo: #f5f0e8;
+    --cor-pagina: #fff;
+    --cor-texto: #2c1f17;
+    --cor-dourado: #d4af37;
+    --cor-roxo: #5b2c83;
+    --sombra: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cor-fundo);
+    color: var(--cor-texto);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CABEÇALHO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-header {
+    background: linear-gradient(135deg, #1a1a1a, #2c241b);
+    color: #f5f0e8;
+    padding: 32px 20px 24px;
+    text-align: center;
+    position: relative;
+}
+
+.voltar-index {
+    position: absolute;
+    top: 16px;
+    left: 20px;
+    color: var(--cor-dourado);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: opacity 0.2s;
+}
+
+.voltar-index:hover {
+    opacity: 0.8;
+}
+
+.suma-header h1 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.info-pagina {
+    display: inline-block;
+    background: rgba(212, 175, 55, 0.15);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    color: var(--cor-dourado);
+    margin-top: 8px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-topo {
+    background: #fff;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    gap: 10px;
+}
+
+.btn-nav {
+    display: inline-flex;
+    align-items: center;
+    padding: 9px 18px;
+    background: var(--cor-roxo);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.btn-nav:hover {
+    background: #4a246a;
+    transform: translateY(-1px);
+}
+
+.desabilitado {
+    background: #ddd !important;
+    color: #999 !important;
+    pointer-events: none;
+}
+
+.info-centena {
+    font-size: 0.85rem;
+    color: #888;
+    font-weight: 500;
+    padding: 0 10px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CONTEÚDO PRINCIPAL                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.pagina-conteudo {
+    flex: 1;
+    max-width: 860px;
+    width: 100%;
+    margin: 36px auto;
+    padding: 0 20px;
+}
+
+.bloco-texto {
+    background: var(--cor-pagina);
+    padding: 48px 44px;
+    border-radius: 12px;
+    box-shadow: var(--sombra);
+    position: relative;
+    margin-bottom: 24px;
+}
+
+.bloco-texto::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 20px;
+    bottom: 20px;
+    width: 4px;
+    background: linear-gradient(to bottom, var(--cor-dourado), var(--cor-roxo));
+    border-radius: 0 4px 4px 0;
+}
+
+.bloco-titulo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.3rem;
+    color: var(--cor-roxo);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e8dfd0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pagina-corpo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.1rem;
+    line-height: 1.95;
+    color: #3d3226;
+    text-align: justify;
+}
+
+.pagina-corpo p {
+    margin-bottom: 1.3em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  BLOCO DE EXPLICAÇÃO                                        */
+/* ────────────────────────────────────────────────────────── */
+
+.bloco-explicacao {
+    background: linear-gradient(135deg, #fffdf5, #faf5eb);
+    border-left: 5px solid var(--cor-dourado);
+    padding: 32px 40px;
+    border-radius: 0 12px 12px 0;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    margin-bottom: 24px;
+}
+
+.explicacao-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--cor-dourado);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 14px;
+}
+
+.explicacao-corpo {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #4a3c2c;
+}
+
+.explicacao-corpo p {
+    margin-bottom: 1em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO INFERIOR                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-inferior {
+    max-width: 860px;
+    width: 100%;
+    margin: 0 auto 40px;
+    padding: 0 20px;
+}
+
+.nav-buttons {
+    background: #fff;
+    padding: 18px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    box-shadow: var(--sombra);
+}
+
+.btn-primary {
+    flex: 1;
+    text-align: center;
+    padding: 13px 16px;
+    background: linear-gradient(135deg, var(--cor-roxo), #7a3eb5);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(91, 44, 131, 0.3);
+}
+
+.pagina-atual {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--cor-dourado);
+    min-width: 50px;
+    text-align: center;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RODAPÉ                                                     */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-footer {
+    background: #1a1a1a;
+    color: #888;
+    text-align: center;
+    padding: 22px 20px;
+    margin-top: auto;
+    font-size: 0.85rem;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RESPONSIVIDADE                                             */
+/* ────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+    .suma-header h1 {
+        font-size: 1.4rem;
+    }
+    
+    .bloco-texto {
+        padding: 28px 18px;
+    }
+    
+    .bloco-explicacao {
+        padding: 22px 18px;
+    }
+    
+    .navegacao-topo {
+        flex-wrap: wrap;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CABEÇALHO                                               -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="suma-header">
+  <a href="../../index.html" class="voltar-index">← Índice</a>
+  <h1>Suma Teológica</h1>
+  <p style="opacity:0.8; font-style:italic; margin-top:4px;">São Tomás de Aquino</p>
+  <span class="info-pagina">Página 212 de 3000</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO SUPERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<nav class="navegacao-topo">
+  <a href="suma-pagina211.html" class="btn-nav">← Anterior</a>
+  <span class="info-centena">Pág. 212/3000</span>
+  <a href="suma-pagina213.html" class="btn-nav">Próxima →</a>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CONTEÚDO PRINCIPAL                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<main class="pagina-conteudo">
+  
+  <!-- Texto Original -->
+  <div class="bloco-texto">
+    <div class="bloco-titulo">
+      <span>📜</span>
+      Questão 40, Artigo 2 — Se as Pessoas se distinguem pelas relações.
+    </div>
+    <div class="pagina-corpo">
+    <p>(I Sent., dist. XXVI, q. 2, a. 2; IV Cont. Gent., cap. XXIV; De Pot. q. 8, a. 3; q. 9, a. 4, ad 15; Quodl.. IV, q. 4, a. 2). O segundo discute-se assim. – Parece que as pessoas não se distinguem pelas relações. 1. – Pois, os seres simples se distinguem por si mesmos. Ora, as Pessoas divinas são simples por excelência. Logo, distinguem-se por si mesmas e não, pelas relações. 2. Demais. – Nenhuma forma se distingue a não ser pelo seu gênero. Assim, o branco não se distingue do preto senão pela qualidade. Ora, a hipóstase significa o indivíduo, no gênero da substância. Logo, as hipóstases se não podem distinguir pelas relações. 3. Demais. – O absoluto é anterior ao relativo. Ora, a distinção primária é a das divinas Pessoas. Logo, estas se não distinguem pelas relações. 4. Demais. – O que pressupõe distinção não pode ser deste primeiro princípio. Ora, a relação pressupõe a distinção, porque entra na definição desta; pois, é próprio do relativo o referir-se a outro. Logo, o primeiro princípio distintivo em Deus não pode ser relação.</p>
+    <p>Mas, em contrário, diz Boécio, que só a relação multiplica a Trindade das divinas Pessoas. SOLUÇÃO. – Quaisquer seres, que têm algo de comum, hão de necessariamente ter também algum distintivo. Por onde, convindo as três Pessoas pela unidade de essência, é necessário inquirir algo que as distinga para serem várias. Ora, duas diferenças há entre as divinas Pessoas, a saber, a de origem e a relação, que embora não difiram realmente, diferem contudo pelo modo de significar. Pois, a origem significa um ato, como geração; e a relação, uma forma, como paternidade. Certos, porém, atendendo a que a relação resulta do ato, disseram que as hipóstases, em Deus, se distinguem pela origem; assim dizemos que o Pai se distingue do Filho enquanto aquele gera e este é gerado. Porém as relações ou propriedades manifestam conseqüentemente as distinções das hipóstases ou das pessoas; assim como nas criaturas as propriedades manifestam as distinções dos indivíduos, que se fazem por princípios materiais. Mas esta opinião se não pode sustentar, por duas razões. – Primeiro porque, para serem duas coisas consideradas distintas, é necessário essa distinção ter um fundamento intrínseco a ambas; assim, as criaturas se distinguem pela matéria ou pela forma. Ora, a origem de um ser não significa nada de intrínseco, mas como um ponto de partida, de um termo, e como chegada a outro. Assim, a geração significa a tendência para o ser gerado e a procedência do gerador. Por onde, não é possível o gerado e o gerador se distinguirem só pela geração, mas hão de distinguir por sinais existentes tanto no gerador como no gerado. Ora, na Pessoa divina não se podem conceber outras realidades além da essência e da relação ou propriedade. Donde, convindo pela essência, resulta que as Pessoas divinas se distinguem pelas relações umas das outras. – Segundo, porque a distinção, nas Pessoas divinas, não se deve entender como algo de comum, que se divide, pois a essência comum permanece indivisa; mas é necessário que as próprias distinções constituam realidades distintas. Pois, as relações ou propriedades distinguem ou constituem hipóstases ou pessoas por serem as próprias pessoas subsistentes; assim, a paternidade é o Pai e a filiação, o Filho, por não diferir em Deus, o abstrato do concreto. Mas, contra a noção de origem é que constituam hipóstase ou pessoa. Porque a origem, no sentido atual significa uma procedência da pessoa subsistente e, portanto, a pressupõe. Porém em sentido passivo, como natividade, significa a tendência para a pessoa subsistente, que ainda não constitui. Por onde, melhor se dirá, que as pessoas ou hipóstases se distinguem antes pelas relações do que pela origem. Pois embora se distingam de um outro modo, todavia, primária e mais principalmente se distinguem pelas relações, segundo o modo de entender. Por isso, o nome de Pai não somente significa a propriedade, mas também a hipóstase; mas o nome de Gerador ou Generante significa somente a propriedade. Porque o nome de pai significa a relação distintiva e constitutiva da hipóstase; porém, o nome de Generante ou Gerador significa a origem, que não é distintiva e constitutiva da hipóstase.</p>
+    <p>DONDE A</p>
+    <p>RESPOSTA À PRIMEIRA OBJEÇÃO. – As Pessoas são as próprias relações subsistentes. Por isso não repugna à simplicidade das divinas Pessoas o serem distintas pelas relações.</p>
+    <p>RESPOSTA À SEGUNDA. – As Pessoas divinas não se distinguem pelo ser no qual subsistem, nem por nada de absoluto; mas quanto sujeitos de relações. Para distinguir basta a relação.</p>
+    <p>RESPOSTA À TERCEIRA. – Quanto mais primária a relação, tanto mais próxima da unidade e, portanto, deve ser mínima. Logo, a distinção das Pessoas não deve se fundar senão no que minimamente as distingue, a saber, na relação.</p>
+    <p>RESPOSTA À QUARTA. – A relação pressupõe a distinção dos supostos, quando é acidente; mas se a relação for subsistente não pressupõe, mas implica a distinção. Quando pois, se diz, que é próprio ao ser relativo o referir-se a outro, por outro se entende o correlativo, que não lhe é anterior, mas, simultâneo, por natureza.</p>
+
+    </div>
+  </div>
+  
+  <!-- Bloco de Explicação (a ser preenchido) -->
+  <div class="bloco-explicacao">
+    <div class="explicacao-label">💡 Explicação e Contexto</div>
+    <div class="explicacao-corpo" id="explicacao">
+    <p><em>Explicação será adicionada em breve.</em></p>
+
+    </div>
+  </div>
+  
+</main>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO INFERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="navegacao-inferior">
+  <div class="nav-buttons">
+    <a href="suma-pagina211.html" class="btn-primary">← Anterior</a>
+    <span class="pagina-atual">212</span>
+    <a href="suma-pagina213.html" class="btn-primary">Próxima →</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  RODAPÉ                                                  -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<footer class="suma-footer">
+  <p>Suma Teológica · São Tomás de Aquino | Biblioteca Lux Fidei</p>
+</footer>
+
+</body>
+</html>

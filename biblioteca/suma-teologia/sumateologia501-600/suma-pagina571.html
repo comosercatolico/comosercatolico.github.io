@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Questão 115, Artigo 6 — — Se os corpos celestes impõem necessidade ao que lhes está | Suma Teológica</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+    --cor-fundo: #f5f0e8;
+    --cor-pagina: #fff;
+    --cor-texto: #2c1f17;
+    --cor-dourado: #d4af37;
+    --cor-roxo: #5b2c83;
+    --sombra: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cor-fundo);
+    color: var(--cor-texto);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CABEÇALHO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-header {
+    background: linear-gradient(135deg, #1a1a1a, #2c241b);
+    color: #f5f0e8;
+    padding: 32px 20px 24px;
+    text-align: center;
+    position: relative;
+}
+
+.voltar-index {
+    position: absolute;
+    top: 16px;
+    left: 20px;
+    color: var(--cor-dourado);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: opacity 0.2s;
+}
+
+.voltar-index:hover {
+    opacity: 0.8;
+}
+
+.suma-header h1 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.info-pagina {
+    display: inline-block;
+    background: rgba(212, 175, 55, 0.15);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    color: var(--cor-dourado);
+    margin-top: 8px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-topo {
+    background: #fff;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    gap: 10px;
+}
+
+.btn-nav {
+    display: inline-flex;
+    align-items: center;
+    padding: 9px 18px;
+    background: var(--cor-roxo);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.btn-nav:hover {
+    background: #4a246a;
+    transform: translateY(-1px);
+}
+
+.desabilitado {
+    background: #ddd !important;
+    color: #999 !important;
+    pointer-events: none;
+}
+
+.info-centena {
+    font-size: 0.85rem;
+    color: #888;
+    font-weight: 500;
+    padding: 0 10px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CONTEÚDO PRINCIPAL                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.pagina-conteudo {
+    flex: 1;
+    max-width: 860px;
+    width: 100%;
+    margin: 36px auto;
+    padding: 0 20px;
+}
+
+.bloco-texto {
+    background: var(--cor-pagina);
+    padding: 48px 44px;
+    border-radius: 12px;
+    box-shadow: var(--sombra);
+    position: relative;
+    margin-bottom: 24px;
+}
+
+.bloco-texto::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 20px;
+    bottom: 20px;
+    width: 4px;
+    background: linear-gradient(to bottom, var(--cor-dourado), var(--cor-roxo));
+    border-radius: 0 4px 4px 0;
+}
+
+.bloco-titulo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.3rem;
+    color: var(--cor-roxo);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e8dfd0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pagina-corpo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.1rem;
+    line-height: 1.95;
+    color: #3d3226;
+    text-align: justify;
+}
+
+.pagina-corpo p {
+    margin-bottom: 1.3em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  BLOCO DE EXPLICAÇÃO                                        */
+/* ────────────────────────────────────────────────────────── */
+
+.bloco-explicacao {
+    background: linear-gradient(135deg, #fffdf5, #faf5eb);
+    border-left: 5px solid var(--cor-dourado);
+    padding: 32px 40px;
+    border-radius: 0 12px 12px 0;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    margin-bottom: 24px;
+}
+
+.explicacao-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--cor-dourado);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 14px;
+}
+
+.explicacao-corpo {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #4a3c2c;
+}
+
+.explicacao-corpo p {
+    margin-bottom: 1em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO INFERIOR                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-inferior {
+    max-width: 860px;
+    width: 100%;
+    margin: 0 auto 40px;
+    padding: 0 20px;
+}
+
+.nav-buttons {
+    background: #fff;
+    padding: 18px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    box-shadow: var(--sombra);
+}
+
+.btn-primary {
+    flex: 1;
+    text-align: center;
+    padding: 13px 16px;
+    background: linear-gradient(135deg, var(--cor-roxo), #7a3eb5);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(91, 44, 131, 0.3);
+}
+
+.pagina-atual {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--cor-dourado);
+    min-width: 50px;
+    text-align: center;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RODAPÉ                                                     */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-footer {
+    background: #1a1a1a;
+    color: #888;
+    text-align: center;
+    padding: 22px 20px;
+    margin-top: auto;
+    font-size: 0.85rem;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RESPONSIVIDADE                                             */
+/* ────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+    .suma-header h1 {
+        font-size: 1.4rem;
+    }
+    
+    .bloco-texto {
+        padding: 28px 18px;
+    }
+    
+    .bloco-explicacao {
+        padding: 22px 18px;
+    }
+    
+    .navegacao-topo {
+        flex-wrap: wrap;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CABEÇALHO                                               -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="suma-header">
+  <a href="../../index.html" class="voltar-index">← Índice</a>
+  <h1>Suma Teológica</h1>
+  <p style="opacity:0.8; font-style:italic; margin-top:4px;">São Tomás de Aquino</p>
+  <span class="info-pagina">Página 571 de 3000</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO SUPERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<nav class="navegacao-topo">
+  <a href="suma-pagina570.html" class="btn-nav">← Anterior</a>
+  <span class="info-centena">Pág. 571/3000</span>
+  <a href="suma-pagina572.html" class="btn-nav">Próxima →</a>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CONTEÚDO PRINCIPAL                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<main class="pagina-conteudo">
+  
+  <!-- Texto Original -->
+  <div class="bloco-texto">
+    <div class="bloco-titulo">
+      <span>📜</span>
+      Questão 115, Artigo 6 — — Se os corpos celestes impõem necessidade ao que lhes está
+    </div>
+    <div class="pagina-corpo">
+    <p>sujeito à ação. (II Sent., dist. XV. q. I, a. 2, ad 3; a. 3. ad 4; III Cont. Gent., cap. LXXXVI; De Verit., q. 5, a. 9, ad I, 2; De Malo, q. 6, ad 21; q. 16, a. 7. ad 14, 16; I Perihem., lect. XIV; VI Metaphys., lecl. III). O sexto discute-se assim. — Parece que os corpos celestes impõem necessidade ao que lhes está sujeito à ação.</p>
+    <p>1. — Pois, posta a causa suficiente, necessariamente segue-se o efeito. Ora, os corpos celestes são causa suficiente dos seus efeitos. E como esses corpos, com os seus movimentos e disposições, são considerados seres necessários, conclui-se que os efeitos deles se seguem necessariamente. 2. Demais. — O efeito do agente resulta, na matéria, necessariamente, quando a virtude daquele for tal que possa submeter esta a si totalmente. Ora, a matéria total dos corpos inferiores está sujeita à virtude dos corpos celestes, como sendo mais excelente. Logo, o efeito desses corpos é recebido, necessariamente, pela matéria corpórea. 3. Demais. — Se os efeitos do corpo celeste não se produzirem necessariamente, há-de ser por alguma causa impediente. Mas qualquer causa corpórea, que possa impedir o eleito do corpo celeste, há-de necessariamente reduzir-se a algum princípio celeste, porque os corpos celestes são a causa de tudo o que neste mundo se faz. Logo, como esse princípio é necessário, segue-se que necessariamente fica impedido o efeito de outro corpo celeste, e assim tudo, neste mundo acontece necessariamente.</p>
+    <p>Mas, em contrário, diz o Filósofo: não há inconveniente em que deixem de produzir-se muitas daquelas coisas corpóreas, como as águas e os ventos, que são sinais celestes. Assim, pois, nem todos os efeitos dos corpos celestes realizam-se necessariamente.</p>
+    <p>SOLUÇÃO. — A questão presente já está em parte resolvida pelo que ficou estabelecido; em parte, porém, encerra alguma dificuldade. Pois, como já se demonstrou, embora, por impressão dos corpos celestes, realizam-se certas inclinações em a natureza corpórea, a vontade contudo não obedece a essas inclinações necessariamente. E portanto nada impede que, pela eleição voluntária, fique impedido o efeito dos corpos celestes, não só em relação ao homem, mas também em relação a outras coisas a que se estende a operação humana. Ora, nenhum princípio semelhante existe nos seres naturais, pelo qual tenham a liberdade de obedecer ou não ás impressões celestes. Donde resulta, que em relação a tais seres, pelo menos, tudo se realiza necessariamente, segundo a opinião antiga de certos que, supondo que tudo o que existe tem causa e que, introduzida a causa, o efeito se segue necessariamente, concluíam que tudo se produz necessariamente. Mas essa opinião Aristóteles a rejeita refutando os dois princípios mesmos donde os adversários partem. — Primeiro, não é verdade resulte o efeito, necessariamente, de qualquer causa suposta; assim, certas causas se ordenam aos seus efeitos, não necessariamente, mas quase sempre; e por isso, às vezes falham, em alguns casos. Mas se falham às vezes, por efeito de alguma outra causa impediente, não fica de pé a refutação proposta porque esse impedimento mesmo, se dá necessariamente. — E por isso, deve-se dizer que, tudo o existente por si tem causa; não a tem porém o que é acidental, porque não tendo verdadeira unidade, não é verdadeiro ente. Assim, o branco tem causa; e semelhantemente, o músico; mas não, músico branco porque, não e verdadeiro ente, nem tem verdadeira unidade. Ora, é , manifesto que a causa impediente da ação de qualquer outra causa ordenada, na maior parte das vezes, ao seu efeito, concorre com esta, às vezes acidentalmente; e, tal concurso, sendo acidental, não tem causa. Por onde, o que resulta desse concurso não se reduz a nenhuma causa preexistente, da qual haja necessariamente de resultar. Assim, é alguma causa celeste que faz um corpo terrestre ígneo ser gerado na parte superior do ar e cair; semelhantemente, a existência na superfície da terra de qualquer matéria combustível pode se reduzir a algum princípio celeste. Mas nenhum corpo celeste é causa de que o fogo cadente encontre essa matéria e a queime — fato acidental. Por onde, é claro que nem todos os efeitos dos corpos celestes são necessários.</p>
+    <p>DONDE A</p>
+    <p>RESPOSTA À PRIMEIRA OBJEÇÃO. — Os corpos celestes são causa dos efeitos inferiores mediante as causas particulares inferiores, que às vezes podem falhar.</p>
+    <p>RESPOSTA À SEGUNDA. — A virtude do corpo celeste não é infinita e por isso exige uma determinada disposição na matéria, para produzir o seu efeito, tanto em relação à distância local como em relação às outras condições. E portanto, assim como a distância local impede o efeito do corpo celeste — pois o sol não produz o mesmo efeito calorífico na Dácia e na Etiópia — assim também a espessura, a frigidez, a calidez e outras disposições semelhantes da matéria podem impedir o efeito desse corpo.</p>
+    <p>RESPOSTA À TERCEIRA. — Embora a causa impediente do efeito de outra causa seja redutível a algum corpo celeste, como à causa; contudo o concurso de duas causas, sendo acidental, não se reduz à causa celeste, como já se disse. Em seguida deve-se tratar do fado. E sobre esta questão, quatro artigos se discutem:</p>
+
+    </div>
+  </div>
+  
+  <!-- Bloco de Explicação (a ser preenchido) -->
+  <div class="bloco-explicacao">
+    <div class="explicacao-label">💡 Explicação e Contexto</div>
+    <div class="explicacao-corpo" id="explicacao">
+    <p><em>Explicação será adicionada em breve.</em></p>
+
+    </div>
+  </div>
+  
+</main>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO INFERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="navegacao-inferior">
+  <div class="nav-buttons">
+    <a href="suma-pagina570.html" class="btn-primary">← Anterior</a>
+    <span class="pagina-atual">571</span>
+    <a href="suma-pagina572.html" class="btn-primary">Próxima →</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  RODAPÉ                                                  -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<footer class="suma-footer">
+  <p>Suma Teológica · São Tomás de Aquino | Biblioteca Lux Fidei</p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Questão 107, Artigo 1 — — Se um anjo fala com outro. | Suma Teológica</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+    --cor-fundo: #f5f0e8;
+    --cor-pagina: #fff;
+    --cor-texto: #2c1f17;
+    --cor-dourado: #d4af37;
+    --cor-roxo: #5b2c83;
+    --sombra: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cor-fundo);
+    color: var(--cor-texto);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CABEÇALHO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-header {
+    background: linear-gradient(135deg, #1a1a1a, #2c241b);
+    color: #f5f0e8;
+    padding: 32px 20px 24px;
+    text-align: center;
+    position: relative;
+}
+
+.voltar-index {
+    position: absolute;
+    top: 16px;
+    left: 20px;
+    color: var(--cor-dourado);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: opacity 0.2s;
+}
+
+.voltar-index:hover {
+    opacity: 0.8;
+}
+
+.suma-header h1 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.info-pagina {
+    display: inline-block;
+    background: rgba(212, 175, 55, 0.15);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    color: var(--cor-dourado);
+    margin-top: 8px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-topo {
+    background: #fff;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    gap: 10px;
+}
+
+.btn-nav {
+    display: inline-flex;
+    align-items: center;
+    padding: 9px 18px;
+    background: var(--cor-roxo);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.btn-nav:hover {
+    background: #4a246a;
+    transform: translateY(-1px);
+}
+
+.desabilitado {
+    background: #ddd !important;
+    color: #999 !important;
+    pointer-events: none;
+}
+
+.info-centena {
+    font-size: 0.85rem;
+    color: #888;
+    font-weight: 500;
+    padding: 0 10px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CONTEÚDO PRINCIPAL                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.pagina-conteudo {
+    flex: 1;
+    max-width: 860px;
+    width: 100%;
+    margin: 36px auto;
+    padding: 0 20px;
+}
+
+.bloco-texto {
+    background: var(--cor-pagina);
+    padding: 48px 44px;
+    border-radius: 12px;
+    box-shadow: var(--sombra);
+    position: relative;
+    margin-bottom: 24px;
+}
+
+.bloco-texto::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 20px;
+    bottom: 20px;
+    width: 4px;
+    background: linear-gradient(to bottom, var(--cor-dourado), var(--cor-roxo));
+    border-radius: 0 4px 4px 0;
+}
+
+.bloco-titulo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.3rem;
+    color: var(--cor-roxo);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e8dfd0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pagina-corpo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.1rem;
+    line-height: 1.95;
+    color: #3d3226;
+    text-align: justify;
+}
+
+.pagina-corpo p {
+    margin-bottom: 1.3em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  BLOCO DE EXPLICAÇÃO                                        */
+/* ────────────────────────────────────────────────────────── */
+
+.bloco-explicacao {
+    background: linear-gradient(135deg, #fffdf5, #faf5eb);
+    border-left: 5px solid var(--cor-dourado);
+    padding: 32px 40px;
+    border-radius: 0 12px 12px 0;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    margin-bottom: 24px;
+}
+
+.explicacao-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--cor-dourado);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 14px;
+}
+
+.explicacao-corpo {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #4a3c2c;
+}
+
+.explicacao-corpo p {
+    margin-bottom: 1em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO INFERIOR                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-inferior {
+    max-width: 860px;
+    width: 100%;
+    margin: 0 auto 40px;
+    padding: 0 20px;
+}
+
+.nav-buttons {
+    background: #fff;
+    padding: 18px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    box-shadow: var(--sombra);
+}
+
+.btn-primary {
+    flex: 1;
+    text-align: center;
+    padding: 13px 16px;
+    background: linear-gradient(135deg, var(--cor-roxo), #7a3eb5);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(91, 44, 131, 0.3);
+}
+
+.pagina-atual {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--cor-dourado);
+    min-width: 50px;
+    text-align: center;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RODAPÉ                                                     */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-footer {
+    background: #1a1a1a;
+    color: #888;
+    text-align: center;
+    padding: 22px 20px;
+    margin-top: auto;
+    font-size: 0.85rem;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RESPONSIVIDADE                                             */
+/* ────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+    .suma-header h1 {
+        font-size: 1.4rem;
+    }
+    
+    .bloco-texto {
+        padding: 28px 18px;
+    }
+    
+    .bloco-explicacao {
+        padding: 22px 18px;
+    }
+    
+    .navegacao-topo {
+        flex-wrap: wrap;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CABEÇALHO                                               -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="suma-header">
+  <a href="../../index.html" class="voltar-index">← Índice</a>
+  <h1>Suma Teológica</h1>
+  <p style="opacity:0.8; font-style:italic; margin-top:4px;">São Tomás de Aquino</p>
+  <span class="info-pagina">Página 524 de 3000</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO SUPERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<nav class="navegacao-topo">
+  <a href="suma-pagina523.html" class="btn-nav">← Anterior</a>
+  <span class="info-centena">Pág. 524/3000</span>
+  <a href="suma-pagina525.html" class="btn-nav">Próxima →</a>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CONTEÚDO PRINCIPAL                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<main class="pagina-conteudo">
+  
+  <!-- Texto Original -->
+  <div class="bloco-texto">
+    <div class="bloco-titulo">
+      <span>📜</span>
+      Questão 107, Artigo 1 — — Se um anjo fala com outro.
+    </div>
+    <div class="pagina-corpo">
+    <p>(II Sent., dist. I, part. II, a. 3; De Verit., q. 9, a. 4; I Cor., cap. XIII, lect. I). O primeiro discute-se assim. — Parece que um anjo não fala com outro.</p>
+    <p>1. — Pois, diz Gregório, que no estado da ressurreição a corpulência dos membros não esconderá a mente de um dos olhos de outro. Por onde, com maior razão, a mente de um anjo não poderá esconder-se a outro. Ora, a locução serve para manifestar a outrem o que está oculto na mente. Logo, não é preciso que um anjo fale a outro. 2. Demais. — Há dupla locução: a interior, pela qual falamos conosco mesmos; e a exterior, pela qual falamos com os outros. Ora esta manifesta-se por algum sinal sensível, como a voz ou um aceno; ou por algum membro do corpo, como a língua ou o dedo; o que tudo não pode convir ao anjo. Logo, um anjo não fala com outro. 3. Demais. — Quem fala excita o ouvinte a atentar para o que diz. Ora, não se vê por onde um anjo excite outro a que atente; pois isso se faz, nos homens, por algum sinal sensível. Logo, um anjo não fala com outro.</p>
+    <p>Mas, em contrário, diz a Escritura (1 Cor 13, 1): Se eu falar as línguas dos homens e dos anjos.</p>
+    <p>SOLUÇÃO. — Os anjos falam de certo modo. Mas como diz Gregório, é digno que a nossa mente, excedendo a qualidade da linguagem corpórea, fique suspensa em relação aos modos sublimes e incógnitos da linguagem íntima. Para se entender, pois, como um anjo fala com outro, deve-se considerar que, como já dissemos ao tratar dos atos e das potências da alma (q. 82, a. 4), a vontade move o intelecto à operação deste. Ora, o inteligível está no intelecto de tríplice modo: habitualmente, ou pela memória, como diz Agostinho; como atualmente considerado ou concebido; e como referido a outra coisa. É manifesto, porém, que o inteligível transfere-se do primeiro para o segundo grau, pelo império da vontade; e por isso define-se o hábito comoaquilo de que alguém usa, quando quer. E se- melhantemente, também, pela vontade transfere-se do segundo grau para o terceiro; pois, por ela, o conceito da mente se ordena a outra coisa p. ex., a fazer ou a manifestar algo a outrem. Ora, quando a mente se atualiza, considerando o que tem, habitualmente, então falamos conosco mesmos; pois, o conceito mesmo da mente se chama verbo interior. Quando, pois, o conceito da mente de um anjo se ordena a manifestar-se a outro, por vontade do primeiro, então, esse conceito faz-se conhecido do outro; sendo assim que um anjo fala com outro. Pois, falar com outrem não é senão manifestar-lhe o conceito da mente.</p>
+    <p>DONDE A</p>
+    <p>RESPOSTA À PRIMEIRA OBJEÇÃO. — O conceito interior da nossa mente se oculta por um como duplo obstáculo. O primeiro é a vontade mesma, que pode reter interiormente o conceito do intelecto ou ordená-la para o exterior; e, no primeiro caso, só Deus, e mais ninguém, pode conhecer a mente de um homem, conforme aquilo da Escritura (1 Cor 2, 11): Qual dos homens conhece as coisas que são do homem, senão o espírito do homem que nele mesmo reside? O segundo é a materialidade do corpo. E assim, mesmo quando a vontade ordena o conceito da mente a manifestar-se a outrem, nem por isso ele é imediatamente conhecido deste, sendo necessário acrescentar-se algum sinal sensível. E é o que pensa Gregório, quando diz:conservamos o segredo da mente, aos olhos alheios, como ocultando-o por trás da parede do corpo; e quando desejamos nos manifestar, saímos pela como janela da língua, mostrando-nos como interiormente somos. Ora, este obstáculo não existe no anjo; e por isso quando um quer manifestar o seu conceito, imediatamente o outro o conhece.</p>
+    <p>RESPOSTA À SEGUNDA. — A locução externa por meio da palavra nos é necessária por causa do obstáculo do corpo. Por onde, convém ao anjo, não esta, mas só a locução interior, pela qual pode um anjo, não só falar consigo mesmo, concebendo interiormente, mas ainda manifestar-se voluntariamente a outro. E assim diz-se metaforicamente, que a locução dos anjos é a virtude mesma de cada um, pela qual manifesta o seu conceito, do modo predito.</p>
+    <p>RESPOSTA À TERCEIRA. — Em relação aos anjos bons, que sempre se vêm mutuamente no Verbo, não é necessário haver nenhum excitante, porque, como um sempre vê a outro, assim também sempre vê, nesse outro, tudo quanto para si for destinado. Mas, como já no primeiro estado da natureza, podiam falar uns com os outros; e como os anjos maus, ainda agora, falam-se entre si; deve-se dizer que, assim como o sentido é movido pelo sensível, assim, o intelecto, pelo inteligível. Assim como, pois, o sentido é excitado pelo sinal sensível, assim pode ser excitada a atenção da mente angélica por alguma virtude inteligível.</p>
+
+    </div>
+  </div>
+  
+  <!-- Bloco de Explicação (a ser preenchido) -->
+  <div class="bloco-explicacao">
+    <div class="explicacao-label">💡 Explicação e Contexto</div>
+    <div class="explicacao-corpo" id="explicacao">
+    <p><em>Explicação será adicionada em breve.</em></p>
+
+    </div>
+  </div>
+  
+</main>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO INFERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="navegacao-inferior">
+  <div class="nav-buttons">
+    <a href="suma-pagina523.html" class="btn-primary">← Anterior</a>
+    <span class="pagina-atual">524</span>
+    <a href="suma-pagina525.html" class="btn-primary">Próxima →</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  RODAPÉ                                                  -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<footer class="suma-footer">
+  <p>Suma Teológica · São Tomás de Aquino | Biblioteca Lux Fidei</p>
+</footer>
+
+</body>
+</html>

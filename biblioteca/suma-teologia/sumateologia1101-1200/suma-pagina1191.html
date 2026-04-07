@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Questão 114, Artigo 1 — Se o homem pode merecer perante Deus. | Suma Teológica</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+    --cor-fundo: #f5f0e8;
+    --cor-pagina: #fff;
+    --cor-texto: #2c1f17;
+    --cor-dourado: #d4af37;
+    --cor-roxo: #5b2c83;
+    --sombra: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cor-fundo);
+    color: var(--cor-texto);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CABEÇALHO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-header {
+    background: linear-gradient(135deg, #1a1a1a, #2c241b);
+    color: #f5f0e8;
+    padding: 32px 20px 24px;
+    text-align: center;
+    position: relative;
+}
+
+.voltar-index {
+    position: absolute;
+    top: 16px;
+    left: 20px;
+    color: var(--cor-dourado);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: opacity 0.2s;
+}
+
+.voltar-index:hover {
+    opacity: 0.8;
+}
+
+.suma-header h1 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.info-pagina {
+    display: inline-block;
+    background: rgba(212, 175, 55, 0.15);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    color: var(--cor-dourado);
+    margin-top: 8px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-topo {
+    background: #fff;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    gap: 10px;
+}
+
+.btn-nav {
+    display: inline-flex;
+    align-items: center;
+    padding: 9px 18px;
+    background: var(--cor-roxo);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.btn-nav:hover {
+    background: #4a246a;
+    transform: translateY(-1px);
+}
+
+.desabilitado {
+    background: #ddd !important;
+    color: #999 !important;
+    pointer-events: none;
+}
+
+.info-centena {
+    font-size: 0.85rem;
+    color: #888;
+    font-weight: 500;
+    padding: 0 10px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CONTEÚDO PRINCIPAL                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.pagina-conteudo {
+    flex: 1;
+    max-width: 860px;
+    width: 100%;
+    margin: 36px auto;
+    padding: 0 20px;
+}
+
+.bloco-texto {
+    background: var(--cor-pagina);
+    padding: 48px 44px;
+    border-radius: 12px;
+    box-shadow: var(--sombra);
+    position: relative;
+    margin-bottom: 24px;
+}
+
+.bloco-texto::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 20px;
+    bottom: 20px;
+    width: 4px;
+    background: linear-gradient(to bottom, var(--cor-dourado), var(--cor-roxo));
+    border-radius: 0 4px 4px 0;
+}
+
+.bloco-titulo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.3rem;
+    color: var(--cor-roxo);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e8dfd0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pagina-corpo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.1rem;
+    line-height: 1.95;
+    color: #3d3226;
+    text-align: justify;
+}
+
+.pagina-corpo p {
+    margin-bottom: 1.3em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  BLOCO DE EXPLICAÇÃO                                        */
+/* ────────────────────────────────────────────────────────── */
+
+.bloco-explicacao {
+    background: linear-gradient(135deg, #fffdf5, #faf5eb);
+    border-left: 5px solid var(--cor-dourado);
+    padding: 32px 40px;
+    border-radius: 0 12px 12px 0;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    margin-bottom: 24px;
+}
+
+.explicacao-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--cor-dourado);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 14px;
+}
+
+.explicacao-corpo {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #4a3c2c;
+}
+
+.explicacao-corpo p {
+    margin-bottom: 1em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO INFERIOR                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-inferior {
+    max-width: 860px;
+    width: 100%;
+    margin: 0 auto 40px;
+    padding: 0 20px;
+}
+
+.nav-buttons {
+    background: #fff;
+    padding: 18px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    box-shadow: var(--sombra);
+}
+
+.btn-primary {
+    flex: 1;
+    text-align: center;
+    padding: 13px 16px;
+    background: linear-gradient(135deg, var(--cor-roxo), #7a3eb5);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(91, 44, 131, 0.3);
+}
+
+.pagina-atual {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--cor-dourado);
+    min-width: 50px;
+    text-align: center;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RODAPÉ                                                     */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-footer {
+    background: #1a1a1a;
+    color: #888;
+    text-align: center;
+    padding: 22px 20px;
+    margin-top: auto;
+    font-size: 0.85rem;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RESPONSIVIDADE                                             */
+/* ────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+    .suma-header h1 {
+        font-size: 1.4rem;
+    }
+    
+    .bloco-texto {
+        padding: 28px 18px;
+    }
+    
+    .bloco-explicacao {
+        padding: 22px 18px;
+    }
+    
+    .navegacao-topo {
+        flex-wrap: wrap;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CABEÇALHO                                               -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="suma-header">
+  <a href="../../index.html" class="voltar-index">← Índice</a>
+  <h1>Suma Teológica</h1>
+  <p style="opacity:0.8; font-style:italic; margin-top:4px;">São Tomás de Aquino</p>
+  <span class="info-pagina">Página 1191 de 3000</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO SUPERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<nav class="navegacao-topo">
+  <a href="suma-pagina1190.html" class="btn-nav">← Anterior</a>
+  <span class="info-centena">Pág. 1191/3000</span>
+  <a href="suma-pagina1192.html" class="btn-nav">Próxima →</a>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CONTEÚDO PRINCIPAL                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<main class="pagina-conteudo">
+  
+  <!-- Texto Original -->
+  <div class="bloco-texto">
+    <div class="bloco-titulo">
+      <span>📜</span>
+      Questão 114, Artigo 1 — Se o homem pode merecer perante Deus.
+    </div>
+    <div class="pagina-corpo">
+    <p>(Supra, q. 21, a. 4; III, Sent., dist. XVIII, a. 2). O primeiro discute-se assim. – Parece que o homem não pode merecer nada de Deus. 1. – Pois, ninguém merece recompensa por pagar o que deve. Ora, nem com todo o bem que fizermos podemos pagar suficientemente o que devemos a Deus, a quem cada vez mais devemos, como o próprio Filósofo o diz. Por isso, está na Escritura: Depois de terdes feito o que vos foi mandado, dizei: Somos uns servos inúteis; fizemos o que devíamos fazer. Logo, o homem não pode merecer nada de Deus. 2. Demais. – O que fazemos em nosso benefício não nos dá nenhum mérito junto de Deus, a quem isso nada aproveita. Ora, uma ação reta aproveita ao seu próprio autor ou a outro homem, mas não a Deus, conforme a Escritura: Se obrares com justiça, que lhe darás? Ou que receberá ele de tua mão? Logo, o homem não pode merecer nada de Deus. 3. Demais. – Quem merece algo de outrem o tem como seu devedor, pois a recompensa merecida é devida. Ora, Deus não pode ser devedor de ninguém, conforme a Escritura: Quem lhe deu alguma coisa primeiro, para esta lhe haver de ser recompensada? Logo, ninguém pode merecer nada de Deus.</p>
+    <p>Mas, em contrário, diz a Escritura: Recompensa há para a tua obra. Ora, recompensa é o dado em virtude de um mérito. Logo, parece que o homem pode merecer perante Deus. SOLUÇÃO. – O mérito e a recompensa têm o mesmo objeto. Pois, recompensa se chama ao dado em retribuição de uma obra ou de um trabalho, como lhe sendo o preço. Por onde, assim como pagar o justo preço pelo que se recebeu de outrem é ato de justiça, assim ato de justiça também é dar a recompensa devida a uma obra ou trabalho. Ora, a justiça implica uma certa igualdade, segundo o Filósofo. Portanto, a justiça absoluta só existe entre os perfeitamente iguais; e onde não há igualdade absoluta não há também justiça absoluta, senão só uma certa espécie dela. Assim, há o chamado direito paterno ou o dominical, como diz o Filósofo no mesmo livro. E por isto, entre os quais há justiça absoluta há também, em absoluto, fundamento ao mérito e à recompensa, Porém onde só há justiça relativa e não, absoluta, também não há mérito, absoluta, senão só relativamente, enquanto isso implica a noção de justiça. Assim, pois, o filho pode merecer perante o pai, e o escravo, junto ao senhor. Ora, é manifesto que, entre Deus e o homem há a máxima desigualdade, pois há entre esses dois seres uma distância infinita, e todo bem do homem vem de Deus. Por isso, entre o homem e Deus não há justiça fundada numa igualdade absoluta, mas apenas proporcional, enquanto cada um age ao seu modo. Ora, o modo e a medida das capacidades humanas é Deus quem os estabelece, Por onde, o homem não pode ter mérito diante de Deus, senão pressuposta uma ordem divina, de maneira que, pela sua ação, ele receba de Deus, como recompensa, por assim dizer, os bens em vista dos quais ele lhe deu o poder de agir. Assim também os seres naturais, pelos seus movimentos próprios e pelas suas operações, alcançam o fim a que Deus os ordenou. Mas de maneira diferente; pois a criatura racional, dotada de livre arbítrio, tem o poder de agir, por si mesma o que lhe dá ao ato caráter meritório. Mas isso não se passa com as outras criaturas.</p>
+    <p>DONDE A</p>
+    <p>RESPOSTA À PRIMEIRA OBJEÇÃO. – O homem, fazendo por vontade própria o que deve, merece; do contrário, o ato de justiça, pelo qual paga o devido, não seria meritório.</p>
+    <p>RESPOSTA À SEGUNDA. – Deus, nas nossas boas obras, não visa nenhuma utilidade, mas a glória, i.e, a manifestação da sua bondade; e isso é o que ele também visa nas suas obras. Pois, de o adorarmos nenhum bem lhe acresce a ele, senão a nós mesmos. E assim, merecemos perante Deus; não que ele tire algum proveito das nossas obras, mas por obrarmos para a sua glória.</p>
+    <p>RESPOSTA À TERCEIRA. – De os nossos atos não serem meritórios, senão pressupondo-se uma ordem divina, não resulta que Deus se torne, absolutamente, nosso devedor, senão a si mesmo, a quem se deve o fazer cumprir-se a sua ordem.</p>
+
+    </div>
+  </div>
+  
+  <!-- Bloco de Explicação (a ser preenchido) -->
+  <div class="bloco-explicacao">
+    <div class="explicacao-label">💡 Explicação e Contexto</div>
+    <div class="explicacao-corpo" id="explicacao">
+    <p><em>Explicação será adicionada em breve.</em></p>
+
+    </div>
+  </div>
+  
+</main>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO INFERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="navegacao-inferior">
+  <div class="nav-buttons">
+    <a href="suma-pagina1190.html" class="btn-primary">← Anterior</a>
+    <span class="pagina-atual">1191</span>
+    <a href="suma-pagina1192.html" class="btn-primary">Próxima →</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  RODAPÉ                                                  -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<footer class="suma-footer">
+  <p>Suma Teológica · São Tomás de Aquino | Biblioteca Lux Fidei</p>
+</footer>
+
+</body>
+</html>

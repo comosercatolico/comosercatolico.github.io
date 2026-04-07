@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Questão 89, Artigo 5 — Se o hábito da ciência adquirida nesta vida permanece na alma | Suma Teológica</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+    --cor-fundo: #f5f0e8;
+    --cor-pagina: #fff;
+    --cor-texto: #2c1f17;
+    --cor-dourado: #d4af37;
+    --cor-roxo: #5b2c83;
+    --sombra: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cor-fundo);
+    color: var(--cor-texto);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CABEÇALHO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-header {
+    background: linear-gradient(135deg, #1a1a1a, #2c241b);
+    color: #f5f0e8;
+    padding: 32px 20px 24px;
+    text-align: center;
+    position: relative;
+}
+
+.voltar-index {
+    position: absolute;
+    top: 16px;
+    left: 20px;
+    color: var(--cor-dourado);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: opacity 0.2s;
+}
+
+.voltar-index:hover {
+    opacity: 0.8;
+}
+
+.suma-header h1 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.info-pagina {
+    display: inline-block;
+    background: rgba(212, 175, 55, 0.15);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    color: var(--cor-dourado);
+    margin-top: 8px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-topo {
+    background: #fff;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    gap: 10px;
+}
+
+.btn-nav {
+    display: inline-flex;
+    align-items: center;
+    padding: 9px 18px;
+    background: var(--cor-roxo);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.btn-nav:hover {
+    background: #4a246a;
+    transform: translateY(-1px);
+}
+
+.desabilitado {
+    background: #ddd !important;
+    color: #999 !important;
+    pointer-events: none;
+}
+
+.info-centena {
+    font-size: 0.85rem;
+    color: #888;
+    font-weight: 500;
+    padding: 0 10px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CONTEÚDO PRINCIPAL                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.pagina-conteudo {
+    flex: 1;
+    max-width: 860px;
+    width: 100%;
+    margin: 36px auto;
+    padding: 0 20px;
+}
+
+.bloco-texto {
+    background: var(--cor-pagina);
+    padding: 48px 44px;
+    border-radius: 12px;
+    box-shadow: var(--sombra);
+    position: relative;
+    margin-bottom: 24px;
+}
+
+.bloco-texto::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 20px;
+    bottom: 20px;
+    width: 4px;
+    background: linear-gradient(to bottom, var(--cor-dourado), var(--cor-roxo));
+    border-radius: 0 4px 4px 0;
+}
+
+.bloco-titulo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.3rem;
+    color: var(--cor-roxo);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e8dfd0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pagina-corpo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.1rem;
+    line-height: 1.95;
+    color: #3d3226;
+    text-align: justify;
+}
+
+.pagina-corpo p {
+    margin-bottom: 1.3em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  BLOCO DE EXPLICAÇÃO                                        */
+/* ────────────────────────────────────────────────────────── */
+
+.bloco-explicacao {
+    background: linear-gradient(135deg, #fffdf5, #faf5eb);
+    border-left: 5px solid var(--cor-dourado);
+    padding: 32px 40px;
+    border-radius: 0 12px 12px 0;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    margin-bottom: 24px;
+}
+
+.explicacao-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--cor-dourado);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 14px;
+}
+
+.explicacao-corpo {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #4a3c2c;
+}
+
+.explicacao-corpo p {
+    margin-bottom: 1em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO INFERIOR                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-inferior {
+    max-width: 860px;
+    width: 100%;
+    margin: 0 auto 40px;
+    padding: 0 20px;
+}
+
+.nav-buttons {
+    background: #fff;
+    padding: 18px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    box-shadow: var(--sombra);
+}
+
+.btn-primary {
+    flex: 1;
+    text-align: center;
+    padding: 13px 16px;
+    background: linear-gradient(135deg, var(--cor-roxo), #7a3eb5);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(91, 44, 131, 0.3);
+}
+
+.pagina-atual {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--cor-dourado);
+    min-width: 50px;
+    text-align: center;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RODAPÉ                                                     */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-footer {
+    background: #1a1a1a;
+    color: #888;
+    text-align: center;
+    padding: 22px 20px;
+    margin-top: auto;
+    font-size: 0.85rem;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RESPONSIVIDADE                                             */
+/* ────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+    .suma-header h1 {
+        font-size: 1.4rem;
+    }
+    
+    .bloco-texto {
+        padding: 28px 18px;
+    }
+    
+    .bloco-explicacao {
+        padding: 22px 18px;
+    }
+    
+    .navegacao-topo {
+        flex-wrap: wrap;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CABEÇALHO                                               -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="suma-header">
+  <a href="../../index.html" class="voltar-index">← Índice</a>
+  <h1>Suma Teológica</h1>
+  <p style="opacity:0.8; font-style:italic; margin-top:4px;">São Tomás de Aquino</p>
+  <span class="info-pagina">Página 447 de 3000</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO SUPERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<nav class="navegacao-topo">
+  <a href="suma-pagina446.html" class="btn-nav">← Anterior</a>
+  <span class="info-centena">Pág. 447/3000</span>
+  <a href="suma-pagina448.html" class="btn-nav">Próxima →</a>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CONTEÚDO PRINCIPAL                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<main class="pagina-conteudo">
+  
+  <!-- Texto Original -->
+  <div class="bloco-texto">
+    <div class="bloco-titulo">
+      <span>📜</span>
+      Questão 89, Artigo 5 — Se o hábito da ciência adquirida nesta vida permanece na alma
+    </div>
+    <div class="pagina-corpo">
+    <p>separada. O quinto discute–se assim. – Parece que o hábito da ciência adquirida nesta vida não permanece na alma separada. 1. – Pois, diz a Escritura: A ciência será abolida. 2. Demais. – Certos há, menos bons, que neste mundo, são ricos de ciência; outros, porém, melhores que eles, dela carecem. Se, pois o hábito da ciência permanecesse na alma, mesmo depois da morte, resultaria que aqueles teriam, mesmo na vida futura, melhor posição que estes. O que é inadmissível. 3. Demais. – As almas separadas terão ciência das coisas, por influência do lume divino. Se, pois, a ciência adquirida nesta vida permanece na alma separada, resultaria a existência de duas formas da mesma espécie no mesmo sujeito. O que é impossível. 4. Demais. – O Filósofo diz: o hábito uma qualidade dificilmente removível; mas, pela doença ou por outra causa semelhante, a ciência, por vezes, corrompe–se. Ora, não há nenhuma imutação tão forte, nesta vida, como a que oriunda da morte. Logo, conclui–se que o hábito da ciência corrompe–se pela morte.</p>
+    <p>Mas, em contrário, diz Jerónimo: Aprendamos na terra aquilo cuja ciência persevera no céu. SOLUÇÃO. – Certos ensinaram que o hábito da ciência não está no intelecto mesmo, mas nas virtudes sensitivas, a saber, a imaginativa, a cogitativa e a memorativa; e que as espécies inteligíveis não se conservam no intelecto possível. E se esta opinião fosse verdadeira, resultaria que, destruído o corpo, totalmente se destruiria o hábito da ciência adquirido nesta vida. Mas, como a ciência está no intelecto, que é o lugar das espécies, segundo diz Aristóteles, necessário é que o hábito da ciência adquirido nesta vida esteja, em parte, nas sobreditas virtudes sensitivas e, em parte, no intelecto mesmo. E isto se pode concluir considerando os atos mesmos dos quais se adquire o hábito da ciência; pois, os hábitos são semelhantes aos atos pelos quais são adquiridos, como diz o Filósofo. Ora, os atos do intelecto, pelos quais, na vida presente, se adquire a ciência, se realizam pelo voltar–se do intelecto para os fantasmas, que existem nas sobreditas virtudes sensitivas. Por onde, por meio de tais atos, tanto o intelecto possível adquire uma certa faculdade de considerar por meio de espécies recebidas; como as sobreditas virtudes inferiores adquirem uma certa habilidade, de modo que, voltando–se para elas, o intelecto possa, mais facilmente especular os inteligíveis. Mas, assim como o ato do intelecto, principal e formalmente está no intelecto mesmo; e, material e dispositivamente, está nas virtudes inferiores, o mesmo também se deve dizer do hábito. Por onde, a parte da ciência presente que alguém tiver, nas virtudes inferiores, não permanecerá na alma separada; mas, aquela que tiver no intelecto mesmo, essa necessariamente há de permanecer. Porque, como se diz na obra da dilatação e brevidade da vida, uma forma pode se corromper de duplo modo: em si mesma, quando corrompida pelo seu contrário, como o cálido pelo frio; e por acidente, isto é, pela corrupção do sujeito. Ora, é manifesto que a ciência existente no intelecto humano não pode corromper–se pela corrupção do sujeito, porque o intelecto é incorruptível, conforme ficou demonstrado. Semelhantemente, também as espécies inteligíveis existentes no intelecto possível não podem ser corrompidas pelo contrário, porque a intenção dos inteligíveis não tem contrário nenhum; e, principalmente, tratando–se da inteligência simples que intelige a quididade. Quanto, porém, à operação pela qual o intelecto compõe e divide, ou ainda, raciocina, há nele contrariedade, por ser o falso, na proposição ou na argumentação, contrário ao verdadeiro. E, deste modo, a ciência, às vezes, se corrompe pelo contrário, a saber, quando alguém por uma argumentação falsa, aberra da ciência verdadeira. E por isso o Filósofo estabelece dois modos pelos quais a ciência, em si mesma, se corrompe, a saber: pelo esquecimento, por parte da memorativa; e pelo engano, por parte da falsa argumentação. Ora, isto não tem lugar na alma separada. Por onde, deve–se concluir que o hábito da ciência, enquanto existente no intelecto, permanece na alma separada.</p>
+    <p>DONDE A</p>
+    <p>RESPOSTA À PRIMEIRA OBJEÇÃO. – No passo citado, o Apóstolo não se refere à ciência quanto ao hábito, mas quanto ao ato do conhecimento. E, assim, para o comprovar, acrescenta: Ligara conheço em parte.</p>
+    <p>RESPOSTA À SEGUNDA. – Assim como, em relação à estatura do corpo, um homem pode ser maior que outro melhor que ele; assim também nada impede que um tenha, na vida futura, um hábito da ciência que não tem outro melhor que ele, se bem que isso seja de quase nula importância, em comparação com as outras prerrogativas que terão os melhores.</p>
+    <p>RESPOSTA À TERCEIRA. – Essas duas ciências não têm a mesma natureza. Donde, pois, não resulta nenhum inconveniente.</p>
+    <p>RESPOSTA À QUARTA. – A OBJEÇÃO procede, em relação à corrupção da ciência, quanto ao que ela tem procedente das virtudes sensitivas.</p>
+
+    </div>
+  </div>
+  
+  <!-- Bloco de Explicação (a ser preenchido) -->
+  <div class="bloco-explicacao">
+    <div class="explicacao-label">💡 Explicação e Contexto</div>
+    <div class="explicacao-corpo" id="explicacao">
+    <p><em>Explicação será adicionada em breve.</em></p>
+
+    </div>
+  </div>
+  
+</main>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO INFERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="navegacao-inferior">
+  <div class="nav-buttons">
+    <a href="suma-pagina446.html" class="btn-primary">← Anterior</a>
+    <span class="pagina-atual">447</span>
+    <a href="suma-pagina448.html" class="btn-primary">Próxima →</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  RODAPÉ                                                  -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<footer class="suma-footer">
+  <p>Suma Teológica · São Tomás de Aquino | Biblioteca Lux Fidei</p>
+</footer>
+
+</body>
+</html>

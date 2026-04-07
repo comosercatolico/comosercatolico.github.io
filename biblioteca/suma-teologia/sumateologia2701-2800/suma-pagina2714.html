@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Questão 12, Artigo 2 — ─ Se a satisfação é um ato de justiça. | Suma Teológica</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+    --cor-fundo: #f5f0e8;
+    --cor-pagina: #fff;
+    --cor-texto: #2c1f17;
+    --cor-dourado: #d4af37;
+    --cor-roxo: #5b2c83;
+    --sombra: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cor-fundo);
+    color: var(--cor-texto);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CABEÇALHO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-header {
+    background: linear-gradient(135deg, #1a1a1a, #2c241b);
+    color: #f5f0e8;
+    padding: 32px 20px 24px;
+    text-align: center;
+    position: relative;
+}
+
+.voltar-index {
+    position: absolute;
+    top: 16px;
+    left: 20px;
+    color: var(--cor-dourado);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: opacity 0.2s;
+}
+
+.voltar-index:hover {
+    opacity: 0.8;
+}
+
+.suma-header h1 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.info-pagina {
+    display: inline-block;
+    background: rgba(212, 175, 55, 0.15);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    color: var(--cor-dourado);
+    margin-top: 8px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-topo {
+    background: #fff;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    gap: 10px;
+}
+
+.btn-nav {
+    display: inline-flex;
+    align-items: center;
+    padding: 9px 18px;
+    background: var(--cor-roxo);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.btn-nav:hover {
+    background: #4a246a;
+    transform: translateY(-1px);
+}
+
+.desabilitado {
+    background: #ddd !important;
+    color: #999 !important;
+    pointer-events: none;
+}
+
+.info-centena {
+    font-size: 0.85rem;
+    color: #888;
+    font-weight: 500;
+    padding: 0 10px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CONTEÚDO PRINCIPAL                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.pagina-conteudo {
+    flex: 1;
+    max-width: 860px;
+    width: 100%;
+    margin: 36px auto;
+    padding: 0 20px;
+}
+
+.bloco-texto {
+    background: var(--cor-pagina);
+    padding: 48px 44px;
+    border-radius: 12px;
+    box-shadow: var(--sombra);
+    position: relative;
+    margin-bottom: 24px;
+}
+
+.bloco-texto::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 20px;
+    bottom: 20px;
+    width: 4px;
+    background: linear-gradient(to bottom, var(--cor-dourado), var(--cor-roxo));
+    border-radius: 0 4px 4px 0;
+}
+
+.bloco-titulo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.3rem;
+    color: var(--cor-roxo);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e8dfd0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pagina-corpo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.1rem;
+    line-height: 1.95;
+    color: #3d3226;
+    text-align: justify;
+}
+
+.pagina-corpo p {
+    margin-bottom: 1.3em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  BLOCO DE EXPLICAÇÃO                                        */
+/* ────────────────────────────────────────────────────────── */
+
+.bloco-explicacao {
+    background: linear-gradient(135deg, #fffdf5, #faf5eb);
+    border-left: 5px solid var(--cor-dourado);
+    padding: 32px 40px;
+    border-radius: 0 12px 12px 0;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    margin-bottom: 24px;
+}
+
+.explicacao-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--cor-dourado);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 14px;
+}
+
+.explicacao-corpo {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #4a3c2c;
+}
+
+.explicacao-corpo p {
+    margin-bottom: 1em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO INFERIOR                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-inferior {
+    max-width: 860px;
+    width: 100%;
+    margin: 0 auto 40px;
+    padding: 0 20px;
+}
+
+.nav-buttons {
+    background: #fff;
+    padding: 18px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    box-shadow: var(--sombra);
+}
+
+.btn-primary {
+    flex: 1;
+    text-align: center;
+    padding: 13px 16px;
+    background: linear-gradient(135deg, var(--cor-roxo), #7a3eb5);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(91, 44, 131, 0.3);
+}
+
+.pagina-atual {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--cor-dourado);
+    min-width: 50px;
+    text-align: center;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RODAPÉ                                                     */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-footer {
+    background: #1a1a1a;
+    color: #888;
+    text-align: center;
+    padding: 22px 20px;
+    margin-top: auto;
+    font-size: 0.85rem;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RESPONSIVIDADE                                             */
+/* ────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+    .suma-header h1 {
+        font-size: 1.4rem;
+    }
+    
+    .bloco-texto {
+        padding: 28px 18px;
+    }
+    
+    .bloco-explicacao {
+        padding: 22px 18px;
+    }
+    
+    .navegacao-topo {
+        flex-wrap: wrap;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CABEÇALHO                                               -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="suma-header">
+  <a href="../../index.html" class="voltar-index">← Índice</a>
+  <h1>Suma Teológica</h1>
+  <p style="opacity:0.8; font-style:italic; margin-top:4px;">São Tomás de Aquino</p>
+  <span class="info-pagina">Página 2714 de 3000</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO SUPERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<nav class="navegacao-topo">
+  <a href="suma-pagina2713.html" class="btn-nav">← Anterior</a>
+  <span class="info-centena">Pág. 2714/3000</span>
+  <a href="suma-pagina2715.html" class="btn-nav">Próxima →</a>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CONTEÚDO PRINCIPAL                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<main class="pagina-conteudo">
+  
+  <!-- Texto Original -->
+  <div class="bloco-texto">
+    <div class="bloco-titulo">
+      <span>📜</span>
+      Questão 12, Artigo 2 — ─ Se a satisfação é um ato de justiça.
+    </div>
+    <div class="pagina-corpo">
+    <p>O segundo discute-se assim. ─ Parece que a satisfação não é um ato de justiça. 1. ─ Pois, o fim da satisfação é nos reconciliar com quem ofendemos. Ora, a reconciliação, implicando o amor, supõe a caridade. Logo, a satisfação é ato de caridade e não de justiça. 2. Demais. ─ As causas dos pecados em nós são as paixões da alma, pelas quais somos incitados ao mal. Ora, a justiça, segundo o Filósofo, não tem por objeto as paixões, mas os atos. Logo, sendo próprio da satisfação eliminar as causas dos pecados, como diz a letra do Mestre, conclui-se que não é um ato de justiça. 3. Demais. ─ Acautelar para o futuro não é ato de justiça, mas antes, de prudência, de que a cautela faz parte. Ora, isto implica a satisfação, pois a ela pertence não permitir a entrada às sugestões dos pecados. Logo, a satisfação não é um ato de justiça.</p>
+    <p>Mas, em contrário. ─ Nenhuma virtude leva em conta a noção de débito, senão a justiça. Ora, a satisfação dá a honra devida a Deus, como diz Anselmo. Logo, a satisfação é um ato de justiça. 2. Demais. ─ Nenhuma virtude, a não ser a justiça, realiza a igualdade entre as coisas exteriores. Ora, isso o faz a satisfação, que estabelece a igualdade entre a reparação e a ofensa. Logo, a satisfação é um ato de justiça.</p>
+    <p>SOLUÇÃO. — Segundo o Filósofo, a mediedade da justiça se funda na igualdade entre duas coisas, segundo uma certa proporcionalidade. Por onde, como essa igualdade implica a denominação mesma de satisfação, pois o advérbio latino satis designa uma igualdade de proporção, conclui-se ser a satisfação formalmente um ato de justiça. Ora, o ato de justiça, segundo o Filósofo, ou é de nos para com outrem, como quando lhe pagamos o devido; ou de outrem para com outrem, como quando o juiz estabelece a justiça entre duas partes. ─ Ora, quando é um ato de justiça de nós para com outrem, a igualdade se constitui em nós mesmos: quando de outrem para com outrem, a igualdade se constitui pelo ato de justiça recebido. E como a satisfação exprime a igualdade no agente, significa o ato de justiça nosso para com outrem, propriamente falando. ─ No outro lado, um ato nosso para com outrem pode realizar a justiça, no atinente às ações e às paixões, ou às coisas externas; assim como co mete uma injustiça para com outrem quem lhe subtrai o que lhe pertence ou o lesa por qualquer ato. E sendo o dar o uso dos bens externos, por isso o ato de justiça, enquanto restabelece a igualdade nas causas externas, significa propriamente restituir, ao passo que satisfazer exprime manifestamente a igualdade nas ações, embora às vezes isto se tome por aquilo. ─ Mas, igualdade não pode haver senão entre causas desiguais. Por isso a satisfação pressupõe a desigualdade entre as ações, desigualdade que constitui a ofensa; por onde, diz respeito a uma ofensa precedente senão a justiça vindicativa. E esta restabelece a igualdade no que recebe o ato justo; e é indiferente seja o paciente o mesmo que o agente ─ como quando nos impomos uma pena a nós mesmos; ou que o seja ─ como quando o juiz pune alguém; pois, em ambos os casos se exerce a justiça vindicativa. Semelhantemente, a penitência, que restabelece a igualdade só no agente, pois, é o penitente mesmo que se dá a si a pena; e assim a penitência faz de certo modo parte da justiça vindicativa. Donde se conclui, que a satisfação, que restabelece no agente a igualdade relativamente à ofensa precedente, é um ato de justiça, no atinente à parte chamada penitência.</p>
+    <p>DONDE A</p>
+    <p>RESPOSTA À PRIMEIRA OBJEÇÃO. ─ A satisfação, cama do sobredito se colhe, é uma certa compensação pela injustiça feita. Por onde, assim como a injustiça praticada causava imediatamente a desigualdade da justiça e, por consequência, a desigualdade oposta à amizade, assim também a satisfação conduz diretamente à igualdade da justiça e, por consequência, à igualdade da amizade. E como um ato procede, como elícito, do hábito a cujo fim imediatamente se ordena; e como imperado, daquele a cujo fim ultimamente tende, por isso a satisfação é um ato elícito da justiça, mas imperado pela caridade.</p>
+    <p>RESPOSTA À SEGUNDA. ─ Embora a justiça respeite principalmente os atos, contudo, por consequência, respeita as paixões, enquanto causas dos atos. Mas, assim como a justiça coíbe à ira, impedindo-nos de causar injúria a outrem; e a conscupiscência, impedindo-nos de violar o leito alheio; assim também a satisfação pode eliminar as causas dos pecados.</p>
+    <p>RESPOSTA À TERCEIRA. ─ Qualquer virtude moral participa do ato da prudência, porque ela realiza formalmente em cada uma a idéia da virtude; pois, é a que estabelece a mediedade em cada uma das virtudes morais, como o demonstra a definição de virtude dada por Aristóteles.</p>
+
+    </div>
+  </div>
+  
+  <!-- Bloco de Explicação (a ser preenchido) -->
+  <div class="bloco-explicacao">
+    <div class="explicacao-label">💡 Explicação e Contexto</div>
+    <div class="explicacao-corpo" id="explicacao">
+    <p><em>Explicação será adicionada em breve.</em></p>
+
+    </div>
+  </div>
+  
+</main>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO INFERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="navegacao-inferior">
+  <div class="nav-buttons">
+    <a href="suma-pagina2713.html" class="btn-primary">← Anterior</a>
+    <span class="pagina-atual">2714</span>
+    <a href="suma-pagina2715.html" class="btn-primary">Próxima →</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  RODAPÉ                                                  -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<footer class="suma-footer">
+  <p>Suma Teológica · São Tomás de Aquino | Biblioteca Lux Fidei</p>
+</footer>
+
+</body>
+</html>

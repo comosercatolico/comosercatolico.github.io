@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Questão 46, Artigo 3 — — Se havia outro modo mais conveniente da liberação humana do | Suma Teológica</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+    --cor-fundo: #f5f0e8;
+    --cor-pagina: #fff;
+    --cor-texto: #2c1f17;
+    --cor-dourado: #d4af37;
+    --cor-roxo: #5b2c83;
+    --sombra: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cor-fundo);
+    color: var(--cor-texto);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CABEÇALHO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-header {
+    background: linear-gradient(135deg, #1a1a1a, #2c241b);
+    color: #f5f0e8;
+    padding: 32px 20px 24px;
+    text-align: center;
+    position: relative;
+}
+
+.voltar-index {
+    position: absolute;
+    top: 16px;
+    left: 20px;
+    color: var(--cor-dourado);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: opacity 0.2s;
+}
+
+.voltar-index:hover {
+    opacity: 0.8;
+}
+
+.suma-header h1 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.info-pagina {
+    display: inline-block;
+    background: rgba(212, 175, 55, 0.15);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    color: var(--cor-dourado);
+    margin-top: 8px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-topo {
+    background: #fff;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    gap: 10px;
+}
+
+.btn-nav {
+    display: inline-flex;
+    align-items: center;
+    padding: 9px 18px;
+    background: var(--cor-roxo);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.btn-nav:hover {
+    background: #4a246a;
+    transform: translateY(-1px);
+}
+
+.desabilitado {
+    background: #ddd !important;
+    color: #999 !important;
+    pointer-events: none;
+}
+
+.info-centena {
+    font-size: 0.85rem;
+    color: #888;
+    font-weight: 500;
+    padding: 0 10px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CONTEÚDO PRINCIPAL                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.pagina-conteudo {
+    flex: 1;
+    max-width: 860px;
+    width: 100%;
+    margin: 36px auto;
+    padding: 0 20px;
+}
+
+.bloco-texto {
+    background: var(--cor-pagina);
+    padding: 48px 44px;
+    border-radius: 12px;
+    box-shadow: var(--sombra);
+    position: relative;
+    margin-bottom: 24px;
+}
+
+.bloco-texto::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 20px;
+    bottom: 20px;
+    width: 4px;
+    background: linear-gradient(to bottom, var(--cor-dourado), var(--cor-roxo));
+    border-radius: 0 4px 4px 0;
+}
+
+.bloco-titulo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.3rem;
+    color: var(--cor-roxo);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e8dfd0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pagina-corpo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.1rem;
+    line-height: 1.95;
+    color: #3d3226;
+    text-align: justify;
+}
+
+.pagina-corpo p {
+    margin-bottom: 1.3em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  BLOCO DE EXPLICAÇÃO                                        */
+/* ────────────────────────────────────────────────────────── */
+
+.bloco-explicacao {
+    background: linear-gradient(135deg, #fffdf5, #faf5eb);
+    border-left: 5px solid var(--cor-dourado);
+    padding: 32px 40px;
+    border-radius: 0 12px 12px 0;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    margin-bottom: 24px;
+}
+
+.explicacao-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--cor-dourado);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 14px;
+}
+
+.explicacao-corpo {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #4a3c2c;
+}
+
+.explicacao-corpo p {
+    margin-bottom: 1em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO INFERIOR                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-inferior {
+    max-width: 860px;
+    width: 100%;
+    margin: 0 auto 40px;
+    padding: 0 20px;
+}
+
+.nav-buttons {
+    background: #fff;
+    padding: 18px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    box-shadow: var(--sombra);
+}
+
+.btn-primary {
+    flex: 1;
+    text-align: center;
+    padding: 13px 16px;
+    background: linear-gradient(135deg, var(--cor-roxo), #7a3eb5);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(91, 44, 131, 0.3);
+}
+
+.pagina-atual {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--cor-dourado);
+    min-width: 50px;
+    text-align: center;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RODAPÉ                                                     */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-footer {
+    background: #1a1a1a;
+    color: #888;
+    text-align: center;
+    padding: 22px 20px;
+    margin-top: auto;
+    font-size: 0.85rem;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RESPONSIVIDADE                                             */
+/* ────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+    .suma-header h1 {
+        font-size: 1.4rem;
+    }
+    
+    .bloco-texto {
+        padding: 28px 18px;
+    }
+    
+    .bloco-explicacao {
+        padding: 22px 18px;
+    }
+    
+    .navegacao-topo {
+        flex-wrap: wrap;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CABEÇALHO                                               -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="suma-header">
+  <a href="../../index.html" class="voltar-index">← Índice</a>
+  <h1>Suma Teológica</h1>
+  <p style="opacity:0.8; font-style:italic; margin-top:4px;">São Tomás de Aquino</p>
+  <span class="info-pagina">Página 2363 de 3000</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO SUPERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<nav class="navegacao-topo">
+  <a href="suma-pagina2362.html" class="btn-nav">← Anterior</a>
+  <span class="info-centena">Pág. 2363/3000</span>
+  <a href="suma-pagina2364.html" class="btn-nav">Próxima →</a>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CONTEÚDO PRINCIPAL                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<main class="pagina-conteudo">
+  
+  <!-- Texto Original -->
+  <div class="bloco-texto">
+    <div class="bloco-titulo">
+      <span>📜</span>
+      Questão 46, Artigo 3 — — Se havia outro modo mais conveniente da liberação humana do
+    </div>
+    <div class="pagina-corpo">
+    <p>que pela paixão de Cristo. O terceiro discute-se assim. — Parece que havia outro modo mais conveniente da liberação humana do que pela paixão de Cristo.</p>
+    <p>1. — Pois, a natureza nas suas obras imita as obras divinas, como regulada e movida que é por Deus. Ora, a natureza não faz por dois meios o que pode fazer por um só. Logo, como Deus podia liberar o homem pela sua só vontade, parece não era conveniente que se acrescentasse a paixão de Cristo para a liberação do gênero humano. 2. Demais. — As obras da natureza se realizam de maneira mais conveniente que o que se faz por violência; porque a violência é uma como ruína ou destruição do que faz a natureza, segundo o Filósofo. Ora, a paixão de Cristo implicava a morte violenta. Logo, era mais conveniente que Cristo liberasse o homem morrendo de morte natural, do que pela paixão. 3. Demais. — É convenientíssimo que quem retém uma coisa, violenta e injustamente, seja despojado dela por um poder superior. Donde o dito da Escritura: Vós fostes vendidos por nada, e sem prata sereis resgatados. Ora, o diabo não tinha nenhum poder sobre o homem, a quem enganava pela fraude e a quem retinha, por uma como violência, na escravidão. Logo, parece que teria sido, mais conveniente que Cristo despojasse o diabo, em virtude do seu simples poder, do que pela sua paixão.</p>
+    <p>Mas, em contrário, diz Agostinho: Não havia outro meio mais conveniente de curar a miséria do que pela paixão de Cristo.</p>
+    <p>SOLUÇÃO. — Tanto um meio é mais conveniente para conseguir um fim, quanto mais ele faz concorrerem elementos conducentes ao fim. Ora, o ser o homem liberado pela paixão de Cristo foi causa de concorrerem muitos elementos conducentes à salvação do mesmo, além da liberação do pecado. — Assim, primeiro, desse modo o homem conhece quanto Deus o ama; o que o excita a amá-lo mais, e nisso consiste a perfeição da salvação humana. Donde o dizer o Apóstolo: Deus faz brilhar a sua caridade em nós porque ainda quando éramos pecadores, morreu Cristo por nós. — Segundo, porque por esse meio nos deu o exemplo da obediência, da humildade, da constância, da justiça e das demais virtudes reveladas na paixão de Cristo e que são necessárias à salvação humana. Por isso diz a Escritura: Cristo padeceu por nós, deixando-vos exemplo para que sigais as suas pisadas. — Terceiro, porque Cristo, com a sua paixão, não somente liberou o homem do pecado, mas ainda lhe mereceu a graça justificante e a glória da beatitude como a seguir se dirá. — Quarto, porque, assim, uma necessidade maior impôs ao homem conservar-se imune do pecado, segundo aquilo do Apóstolo: Porque vós fostes comprado por um grande preço; glorificai, pois, e trazei a Deus no vosso corpo. — Quinto, porque contribuiu para maior dignidade do homem, de modo que assim como fora vencido e enganado pelo diabo, assim também fosse ele mesmo quem vencesse o diabo; e assim como o homem mereceu a morte, assim também, morrendo, a vencesse a ela, conforme o dizer do Apóstolo: Graças a Deus, que nos deu a vitória, por Jesus Cristo. — Por isso foi mais conveniente que, pela paixão de Cristo fossemos liberados, do que pela só vontade de Deus.</p>
+    <p>DONDE A</p>
+    <p>RESPOSTA À PRIMEIRA OBJEÇÃO. — Também a natureza, para produzir uma obra de modo mais conveniente, aplica vários meios para um mesmo fim; assim, dois olhos, para ver. E o mesmo faz em casos semelhantes.</p>
+    <p>RESPOSTA À SEGUNDA. — Como diz Crisóstomo, Cristo veio destruir não a sua própria morte, pois, sendo a vida não estava sujeito a morrer; mas a dos homens. Por isso não depôs o seu corpo por uma morte natural, mas quis sofrê-la infligida pelos outros homens. Pois, se no seu corpo tivesse adoecido e na presença de todos, morrido, seria incompreensível que quem veio curar as doenças alheias tivesse o seu próprio corpo sujeito a elas. E se, sem nenhuma doença, tivesse se despojado do corpo, para se mostrar em seguida, não lhe acreditariam quando falasse da sua ressurreição. Pois, como teria Cristo manifestado a vitória sobre a morte, se não tivesse mostrado, sofrendo-a na presença de todos, que a morte foi vencida pela incorrupção do corpo?</p>
+    <p>RESPOSTA À TERCEIRA. — Embora o diabo tivesse atacado o homem injustamente, contudo o homem fora, por causa do pecado, justamente entregue por Deus à escravidão do diabo. Por isso foi conveniente que, pela justiça, o homem fosse liberado da escravidão do diabo. Satisfazendo do Cristo por ele, com a sua paixão. - E isso também foi conveniente para vencer a soberba do diabo, inimigo da justiça e amante do poder: de modo que Cristo vencesse o diabo e liberasse o homem, não pelo só poder da divindade, mas também pela justificação e pela humilhação da paixão, como diz Agostinho.</p>
+
+    </div>
+  </div>
+  
+  <!-- Bloco de Explicação (a ser preenchido) -->
+  <div class="bloco-explicacao">
+    <div class="explicacao-label">💡 Explicação e Contexto</div>
+    <div class="explicacao-corpo" id="explicacao">
+    <p><em>Explicação será adicionada em breve.</em></p>
+
+    </div>
+  </div>
+  
+</main>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO INFERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="navegacao-inferior">
+  <div class="nav-buttons">
+    <a href="suma-pagina2362.html" class="btn-primary">← Anterior</a>
+    <span class="pagina-atual">2363</span>
+    <a href="suma-pagina2364.html" class="btn-primary">Próxima →</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  RODAPÉ                                                  -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<footer class="suma-footer">
+  <p>Suma Teológica · São Tomás de Aquino | Biblioteca Lux Fidei</p>
+</footer>
+
+</body>
+</html>

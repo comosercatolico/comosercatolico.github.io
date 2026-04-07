@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Questão 95, Artigo 8 — Se a adivinhação por meio de sortes é ilícita. | Suma Teológica</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+    --cor-fundo: #f5f0e8;
+    --cor-pagina: #fff;
+    --cor-texto: #2c1f17;
+    --cor-dourado: #d4af37;
+    --cor-roxo: #5b2c83;
+    --sombra: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cor-fundo);
+    color: var(--cor-texto);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CABEÇALHO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-header {
+    background: linear-gradient(135deg, #1a1a1a, #2c241b);
+    color: #f5f0e8;
+    padding: 32px 20px 24px;
+    text-align: center;
+    position: relative;
+}
+
+.voltar-index {
+    position: absolute;
+    top: 16px;
+    left: 20px;
+    color: var(--cor-dourado);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: opacity 0.2s;
+}
+
+.voltar-index:hover {
+    opacity: 0.8;
+}
+
+.suma-header h1 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.info-pagina {
+    display: inline-block;
+    background: rgba(212, 175, 55, 0.15);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    color: var(--cor-dourado);
+    margin-top: 8px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO                                                  */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-topo {
+    background: #fff;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    gap: 10px;
+}
+
+.btn-nav {
+    display: inline-flex;
+    align-items: center;
+    padding: 9px 18px;
+    background: var(--cor-roxo);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.btn-nav:hover {
+    background: #4a246a;
+    transform: translateY(-1px);
+}
+
+.desabilitado {
+    background: #ddd !important;
+    color: #999 !important;
+    pointer-events: none;
+}
+
+.info-centena {
+    font-size: 0.85rem;
+    color: #888;
+    font-weight: 500;
+    padding: 0 10px;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  CONTEÚDO PRINCIPAL                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.pagina-conteudo {
+    flex: 1;
+    max-width: 860px;
+    width: 100%;
+    margin: 36px auto;
+    padding: 0 20px;
+}
+
+.bloco-texto {
+    background: var(--cor-pagina);
+    padding: 48px 44px;
+    border-radius: 12px;
+    box-shadow: var(--sombra);
+    position: relative;
+    margin-bottom: 24px;
+}
+
+.bloco-texto::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 20px;
+    bottom: 20px;
+    width: 4px;
+    background: linear-gradient(to bottom, var(--cor-dourado), var(--cor-roxo));
+    border-radius: 0 4px 4px 0;
+}
+
+.bloco-titulo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.3rem;
+    color: var(--cor-roxo);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e8dfd0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pagina-corpo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.1rem;
+    line-height: 1.95;
+    color: #3d3226;
+    text-align: justify;
+}
+
+.pagina-corpo p {
+    margin-bottom: 1.3em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  BLOCO DE EXPLICAÇÃO                                        */
+/* ────────────────────────────────────────────────────────── */
+
+.bloco-explicacao {
+    background: linear-gradient(135deg, #fffdf5, #faf5eb);
+    border-left: 5px solid var(--cor-dourado);
+    padding: 32px 40px;
+    border-radius: 0 12px 12px 0;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    margin-bottom: 24px;
+}
+
+.explicacao-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--cor-dourado);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 14px;
+}
+
+.explicacao-corpo {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #4a3c2c;
+}
+
+.explicacao-corpo p {
+    margin-bottom: 1em;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  NAVEGAÇÃO INFERIOR                                         */
+/* ────────────────────────────────────────────────────────── */
+
+.navegacao-inferior {
+    max-width: 860px;
+    width: 100%;
+    margin: 0 auto 40px;
+    padding: 0 20px;
+}
+
+.nav-buttons {
+    background: #fff;
+    padding: 18px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    box-shadow: var(--sombra);
+}
+
+.btn-primary {
+    flex: 1;
+    text-align: center;
+    padding: 13px 16px;
+    background: linear-gradient(135deg, var(--cor-roxo), #7a3eb5);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(91, 44, 131, 0.3);
+}
+
+.pagina-atual {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--cor-dourado);
+    min-width: 50px;
+    text-align: center;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RODAPÉ                                                     */
+/* ────────────────────────────────────────────────────────── */
+
+.suma-footer {
+    background: #1a1a1a;
+    color: #888;
+    text-align: center;
+    padding: 22px 20px;
+    margin-top: auto;
+    font-size: 0.85rem;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/*  RESPONSIVIDADE                                             */
+/* ────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+    .suma-header h1 {
+        font-size: 1.4rem;
+    }
+    
+    .bloco-texto {
+        padding: 28px 18px;
+    }
+    
+    .bloco-explicacao {
+        padding: 22px 18px;
+    }
+    
+    .navegacao-topo {
+        flex-wrap: wrap;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CABEÇALHO                                               -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="suma-header">
+  <a href="../../index.html" class="voltar-index">← Índice</a>
+  <h1>Suma Teológica</h1>
+  <p style="opacity:0.8; font-style:italic; margin-top:4px;">São Tomás de Aquino</p>
+  <span class="info-pagina">Página 1711 de 3000</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO SUPERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<nav class="navegacao-topo">
+  <a href="suma-pagina1710.html" class="btn-nav">← Anterior</a>
+  <span class="info-centena">Pág. 1711/3000</span>
+  <a href="suma-pagina1712.html" class="btn-nav">Próxima →</a>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CONTEÚDO PRINCIPAL                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<main class="pagina-conteudo">
+  
+  <!-- Texto Original -->
+  <div class="bloco-texto">
+    <div class="bloco-titulo">
+      <span>📜</span>
+      Questão 95, Artigo 8 — Se a adivinhação por meio de sortes é ilícita.
+    </div>
+    <div class="pagina-corpo">
+    <p>O oitavo discute–se assim. – Parece que a adivinhação por meio de sortes não é ilícita. 1. – Pois, aquilo da Escritura – Nas tuas mãos, estão as minhas sortes – diz a Glosa de Agostinho: A sorte não tem nada de mau mas indica a vontade divina, quando duvidamos. 2. Demais. – Aquilo que os santos praticavam e refere a Escritura não parece ilícito. Ora, vemos, tanto no Antigo como em o Novo Testamento, que varões santos recorreram à sorte. Assim, lemos que Josué, por ordem do Senhor, por um juízo fundado em sortes, puniu Acar, que subtraíra uma parte dos despojos. Também Saul descobriu por sorte que seu filho Jónatas comera mel; e Jonas, fugindo da presença do Senhor, foi descoberto por sorte e atirado ao mar: Zacarias caiu–lhe por sorte oferecer o incenso; Matias foi escolhido para o apostolado, por sorte, pelos Apóstolos – o que tudo se lê na Escritura. Logo, parece que a adivinhação por meio de sortes não é ilícita. 3. Demais. – O duelo, chamado monomaquia, isto é, combate singular; e os juízos por meio do fogo e da água, chamados vulgares, parecem espécies de sorte; por serem meios de se descobrirem coisas ocultas. Ora, não parecem ilícitos; pois, lemos de Davi, que entrou em combate singular com o Filisteu. Logo, parece que a adivinhação por meio de sortes não é ilícita.</p>
+    <p>Mas, em contrário, determina um cânon: Decretamos que são adivinhações e malefícios as sortes, que os Padres condenaram, mas a que vós recorreis para resolver todas as dificuldades, nas vossas províncias. Pelo que, as condenaremos absolutamente e proibimos que os Cristãos não mais lhe pronunciem os nomes nem as pratiquem, sob pena de anátema. SOLUÇÃO. – Como dissemos, há propriamente sorte quando praticamos um ato para, da observação dele, tirar o conhecimento do que está oculto. E então, a sorte será divisória quando por meio dela, pretendemos descobrir o que devemos atribuir a outrem, quer seja, uma coisa possuída, ou a honra, ou a dignidade, ou uma pena, ou uma ação qualquer. Mas, se quisermos indagar o que devemos praticar, a sorte será consultoria. Se, enfim, quisermos saber um acontecimento futuro, será divinatória. Ora, os atos humanos praticados para consultar a sorte não estão sujeitos à disposição das estrelas, nem os resultados deles. Por onde, quem recorrer à sorte, pretendendo que os atos humanos praticados para consulta–la, produzam efeito por influência das estrelas, professa opinião vã e falsa e, por conseguinte, não escapa à ingerência dos demônios. Por onde, essa espécie de adivinhação será sempre supersticiosa e ilícita. Ora, pondo essa causa de lado, havemos de esperar o resultado desses atos, que consultam a sorte, ou da fortuna ou de alguma causa espiritual dirigente. – E se for a fortuna, o que pode se dar só com a sorte divisória, parece que não se cometerá talvez senão o pecado de vaidade. Tal o caso daqueles que, não querendo concordar na divisão de uma causa, recorram à sorte para fazer a divisão, como que pedindo à fortuna determine a parte que cada um receberá. Se porém a decisão da sorte se esperar que provenha de uma causa espiritual, às vezes quem assim espera, nos demônios espera. Tal o que se lê de Eliezer, na Escritura: O rei de Babilônia parou na encruzilhada, no topo dos dois caminhos, procurando adivinhação, misturando as setas: perguntou aos seus ídolos, consultou as entranhas. E tais sortes são ilícitas e proibidas pelos cânones. Outras vezes, porém, espera–se que a sorte provenha de Deus, conforme aquilo da Escritura: Os bilhetes da sorte lançam–se numa dobra do vestido; mas o Senhor é quem os tempera. E tal sorte não é má em si mesma, como diz Agostinho. Mas, de quatro modos pode nela haver pecado. – Primeiro, se se recorrer a sortes sem nenhuma necessidade, o que implica em tentar a Deus. Por isso Ambrósio diz: Quem foi escolhido por sorte não o foi por deliberação humana. – Segundo, se se usar ele sortes, mesmo em caso de necessidade, mas faltando com a reverência devida a Deus. Por isso diz Beda: Aqueles que, compelidos pela necessidade, pensam que devem consultar a Deus, por meio de sortes, a exemplo dos Apóstolos, notem que eles só o fizeram depois de convocada a reunião dos irmãos e feitas orações a Deus. – Terceiro, se nos servirmos das palavras divinas para fins terrenos. Por isso Agostinho diz: Aqueles que tiram sortes por meio das Páginas do Evangelho, embora seja preferível proceder assim a consultarem o demônio, contudo, esse costume me desagrada, de aplicar as palavras divinas a negócios seculares e à vaidade desta vida. – Quarto, se se recorrer a sortes quando se trata de eleições eclesiásticas que devem ser feitas por inspiração do Espírito Santo. Por isso, diz Beda: Matias, ordenado antes de Pentecostes, foi escolhido por sorte, e isso porque a Igreja ainda não tinha a plenitude do Espírito Santo; mas depois foram ordenados sete diáconos não por sorte, mas, por eleição dos discípulos. É diferente porém o que se dá com as dignidades temporais, destinadas a fins terrenos; e na eleição para elas muitas vezes se recorre à sorte, como na divisão dos bens temporais. Mas por premente necessidade, é lícito, com a reverência devida a Deus, implorar o juízo divino recorrendo a sortes. Por isso diz Agostinho: Pode haver dúvidas entre os ministros de Deus para saber, em tempo de perseguição, quais os que devem ficar – para que todos não fujam; e quais os que devem fugir – para a Igreja não ficar deserta, com a morte de todos. E então se essas dúvidas não puderem ser resolvidas, sou de opinião que devem ser escolhidos por sorte os que fiquem e os que fujam. E noutro lugar: Se tivesses abundância de algum bem que deverias dar a quem não o tivesse; se se apresentassem dois candidatos, não podendo tu dá–lo a ambos; e se desses dois nenhum tivesse mais necessidade que o outro nem qualquer relação particular contigo, nada de mais justo poderias fazer do que escolher por sorte aquele a quem deverias dar o que não poderias dar a ambos. Donde se deduz clara a</p>
+    <p>RESPOSTA À PRIMEIRA E À SEGUNDA OBJEÇÕES.</p>
+    <p>RESPOSTA À TERCEIRA. – O juízo do ferro candente e o da água fervendo ordenam–se por certo à descoberta de um pecado oculto, por meio de um ato humano e, por aí, são da mesma natureza que a sorte; mas, tem natureza mais ampla que ela por esperarem de Deus um efeito milagroso. Por isso esses juízos são ilícitos: tanto por buscarem descobrir as causas ocultas reservadas ao juízo divino, como por não serem permitidos por autoridade divina. E é a razão por que um decreto do Papa Estevão dispõe: Os cânones sagrados não permitem arrancar a confissão de ninguém pelo exame do ferro candente ou da água fervendo; e o que a doutrina dos Santos Padres não o permite não devemos procurar obter por meio de descoberta supersticiosa. Pois, é da nossa alçada julgar, com os olhos no temor de Deus, os delitos tornados públicos por confissão espontânea ou comprovação de testemunhas. Quanto às coisas ocultas e desconhecidas, devem ser deixadas aquele que só conhece o coração dos filhos dos homens. E o mesmo se dá com a lei dos duelos; salvo que se aproximam mais da natureza comum das sortes, por não esperarem efeitos milagrosos, senão quando os contendores são de força ou arte muito desiguais. Em seguida devemos tratar das observâncias supersticiosas. E nesta questão discutem–se quatro artigos:</p>
+
+    </div>
+  </div>
+  
+  <!-- Bloco de Explicação (a ser preenchido) -->
+  <div class="bloco-explicacao">
+    <div class="explicacao-label">💡 Explicação e Contexto</div>
+    <div class="explicacao-corpo" id="explicacao">
+    <p><em>Explicação será adicionada em breve.</em></p>
+
+    </div>
+  </div>
+  
+</main>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO INFERIOR                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<div class="navegacao-inferior">
+  <div class="nav-buttons">
+    <a href="suma-pagina1710.html" class="btn-primary">← Anterior</a>
+    <span class="pagina-atual">1711</span>
+    <a href="suma-pagina1712.html" class="btn-primary">Próxima →</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  RODAPÉ                                                  -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<footer class="suma-footer">
+  <p>Suma Teológica · São Tomás de Aquino | Biblioteca Lux Fidei</p>
+</footer>
+
+</body>
+</html>
