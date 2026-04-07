@@ -1,7 +1,6 @@
 /* ═══════════════════════════════════════════════════════════
    SUMA TEOLÓGICA - CSS UNIFICADO
    ═══════════════════════════════════════════════════════════ */
-
 @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
 
 /* ─────────────────────────────────────────────────────────
@@ -22,6 +21,7 @@
 /* ─────────────────────────────────────────────────────────
    RESET E BASE
    ───────────────────────────────────────────────────────── */
+
 * {
     margin: 0;
     padding: 0;
@@ -390,181 +390,52 @@ body {
 }
 
 /* ═══════════════════════════════════════════════════════════
-   COMPONENTES DO LEITOR.JS
+   RESPONSIVO
    ═══════════════════════════════════════════════════════════ */
 
-/* Widget de navegação (substitui .info-centena) */
-#leitor-widget {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 3px;
+@media (max-width: 768px) {
+    .hero-card {
+        padding: 30px 20px;
+    }
+
+    .hero-card h1 {
+        font-size: 2rem;
+    }
+
+    .navegacao-topo {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .bloco-texto {
+        padding: 30px 20px;
+    }
+
+    .bloco-explicacao {
+        padding: 20px 16px;
+    }
+
+    .nav-buttons {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .btn-primary {
+        width: 100%;
+    }
 }
 
-.lw-label {
-    font-size: 0.7rem;
-    color: #999;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    font-weight: 600;
-}
+@media (max-width: 480px) {
+    .hero-card h1 {
+        font-size: 1.6rem;
+    }
 
-.lw-row {
-    display: flex;
-    align-items: center;
-    background: #f7f3ec;
-    border: 1.5px solid var(--cor-dourado);
-    border-radius: 10px;
-    overflow: hidden;
-    transition: box-shadow 0.2s;
-}
+    .btn-start {
+        padding: 14px 30px;
+        font-size: 1rem;
+    }
 
-.lw-row:focus-within {
-    box-shadow: 0 0 0 3px rgba(212,175,55,0.22);
+    .info-estrutura {
+        gap: 20px;
+    }
 }
-
-#lw-input {
-    width: 60px;
-    border: none;
-    background: transparent;
-    font-size: 1rem;
-    font-weight: 700;
-    color: var(--cor-texto);
-    text-align: center;
-    outline: none;
-    font-family: inherit;
-    padding: 6px 4px;
-    -moz-appearance: textfield;
-}
-
-#lw-input::-webkit-inner-spin-button,
-#lw-input::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-}
-
-.lw-total {
-    font-size: 0.82rem;
-    color: #aaa;
-    padding-right: 6px;
-    white-space: nowrap;
-}
-
-.lw-div {
-    width: 1px;
-    height: 28px;
-    background: #ddd;
-}
-
-.lw-btn-ir {
-    background: var(--cor-roxo);
-    color: #fff;
-    border: none;
-    padding: 6px 13px;
-    font-weight: 700;
-    font-size: 0.88rem;
-    cursor: pointer;
-    font-family: inherit;
-    transition: background 0.15s;
-}
-
-.lw-btn-ir:hover {
-    background: var(--cor-roxo-hover);
-}
-
-.lw-btn-idx {
-    background: transparent;
-    border: none;
-    padding: 6px 12px;
-    color: #8b6914;
-    font-size: 0.82rem;
-    font-weight: 700;
-    cursor: pointer;
-    font-family: inherit;
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    transition: all 0.15s;
-    white-space: nowrap;
-}
-
-.lw-btn-idx:hover {
-    color: var(--cor-roxo);
-    background: rgba(91,44,131,0.06);
-}
-
-.lw-btn-idx svg {
-    width: 13px;
-    height: 13px;
-}
-
-.lw-erro {
-    font-size: 0.72rem;
-    color: #c0392b;
-    min-height: 14px;
-    font-weight: 600;
-}
-
-/* Painel de Índice */
-#li-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.42);
-    z-index: 8000;
-    display: none;
-    align-items: flex-start;
-    justify-content: center;
-    padding: 70px 16px 20px;
-    backdrop-filter: blur(2px);
-}
-
-#li-overlay.aberto {
-    display: flex;
-}
-
-#li-painel {
-    background: #fff;
-    border-radius: 14px;
-    width: 100%;
-    max-width: 480px;
-    max-height: 75vh;
-    display: flex;
-    flex-direction: column;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.22);
-    overflow: hidden;
-    animation: liSlide 0.2s ease;
-}
-
-@keyframes liSlide {
-    from { transform: translateY(-16px); opacity: 0; }
-    to   { transform: translateY(0);     opacity: 1; }
-}
-
-#li-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 15px 18px 11px;
-    border-bottom: 1px solid #eee;
-}
-
-#li-header h3 {
-    font-family: 'Libre Baskerville', serif;
-    font-size: 1rem;
-    color: var(--cor-texto);
-    margin: 0;
-}
-
-#li-fechar {
-    background: none;
-    border: none;
-    font-size: 1.2rem;
-    color: #aaa;
-    cursor: pointer;
-    padding: 2px 7px;
-    border-radius: 6px;
-    transition: all 0.15s;
-}
-
-#li-fechar:hover {
-    background: #f0e6d2;
-    color: var(--cor-texto);
