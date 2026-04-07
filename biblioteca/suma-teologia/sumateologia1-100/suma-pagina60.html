@@ -1,318 +1,29 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Questão 12, Artigo 5 — — Se o intelecto criado precisa, para ver a essência de Deus, de | Suma Teológica</title>
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
-
-:root {
-    --cor-fundo: #f5f0e8;
-    --cor-pagina: #fff;
-    --cor-texto: #2c1f17;
-    --cor-dourado: #d4af37;
-    --cor-roxo: #5b2c83;
-    --sombra: 0 8px 24px rgba(0,0,0,0.08);
-}
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: 'Inter', sans-serif;
-    background: var(--cor-fundo);
-    color: var(--cor-texto);
-    line-height: 1.6;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-}
-
-/* ────────────────────────────────────────────────────────── */
-/*  CABEÇALHO                                                  */
-/* ────────────────────────────────────────────────────────── */
-
-.suma-header {
-    background: linear-gradient(135deg, #1a1a1a, #2c241b);
-    color: #f5f0e8;
-    padding: 32px 20px 24px;
-    text-align: center;
-    position: relative;
-}
-
-.voltar-index {
-    position: absolute;
-    top: 16px;
-    left: 20px;
-    color: var(--cor-dourado);
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 0.9rem;
-    transition: opacity 0.2s;
-}
-
-.voltar-index:hover {
-    opacity: 0.8;
-}
-
-.suma-header h1 {
-    font-family: 'Libre Baskerville', serif;
-    font-size: 1.9rem;
-    font-weight: 700;
-    margin-bottom: 6px;
-}
-
-.info-pagina {
-    display: inline-block;
-    background: rgba(212, 175, 55, 0.15);
-    border: 1px solid rgba(212, 175, 55, 0.35);
-    padding: 5px 14px;
-    border-radius: 20px;
-    font-size: 0.85rem;
-    color: var(--cor-dourado);
-    margin-top: 8px;
-}
-
-/* ────────────────────────────────────────────────────────── */
-/*  NAVEGAÇÃO                                                  */
-/* ────────────────────────────────────────────────────────── */
-
-.navegacao-topo {
-    background: #fff;
-    padding: 12px 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    gap: 10px;
-}
-
-.btn-nav {
-    display: inline-flex;
-    align-items: center;
-    padding: 9px 18px;
-    background: var(--cor-roxo);
-    color: #fff;
-    text-decoration: none;
-    border-radius: 8px;
-    font-weight: 600;
-    font-size: 0.9rem;
-    transition: all 0.2s;
-}
-
-.btn-nav:hover {
-    background: #4a246a;
-    transform: translateY(-1px);
-}
-
-.desabilitado {
-    background: #ddd !important;
-    color: #999 !important;
-    pointer-events: none;
-}
-
-.info-centena {
-    font-size: 0.85rem;
-    color: #888;
-    font-weight: 500;
-    padding: 0 10px;
-}
-
-/* ────────────────────────────────────────────────────────── */
-/*  CONTEÚDO PRINCIPAL                                         */
-/* ────────────────────────────────────────────────────────── */
-
-.pagina-conteudo {
-    flex: 1;
-    max-width: 860px;
-    width: 100%;
-    margin: 36px auto;
-    padding: 0 20px;
-}
-
-.bloco-texto {
-    background: var(--cor-pagina);
-    padding: 48px 44px;
-    border-radius: 12px;
-    box-shadow: var(--sombra);
-    position: relative;
-    margin-bottom: 24px;
-}
-
-.bloco-texto::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 20px;
-    bottom: 20px;
-    width: 4px;
-    background: linear-gradient(to bottom, var(--cor-dourado), var(--cor-roxo));
-    border-radius: 0 4px 4px 0;
-}
-
-.bloco-titulo {
-    font-family: 'Libre Baskerville', serif;
-    font-size: 1.3rem;
-    color: var(--cor-roxo);
-    margin-bottom: 20px;
-    padding-bottom: 12px;
-    border-bottom: 1px solid #e8dfd0;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.pagina-corpo {
-    font-family: 'Libre Baskerville', serif;
-    font-size: 1.1rem;
-    line-height: 1.95;
-    color: #3d3226;
-    text-align: justify;
-}
-
-.pagina-corpo p {
-    margin-bottom: 1.3em;
-}
-
-/* ────────────────────────────────────────────────────────── */
-/*  BLOCO DE EXPLICAÇÃO                                        */
-/* ────────────────────────────────────────────────────────── */
-
-.bloco-explicacao {
-    background: linear-gradient(135deg, #fffdf5, #faf5eb);
-    border-left: 5px solid var(--cor-dourado);
-    padding: 32px 40px;
-    border-radius: 0 12px 12px 0;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
-    margin-bottom: 24px;
-}
-
-.explicacao-label {
-    font-family: 'Inter', sans-serif;
-    font-size: 0.72rem;
-    font-weight: 800;
-    color: var(--cor-dourado);
-    text-transform: uppercase;
-    letter-spacing: 1.2px;
-    margin-bottom: 14px;
-}
-
-.explicacao-corpo {
-    font-family: 'Inter', sans-serif;
-    font-size: 1rem;
-    line-height: 1.8;
-    color: #4a3c2c;
-}
-
-.explicacao-corpo p {
-    margin-bottom: 1em;
-}
-
-/* ────────────────────────────────────────────────────────── */
-/*  NAVEGAÇÃO INFERIOR                                         */
-/* ────────────────────────────────────────────────────────── */
-
-.navegacao-inferior {
-    max-width: 860px;
-    width: 100%;
-    margin: 0 auto 40px;
-    padding: 0 20px;
-}
-
-.nav-buttons {
-    background: #fff;
-    padding: 18px;
-    border-radius: 12px;
-    display: flex;
-    justify-content: space-between;
-    gap: 16px;
-    box-shadow: var(--sombra);
-}
-
-.btn-primary {
-    flex: 1;
-    text-align: center;
-    padding: 13px 16px;
-    background: linear-gradient(135deg, var(--cor-roxo), #7a3eb5);
-    color: #fff;
-    text-decoration: none;
-    border-radius: 10px;
-    font-weight: 600;
-    transition: all 0.2s;
-}
-
-.btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(91, 44, 131, 0.3);
-}
-
-.pagina-atual {
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: var(--cor-dourado);
-    min-width: 50px;
-    text-align: center;
-}
-
-/* ────────────────────────────────────────────────────────── */
-/*  RODAPÉ                                                     */
-/* ────────────────────────────────────────────────────────── */
-
-.suma-footer {
-    background: #1a1a1a;
-    color: #888;
-    text-align: center;
-    padding: 22px 20px;
-    margin-top: auto;
-    font-size: 0.85rem;
-}
-
-/* ────────────────────────────────────────────────────────── */
-/*  RESPONSIVIDADE                                             */
-/* ────────────────────────────────────────────────────────── */
-
-@media (max-width: 768px) {
-    .suma-header h1 {
-        font-size: 1.4rem;
-    }
-    
-    .bloco-texto {
-        padding: 28px 18px;
-    }
-    
-    .bloco-explicacao {
-        padding: 22px 18px;
-    }
-    
-    .navegacao-topo {
-        flex-wrap: wrap;
-    }
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="leitor-pagina" content="60">
+  <title>Questão 12, Artigo 5 — — Se o intelecto criado precisa, para ver a essência de Deus, de | Suma Teológica</title>
+  <link rel="stylesheet" href="../suma.css">
+  <script src="../suma.js" defer></script>
 </head>
 <body>
 
-<!-- ═══════════════════════════════════════════════════════ -->
-<!--  CABEÇALHO                                               -->
-<!-- ═══════════════════════════════════════════════════════ -->
+<!-- ══════════════════════════════════════════════════════ -->
+<!--  CABEÇALHO                                             -->
+<!-- ══════════════════════════════════════════════════════ -->
 
 <div class="suma-header">
-  <a href="../../index.html" class="voltar-index">← Índice</a>
+  <a href="../index.html" class="voltar-index">← Índice</a>
   <h1>Suma Teológica</h1>
-  <p style="opacity:0.8; font-style:italic; margin-top:4px;">São Tomás de Aquino</p>
+  <p class="subtitulo">São Tomás de Aquino</p>
   <span class="info-pagina">Página 60 de 3000</span>
 </div>
 
-<!-- ═══════════════════════════════════════════════════════ -->
-<!--  NAVEGAÇÃO SUPERIOR                                      -->
-<!-- ═══════════════════════════════════════════════════════ -->
+<!-- ══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO SUPERIOR                                    -->
+<!-- ══════════════════════════════════════════════════════ -->
 
 <nav class="navegacao-topo">
   <a href="suma-pagina59.html" class="btn-nav">← Anterior</a>
@@ -320,57 +31,54 @@ body {
   <a href="suma-pagina61.html" class="btn-nav">Próxima →</a>
 </nav>
 
-<!-- ═══════════════════════════════════════════════════════ -->
-<!--  CONTEÚDO PRINCIPAL                                      -->
-<!-- ═══════════════════════════════════════════════════════ -->
+<!-- ══════════════════════════════════════════════════════ -->
+<!--  CONTEÚDO PRINCIPAL                                    -->
+<!-- ══════════════════════════════════════════════════════ -->
 
 <main class="pagina-conteudo">
-  
-  <!-- Texto Original -->
+
   <div class="bloco-texto">
     <div class="bloco-titulo">
       <span>📜</span>
       Questão 12, Artigo 5 — — Se o intelecto criado precisa, para ver a essência de Deus, de
     </div>
     <div class="pagina-corpo">
-    <p>algum lume criado. (II Sent., dist. XIV, a. 1, q. 3; IV, dist., XLIX, q. 2, a. 6; III Cont. Gent., cap. LIII, LIV; De Verit., q. 8, a. 3; q. 18, a. 1, ad 1; q. 20, a. 2; Quodl., VII, q. 1, a. 1; Compend. Theol., cap. CV). O quinto discute-se assim. — Parece que o intelecto criado não precisa de nenhum lume criado para ver a essência de Deus.</p>
-    <p>1. — Pois, as coisas sensíveis, por si mesmas lúcidas, não precisam de nenhum outro lume para serem vistas. Logo, nem as inteligíveis. Ora, como Deus é inteligível, não é visto por nenhum lume criado. 2. Demais. — Se Deus é visto por um intermediário não o é em essência. Ora, tal se dá se é visto por meio de um lume criado. Logo, não é visto em essência. 3. Demais. — Nada impede que o que é criado seja natural a uma criatura. Se, pois, a essência de Deus é vista por meio de algum lume criado, este lume poderá ser natural a alguma criatura que, então, não precisaria de nenhum outro lume para ver a Deus, o que é impossível. Logo, não é necessário a toda criatura acrescentar-se um lume, para ver a essência de Deus.</p>
-    <p>Mas, em contrário, a Escritura (Sl 35, 10): No teu lume veremos o lume.</p>
-    <p>SOLUÇÃO. — Tudo o que é elevado acima da natureza própria é necessário que tenha uma disposição, que lhe seja superior; assim, se o ar tiver que receber a forma do fogo, é necessário que receba alguma disposição para tal forma. Ora, quando um intelecto criado vê a Deus em essência, esta torna-se-lhe a forma inteligível. Por onde, é necessário lhe seja acrescentada alguma disposição sobrenatural, para que se eleve a tanta sublimidade. Ora, como a virtude natural do intelecto criado não lhe basta para que veja a essência de Deus, como já demonstramos, necessário é lhe seja aumentada pela divina graça a virtude intelectual, e este aumento chama-se iluminação do intelecto, assim como o próprio inteligível é chamado luz ou lume, do qual diz a Escritura (Ap 21, 23): A claridade de Deus a alumiou, i. é, a sociedade dos bem-aventurados que vêem a Deus. E este lume os torna deiformes, i. é, semelhantes a Deus, conforme aquilo do Evangelho (1 Jo 3, 2):Quando ele aparecer, seremos semelhantes a ele e o veremos bem como ele é.</p>
-    <p>DONDE A</p>
-    <p>RESPOSTA À PRIMEIRA OBJEÇÃO. — O lume criado é necessário para ver a essência de Deus; não que torne essa essência inteligível, que, em si mesma, é incompreensível, mas porque dá ao intelecto a capacidade de inteligir, do modo pelo qual o hábito dá a uma potência capacidade de operar. Semelhantemente, o lume corpóreo é necessário para a visão exterior, tornando, atualmente, o meio transparente, de maneira que possa a cor afetá-lo.</p>
-    <p>RESPOSTA À SEGUNDA. — Não é preciso que o lume em questão, necessário para vermos a essência de Deus, seja uma imagem na qual vejamos essa essência, mas, sim uma quase perfeição do intelecto, que o fortifica para que possa ver a Deus. Por onde, pode-se dizer, que não é um intermediário no qual, mas antes, pelo qual Deus é visto. Ora, isto não tolhe a visão de Deus.</p>
-    <p>RESPOSTA À TERCEIRA. — A disposição para a forma do fogo não pode ser natural, senão para o que já tem essa forma. Por onde, o lume da glória só poderia ser natural à criatura se esta fosse de natureza divina, o que é impossível. Mas, por este lume, a criatura racional torna-se deiforme, como dissemos.</p>
+      <p>algum lume criado. (II Sent., dist. XIV, a. 1, q. 3; IV, dist., XLIX, q. 2, a. 6; III Cont. Gent., cap. LIII, LIV; De Verit., q. 8, a. 3; q. 18, a. 1, ad 1; q. 20, a. 2; Quodl., VII, q. 1, a. 1; Compend. Theol., cap. CV). O quinto discute-se assim. — Parece que o intelecto criado não precisa de nenhum lume criado para ver a essência de Deus.</p>
+      <p>1. — Pois, as coisas sensíveis, por si mesmas lúcidas, não precisam de nenhum outro lume para serem vistas. Logo, nem as inteligíveis. Ora, como Deus é inteligível, não é visto por nenhum lume criado. 2. Demais. — Se Deus é visto por um intermediário não o é em essência. Ora, tal se dá se é visto por meio de um lume criado. Logo, não é visto em essência. 3. Demais. — Nada impede que o que é criado seja natural a uma criatura. Se, pois, a essência de Deus é vista por meio de algum lume criado, este lume poderá ser natural a alguma criatura que, então, não precisaria de nenhum outro lume para ver a Deus, o que é impossível. Logo, não é necessário a toda criatura acrescentar-se um lume, para ver a essência de Deus.</p>
+      <p>Mas, em contrário, a Escritura (Sl 35, 10): No teu lume veremos o lume.</p>
+      <p>SOLUÇÃO. — Tudo o que é elevado acima da natureza própria é necessário que tenha uma disposição, que lhe seja superior; assim, se o ar tiver que receber a forma do fogo, é necessário que receba alguma disposição para tal forma. Ora, quando um intelecto criado vê a Deus em essência, esta torna-se-lhe a forma inteligível. Por onde, é necessário lhe seja acrescentada alguma disposição sobrenatural, para que se eleve a tanta sublimidade. Ora, como a virtude natural do intelecto criado não lhe basta para que veja a essência de Deus, como já demonstramos, necessário é lhe seja aumentada pela divina graça a virtude intelectual, e este aumento chama-se iluminação do intelecto, assim como o próprio inteligível é chamado luz ou lume, do qual diz a Escritura (Ap 21, 23): A claridade de Deus a alumiou, i. é, a sociedade dos bem-aventurados que vêem a Deus. E este lume os torna deiformes, i. é, semelhantes a Deus, conforme aquilo do Evangelho (1 Jo 3, 2):Quando ele aparecer, seremos semelhantes a ele e o veremos bem como ele é.</p>
+      <p>DONDE A</p>
+      <p>RESPOSTA À PRIMEIRA OBJEÇÃO. — O lume criado é necessário para ver a essência de Deus; não que torne essa essência inteligível, que, em si mesma, é incompreensível, mas porque dá ao intelecto a capacidade de inteligir, do modo pelo qual o hábito dá a uma potência capacidade de operar. Semelhantemente, o lume corpóreo é necessário para a visão exterior, tornando, atualmente, o meio transparente, de maneira que possa a cor afetá-lo.</p>
+      <p>RESPOSTA À SEGUNDA. — Não é preciso que o lume em questão, necessário para vermos a essência de Deus, seja uma imagem na qual vejamos essa essência, mas, sim uma quase perfeição do intelecto, que o fortifica para que possa ver a Deus. Por onde, pode-se dizer, que não é um intermediário no qual, mas antes, pelo qual Deus é visto. Ora, isto não tolhe a visão de Deus.</p>
+      <p>RESPOSTA À TERCEIRA. — A disposição para a forma do fogo não pode ser natural, senão para o que já tem essa forma. Por onde, o lume da glória só poderia ser natural à criatura se esta fosse de natureza divina, o que é impossível. Mas, por este lume, a criatura racional torna-se deiforme, como dissemos.</p>
 
     </div>
   </div>
-  
-  <!-- Bloco de Explicação (a ser preenchido) -->
+
   <div class="bloco-explicacao">
     <div class="explicacao-label">💡 Explicação e Contexto</div>
     <div class="explicacao-corpo" id="explicacao">
-    <p><em>Explicação será adicionada em breve.</em></p>
-
+      <p><em>Explicação será adicionada em breve.</em></p>
     </div>
   </div>
-  
+
 </main>
 
-<!-- ═══════════════════════════════════════════════════════ -->
-<!--  NAVEGAÇÃO INFERIOR                                      -->
-<!-- ═══════════════════════════════════════════════════════ -->
+<!-- ══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO INFERIOR                                    -->
+<!-- ══════════════════════════════════════════════════════ -->
 
 <div class="navegacao-inferior">
   <div class="nav-buttons">
-    <a href="suma-pagina59.html" class="btn-primary">← Anterior</a>
+    <a href="suma-pagina59.html" class="btn-primary">← Página Anterior</a>
     <span class="pagina-atual">60</span>
-    <a href="suma-pagina61.html" class="btn-primary">Próxima →</a>
+    <a href="suma-pagina61.html" class="btn-primary">Próxima Página →</a>
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════════════════════ -->
-<!--  RODAPÉ                                                  -->
-<!-- ═══════════════════════════════════════════════════════ -->
+<!-- ══════════════════════════════════════════════════════ -->
+<!--  RODAPÉ                                                -->
+<!-- ══════════════════════════════════════════════════════ -->
 
 <footer class="suma-footer">
   <p>Suma Teológica · São Tomás de Aquino | Biblioteca Lux Fidei</p>

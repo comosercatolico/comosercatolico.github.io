@@ -1,318 +1,29 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Questão 11, Artigo 2 — — Se unidade e multiplicidade se opõem. | Suma Teológica</title>
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
-
-:root {
-    --cor-fundo: #f5f0e8;
-    --cor-pagina: #fff;
-    --cor-texto: #2c1f17;
-    --cor-dourado: #d4af37;
-    --cor-roxo: #5b2c83;
-    --sombra: 0 8px 24px rgba(0,0,0,0.08);
-}
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: 'Inter', sans-serif;
-    background: var(--cor-fundo);
-    color: var(--cor-texto);
-    line-height: 1.6;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-}
-
-/* ────────────────────────────────────────────────────────── */
-/*  CABEÇALHO                                                  */
-/* ────────────────────────────────────────────────────────── */
-
-.suma-header {
-    background: linear-gradient(135deg, #1a1a1a, #2c241b);
-    color: #f5f0e8;
-    padding: 32px 20px 24px;
-    text-align: center;
-    position: relative;
-}
-
-.voltar-index {
-    position: absolute;
-    top: 16px;
-    left: 20px;
-    color: var(--cor-dourado);
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 0.9rem;
-    transition: opacity 0.2s;
-}
-
-.voltar-index:hover {
-    opacity: 0.8;
-}
-
-.suma-header h1 {
-    font-family: 'Libre Baskerville', serif;
-    font-size: 1.9rem;
-    font-weight: 700;
-    margin-bottom: 6px;
-}
-
-.info-pagina {
-    display: inline-block;
-    background: rgba(212, 175, 55, 0.15);
-    border: 1px solid rgba(212, 175, 55, 0.35);
-    padding: 5px 14px;
-    border-radius: 20px;
-    font-size: 0.85rem;
-    color: var(--cor-dourado);
-    margin-top: 8px;
-}
-
-/* ────────────────────────────────────────────────────────── */
-/*  NAVEGAÇÃO                                                  */
-/* ────────────────────────────────────────────────────────── */
-
-.navegacao-topo {
-    background: #fff;
-    padding: 12px 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    gap: 10px;
-}
-
-.btn-nav {
-    display: inline-flex;
-    align-items: center;
-    padding: 9px 18px;
-    background: var(--cor-roxo);
-    color: #fff;
-    text-decoration: none;
-    border-radius: 8px;
-    font-weight: 600;
-    font-size: 0.9rem;
-    transition: all 0.2s;
-}
-
-.btn-nav:hover {
-    background: #4a246a;
-    transform: translateY(-1px);
-}
-
-.desabilitado {
-    background: #ddd !important;
-    color: #999 !important;
-    pointer-events: none;
-}
-
-.info-centena {
-    font-size: 0.85rem;
-    color: #888;
-    font-weight: 500;
-    padding: 0 10px;
-}
-
-/* ────────────────────────────────────────────────────────── */
-/*  CONTEÚDO PRINCIPAL                                         */
-/* ────────────────────────────────────────────────────────── */
-
-.pagina-conteudo {
-    flex: 1;
-    max-width: 860px;
-    width: 100%;
-    margin: 36px auto;
-    padding: 0 20px;
-}
-
-.bloco-texto {
-    background: var(--cor-pagina);
-    padding: 48px 44px;
-    border-radius: 12px;
-    box-shadow: var(--sombra);
-    position: relative;
-    margin-bottom: 24px;
-}
-
-.bloco-texto::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 20px;
-    bottom: 20px;
-    width: 4px;
-    background: linear-gradient(to bottom, var(--cor-dourado), var(--cor-roxo));
-    border-radius: 0 4px 4px 0;
-}
-
-.bloco-titulo {
-    font-family: 'Libre Baskerville', serif;
-    font-size: 1.3rem;
-    color: var(--cor-roxo);
-    margin-bottom: 20px;
-    padding-bottom: 12px;
-    border-bottom: 1px solid #e8dfd0;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.pagina-corpo {
-    font-family: 'Libre Baskerville', serif;
-    font-size: 1.1rem;
-    line-height: 1.95;
-    color: #3d3226;
-    text-align: justify;
-}
-
-.pagina-corpo p {
-    margin-bottom: 1.3em;
-}
-
-/* ────────────────────────────────────────────────────────── */
-/*  BLOCO DE EXPLICAÇÃO                                        */
-/* ────────────────────────────────────────────────────────── */
-
-.bloco-explicacao {
-    background: linear-gradient(135deg, #fffdf5, #faf5eb);
-    border-left: 5px solid var(--cor-dourado);
-    padding: 32px 40px;
-    border-radius: 0 12px 12px 0;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
-    margin-bottom: 24px;
-}
-
-.explicacao-label {
-    font-family: 'Inter', sans-serif;
-    font-size: 0.72rem;
-    font-weight: 800;
-    color: var(--cor-dourado);
-    text-transform: uppercase;
-    letter-spacing: 1.2px;
-    margin-bottom: 14px;
-}
-
-.explicacao-corpo {
-    font-family: 'Inter', sans-serif;
-    font-size: 1rem;
-    line-height: 1.8;
-    color: #4a3c2c;
-}
-
-.explicacao-corpo p {
-    margin-bottom: 1em;
-}
-
-/* ────────────────────────────────────────────────────────── */
-/*  NAVEGAÇÃO INFERIOR                                         */
-/* ────────────────────────────────────────────────────────── */
-
-.navegacao-inferior {
-    max-width: 860px;
-    width: 100%;
-    margin: 0 auto 40px;
-    padding: 0 20px;
-}
-
-.nav-buttons {
-    background: #fff;
-    padding: 18px;
-    border-radius: 12px;
-    display: flex;
-    justify-content: space-between;
-    gap: 16px;
-    box-shadow: var(--sombra);
-}
-
-.btn-primary {
-    flex: 1;
-    text-align: center;
-    padding: 13px 16px;
-    background: linear-gradient(135deg, var(--cor-roxo), #7a3eb5);
-    color: #fff;
-    text-decoration: none;
-    border-radius: 10px;
-    font-weight: 600;
-    transition: all 0.2s;
-}
-
-.btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(91, 44, 131, 0.3);
-}
-
-.pagina-atual {
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: var(--cor-dourado);
-    min-width: 50px;
-    text-align: center;
-}
-
-/* ────────────────────────────────────────────────────────── */
-/*  RODAPÉ                                                     */
-/* ────────────────────────────────────────────────────────── */
-
-.suma-footer {
-    background: #1a1a1a;
-    color: #888;
-    text-align: center;
-    padding: 22px 20px;
-    margin-top: auto;
-    font-size: 0.85rem;
-}
-
-/* ────────────────────────────────────────────────────────── */
-/*  RESPONSIVIDADE                                             */
-/* ────────────────────────────────────────────────────────── */
-
-@media (max-width: 768px) {
-    .suma-header h1 {
-        font-size: 1.4rem;
-    }
-    
-    .bloco-texto {
-        padding: 28px 18px;
-    }
-    
-    .bloco-explicacao {
-        padding: 22px 18px;
-    }
-    
-    .navegacao-topo {
-        flex-wrap: wrap;
-    }
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="leitor-pagina" content="52">
+  <title>Questão 11, Artigo 2 — — Se unidade e multiplicidade se opõem. | Suma Teológica</title>
+  <link rel="stylesheet" href="../suma.css">
+  <script src="../suma.js" defer></script>
 </head>
 <body>
 
-<!-- ═══════════════════════════════════════════════════════ -->
-<!--  CABEÇALHO                                               -->
-<!-- ═══════════════════════════════════════════════════════ -->
+<!-- ══════════════════════════════════════════════════════ -->
+<!--  CABEÇALHO                                             -->
+<!-- ══════════════════════════════════════════════════════ -->
 
 <div class="suma-header">
-  <a href="../../index.html" class="voltar-index">← Índice</a>
+  <a href="../index.html" class="voltar-index">← Índice</a>
   <h1>Suma Teológica</h1>
-  <p style="opacity:0.8; font-style:italic; margin-top:4px;">São Tomás de Aquino</p>
+  <p class="subtitulo">São Tomás de Aquino</p>
   <span class="info-pagina">Página 52 de 3000</span>
 </div>
 
-<!-- ═══════════════════════════════════════════════════════ -->
-<!--  NAVEGAÇÃO SUPERIOR                                      -->
-<!-- ═══════════════════════════════════════════════════════ -->
+<!-- ══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO SUPERIOR                                    -->
+<!-- ══════════════════════════════════════════════════════ -->
 
 <nav class="navegacao-topo">
   <a href="suma-pagina51.html" class="btn-nav">← Anterior</a>
@@ -320,58 +31,55 @@ body {
   <a href="suma-pagina53.html" class="btn-nav">Próxima →</a>
 </nav>
 
-<!-- ═══════════════════════════════════════════════════════ -->
-<!--  CONTEÚDO PRINCIPAL                                      -->
-<!-- ═══════════════════════════════════════════════════════ -->
+<!-- ══════════════════════════════════════════════════════ -->
+<!--  CONTEÚDO PRINCIPAL                                    -->
+<!-- ══════════════════════════════════════════════════════ -->
 
 <main class="pagina-conteudo">
-  
-  <!-- Texto Original -->
+
   <div class="bloco-texto">
     <div class="bloco-titulo">
       <span>📜</span>
       Questão 11, Artigo 2 — — Se unidade e multiplicidade se opõem.
     </div>
     <div class="pagina-corpo">
-    <p>(I Sent., dist. XXIV, q. 1, a. 3, ad 4; De Pot., q. 3, a. 16, ad 3; q. 9, a. 7, ad 14 sqq.; X Metaphys., lect. IV, VIII). O segundo discute-se assim. — Parece que unidade e multiplicidade não se opõem.</p>
-    <p>1. — Pois, não se pode predicar de uma coisa o que lhe é contrário. Ora, toda multidão é, de certo modo, uma, como acabamos de ver. Logo, a unidade não se lhe opõe. 2. Demais. — Nenhum ser é constituído pelo seu contrário. Ora, a unidade constitui a multidão. Logo, não se lhe opõe. 3. Demais. — A unidade se opõe à unidade. Ora, a multiplicidade se opõe ao pequeno número. Logo, a unidade não lhe é contrária. 4. Demais. — Se a unidade se opõe à multidão há-de se lhe opor como o indiviso ao dividido e, portanto, como a privação ao hábito. Ora, isto é inadmissível, porque daí resultaria que a unidade é posterior à multidão e por ela definida, quando a verdade é que esta se define por aquela. Logo, haveria círculo na definição, o que é inconveniente. Logo, unidade e multiplicidade são contrárias.</p>
-    <p>Mas, em contrário. — Os opostos têm noções opostas. Ora, a noção da unidade funda-se na indivisibilidade, ao passo que a da multiplicidade implica a divisão. Logo, unidade e multiplicidade opõem-se.</p>
-    <p>SOLUÇÃO. — A unidade se opõe à multiplicidade, mas, de modos diversos. Pois, a que é princípio do número opõe-se à multidão numérica como a medida, ao medido, porque corresponde à noção de primeira medida; e o número é a multidão por essa unidade medida, como se vê em Aristóteles. Ao passo que a unidade convertível no ser opõe-se à multidão a modo de privação, como o indiviso, ao dividido.</p>
-    <p>DONDE A</p>
-    <p>RESPOSTA À PRIMEIRA OBJEÇÃO. — A privação, sendo uma negação no sujeito, segundo o Filósofo, nenhuma elimina totalmente o ser, mas, só parcialmente. Por onde, em se tratando do ser mesmo, a sua universalidade faz com que a privação do ser neste ser se funde; o que não se dá com as privações das formas especiais como a da vista, da brancura ou semelhantes. E o que se dá com o ser dá-se com a unidade e a bondade, que nele se convertem; pois, a privação de um bem há-de se fundar no bem, assim como na unidade se há de fundar a remoção de qualquer parte dela. Donde vem, que a multidão é uma certa unidade, assim como o mal é um certo bem e o não-ser, um certo ser. Um contrário, porém, não se predica de outro, porque um deles é absolutamente, e o outro relativamente. Assim, um ser relativo, como potencial, é não ser, absolutamente, i. é, em ato; ou ainda, o ser, absolutamente, no gênero da substância, é não ser relativamente quanto a algum acidente. E, logo, do mesmo modo, o bem, relativamente, é absolutamente mal, ou ao inverso; assim como o que é absolutamente uno é, relativamente, múltiplo, e ao inverso.</p>
-    <p>RESPOSTA À SEGUNDA. — Há duas espécies de todo: um homogêneo, composto de partes dissemelhantes. Ora, qualquer todo homogêneo é constituído de partes, que têm a mesma forma que ele, assim, qualquer parte da água é água; e tal é a constituição do contínuo, nas suas partes. Em qualquer todo heterogêneo, pelo contrário, as partes não têm a mesma forma que ele; assim nenhuma parte da casa é casa, como nenhuma parte do homem é homem. E tal espécie de todo é a multidão. Pois, como nenhuma das suas partes tem a sua forma, compõe-se a multidão de unidades, como a casa, do que não é casa. Não que as unidades constituam a multidão, enquanto que, sendo de natureza indivisível, a ela se lhe oponham mas, pelo que elas têm de ser; do mesmo modo por que as partes de uma casa a constituem, não por não serem casa, mas por serem determinados corpos.</p>
-    <p>RESPOSTA À TERCEIRA. — O múltiplo tem muitas acepções. Absolutamente, opõe-se à unidade; e, noutro sentido, implicando um certo excesso, opõe-se ao pequeno número. Por onde, no primeiro sentido, dois é multidão; no segundo, não.</p>
-    <p>RESPOSTA À QUARTA. — A unidade opõe-se privativamente ao múltiplo, enquanto este é dividido. Por onde, é necessário que a divisão exista, primeiro, na unidade; não absolutamente, mas, em virtude da apreensão da nossa razão. Pois, apreendemos o simples pelo composto e, por isso, definimos o ponto — o que não tem parte, ou, o princípio da linha. A multidão, porém, mesmo racionalmente, é conseqüente à unidade; pois, não concebemos seres divididos como multidão, senão porque atribuímos a unidade a cada parte da divisão. Logo, a unidade entra na definição da multidão, mas não esta, na daquela. A idéia de divisão, porém, o nosso intelecto a tira da negação do ser, de modo tal que, primeiramente, o intelecto apreende o ente; depois, diferençando esse ente de outro, apreende a divisão; em terceiro lugar, a unidade, e em quarto e último, a multidão.</p>
+      <p>(I Sent., dist. XXIV, q. 1, a. 3, ad 4; De Pot., q. 3, a. 16, ad 3; q. 9, a. 7, ad 14 sqq.; X Metaphys., lect. IV, VIII). O segundo discute-se assim. — Parece que unidade e multiplicidade não se opõem.</p>
+      <p>1. — Pois, não se pode predicar de uma coisa o que lhe é contrário. Ora, toda multidão é, de certo modo, uma, como acabamos de ver. Logo, a unidade não se lhe opõe. 2. Demais. — Nenhum ser é constituído pelo seu contrário. Ora, a unidade constitui a multidão. Logo, não se lhe opõe. 3. Demais. — A unidade se opõe à unidade. Ora, a multiplicidade se opõe ao pequeno número. Logo, a unidade não lhe é contrária. 4. Demais. — Se a unidade se opõe à multidão há-de se lhe opor como o indiviso ao dividido e, portanto, como a privação ao hábito. Ora, isto é inadmissível, porque daí resultaria que a unidade é posterior à multidão e por ela definida, quando a verdade é que esta se define por aquela. Logo, haveria círculo na definição, o que é inconveniente. Logo, unidade e multiplicidade são contrárias.</p>
+      <p>Mas, em contrário. — Os opostos têm noções opostas. Ora, a noção da unidade funda-se na indivisibilidade, ao passo que a da multiplicidade implica a divisão. Logo, unidade e multiplicidade opõem-se.</p>
+      <p>SOLUÇÃO. — A unidade se opõe à multiplicidade, mas, de modos diversos. Pois, a que é princípio do número opõe-se à multidão numérica como a medida, ao medido, porque corresponde à noção de primeira medida; e o número é a multidão por essa unidade medida, como se vê em Aristóteles. Ao passo que a unidade convertível no ser opõe-se à multidão a modo de privação, como o indiviso, ao dividido.</p>
+      <p>DONDE A</p>
+      <p>RESPOSTA À PRIMEIRA OBJEÇÃO. — A privação, sendo uma negação no sujeito, segundo o Filósofo, nenhuma elimina totalmente o ser, mas, só parcialmente. Por onde, em se tratando do ser mesmo, a sua universalidade faz com que a privação do ser neste ser se funde; o que não se dá com as privações das formas especiais como a da vista, da brancura ou semelhantes. E o que se dá com o ser dá-se com a unidade e a bondade, que nele se convertem; pois, a privação de um bem há-de se fundar no bem, assim como na unidade se há de fundar a remoção de qualquer parte dela. Donde vem, que a multidão é uma certa unidade, assim como o mal é um certo bem e o não-ser, um certo ser. Um contrário, porém, não se predica de outro, porque um deles é absolutamente, e o outro relativamente. Assim, um ser relativo, como potencial, é não ser, absolutamente, i. é, em ato; ou ainda, o ser, absolutamente, no gênero da substância, é não ser relativamente quanto a algum acidente. E, logo, do mesmo modo, o bem, relativamente, é absolutamente mal, ou ao inverso; assim como o que é absolutamente uno é, relativamente, múltiplo, e ao inverso.</p>
+      <p>RESPOSTA À SEGUNDA. — Há duas espécies de todo: um homogêneo, composto de partes dissemelhantes. Ora, qualquer todo homogêneo é constituído de partes, que têm a mesma forma que ele, assim, qualquer parte da água é água; e tal é a constituição do contínuo, nas suas partes. Em qualquer todo heterogêneo, pelo contrário, as partes não têm a mesma forma que ele; assim nenhuma parte da casa é casa, como nenhuma parte do homem é homem. E tal espécie de todo é a multidão. Pois, como nenhuma das suas partes tem a sua forma, compõe-se a multidão de unidades, como a casa, do que não é casa. Não que as unidades constituam a multidão, enquanto que, sendo de natureza indivisível, a ela se lhe oponham mas, pelo que elas têm de ser; do mesmo modo por que as partes de uma casa a constituem, não por não serem casa, mas por serem determinados corpos.</p>
+      <p>RESPOSTA À TERCEIRA. — O múltiplo tem muitas acepções. Absolutamente, opõe-se à unidade; e, noutro sentido, implicando um certo excesso, opõe-se ao pequeno número. Por onde, no primeiro sentido, dois é multidão; no segundo, não.</p>
+      <p>RESPOSTA À QUARTA. — A unidade opõe-se privativamente ao múltiplo, enquanto este é dividido. Por onde, é necessário que a divisão exista, primeiro, na unidade; não absolutamente, mas, em virtude da apreensão da nossa razão. Pois, apreendemos o simples pelo composto e, por isso, definimos o ponto — o que não tem parte, ou, o princípio da linha. A multidão, porém, mesmo racionalmente, é conseqüente à unidade; pois, não concebemos seres divididos como multidão, senão porque atribuímos a unidade a cada parte da divisão. Logo, a unidade entra na definição da multidão, mas não esta, na daquela. A idéia de divisão, porém, o nosso intelecto a tira da negação do ser, de modo tal que, primeiramente, o intelecto apreende o ente; depois, diferençando esse ente de outro, apreende a divisão; em terceiro lugar, a unidade, e em quarto e último, a multidão.</p>
 
     </div>
   </div>
-  
-  <!-- Bloco de Explicação (a ser preenchido) -->
+
   <div class="bloco-explicacao">
     <div class="explicacao-label">💡 Explicação e Contexto</div>
     <div class="explicacao-corpo" id="explicacao">
-    <p><em>Explicação será adicionada em breve.</em></p>
-
+      <p><em>Explicação será adicionada em breve.</em></p>
     </div>
   </div>
-  
+
 </main>
 
-<!-- ═══════════════════════════════════════════════════════ -->
-<!--  NAVEGAÇÃO INFERIOR                                      -->
-<!-- ═══════════════════════════════════════════════════════ -->
+<!-- ══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO INFERIOR                                    -->
+<!-- ══════════════════════════════════════════════════════ -->
 
 <div class="navegacao-inferior">
   <div class="nav-buttons">
-    <a href="suma-pagina51.html" class="btn-primary">← Anterior</a>
+    <a href="suma-pagina51.html" class="btn-primary">← Página Anterior</a>
     <span class="pagina-atual">52</span>
-    <a href="suma-pagina53.html" class="btn-primary">Próxima →</a>
+    <a href="suma-pagina53.html" class="btn-primary">Próxima Página →</a>
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════════════════════ -->
-<!--  RODAPÉ                                                  -->
-<!-- ═══════════════════════════════════════════════════════ -->
+<!-- ══════════════════════════════════════════════════════ -->
+<!--  RODAPÉ                                                -->
+<!-- ══════════════════════════════════════════════════════ -->
 
 <footer class="suma-footer">
   <p>Suma Teológica · São Tomás de Aquino | Biblioteca Lux Fidei</p>

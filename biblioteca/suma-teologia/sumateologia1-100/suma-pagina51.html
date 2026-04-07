@@ -1,318 +1,29 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Questão 11, Artigo 1 — — Se a unidade acrescenta alguma coisa ao ser. | Suma Teológica</title>
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
-
-:root {
-    --cor-fundo: #f5f0e8;
-    --cor-pagina: #fff;
-    --cor-texto: #2c1f17;
-    --cor-dourado: #d4af37;
-    --cor-roxo: #5b2c83;
-    --sombra: 0 8px 24px rgba(0,0,0,0.08);
-}
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: 'Inter', sans-serif;
-    background: var(--cor-fundo);
-    color: var(--cor-texto);
-    line-height: 1.6;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-}
-
-/* ────────────────────────────────────────────────────────── */
-/*  CABEÇALHO                                                  */
-/* ────────────────────────────────────────────────────────── */
-
-.suma-header {
-    background: linear-gradient(135deg, #1a1a1a, #2c241b);
-    color: #f5f0e8;
-    padding: 32px 20px 24px;
-    text-align: center;
-    position: relative;
-}
-
-.voltar-index {
-    position: absolute;
-    top: 16px;
-    left: 20px;
-    color: var(--cor-dourado);
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 0.9rem;
-    transition: opacity 0.2s;
-}
-
-.voltar-index:hover {
-    opacity: 0.8;
-}
-
-.suma-header h1 {
-    font-family: 'Libre Baskerville', serif;
-    font-size: 1.9rem;
-    font-weight: 700;
-    margin-bottom: 6px;
-}
-
-.info-pagina {
-    display: inline-block;
-    background: rgba(212, 175, 55, 0.15);
-    border: 1px solid rgba(212, 175, 55, 0.35);
-    padding: 5px 14px;
-    border-radius: 20px;
-    font-size: 0.85rem;
-    color: var(--cor-dourado);
-    margin-top: 8px;
-}
-
-/* ────────────────────────────────────────────────────────── */
-/*  NAVEGAÇÃO                                                  */
-/* ────────────────────────────────────────────────────────── */
-
-.navegacao-topo {
-    background: #fff;
-    padding: 12px 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    gap: 10px;
-}
-
-.btn-nav {
-    display: inline-flex;
-    align-items: center;
-    padding: 9px 18px;
-    background: var(--cor-roxo);
-    color: #fff;
-    text-decoration: none;
-    border-radius: 8px;
-    font-weight: 600;
-    font-size: 0.9rem;
-    transition: all 0.2s;
-}
-
-.btn-nav:hover {
-    background: #4a246a;
-    transform: translateY(-1px);
-}
-
-.desabilitado {
-    background: #ddd !important;
-    color: #999 !important;
-    pointer-events: none;
-}
-
-.info-centena {
-    font-size: 0.85rem;
-    color: #888;
-    font-weight: 500;
-    padding: 0 10px;
-}
-
-/* ────────────────────────────────────────────────────────── */
-/*  CONTEÚDO PRINCIPAL                                         */
-/* ────────────────────────────────────────────────────────── */
-
-.pagina-conteudo {
-    flex: 1;
-    max-width: 860px;
-    width: 100%;
-    margin: 36px auto;
-    padding: 0 20px;
-}
-
-.bloco-texto {
-    background: var(--cor-pagina);
-    padding: 48px 44px;
-    border-radius: 12px;
-    box-shadow: var(--sombra);
-    position: relative;
-    margin-bottom: 24px;
-}
-
-.bloco-texto::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 20px;
-    bottom: 20px;
-    width: 4px;
-    background: linear-gradient(to bottom, var(--cor-dourado), var(--cor-roxo));
-    border-radius: 0 4px 4px 0;
-}
-
-.bloco-titulo {
-    font-family: 'Libre Baskerville', serif;
-    font-size: 1.3rem;
-    color: var(--cor-roxo);
-    margin-bottom: 20px;
-    padding-bottom: 12px;
-    border-bottom: 1px solid #e8dfd0;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.pagina-corpo {
-    font-family: 'Libre Baskerville', serif;
-    font-size: 1.1rem;
-    line-height: 1.95;
-    color: #3d3226;
-    text-align: justify;
-}
-
-.pagina-corpo p {
-    margin-bottom: 1.3em;
-}
-
-/* ────────────────────────────────────────────────────────── */
-/*  BLOCO DE EXPLICAÇÃO                                        */
-/* ────────────────────────────────────────────────────────── */
-
-.bloco-explicacao {
-    background: linear-gradient(135deg, #fffdf5, #faf5eb);
-    border-left: 5px solid var(--cor-dourado);
-    padding: 32px 40px;
-    border-radius: 0 12px 12px 0;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
-    margin-bottom: 24px;
-}
-
-.explicacao-label {
-    font-family: 'Inter', sans-serif;
-    font-size: 0.72rem;
-    font-weight: 800;
-    color: var(--cor-dourado);
-    text-transform: uppercase;
-    letter-spacing: 1.2px;
-    margin-bottom: 14px;
-}
-
-.explicacao-corpo {
-    font-family: 'Inter', sans-serif;
-    font-size: 1rem;
-    line-height: 1.8;
-    color: #4a3c2c;
-}
-
-.explicacao-corpo p {
-    margin-bottom: 1em;
-}
-
-/* ────────────────────────────────────────────────────────── */
-/*  NAVEGAÇÃO INFERIOR                                         */
-/* ────────────────────────────────────────────────────────── */
-
-.navegacao-inferior {
-    max-width: 860px;
-    width: 100%;
-    margin: 0 auto 40px;
-    padding: 0 20px;
-}
-
-.nav-buttons {
-    background: #fff;
-    padding: 18px;
-    border-radius: 12px;
-    display: flex;
-    justify-content: space-between;
-    gap: 16px;
-    box-shadow: var(--sombra);
-}
-
-.btn-primary {
-    flex: 1;
-    text-align: center;
-    padding: 13px 16px;
-    background: linear-gradient(135deg, var(--cor-roxo), #7a3eb5);
-    color: #fff;
-    text-decoration: none;
-    border-radius: 10px;
-    font-weight: 600;
-    transition: all 0.2s;
-}
-
-.btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(91, 44, 131, 0.3);
-}
-
-.pagina-atual {
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: var(--cor-dourado);
-    min-width: 50px;
-    text-align: center;
-}
-
-/* ────────────────────────────────────────────────────────── */
-/*  RODAPÉ                                                     */
-/* ────────────────────────────────────────────────────────── */
-
-.suma-footer {
-    background: #1a1a1a;
-    color: #888;
-    text-align: center;
-    padding: 22px 20px;
-    margin-top: auto;
-    font-size: 0.85rem;
-}
-
-/* ────────────────────────────────────────────────────────── */
-/*  RESPONSIVIDADE                                             */
-/* ────────────────────────────────────────────────────────── */
-
-@media (max-width: 768px) {
-    .suma-header h1 {
-        font-size: 1.4rem;
-    }
-    
-    .bloco-texto {
-        padding: 28px 18px;
-    }
-    
-    .bloco-explicacao {
-        padding: 22px 18px;
-    }
-    
-    .navegacao-topo {
-        flex-wrap: wrap;
-    }
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="leitor-pagina" content="51">
+  <title>Questão 11, Artigo 1 — — Se a unidade acrescenta alguma coisa ao ser. | Suma Teológica</title>
+  <link rel="stylesheet" href="../suma.css">
+  <script src="../suma.js" defer></script>
 </head>
 <body>
 
-<!-- ═══════════════════════════════════════════════════════ -->
-<!--  CABEÇALHO                                               -->
-<!-- ═══════════════════════════════════════════════════════ -->
+<!-- ══════════════════════════════════════════════════════ -->
+<!--  CABEÇALHO                                             -->
+<!-- ══════════════════════════════════════════════════════ -->
 
 <div class="suma-header">
-  <a href="../../index.html" class="voltar-index">← Índice</a>
+  <a href="../index.html" class="voltar-index">← Índice</a>
   <h1>Suma Teológica</h1>
-  <p style="opacity:0.8; font-style:italic; margin-top:4px;">São Tomás de Aquino</p>
+  <p class="subtitulo">São Tomás de Aquino</p>
   <span class="info-pagina">Página 51 de 3000</span>
 </div>
 
-<!-- ═══════════════════════════════════════════════════════ -->
-<!--  NAVEGAÇÃO SUPERIOR                                      -->
-<!-- ═══════════════════════════════════════════════════════ -->
+<!-- ══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO SUPERIOR                                    -->
+<!-- ══════════════════════════════════════════════════════ -->
 
 <nav class="navegacao-topo">
   <a href="suma-pagina50.html" class="btn-nav">← Anterior</a>
@@ -320,57 +31,54 @@ body {
   <a href="suma-pagina52.html" class="btn-nav">Próxima →</a>
 </nav>
 
-<!-- ═══════════════════════════════════════════════════════ -->
-<!--  CONTEÚDO PRINCIPAL                                      -->
-<!-- ═══════════════════════════════════════════════════════ -->
+<!-- ══════════════════════════════════════════════════════ -->
+<!--  CONTEÚDO PRINCIPAL                                    -->
+<!-- ══════════════════════════════════════════════════════ -->
 
 <main class="pagina-conteudo">
-  
-  <!-- Texto Original -->
+
   <div class="bloco-texto">
     <div class="bloco-titulo">
       <span>📜</span>
       Questão 11, Artigo 1 — — Se a unidade acrescenta alguma coisa ao ser.
     </div>
     <div class="pagina-corpo">
-    <p>(Infra, q. 30, a. 3; I Sent., dist. XIX, q. 4, a. 1, ad 2; dist. XXIV, a. 3; De Pot., q. 9, a. 7; Quodl., X, q. 1, a. 1; IV, Metaphys., lect. II; X, lect. III). O primeiro discute-se assim. — Parece que a unidade acrescenta alguma coisa ao ser.</p>
-    <p>1. — Pois, tudo o que pertence a um gênero determinado acrescenta algo ao ser. Ora, a unidade, sendo o princípio do número, espécie de quantidade, pertence a um gênero determinado. Logo, acrescenta alguma coisa ao ser. 2. Demais. — O que divide uma noção comum adiciona-lhe alguma realidade. Ora, o ser é dividido pela unidade e pela multiplicidade. Logo, a unidade acrescenta algo de real ao ser. 3. Demais. — Se a unidade não acrescenta nada ao ser, este identifica-se com ela. Ora, é tautologia dizer que um ente é ente. Logo, também o é dizer que o ser é um — o que é falso. Portanto, a unidade acrescenta alguma coisa ao ser.</p>
-    <p>Mas, em contrário, diz Dionísio: Nada existe que não participe da unidade; o que não se daria se esta acrescentasse ao ser alguma coisa. Logo, não acrescenta.</p>
-    <p>SOLUÇÃO. — A unidade não acrescenta nada ao ser, mas, só a negação da divisão; pois, ser uno não é senão ser indiviso; e daqui resulta claramente, que a unidade é conversível no ser. Pois, todo o ser ou é simples ou composto. Aquele é indiviso, atual e potencialmente. Este não recebe o ser enquanto as suas partes estiverem divididas. Mas, só depois que elas o constituem e compõem. Por onde, é manifesto que o ser de qualquer coisa consiste na sua indivisão; e daí vem que todo ente conserva o seu ser na medida em que conserva a unidade.</p>
-    <p>DONDE A</p>
-    <p>RESPOSTA À PRIMEIRA OBJEÇÃO. — Certos, pensando que a unidade convertível no ser se identifica com a que é princípio do número, professaram opiniões diversas. Assim, Pitágoras e Platão, vendo que a unidade convertível no ser não acrescenta a este nenhuma realidade, mas lhe significa a substância indivisa, pensaram que o mesmo se dá com a unidade, princípio do número. E como este se compõe de unidades, pensaram que os números são as substâncias de todas as coisas. Avicena, ao contrário, considerando que a unidade, princípio do número, acrescenta alguma realidade à substância, aliás, o número, composto de unidade não seria uma espécie de quantidade, acreditou que a unidade convertível no ser adiciona-lhe à substância alguma realidade, como branco, ao homem. Mas, isto é manifestamente falso. Pois, um ser é uno pela sua substância; porque, se o fosse em virtude de outra causa, como esta, de novo, seria una, havia de sê-lo, por sua vez, em virtude de uma terceira e, assim iríamos ao infinito. Por isso, devemos parar no primeiro termo e, portanto, dizer que a unidade convertível no ser nenhuma realidade lhe acrescenta; mas a unidade, princípio do número, acrescenta- lhe um atributo que pertence ao gênero da quantidade.</p>
-    <p>RESPOSTA À SEGUNDA. — Nada impede que uma realidade dividida, de um certo modo, seja indivisa, de outro; assim, o que é numericamente dividido é indiviso especificamente. De modo que um ente uno sob um aspecto, pode ser múltiplo sob outro. Contudo será uno, absolutamente falando, e múltiplo, relativamente, o ser que for absolutamente indiviso, de qualquer dos modos seguintes. Ou pela essência, embora dividido no que não lhe é essencial, como se dá com um mesmo sujeito afetado de acidentes diversos; ou pelo ato, embora dividido em potência, como acontece com o que é uno pelo todo e múltiplo pelas partes. O que, pelo contrário, for indiviso relativamente, e dividido absolutamente, como se dá com o que é dividido quanto à essência, e indiviso só quanto à apreensão da razão, ou ao seu princípio ou causa, será múltiplo absolutamente, e uno relativamente. Tal é o caso do que, numericamente múltiplo, é uno especificamente, ou quanto ao princípio. Assim pois, o ser é dividido pela unidade e pela multiplicidade: por aquele absolutamente, e por esta relativamente, pois a própria multidão não poderia participar do ser se, de certo modo, não estivesse contida na unidade. E, por isso, diz Dionísio: Não há multidão que não participe da unidade. Assim o múltiplo pelas partes é uno pelo todo: o múltiplo quanto aos acidentes é uno pelo sujeito; o que é múltiplo numericamente é especificamente uno; as coisas especificamente múltiplas unificam-se pelo gênero, e as múltiplas, pela procedência, são unificadas pelo princípio.</p>
-    <p>RESPOSTA À TERCEIRA. — Não há tautologia em dizer-se que o ser é uno, porque a unidade acrescenta algo de racional ao ser.</p>
+      <p>(Infra, q. 30, a. 3; I Sent., dist. XIX, q. 4, a. 1, ad 2; dist. XXIV, a. 3; De Pot., q. 9, a. 7; Quodl., X, q. 1, a. 1; IV, Metaphys., lect. II; X, lect. III). O primeiro discute-se assim. — Parece que a unidade acrescenta alguma coisa ao ser.</p>
+      <p>1. — Pois, tudo o que pertence a um gênero determinado acrescenta algo ao ser. Ora, a unidade, sendo o princípio do número, espécie de quantidade, pertence a um gênero determinado. Logo, acrescenta alguma coisa ao ser. 2. Demais. — O que divide uma noção comum adiciona-lhe alguma realidade. Ora, o ser é dividido pela unidade e pela multiplicidade. Logo, a unidade acrescenta algo de real ao ser. 3. Demais. — Se a unidade não acrescenta nada ao ser, este identifica-se com ela. Ora, é tautologia dizer que um ente é ente. Logo, também o é dizer que o ser é um — o que é falso. Portanto, a unidade acrescenta alguma coisa ao ser.</p>
+      <p>Mas, em contrário, diz Dionísio: Nada existe que não participe da unidade; o que não se daria se esta acrescentasse ao ser alguma coisa. Logo, não acrescenta.</p>
+      <p>SOLUÇÃO. — A unidade não acrescenta nada ao ser, mas, só a negação da divisão; pois, ser uno não é senão ser indiviso; e daqui resulta claramente, que a unidade é conversível no ser. Pois, todo o ser ou é simples ou composto. Aquele é indiviso, atual e potencialmente. Este não recebe o ser enquanto as suas partes estiverem divididas. Mas, só depois que elas o constituem e compõem. Por onde, é manifesto que o ser de qualquer coisa consiste na sua indivisão; e daí vem que todo ente conserva o seu ser na medida em que conserva a unidade.</p>
+      <p>DONDE A</p>
+      <p>RESPOSTA À PRIMEIRA OBJEÇÃO. — Certos, pensando que a unidade convertível no ser se identifica com a que é princípio do número, professaram opiniões diversas. Assim, Pitágoras e Platão, vendo que a unidade convertível no ser não acrescenta a este nenhuma realidade, mas lhe significa a substância indivisa, pensaram que o mesmo se dá com a unidade, princípio do número. E como este se compõe de unidades, pensaram que os números são as substâncias de todas as coisas. Avicena, ao contrário, considerando que a unidade, princípio do número, acrescenta alguma realidade à substância, aliás, o número, composto de unidade não seria uma espécie de quantidade, acreditou que a unidade convertível no ser adiciona-lhe à substância alguma realidade, como branco, ao homem. Mas, isto é manifestamente falso. Pois, um ser é uno pela sua substância; porque, se o fosse em virtude de outra causa, como esta, de novo, seria una, havia de sê-lo, por sua vez, em virtude de uma terceira e, assim iríamos ao infinito. Por isso, devemos parar no primeiro termo e, portanto, dizer que a unidade convertível no ser nenhuma realidade lhe acrescenta; mas a unidade, princípio do número, acrescenta- lhe um atributo que pertence ao gênero da quantidade.</p>
+      <p>RESPOSTA À SEGUNDA. — Nada impede que uma realidade dividida, de um certo modo, seja indivisa, de outro; assim, o que é numericamente dividido é indiviso especificamente. De modo que um ente uno sob um aspecto, pode ser múltiplo sob outro. Contudo será uno, absolutamente falando, e múltiplo, relativamente, o ser que for absolutamente indiviso, de qualquer dos modos seguintes. Ou pela essência, embora dividido no que não lhe é essencial, como se dá com um mesmo sujeito afetado de acidentes diversos; ou pelo ato, embora dividido em potência, como acontece com o que é uno pelo todo e múltiplo pelas partes. O que, pelo contrário, for indiviso relativamente, e dividido absolutamente, como se dá com o que é dividido quanto à essência, e indiviso só quanto à apreensão da razão, ou ao seu princípio ou causa, será múltiplo absolutamente, e uno relativamente. Tal é o caso do que, numericamente múltiplo, é uno especificamente, ou quanto ao princípio. Assim pois, o ser é dividido pela unidade e pela multiplicidade: por aquele absolutamente, e por esta relativamente, pois a própria multidão não poderia participar do ser se, de certo modo, não estivesse contida na unidade. E, por isso, diz Dionísio: Não há multidão que não participe da unidade. Assim o múltiplo pelas partes é uno pelo todo: o múltiplo quanto aos acidentes é uno pelo sujeito; o que é múltiplo numericamente é especificamente uno; as coisas especificamente múltiplas unificam-se pelo gênero, e as múltiplas, pela procedência, são unificadas pelo princípio.</p>
+      <p>RESPOSTA À TERCEIRA. — Não há tautologia em dizer-se que o ser é uno, porque a unidade acrescenta algo de racional ao ser.</p>
 
     </div>
   </div>
-  
-  <!-- Bloco de Explicação (a ser preenchido) -->
+
   <div class="bloco-explicacao">
     <div class="explicacao-label">💡 Explicação e Contexto</div>
     <div class="explicacao-corpo" id="explicacao">
-    <p><em>Explicação será adicionada em breve.</em></p>
-
+      <p><em>Explicação será adicionada em breve.</em></p>
     </div>
   </div>
-  
+
 </main>
 
-<!-- ═══════════════════════════════════════════════════════ -->
-<!--  NAVEGAÇÃO INFERIOR                                      -->
-<!-- ═══════════════════════════════════════════════════════ -->
+<!-- ══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO INFERIOR                                    -->
+<!-- ══════════════════════════════════════════════════════ -->
 
 <div class="navegacao-inferior">
   <div class="nav-buttons">
-    <a href="suma-pagina50.html" class="btn-primary">← Anterior</a>
+    <a href="suma-pagina50.html" class="btn-primary">← Página Anterior</a>
     <span class="pagina-atual">51</span>
-    <a href="suma-pagina52.html" class="btn-primary">Próxima →</a>
+    <a href="suma-pagina52.html" class="btn-primary">Próxima Página →</a>
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════════════════════ -->
-<!--  RODAPÉ                                                  -->
-<!-- ═══════════════════════════════════════════════════════ -->
+<!-- ══════════════════════════════════════════════════════ -->
+<!--  RODAPÉ                                                -->
+<!-- ══════════════════════════════════════════════════════ -->
 
 <footer class="suma-footer">
   <p>Suma Teológica · São Tomás de Aquino | Biblioteca Lux Fidei</p>

@@ -1,318 +1,29 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Questão 14, Artigo 13 — — Se Deus tem ciência dos futuros contingentes. | Suma Teológica</title>
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
-
-:root {
-    --cor-fundo: #f5f0e8;
-    --cor-pagina: #fff;
-    --cor-texto: #2c1f17;
-    --cor-dourado: #d4af37;
-    --cor-roxo: #5b2c83;
-    --sombra: 0 8px 24px rgba(0,0,0,0.08);
-}
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: 'Inter', sans-serif;
-    background: var(--cor-fundo);
-    color: var(--cor-texto);
-    line-height: 1.6;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-}
-
-/* ────────────────────────────────────────────────────────── */
-/*  CABEÇALHO                                                  */
-/* ────────────────────────────────────────────────────────── */
-
-.suma-header {
-    background: linear-gradient(135deg, #1a1a1a, #2c241b);
-    color: #f5f0e8;
-    padding: 32px 20px 24px;
-    text-align: center;
-    position: relative;
-}
-
-.voltar-index {
-    position: absolute;
-    top: 16px;
-    left: 20px;
-    color: var(--cor-dourado);
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 0.9rem;
-    transition: opacity 0.2s;
-}
-
-.voltar-index:hover {
-    opacity: 0.8;
-}
-
-.suma-header h1 {
-    font-family: 'Libre Baskerville', serif;
-    font-size: 1.9rem;
-    font-weight: 700;
-    margin-bottom: 6px;
-}
-
-.info-pagina {
-    display: inline-block;
-    background: rgba(212, 175, 55, 0.15);
-    border: 1px solid rgba(212, 175, 55, 0.35);
-    padding: 5px 14px;
-    border-radius: 20px;
-    font-size: 0.85rem;
-    color: var(--cor-dourado);
-    margin-top: 8px;
-}
-
-/* ────────────────────────────────────────────────────────── */
-/*  NAVEGAÇÃO                                                  */
-/* ────────────────────────────────────────────────────────── */
-
-.navegacao-topo {
-    background: #fff;
-    padding: 12px 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    gap: 10px;
-}
-
-.btn-nav {
-    display: inline-flex;
-    align-items: center;
-    padding: 9px 18px;
-    background: var(--cor-roxo);
-    color: #fff;
-    text-decoration: none;
-    border-radius: 8px;
-    font-weight: 600;
-    font-size: 0.9rem;
-    transition: all 0.2s;
-}
-
-.btn-nav:hover {
-    background: #4a246a;
-    transform: translateY(-1px);
-}
-
-.desabilitado {
-    background: #ddd !important;
-    color: #999 !important;
-    pointer-events: none;
-}
-
-.info-centena {
-    font-size: 0.85rem;
-    color: #888;
-    font-weight: 500;
-    padding: 0 10px;
-}
-
-/* ────────────────────────────────────────────────────────── */
-/*  CONTEÚDO PRINCIPAL                                         */
-/* ────────────────────────────────────────────────────────── */
-
-.pagina-conteudo {
-    flex: 1;
-    max-width: 860px;
-    width: 100%;
-    margin: 36px auto;
-    padding: 0 20px;
-}
-
-.bloco-texto {
-    background: var(--cor-pagina);
-    padding: 48px 44px;
-    border-radius: 12px;
-    box-shadow: var(--sombra);
-    position: relative;
-    margin-bottom: 24px;
-}
-
-.bloco-texto::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 20px;
-    bottom: 20px;
-    width: 4px;
-    background: linear-gradient(to bottom, var(--cor-dourado), var(--cor-roxo));
-    border-radius: 0 4px 4px 0;
-}
-
-.bloco-titulo {
-    font-family: 'Libre Baskerville', serif;
-    font-size: 1.3rem;
-    color: var(--cor-roxo);
-    margin-bottom: 20px;
-    padding-bottom: 12px;
-    border-bottom: 1px solid #e8dfd0;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.pagina-corpo {
-    font-family: 'Libre Baskerville', serif;
-    font-size: 1.1rem;
-    line-height: 1.95;
-    color: #3d3226;
-    text-align: justify;
-}
-
-.pagina-corpo p {
-    margin-bottom: 1.3em;
-}
-
-/* ────────────────────────────────────────────────────────── */
-/*  BLOCO DE EXPLICAÇÃO                                        */
-/* ────────────────────────────────────────────────────────── */
-
-.bloco-explicacao {
-    background: linear-gradient(135deg, #fffdf5, #faf5eb);
-    border-left: 5px solid var(--cor-dourado);
-    padding: 32px 40px;
-    border-radius: 0 12px 12px 0;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
-    margin-bottom: 24px;
-}
-
-.explicacao-label {
-    font-family: 'Inter', sans-serif;
-    font-size: 0.72rem;
-    font-weight: 800;
-    color: var(--cor-dourado);
-    text-transform: uppercase;
-    letter-spacing: 1.2px;
-    margin-bottom: 14px;
-}
-
-.explicacao-corpo {
-    font-family: 'Inter', sans-serif;
-    font-size: 1rem;
-    line-height: 1.8;
-    color: #4a3c2c;
-}
-
-.explicacao-corpo p {
-    margin-bottom: 1em;
-}
-
-/* ────────────────────────────────────────────────────────── */
-/*  NAVEGAÇÃO INFERIOR                                         */
-/* ────────────────────────────────────────────────────────── */
-
-.navegacao-inferior {
-    max-width: 860px;
-    width: 100%;
-    margin: 0 auto 40px;
-    padding: 0 20px;
-}
-
-.nav-buttons {
-    background: #fff;
-    padding: 18px;
-    border-radius: 12px;
-    display: flex;
-    justify-content: space-between;
-    gap: 16px;
-    box-shadow: var(--sombra);
-}
-
-.btn-primary {
-    flex: 1;
-    text-align: center;
-    padding: 13px 16px;
-    background: linear-gradient(135deg, var(--cor-roxo), #7a3eb5);
-    color: #fff;
-    text-decoration: none;
-    border-radius: 10px;
-    font-weight: 600;
-    transition: all 0.2s;
-}
-
-.btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(91, 44, 131, 0.3);
-}
-
-.pagina-atual {
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: var(--cor-dourado);
-    min-width: 50px;
-    text-align: center;
-}
-
-/* ────────────────────────────────────────────────────────── */
-/*  RODAPÉ                                                     */
-/* ────────────────────────────────────────────────────────── */
-
-.suma-footer {
-    background: #1a1a1a;
-    color: #888;
-    text-align: center;
-    padding: 22px 20px;
-    margin-top: auto;
-    font-size: 0.85rem;
-}
-
-/* ────────────────────────────────────────────────────────── */
-/*  RESPONSIVIDADE                                             */
-/* ────────────────────────────────────────────────────────── */
-
-@media (max-width: 768px) {
-    .suma-header h1 {
-        font-size: 1.4rem;
-    }
-    
-    .bloco-texto {
-        padding: 28px 18px;
-    }
-    
-    .bloco-explicacao {
-        padding: 22px 18px;
-    }
-    
-    .navegacao-topo {
-        flex-wrap: wrap;
-    }
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="leitor-pagina" content="93">
+  <title>Questão 14, Artigo 13 — — Se Deus tem ciência dos futuros contingentes. | Suma Teológica</title>
+  <link rel="stylesheet" href="../suma.css">
+  <script src="../suma.js" defer></script>
 </head>
 <body>
 
-<!-- ═══════════════════════════════════════════════════════ -->
-<!--  CABEÇALHO                                               -->
-<!-- ═══════════════════════════════════════════════════════ -->
+<!-- ══════════════════════════════════════════════════════ -->
+<!--  CABEÇALHO                                             -->
+<!-- ══════════════════════════════════════════════════════ -->
 
 <div class="suma-header">
-  <a href="../../index.html" class="voltar-index">← Índice</a>
+  <a href="../index.html" class="voltar-index">← Índice</a>
   <h1>Suma Teológica</h1>
-  <p style="opacity:0.8; font-style:italic; margin-top:4px;">São Tomás de Aquino</p>
+  <p class="subtitulo">São Tomás de Aquino</p>
   <span class="info-pagina">Página 93 de 3000</span>
 </div>
 
-<!-- ═══════════════════════════════════════════════════════ -->
-<!--  NAVEGAÇÃO SUPERIOR                                      -->
-<!-- ═══════════════════════════════════════════════════════ -->
+<!-- ══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO SUPERIOR                                    -->
+<!-- ══════════════════════════════════════════════════════ -->
 
 <nav class="navegacao-topo">
   <a href="suma-pagina92.html" class="btn-nav">← Anterior</a>
@@ -320,57 +31,54 @@ body {
   <a href="suma-pagina94.html" class="btn-nav">Próxima →</a>
 </nav>
 
-<!-- ═══════════════════════════════════════════════════════ -->
-<!--  CONTEÚDO PRINCIPAL                                      -->
-<!-- ═══════════════════════════════════════════════════════ -->
+<!-- ══════════════════════════════════════════════════════ -->
+<!--  CONTEÚDO PRINCIPAL                                    -->
+<!-- ══════════════════════════════════════════════════════ -->
 
 <main class="pagina-conteudo">
-  
-  <!-- Texto Original -->
+
   <div class="bloco-texto">
     <div class="bloco-titulo">
       <span>📜</span>
       Questão 14, Artigo 13 — — Se Deus tem ciência dos futuros contingentes.
     </div>
     <div class="pagina-corpo">
-    <p>(Infra, q. 86, a. 4; I Sent., dist. XXXVIII, a. 5; I Cont. Gent., cap. LXVII; De Verit., q. 2, a. 12; De Malo, q. 16 a. 7; Quodl., XI, q. 3; Opusc., II, Contra Graecos, Armênios, etc., cap. X; Compend. Theol., cap. CXXXIII; I Periherm., lect. XIV). O décimo terceiro discute-se assim. Parece que Deus não tem ciência dos futuros contingentes.</p>
-    <p>1. — Pois, de causa necessária procede efeito necessário. Ora, a ciência de Deus é causa das coisas conhecidas, como se disse. Mas, sendo necessária, também será o que sabe, necessário. Logo, Deus não tem ciência do contingente. 2. Demais. — De toda condicional, cujo antecedente é absolutamente necessário, o conseqüente também o é; pois, o antecedente está para o conseqüente, como os princípios, para a conclusão. Ora, de princípios necessários não resulta senão conclusão necessária, como o prova Aristóteles. Mas, a seguinte proposição é uma condicional verdadeira: se Deus sabe que um contingente existirá, ele há de existir. Porque a ciência de Deus não tem por objeto senão a verdade. Ora, o antecedente desta condicional é absolutamente necessário, tanto por ser eterno, como por ser expresso no pretérito. Logo, também o conseqüente é absolutamente necessário. Portanto, tudo o que é sabido por Deus é necessário; e, assim, ele não tem ciência dos contingentes. 3. Demais. — Necessariamente, tudo o que é sabido por Deus, existe, porque também tudo o que nós sabemos ser necessário existe; pois, a ciência de Deus é mais certa que a nossa. Ora, não existe necessariamente nenhum futuro contingente. Logo, nenhum futuro contingente é conhecido de Deus.</p>
-    <p>Mas, em contrário, diz o salmista (Sl 32, 15): Deus, que formou o coração de cada um deles, entende todas suas obras, i. é, dos homens. Ora, as obras dos homens, estando sujeitas ao livre arbítrio, são contingentes. Logo, Deus conhece os futuros contingentes.</p>
-    <p>SOLUÇÃO. — Como já demonstramos, Deus sabe, não somente tudo o que existe, em ato, mas também tudo o que está no seu poder ou no da criatura. Ora, como destas coisas umas são, para nós, futuros contingentes, segue-se que Deus conhece esses futuros. Para evidenciá-lo, devemos ponderar, que qualquer contingente pode ser considerado à dupla luz. Primeiro, em si mesmo, enquanto já atual. E, então, não é tido como futuro, mas, como presente; nem como contingente, em relação a qualquer de duas atualizações, mas, como determinado por uma. Por isso, pode ser infalivelmente objeto de um conhecimento certo, por ex., do sentido da vista, como quando vejo Sócrates sentar-se. De outro modo, pode ser considerado o contingente como existe na sua causa, e, então, é tido como futuro e como contingente ainda não determinado por uma atualização; porque, a causa contingente, podendo tender para termos opostos, o contingente não é objeto de nenhum conhecimento. Por onde, quem conhece o efeito contingente, somente na sua causa, tem dele conhecimento apenas conjetural. Ora, Deus conhece todos os contingentes, não só enquanto existentes nas suas causas, mas também enquanto cada um deles existe em si mesmo. Embora, porém, os contingentes se atualizem sucessivamente, Deus não os conhece, como nós, sucessivamente, tais como são, mas simultaneamente. Porque o seu conhecimento, como o seu ser, mede-se pela eternidade; e a eternidade, existindo toda simultaneamente, abrange o tempo todo, como já dissemos. Donde, tudo o que existe no tempo é abeterno presente a Deus; não somente porque ele encerra as razões das coisas, para si presentes, como alguns dizem, mas, porque a sua intuição projeta-se abeterno sobre tudo, enquanto existente na sua presencialidade. Por onde, é manifesto que os contingentes infalivelmente são conhecidos por Deus, enquanto objetos do divino olhar, que os tem como na sua presença. E, contudo, são futuros contingentes, referidos às suas causas próximas.</p>
-    <p>DONDE A</p>
-    <p>RESPOSTA À PRIMEIRA OBJEÇÃO. — Embora a causa suprema seja necessária, contudo, o seu efeito pode ser contingente, em virtude da causa próxima contingente. Assim, a germinação da planta é contingente, pela causa próxima, embora o movimento do sol, que é a causa primeira, seja necessária. Semelhantemente, o que Deus sabe é contingente, pelas causas próximas, embora a ciência de Deus, que é a causa primeira seja necessária.</p>
-    <p>RESPOSTA À SEGUNDA. — Uns dizem que o antecedente — Deus soube que um determinado contingente há de existir — não é necessário, mas, contingente; pois, embora pretérito, diz respeito ao futuro. — Mas, isso não lhe tira a necessidade, porque aquilo que dizia respeito ao futuro, necessariamente o disse, embora, às vezes, o futuro não se realize. Outros, porém, dizem, que esse antecedente é contingente, por ser composto de necessário, e de contingente, como é contingente a afirmação — Sócrates é um homem branco. — Mas, também isto não é verdade, porque quando dizemos — Deus soube que um determinado contingente há de existir — contingente é posto, aí, como objeto do verbo, e não, como parte principal da proposição. Portanto, a sua contingência ou a sua necessidade em nada influem para a proposição ser necessária ou contingente, verdadeira ou falsa. Pois, tanto pode ser verdade ter eu dito que o homem é asno, como, que Sócrates corre, ou Deus existe; a mesma sendo a essência do necessário e a do contingente. Portanto, devemos concluir, que o antecedente é absolutamente necessário. Mas daí não resulta, como querem alguns, que o conseqüente também, o seja, por ser o antecedente a causa remota dele, o qual, pela sua causa próxima é contingente. — Pois, tal não é verdade, porque então seria falsa a condicional, cujo antecedente fosse causa remota necessária, e cujo conseqüente, um efeito contingente; como, p. ex., se eu dissesse: se o sol se move, a erva germinará. E, portanto, devemos dizer, diferentemente, que, quando no antecedente se inclui o que pertence a um ato da alma, devemos tomar o conseqüente, não como ele em si mesmo é, mas, como está na alma. Pois um é o ser da coisa, em si mesma, e outro, o que tem na alma; assim, se eu disser — se a alma inteligir um objeto, esse é imaterial — deve-se compreender que tal objeto é imaterial, segundo está no intelecto; não, segundo o que em si mesmo é. Semelhantemente, se disser — se Deus conheceu uma coisa, ela existirá — deve-se compreender o conseqüente como objeto da ciência de Deus, i. é, enquanto lhe é presente. E então, é necessário, como o seu antecedente; porque, tudo o que existe, enquanto existir, existe necessariamente, como diz Aristóteles.</p>
-    <p>RESPOSTA À TERCEIRA. — O que se atualiza no tempo é por nós sucessivamente conhecido nele; mas, por Deus, na eternidade, que é superior ao tempo. Donde, para nós, que os conhecemos como tais, os futuros contingentes não podem ser certos; mas o são só para Deus, cujo inteligir está na eternidade, acima do tempo. Assim, quem vai por um caminho não vê os que lhe vêem atrás; mas, quem olhar todo o caminho, de uma certa altura, vê, ao mesmo tempo todos os que por ele transitam. E portanto, o que nós sabemos há de ser necessário ainda considerado no que em si mesmo é; porque os futuros contingentes não podemos conhecê-los. As coisas, porém, sabidas de Deus, devem ser necessárias, pelo modo por que são objetos da ciência divina, como dissemos; não porém, absolutamente, enquanto considerados nas suas causas próprias. Donde, na proposição — é necessário, que tudo o que é sabido de Deus exista. — costuma-se distinguir. Pois, pode referir-se à realidade ou à afirmação. Entendida no real,é dividida e falsa, e o sentido é — toda realidade que Deus conhece é necessária. Entendida da afirmação, é composta e verdadeira, e o sentido é — esta afirmação, o que é sabido por Deus existe, é necessária. Mas, alguns objetam, que essa distinção tem lugar nas formas separáveis da matéria, como se disser — é possível o branco ser preto. O que é certamente falso, quanto à afirmação, mas verdadeiro, quanto à realidade; pois, uma coisa branca pode ser preta. Ao contrário, esta afirmativa — o branco é preto — nunca pode ser verdadeira. Porém, nas formas inseparáveis da matéria, tal distinção não tem lugar, como se dissesse — é possível um corvo preto ser branco. Porque, em ambos os sentidos, tal afirmação é falsa. Ora, o ser sabido de Deus é inseparável da realidade, porque o que é sabido de Deus não pode ser não- sabido. — Esta instância teria lugar se o que chamo — sabido — importasse alguma disposição inerente ao sujeito. Mas, como importe o ato do ciente, à realidade mesma sabida, embora sempre o seja, pode- se-lhe atribuir, em si mesma, algo que não se lhe atribui enquanto depende do ato do ciente. Assim, o ser material é atribuído à pedra em si, que não lhe é atribuído enquanto inteligível.</p>
+      <p>(Infra, q. 86, a. 4; I Sent., dist. XXXVIII, a. 5; I Cont. Gent., cap. LXVII; De Verit., q. 2, a. 12; De Malo, q. 16 a. 7; Quodl., XI, q. 3; Opusc., II, Contra Graecos, Armênios, etc., cap. X; Compend. Theol., cap. CXXXIII; I Periherm., lect. XIV). O décimo terceiro discute-se assim. Parece que Deus não tem ciência dos futuros contingentes.</p>
+      <p>1. — Pois, de causa necessária procede efeito necessário. Ora, a ciência de Deus é causa das coisas conhecidas, como se disse. Mas, sendo necessária, também será o que sabe, necessário. Logo, Deus não tem ciência do contingente. 2. Demais. — De toda condicional, cujo antecedente é absolutamente necessário, o conseqüente também o é; pois, o antecedente está para o conseqüente, como os princípios, para a conclusão. Ora, de princípios necessários não resulta senão conclusão necessária, como o prova Aristóteles. Mas, a seguinte proposição é uma condicional verdadeira: se Deus sabe que um contingente existirá, ele há de existir. Porque a ciência de Deus não tem por objeto senão a verdade. Ora, o antecedente desta condicional é absolutamente necessário, tanto por ser eterno, como por ser expresso no pretérito. Logo, também o conseqüente é absolutamente necessário. Portanto, tudo o que é sabido por Deus é necessário; e, assim, ele não tem ciência dos contingentes. 3. Demais. — Necessariamente, tudo o que é sabido por Deus, existe, porque também tudo o que nós sabemos ser necessário existe; pois, a ciência de Deus é mais certa que a nossa. Ora, não existe necessariamente nenhum futuro contingente. Logo, nenhum futuro contingente é conhecido de Deus.</p>
+      <p>Mas, em contrário, diz o salmista (Sl 32, 15): Deus, que formou o coração de cada um deles, entende todas suas obras, i. é, dos homens. Ora, as obras dos homens, estando sujeitas ao livre arbítrio, são contingentes. Logo, Deus conhece os futuros contingentes.</p>
+      <p>SOLUÇÃO. — Como já demonstramos, Deus sabe, não somente tudo o que existe, em ato, mas também tudo o que está no seu poder ou no da criatura. Ora, como destas coisas umas são, para nós, futuros contingentes, segue-se que Deus conhece esses futuros. Para evidenciá-lo, devemos ponderar, que qualquer contingente pode ser considerado à dupla luz. Primeiro, em si mesmo, enquanto já atual. E, então, não é tido como futuro, mas, como presente; nem como contingente, em relação a qualquer de duas atualizações, mas, como determinado por uma. Por isso, pode ser infalivelmente objeto de um conhecimento certo, por ex., do sentido da vista, como quando vejo Sócrates sentar-se. De outro modo, pode ser considerado o contingente como existe na sua causa, e, então, é tido como futuro e como contingente ainda não determinado por uma atualização; porque, a causa contingente, podendo tender para termos opostos, o contingente não é objeto de nenhum conhecimento. Por onde, quem conhece o efeito contingente, somente na sua causa, tem dele conhecimento apenas conjetural. Ora, Deus conhece todos os contingentes, não só enquanto existentes nas suas causas, mas também enquanto cada um deles existe em si mesmo. Embora, porém, os contingentes se atualizem sucessivamente, Deus não os conhece, como nós, sucessivamente, tais como são, mas simultaneamente. Porque o seu conhecimento, como o seu ser, mede-se pela eternidade; e a eternidade, existindo toda simultaneamente, abrange o tempo todo, como já dissemos. Donde, tudo o que existe no tempo é abeterno presente a Deus; não somente porque ele encerra as razões das coisas, para si presentes, como alguns dizem, mas, porque a sua intuição projeta-se abeterno sobre tudo, enquanto existente na sua presencialidade. Por onde, é manifesto que os contingentes infalivelmente são conhecidos por Deus, enquanto objetos do divino olhar, que os tem como na sua presença. E, contudo, são futuros contingentes, referidos às suas causas próximas.</p>
+      <p>DONDE A</p>
+      <p>RESPOSTA À PRIMEIRA OBJEÇÃO. — Embora a causa suprema seja necessária, contudo, o seu efeito pode ser contingente, em virtude da causa próxima contingente. Assim, a germinação da planta é contingente, pela causa próxima, embora o movimento do sol, que é a causa primeira, seja necessária. Semelhantemente, o que Deus sabe é contingente, pelas causas próximas, embora a ciência de Deus, que é a causa primeira seja necessária.</p>
+      <p>RESPOSTA À SEGUNDA. — Uns dizem que o antecedente — Deus soube que um determinado contingente há de existir — não é necessário, mas, contingente; pois, embora pretérito, diz respeito ao futuro. — Mas, isso não lhe tira a necessidade, porque aquilo que dizia respeito ao futuro, necessariamente o disse, embora, às vezes, o futuro não se realize. Outros, porém, dizem, que esse antecedente é contingente, por ser composto de necessário, e de contingente, como é contingente a afirmação — Sócrates é um homem branco. — Mas, também isto não é verdade, porque quando dizemos — Deus soube que um determinado contingente há de existir — contingente é posto, aí, como objeto do verbo, e não, como parte principal da proposição. Portanto, a sua contingência ou a sua necessidade em nada influem para a proposição ser necessária ou contingente, verdadeira ou falsa. Pois, tanto pode ser verdade ter eu dito que o homem é asno, como, que Sócrates corre, ou Deus existe; a mesma sendo a essência do necessário e a do contingente. Portanto, devemos concluir, que o antecedente é absolutamente necessário. Mas daí não resulta, como querem alguns, que o conseqüente também, o seja, por ser o antecedente a causa remota dele, o qual, pela sua causa próxima é contingente. — Pois, tal não é verdade, porque então seria falsa a condicional, cujo antecedente fosse causa remota necessária, e cujo conseqüente, um efeito contingente; como, p. ex., se eu dissesse: se o sol se move, a erva germinará. E, portanto, devemos dizer, diferentemente, que, quando no antecedente se inclui o que pertence a um ato da alma, devemos tomar o conseqüente, não como ele em si mesmo é, mas, como está na alma. Pois um é o ser da coisa, em si mesma, e outro, o que tem na alma; assim, se eu disser — se a alma inteligir um objeto, esse é imaterial — deve-se compreender que tal objeto é imaterial, segundo está no intelecto; não, segundo o que em si mesmo é. Semelhantemente, se disser — se Deus conheceu uma coisa, ela existirá — deve-se compreender o conseqüente como objeto da ciência de Deus, i. é, enquanto lhe é presente. E então, é necessário, como o seu antecedente; porque, tudo o que existe, enquanto existir, existe necessariamente, como diz Aristóteles.</p>
+      <p>RESPOSTA À TERCEIRA. — O que se atualiza no tempo é por nós sucessivamente conhecido nele; mas, por Deus, na eternidade, que é superior ao tempo. Donde, para nós, que os conhecemos como tais, os futuros contingentes não podem ser certos; mas o são só para Deus, cujo inteligir está na eternidade, acima do tempo. Assim, quem vai por um caminho não vê os que lhe vêem atrás; mas, quem olhar todo o caminho, de uma certa altura, vê, ao mesmo tempo todos os que por ele transitam. E portanto, o que nós sabemos há de ser necessário ainda considerado no que em si mesmo é; porque os futuros contingentes não podemos conhecê-los. As coisas, porém, sabidas de Deus, devem ser necessárias, pelo modo por que são objetos da ciência divina, como dissemos; não porém, absolutamente, enquanto considerados nas suas causas próprias. Donde, na proposição — é necessário, que tudo o que é sabido de Deus exista. — costuma-se distinguir. Pois, pode referir-se à realidade ou à afirmação. Entendida no real,é dividida e falsa, e o sentido é — toda realidade que Deus conhece é necessária. Entendida da afirmação, é composta e verdadeira, e o sentido é — esta afirmação, o que é sabido por Deus existe, é necessária. Mas, alguns objetam, que essa distinção tem lugar nas formas separáveis da matéria, como se disser — é possível o branco ser preto. O que é certamente falso, quanto à afirmação, mas verdadeiro, quanto à realidade; pois, uma coisa branca pode ser preta. Ao contrário, esta afirmativa — o branco é preto — nunca pode ser verdadeira. Porém, nas formas inseparáveis da matéria, tal distinção não tem lugar, como se dissesse — é possível um corvo preto ser branco. Porque, em ambos os sentidos, tal afirmação é falsa. Ora, o ser sabido de Deus é inseparável da realidade, porque o que é sabido de Deus não pode ser não- sabido. — Esta instância teria lugar se o que chamo — sabido — importasse alguma disposição inerente ao sujeito. Mas, como importe o ato do ciente, à realidade mesma sabida, embora sempre o seja, pode- se-lhe atribuir, em si mesma, algo que não se lhe atribui enquanto depende do ato do ciente. Assim, o ser material é atribuído à pedra em si, que não lhe é atribuído enquanto inteligível.</p>
 
     </div>
   </div>
-  
-  <!-- Bloco de Explicação (a ser preenchido) -->
+
   <div class="bloco-explicacao">
     <div class="explicacao-label">💡 Explicação e Contexto</div>
     <div class="explicacao-corpo" id="explicacao">
-    <p><em>Explicação será adicionada em breve.</em></p>
-
+      <p><em>Explicação será adicionada em breve.</em></p>
     </div>
   </div>
-  
+
 </main>
 
-<!-- ═══════════════════════════════════════════════════════ -->
-<!--  NAVEGAÇÃO INFERIOR                                      -->
-<!-- ═══════════════════════════════════════════════════════ -->
+<!-- ══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO INFERIOR                                    -->
+<!-- ══════════════════════════════════════════════════════ -->
 
 <div class="navegacao-inferior">
   <div class="nav-buttons">
-    <a href="suma-pagina92.html" class="btn-primary">← Anterior</a>
+    <a href="suma-pagina92.html" class="btn-primary">← Página Anterior</a>
     <span class="pagina-atual">93</span>
-    <a href="suma-pagina94.html" class="btn-primary">Próxima →</a>
+    <a href="suma-pagina94.html" class="btn-primary">Próxima Página →</a>
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════════════════════ -->
-<!--  RODAPÉ                                                  -->
-<!-- ═══════════════════════════════════════════════════════ -->
+<!-- ══════════════════════════════════════════════════════ -->
+<!--  RODAPÉ                                                -->
+<!-- ══════════════════════════════════════════════════════ -->
 
 <footer class="suma-footer">
   <p>Suma Teológica · São Tomás de Aquino | Biblioteca Lux Fidei</p>

@@ -1,318 +1,29 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Questão 13, Artigo 11 — — Se a denominação — aquele que é — é por excelência o nome | Suma Teológica</title>
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
-
-:root {
-    --cor-fundo: #f5f0e8;
-    --cor-pagina: #fff;
-    --cor-texto: #2c1f17;
-    --cor-dourado: #d4af37;
-    --cor-roxo: #5b2c83;
-    --sombra: 0 8px 24px rgba(0,0,0,0.08);
-}
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: 'Inter', sans-serif;
-    background: var(--cor-fundo);
-    color: var(--cor-texto);
-    line-height: 1.6;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-}
-
-/* ────────────────────────────────────────────────────────── */
-/*  CABEÇALHO                                                  */
-/* ────────────────────────────────────────────────────────── */
-
-.suma-header {
-    background: linear-gradient(135deg, #1a1a1a, #2c241b);
-    color: #f5f0e8;
-    padding: 32px 20px 24px;
-    text-align: center;
-    position: relative;
-}
-
-.voltar-index {
-    position: absolute;
-    top: 16px;
-    left: 20px;
-    color: var(--cor-dourado);
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 0.9rem;
-    transition: opacity 0.2s;
-}
-
-.voltar-index:hover {
-    opacity: 0.8;
-}
-
-.suma-header h1 {
-    font-family: 'Libre Baskerville', serif;
-    font-size: 1.9rem;
-    font-weight: 700;
-    margin-bottom: 6px;
-}
-
-.info-pagina {
-    display: inline-block;
-    background: rgba(212, 175, 55, 0.15);
-    border: 1px solid rgba(212, 175, 55, 0.35);
-    padding: 5px 14px;
-    border-radius: 20px;
-    font-size: 0.85rem;
-    color: var(--cor-dourado);
-    margin-top: 8px;
-}
-
-/* ────────────────────────────────────────────────────────── */
-/*  NAVEGAÇÃO                                                  */
-/* ────────────────────────────────────────────────────────── */
-
-.navegacao-topo {
-    background: #fff;
-    padding: 12px 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    gap: 10px;
-}
-
-.btn-nav {
-    display: inline-flex;
-    align-items: center;
-    padding: 9px 18px;
-    background: var(--cor-roxo);
-    color: #fff;
-    text-decoration: none;
-    border-radius: 8px;
-    font-weight: 600;
-    font-size: 0.9rem;
-    transition: all 0.2s;
-}
-
-.btn-nav:hover {
-    background: #4a246a;
-    transform: translateY(-1px);
-}
-
-.desabilitado {
-    background: #ddd !important;
-    color: #999 !important;
-    pointer-events: none;
-}
-
-.info-centena {
-    font-size: 0.85rem;
-    color: #888;
-    font-weight: 500;
-    padding: 0 10px;
-}
-
-/* ────────────────────────────────────────────────────────── */
-/*  CONTEÚDO PRINCIPAL                                         */
-/* ────────────────────────────────────────────────────────── */
-
-.pagina-conteudo {
-    flex: 1;
-    max-width: 860px;
-    width: 100%;
-    margin: 36px auto;
-    padding: 0 20px;
-}
-
-.bloco-texto {
-    background: var(--cor-pagina);
-    padding: 48px 44px;
-    border-radius: 12px;
-    box-shadow: var(--sombra);
-    position: relative;
-    margin-bottom: 24px;
-}
-
-.bloco-texto::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 20px;
-    bottom: 20px;
-    width: 4px;
-    background: linear-gradient(to bottom, var(--cor-dourado), var(--cor-roxo));
-    border-radius: 0 4px 4px 0;
-}
-
-.bloco-titulo {
-    font-family: 'Libre Baskerville', serif;
-    font-size: 1.3rem;
-    color: var(--cor-roxo);
-    margin-bottom: 20px;
-    padding-bottom: 12px;
-    border-bottom: 1px solid #e8dfd0;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.pagina-corpo {
-    font-family: 'Libre Baskerville', serif;
-    font-size: 1.1rem;
-    line-height: 1.95;
-    color: #3d3226;
-    text-align: justify;
-}
-
-.pagina-corpo p {
-    margin-bottom: 1.3em;
-}
-
-/* ────────────────────────────────────────────────────────── */
-/*  BLOCO DE EXPLICAÇÃO                                        */
-/* ────────────────────────────────────────────────────────── */
-
-.bloco-explicacao {
-    background: linear-gradient(135deg, #fffdf5, #faf5eb);
-    border-left: 5px solid var(--cor-dourado);
-    padding: 32px 40px;
-    border-radius: 0 12px 12px 0;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
-    margin-bottom: 24px;
-}
-
-.explicacao-label {
-    font-family: 'Inter', sans-serif;
-    font-size: 0.72rem;
-    font-weight: 800;
-    color: var(--cor-dourado);
-    text-transform: uppercase;
-    letter-spacing: 1.2px;
-    margin-bottom: 14px;
-}
-
-.explicacao-corpo {
-    font-family: 'Inter', sans-serif;
-    font-size: 1rem;
-    line-height: 1.8;
-    color: #4a3c2c;
-}
-
-.explicacao-corpo p {
-    margin-bottom: 1em;
-}
-
-/* ────────────────────────────────────────────────────────── */
-/*  NAVEGAÇÃO INFERIOR                                         */
-/* ────────────────────────────────────────────────────────── */
-
-.navegacao-inferior {
-    max-width: 860px;
-    width: 100%;
-    margin: 0 auto 40px;
-    padding: 0 20px;
-}
-
-.nav-buttons {
-    background: #fff;
-    padding: 18px;
-    border-radius: 12px;
-    display: flex;
-    justify-content: space-between;
-    gap: 16px;
-    box-shadow: var(--sombra);
-}
-
-.btn-primary {
-    flex: 1;
-    text-align: center;
-    padding: 13px 16px;
-    background: linear-gradient(135deg, var(--cor-roxo), #7a3eb5);
-    color: #fff;
-    text-decoration: none;
-    border-radius: 10px;
-    font-weight: 600;
-    transition: all 0.2s;
-}
-
-.btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(91, 44, 131, 0.3);
-}
-
-.pagina-atual {
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: var(--cor-dourado);
-    min-width: 50px;
-    text-align: center;
-}
-
-/* ────────────────────────────────────────────────────────── */
-/*  RODAPÉ                                                     */
-/* ────────────────────────────────────────────────────────── */
-
-.suma-footer {
-    background: #1a1a1a;
-    color: #888;
-    text-align: center;
-    padding: 22px 20px;
-    margin-top: auto;
-    font-size: 0.85rem;
-}
-
-/* ────────────────────────────────────────────────────────── */
-/*  RESPONSIVIDADE                                             */
-/* ────────────────────────────────────────────────────────── */
-
-@media (max-width: 768px) {
-    .suma-header h1 {
-        font-size: 1.4rem;
-    }
-    
-    .bloco-texto {
-        padding: 28px 18px;
-    }
-    
-    .bloco-explicacao {
-        padding: 22px 18px;
-    }
-    
-    .navegacao-topo {
-        flex-wrap: wrap;
-    }
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="leitor-pagina" content="79">
+  <title>Questão 13, Artigo 11 — — Se a denominação — aquele que é — é por excelência o nome | Suma Teológica</title>
+  <link rel="stylesheet" href="../suma.css">
+  <script src="../suma.js" defer></script>
 </head>
 <body>
 
-<!-- ═══════════════════════════════════════════════════════ -->
-<!--  CABEÇALHO                                               -->
-<!-- ═══════════════════════════════════════════════════════ -->
+<!-- ══════════════════════════════════════════════════════ -->
+<!--  CABEÇALHO                                             -->
+<!-- ══════════════════════════════════════════════════════ -->
 
 <div class="suma-header">
-  <a href="../../index.html" class="voltar-index">← Índice</a>
+  <a href="../index.html" class="voltar-index">← Índice</a>
   <h1>Suma Teológica</h1>
-  <p style="opacity:0.8; font-style:italic; margin-top:4px;">São Tomás de Aquino</p>
+  <p class="subtitulo">São Tomás de Aquino</p>
   <span class="info-pagina">Página 79 de 3000</span>
 </div>
 
-<!-- ═══════════════════════════════════════════════════════ -->
-<!--  NAVEGAÇÃO SUPERIOR                                      -->
-<!-- ═══════════════════════════════════════════════════════ -->
+<!-- ══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO SUPERIOR                                    -->
+<!-- ══════════════════════════════════════════════════════ -->
 
 <nav class="navegacao-topo">
   <a href="suma-pagina78.html" class="btn-nav">← Anterior</a>
@@ -320,57 +31,54 @@ body {
   <a href="suma-pagina80.html" class="btn-nav">Próxima →</a>
 </nav>
 
-<!-- ═══════════════════════════════════════════════════════ -->
-<!--  CONTEÚDO PRINCIPAL                                      -->
-<!-- ═══════════════════════════════════════════════════════ -->
+<!-- ══════════════════════════════════════════════════════ -->
+<!--  CONTEÚDO PRINCIPAL                                    -->
+<!-- ══════════════════════════════════════════════════════ -->
 
 <main class="pagina-conteudo">
-  
-  <!-- Texto Original -->
+
   <div class="bloco-texto">
     <div class="bloco-titulo">
       <span>📜</span>
       Questão 13, Artigo 11 — — Se a denominação — aquele que é — é por excelência o nome
     </div>
     <div class="pagina-corpo">
-    <p>próprio de Deus. (I Sent., dist. 8, q. 1, a. 1, 3; De Pot., q. 2, a.1; q. 7, a. 5; q. 10, a. 1 ad 9; De Div. Nom., cap. V, lect. I). O undécimo discute-se assim. — Parece que a denominação — Aquele que é — não é, por excelência, o nome próprio de Deus.</p>
-    <p>1. — Pois, o nome de Deus é incomunicável, como já dissemos. Ora, isto não se dá com a denominação —Aquele que é. Logo, esta denominação não é própria de Deus. 2. Demais. — Dionísio diz, que o nome de bem é manifestativo de todas as processões de Deus. Ora, convém a Deus, por excelência, ser o princípio universal das coisas. Logo, a denominação própria de Deus, por excelência, é a de bem e não Aquele que é. 3. Demais. — Todo nome divino parece que deve implicar uma relação com as criaturas, pois não conhecemos a Deus senão por meio destas. Ora, a denominação — Aquele que é — não implica nenhuma relação com as criaturas. Logo, essa denominação — Aquele que é — não é, por excelência, própria de Deus.</p>
-    <p>Mas, em contrário, a Escritura (Ex 3, 13): a Moisés que perguntava: Se eles me disserem: que nome é o seu? Que lhes hei-de eu responder — respondeu-lhe o Senhor: Eis-aqui o que tu hás-de dizer aos filhos de Israel: Aquele que é me enviou a vós. Logo, é a denominação — Aquele que é — por excelência, própria de Deus.</p>
-    <p>SOLUÇÃO. — A denominação — Aquele que é — por excelência é própria de Deus, por três razões. Primeira, pela sua significação, pois não significa nenhuma forma, mas, o próprio ser. Ora, sendo em Deus a existência idêntica à essência, o que não se dá com nenhum outro ser, como já demonstramos, é manifesto que, entre outras, a denominação de que se trata é a que convém a Deus, por excelência; pois, um ser é denominado pela sua forma. Segunda, por causa da sua universalidade. Pois, todos os outros nomes são menos gerais, ou, se são equivalentes à denominação vertente, contudo, acrescentam-lhe algo, racionalmente, e de certo modo informam-na e a determinam. Ora, o nosso intelecto não pode, nesta vida, conhecer a essência mesma de Deus, tal como ela em si é; por onde, seja qual for o modo por que determinamos o que inteligimos de Deus, não poderemos nunca compreender o que Deus em si mesmo é. E, portanto, quanto menos determinados e quanto mais gerais e absolutos forem certos nomes, tanto mais propriamente nós os atribuiremos a Deus. E por isso, diz Damasceno, que de todos os nomes atribuídos a Deus, é o principal — Aquele que é; pois, compreendendo tudo em si, exprime o ser mesmo, como uma espécie de pélago infinito e indeterminado da substância. Ao passo que qualquer outro nome determina apenas um aspecto da substância da coisa designada, a denominação — Aquele que é — não determina nenhum modo de ser, porque se comporta indeterminadamente em relação a todos e, portanto, designa o pélago mesmo infinito da substância. Terceira, pelo que está incluído na sua significação mesma, que é o ser presente, que se atribui a Deus por excelência, cujo ser não conhece pretérito nem futuro, como diz Agostinho.</p>
-    <p>DONDE A</p>
-    <p>RESPOSTA À PRIMEIRA OBJEÇÃO. — A denominação — Aquele que é — quanto à sua origem, é mais própria de Deus, que este último nome mesmo; pois, ela se origina do ser, tanto quanto à sua significação, como quanto ao conteúdo desta, conforme já dissemos. Mas, quanto ao ser designado, o nome de Deus é mais próprio, porque é usado para significar a natureza divina; se bem que mais próprio ainda é o nome do tetragrama, imposto para significar a própria essência incomunicável, e, por assim dizer, singular, de Deus.</p>
-    <p>RESPOSTA À SEGUNDA. — O nome de bem é o principal nome de Deus, como causa; mas, não de Deus, considerado em absoluto, pois absolutamente falando, nós inteligimos o ser antes de inteligirmos a causa.</p>
-    <p>RESPOSTA À TERCEIRA. — Não é necessário que todos os nomes divinos impliquem relação de Deus com as criaturas; mas, basta que sejam impostos, fundados em certas perfeições, que procedem de Deus para elas; e entre essas perfeições a primeira é o ser mesmo, donde derivou a denominação — Aquele que é.</p>
+      <p>próprio de Deus. (I Sent., dist. 8, q. 1, a. 1, 3; De Pot., q. 2, a.1; q. 7, a. 5; q. 10, a. 1 ad 9; De Div. Nom., cap. V, lect. I). O undécimo discute-se assim. — Parece que a denominação — Aquele que é — não é, por excelência, o nome próprio de Deus.</p>
+      <p>1. — Pois, o nome de Deus é incomunicável, como já dissemos. Ora, isto não se dá com a denominação —Aquele que é. Logo, esta denominação não é própria de Deus. 2. Demais. — Dionísio diz, que o nome de bem é manifestativo de todas as processões de Deus. Ora, convém a Deus, por excelência, ser o princípio universal das coisas. Logo, a denominação própria de Deus, por excelência, é a de bem e não Aquele que é. 3. Demais. — Todo nome divino parece que deve implicar uma relação com as criaturas, pois não conhecemos a Deus senão por meio destas. Ora, a denominação — Aquele que é — não implica nenhuma relação com as criaturas. Logo, essa denominação — Aquele que é — não é, por excelência, própria de Deus.</p>
+      <p>Mas, em contrário, a Escritura (Ex 3, 13): a Moisés que perguntava: Se eles me disserem: que nome é o seu? Que lhes hei-de eu responder — respondeu-lhe o Senhor: Eis-aqui o que tu hás-de dizer aos filhos de Israel: Aquele que é me enviou a vós. Logo, é a denominação — Aquele que é — por excelência, própria de Deus.</p>
+      <p>SOLUÇÃO. — A denominação — Aquele que é — por excelência é própria de Deus, por três razões. Primeira, pela sua significação, pois não significa nenhuma forma, mas, o próprio ser. Ora, sendo em Deus a existência idêntica à essência, o que não se dá com nenhum outro ser, como já demonstramos, é manifesto que, entre outras, a denominação de que se trata é a que convém a Deus, por excelência; pois, um ser é denominado pela sua forma. Segunda, por causa da sua universalidade. Pois, todos os outros nomes são menos gerais, ou, se são equivalentes à denominação vertente, contudo, acrescentam-lhe algo, racionalmente, e de certo modo informam-na e a determinam. Ora, o nosso intelecto não pode, nesta vida, conhecer a essência mesma de Deus, tal como ela em si é; por onde, seja qual for o modo por que determinamos o que inteligimos de Deus, não poderemos nunca compreender o que Deus em si mesmo é. E, portanto, quanto menos determinados e quanto mais gerais e absolutos forem certos nomes, tanto mais propriamente nós os atribuiremos a Deus. E por isso, diz Damasceno, que de todos os nomes atribuídos a Deus, é o principal — Aquele que é; pois, compreendendo tudo em si, exprime o ser mesmo, como uma espécie de pélago infinito e indeterminado da substância. Ao passo que qualquer outro nome determina apenas um aspecto da substância da coisa designada, a denominação — Aquele que é — não determina nenhum modo de ser, porque se comporta indeterminadamente em relação a todos e, portanto, designa o pélago mesmo infinito da substância. Terceira, pelo que está incluído na sua significação mesma, que é o ser presente, que se atribui a Deus por excelência, cujo ser não conhece pretérito nem futuro, como diz Agostinho.</p>
+      <p>DONDE A</p>
+      <p>RESPOSTA À PRIMEIRA OBJEÇÃO. — A denominação — Aquele que é — quanto à sua origem, é mais própria de Deus, que este último nome mesmo; pois, ela se origina do ser, tanto quanto à sua significação, como quanto ao conteúdo desta, conforme já dissemos. Mas, quanto ao ser designado, o nome de Deus é mais próprio, porque é usado para significar a natureza divina; se bem que mais próprio ainda é o nome do tetragrama, imposto para significar a própria essência incomunicável, e, por assim dizer, singular, de Deus.</p>
+      <p>RESPOSTA À SEGUNDA. — O nome de bem é o principal nome de Deus, como causa; mas, não de Deus, considerado em absoluto, pois absolutamente falando, nós inteligimos o ser antes de inteligirmos a causa.</p>
+      <p>RESPOSTA À TERCEIRA. — Não é necessário que todos os nomes divinos impliquem relação de Deus com as criaturas; mas, basta que sejam impostos, fundados em certas perfeições, que procedem de Deus para elas; e entre essas perfeições a primeira é o ser mesmo, donde derivou a denominação — Aquele que é.</p>
 
     </div>
   </div>
-  
-  <!-- Bloco de Explicação (a ser preenchido) -->
+
   <div class="bloco-explicacao">
     <div class="explicacao-label">💡 Explicação e Contexto</div>
     <div class="explicacao-corpo" id="explicacao">
-    <p><em>Explicação será adicionada em breve.</em></p>
-
+      <p><em>Explicação será adicionada em breve.</em></p>
     </div>
   </div>
-  
+
 </main>
 
-<!-- ═══════════════════════════════════════════════════════ -->
-<!--  NAVEGAÇÃO INFERIOR                                      -->
-<!-- ═══════════════════════════════════════════════════════ -->
+<!-- ══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO INFERIOR                                    -->
+<!-- ══════════════════════════════════════════════════════ -->
 
 <div class="navegacao-inferior">
   <div class="nav-buttons">
-    <a href="suma-pagina78.html" class="btn-primary">← Anterior</a>
+    <a href="suma-pagina78.html" class="btn-primary">← Página Anterior</a>
     <span class="pagina-atual">79</span>
-    <a href="suma-pagina80.html" class="btn-primary">Próxima →</a>
+    <a href="suma-pagina80.html" class="btn-primary">Próxima Página →</a>
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════════════════════ -->
-<!--  RODAPÉ                                                  -->
-<!-- ═══════════════════════════════════════════════════════ -->
+<!-- ══════════════════════════════════════════════════════ -->
+<!--  RODAPÉ                                                -->
+<!-- ══════════════════════════════════════════════════════ -->
 
 <footer class="suma-footer">
   <p>Suma Teológica · São Tomás de Aquino | Biblioteca Lux Fidei</p>

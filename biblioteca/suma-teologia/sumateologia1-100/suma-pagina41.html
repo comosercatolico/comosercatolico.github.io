@@ -1,318 +1,29 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Questão 8, Artigo 3 — — Se estão bem assinalados os modos por que Deus existe em | Suma Teológica</title>
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
-
-:root {
-    --cor-fundo: #f5f0e8;
-    --cor-pagina: #fff;
-    --cor-texto: #2c1f17;
-    --cor-dourado: #d4af37;
-    --cor-roxo: #5b2c83;
-    --sombra: 0 8px 24px rgba(0,0,0,0.08);
-}
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: 'Inter', sans-serif;
-    background: var(--cor-fundo);
-    color: var(--cor-texto);
-    line-height: 1.6;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-}
-
-/* ────────────────────────────────────────────────────────── */
-/*  CABEÇALHO                                                  */
-/* ────────────────────────────────────────────────────────── */
-
-.suma-header {
-    background: linear-gradient(135deg, #1a1a1a, #2c241b);
-    color: #f5f0e8;
-    padding: 32px 20px 24px;
-    text-align: center;
-    position: relative;
-}
-
-.voltar-index {
-    position: absolute;
-    top: 16px;
-    left: 20px;
-    color: var(--cor-dourado);
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 0.9rem;
-    transition: opacity 0.2s;
-}
-
-.voltar-index:hover {
-    opacity: 0.8;
-}
-
-.suma-header h1 {
-    font-family: 'Libre Baskerville', serif;
-    font-size: 1.9rem;
-    font-weight: 700;
-    margin-bottom: 6px;
-}
-
-.info-pagina {
-    display: inline-block;
-    background: rgba(212, 175, 55, 0.15);
-    border: 1px solid rgba(212, 175, 55, 0.35);
-    padding: 5px 14px;
-    border-radius: 20px;
-    font-size: 0.85rem;
-    color: var(--cor-dourado);
-    margin-top: 8px;
-}
-
-/* ────────────────────────────────────────────────────────── */
-/*  NAVEGAÇÃO                                                  */
-/* ────────────────────────────────────────────────────────── */
-
-.navegacao-topo {
-    background: #fff;
-    padding: 12px 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    gap: 10px;
-}
-
-.btn-nav {
-    display: inline-flex;
-    align-items: center;
-    padding: 9px 18px;
-    background: var(--cor-roxo);
-    color: #fff;
-    text-decoration: none;
-    border-radius: 8px;
-    font-weight: 600;
-    font-size: 0.9rem;
-    transition: all 0.2s;
-}
-
-.btn-nav:hover {
-    background: #4a246a;
-    transform: translateY(-1px);
-}
-
-.desabilitado {
-    background: #ddd !important;
-    color: #999 !important;
-    pointer-events: none;
-}
-
-.info-centena {
-    font-size: 0.85rem;
-    color: #888;
-    font-weight: 500;
-    padding: 0 10px;
-}
-
-/* ────────────────────────────────────────────────────────── */
-/*  CONTEÚDO PRINCIPAL                                         */
-/* ────────────────────────────────────────────────────────── */
-
-.pagina-conteudo {
-    flex: 1;
-    max-width: 860px;
-    width: 100%;
-    margin: 36px auto;
-    padding: 0 20px;
-}
-
-.bloco-texto {
-    background: var(--cor-pagina);
-    padding: 48px 44px;
-    border-radius: 12px;
-    box-shadow: var(--sombra);
-    position: relative;
-    margin-bottom: 24px;
-}
-
-.bloco-texto::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 20px;
-    bottom: 20px;
-    width: 4px;
-    background: linear-gradient(to bottom, var(--cor-dourado), var(--cor-roxo));
-    border-radius: 0 4px 4px 0;
-}
-
-.bloco-titulo {
-    font-family: 'Libre Baskerville', serif;
-    font-size: 1.3rem;
-    color: var(--cor-roxo);
-    margin-bottom: 20px;
-    padding-bottom: 12px;
-    border-bottom: 1px solid #e8dfd0;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.pagina-corpo {
-    font-family: 'Libre Baskerville', serif;
-    font-size: 1.1rem;
-    line-height: 1.95;
-    color: #3d3226;
-    text-align: justify;
-}
-
-.pagina-corpo p {
-    margin-bottom: 1.3em;
-}
-
-/* ────────────────────────────────────────────────────────── */
-/*  BLOCO DE EXPLICAÇÃO                                        */
-/* ────────────────────────────────────────────────────────── */
-
-.bloco-explicacao {
-    background: linear-gradient(135deg, #fffdf5, #faf5eb);
-    border-left: 5px solid var(--cor-dourado);
-    padding: 32px 40px;
-    border-radius: 0 12px 12px 0;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
-    margin-bottom: 24px;
-}
-
-.explicacao-label {
-    font-family: 'Inter', sans-serif;
-    font-size: 0.72rem;
-    font-weight: 800;
-    color: var(--cor-dourado);
-    text-transform: uppercase;
-    letter-spacing: 1.2px;
-    margin-bottom: 14px;
-}
-
-.explicacao-corpo {
-    font-family: 'Inter', sans-serif;
-    font-size: 1rem;
-    line-height: 1.8;
-    color: #4a3c2c;
-}
-
-.explicacao-corpo p {
-    margin-bottom: 1em;
-}
-
-/* ────────────────────────────────────────────────────────── */
-/*  NAVEGAÇÃO INFERIOR                                         */
-/* ────────────────────────────────────────────────────────── */
-
-.navegacao-inferior {
-    max-width: 860px;
-    width: 100%;
-    margin: 0 auto 40px;
-    padding: 0 20px;
-}
-
-.nav-buttons {
-    background: #fff;
-    padding: 18px;
-    border-radius: 12px;
-    display: flex;
-    justify-content: space-between;
-    gap: 16px;
-    box-shadow: var(--sombra);
-}
-
-.btn-primary {
-    flex: 1;
-    text-align: center;
-    padding: 13px 16px;
-    background: linear-gradient(135deg, var(--cor-roxo), #7a3eb5);
-    color: #fff;
-    text-decoration: none;
-    border-radius: 10px;
-    font-weight: 600;
-    transition: all 0.2s;
-}
-
-.btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(91, 44, 131, 0.3);
-}
-
-.pagina-atual {
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: var(--cor-dourado);
-    min-width: 50px;
-    text-align: center;
-}
-
-/* ────────────────────────────────────────────────────────── */
-/*  RODAPÉ                                                     */
-/* ────────────────────────────────────────────────────────── */
-
-.suma-footer {
-    background: #1a1a1a;
-    color: #888;
-    text-align: center;
-    padding: 22px 20px;
-    margin-top: auto;
-    font-size: 0.85rem;
-}
-
-/* ────────────────────────────────────────────────────────── */
-/*  RESPONSIVIDADE                                             */
-/* ────────────────────────────────────────────────────────── */
-
-@media (max-width: 768px) {
-    .suma-header h1 {
-        font-size: 1.4rem;
-    }
-    
-    .bloco-texto {
-        padding: 28px 18px;
-    }
-    
-    .bloco-explicacao {
-        padding: 22px 18px;
-    }
-    
-    .navegacao-topo {
-        flex-wrap: wrap;
-    }
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="leitor-pagina" content="41">
+  <title>Questão 8, Artigo 3 — — Se estão bem assinalados os modos por que Deus existe em | Suma Teológica</title>
+  <link rel="stylesheet" href="../suma.css">
+  <script src="../suma.js" defer></script>
 </head>
 <body>
 
-<!-- ═══════════════════════════════════════════════════════ -->
-<!--  CABEÇALHO                                               -->
-<!-- ═══════════════════════════════════════════════════════ -->
+<!-- ══════════════════════════════════════════════════════ -->
+<!--  CABEÇALHO                                             -->
+<!-- ══════════════════════════════════════════════════════ -->
 
 <div class="suma-header">
-  <a href="../../index.html" class="voltar-index">← Índice</a>
+  <a href="../index.html" class="voltar-index">← Índice</a>
   <h1>Suma Teológica</h1>
-  <p style="opacity:0.8; font-style:italic; margin-top:4px;">São Tomás de Aquino</p>
+  <p class="subtitulo">São Tomás de Aquino</p>
   <span class="info-pagina">Página 41 de 3000</span>
 </div>
 
-<!-- ═══════════════════════════════════════════════════════ -->
-<!--  NAVEGAÇÃO SUPERIOR                                      -->
-<!-- ═══════════════════════════════════════════════════════ -->
+<!-- ══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO SUPERIOR                                    -->
+<!-- ══════════════════════════════════════════════════════ -->
 
 <nav class="navegacao-topo">
   <a href="suma-pagina40.html" class="btn-nav">← Anterior</a>
@@ -320,58 +31,55 @@ body {
   <a href="suma-pagina42.html" class="btn-nav">Próxima →</a>
 </nav>
 
-<!-- ═══════════════════════════════════════════════════════ -->
-<!--  CONTEÚDO PRINCIPAL                                      -->
-<!-- ═══════════════════════════════════════════════════════ -->
+<!-- ══════════════════════════════════════════════════════ -->
+<!--  CONTEÚDO PRINCIPAL                                    -->
+<!-- ══════════════════════════════════════════════════════ -->
 
 <main class="pagina-conteudo">
-  
-  <!-- Texto Original -->
+
   <div class="bloco-texto">
     <div class="bloco-titulo">
       <span>📜</span>
       Questão 8, Artigo 3 — — Se estão bem assinalados os modos por que Deus existe em
     </div>
     <div class="pagina-corpo">
-    <p>todas as coisas, dizendo-se que existe por essência, poder e presença. (I Sent., dist, XXXVII, q. 1, a. 2; et in expos. lit.). O terceiro discute-se assim. — Parece que estão mal assinalados os modos por que Deus existe em todas as coisas, dizendo-se que existe por essência, poder e presença.</p>
-    <p>1. — Pois, estar por essência em alguma coisa é estar essencialmente. Ora, Deus, não sendo da essência de nenhuma coisa, em nenhuma está essencialmente. Logo, não se deve dizer que nelas está por essência, presença e poder. 2. Demais. — Estar presente a uma coisa é não lhe faltar. Ora estar Deus por essência nas coisas é não lhes faltar. Logo, o mesmo é estar em todas por essência e por presença e, portanto, é supérfluo dizer que Deus está nas coisas por essência, presença e poder. 3. Demais. — Assim como Deus é o princípio de todas as coisas pelo seu poder, assim, também o é pela ciência e pela vontade. Ora, não se diz que está nas coisas por esta e por aquela. Logo, nem pela potência. 4. Demais. — Como a graça, há muitas outras perfeições acrescentadas à substância de um ser. Se, pois, dizemos que Deus está em certos seres, de modo especial, pela graça, devemos admitir um modo especial pelo qual está nas coisas, segundo uma determinada perfeição.</p>
-    <p>Mas, em contrário, diz Gregório: Deus, de modo comum está em todas as coisas pela presença, poder e substância; contudo, de modo familiar, diz-se que está em certos seres pela graça.</p>
-    <p>SOLUÇÃO. — De dois modos se pode dizer que Deus está numa coisa: como causa agente e, assim, está em todas as que criou: e como o objeto da ação está no agente, o que é próprio das operações da alma, pois assim é que está o objeto conhecido no ser que conhece e o desejado, no que deseja. — Ora, deste segundo modo, Deus está especialmente na criatura racional, que o conhece e o ama atual ou habitualmente. E como isto a criatura o tem da graça, como a seguir se verá, dizemos que Deus está nos santos pela graça. Para compreendermos, porém, como é que ele está nos demais seres, que criou, devemos examinar o que se dá com as coisas humanas. Ora, dizemos que um rei está, pelo poder, em todo reino, embora ele não esteja presente em todo. Por outro lado, dizemos que alguém está presente a todas as coisas que abrange com o seu olhar; e que todas as coisas, situadas numa parte da casa, estão presentes a alguém que, contudo não está, pela sua substância, em todas as partes da mesma. Por fim, dizemos que um ser está, pela sua substância ou essência, no lugar pela substância ocupado. Alguns, porém, como os Maniqueus, disseram que ao divino poder estão sujeitas as criaturas espirituais e incorpóreas; mas, que as visíveis e corpóreas estão sujeitas ao poder do princípio oposto. Ora, contra estes devemos dizer que Deus está em todos os seres pelo seu poder. — Outros, ainda, embora acreditassem que todas as coisas estão sujeitas ao divino poder, não admitiam contudo que a providência divina estendesse até às inferiores realidades corpóreas. E esses poderiam se servir das palavras de Jó (Jó 22, 14): Nas nuvens está escondido, nem tem cuidado das nossas coisas. Ora, contra estes, tivemos que estabelecer que Deus está em todas as coisas pela sua presença. — Outros, por fim, embora admitindo que todas as coisas dependem da providência divina, ensinavam contudo, que nem todas foram criadas imediatamente por Deus, mas só as primeiras criaturas, que, por sua vez, criaram as outras. Ora, contra estes, há de dizer-se, que ele está em todas pela essência. — Assim, pois, Deus está em todas as coisas pelo poder, porque todas lhe estão sujeitas; pela presença, porque tudo lhe está descoberto e como a nú diante dos olhos; e pela essência, porque a todas está presente como causa de serem, conforme se disse.</p>
-    <p>DONDE A</p>
-    <p>RESPOSTA À PRIMEIRA OBJEÇÃO. — Dizemos que Deus está em todas as coisas, não pela essência delas, como se delas fizesse parte, mas, pela sua, porque a sua substância está presente a todas como causa de serem, conforme já se disse.</p>
-    <p>RESPOSTA À SEGUNDA. — Um ser pode estar presente a outro, que o vê, embora dele diste pela substância, como dissemos; e por isso, distinguimos dois modos — por essência e por presença.</p>
-    <p>RESPOSTA À TERCEIRA. — É da natureza da ciência e da vontade, que a coisa conhecida esteja em quem conhece, e a querida, em quem quer. Por onde, pela ciência e pela vontade, as coisas estão, antes em Deus, que Deus nelas. Mas, é da essência do poder ser princípio de ação sobre outrem. Por onde, quanto ao poder, o agente se relaciona com a coisa exterior e a ela se aplica; e, assim, podemos dizer que, desse modo, o agente está em outro ser.</p>
-    <p>RESPOSTA À QUARTA. — Nenhuma outra perfeição acrescentada à substância, a não ser a graça, faz com que Deus esteja em algum ser, como objeto conhecido e amado. Por onde, só a graça constitui um modo particular de existir Deus, nas coisas. Há, porém, outro modo singular de Deus existir no homem, que é a união, do qual em seu lugar se tratará.</p>
+      <p>todas as coisas, dizendo-se que existe por essência, poder e presença. (I Sent., dist, XXXVII, q. 1, a. 2; et in expos. lit.). O terceiro discute-se assim. — Parece que estão mal assinalados os modos por que Deus existe em todas as coisas, dizendo-se que existe por essência, poder e presença.</p>
+      <p>1. — Pois, estar por essência em alguma coisa é estar essencialmente. Ora, Deus, não sendo da essência de nenhuma coisa, em nenhuma está essencialmente. Logo, não se deve dizer que nelas está por essência, presença e poder. 2. Demais. — Estar presente a uma coisa é não lhe faltar. Ora estar Deus por essência nas coisas é não lhes faltar. Logo, o mesmo é estar em todas por essência e por presença e, portanto, é supérfluo dizer que Deus está nas coisas por essência, presença e poder. 3. Demais. — Assim como Deus é o princípio de todas as coisas pelo seu poder, assim, também o é pela ciência e pela vontade. Ora, não se diz que está nas coisas por esta e por aquela. Logo, nem pela potência. 4. Demais. — Como a graça, há muitas outras perfeições acrescentadas à substância de um ser. Se, pois, dizemos que Deus está em certos seres, de modo especial, pela graça, devemos admitir um modo especial pelo qual está nas coisas, segundo uma determinada perfeição.</p>
+      <p>Mas, em contrário, diz Gregório: Deus, de modo comum está em todas as coisas pela presença, poder e substância; contudo, de modo familiar, diz-se que está em certos seres pela graça.</p>
+      <p>SOLUÇÃO. — De dois modos se pode dizer que Deus está numa coisa: como causa agente e, assim, está em todas as que criou: e como o objeto da ação está no agente, o que é próprio das operações da alma, pois assim é que está o objeto conhecido no ser que conhece e o desejado, no que deseja. — Ora, deste segundo modo, Deus está especialmente na criatura racional, que o conhece e o ama atual ou habitualmente. E como isto a criatura o tem da graça, como a seguir se verá, dizemos que Deus está nos santos pela graça. Para compreendermos, porém, como é que ele está nos demais seres, que criou, devemos examinar o que se dá com as coisas humanas. Ora, dizemos que um rei está, pelo poder, em todo reino, embora ele não esteja presente em todo. Por outro lado, dizemos que alguém está presente a todas as coisas que abrange com o seu olhar; e que todas as coisas, situadas numa parte da casa, estão presentes a alguém que, contudo não está, pela sua substância, em todas as partes da mesma. Por fim, dizemos que um ser está, pela sua substância ou essência, no lugar pela substância ocupado. Alguns, porém, como os Maniqueus, disseram que ao divino poder estão sujeitas as criaturas espirituais e incorpóreas; mas, que as visíveis e corpóreas estão sujeitas ao poder do princípio oposto. Ora, contra estes devemos dizer que Deus está em todos os seres pelo seu poder. — Outros, ainda, embora acreditassem que todas as coisas estão sujeitas ao divino poder, não admitiam contudo que a providência divina estendesse até às inferiores realidades corpóreas. E esses poderiam se servir das palavras de Jó (Jó 22, 14): Nas nuvens está escondido, nem tem cuidado das nossas coisas. Ora, contra estes, tivemos que estabelecer que Deus está em todas as coisas pela sua presença. — Outros, por fim, embora admitindo que todas as coisas dependem da providência divina, ensinavam contudo, que nem todas foram criadas imediatamente por Deus, mas só as primeiras criaturas, que, por sua vez, criaram as outras. Ora, contra estes, há de dizer-se, que ele está em todas pela essência. — Assim, pois, Deus está em todas as coisas pelo poder, porque todas lhe estão sujeitas; pela presença, porque tudo lhe está descoberto e como a nú diante dos olhos; e pela essência, porque a todas está presente como causa de serem, conforme se disse.</p>
+      <p>DONDE A</p>
+      <p>RESPOSTA À PRIMEIRA OBJEÇÃO. — Dizemos que Deus está em todas as coisas, não pela essência delas, como se delas fizesse parte, mas, pela sua, porque a sua substância está presente a todas como causa de serem, conforme já se disse.</p>
+      <p>RESPOSTA À SEGUNDA. — Um ser pode estar presente a outro, que o vê, embora dele diste pela substância, como dissemos; e por isso, distinguimos dois modos — por essência e por presença.</p>
+      <p>RESPOSTA À TERCEIRA. — É da natureza da ciência e da vontade, que a coisa conhecida esteja em quem conhece, e a querida, em quem quer. Por onde, pela ciência e pela vontade, as coisas estão, antes em Deus, que Deus nelas. Mas, é da essência do poder ser princípio de ação sobre outrem. Por onde, quanto ao poder, o agente se relaciona com a coisa exterior e a ela se aplica; e, assim, podemos dizer que, desse modo, o agente está em outro ser.</p>
+      <p>RESPOSTA À QUARTA. — Nenhuma outra perfeição acrescentada à substância, a não ser a graça, faz com que Deus esteja em algum ser, como objeto conhecido e amado. Por onde, só a graça constitui um modo particular de existir Deus, nas coisas. Há, porém, outro modo singular de Deus existir no homem, que é a união, do qual em seu lugar se tratará.</p>
 
     </div>
   </div>
-  
-  <!-- Bloco de Explicação (a ser preenchido) -->
+
   <div class="bloco-explicacao">
     <div class="explicacao-label">💡 Explicação e Contexto</div>
     <div class="explicacao-corpo" id="explicacao">
-    <p><em>Explicação será adicionada em breve.</em></p>
-
+      <p><em>Explicação será adicionada em breve.</em></p>
     </div>
   </div>
-  
+
 </main>
 
-<!-- ═══════════════════════════════════════════════════════ -->
-<!--  NAVEGAÇÃO INFERIOR                                      -->
-<!-- ═══════════════════════════════════════════════════════ -->
+<!-- ══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO INFERIOR                                    -->
+<!-- ══════════════════════════════════════════════════════ -->
 
 <div class="navegacao-inferior">
   <div class="nav-buttons">
-    <a href="suma-pagina40.html" class="btn-primary">← Anterior</a>
+    <a href="suma-pagina40.html" class="btn-primary">← Página Anterior</a>
     <span class="pagina-atual">41</span>
-    <a href="suma-pagina42.html" class="btn-primary">Próxima →</a>
+    <a href="suma-pagina42.html" class="btn-primary">Próxima Página →</a>
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════════════════════ -->
-<!--  RODAPÉ                                                  -->
-<!-- ═══════════════════════════════════════════════════════ -->
+<!-- ══════════════════════════════════════════════════════ -->
+<!--  RODAPÉ                                                -->
+<!-- ══════════════════════════════════════════════════════ -->
 
 <footer class="suma-footer">
   <p>Suma Teológica · São Tomás de Aquino | Biblioteca Lux Fidei</p>

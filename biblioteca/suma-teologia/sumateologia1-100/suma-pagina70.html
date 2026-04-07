@@ -1,318 +1,29 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Questão 13, Artigo 2 — — Se algum nome se predica de Deus substancialmente. | Suma Teológica</title>
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
-
-:root {
-    --cor-fundo: #f5f0e8;
-    --cor-pagina: #fff;
-    --cor-texto: #2c1f17;
-    --cor-dourado: #d4af37;
-    --cor-roxo: #5b2c83;
-    --sombra: 0 8px 24px rgba(0,0,0,0.08);
-}
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: 'Inter', sans-serif;
-    background: var(--cor-fundo);
-    color: var(--cor-texto);
-    line-height: 1.6;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-}
-
-/* ────────────────────────────────────────────────────────── */
-/*  CABEÇALHO                                                  */
-/* ────────────────────────────────────────────────────────── */
-
-.suma-header {
-    background: linear-gradient(135deg, #1a1a1a, #2c241b);
-    color: #f5f0e8;
-    padding: 32px 20px 24px;
-    text-align: center;
-    position: relative;
-}
-
-.voltar-index {
-    position: absolute;
-    top: 16px;
-    left: 20px;
-    color: var(--cor-dourado);
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 0.9rem;
-    transition: opacity 0.2s;
-}
-
-.voltar-index:hover {
-    opacity: 0.8;
-}
-
-.suma-header h1 {
-    font-family: 'Libre Baskerville', serif;
-    font-size: 1.9rem;
-    font-weight: 700;
-    margin-bottom: 6px;
-}
-
-.info-pagina {
-    display: inline-block;
-    background: rgba(212, 175, 55, 0.15);
-    border: 1px solid rgba(212, 175, 55, 0.35);
-    padding: 5px 14px;
-    border-radius: 20px;
-    font-size: 0.85rem;
-    color: var(--cor-dourado);
-    margin-top: 8px;
-}
-
-/* ────────────────────────────────────────────────────────── */
-/*  NAVEGAÇÃO                                                  */
-/* ────────────────────────────────────────────────────────── */
-
-.navegacao-topo {
-    background: #fff;
-    padding: 12px 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    gap: 10px;
-}
-
-.btn-nav {
-    display: inline-flex;
-    align-items: center;
-    padding: 9px 18px;
-    background: var(--cor-roxo);
-    color: #fff;
-    text-decoration: none;
-    border-radius: 8px;
-    font-weight: 600;
-    font-size: 0.9rem;
-    transition: all 0.2s;
-}
-
-.btn-nav:hover {
-    background: #4a246a;
-    transform: translateY(-1px);
-}
-
-.desabilitado {
-    background: #ddd !important;
-    color: #999 !important;
-    pointer-events: none;
-}
-
-.info-centena {
-    font-size: 0.85rem;
-    color: #888;
-    font-weight: 500;
-    padding: 0 10px;
-}
-
-/* ────────────────────────────────────────────────────────── */
-/*  CONTEÚDO PRINCIPAL                                         */
-/* ────────────────────────────────────────────────────────── */
-
-.pagina-conteudo {
-    flex: 1;
-    max-width: 860px;
-    width: 100%;
-    margin: 36px auto;
-    padding: 0 20px;
-}
-
-.bloco-texto {
-    background: var(--cor-pagina);
-    padding: 48px 44px;
-    border-radius: 12px;
-    box-shadow: var(--sombra);
-    position: relative;
-    margin-bottom: 24px;
-}
-
-.bloco-texto::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 20px;
-    bottom: 20px;
-    width: 4px;
-    background: linear-gradient(to bottom, var(--cor-dourado), var(--cor-roxo));
-    border-radius: 0 4px 4px 0;
-}
-
-.bloco-titulo {
-    font-family: 'Libre Baskerville', serif;
-    font-size: 1.3rem;
-    color: var(--cor-roxo);
-    margin-bottom: 20px;
-    padding-bottom: 12px;
-    border-bottom: 1px solid #e8dfd0;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.pagina-corpo {
-    font-family: 'Libre Baskerville', serif;
-    font-size: 1.1rem;
-    line-height: 1.95;
-    color: #3d3226;
-    text-align: justify;
-}
-
-.pagina-corpo p {
-    margin-bottom: 1.3em;
-}
-
-/* ────────────────────────────────────────────────────────── */
-/*  BLOCO DE EXPLICAÇÃO                                        */
-/* ────────────────────────────────────────────────────────── */
-
-.bloco-explicacao {
-    background: linear-gradient(135deg, #fffdf5, #faf5eb);
-    border-left: 5px solid var(--cor-dourado);
-    padding: 32px 40px;
-    border-radius: 0 12px 12px 0;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
-    margin-bottom: 24px;
-}
-
-.explicacao-label {
-    font-family: 'Inter', sans-serif;
-    font-size: 0.72rem;
-    font-weight: 800;
-    color: var(--cor-dourado);
-    text-transform: uppercase;
-    letter-spacing: 1.2px;
-    margin-bottom: 14px;
-}
-
-.explicacao-corpo {
-    font-family: 'Inter', sans-serif;
-    font-size: 1rem;
-    line-height: 1.8;
-    color: #4a3c2c;
-}
-
-.explicacao-corpo p {
-    margin-bottom: 1em;
-}
-
-/* ────────────────────────────────────────────────────────── */
-/*  NAVEGAÇÃO INFERIOR                                         */
-/* ────────────────────────────────────────────────────────── */
-
-.navegacao-inferior {
-    max-width: 860px;
-    width: 100%;
-    margin: 0 auto 40px;
-    padding: 0 20px;
-}
-
-.nav-buttons {
-    background: #fff;
-    padding: 18px;
-    border-radius: 12px;
-    display: flex;
-    justify-content: space-between;
-    gap: 16px;
-    box-shadow: var(--sombra);
-}
-
-.btn-primary {
-    flex: 1;
-    text-align: center;
-    padding: 13px 16px;
-    background: linear-gradient(135deg, var(--cor-roxo), #7a3eb5);
-    color: #fff;
-    text-decoration: none;
-    border-radius: 10px;
-    font-weight: 600;
-    transition: all 0.2s;
-}
-
-.btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(91, 44, 131, 0.3);
-}
-
-.pagina-atual {
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: var(--cor-dourado);
-    min-width: 50px;
-    text-align: center;
-}
-
-/* ────────────────────────────────────────────────────────── */
-/*  RODAPÉ                                                     */
-/* ────────────────────────────────────────────────────────── */
-
-.suma-footer {
-    background: #1a1a1a;
-    color: #888;
-    text-align: center;
-    padding: 22px 20px;
-    margin-top: auto;
-    font-size: 0.85rem;
-}
-
-/* ────────────────────────────────────────────────────────── */
-/*  RESPONSIVIDADE                                             */
-/* ────────────────────────────────────────────────────────── */
-
-@media (max-width: 768px) {
-    .suma-header h1 {
-        font-size: 1.4rem;
-    }
-    
-    .bloco-texto {
-        padding: 28px 18px;
-    }
-    
-    .bloco-explicacao {
-        padding: 22px 18px;
-    }
-    
-    .navegacao-topo {
-        flex-wrap: wrap;
-    }
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="leitor-pagina" content="70">
+  <title>Questão 13, Artigo 2 — — Se algum nome se predica de Deus substancialmente. | Suma Teológica</title>
+  <link rel="stylesheet" href="../suma.css">
+  <script src="../suma.js" defer></script>
 </head>
 <body>
 
-<!-- ═══════════════════════════════════════════════════════ -->
-<!--  CABEÇALHO                                               -->
-<!-- ═══════════════════════════════════════════════════════ -->
+<!-- ══════════════════════════════════════════════════════ -->
+<!--  CABEÇALHO                                             -->
+<!-- ══════════════════════════════════════════════════════ -->
 
 <div class="suma-header">
-  <a href="../../index.html" class="voltar-index">← Índice</a>
+  <a href="../index.html" class="voltar-index">← Índice</a>
   <h1>Suma Teológica</h1>
-  <p style="opacity:0.8; font-style:italic; margin-top:4px;">São Tomás de Aquino</p>
+  <p class="subtitulo">São Tomás de Aquino</p>
   <span class="info-pagina">Página 70 de 3000</span>
 </div>
 
-<!-- ═══════════════════════════════════════════════════════ -->
-<!--  NAVEGAÇÃO SUPERIOR                                      -->
-<!-- ═══════════════════════════════════════════════════════ -->
+<!-- ══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO SUPERIOR                                    -->
+<!-- ══════════════════════════════════════════════════════ -->
 
 <nav class="navegacao-topo">
   <a href="suma-pagina69.html" class="btn-nav">← Anterior</a>
@@ -320,57 +31,54 @@ body {
   <a href="suma-pagina71.html" class="btn-nav">Próxima →</a>
 </nav>
 
-<!-- ═══════════════════════════════════════════════════════ -->
-<!--  CONTEÚDO PRINCIPAL                                      -->
-<!-- ═══════════════════════════════════════════════════════ -->
+<!-- ══════════════════════════════════════════════════════ -->
+<!--  CONTEÚDO PRINCIPAL                                    -->
+<!-- ══════════════════════════════════════════════════════ -->
 
 <main class="pagina-conteudo">
-  
-  <!-- Texto Original -->
+
   <div class="bloco-texto">
     <div class="bloco-titulo">
       <span>📜</span>
       Questão 13, Artigo 2 — — Se algum nome se predica de Deus substancialmente.
     </div>
     <div class="pagina-corpo">
-    <p>(I Sent., dist. II, a. 2; I Cont. Gent., cap. XXXI; De Pot., q. 7, a. 5). O segundo discute-se assim. — Parece que nenhum nome se predica de Deus substancialmente.</p>
-    <p>1. — Pois, diz Damasceno: Tudo o que dizemos de Deus não exprime o que ele é substancialmente, mas, significa o que não é, ou alguma relação, ou alguma particularidade consecutiva à sua natureza ou ação. 2. Demais. — Dionísio diz: Em todos os santos teólogos acharás um hino às felizes participações da tearquia, exprimindo manifestativa e laudativamente cada uma das denominações de Deus. O sentido deste lugar é que os nomes que os Santos Doutores consagram ao divino louvor, se distinguem pelas participações de Deus. Ora, o que exprime a participação de um ser não significa nada do que lhe pertence à essência. Logo, os nomes predicados de Deus não se lhe atribuem substancialmente. 3. Demais. — Um ser é nomeado por nós conforme o modo pelo qual o compreendemos. Ora, nós não inteligimos a Deus em substância, nesta vida. Logo, nenhum dos nomes que lhe aplicamos se lhe aplica substancialmente.</p>
-    <p>Mas, em contrário, diz Agostinho: Em Deus se identificam o ser forte, sábio, ou o que quer que digamos da sua simplicidade, para lhe significar a substância. Logo, todas essas denominações exprimem a divina substância.</p>
-    <p>SOLUÇÃO. — Os nomes atribuídos a Deus negativamente ou os que exprimem alguma relação dele com a criatura, é claro que de nenhum modo lhe significam a substância, mas, dele removem alguma coisa ou exprimem alguma relação que têm com algum ser ou, antes, que algum ser tem com ele. Mas, as opiniões variam quanto aos nomes que de Deus se predicam absoluta e afirmativamente, como bom, sábio e outros. — Assim, uns disseram que, embora todos esses nomes se prediquem de Deus afirmativamente, contudo, são destinados, antes, para dele remover, que para afirmar alguma coisa. Por onde, dizem, quando afirmamos que Deus é vivo, queremos exprimir que não tem o mesmo modo de ser das coisas inanimadas, e assim por diante. Esta é a opinião de Moisés Maimónides. — Outros, porém, dizem que tais nomes são impostos para exprimir as relações de Deus com as criaturas; assim, quando dizemos queDeus é bom, o sentido é, que Deus é a causa da bondade das coisas, e assim por diante. Mas, estas duas opiniões são inconvenientes, por três razões. Primeiro, porque nenhuma dessas duas opiniões pode explicar a razão por que certos nomes se predicariam de Deus, de preferência a outros. Pois, ele é causa, tanto dos corpos, como dos bens; portanto, se quando dizemos que Deus é bom queremos dizer que Deus é a causa dos bens, semelhantemente, quando dizemos, que Deus é corpo, também significa isso que é a causa dos corpos. E, do mesmo modo, dizendo que é corpo; dele removemos que seja um ente puramente potencial, como a matéria prima. Segundo, porque resultaria de tais opiniões, que todos os nomes aplicados a Deus não lhe convém senão em sentido secundário, como quando dizemos que um remédio é são para, em sentido secundário, significar somente que é causa da saúde no animal que, primariamente, se chama são. Terceiro, porque tais opiniões vão contra a intenção dos que falamos de Deus, que, quando dizemos que Deus é vivo, queremos dizer coisa diferente, que quando dizemos que é a causa da nossa vida, ou que difere dos corpos inanimados. E, portanto, devemos pensar, de outro modo, que tais nomes significam certamente a substância divina e de Deus se predicam substancialmente, mas o representam de modo deficiente, o que assim se demonstra. Os nomes exprimem a Deus do modo pelo qual o nosso intelecto o conhece. Ora, como o nosso intelecto o conhece por meio das criaturas, há de conhecê-lo do modo pelo qual estas o representam. Já demonstramos, porém, que Deus encerra em si, primariamente, quase absoluta e universalmente simples, todas as perfeições das criaturas. Por onde, uma criatura qualquer o representa e tem com ele semelhança, na medida em que tem alguma perfeição; não porém, que o represente como sendo da mesma espécie ou do mesmo gênero, mas, como um principio excelente, em relação a cuja: Porque ele é bom é que nós somos. forma os efeitos são deficientes, se deixarem, contudo, de exprimir alguma semelhança dele; assim, a forma dos corpos inferiores representam a virtude solar. E isso já o expusemos quando tratamos da perfeição divina. Por onde, os nomes em questão exprimem a divina substância, embora imperfeitamente, assim como imperfeitamente as criaturas o representam. Assim, pois, quando dizemos, que Deus é bom, o sentido não é, que Deus é a causa da bondade, ou que Deus não é mau, mas que a bondade que atribuímos às criaturas, preexiste em Deus de modo mais eminente. Donde, pois não se segue que a Deus convém o ser bom; porque causa a bondade, mas, antes, pelo contrário, porque é bom difunde nas coisas a bondade, conforme aquilo de Agostinho.</p>
-    <p>DONDE A</p>
-    <p>RESPOSTA À PRIMEIRA OBJEÇÃO. — Damasceno diz que tais nomes não significam o que é Deus, porque nenhum deles exprime o que Deus perfeitamente é, mas, cada um o significa imperfeitamente, assim como imperfeitamente o representam as criaturas.</p>
-    <p>RESPOSTA À SEGUNDA. — Às vezes, uma coisa é a origem da qual um nome tira a sua significação, e outra, o objeto que ele designa. Assim, o nome de lapide ou pedra se origina daquilo que lesa o pé; não é, porém, usado para significar aquilo que lesa o pé, mas, uma espécie de corpo; do contrário, tudo o que lesa o pé seria lápide ou pedra. Donde devemos concluir, que os nomes divinos em questão são, certo, originados das participações da divindade. Assim, pois, como as criaturas representam a Deus, embora imperfeitamente, segundo as diversas participações das divinas perfeições, assim o nosso intelecto conhece e nomeia a Deus conforme cada uma dessas participações. Esses nomes, porém, não são impostos para significar as participações mesmas; e quando dizemos que Deus é vivo, queremos dizer que de Deus procede a vida,querendo assim significar o princípio mesmo das coisas, no qual preexiste a vida, embora de modo mais eminente do que o que nós podemos compreender ou exprimir.</p>
-    <p>RESPOSTA À TERCEIRA. — Não podemos, nesta vida, conhecer a essência de Deus, tal como ela é em si mesma; mas, a conhecemos enquanto representada nas perfeições das criaturas e, assim é que os nomes que impomos a significam.</p>
+      <p>(I Sent., dist. II, a. 2; I Cont. Gent., cap. XXXI; De Pot., q. 7, a. 5). O segundo discute-se assim. — Parece que nenhum nome se predica de Deus substancialmente.</p>
+      <p>1. — Pois, diz Damasceno: Tudo o que dizemos de Deus não exprime o que ele é substancialmente, mas, significa o que não é, ou alguma relação, ou alguma particularidade consecutiva à sua natureza ou ação. 2. Demais. — Dionísio diz: Em todos os santos teólogos acharás um hino às felizes participações da tearquia, exprimindo manifestativa e laudativamente cada uma das denominações de Deus. O sentido deste lugar é que os nomes que os Santos Doutores consagram ao divino louvor, se distinguem pelas participações de Deus. Ora, o que exprime a participação de um ser não significa nada do que lhe pertence à essência. Logo, os nomes predicados de Deus não se lhe atribuem substancialmente. 3. Demais. — Um ser é nomeado por nós conforme o modo pelo qual o compreendemos. Ora, nós não inteligimos a Deus em substância, nesta vida. Logo, nenhum dos nomes que lhe aplicamos se lhe aplica substancialmente.</p>
+      <p>Mas, em contrário, diz Agostinho: Em Deus se identificam o ser forte, sábio, ou o que quer que digamos da sua simplicidade, para lhe significar a substância. Logo, todas essas denominações exprimem a divina substância.</p>
+      <p>SOLUÇÃO. — Os nomes atribuídos a Deus negativamente ou os que exprimem alguma relação dele com a criatura, é claro que de nenhum modo lhe significam a substância, mas, dele removem alguma coisa ou exprimem alguma relação que têm com algum ser ou, antes, que algum ser tem com ele. Mas, as opiniões variam quanto aos nomes que de Deus se predicam absoluta e afirmativamente, como bom, sábio e outros. — Assim, uns disseram que, embora todos esses nomes se prediquem de Deus afirmativamente, contudo, são destinados, antes, para dele remover, que para afirmar alguma coisa. Por onde, dizem, quando afirmamos que Deus é vivo, queremos exprimir que não tem o mesmo modo de ser das coisas inanimadas, e assim por diante. Esta é a opinião de Moisés Maimónides. — Outros, porém, dizem que tais nomes são impostos para exprimir as relações de Deus com as criaturas; assim, quando dizemos queDeus é bom, o sentido é, que Deus é a causa da bondade das coisas, e assim por diante. Mas, estas duas opiniões são inconvenientes, por três razões. Primeiro, porque nenhuma dessas duas opiniões pode explicar a razão por que certos nomes se predicariam de Deus, de preferência a outros. Pois, ele é causa, tanto dos corpos, como dos bens; portanto, se quando dizemos que Deus é bom queremos dizer que Deus é a causa dos bens, semelhantemente, quando dizemos, que Deus é corpo, também significa isso que é a causa dos corpos. E, do mesmo modo, dizendo que é corpo; dele removemos que seja um ente puramente potencial, como a matéria prima. Segundo, porque resultaria de tais opiniões, que todos os nomes aplicados a Deus não lhe convém senão em sentido secundário, como quando dizemos que um remédio é são para, em sentido secundário, significar somente que é causa da saúde no animal que, primariamente, se chama são. Terceiro, porque tais opiniões vão contra a intenção dos que falamos de Deus, que, quando dizemos que Deus é vivo, queremos dizer coisa diferente, que quando dizemos que é a causa da nossa vida, ou que difere dos corpos inanimados. E, portanto, devemos pensar, de outro modo, que tais nomes significam certamente a substância divina e de Deus se predicam substancialmente, mas o representam de modo deficiente, o que assim se demonstra. Os nomes exprimem a Deus do modo pelo qual o nosso intelecto o conhece. Ora, como o nosso intelecto o conhece por meio das criaturas, há de conhecê-lo do modo pelo qual estas o representam. Já demonstramos, porém, que Deus encerra em si, primariamente, quase absoluta e universalmente simples, todas as perfeições das criaturas. Por onde, uma criatura qualquer o representa e tem com ele semelhança, na medida em que tem alguma perfeição; não porém, que o represente como sendo da mesma espécie ou do mesmo gênero, mas, como um principio excelente, em relação a cuja: Porque ele é bom é que nós somos. forma os efeitos são deficientes, se deixarem, contudo, de exprimir alguma semelhança dele; assim, a forma dos corpos inferiores representam a virtude solar. E isso já o expusemos quando tratamos da perfeição divina. Por onde, os nomes em questão exprimem a divina substância, embora imperfeitamente, assim como imperfeitamente as criaturas o representam. Assim, pois, quando dizemos, que Deus é bom, o sentido não é, que Deus é a causa da bondade, ou que Deus não é mau, mas que a bondade que atribuímos às criaturas, preexiste em Deus de modo mais eminente. Donde, pois não se segue que a Deus convém o ser bom; porque causa a bondade, mas, antes, pelo contrário, porque é bom difunde nas coisas a bondade, conforme aquilo de Agostinho.</p>
+      <p>DONDE A</p>
+      <p>RESPOSTA À PRIMEIRA OBJEÇÃO. — Damasceno diz que tais nomes não significam o que é Deus, porque nenhum deles exprime o que Deus perfeitamente é, mas, cada um o significa imperfeitamente, assim como imperfeitamente o representam as criaturas.</p>
+      <p>RESPOSTA À SEGUNDA. — Às vezes, uma coisa é a origem da qual um nome tira a sua significação, e outra, o objeto que ele designa. Assim, o nome de lapide ou pedra se origina daquilo que lesa o pé; não é, porém, usado para significar aquilo que lesa o pé, mas, uma espécie de corpo; do contrário, tudo o que lesa o pé seria lápide ou pedra. Donde devemos concluir, que os nomes divinos em questão são, certo, originados das participações da divindade. Assim, pois, como as criaturas representam a Deus, embora imperfeitamente, segundo as diversas participações das divinas perfeições, assim o nosso intelecto conhece e nomeia a Deus conforme cada uma dessas participações. Esses nomes, porém, não são impostos para significar as participações mesmas; e quando dizemos que Deus é vivo, queremos dizer que de Deus procede a vida,querendo assim significar o princípio mesmo das coisas, no qual preexiste a vida, embora de modo mais eminente do que o que nós podemos compreender ou exprimir.</p>
+      <p>RESPOSTA À TERCEIRA. — Não podemos, nesta vida, conhecer a essência de Deus, tal como ela é em si mesma; mas, a conhecemos enquanto representada nas perfeições das criaturas e, assim é que os nomes que impomos a significam.</p>
 
     </div>
   </div>
-  
-  <!-- Bloco de Explicação (a ser preenchido) -->
+
   <div class="bloco-explicacao">
     <div class="explicacao-label">💡 Explicação e Contexto</div>
     <div class="explicacao-corpo" id="explicacao">
-    <p><em>Explicação será adicionada em breve.</em></p>
-
+      <p><em>Explicação será adicionada em breve.</em></p>
     </div>
   </div>
-  
+
 </main>
 
-<!-- ═══════════════════════════════════════════════════════ -->
-<!--  NAVEGAÇÃO INFERIOR                                      -->
-<!-- ═══════════════════════════════════════════════════════ -->
+<!-- ══════════════════════════════════════════════════════ -->
+<!--  NAVEGAÇÃO INFERIOR                                    -->
+<!-- ══════════════════════════════════════════════════════ -->
 
 <div class="navegacao-inferior">
   <div class="nav-buttons">
-    <a href="suma-pagina69.html" class="btn-primary">← Anterior</a>
+    <a href="suma-pagina69.html" class="btn-primary">← Página Anterior</a>
     <span class="pagina-atual">70</span>
-    <a href="suma-pagina71.html" class="btn-primary">Próxima →</a>
+    <a href="suma-pagina71.html" class="btn-primary">Próxima Página →</a>
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════════════════════ -->
-<!--  RODAPÉ                                                  -->
-<!-- ═══════════════════════════════════════════════════════ -->
+<!-- ══════════════════════════════════════════════════════ -->
+<!--  RODAPÉ                                                -->
+<!-- ══════════════════════════════════════════════════════ -->
 
 <footer class="suma-footer">
   <p>Suma Teológica · São Tomás de Aquino | Biblioteca Lux Fidei</p>
