@@ -1,19 +1,48 @@
 (function () {
 'use strict';
 
+// ═══════════════════════════════════════════════════════════════
+// ★ ÍNDICE DA SUMA TEOLÓGICA
+//
+// Edite esta lista para adicionar/remover entradas.
+// Cada entrada tem:
+//   titulo → texto que aparece no índice
+//   pagina → número da página onde começa
+//   secao → (opcional) true = título de seção, não é clicável
+//
+// Exemplo:
+//   { titulo: 'Introdução', pagina: 1 },
+//   { titulo: 'Questão 1 — ...', pagina: 5 },
+//   { titulo: '── PARTE II ──', secao: true },
+//   { titulo: 'Questão 50 — ...', pagina: 120 },
+// ═══════════════════════════════════════════════════════════════
 var INDICE_SUMA = [
+
+    // ── Coloque aqui as suas entradas ──────────────────────────
+    // Exemplos provisórios (substitua pelos seus títulos reais):
+
     { titulo: 'Prólogo de São Tomás de Aquino',           pagina: 1   },
     { titulo: 'Encíclica Aeterni Patris',                 pagina: 8   },
+
     { titulo: '── PARTE I: DEUS ──',                     secao: true },
     { titulo: 'Q.1 · A Sagrada Doutrina',                 pagina: 20  },
     { titulo: 'Q.2 · A Existência de Deus',               pagina: 28  },
     { titulo: 'Q.3 · A Simplicidade de Deus',             pagina: 38  },
+
     { titulo: '── Adicione mais entradas acima ──',       secao: true },
+
+    // ── Fim das entradas ───────────────────────────────────────
 ];
 
-var TOTAL_PAGINAS = 3000;
-var CHAVE_SAVE    = 'leitor_suma';
+// ═══════════════════════════════════════════════════════════════
+// CONFIGURAÇÃO (não precisa mexer aqui normalmente)
+// ═══════════════════════════════════════════════════════════════
+var TOTAL_PAGINAS = 3000;  // total de páginas do livro
+var CHAVE_SAVE = 'leitor_suma';  // chave do localStorage
 
+// ─────────────────────────────────────────────────────────────
+// LER / SALVAR PROGRESSO
+// ─────────────────────────────────────────────────────────────
 function salvar(pag) {
     try { localStorage.setItem(CHAVE_SAVE, String(pag)); } catch(e) {}
 }
@@ -26,28 +55,56 @@ function lerSalvo() {
     } catch(e) { return 0; }
 }
 
+// ─────────────────────────────────────────────────────────────
+// DETECTAR PÁGINA ATUAL
+// Prioridade: meta tag → nome do arquivo
+// ─────────────────────────────────────────────────────────────
 function getPaginaAtual() {
+    // 1. Meta tag (mais confiável — recomendado)
     var meta = document.querySelector('meta[name="leitor-pagina"]');
     if (meta) {
         var n = parseInt(meta.getAttribute('content'), 10);
         if (n >= 1) return n;
     }
+    // 2. Nome do arquivo (fallback)
     var arquivo = window.location.pathname.split('/').pop();
-    var m = arquivo.match(/pagina(\d+)\.html$/i);
+    var m = arquivo.match(/pagina(\d+).html$/i);
     return m ? parseInt(m[1], 10) : null;
 }
 
+// ─────────────────────────────────────────────────────────────
+// CONSTRUIR URL para uma página qualquer
+//
+// Estrutura de pastas:
+//   sumateologia1-100/suma-pagina1.html até suma-pagina100.html
+//   sumateologia101-200/suma-pagina101.html ...
+//
+// leitor.js fica em: biblioteca/suma-teologia/leitor.js
+// Página atual fica: biblioteca/suma-teologia/sumateologia1-100/suma-pagina1.html
+//
+// Para ir de qualquer página para outra, subimos um nível (../)
+// e entramos na pasta correta.
+// ─────────────────────────────────────────────────────────────
 function urlParaPagina(n) {
     n = Math.max(1, Math.min(TOTAL_PAGINAS, parseInt(n, 10) || 1));
+
+    // Calcular a pasta: página 1-100 → sumateologia1-100, 101-200 → sumateologia101-200 ...
     var inicio = Math.floor((n - 1) / 100) * 100 + 1;
     var fim    = inicio + 99;
     var pasta  = 'sumateologia' + inicio + '-' + fim;
+
     var pathname = window.location.pathname;
     var partes   = pathname.split('/');
     var arquivo  = partes[partes.length - 1];
+
+    // Se estamos dentro de uma subpasta (suma-paginaN.html), subimos um nível
     if (/suma-pagina\d+\.html$/i.test(arquivo)) {
+        // Estamos em: .../sumateologiaX-Y/
+        // Subir um nível: ../
         return '../' + pasta + '/suma-pagina' + n + '.html';
     }
+
+    // Se estamos no index.html da suma ou em outro lugar, usar caminho direto
     return pasta + '/suma-pagina' + n + '.html';
 }
 
@@ -55,14 +112,17 @@ function irParaPagina(n) {
     window.location.href = urlParaPagina(n);
 }
 
+// ─────────────────────────────────────────────────────────────
+// CSS
+// ─────────────────────────────────────────────────────────────
 function injetarCSS() {
     if (document.getElementById('leitor-css')) return;
     var s = document.createElement('style');
-    s.id  = 'leitor-css';
+    s.id = 'leitor-css';
     s.textContent = `
 
-/* ── Widget central (busca + índice) ───────────────────── */
-#leitor-widget {
+/* ── Widget central do topo (busca simples) ───────────────── */
+#leitor-widget-topo {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -88,7 +148,7 @@ function injetarCSS() {
 .lw-row:focus-within {
     box-shadow: 0 0 0 3px rgba(212,175,55,0.22);
 }
-#lw-input {
+#lw-input-topo {
     width: 60px;
     border: none;
     background: transparent;
@@ -101,8 +161,8 @@ function injetarCSS() {
     padding: 6px 4px;
     -moz-appearance: textfield;
 }
-#lw-input::-webkit-inner-spin-button,
-#lw-input::-webkit-outer-spin-button { -webkit-appearance: none; }
+#lw-input-topo::-webkit-inner-spin-button,
+#lw-input-topo::-webkit-outer-spin-button { -webkit-appearance: none; }
 .lw-total {
     font-size: 0.82rem;
     color: #aaa;
@@ -127,28 +187,6 @@ function injetarCSS() {
     height: 100%;
 }
 .lw-btn-ir:hover { background: #4a246a; }
-.lw-div2 {
-    width: 1px;
-    height: 28px;
-    background: #ddd;
-}
-.lw-btn-idx {
-    background: transparent;
-    border: none;
-    padding: 6px 12px;
-    color: #8b6914;
-    font-size: 0.82rem;
-    font-weight: 700;
-    cursor: pointer;
-    font-family: inherit;
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    transition: color 0.15s, background 0.15s;
-    white-space: nowrap;
-}
-.lw-btn-idx:hover { color: #5b2c83; background: rgba(91,44,131,0.06); }
-.lw-btn-idx svg { width: 13px; height: 13px; }
 .lw-erro {
     font-size: 0.72rem;
     color: #c0392b;
@@ -156,9 +194,47 @@ function injetarCSS() {
     font-weight: 600;
 }
 
-/* ── Esconder botão índice do header ────────────────────── */
-.voltar-index {
-    display: none !important;
+/* ── Widget navegação inferior (contador + índice) ─────────── */
+#leitor-widget-inferior {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.pagina-numero {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #d4af37;
+}
+
+.lw-btn-idx-inferior {
+    background: transparent;
+    border: 1.5px solid #d4af37;
+    padding: 6px 14px;
+    border-radius: 8px;
+    color: #d4af37;
+    font-size: 0.82rem;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: inherit;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: all 0.2s;
+    white-space: nowrap;
+}
+
+.lw-btn-idx-inferior:hover {
+    background: #d4af37;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+}
+
+.lw-btn-idx-inferior svg {
+    width: 14px;
+    height: 14px;
 }
 
 /* ── Painel de Índice ───────────────────────────────────── */
@@ -189,7 +265,7 @@ function injetarCSS() {
 }
 @keyframes liSlide {
     from { transform: translateY(-16px); opacity: 0; }
-    to   { transform: translateY(0);     opacity: 1; }
+    to { transform: translateY(0); opacity: 1; }
 }
 #li-header {
     display: flex;
@@ -263,6 +339,7 @@ function injetarCSS() {
 .li-item.atual { background: #fdf3cc; }
 .li-item.atual .li-titulo { font-weight: 700; }
 
+/* Entrada de seção (não clicável) */
 .li-secao {
     padding: 12px 18px 4px;
     font-size: 0.68rem;
@@ -336,10 +413,10 @@ function injetarCSS() {
     box-shadow: 0 4px 14px rgba(0,0,0,0.06);
 }
 #leitor-continuar.visivel { display: flex; }
-.lc-icone  { font-size: 1.8rem; flex-shrink: 0; }
-.lc-txt    { flex: 1; }
+.lc-icone { font-size: 1.8rem; flex-shrink: 0; }
+.lc-txt { flex: 1; }
 .lc-titulo { font-weight: 800; color: #2c1f17; font-size: 0.98rem; margin-bottom: 2px; }
-.lc-sub    { color: #999; font-size: 0.85rem; }
+.lc-sub { color: #999; font-size: 0.85rem; }
 .lc-btn {
     background: linear-gradient(135deg, #5b2c83, #7a3eb5);
     color: #fff;
@@ -356,14 +433,34 @@ function injetarCSS() {
 }
 .lc-btn:hover { filter: brightness(1.15); transform: translateY(-2px); }
 
+/* ── Responsivo ──────────────────────────────────────────── */
+@media (max-width: 600px) {
+    .pagina-numero {
+        font-size: 0.95rem;
+    }
+    
+    .lw-btn-idx-inferior {
+        font-size: 0.75rem;
+        padding: 5px 10px;
+    }
+    
+    .lw-btn-idx-inferior svg {
+        width: 12px;
+        height: 12px;
+    }
+}
+
 @media (max-width: 480px) {
     #leitor-continuar { flex-wrap: wrap; }
     .lc-btn { width: 100%; text-align: center; }
 }
-    `;
+`;
     document.head.appendChild(s);
 }
 
+// ─────────────────────────────────────────────────────────────
+// TOAST
+// ─────────────────────────────────────────────────────────────
 var _toastTimer = null;
 function toast(msg) {
     var el = document.getElementById('leitor-toast');
@@ -378,6 +475,9 @@ function toast(msg) {
     _toastTimer = setTimeout(function() { el.classList.remove('visivel'); }, 2400);
 }
 
+// ─────────────────────────────────────────────────────────────
+// PAINEL DE ÍNDICE
+// ─────────────────────────────────────────────────────────────
 function renderLista(filtro, pagAtual) {
     var lista = document.getElementById('li-lista');
     if (!lista) return;
@@ -408,9 +508,11 @@ function renderLista(filtro, pagAtual) {
     });
     lista.innerHTML = html;
 
+    // Rolar até item atual
     var atual = lista.querySelector('.li-item.atual');
     if (atual) setTimeout(function() { atual.scrollIntoView({ block: 'center' }); }, 60);
 
+    // Eventos de clique
     lista.querySelectorAll('.li-item[data-pag]').forEach(function(btn) {
         btn.addEventListener('click', function() {
             irParaPagina(parseInt(this.dataset.pag, 10));
@@ -419,27 +521,30 @@ function renderLista(filtro, pagAtual) {
 }
 
 function abrirIndice(pagAtual) {
+    // Criar overlay se não existir
     if (!document.getElementById('li-overlay')) {
         var ov = document.createElement('div');
-        ov.id  = 'li-overlay';
+        ov.id = 'li-overlay';
         ov.innerHTML =
             '<div id="li-painel">'
             + '<div id="li-header">'
-            +   '<h3>📖 Índice</h3>'
-            +   '<button id="li-fechar" title="Fechar (Esc)">✕</button>'
+            + '<h3>📖 Índice</h3>'
+            + '<button id="li-fechar" title="Fechar (Esc)">✕</button>'
             + '</div>'
             + '<div id="li-busca-wrap">'
-            +   '<input id="li-busca" type="text" placeholder="Buscar seção..." autocomplete="off">'
+            + '<input id="li-busca" type="text" placeholder="Buscar seção..." autocomplete="off">'
             + '</div>'
             + '<div id="li-lista"></div>'
             + '</div>';
         document.body.appendChild(ov);
 
+        // Fechar ao clicar fora
         ov.addEventListener('click', function(e) {
             if (e.target === ov) fecharIndice();
         });
         document.getElementById('li-fechar').addEventListener('click', fecharIndice);
 
+        // Busca interna
         document.getElementById('li-busca').addEventListener('input', function() {
             renderLista(this.value.trim(), pagAtual);
         });
@@ -448,6 +553,7 @@ function abrirIndice(pagAtual) {
     renderLista('', pagAtual);
     document.getElementById('li-overlay').classList.add('aberto');
 
+    // Focar no campo de busca
     setTimeout(function() {
         var b = document.getElementById('li-busca');
         if (b) b.focus();
@@ -459,96 +565,101 @@ function fecharIndice() {
     if (ov) ov.classList.remove('aberto');
 }
 
+// Fechar índice com Escape
 document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') fecharIndice();
 });
 
 // ─────────────────────────────────────────────────────────────
-//  PÁGINA DE LEITURA  ← FUNÇÃO MODIFICADA
+// PÁGINA DE LEITURA (suma-paginaN.html)
 // ─────────────────────────────────────────────────────────────
 function iniciarLeitura(pagAtual) {
     // 1. Salvar progresso
     salvar(pagAtual);
     toast('✦ Progresso salvo — pág. ' + pagAtual);
 
-    // 2. Esconder o botão "← Índice" do header
-    var voltarIndex = document.querySelector('.voltar-index');
-    if (voltarIndex) {
-        voltarIndex.style.display = 'none';
-    }
+    // 2. Substituir .info-centena (navegação do topo) por busca simples
+    var alvoTopo = document.querySelector('.info-centena');
+    if (alvoTopo) {
+        var widgetTopo = document.createElement('div');
+        widgetTopo.id = 'leitor-widget-topo';
+        widgetTopo.innerHTML =
+            '<span class="lw-label">Ir para a página</span>'
+            + '<div class="lw-row">'
+            +   '<input id="lw-input-topo" type="number" min="1" max="' + TOTAL_PAGINAS + '" value="' + pagAtual + '">'
+            +   '<span class="lw-total">/ ' + TOTAL_PAGINAS + '</span>'
+            +   '<span class="lw-div"></span>'
+            +   '<button class="lw-btn-ir" id="lw-ir-topo">Ir</button>'
+            + '</div>'
+            + '<span class="lw-erro" id="lw-erro-topo"></span>';
 
-    // 3. Substituir .info-centena pelo widget completo (input + Ir + Índice)
-    var alvo = document.querySelector('.info-centena');
-    if (!alvo) return;
+        alvoTopo.parentNode.replaceChild(widgetTopo, alvoTopo);
 
-    var widget = document.createElement('div');
-    widget.id  = 'leitor-widget';
-    widget.innerHTML =
-        '<span class="lw-label">Ir para a página</span>'
-        + '<div class="lw-row">'
-        +   '<input id="lw-input" type="number" min="1" max="' + TOTAL_PAGINAS + '" value="' + pagAtual + '">'
-        +   '<span class="lw-total">/ ' + TOTAL_PAGINAS + '</span>'
-        +   '<span class="lw-div"></span>'
-        +   '<button class="lw-btn-ir" id="lw-ir">Ir</button>'
-        +   '<span class="lw-div2"></span>'
-        +   '<button class="lw-btn-idx" id="lw-idx">'
-        +     '<svg viewBox="0 0 20 20" fill="currentColor"><path d="M3 4h14v2H3V4zm0 5h14v2H3V9zm0 5h10v2H3v-2z"/></svg>'
-        +     'Índice'
-        +   '</button>'
-        + '</div>'
-        + '<span class="lw-erro" id="lw-erro"></span>';
-
-    alvo.parentNode.replaceChild(widget, alvo);
-
-    // 4. Navegar ao clicar em "Ir" ou pressionar Enter
-    function navegar() {
-        var inp = document.getElementById('lw-input');
-        var err = document.getElementById('lw-erro');
-        var n   = parseInt(inp.value, 10);
-        if (isNaN(n) || n < 1 || n > TOTAL_PAGINAS) {
-            err.textContent = 'Digite entre 1 e ' + TOTAL_PAGINAS;
-            inp.focus();
-            return;
+        // Evento do botão "Ir" do topo
+        function navegarTopo() {
+            var inp = document.getElementById('lw-input-topo');
+            var err = document.getElementById('lw-erro-topo');
+            var n = parseInt(inp.value, 10);
+            if (isNaN(n) || n < 1 || n > TOTAL_PAGINAS) {
+                err.textContent = 'Digite entre 1 e ' + TOTAL_PAGINAS;
+                inp.focus();
+                return;
+            }
+            err.textContent = '';
+            irParaPagina(n);
         }
-        err.textContent = '';
-        irParaPagina(n);
+
+        document.getElementById('lw-ir-topo').addEventListener('click', navegarTopo);
+        var inpTopo = document.getElementById('lw-input-topo');
+        inpTopo.addEventListener('keydown', function(e) { if (e.key === 'Enter') navegarTopo(); });
+        inpTopo.addEventListener('focus', function() { this.select(); });
+        inpTopo.addEventListener('input', function() {
+            var err = document.getElementById('lw-erro-topo');
+            if (err) err.textContent = '';
+        });
     }
 
-    document.getElementById('lw-ir').addEventListener('click', navegar);
+    // 3. Substituir .pagina-atual (navegação inferior) por contador + botão índice
+    var alvoInferior = document.querySelector('.pagina-atual');
+    if (alvoInferior) {
+        var widgetInferior = document.createElement('div');
+        widgetInferior.id = 'leitor-widget-inferior';
+        widgetInferior.innerHTML =
+            '<span class="pagina-numero">' + pagAtual + ' / ' + TOTAL_PAGINAS + '</span>'
+            + '<button class="lw-btn-idx-inferior" id="lw-idx-inferior">'
+            +   '<svg viewBox="0 0 20 20" fill="currentColor"><path d="M3 4h14v2H3V4zm0 5h14v2H3V9zm0 5h10v2H3v-2z"/></svg>'
+            +   'Índice'
+            + '</button>';
 
-    var inp = document.getElementById('lw-input');
-    inp.addEventListener('keydown', function(e) { if (e.key === 'Enter') navegar(); });
-    inp.addEventListener('focus',   function()  { this.select(); });
-    inp.addEventListener('input',   function()  {
-        var err = document.getElementById('lw-erro');
-        if (err) err.textContent = '';
-    });
+        alvoInferior.parentNode.replaceChild(widgetInferior, alvoInferior);
 
-    // 5. Abrir índice
-    document.getElementById('lw-idx').addEventListener('click', function() {
-        abrirIndice(pagAtual);
-    });
+        // 4. Abrir índice ao clicar no botão inferior
+        document.getElementById('lw-idx-inferior').addEventListener('click', function() {
+            abrirIndice(pagAtual);
+        });
+    }
 
-    // 6. Navegação por teclado (← →)
+    // 5. Navegação por teclado (← →)
     document.addEventListener('keydown', function(e) {
         if (['INPUT','TEXTAREA','SELECT'].includes(document.activeElement.tagName)) return;
         if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
         document.querySelectorAll('.btn-nav, .btn-primary').forEach(function(btn) {
             if (btn.classList.contains('desabilitado')) return;
             var txt = btn.textContent;
-            if (e.key === 'ArrowLeft'  && txt.includes('Anterior')) btn.click();
-            if (e.key === 'ArrowRight' && txt.includes('Próxima'))  btn.click();
+            if (e.key === 'ArrowLeft' && txt.includes('Anterior')) btn.click();
+            if (e.key === 'ArrowRight' && txt.includes('Próxima')) btn.click();
         });
     });
 
-    // 7. Botões desabilitados não navegam
+    // 6. Botões desabilitados não navegam
     document.querySelectorAll('.desabilitado').forEach(function(el) {
         el.addEventListener('click', function(ev) { ev.preventDefault(); });
     });
 }
 
 // ─────────────────────────────────────────────────────────────
-//  INDEX DA SUMA
+// INDEX DA SUMA (suma-teologia/index.html)
+// Mostra banner "continuar leitura" se houver progresso
 // ─────────────────────────────────────────────────────────────
 function iniciarIndex() {
     var prog = lerSalvo();
@@ -564,6 +675,7 @@ function iniciarIndex() {
         + '</div>'
         + '<button class="lc-btn" id="lc-btn">Continuar →</button>';
 
+    // Inserir antes do botão "Iniciar Leitura"
     var ref = document.querySelector('.btn-start') || document.querySelector('.descricao');
     if (ref) {
         ref.parentNode.insertBefore(banner, ref);
@@ -571,6 +683,7 @@ function iniciarIndex() {
     }
 
     document.getElementById('lc-btn').addEventListener('click', function() {
+        // Do index.html a URL é: sumateologiaX-Y/suma-paginaN.html
         var inicio = Math.floor((prog - 1) / 100) * 100 + 1;
         var fim    = inicio + 99;
         window.location.href = 'sumateologia' + inicio + '-' + fim + '/suma-pagina' + prog + '.html';
@@ -578,18 +691,21 @@ function iniciarIndex() {
 }
 
 // ─────────────────────────────────────────────────────────────
-//  BIBLIOTECA
+// BIBLIOTECA (biblioteca.html)
 // ─────────────────────────────────────────────────────────────
 function iniciarBiblioteca() {
     var prog = lerSalvo();
     if (!prog) return;
 
+    // Atualizar barra de progresso
     var fill = document.querySelector('.progress-fill');
     if (fill) fill.style.width = Math.max(0.5, Math.min(100, Math.round(prog / TOTAL_PAGINAS * 100))) + '%';
 
+    // Atualizar texto
     var small = document.querySelector('.progresso-traducao small');
     if (small) small.textContent = 'Você está na página ' + prog + ' de ' + TOTAL_PAGINAS;
 
+    // Atualizar botão "Acessar"
     var btn = document.querySelector('a.btn-destaque');
     if (btn) {
         btn.textContent = '📖 Continuar — pág. ' + prog;
@@ -600,7 +716,7 @@ function iniciarBiblioteca() {
 }
 
 // ─────────────────────────────────────────────────────────────
-//  INICIALIZAÇÃO
+// INICIALIZAÇÃO — detecta em qual página estamos
 // ─────────────────────────────────────────────────────────────
 function init() {
     injetarCSS();
@@ -609,13 +725,16 @@ function init() {
     var arquivo  = pathname.split('/').pop();
 
     if (/suma-pagina\d+\.html$/.test(arquivo)) {
+        // Página de leitura
         var pag = getPaginaAtual();
         if (pag) iniciarLeitura(pag);
 
     } else if (arquivo === 'index.html' && pathname.includes('suma-teologia')) {
+        // Índice da Suma
         iniciarIndex();
 
     } else if (arquivo === 'biblioteca.html') {
+        // Biblioteca
         iniciarBiblioteca();
     }
 }
