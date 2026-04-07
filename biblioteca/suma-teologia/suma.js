@@ -1,49 +1,19 @@
-
 (function () {
 'use strict';
 
-// ═══════════════════════════════════════════════════════════════
-//  ★ ÍNDICE DA SUMA TEOLÓGICA
-//
-//  Edite esta lista para adicionar/remover entradas.
-//  Cada entrada tem:
-//    titulo  → texto que aparece no índice
-//    pagina  → número da página onde começa
-//    secao   → (opcional) true = título de seção, não é clicável
-//
-//  Exemplo:
-//    { titulo: 'Introdução',         pagina: 1  },
-//    { titulo: 'Questão 1 — ...',    pagina: 5  },
-//    { titulo: '── PARTE II ──',     secao: true },
-//    { titulo: 'Questão 50 — ...',   pagina: 120 },
-// ═══════════════════════════════════════════════════════════════
 var INDICE_SUMA = [
-
-    // ── Coloque aqui as suas entradas ──────────────────────────
-    // Exemplos provisórios (substitua pelos seus títulos reais):
-
     { titulo: 'Prólogo de São Tomás de Aquino',           pagina: 1   },
     { titulo: 'Encíclica Aeterni Patris',                 pagina: 8   },
-
     { titulo: '── PARTE I: DEUS ──',                     secao: true },
     { titulo: 'Q.1 · A Sagrada Doutrina',                 pagina: 20  },
     { titulo: 'Q.2 · A Existência de Deus',               pagina: 28  },
     { titulo: 'Q.3 · A Simplicidade de Deus',             pagina: 38  },
-
     { titulo: '── Adicione mais entradas acima ──',       secao: true },
-
-    // ── Fim das entradas ───────────────────────────────────────
 ];
 
-// ═══════════════════════════════════════════════════════════════
-//  CONFIGURAÇÃO  (não precisa mexer aqui normalmente)
-// ═══════════════════════════════════════════════════════════════
-var TOTAL_PAGINAS = 3000;          // total de páginas do livro
-var CHAVE_SAVE    = 'leitor_suma'; // chave do localStorage
+var TOTAL_PAGINAS = 3000;
+var CHAVE_SAVE    = 'leitor_suma';
 
-// ─────────────────────────────────────────────────────────────
-//  LER / SALVAR PROGRESSO
-// ─────────────────────────────────────────────────────────────
 function salvar(pag) {
     try { localStorage.setItem(CHAVE_SAVE, String(pag)); } catch(e) {}
 }
@@ -56,56 +26,28 @@ function lerSalvo() {
     } catch(e) { return 0; }
 }
 
-// ─────────────────────────────────────────────────────────────
-//  DETECTAR PÁGINA ATUAL
-//  Prioridade: meta tag → nome do arquivo
-// ─────────────────────────────────────────────────────────────
 function getPaginaAtual() {
-    // 1. Meta tag (mais confiável — recomendado)
     var meta = document.querySelector('meta[name="leitor-pagina"]');
     if (meta) {
         var n = parseInt(meta.getAttribute('content'), 10);
         if (n >= 1) return n;
     }
-    // 2. Nome do arquivo (fallback)
     var arquivo = window.location.pathname.split('/').pop();
     var m = arquivo.match(/pagina(\d+)\.html$/i);
     return m ? parseInt(m[1], 10) : null;
 }
 
-// ─────────────────────────────────────────────────────────────
-//  CONSTRUIR URL para uma página qualquer
-//
-//  Estrutura de pastas:
-//    sumateologia1-100/suma-pagina1.html   até   suma-pagina100.html
-//    sumateologia101-200/suma-pagina101.html ...
-//
-//  leitor.js fica em:  biblioteca/suma-teologia/leitor.js
-//  Página atual fica:  biblioteca/suma-teologia/sumateologia1-100/suma-pagina1.html
-//
-//  Para ir de qualquer página para outra, subimos um nível (../)
-//  e entramos na pasta correta.
-// ─────────────────────────────────────────────────────────────
 function urlParaPagina(n) {
     n = Math.max(1, Math.min(TOTAL_PAGINAS, parseInt(n, 10) || 1));
-
-    // Calcular a pasta: página 1-100 → sumateologia1-100, 101-200 → sumateologia101-200 ...
     var inicio = Math.floor((n - 1) / 100) * 100 + 1;
     var fim    = inicio + 99;
     var pasta  = 'sumateologia' + inicio + '-' + fim;
-
     var pathname = window.location.pathname;
     var partes   = pathname.split('/');
     var arquivo  = partes[partes.length - 1];
-
-    // Se estamos dentro de uma subpasta (suma-paginaN.html), subimos um nível
     if (/suma-pagina\d+\.html$/i.test(arquivo)) {
-        // Estamos em: .../sumateologiaX-Y/
-        // Subir um nível: ../
         return '../' + pasta + '/suma-pagina' + n + '.html';
     }
-
-    // Se estamos no index.html da suma ou em outro lugar, usar caminho direto
     return pasta + '/suma-pagina' + n + '.html';
 }
 
@@ -113,9 +55,6 @@ function irParaPagina(n) {
     window.location.href = urlParaPagina(n);
 }
 
-// ─────────────────────────────────────────────────────────────
-//  CSS
-// ─────────────────────────────────────────────────────────────
 function injetarCSS() {
     if (document.getElementById('leitor-css')) return;
     var s = document.createElement('style');
@@ -215,6 +154,11 @@ function injetarCSS() {
     color: #c0392b;
     min-height: 14px;
     font-weight: 600;
+}
+
+/* ── Esconder botão índice do header ────────────────────── */
+.voltar-index {
+    display: none !important;
 }
 
 /* ── Painel de Índice ───────────────────────────────────── */
@@ -319,7 +263,6 @@ function injetarCSS() {
 .li-item.atual { background: #fdf3cc; }
 .li-item.atual .li-titulo { font-weight: 700; }
 
-/* Entrada de seção (não clicável) */
 .li-secao {
     padding: 12px 18px 4px;
     font-size: 0.68rem;
@@ -421,9 +364,6 @@ function injetarCSS() {
     document.head.appendChild(s);
 }
 
-// ─────────────────────────────────────────────────────────────
-//  TOAST
-// ─────────────────────────────────────────────────────────────
 var _toastTimer = null;
 function toast(msg) {
     var el = document.getElementById('leitor-toast');
@@ -438,9 +378,6 @@ function toast(msg) {
     _toastTimer = setTimeout(function() { el.classList.remove('visivel'); }, 2400);
 }
 
-// ─────────────────────────────────────────────────────────────
-//  PAINEL DE ÍNDICE
-// ─────────────────────────────────────────────────────────────
 function renderLista(filtro, pagAtual) {
     var lista = document.getElementById('li-lista');
     if (!lista) return;
@@ -471,11 +408,9 @@ function renderLista(filtro, pagAtual) {
     });
     lista.innerHTML = html;
 
-    // Rolar até item atual
     var atual = lista.querySelector('.li-item.atual');
     if (atual) setTimeout(function() { atual.scrollIntoView({ block: 'center' }); }, 60);
 
-    // Eventos de clique
     lista.querySelectorAll('.li-item[data-pag]').forEach(function(btn) {
         btn.addEventListener('click', function() {
             irParaPagina(parseInt(this.dataset.pag, 10));
@@ -484,7 +419,6 @@ function renderLista(filtro, pagAtual) {
 }
 
 function abrirIndice(pagAtual) {
-    // Criar overlay se não existir
     if (!document.getElementById('li-overlay')) {
         var ov = document.createElement('div');
         ov.id  = 'li-overlay';
@@ -501,13 +435,11 @@ function abrirIndice(pagAtual) {
             + '</div>';
         document.body.appendChild(ov);
 
-        // Fechar ao clicar fora
         ov.addEventListener('click', function(e) {
             if (e.target === ov) fecharIndice();
         });
         document.getElementById('li-fechar').addEventListener('click', fecharIndice);
 
-        // Busca interna
         document.getElementById('li-busca').addEventListener('input', function() {
             renderLista(this.value.trim(), pagAtual);
         });
@@ -516,7 +448,6 @@ function abrirIndice(pagAtual) {
     renderLista('', pagAtual);
     document.getElementById('li-overlay').classList.add('aberto');
 
-    // Focar no campo de busca
     setTimeout(function() {
         var b = document.getElementById('li-busca');
         if (b) b.focus();
@@ -528,22 +459,27 @@ function fecharIndice() {
     if (ov) ov.classList.remove('aberto');
 }
 
-// Fechar índice com Escape
 document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') fecharIndice();
 });
 
 // ─────────────────────────────────────────────────────────────
-//  PÁGINA DE LEITURA  (suma-paginaN.html)
+//  PÁGINA DE LEITURA  ← FUNÇÃO MODIFICADA
 // ─────────────────────────────────────────────────────────────
 function iniciarLeitura(pagAtual) {
     // 1. Salvar progresso
     salvar(pagAtual);
     toast('✦ Progresso salvo — pág. ' + pagAtual);
 
-    // 2. Criar widget e substituir .info-centena
+    // 2. Esconder o botão "← Índice" do header
+    var voltarIndex = document.querySelector('.voltar-index');
+    if (voltarIndex) {
+        voltarIndex.style.display = 'none';
+    }
+
+    // 3. Substituir .info-centena pelo widget completo (input + Ir + Índice)
     var alvo = document.querySelector('.info-centena');
-    if (!alvo) return; // sem navegação, não faz nada
+    if (!alvo) return;
 
     var widget = document.createElement('div');
     widget.id  = 'leitor-widget';
@@ -564,7 +500,7 @@ function iniciarLeitura(pagAtual) {
 
     alvo.parentNode.replaceChild(widget, alvo);
 
-    // 3. Navegar ao clicar em "Ir" ou pressionar Enter
+    // 4. Navegar ao clicar em "Ir" ou pressionar Enter
     function navegar() {
         var inp = document.getElementById('lw-input');
         var err = document.getElementById('lw-erro');
@@ -588,12 +524,12 @@ function iniciarLeitura(pagAtual) {
         if (err) err.textContent = '';
     });
 
-    // 4. Abrir índice
+    // 5. Abrir índice
     document.getElementById('lw-idx').addEventListener('click', function() {
         abrirIndice(pagAtual);
     });
 
-    // 5. Navegação por teclado (← →) — mantida do suma.js original
+    // 6. Navegação por teclado (← →)
     document.addEventListener('keydown', function(e) {
         if (['INPUT','TEXTAREA','SELECT'].includes(document.activeElement.tagName)) return;
         if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
@@ -605,15 +541,14 @@ function iniciarLeitura(pagAtual) {
         });
     });
 
-    // 6. Botões desabilitados não navegam
+    // 7. Botões desabilitados não navegam
     document.querySelectorAll('.desabilitado').forEach(function(el) {
         el.addEventListener('click', function(ev) { ev.preventDefault(); });
     });
 }
 
 // ─────────────────────────────────────────────────────────────
-//  INDEX DA SUMA  (suma-teologia/index.html)
-//  Mostra banner "continuar leitura" se houver progresso
+//  INDEX DA SUMA
 // ─────────────────────────────────────────────────────────────
 function iniciarIndex() {
     var prog = lerSalvo();
@@ -629,7 +564,6 @@ function iniciarIndex() {
         + '</div>'
         + '<button class="lc-btn" id="lc-btn">Continuar →</button>';
 
-    // Inserir antes do botão "Iniciar Leitura"
     var ref = document.querySelector('.btn-start') || document.querySelector('.descricao');
     if (ref) {
         ref.parentNode.insertBefore(banner, ref);
@@ -637,7 +571,6 @@ function iniciarIndex() {
     }
 
     document.getElementById('lc-btn').addEventListener('click', function() {
-        // Do index.html a URL é: sumateologiaX-Y/suma-paginaN.html
         var inicio = Math.floor((prog - 1) / 100) * 100 + 1;
         var fim    = inicio + 99;
         window.location.href = 'sumateologia' + inicio + '-' + fim + '/suma-pagina' + prog + '.html';
@@ -645,21 +578,18 @@ function iniciarIndex() {
 }
 
 // ─────────────────────────────────────────────────────────────
-//  BIBLIOTECA  (biblioteca.html)
+//  BIBLIOTECA
 // ─────────────────────────────────────────────────────────────
 function iniciarBiblioteca() {
     var prog = lerSalvo();
     if (!prog) return;
 
-    // Atualizar barra de progresso
     var fill = document.querySelector('.progress-fill');
     if (fill) fill.style.width = Math.max(0.5, Math.min(100, Math.round(prog / TOTAL_PAGINAS * 100))) + '%';
 
-    // Atualizar texto
     var small = document.querySelector('.progresso-traducao small');
     if (small) small.textContent = 'Você está na página ' + prog + ' de ' + TOTAL_PAGINAS;
 
-    // Atualizar botão "Acessar"
     var btn = document.querySelector('a.btn-destaque');
     if (btn) {
         btn.textContent = '📖 Continuar — pág. ' + prog;
@@ -670,7 +600,7 @@ function iniciarBiblioteca() {
 }
 
 // ─────────────────────────────────────────────────────────────
-//  INICIALIZAÇÃO — detecta em qual página estamos
+//  INICIALIZAÇÃO
 // ─────────────────────────────────────────────────────────────
 function init() {
     injetarCSS();
@@ -679,16 +609,13 @@ function init() {
     var arquivo  = pathname.split('/').pop();
 
     if (/suma-pagina\d+\.html$/.test(arquivo)) {
-        // Página de leitura
         var pag = getPaginaAtual();
         if (pag) iniciarLeitura(pag);
 
     } else if (arquivo === 'index.html' && pathname.includes('suma-teologia')) {
-        // Índice da Suma
         iniciarIndex();
 
     } else if (arquivo === 'biblioteca.html') {
-        // Biblioteca
         iniciarBiblioteca();
     }
 }
