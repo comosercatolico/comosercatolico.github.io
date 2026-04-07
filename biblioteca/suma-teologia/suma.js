@@ -307,30 +307,6 @@ function injetarCSS() {
     padding: 28px 16px;
 }
 
-/* ── Toast ───────────────────────────────────────────────── */
-#leitor-toast {
-    position: fixed;
-    bottom: 24px;
-    left: 50%;
-    transform: translateX(-50%) translateY(12px);
-    background: rgba(44,31,23,0.92);
-    color: #d4af37;
-    padding: 9px 20px;
-    border-radius: 30px;
-    font-size: 0.85rem;
-    font-weight: 700;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.28);
-    opacity: 0;
-    transition: opacity 0.28s, transform 0.28s;
-    z-index: 9999;
-    pointer-events: none;
-    white-space: nowrap;
-}
-#leitor-toast.visivel {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0);
-}
-
 /* ── Banner continuar leitura ────────────────────────────── */
 #leitor-continuar {
     display: none;
@@ -376,23 +352,6 @@ function injetarCSS() {
 }
 `;
     document.head.appendChild(s);
-}
-
-// ─────────────────────────────────────────────────────────────
-// TOAST
-// ─────────────────────────────────────────────────────────────
-var _toastTimer = null;
-function toast(msg) {
-    var el = document.getElementById('leitor-toast');
-    if (!el) {
-        el = document.createElement('div');
-        el.id = 'leitor-toast';
-        document.body.appendChild(el);
-    }
-    el.textContent = msg;
-    el.classList.add('visivel');
-    clearTimeout(_toastTimer);
-    _toastTimer = setTimeout(function() { el.classList.remove('visivel'); }, 2400);
 }
 
 // ─────────────────────────────────────────────────────────────
@@ -485,8 +444,9 @@ document.addEventListener('keydown', function(e) {
 // PÁGINA DE LEITURA
 // ─────────────────────────────────────────────────────────────
 function iniciarLeitura(pagAtual) {
+
+    // Salvar progresso SILENCIOSAMENTE (sem notificação)
     salvar(pagAtual);
-    toast('✦ Progresso salvo — pág. ' + pagAtual);
 
     // ── TOPO: substituir .info-centena por campo de busca ──
     var alvoTopo = document.querySelector('.info-centena');
