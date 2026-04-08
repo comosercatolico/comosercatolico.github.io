@@ -207,7 +207,64 @@ rgba(0,0,0,0.02) 2px,
 transparent 2px,
 transparent 4px
 );
+/* ===== MOBILE (telas até 768px) ===== */
+@media (max-width: 768px) {
 
+  /* HEADER - reduzir tamanho */
+  header {
+    padding: 20px 15px;
+    min-height: auto;
+  }
+
+  header h1 {
+    font-size: 2rem; /* menor que no PC */
+  }
+
+  header p {
+    font-size: 0.9rem;
+  }
+
+  /* NAVBAR - empilhar os itens verticalmente */
+  nav {
+    display: none; /* esconde a nav normal no mobile */
+    flex-direction: column;
+    width: 100%;
+  }
+
+  nav.aberta {
+    display: flex; /* abre quando clicar no botão hamburguer */
+  }
+
+  nav a {
+    padding: 12px 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    text-align: left;
+  }
+
+  /* BOTÃO HAMBURGUER - mostrar no mobile */
+  .menu-btn {
+    display: block;
+  }
+
+  /* CONTEÚDO PRINCIPAL */
+  main, .conteudo {
+    padding: 20px 15px;
+  }
+
+  h2 {
+    font-size: 1.8rem;
+  }
+
+  p {
+    font-size: 1rem;
+  }
+
+  /* Se tiver grid ou flex lado a lado */
+  .cards, .grid {
+    flex-direction: column;
+    grid-template-columns: 1fr; /* uma coluna só */
+  }
+}
 pointer-events:none;
 z-index:0;
 
