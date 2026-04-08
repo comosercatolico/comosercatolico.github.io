@@ -57,8 +57,21 @@ export async function abrirModal(nomeSanto, baseDados) {
     modal.classList.add("active");
     document.body.style.overflow = "hidden";
 
+    // 🔥 DETERMINA O CAMINHO CORRETO
+    const pasta = santo.pasta || "doutores";
+    const caminho = `/santos/${pasta}/${slug}.html`;
+
+    // 🔥 BADGE: usa a pasta para definir o título principal
+    const tituloBadge = {
+        "doutores":  "Doutor da Igreja",
+        "apostolos": "Apóstolo & Evangelista",
+        "martires":  "Mártir",
+        "papas":     "Papa",
+        "santos":    "Santo"
+    }[pasta] || santo.categorias[0];
+
     try {
-        const response = await fetch(`/santos/doutores/${slug}.html`);
+        const response = await fetch(caminho);
         if (!response.ok) throw new Error("Arquivo não encontrado");
 
         const html = await response.text();
@@ -66,7 +79,7 @@ export async function abrirModal(nomeSanto, baseDados) {
         content.innerHTML = `
             <div class="santo-info">
                 <div class="vocation-badge">
-                    Doutor da Igreja • ${santo.categorias.join(' • ')}
+                    ${tituloBadge} • ${santo.categorias.join(' • ')}
                 </div>
 
                 <div class="biografia-container">
