@@ -2,16 +2,26 @@
    VARIÁVEIS DE DESIGN (LUX FIDEI)
    ========================================= */
 :root {
-    --primary-gold: #8b6f3d;
-    --light-gold: #d4af37;
-    --soft-white: #ffffff;
-    --bg-page: #f4f4f4;
-    --text-main: #2d3436;
-    --text-muted: #636e72;
-    --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.08);
-    --shadow-lg: 0 12px 24px rgba(0, 0, 0, 0.15);
-    --radius: 16px;
-    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --gold:        #8b6f3d;
+    --gold-light:  #d4af37;
+    --gold-pale:   #f5ede0;
+    --gold-border: rgba(139, 111, 61, 0.18);
+    --white:       #ffffff;
+    --bg:          #f7f5f2;
+    --text:        #1e1e1e;
+    --text-muted:  #7a7060;
+    --radius:      18px;
+    --radius-sm:   10px;
+    --shadow:      0 4px 20px rgba(0,0,0,0.07);
+    --shadow-lg:   0 16px 40px rgba(0,0,0,0.13);
+    --ease:        cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* =========================================
+   RESET GERAL
+   ========================================= */
+*, *::before, *::after {
+    box-sizing: border-box;
 }
 
 /* =========================================
@@ -19,362 +29,232 @@
    ========================================= */
 .santos-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 30px;
-    padding: 40px 20px;
-    max-width: 1300px;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 24px;
+    padding: 32px 24px 60px;
+    max-width: 1320px;
     margin: 0 auto;
 }
 
 /* =========================================
-   ESTILIZAÇÃO DO CARD
+   CARD DO SANTO
    ========================================= */
 .santo-card {
-    background: var(--soft-white);
+    background: var(--white);
     border-radius: var(--radius);
-    box-shadow: var(--shadow-sm);
+    box-shadow: var(--shadow);
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    transition: var(--transition);
-    border: 1px solid rgba(0, 0, 0, 0.05);
-    
-    /* Configuração para a animação do JS */
+    transition: transform 0.35s var(--ease), box-shadow 0.35s var(--ease);
+    border: 1px solid rgba(0,0,0,0.04);
     opacity: 0;
-    transform: translateY(30px);
+    transform: translateY(24px);
+    cursor: pointer;
 }
 
-/* Classe aplicada pelo JavaScript */
 .santo-card.visible {
     opacity: 1;
     transform: translateY(0);
 }
 
 .santo-card:hover {
-    transform: translateY(-10px);
+    transform: translateY(-8px);
     box-shadow: var(--shadow-lg);
 }
 
-/* Container da Imagem */
+/* Imagem */
 .image-container {
-    width: 100%;
-    height: 250px;
-    background: #eee;
+    width: calc(100% - 16px);
+    height: 200px;
+    margin: 8px 8px 0;
+    border-radius: 12px;
     overflow: hidden;
+    position: relative;
+    background: #e8e0d4;
+    z-index: 2;
 }
 
 .image-container img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.6s ease;
+    transition: transform 0.6s var(--ease);
+    display: block;
 }
 
 .santo-card:hover .image-container img {
-    transform: scale(1.1);
+    transform: scale(1.07);
 }
 
-/* Conteúdo do Card */
-.santo-card-content {
-    padding: 24px;
-    text-align: center;
-    flex-grow: 1;
-}
-
-.santo-card h3 {
-    font-family: 'Libre Baskerville', serif;
-    font-size: 1.5rem;
-    color: var(--text-main);
-    margin: 15px 0 10px;
-}
-
-/* =========================================
-   BADGES (VOCAÇÕES) - O SEU PROBLEMA ESTAVA AQUI
-   ========================================= */
+/* Badges */
 .santo-badge-container {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 6px; /* Espaço entre as tags */
-    margin-bottom: 10px;
+    gap: 5px;
+    padding: 14px 14px 0;
+    position: relative;
+    z-index: 2;
 }
 
 .badge {
-    background: #f8f1e5;
-    color: var(--primary-gold);
-    font-size: 0.7rem;
+    background: var(--gold-pale);
+    color: var(--gold);
+    font-size: 0.65rem;
     font-weight: 700;
     text-transform: uppercase;
-    padding: 5px 12px;
+    letter-spacing: 0.8px;
+    padding: 4px 10px;
     border-radius: 20px;
-    letter-spacing: 0.5px;
-    border: 1px solid rgba(139, 111, 61, 0.2);
+    border: 1px solid var(--gold-border);
 }
 
-/* =========================================
-   BOTÃO "LER BIOGRAFIA"
-   ========================================= */
+/* Conteúdo */
+.santo-card-content {
+    padding: 12px 20px 20px;
+    text-align: center;
+    flex-grow: 1;
+    position: relative;
+    z-index: 2;
+}
+
+.santo-card h3 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.15rem;
+    color: var(--text);
+    margin: 10px 0 14px;
+    line-height: 1.3;
+    transition: color 0.4s ease;
+}
+
+/* Rodapé do Card */
+.card-footer {
+    margin-top: 4px;
+}
+
+/* Botão Ler Biografia */
 .btn-primary {
-    background: var(--primary-gold);
+    background: var(--gold);
     color: white;
     border: none;
-    padding: 14px 28px;
-    border-radius: 12px;
+    padding: 12px 24px;
+    border-radius: var(--radius-sm);
     font-weight: 600;
-    font-size: 0.95rem;
+    font-size: 0.88rem;
     cursor: pointer;
-    transition: var(--transition);
+    transition: background 0.3s var(--ease), box-shadow 0.3s var(--ease), transform 0.2s;
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 8px;
-    margin-top: 15px;
+    letter-spacing: 0.3px;
 }
 
 .btn-primary:hover {
-    background: var(--light-gold);
-    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+    background: var(--gold-light);
+    box-shadow: 0 6px 20px rgba(212, 175, 55, 0.35);
+    transform: translateY(-1px);
+}
+
+.btn-primary:active {
+    transform: translateY(0);
 }
 
 /* =========================================
-   FILTRO DE CATEGORIAS (TOP)
+   PESQUISA
+   ========================================= */
+.santos-pesquisa {
+    display: flex;
+    justify-content: center;
+    padding: 20px 20px 8px;
+}
+
+.santos-pesquisa input {
+    width: 100%;
+    max-width: 520px;
+    padding: 13px 22px;
+    border-radius: 50px;
+    border: 1.5px solid var(--gold-border);
+    background: white;
+    font-size: 0.92rem;
+    color: var(--text);
+    outline: none;
+    box-shadow: var(--shadow);
+    transition: border-color 0.3s, box-shadow 0.3s, transform 0.2s;
+    font-family: 'Inter', sans-serif;
+}
+
+.santos-pesquisa input:focus {
+    border-color: var(--gold);
+    box-shadow: 0 4px 20px rgba(139, 111, 61, 0.14);
+    transform: translateY(-1px);
+}
+
+.santos-pesquisa input::placeholder {
+    color: #bbb;
+}
+
+/* =========================================
+   CHIPS DE CATEGORIA
    ========================================= */
 .categorias-container {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 12px;
-    padding: 20px;
+    gap: 10px;
+    padding: 18px 20px;
     background: white;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid #ede8e0;
 }
 
 .chip {
-    padding: 10px 20px;
-    border-radius: 30px;
-    border: 1px solid #ddd;
+    padding: 8px 18px;
+    border-radius: 50px;
+    border: 1.5px solid #e0d8cc;
     background: white;
-    font-size: 0.9rem;
+    font-size: 0.82rem;
     font-weight: 500;
     cursor: pointer;
-    transition: var(--transition);
+    transition: all 0.25s var(--ease);
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 7px;
+    color: var(--text-muted);
+}
+
+.chip:hover {
+    border-color: var(--gold);
+    color: var(--gold);
 }
 
 .chip.active {
-    background: var(--primary-gold);
+    background: var(--gold);
     color: white;
-    border-color: var(--primary-gold);
+    border-color: var(--gold);
+    box-shadow: 0 4px 14px rgba(139, 111, 61, 0.25);
 }
 
 .chip-count {
-    font-size: 0.75rem;
-    opacity: 0.7;
-    background: rgba(0,0,0,0.1);
-    padding: 2px 8px;
+    font-size: 0.7rem;
+    opacity: 0.75;
+    background: rgba(0,0,0,0.08);
+    padding: 1px 7px;
     border-radius: 10px;
 }
 
 .chip.active .chip-count {
-    background: rgba(255,255,255,0.2);
+    background: rgba(255,255,255,0.22);
+    opacity: 1;
 }
 
 /* =========================================
-   MODAL TELA CHEIA (FULLSCREEN)
+   HISTÓRICO
    ========================================= */
-/* =========================================
-   MODAL TELA CHEIA - DESIGN PREMIUM
-   ========================================= */
-.modal-blur {
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.95);
-    backdrop-filter: blur(15px);
-    display: none;
-    justify-content: center;
-    align-items: center;
-    z-index: 10000;
-}
-
-.modal-blur.active { display: flex; }
-
-.modal-content {
-    width: 100vw !important;
-    height: 100vh !important;
-    background-color: #ffffff !important; /* FORÇA O FUNDO BRANCO */
-    color: #1a1a1a !important;            /* FORÇA O TEXTO ESCURO */
-    position: fixed;
-    top: 0;
-    left: 0;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-    z-index: 10001;
-}
-
-/* Garante que o texto dentro da biografia seja legível */
-.biografia-container, .biografia-container p {
-    color: #2c2c2c !important;
-    font-size: 1.2rem;
-}
-
-/* Sombra suave na imagem para o título não sumir */
-.modal-header-img::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 30%;
-    background: linear-gradient(transparent, rgba(0,0,0,0.2));
-}
-
-/* Botão de Fechar flutuante e elegante */
-.close-modal {
-    position: fixed;
-    top: 30px;
-    right: 30px;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background: white;
-    color: var(--primary-gold);
-    border: none;
-    font-size: 28px;
-    cursor: pointer;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
-    z-index: 10002;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: var(--transition);
-}
-
-.close-modal:hover {
-    transform: rotate(90deg) scale(1.1);
-    background: var(--primary-gold);
-    color: white;
-}
-
-.vocation-badge {
-    text-align: center;
-    color: var(--primary-gold);
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    font-size: 0.9rem;
-    margin-bottom: 40px;
-    display: block;
-}
-
-.biografia-container {
-    font-family: 'Inter', sans-serif;
-    line-height: 2; /* Texto bem espaçado */
-    color: #333;
-    font-size: 1.2rem;
-    text-align: justify;
-}
-
-/* Capitular (A primeira letra grande) */
-.biografia-container p::first-letter {
-    float: left;
-    font-size: 4rem;
-    line-height: 1;
-    font-weight: bold;
-    margin-right: 15px;
-    color: var(--primary-gold);
-    font-family: 'Libre Baskerville', serif;
-}
-
-/* Animação */
-@keyframes fadeIn {
-    from { opacity: 0; transform: scale(1.05); }
-    to { opacity: 1; transform: scale(1); }
-}
-/* Ajuste no Header para centralizar o título */
-.modal-header-img {
-    width: 100%;
-    min-height: 30vh; /* Diminuí de 50vh para 30vh para não ocupar tela demais */
-    background-size: cover;
-    background-position: center;
-    position: relative;
-    flex-shrink: 0;
-    border-bottom: 5px solid var(--primary-gold);
-    
-    /* Adicionado para centralizar o título */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 40px 20px;
-}
-
-/* Ajuste no Título */
-#modalTitle {
-    font-family: 'Libre Baskerville', serif;
-    font-size: clamp(1.8rem, 5vw, 3rem); /* Fonte responsiva */
-    color: var(--text-main);
-    text-align: center;
-    text-transform: uppercase;
-    letter-spacing: 3px;
-    z-index: 2;
-    margin: 0; /* Remove margens que podem empurrar o texto */
-}
-
-/* Ajuste no Padding do corpo (reduzir o espaço superior) */
-.modal-body-padding {
-    padding: 20px 20px 60px; /* Reduzi o padding superior de 60px para 20px */
-    max-width: 800px;
-    margin: 0 auto;
-    width: 100%;
-}
-.santo-card {
-    border-radius: var(--radius) !important; /* bordas ovais já tem */
-    position: relative;
-    overflow: hidden;
-}
-
-.image-container {
-    height: 180px; /* menor que os 250px anteriores */
-}
-/* PESQUISA MELHORADA */
-.santos-pesquisa {
-    display: flex;
-    justify-content: center;
-    padding: 20px 20px 10px;
-}
-
-.santos-pesquisa input {
-    width: 100%;
-    max-width: 500px;
-    padding: 14px 20px;
-    border-radius: 50px;
-    border: 2px solid rgba(139, 111, 61, 0.2);
-    background: white;
-    font-size: 0.95rem;
-    color: var(--text-main);
-    outline: none;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.07);
-    transition: all 0.3s ease;
-    font-family: 'Inter', sans-serif;
-}
-
-.santos-pesquisa input:focus {
-    border-color: var(--primary-gold);
-    box-shadow: 0 4px 20px rgba(139, 111, 61, 0.15);
-    transform: translateY(-1px);
-}
-
-.santos-pesquisa input::placeholder {
-    color: #aaa;
-}
-
-/* HISTÓRICO */
 .historico-section {
-    padding: 20px 20px 10px;
-    max-width: 1300px;
+    padding: 24px 24px 8px;
+    max-width: 1320px;
     margin: 0 auto;
     width: 100%;
     box-sizing: border-box;
@@ -384,110 +264,89 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 14px;
-    padding: 0 4px;
+    margin-bottom: 16px;
+    padding: 0 2px;
 }
 
 .historico-titulo {
     font-family: 'Libre Baskerville', serif;
-    font-size: 1.2rem;
-    color: var(--text-main);
+    font-size: 1.05rem;
+    color: var(--text);
     margin: 0;
+    letter-spacing: 0.2px;
 }
 
 .historico-limpar {
     background: none;
-    border: none;
-    font-size: 0.8rem;
+    border: 1px solid #e0d8cc;
+    font-size: 0.75rem;
     color: var(--text-muted);
     cursor: pointer;
-    padding: 4px 10px;
+    padding: 5px 14px;
     border-radius: 20px;
     transition: all 0.2s ease;
+    font-family: 'Inter', sans-serif;
 }
 
 .historico-limpar:hover {
-    background: #f0f0f0;
-    color: var(--text-main);
+    background: #f0ece4;
+    color: var(--text);
+    border-color: var(--gold-border);
 }
 
 .historico-scroll {
     display: flex;
-    gap: 16px;
+    gap: 18px;
     overflow-x: auto;
-    padding-bottom: 12px;
+    padding: 6px 2px 18px;
     scrollbar-width: thin;
-    scrollbar-color: rgba(139,111,61,0.3) transparent;
+    scrollbar-color: rgba(139,111,61,0.25) transparent;
 }
 
-.historico-scroll::-webkit-scrollbar {
-    height: 4px;
-}
-
+.historico-scroll::-webkit-scrollbar { height: 3px; }
 .historico-scroll::-webkit-scrollbar-thumb {
-    background: rgba(139,111,61,0.3);
+    background: rgba(139,111,61,0.25);
     border-radius: 10px;
 }
 
-/* HISTÓRICO SCROLL */
-.historico-scroll {
-    display: flex;
-    gap: 24px;
-    overflow-x: auto;
-    padding: 10px 4px 16px;
-    scrollbar-width: thin;
-    scrollbar-color: rgba(139,111,61,0.3) transparent;
-}
-
-.historico-scroll::-webkit-scrollbar { height: 4px; }
-.historico-scroll::-webkit-scrollbar-thumb {
-    background: rgba(139,111,61,0.3);
-    border-radius: 10px;
-}
-
-/* CARD DO HISTÓRICO — igual ao santo-card da grid */
+/* Card do Histórico */
 .hist-card {
     flex-shrink: 0;
-    width: 280px;
-    background: var(--soft-white);
+    width: 220px;
+    background: var(--white);
     border-radius: var(--radius);
-    box-shadow: var(--shadow-sm);
+    box-shadow: var(--shadow);
     overflow: hidden;
     position: relative;
     cursor: pointer;
-    transition: var(--transition);
-    border: 1px solid rgba(0,0,0,0.05);
+    transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
+    border: 1px solid rgba(0,0,0,0.04);
 }
 
 .hist-card:hover {
-    transform: translateY(-6px);
+    transform: translateY(-5px);
     box-shadow: var(--shadow-lg);
 }
 
-/* preenchimento azul/verde igual ao da grid */
 .hist-progresso-fill-bg {
     position: absolute;
     bottom: 0; left: 0;
     width: 100%;
-    background: linear-gradient(180deg, #5ba3d9 0%, #4a8fc2 100%);
     height: 0%;
+    background: linear-gradient(180deg, #5ba3d9 0%, #4a8fc2 100%);
     z-index: 1;
-    transition: height 1.2s cubic-bezier(0.4,0,0.2,1);
+    transition: height 1.3s cubic-bezier(0.4,0,0.2,1);
     border-radius: 0 0 var(--radius) var(--radius);
-}
-
-.hist-card.lido .hist-progresso-fill-bg {
-    background: linear-gradient(180deg, #4caf82 0%, #388e60 100%);
 }
 
 .hist-img-wrap {
     position: relative;
     margin: 8px;
     width: calc(100% - 16px);
-    height: 180px;
-    border-radius: 14px;
+    height: 160px;
+    border-radius: 12px;
     overflow: hidden;
-    background: #111;
+    background: #e8e0d4;
     z-index: 2;
 }
 
@@ -495,34 +354,33 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.6s ease;
+    transition: transform 0.5s var(--ease);
+    display: block;
 }
 
 .hist-card:hover .hist-img-wrap img {
-    transform: scale(1.05);
+    transform: scale(1.06);
 }
 
-/* badge "✓ Lido" no canto da imagem */
 .hist-badge-lido {
     display: none;
     position: absolute;
     top: 8px; right: 8px;
     background: #4caf82;
     color: white;
-    font-size: 0.65rem;
+    font-size: 0.6rem;
     font-weight: 700;
-    padding: 3px 8px;
+    padding: 3px 9px;
     border-radius: 20px;
     z-index: 3;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
 }
 
-.hist-card.lido .hist-badge-lido {
-    display: block;
-}
+.hist-card.lido .hist-badge-lido { display: block; }
 
 .hist-info {
-    padding: 12px 16px 16px;
+    padding: 10px 14px 14px;
     text-align: center;
     position: relative;
     z-index: 2;
@@ -530,38 +388,221 @@
 
 .hist-nome {
     font-family: 'Libre Baskerville', serif;
-    font-size: 1rem;
+    font-size: 0.88rem;
     font-weight: 700;
-    color: var(--text-main);
+    color: var(--text);
     margin: 0 0 4px;
     line-height: 1.3;
     transition: color 0.4s ease;
 }
 
 .hist-pct {
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     color: var(--text-muted);
     margin: 0;
+    letter-spacing: 0.3px;
 }
 
-/* BOTÃO FINALIZADO no modal */
+/* =========================================
+   MODAL — FULLSCREEN PREMIUM
+   ========================================= */
+.modal-blur {
+    position: fixed;
+    inset: 0;
+    background: rgba(10, 8, 5, 0.92);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+}
+
+.modal-blur.active { display: flex; }
+
+/* Área de scroll */
+.modal-content {
+    width: 100vw;
+    height: 100vh;
+    background: #fdfbf8;
+    color: var(--text);
+    position: fixed;
+    top: 0; left: 0;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    z-index: 10001;
+    scroll-behavior: smooth;
+}
+
+/* Header com imagem */
+.modal-header-img {
+    width: 100%;
+    min-height: 36vh;
+    background-size: cover;
+    background-position: center top;
+    position: relative;
+    flex-shrink: 0;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding: 0 20px 32px;
+}
+
+.modal-header-img::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        to bottom,
+        rgba(253,251,248,0) 0%,
+        rgba(253,251,248,0.15) 50%,
+        rgba(253,251,248,0.85) 80%,
+        rgba(253,251,248,1) 100%
+    );
+    z-index: 1;
+}
+
+#modalTitle {
+    font-family: 'Libre Baskerville', serif;
+    font-size: clamp(1.6rem, 4vw, 2.8rem);
+    color: var(--text);
+    text-align: center;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    z-index: 2;
+    position: relative;
+    margin: 0;
+    line-height: 1.2;
+}
+
+/* Linha dourada abaixo do header */
+.modal-header-img::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 2px;
+    background: var(--gold);
+    z-index: 3;
+}
+
+/* Corpo */
+.modal-body-padding {
+    padding: 36px 24px 80px;
+    max-width: 780px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+/* Badge de vocação */
+.vocation-badge {
+    text-align: center;
+    color: var(--gold);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2.5px;
+    font-size: 0.75rem;
+    margin-bottom: 36px;
+    display: block;
+    font-family: 'Inter', sans-serif;
+}
+
+/* Biografia */
+.biografia-container {
+    font-family: 'Georgia', serif;
+    line-height: 1.9;
+    color: #2a2520;
+    font-size: 1rem;
+}
+
+/* RESET da capitular — controlado pelo sao-lucas.html */
+.biografia-container p::first-letter {
+    float: none !important;
+    font-size: inherit !important;
+    line-height: inherit !important;
+    font-weight: inherit !important;
+    color: inherit !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    font-family: inherit !important;
+}
+
+/* Botão fechar */
+.close-modal {
+    position: fixed;
+    top: 24px;
+    right: 24px;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: white;
+    color: var(--gold);
+    border: 1.5px solid var(--gold-border);
+    font-size: 22px;
+    cursor: pointer;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+    z-index: 10002;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s var(--ease);
+    line-height: 1;
+}
+
+.close-modal:hover {
+    transform: rotate(90deg) scale(1.08);
+    background: var(--gold);
+    color: white;
+    border-color: var(--gold);
+}
+
+/* Botão marcar linha */
+.toggle-highlight {
+    position: fixed;
+    top: 24px;
+    right: 78px;
+    background: white;
+    border: 1.5px solid var(--gold-border);
+    color: var(--gold);
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: var(--radius-sm);
+    padding: 8px 13px;
+    z-index: 10003;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+    transition: all 0.3s var(--ease);
+    line-height: 1;
+}
+
+.toggle-highlight:hover {
+    background: var(--gold-pale);
+    border-color: var(--gold);
+}
+
+/* Botão finalizado */
 .btn-finalizado {
     display: block;
-    margin: 30px auto 0;
-    padding: 14px 36px;
+    margin: 40px auto 0;
+    padding: 13px 36px;
     background: white;
     color: #388e60;
-    border: 2px solid #4caf82;
-    border-radius: 12px;
-    font-weight: 700;
-    font-size: 1rem;
+    border: 1.5px solid #4caf82;
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+    font-size: 0.9rem;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.3s var(--ease);
+    letter-spacing: 0.3px;
+    font-family: 'Inter', sans-serif;
 }
 
 .btn-finalizado:hover {
     background: #4caf82;
     color: white;
+    box-shadow: 0 6px 20px rgba(76, 175, 130, 0.28);
+    transform: translateY(-1px);
 }
 
 .btn-finalizado.ativo {
@@ -569,48 +610,92 @@
     color: white;
     border-color: #4caf82;
 }
-.toggle-highlight {
-    position: fixed; /* 🔥 chave da correção */
-    top: 30px;
-    right: 90px; /* ajusta ao lado do X */
 
-    background: white;
-    border: none;
-    color: #8b6f3d;
-
-    font-size: 18px;
-    cursor: pointer;
-    border-radius: 10px;
-    padding: 8px 12px;
-
-    z-index: 10003; /* 🔥 acima de tudo */
-    box-shadow: 0 6px 15px rgba(0,0,0,0.2);
-
-    transition: 0.3s;
-}
-
-.toggle-highlight:hover {
-    background: rgba(255,255,255,0.2);
-}
+/* =========================================
+   MARCAÇÃO DE LINHAS
+   ========================================= */
 .modo-marcacao .linha {
     cursor: pointer;
-    transition: 0.2s;
+    border-radius: 4px;
+    transition: background 0.2s ease;
+    padding: 1px 4px;
+    margin: 0 -4px;
 }
 
 .modo-marcacao .linha:hover {
-    background: rgba(255, 215, 0, 0.2);
+    background: rgba(212, 175, 55, 0.12);
 }
 
 .linha-marcada {
+    background: rgba(212, 175, 55, 0.15) !important;
+    border-radius: 4px;
     position: relative;
-    background: rgba(255, 215, 0, 0.15);
+    padding-left: 12px !important;
 }
 
 .linha-marcada::before {
-    content: "➤";
+    content: '';
     position: absolute;
-    left: -20px;
-    color: #c5a96a;
-    font-size: 18px;
+    left: 0;
+    top: 4px;
+    bottom: 4px;
+    width: 2px;
+    background: var(--gold);
+    border-radius: 2px;
 }
 
+/* =========================================
+   ANIMAÇÕES
+   ========================================= */
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.modal-blur.active .modal-content {
+    animation: fadeUp 0.35s var(--ease) both;
+}
+
+/* =========================================
+   RESPONSIVO
+   ========================================= */
+@media (max-width: 768px) {
+    .santos-grid {
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+        gap: 14px;
+        padding: 20px 14px 40px;
+    }
+
+    .image-container { height: 150px; }
+
+    .santo-card h3 { font-size: 0.95rem; }
+
+    .btn-primary {
+        font-size: 0.8rem;
+        padding: 10px 16px;
+    }
+
+    .modal-header-img { min-height: 28vh; }
+
+    .modal-body-padding { padding: 28px 18px 60px; }
+
+    .close-modal  { top: 16px; right: 16px; }
+    .toggle-highlight { top: 16px; right: 68px; }
+
+    .hist-card { width: 180px; }
+    .hist-img-wrap { height: 130px; }
+}
+
+@media (max-width: 480px) {
+    .santos-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+        padding: 16px 12px 40px;
+    }
+
+    #modalTitle { font-size: 1.4rem; letter-spacing: 1px; }
+
+    .categorias-container { gap: 7px; padding: 14px; }
+
+    .chip { font-size: 0.76rem; padding: 7px 13px; }
+}
