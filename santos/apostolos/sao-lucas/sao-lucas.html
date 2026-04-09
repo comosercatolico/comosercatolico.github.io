@@ -267,9 +267,9 @@
   </div>
 
   <nav class="sl-nav">
-    <button class="sl-nav-btn ativo" data-painel="historia" onclick="slNavegar(this)">História</button>
-    <button class="sl-nav-btn" data-painel="geral" onclick="slNavegar(this)">Geral</button>
-    <button class="sl-nav-btn" data-painel="milagres" onclick="slNavegar(this)">Milagres</button>
+    <button class="sl-nav-btn ativo" data-painel="historia">História</button>
+    <button class="sl-nav-btn" data-painel="geral">Geral</button>
+    <button class="sl-nav-btn" data-painel="milagres">Milagres</button>
   </nav>
 
   <!-- HISTÓRIA -->
@@ -700,25 +700,34 @@
 </div><!-- /sl-wrap -->
 
 <script>
-  function slNavegar(btn) {
-    var nomePainel = btn.getAttribute('data-painel');
-    var wrap = btn.closest('.sl-wrap');
+  (function () {
+    function init() {
+      var botoes = document.querySelectorAll('.sl-nav-btn');
+      botoes.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var nomePainel = btn.getAttribute('data-painel');
+          var wrap = btn.closest('.sl-wrap');
 
-    var paineis = wrap.querySelectorAll('.sl-painel');
-    for (var i = 0; i < paineis.length; i++) {
-      paineis[i].classList.remove('ativo');
+          wrap.querySelectorAll('.sl-painel').forEach(function (p) {
+            p.classList.remove('ativo');
+          });
+
+          wrap.querySelectorAll('.sl-nav-btn').forEach(function (b) {
+            b.classList.remove('ativo');
+          });
+
+          var alvo = wrap.querySelector('[data-nome="' + nomePainel + '"]');
+          if (alvo) alvo.classList.add('ativo');
+
+          btn.classList.add('ativo');
+        });
+      });
     }
 
-    var botoes = wrap.querySelectorAll('.sl-nav-btn');
-    for (var j = 0; j < botoes.length; j++) {
-      botoes[j].classList.remove('ativo');
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
     }
-
-    var alvo = wrap.querySelector('[data-nome="' + nomePainel + '"]');
-    if (alvo) {
-      alvo.classList.add('ativo');
-    }
-
-    btn.classList.add('ativo');
-  }
+  })();
 </script>
