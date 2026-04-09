@@ -1,5 +1,5 @@
 <style>
-  /* RESET — neutraliza o first-letter do santos.css */
+  /* RESET */
   .sl-wrap p::first-letter {
     font-size: inherit !important;
     float: none !important;
@@ -27,15 +27,6 @@
     margin-bottom: 48px;
   }
 
-  .sl-parte {
-    font-size: 10px;
-    letter-spacing: 5px;
-    text-transform: uppercase;
-    color: #9a7c3f;
-    margin-bottom: 12px;
-    display: block;
-  }
-
   .sl-intro p {
     font-size: 15px;
     color: #666;
@@ -43,6 +34,49 @@
     line-height: 1.7;
     max-width: 480px;
     margin: 0 auto;
+  }
+
+  /* ── NAVEGAÇÃO POR ABAS ── */
+  .sl-nav {
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    margin-bottom: 48px;
+    border-bottom: 1px solid #e8e0d0;
+  }
+
+  .sl-nav-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: 'Georgia', serif;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #aaa;
+    padding: 14px 28px;
+    position: relative;
+    transition: color 0.3s ease;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+  }
+
+  .sl-nav-btn:hover {
+    color: #9a7c3f;
+  }
+
+  .sl-nav-btn.ativo {
+    color: #9a7c3f;
+    border-bottom: 2px solid #9a7c3f;
+  }
+
+  /* PAINÉIS */
+  .sl-painel {
+    display: none;
+  }
+
+  .sl-painel.ativo {
+    display: block;
   }
 
   /* SEÇÕES */
@@ -139,7 +173,7 @@
     font-style: normal;
   }
 
-  /* TAG / DESTAQUE INLINE */
+  /* TAG */
   .sl-tag {
     display: inline-block;
     font-size: 10px;
@@ -161,7 +195,7 @@
     line-height: 1.6;
   }
 
-  /* SEPARADOR DE SEÇÃO */
+  /* SEPARADOR */
   .sl-sep {
     text-align: center;
     margin: 48px 0;
@@ -170,11 +204,84 @@
     letter-spacing: 8px;
   }
 
-  /* RESPONSIVO */
+  /* GRID DE INFO — usado na aba Geral */
+  .sl-info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: #e8e0d0;
+    border: 1px solid #e8e0d0;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 40px;
+  }
+
+  .sl-info-item {
+    background: #faf8f4;
+    padding: 18px 20px;
+  }
+
+  .sl-info-label {
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #9a7c3f;
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  .sl-info-valor {
+    font-size: 14px;
+    color: #1a1a1a;
+    line-height: 1.5;
+  }
+
+  /* MILAGRE CARD */
+  .sl-milagre-card {
+    background: #faf8f4;
+    border: 1px solid #e8e0d0;
+    border-left: 3px solid #9a7c3f;
+    border-radius: 0 6px 6px 0;
+    padding: 24px 28px;
+    margin-bottom: 24px;
+  }
+
+  .sl-milagre-card h3 {
+    font-size: 15px;
+    font-weight: normal;
+    color: #111;
+    margin: 0 0 10px 0;
+    letter-spacing: 0.2px;
+  }
+
+  .sl-milagre-card p {
+    font-size: 14px;
+    color: #555;
+    line-height: 1.8;
+    margin: 0;
+    text-align: left;
+  }
+
+  .sl-milagre-card p::first-letter {
+    font-size: inherit !important;
+    float: none !important;
+  }
+
+  .sl-milagre-num {
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #9a7c3f;
+    display: block;
+    margin-bottom: 8px;
+  }
+
   @media (max-width: 600px) {
+    .sl-nav-btn { padding: 12px 16px; letter-spacing: 2px; }
     .sl-bloco h3 { font-size: 15px; }
     .sl-bloco p  { font-size: 14px; }
     .sl-citacao p { font-size: 14px; }
+    .sl-info-grid { grid-template-columns: 1fr; }
   }
 </style>
 
@@ -182,298 +289,487 @@
 
   <!-- INTRO -->
   <div class="sl-intro">
-    <span class="sl-parte">Parte I — História</span>
     <p>Médico, escritor, companheiro fiel de Paulo e testemunha da fé cristã nascente</p>
   </div>
 
+  <!-- NAVEGAÇÃO -->
+  <nav class="sl-nav">
+    <button class="sl-nav-btn ativo" onclick="slMostrar('historia', this)">História</button>
+    <button class="sl-nav-btn" onclick="slMostrar('geral', this)">Geral</button>
+    <button class="sl-nav-btn" onclick="slMostrar('milagres', this)">Milagres</button>
+  </nav>
 
-  <!-- ═══════════════════════════════════════ -->
-  <!-- SEÇÃO 1 — ORIGENS                      -->
-  <!-- ═══════════════════════════════════════ -->
-  <div class="sl-secao">
-    <div class="sl-secao-header">
-      <span class="sl-secao-num">01</span>
-      <div class="sl-secao-linha"></div>
-      <span class="sl-secao-titulo">Origens e Identidade</span>
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- PAINEL: HISTÓRIA                              -->
+  <!-- ══════════════════════════════════════════════ -->
+  <div id="sl-historia" class="sl-painel ativo">
+
+    <div class="sl-secao">
+      <div class="sl-secao-header">
+        <span class="sl-secao-num">01</span>
+        <div class="sl-secao-linha"></div>
+        <span class="sl-secao-titulo">Origens e Identidade</span>
+      </div>
+
+      <div class="sl-bloco">
+        <h3>Quem era Lucas antes de seguir Cristo</h3>
+        <p>Lucas não era um pescador, nem um cobrador de impostos, nem um zelota apaixonado. Era médico. E isso, no século I, dizia muito sobre quem ele era.</p>
+        <p>Antes de qualquer coisa, Lucas era um homem culto, formado, com um ofício respeitado e uma mente treinada para observar, investigar e registrar. Quando ele se tornou cristão e decidiu escrever sobre Jesus, essas qualidades não desapareceram — elas foram colocadas inteiramente a serviço da fé.</p>
+        <p>Diferente de Mateus e João, que eram judeus e conheciam as Escrituras desde a infância, Lucas chegou ao Evangelho de fora. Era gentio — ou seja, não judeu. Esse detalhe é fundamental para entender por que o seu Evangelho é o mais universal dos quatro: ele escrevia para pessoas como ele.</p>
+      </div>
+
+      <div class="sl-bloco">
+        <h3>O único evangelista não judeu</h3>
+        <p>Entre os quatro evangelistas, Lucas é o único que não nasceu judeu. Mateus era judeu. Marcos era judeu. João era judeu. Lucas era grego — ou pelo menos de formação completamente grega, nascido e criado fora do mundo hebraico.</p>
+        <p>Isso torna a sua obra algo extraordinário: um homem que cresceu sem o Antigo Testamento como pano de fundo, mas que mergulhou tão fundo na história de Jesus que produziu o maior dos quatro Evangelhos em extensão — e um dos mais belos em estilo.</p>
+        <p>Paulo confirma isso indiretamente. Na carta aos Colossenses, ao listar seus companheiros judeus, ele menciona Lucas separadamente — como alguém que não pertencia a esse grupo. Uma pequena frase, mas historicamente reveladora.</p>
+      </div>
+
+      <div class="sl-bloco">
+        <h3>Nascido em Antioquia da Síria</h3>
+        <p>A tradição mais antiga localiza o nascimento de Lucas em Antioquia da Síria — hoje o sul da Turquia, próximo à fronteira com a Síria. Era a terceira maior cidade do Império Romano, atrás apenas de Roma e Alexandria.</p>
+        <p>Antioquia era uma cidade cosmopolita, onde gregos, romanos, sírios e judeus viviam lado a lado. Foi lá que, pela primeira vez na história, os seguidores de Jesus foram chamados de "cristãos". Crescer naquela cidade significava estar em contato com múltiplas culturas — um ambiente que moldou a visão aberta e universal de Lucas.</p>
+      </div>
+
+      <div class="sl-bloco">
+        <h3>Seu nome — Loukas</h3>
+        <p>Em grego, ele se chamava <em>Loukas</em>. Muitos estudiosos acreditam que esse nome é uma forma abreviada de <em>Lucanus</em> — um nome romano bastante comum na época. Outros sugerem que pode derivar de <em>Lucius</em>.</p>
+        <p>Um nome que soa romano, uma cultura grega, uma origem síria, uma fé cristã. Lucas era o homem do cruzamento de mundos — e isso se reflete em tudo o que ele escreveu.</p>
+      </div>
+
+      <div class="sl-bloco">
+        <h3>Grego, sírio ou romano? A questão da etnia</h3>
+        <p>Essa pergunta não tem resposta definitiva. O que os estudiosos concordam é que Lucas era de língua e cultura gregas. Se seus ancestrais eram gregos étnicos, sírios helenizados ou descendentes de colonos romanos, não há como saber.</p>
+        <p>Em 2001, pesquisadores italianos realizaram um teste de DNA nas relíquias conservadas em Pádua — e o resultado foi compatível com um homem de origem sírio-grega do século I. Consistente com o que a tradição sempre afirmou.</p>
+      </div>
+
+      <div class="sl-bloco">
+        <h3>Um homem de educação rara</h3>
+        <p>O grego de Lucas é considerado pelos especialistas o mais elegante e sofisticado de todo o Novo Testamento. Não é o grego simples das ruas — é o grego de quem leu, estudou, e sabia escrever com intenção literária.</p>
+        <p>O prólogo do seu Evangelho, nos primeiros quatro versículos, é um período gramatical que qualquer autor greco-romano da época reconheceria como obra de alguém instruído. Ele não estava apenas relatando — estava construindo um argumento histórico com as ferramentas de um escritor consciente.</p>
+        <p class="sl-nota">Comparado a Pedro, a João, a pescadores da Galileia, Lucas pertencia a outro nível de instrução formal. Não era superior em fé — mas era diferente em formação.</p>
+      </div>
+
+      <div class="sl-bloco">
+        <h3>O que era ser médico no século I</h3>
+        <p>Ser médico no mundo greco-romano era uma profissão de prestígio intelectual, mas de posição social ambígua. Muitos médicos eram escravos libertos que ascenderam pelo conhecimento. A medicina envolvia observação clínica, uso de ervas e compostos, cirurgias básicas — e exigia saber ler, escrever e raciocinar com precisão.</p>
+        <p>Essas habilidades aparecem claramente na escrita de Lucas. Quando narra a cura da sogra de Pedro, Marcos diz simplesmente que ela tinha febre. Lucas, o médico, acrescenta que era "uma grande febre" — um detalhe clínico que só alguém com formação médica naturalmente incluiria.</p>
+      </div>
+
+      <div class="sl-bloco">
+        <h3>Havia Lucas sido escravo?</h3>
+        <p>Existe uma teoria histórica levantada por alguns estudiosos: Lucas poderia ter sido originalmente um escravo. No Império Romano, era comum que homens educados com habilidades médicas fossem escravos de famílias ricas — e depois libertados, tornando-se <em>liberti</em>.</p>
+        <p>Não há prova direta. A maioria dos estudiosos trata o ponto como possibilidade remota. Mas a pergunta permanece fascinante: e se o homem que escreveu o Evangelho mais compassivo com os pobres e marginalizados tivesse ele mesmo conhecido a marginalização por dentro?</p>
+      </div>
     </div>
 
-    <div class="sl-bloco">
-      <h3>Quem era Lucas antes de seguir Cristo</h3>
-      <p>Lucas não era um pescador, nem um cobrador de impostos, nem um zelota apaixonado. Era médico. E isso, no século I, dizia muito sobre quem ele era.</p>
-      <p>Antes de qualquer coisa, Lucas era um homem culto, formado, com um ofício respeitado e uma mente treinada para observar, investigar e registrar. Quando ele se tornou cristão e decidiu escrever sobre Jesus, essas qualidades não desapareceram — elas foram colocadas inteiramente a serviço da fé.</p>
-      <p>Diferente de Mateus e João, que eram judeus e conheciam as Escrituras desde a infância, Lucas chegou ao Evangelho de fora. Era gentio — ou seja, não judeu. Esse detalhe é fundamental para entender por que o seu Evangelho é o mais universal dos quatro: ele escrevia para pessoas como ele.</p>
+    <div class="sl-sep">· · ·</div>
+
+    <div class="sl-secao">
+      <div class="sl-secao-header">
+        <span class="sl-secao-num">02</span>
+        <div class="sl-secao-linha"></div>
+        <span class="sl-secao-titulo">Lucas Antes de Encontrar Paulo</span>
+      </div>
+
+      <div class="sl-bloco">
+        <h3>A vida antes da conversão</h3>
+        <p>Sobre a vida de Lucas antes de se tornar cristão, a história guarda um silêncio quase total. Ele não deixou memórias pessoais, não narrou sua própria conversão, não descreveu sua infância. Tudo o que sabemos vem de deduções a partir de sua obra e de tradições posteriores.</p>
+        <p>O que podemos dizer com razoável confiança: ele viveu numa cidade grande e cosmopolita, exerceu a medicina, tinha familiaridade com a cultura grega e provavelmente conhecia comunidades judaicas em Antioquia antes de encontrar o Evangelho.</p>
+      </div>
+
+      <div class="sl-bloco">
+        <h3>Era Lucas um prosélito judeu?</h3>
+        <p>Alguns estudiosos propõem que Lucas, antes de se tornar cristão, poderia ter sido um "temente a Deus" — expressão usada na época para descrever gentios que admiravam o judaísmo, frequentavam as sinagogas e observavam algumas práticas, mas não se convertiam formalmente.</p>
+        <p>Essa teoria explicaria seu conhecimento profundo das Escrituras hebraicas e sua capacidade de citar o Antigo Testamento com precisão. Alguém que chegasse ao Evangelho completamente de fora do mundo judeu dificilmente escreveria como Lucas escreveu.</p>
+        <p class="sl-nota">Não é uma certeza — mas é uma hipótese que muitos especialistas consideram plausível.</p>
+      </div>
+
+      <div class="sl-bloco">
+        <h3>A conversão de Lucas</h3>
+        <p>A tradição não conservou uma narrativa da conversão de Lucas. Não existe um "caminho de Damasco" para ele — nenhum momento dramático registrado, nenhuma visão descrita.</p>
+        <p>O que se pode inferir é que ele se tornou cristão provavelmente em Antioquia, onde a comunidade cristã era forte desde muito cedo. O que é certo é que, quando os dois se encontraram, Lucas já era cristão comprometido o suficiente para deixar tudo e acompanhar Paulo nas suas viagens pelo mundo.</p>
+      </div>
+
+      <div class="sl-bloco">
+        <h3>Lucas conheceu Jesus pessoalmente?</h3>
+        <p>Esta é uma das perguntas mais fascinantes sobre Lucas — e a resposta, para a maioria dos estudiosos modernos, é não.</p>
+        <p>O próprio Lucas parece confirmar isso no prólogo do seu Evangelho, quando escreve que recebeu as informações "dos que desde o princípio foram testemunhas oculares". Ele fala dos outros como testemunhas — não fala de si mesmo como uma delas.</p>
+      </div>
+
+      <div class="sl-bloco">
+        <h3>A tradição minoritária: Lucas entre os 70 discípulos</h3>
+        <p>Existe uma tradição minoritária — presente em alguns escritos dos Padres da Igreja — que afirma que Lucas teria sido um dos 70 discípulos enviados por Jesus, conforme narrado no próprio capítulo 10 do seu Evangelho.</p>
+        <p>Alguns Padres também identificam Lucas como um dos dois discípulos do caminho de Emaús — aqueles que conversaram com o Cristo ressuscitado sem reconhecê-lo. Um dos dois é identificado como Cléofas; o outro permanece sem nome — e a tradição preenche esse silêncio com o nome de Lucas.</p>
+        <p>São belas tradições. Não são historicamente verificáveis. Mas a fé popular as manteve vivas por séculos, e elas revelam o quanto os cristãos de todos os tempos desejaram que Lucas tivesse olhado nos olhos de Jesus.</p>
+      </div>
     </div>
 
-    <div class="sl-bloco">
-      <h3>O único evangelista não judeu</h3>
-      <p>Entre os quatro evangelistas, Lucas é o único que não nasceu judeu. Mateus era judeu. Marcos era judeu. João era judeu. Lucas era grego — ou pelo menos de formação completamente grega, nascido e criado fora do mundo hebraico.</p>
-      <p>Isso torna a sua obra algo extraordinário: um homem que cresceu sem o Antigo Testamento como pano de fundo, mas que mergulhou tão fundo na história de Jesus que produziu o maior dos quatro Evangelhos em extensão — e um dos mais belos em estilo.</p>
-      <p>Paulo confirma isso indiretamente. Na carta aos Colossenses, ao listar seus companheiros judeus, ele menciona Lucas separadamente — como alguém que não pertencia a esse grupo. Uma pequena frase, mas historicamente reveladora.</p>
+    <div class="sl-sep">· · ·</div>
+
+    <div class="sl-secao">
+      <div class="sl-secao-header">
+        <span class="sl-secao-num">03</span>
+        <div class="sl-secao-linha"></div>
+        <span class="sl-secao-titulo">Lucas e Paulo — A Grande Parceria</span>
+      </div>
+
+      <div class="sl-bloco">
+        <h3>O primeiro encontro — Trôade, por volta de 50 d.C.</h3>
+        <p>A história começa com uma mudança de pronome.</p>
+        <p>Nos Atos dos Apóstolos, a narrativa segue normalmente na terceira pessoa — "eles foram", "Paulo disse", "o grupo partiu". Então, de repente, no capítulo 16, o texto muda: "procuramos uma passagem para a Macedônia". <em>Procuramos.</em> Em primeira pessoa do plural.</p>
+        <p>Esse pequeno detalhe gramatical é a marca de um testemunho direto. Lucas estava lá. Era parte do grupo. E o lugar onde isso acontece é Trôade, na costa do que hoje é a Turquia — o ponto em que Lucas se junta à equipe de Paulo pela primeira vez.</p>
+      </div>
+
+      <div class="sl-bloco">
+        <h3>As passagens "nós" — a prova da presença de Lucas</h3>
+        <p>Ao longo dos Atos, essas passagens em primeira pessoa do plural aparecem em quatro momentos distintos: durante a Segunda Viagem Missionária a partir de Trôade, durante parte da Terceira Viagem, na permanência em Cesareia e, finalmente, na dramática viagem de navio até Roma — incluindo o naufrágio em Malta.</p>
+        <p>Para os historiadores, essas seções são preciosas. Elas representam um diário de viagem, uma memória pessoal inserida dentro de uma narrativa mais ampla. Lucas não estava apenas escrevendo sobre Paulo — estava viajando com ele.</p>
+      </div>
+
+      <div class="sl-bloco">
+        <h3>"Lucas, o médico amado"</h3>
+        <p>Paulo menciona Lucas em três de suas cartas. A mais memorável está em Colossenses 4:14, onde o apóstolo o chama de <em>"Lucas, o médico amado"</em>.</p>
+        <p>Quatro palavras em grego. Mas que palavras. Elas revelam que Lucas ainda exercia sua profissão — provavelmente cuidando da saúde frágil de Paulo. E revelam algo mais profundo: havia entre os dois uma afeição genuína. Paulo não diz apenas "Lucas, o médico". Diz <em>amado</em>.</p>
+      </div>
+
+      <div class="sl-citacao">
+        <p>"Lucas, o médico amado, vos saúda, e também Demas."</p>
+        <span class="sl-fonte">Colossenses 4:14</span>
+      </div>
+
+      <div class="sl-bloco">
+        <h3>Lucas nas prisões de Paulo</h3>
+        <p>Quando Paulo foi preso em Cesareia — onde permaneceu por dois anos — Lucas ficou. Não fugiu, não voltou para casa. Ficou. E foi durante esse período que Lucas provavelmente realizou grande parte de sua pesquisa, entrevistando testemunhas na Judeia e na Galileia para escrever seu Evangelho.</p>
+        <p>Depois, quando Paulo embarcou para Roma, Lucas foi junto. A viagem narrada nos capítulos finais dos Atos — com tempestades e o naufrágio em Malta — é uma das mais vívidas narrativas de viagem marítima conservadas da Antiguidade.</p>
+      </div>
+
+      <div class="sl-bloco">
+        <h3>"Apenas Lucas está comigo"</h3>
+        <p>A frase mais solitária e mais reveladora está na Segunda Carta a Timóteo — provavelmente a última carta que Paulo escreveu antes do seu martírio.</p>
+        <p>Paulo escreveu: <em>"Apenas Lucas está comigo."</em></p>
+        <p>Todos os outros tinham partido. No momento mais sombrio de Paulo, quando o fim estava próximo, era Lucas quem permanecia. O médico. O amigo. O fiel companheiro. É difícil ler essa frase sem sentir o peso do que ela significa.</p>
+      </div>
+
+      <div class="sl-citacao">
+        <p>"Apenas Lucas está comigo."</p>
+        <span class="sl-fonte">2 Timóteo 4:11</span>
+      </div>
+
+      <div class="sl-bloco">
+        <h3>Como Paulo moldou a teologia de Lucas</h3>
+        <p>Anos ao lado de Paulo deixaram marcas profundas na visão teológica de Lucas. A ênfase na misericórdia universal de Deus, a abertura aos gentios, a centralidade da graça — todos esses temas têm ressonâncias claras com o pensamento paulino.</p>
+        <p>Mas Lucas não foi apenas um repetidor das ideias de Paulo. Ele trouxe sua própria voz, sua sensibilidade médica para o sofrimento humano, sua atenção às mulheres e aos pobres. A parceria foi de influência mútua — e o resultado está nos dois livros que juntos formam quase um terço de todo o Novo Testamento.</p>
+      </div>
     </div>
 
-    <div class="sl-bloco">
-      <h3>Nascido em Antioquia da Síria</h3>
-      <p>A tradição mais antiga localiza o nascimento de Lucas em Antioquia da Síria — hoje o sul da Turquia, próximo à fronteira com a Síria. Era a terceira maior cidade do Império Romano, atrás apenas de Roma e Alexandria.</p>
-      <p>Antioquia era uma cidade cosmopolita, onde gregos, romanos, sírios e judeus viviam lado a lado. Foi lá que, pela primeira vez na história, os seguidores de Jesus foram chamados de "cristãos". Crescer naquela cidade significava estar em contato com múltiplas culturas — um ambiente que moldou a visão aberta e universal de Lucas.</p>
+    <div class="sl-sep">· · ·</div>
+
+    <div class="sl-secao">
+      <div class="sl-secao-header">
+        <span class="sl-secao-num">04</span>
+        <div class="sl-secao-linha"></div>
+        <span class="sl-secao-titulo">Lucas como Escritor e Historiador</span>
+      </div>
+
+      <div class="sl-bloco">
+        <h3>A decisão de escrever</h3>
+        <p>Em algum momento — provavelmente durante os dois anos em que Paulo estava preso em Cesareia — Lucas decidiu escrever.</p>
+        <p>Já existiam outros relatos sobre Jesus. O próprio Lucas menciona isso no prólogo: "muitos já empreenderam organizar uma narração dos fatos que entre nós se cumpriram". Então por que escrever mais um? Porque ele tinha feito o trabalho de investigação que outros talvez não tenham feito. Ele seguiu tudo "desde o princípio com exatidão".</p>
+      </div>
+
+      <div class="sl-bloco">
+        <h3>O prólogo — a mais sofisticada introdução do Novo Testamento</h3>
+        <p>Os primeiros quatro versículos do Evangelho de Lucas são, do ponto de vista literário, extraordinários. São escritos num grego clássico impecável que lembra os prólogos dos grandes historiadores gregos.</p>
+        <p>E então, a partir do versículo 5, o estilo muda completamente: Lucas passa a escrever num grego que imita propositalmente o Antigo Testamento. A mudança é deliberada — é Lucas sinalizando que a história que se segue pertence à continuidade das Escrituras.</p>
+        <p class="sl-nota">É um dos recursos literários mais sofisticados do Novo Testamento, e a maioria dos leitores passa por ele sem perceber.</p>
+      </div>
+
+      <div class="sl-bloco">
+        <h3>Quem era Teófilo?</h3>
+        <p>Tanto o Evangelho quanto os Atos são dedicados a alguém chamado Teófilo — a quem Lucas chama de "excelentíssimo Teófilo". Esse título era usado no mundo romano para pessoas de posição elevada, sugerindo que Teófilo era um homem de alto status que havia se tornado cristão.</p>
+        <p>Outros estudiosos propõem que "Teófilo" — que em grego significa "amigo de Deus" — poderia ser um nome simbólico, representando qualquer leitor cristão. A maioria, porém, vê uma pessoa real por trás do nome.</p>
+      </div>
+
+      <div class="sl-bloco">
+        <h3>Teria Lucas entrevistado Maria?</h3>
+        <p>O Evangelho de Lucas contém informações sobre a infância de Jesus que não aparecem em nenhum outro lugar — a Anunciação, a visita a Isabel, o nascimento em Belém, a apresentação no Templo. Duas vezes o texto menciona que Maria "guardava essas coisas e as meditava no seu coração".</p>
+        <p>A tradição patrística afirma que Lucas entrevistou Maria. Durante os dois anos em Cesareia, com a Judeia a curta distância, seria possível que Lucas tivesse viajado até Jerusalém ou Éfeso para ouvi-la pessoalmente.</p>
+        <p>Não é possível provar. Mas o Evangelho de Lucas cheira a Maria de uma forma que nenhum outro Evangelho cheira — e isso precisa de explicação.</p>
+      </div>
+
+      <div class="sl-bloco">
+        <h3>O evangelista dos pobres, das mulheres e dos marginalizados</h3>
+        <p>Quem lê Lucas com atenção percebe rapidamente uma tendência clara: ele se interessa pelas pessoas que os poderosos ignoram. Os pastores do nascimento de Jesus eram trabalhadores de baixo status. As mulheres que acompanham Jesus têm nomes e histórias — algo incomum para a literatura do século I. Os pobres são abençoados; os ricos são advertidos. Os samaritanos são apresentados como heróis.</p>
+        <p>Lucas sabia o que era ser de fora — e encontrou em Jesus alguém que sempre abria a porta para os de fora.</p>
+      </div>
+
+      <div class="sl-bloco">
+        <h3>Os hinos de Lucas</h3>
+        <p>Um dos tesouros mais preciosos do Evangelho de Lucas são os quatro hinos preservados nos seus primeiros dois capítulos — cânticos que a Igreja canta há dois mil anos:</p>
+        <p>O <strong>Magnificat</strong> — o canto de Maria. O <strong>Benedictus</strong> — o canto de Zacarias. O <strong>Gloria in Excelsis</strong> — o canto dos anjos. O <strong>Nunc Dimittis</strong> — o canto do ancião Simeão.</p>
+        <p>Bach os musicou. Vivaldi os musicou. Centenas de compositores os musicaram. Lucas os preservou — e sem ele, estariam perdidos.</p>
+      </div>
+
+      <div class="sl-bloco">
+        <h3>A precisão histórica confirmada pela arqueologia</h3>
+        <p>Por muito tempo, críticos apontaram supostos erros nos textos de Lucas — especialmente nos Atos. O tempo foi mostrando o contrário. A arqueologia confirmou detalhe após detalhe: os títulos corretos dos magistrados de diferentes cidades, a existência do "pretório de Herodes" em Cesareia, a rota específica da viagem de naufrágio.</p>
+        <p>O arqueólogo Colin Hemer passou décadas verificando as afirmações dos Atos e concluiu que o texto demonstra um nível de precisão que só é possível em alguém que esteve nos lugares ou tinha acesso a fontes de primeira qualidade.</p>
+      </div>
     </div>
 
-    <div class="sl-bloco">
-      <h3>Seu nome — Loukas</h3>
-      <p>Em grego, ele se chamava <em>Loukas</em>. Muitos estudiosos acreditam que esse nome é uma forma abreviada de <em>Lucanus</em> — um nome romano bastante comum na época. Outros sugerem que pode derivar de <em>Lucius</em>.</p>
-      <p>Um nome que soa romano, uma cultura grega, uma origem síria, uma fé cristã. Lucas era o homem do cruzamento de mundos — e isso se reflete em tudo o que ele escreveu.</p>
+    <div class="sl-sep">· · ·</div>
+
+    <div class="sl-secao">
+      <div class="sl-secao-header">
+        <span class="sl-secao-num">05</span>
+        <div class="sl-secao-linha"></div>
+        <span class="sl-secao-titulo">Lucas Após a Morte de Paulo</span>
+      </div>
+
+      <div class="sl-bloco">
+        <h3>Depois do martírio de Paulo</h3>
+        <p>Paulo foi martyrizado em Roma por volta do ano 67 d.C. Lucas sobreviveu. O que aconteceu com ele depois é território de tradição, não de história documentada — mas as tradições que existem são antigas e merecem atenção.</p>
+        <p>A narrativa mais comum é que Lucas continuou sua missão como evangelista, pregando na Grécia — especialmente na Acaia, com cidades como Corinto, Atenas e Patras. Outras tradições falam da Dalmácia, da Macedônia, do Egito e da Bitínia.</p>
+      </div>
+
+      <div class="sl-bloco">
+        <h3>A ligação de Lucas com Filipos</h3>
+        <p>Entre todas as cidades onde Lucas trabalhou, Filipos parece ter ocupado um lugar especial. Foi lá que ele primeiro chegou com Paulo, testemunhou o milagre da jovem liberta e viu a comunidade cristã mais querida de Paulo ter seu início.</p>
+        <p>Há indícios nas passagens "nós" dos Atos de que Lucas permaneceu em Filipos por um período considerável, cuidando da jovem comunidade, enquanto Paulo seguia adiante.</p>
+      </div>
+
+      <div class="sl-bloco">
+        <h3>Os últimos anos — o silêncio da história</h3>
+        <p>Sobre os últimos anos de Lucas, a história guarda um silêncio frustrante. Sabemos que seus dois livros circularam nas comunidades cristãs e foram reconhecidos como autoritativos desde muito cedo. Mas sobre o homem que os escreveu, quase nada é documentado.</p>
+        <p>É o silêncio característico dos primeiros séculos cristãos: os que mais fizeram muitas vezes deixaram menos rastros históricos. Lucas escreveu sobre outros — e deixou que outros escrevessem sobre ele, depois.</p>
+      </div>
     </div>
 
-    <div class="sl-bloco">
-      <h3>Grego, sírio ou romano? A questão da etnia</h3>
-      <p>Essa pergunta não tem resposta definitiva. O que os estudiosos concordam é que Lucas era de língua e cultura gregas. Se seus ancestrais eram gregos étnicos, sírios helenizados ou descendentes de colonos romanos, não há como saber.</p>
-      <p>Em 2001, pesquisadores italianos realizaram um teste de DNA nas relíquias conservadas em Pádua — e o resultado foi compatível com um homem de origem sírio-grega do século I. Consistente com o que a tradição sempre afirmou.</p>
+    <div class="sl-sep">· · ·</div>
+
+    <div class="sl-secao">
+      <div class="sl-secao-header">
+        <span class="sl-secao-num">06</span>
+        <div class="sl-secao-linha"></div>
+        <span class="sl-secao-titulo">A Morte de Lucas</span>
+      </div>
+
+      <div class="sl-bloco">
+        <h3>Mártir ou morte natural? O grande debate</h3>
+        <p>Lucas morreu como mártir ou viveu até a velhice e morreu em paz? As tradições antigas se dividem — e as duas linhas existem desde muito cedo na história da Igreja.</p>
+        <p>A tradição mais antiga e mais sustentada pelos Padres afirma que Lucas morreu de morte natural, com aproximadamente 84 anos, em Tebas, na Beócia (Grécia). Essa tradição é atestada por Eusébio de Cesareia no século IV. Para eles, Lucas foi um "confessor" — alguém que testemunhou a fé com coragem, mas não morreu assassinado por causa de Cristo.</p>
+        <p>Uma tradição posterior — e minoritária — afirma que Lucas foi martyrizado, tendo sido enforcado numa oliveira em Patras, no Peloponeso. A Igreja frequentemente o honra com o símbolo do martírio sem tomar posição definitiva sobre como ele morreu.</p>
+      </div>
+
+      <div class="sl-bloco">
+        <h3>As relíquias — de Tebas a Constantinopla a Pádua</h3>
+        <p>Segundo a tradição, Lucas foi sepultado em Tebas, na Grécia. Em 357 d.C., o imperador Constâncio II mandou transladar suas relíquias para Constantinopla. Séculos depois, foram transferidas para Pádua, na Itália, onde repousam até hoje na Basílica de Santa Justina.</p>
+        <p>Em 2001, pesquisadores realizaram um teste de DNA nas relíquias de Pádua — e o resultado foi compatível com um homem de origem sírio-grega do século I.</p>
+        <p>E em 2000, como gesto de reconciliação ecumênica, o Papa João Paulo II devolveu simbolicamente uma costela de São Lucas à Grécia — para a cidade de Tebas, onde tudo começou. Depois de mais de 1600 anos, uma parte de Lucas voltou para casa.</p>
+      </div>
     </div>
 
-    <div class="sl-bloco">
-      <h3>Um homem de educação rara</h3>
-      <p>O grego de Lucas é considerado pelos especialistas o mais elegante e sofisticado de todo o Novo Testamento. Não é o grego simples das ruas — é o grego de quem leu, estudou, e sabia escrever com intenção literária.</p>
-      <p>O prólogo do seu Evangelho, nos primeiros quatro versículos, é um período gramatical que qualquer autor greco-romano da época reconheceria como obra de alguém instruído. Ele não estava apenas relatando — estava construindo um argumento histórico com as ferramentas de um escritor consciente.</p>
-      <p class="sl-nota">Comparado a Pedro, a João, a pescadores da Galileia, Lucas pertencia a outro nível de instrução formal. Não era superior em fé — mas era diferente em formação.</p>
+  </div><!-- /painel historia -->
+
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- PAINEL: GERAL                                 -->
+  <!-- ══════════════════════════════════════════════ -->
+  <div id="sl-geral" class="sl-painel">
+
+    <div class="sl-secao">
+      <div class="sl-secao-header">
+        <span class="sl-secao-num">01</span>
+        <div class="sl-secao-linha"></div>
+        <span class="sl-secao-titulo">Dados e Devoção</span>
+      </div>
+
+      <div class="sl-info-grid">
+        <div class="sl-info-item">
+          <span class="sl-info-label">Nascimento</span>
+          <span class="sl-info-valor">c. 1 d.C., Antioquia da Síria</span>
+        </div>
+        <div class="sl-info-item">
+          <span class="sl-info-label">Morte</span>
+          <span class="sl-info-valor">c. 84 d.C., Tebas (Grécia)</span>
+        </div>
+        <div class="sl-info-item">
+          <span class="sl-info-label">Festa litúrgica</span>
+          <span class="sl-info-valor">18 de outubro</span>
+        </div>
+        <div class="sl-info-item">
+          <span class="sl-info-label">Padroeiro de</span>
+          <span class="sl-info-valor">Médicos, pintores, escritores, cirurgiões</span>
+        </div>
+        <div class="sl-info-item">
+          <span class="sl-info-label">Símbolo</span>
+          <span class="sl-info-valor">O boi alado (um dos quatro viventes)</span>
+        </div>
+        <div class="sl-info-item">
+          <span class="sl-info-label">Relíquias</span>
+          <span class="sl-info-valor">Basílica de Santa Justina, Pádua</span>
+        </div>
+        <div class="sl-info-item">
+          <span class="sl-info-label">Obras</span>
+          <span class="sl-info-valor">Evangelho de Lucas · Atos dos Apóstolos</span>
+        </div>
+        <div class="sl-info-item">
+          <span class="sl-info-label">Profissão</span>
+          <span class="sl-info-valor">Médico e evangelista</span>
+        </div>
+      </div>
+
+      <div class="sl-bloco">
+        <h3>O boi alado — o símbolo de Lucas</h3>
+        <p>Na visão de Ezequiel e no Apocalipse de João, quatro seres viventes rodeiam o trono de Deus: um leão, um boi, um homem e uma águia. Desde os primeiros séculos, a tradição associou cada um deles a um evangelista. A Lucas coube o boi — símbolo do sacrifício, do serviço e da resistência silenciosa.</p>
+        <p>O boi carrega o peso do trabalho sem reclamar. Lucas carregou o peso de registrar uma história maior do que ele mesmo — e o fez com precisão, humildade e arte. O símbolo é justo.</p>
+      </div>
+
+      <div class="sl-bloco">
+        <h3>Lucas, o pintor — uma tradição venerável</h3>
+        <p>Uma das tradições mais belas — e mais difíceis de verificar — afirma que Lucas foi o primeiro a pintar o rosto de Maria. Segundo essa lenda, ele teria feito um retrato da Virgem ainda em vida, e a partir dele nasceria toda a tradição iconográfica mariana do Oriente e do Ocidente.</p>
+        <p>Diversas igrejas ao redor do mundo guardam ícones que se reivindicam "pintados por Lucas" — a mais famosa é a Nossa Senhora de Częstochowa, na Polônia, venerada há séculos como a "Madona Negra". Historicamente, os ícones são medievais. Mas a tradição tem raízes no século VI — e ela diz algo verdadeiro sobre Lucas mesmo que não seja literalmente factual: foi ele quem, com suas palavras, pintou o retrato mais vivo de Maria que o Novo Testamento preservou.</p>
+      </div>
+
+      <div class="sl-bloco">
+        <h3>Por que Lucas é padroeiro dos médicos</h3>
+        <p>A razão é direta: Paulo o chamou de "o médico amado", e essa profissão nunca foi esquecida pela tradição. Mas há algo mais profundo. A medicina de Lucas não era apenas uma ocupação — era uma forma de ver o mundo. Ele enxergava o sofrimento com atenção clínica e com compaixão humana ao mesmo tempo.</p>
+        <p>Quando Jesus cura no Evangelho de Lucas, as descrições são mais precisas clinicamente do que nos outros Evangelhos. Quando os pobres aparecem, aparecem com dignidade. O médico amado tornou-se padroeiro de todos que exercem a arte de curar.</p>
+      </div>
     </div>
 
-    <div class="sl-bloco">
-      <h3>O que era ser médico no século I</h3>
-      <p>Ser médico no mundo greco-romano era uma profissão de prestígio intelectual, mas de posição social ambígua. Muitos médicos eram escravos libertos que ascenderam pelo conhecimento. A medicina envolvia observação clínica, uso de ervas e compostos, cirurgias básicas — e exigia saber ler, escrever e raciocinar com precisão.</p>
-      <p>Essas habilidades aparecem claramente na escrita de Lucas. Quando narra a cura da sogra de Pedro, Marcos diz simplesmente que ela tinha febre. Lucas, o médico, acrescenta que era "uma grande febre" — um detalhe clínico que só alguém com formação médica naturalmente incluiria.</p>
+    <div class="sl-sep">· · ·</div>
+
+    <div class="sl-secao">
+      <div class="sl-secao-header">
+        <span class="sl-secao-num">02</span>
+        <div class="sl-secao-linha"></div>
+        <span class="sl-secao-titulo">A Obra de Lucas no Cânon</span>
+      </div>
+
+      <div class="sl-bloco">
+        <h3>Quase um terço do Novo Testamento</h3>
+        <p>O Evangelho de Lucas é o maior dos quatro — em número de palavras, supera Mateus, Marcos e João. Os Atos dos Apóstolos, que também saíram da sua pena, têm extensão comparável. Juntos, os dois livros representam aproximadamente 27% de todo o Novo Testamento.</p>
+        <p>Um único autor, que não era apóstolo, que não conheceu Jesus pessoalmente, que chegou ao Evangelho de fora — e que acabou sendo o maior contribuidor individual para o texto sagrado que a Igreja herdou.</p>
+      </div>
+
+      <div class="sl-bloco">
+        <h3>Parábolas que só existem por causa de Lucas</h3>
+        <p>Se Lucas não tivesse escrito, algumas das histórias mais conhecidas do mundo não existiriam. O Filho Pródigo está apenas em Lucas. O Bom Samaritano está apenas em Lucas. A mulher que perdeu sua moeda está apenas em Lucas. Zaqueu está apenas em Lucas. O rico e Lázaro está apenas em Lucas.</p>
+        <p>Quem disse que Lucas não foi testemunha ocular e que portanto sua contribuição seria menor, esqueceu que ele foi o guardião de histórias que mais nenhum outro evangelista preservou.</p>
+      </div>
     </div>
 
-    <div class="sl-bloco">
-      <h3>Havia Lucas sido escravo?</h3>
-      <p>Existe uma teoria histórica levantada por alguns estudiosos: Lucas poderia ter sido originalmente um escravo. No Império Romano, era comum que homens educados com habilidades médicas fossem escravos de famílias ricas — e depois libertados, tornando-se <em>liberti</em>.</p>
-      <p>Não há prova direta. A maioria dos estudiosos trata o ponto como possibilidade remota. Mas a pergunta permanece fascinante: e se o homem que escreveu o Evangelho mais compassivo com os pobres e marginalizados tivesse ele mesmo conhecido a marginalização por dentro?</p>
-    </div>
-  </div>
-
-  <div class="sl-sep">· · ·</div>
+  </div><!-- /painel geral -->
 
 
-  <!-- ═══════════════════════════════════════ -->
-  <!-- SEÇÃO 2 — ANTES DE PAULO               -->
-  <!-- ═══════════════════════════════════════ -->
-  <div class="sl-secao">
-    <div class="sl-secao-header">
-      <span class="sl-secao-num">02</span>
-      <div class="sl-secao-linha"></div>
-      <span class="sl-secao-titulo">Lucas Antes de Encontrar Paulo</span>
-    </div>
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- PAINEL: MILAGRES                              -->
+  <!-- ══════════════════════════════════════════════ -->
+  <div id="sl-milagres" class="sl-painel">
 
-    <div class="sl-bloco">
-      <h3>A vida antes da conversão</h3>
-      <p>Sobre a vida de Lucas antes de se tornar cristão, a história guarda um silêncio quase total. Ele não deixou memórias pessoais, não narrou sua própria conversão, não descreveu sua infância. Tudo o que sabemos vem de deduções a partir de sua obra e de tradições posteriores.</p>
-      <p>O que podemos dizer com razoável confiança: ele viveu numa cidade grande e cosmopolita, exerceu a medicina, tinha familiaridade com a cultura grega e provavelmente conhecia comunidades judaicas em Antioquia antes de encontrar o Evangelho.</p>
+    <div class="sl-secao">
+      <div class="sl-secao-header">
+        <span class="sl-secao-num">01</span>
+        <div class="sl-secao-linha"></div>
+        <span class="sl-secao-titulo">O Escritor dos Milagres de Jesus</span>
+      </div>
+
+      <div class="sl-bloco">
+        <h3>O médico diante do sobrenatural</h3>
+        <p>Existe uma ironia magnífica no fato de que foi um médico — alguém treinado para explicar o corpo e suas enfermidades — quem registrou com maior riqueza de detalhes as curas milagrosas de Jesus. Lucas não minimizou o sobrenatural diante de sua formação científica. Ao contrário: a precisão do médico tornou os milagres ainda mais vívidos na sua narração.</p>
+        <p>Enquanto Marcos descreve curas de forma rápida e direta, Lucas acrescenta detalhes clínicos que revelam o olhar de quem entendia de doenças. E esse olhar não contradiz a fé — ele a aprofunda.</p>
+      </div>
     </div>
 
-    <div class="sl-bloco">
-      <h3>Era Lucas um prosélito judeu?</h3>
-      <p>Alguns estudiosos propõem que Lucas, antes de se tornar cristão, poderia ter sido um "temente a Deus" — expressão usada na época para descrever gentios que admiravam o judaísmo, frequentavam as sinagogas e observavam algumas práticas, mas não se convertiam formalmente.</p>
-      <p>Essa teoria explicaria seu conhecimento profundo das Escrituras hebraicas e sua capacidade de citar o Antigo Testamento com precisão. Alguém que chegasse ao Evangelho completamente de fora do mundo judeu dificilmente escreveria como Lucas escreveu.</p>
-      <p class="sl-nota">Não é uma certeza — mas é uma hipótese que muitos especialistas consideram plausível.</p>
+    <div class="sl-sep">· · ·</div>
+
+    <div class="sl-secao">
+      <div class="sl-secao-header">
+        <span class="sl-secao-num">02</span>
+        <div class="sl-secao-linha"></div>
+        <span class="sl-secao-titulo">Milagres Narrados por Lucas</span>
+      </div>
+
+      <div class="sl-milagre-card">
+        <span class="sl-milagre-num">Lucas 5:12–13</span>
+        <h3>A cura do leproso</h3>
+        <p>Um homem "coberto de lepra" — a expressão é de Lucas, o único que especifica a gravidade da doença — prostrou-se diante de Jesus e pediu cura. Jesus o tocou. Tocou um leproso, quando a lei proibia qualquer contato. E o homem ficou limpo imediatamente. Lucas, o médico, registrou o que os olhos não conseguem ignorar: a cura foi instantânea e completa.</p>
+      </div>
+
+      <div class="sl-milagre-card">
+        <span class="sl-milagre-num">Lucas 7:11–17</span>
+        <h3>A ressurreição do filho da viúva de Naim</h3>
+        <p>Este milagre existe apenas no Evangelho de Lucas. Uma viúva perdera seu único filho — e o cortejo fúnebre saía da cidade quando Jesus chegou. Ele foi movido de compaixão, tocou o esquife e disse: "Jovem, eu te digo, levanta-te." O morto se sentou e começou a falar. A multidão que assistiu ao milagre reconheceu que um grande profeta havia surgido entre eles.</p>
+      </div>
+
+      <div class="sl-milagre-card">
+        <span class="sl-milagre-num">Lucas 13:10–17</span>
+        <h3>A mulher curvada por dezoito anos</h3>
+        <p>Apenas em Lucas. Uma mulher que estava encurvada havia dezoito anos — impossibilitada de se endireitar — foi curada por Jesus numa sinagoga, no sábado. O dirigente da sinagoga ficou indignado. Jesus respondeu chamando-a de "filha de Abraão" — uma expressão de dignidade e pertença que o mundo havia negado a ela por quase duas décadas.</p>
+      </div>
+
+      <div class="sl-milagre-card">
+        <span class="sl-milagre-num">Lucas 17:11–19</span>
+        <h3>Os dez leprosos</h3>
+        <p>Dez leprosos foram curados de uma só vez. Dez. Mas apenas um voltou para agradecer — e era samaritano, o mais improvável de todos. Lucas preservou esse detalhe que diz tanto sobre gratidão, sobre fé e sobre quem realmente reconhece a graça quando a recebe. Jesus perguntou: "Não foram curados os dez? Onde estão os outros nove?"</p>
+      </div>
+
+      <div class="sl-milagre-card">
+        <span class="sl-milagre-num">Lucas 22:50–51</span>
+        <h3>A orelha do servo do sumo sacerdote</h3>
+        <p>No momento da prisão de Jesus, um dos discípulos cortou a orelha de um servo do sumo sacerdote. Lucas — e apenas Lucas — registra que Jesus tocou a orelha do homem e o curou. O último milagre de cura antes da Paixão. Realizado não por um amigo, mas por um homem que seria executado horas depois — em favor de alguém que havia vindo prendê-lo.</p>
+      </div>
+
+      <div class="sl-milagre-card">
+        <span class="sl-milagre-num">Atos 19:11–12</span>
+        <h3>Os milagres extraordinários através de Paulo</h3>
+        <p>Lucas, nos Atos, narra que Deus realizava milagres extraordinários pelas mãos de Paulo — a ponto de que panos e aventais que tinham tocado o corpo de Paulo eram levados aos doentes, e estes ficavam curados, os espíritos malignos os abandonavam. Lucas, o médico que acompanhou Paulo, foi testemunha ocular de parte desses prodígios.</p>
+      </div>
     </div>
 
-    <div class="sl-bloco">
-      <h3>A conversão de Lucas</h3>
-      <p>A tradição não conservou uma narrativa da conversão de Lucas. Não existe um "caminho de Damasco" para ele — nenhum momento dramático registrado, nenhuma visão descrita.</p>
-      <p>O que se pode inferir é que ele se tornou cristão provavelmente em Antioquia, onde a comunidade cristã era forte desde muito cedo. O que é certo é que, quando os dois se encontraram, Lucas já era cristão comprometido o suficiente para deixar tudo e acompanhar Paulo nas suas viagens pelo mundo.</p>
+    <div class="sl-sep">· · ·</div>
+
+    <div class="sl-secao">
+      <div class="sl-secao-header">
+        <span class="sl-secao-num">03</span>
+        <div class="sl-secao-linha"></div>
+        <span class="sl-secao-titulo">Graças Atribuídas a São Lucas</span>
+      </div>
+
+      <div class="sl-bloco">
+        <h3>A devoção dos médicos e enfermos</h3>
+        <p>Ao longo dos séculos, São Lucas tornou-se intercessor particular dos que sofrem e dos que curam. Médicos que enfrentam casos sem esperança, pacientes à beira da morte, famílias que velam um doente — todos encontraram em Lucas um patrono que conhece o sofrimento humano por dentro.</p>
+        <p>Não porque Lucas realizasse curas sobrenaturais em vida de forma documentada. Mas porque o homem que escreveu "a fé te salvou" em mais de uma ocasião entendeu que saúde e fé nunca estiveram separadas — e sua intercessão é invocada precisamente nessa fronteira entre o que a medicina pode fazer e o que só Deus pode fazer.</p>
+      </div>
+
+      <div class="sl-bloco">
+        <h3>O ícone que cura — Nossa Senhora de Częstochowa</h3>
+        <p>A tradição afirma que o ícone de Nossa Senhora de Częstochowa, na Polônia — o mais venerado da Europa Oriental — foi pintado por São Lucas sobre uma tábua que pertenceu à Sagrada Família. Independentemente da historicidade, o ícone tornou-se centro de graças e curas relatadas por peregrinos de todo o mundo por séculos.</p>
+        <p>A ligação entre Lucas e Maria, entre o evangelista e a Mãe de Deus, faz sentido profundo: foi ele quem preservou as palavras dela, quem narrou sua história com mais ternura — e a tradição quis que esse vínculo continuasse além da morte, através de uma imagem pintada com as mãos do médico amado.</p>
+      </div>
     </div>
 
-    <div class="sl-bloco">
-      <h3>Lucas conheceu Jesus pessoalmente?</h3>
-      <p>Esta é uma das perguntas mais fascinantes sobre Lucas — e a resposta, para a maioria dos estudiosos modernos, é não.</p>
-      <p>O próprio Lucas parece confirmar isso no prólogo do seu Evangelho, quando escreve que recebeu as informações "dos que desde o princípio foram testemunhas oculares". Ele fala dos outros como testemunhas — não fala de si mesmo como uma delas.</p>
-    </div>
+  </div><!-- /painel milagres -->
 
-    <div class="sl-bloco">
-      <h3>A tradição minoritária: Lucas entre os 70 discípulos</h3>
-      <p>Existe uma tradição minoritária — presente em alguns escritos dos Padres da Igreja — que afirma que Lucas teria sido um dos 70 discípulos enviados por Jesus, conforme narrado no próprio capítulo 10 do seu Evangelho.</p>
-      <p>Alguns Padres também identificam Lucas como um dos dois discípulos do caminho de Emaús — aqueles que conversaram com o Cristo ressuscitado sem reconhecê-lo. Um dos dois é identificado como Cléofas; o outro permanece sem nome — e a tradição preenche esse silêncio com o nome de Lucas.</p>
-      <p>São belas tradições. Não são historicamente verificáveis. Mas a fé popular as manteve vivas por séculos, e elas revelam o quanto os cristãos de todos os tempos desejaram que Lucas tivesse olhado nos olhos de Jesus.</p>
-    </div>
-  </div>
+</div><!-- /sl-wrap -->
 
-  <div class="sl-sep">· · ·</div>
-
-
-  <!-- ═══════════════════════════════════════ -->
-  <!-- SEÇÃO 3 — LUCAS E PAULO                -->
-  <!-- ═══════════════════════════════════════ -->
-  <div class="sl-secao">
-    <div class="sl-secao-header">
-      <span class="sl-secao-num">03</span>
-      <div class="sl-secao-linha"></div>
-      <span class="sl-secao-titulo">Lucas e Paulo — A Grande Parceria</span>
-    </div>
-
-    <div class="sl-bloco">
-      <h3>O primeiro encontro — Trôade, por volta de 50 d.C.</h3>
-      <p>A história começa com uma mudança de pronome.</p>
-      <p>Nos Atos dos Apóstolos, a narrativa segue normalmente na terceira pessoa — "eles foram", "Paulo disse", "o grupo partiu". Então, de repente, no capítulo 16, o texto muda: "procuramos uma passagem para a Macedônia". <em>Procuramos.</em> Em primeira pessoa do plural.</p>
-      <p>Esse pequeno detalhe gramatical é a marca de um testemunho direto. Lucas estava lá. Era parte do grupo. E o lugar onde isso acontece é Trôade, na costa do que hoje é a Turquia — o ponto em que Lucas se junta à equipe de Paulo pela primeira vez.</p>
-    </div>
-
-    <div class="sl-bloco">
-      <h3>As passagens "nós" — a prova da presença de Lucas</h3>
-      <p>Ao longo dos Atos, essas passagens em primeira pessoa do plural aparecem em quatro momentos distintos: durante a Segunda Viagem Missionária a partir de Trôade, durante parte da Terceira Viagem, na permanência em Cesareia e, finalmente, na dramática viagem de navio até Roma — incluindo o naufrágio em Malta.</p>
-      <p>Para os historiadores, essas seções são preciosas. Elas representam um diário de viagem, uma memória pessoal inserida dentro de uma narrativa mais ampla. Lucas não estava apenas escrevendo sobre Paulo — estava viajando com ele.</p>
-    </div>
-
-    <div class="sl-bloco">
-      <h3>"Lucas, o médico amado"</h3>
-      <p>Paulo menciona Lucas em três de suas cartas. A mais memorável está em Colossenses 4:14, onde o apóstolo o chama de <em>"Lucas, o médico amado"</em>.</p>
-      <p>Quatro palavras em grego. Mas que palavras. Elas revelam que Lucas ainda exercia sua profissão — provavelmente cuidando da saúde frágil de Paulo. E revelam algo mais profundo: havia entre os dois uma afeição genuína. Paulo não diz apenas "Lucas, o médico". Diz <em>amado</em>.</p>
-    </div>
-
-    <div class="sl-citacao">
-      <p>"Lucas, o médico amado, vos saúda, e também Demas."</p>
-      <span class="sl-fonte">Colossenses 4:14</span>
-    </div>
-
-    <div class="sl-bloco">
-      <h3>Lucas nas prisões de Paulo</h3>
-      <p>Quando Paulo foi preso em Cesareia — onde permaneceu por dois anos — Lucas ficou. Não fugiu, não voltou para casa. Ficou. E foi durante esse período que Lucas provavelmente realizou grande parte de sua pesquisa, entrevistando testemunhas na Judeia e na Galileia para escrever seu Evangelho.</p>
-      <p>Depois, quando Paulo embarcou para Roma, Lucas foi junto. A viagem narrada nos capítulos finais dos Atos — com tempestades e o naufrágio em Malta — é uma das mais vívidas narrativas de viagem marítima conservadas da Antiguidade.</p>
-    </div>
-
-    <div class="sl-bloco">
-      <h3>"Apenas Lucas está comigo"</h3>
-      <p>A frase mais solitária e mais reveladora está na Segunda Carta a Timóteo — provavelmente a última carta que Paulo escreveu antes do seu martírio.</p>
-      <p>Paulo escreveu: <em>"Apenas Lucas está comigo."</em></p>
-      <p>Todos os outros tinham partido. No momento mais sombrio de Paulo, quando o fim estava próximo, era Lucas quem permanecia. O médico. O amigo. O fiel companheiro. É difícil ler essa frase sem sentir o peso do que ela significa.</p>
-    </div>
-
-    <div class="sl-citacao">
-      <p>"Apenas Lucas está comigo."</p>
-      <span class="sl-fonte">2 Timóteo 4:11</span>
-    </div>
-
-    <div class="sl-bloco">
-      <h3>Como Paulo moldou a teologia de Lucas</h3>
-      <p>Anos ao lado de Paulo deixaram marcas profundas na visão teológica de Lucas. A ênfase na misericórdia universal de Deus, a abertura aos gentios, a centralidade da graça — todos esses temas têm ressonâncias claras com o pensamento paulino.</p>
-      <p>Mas Lucas não foi apenas um repetidor das ideias de Paulo. Ele trouxe sua própria voz, sua sensibilidade médica para o sofrimento humano, sua atenção às mulheres e aos pobres. A parceria foi de influência mútua — e o resultado está nos dois livros que juntos formam quase um terço de todo o Novo Testamento.</p>
-    </div>
-  </div>
-
-  <div class="sl-sep">· · ·</div>
-
-
-  <!-- ═══════════════════════════════════════ -->
-  <!-- SEÇÃO 4 — ESCRITOR E HISTORIADOR       -->
-  <!-- ═══════════════════════════════════════ -->
-  <div class="sl-secao">
-    <div class="sl-secao-header">
-      <span class="sl-secao-num">04</span>
-      <div class="sl-secao-linha"></div>
-      <span class="sl-secao-titulo">Lucas como Escritor e Historiador</span>
-    </div>
-
-    <div class="sl-bloco">
-      <h3>A decisão de escrever</h3>
-      <p>Em algum momento — provavelmente durante os dois anos em que Paulo estava preso em Cesareia — Lucas decidiu escrever.</p>
-      <p>Já existiam outros relatos sobre Jesus. O próprio Lucas menciona isso no prólogo: "muitos já empreenderam organizar uma narração dos fatos que entre nós se cumpriram". Então por que escrever mais um? Porque ele tinha feito o trabalho de investigação que outros talvez não tenham feito. Ele seguiu tudo "desde o princípio com exatidão".</p>
-    </div>
-
-    <div class="sl-bloco">
-      <h3>O prólogo — a mais sofisticada introdução do Novo Testamento</h3>
-      <p>Os primeiros quatro versículos do Evangelho de Lucas são, do ponto de vista literário, extraordinários. São escritos num grego clássico impecável que lembra os prólogos dos grandes historiadores gregos.</p>
-      <p>E então, a partir do versículo 5, o estilo muda completamente: Lucas passa a escrever num grego que imita propositalmente o Antigo Testamento. A mudança é deliberada — é Lucas sinalizando que a história que se segue pertence à continuidade das Escrituras.</p>
-      <p class="sl-nota">É um dos recursos literários mais sofisticados do Novo Testamento, e a maioria dos leitores passa por ele sem perceber.</p>
-    </div>
-
-    <div class="sl-bloco">
-      <h3>Quem era Teófilo?</h3>
-      <p>Tanto o Evangelho quanto os Atos são dedicados a alguém chamado Teófilo — a quem Lucas chama de "excelentíssimo Teófilo". Esse título era usado no mundo romano para pessoas de posição elevada, sugerindo que Teófilo era um homem de alto status que havia se tornado cristão.</p>
-      <p>Outros estudiosos propõem que "Teófilo" — que em grego significa "amigo de Deus" — poderia ser um nome simbólico, representando qualquer leitor cristão. A maioria, porém, vê uma pessoa real por trás do nome.</p>
-    </div>
-
-    <div class="sl-bloco">
-      <h3>Teria Lucas entrevistado Maria?</h3>
-      <p>O Evangelho de Lucas contém informações sobre a infância de Jesus que não aparecem em nenhum outro lugar — a Anunciação, a visita a Isabel, o nascimento em Belém, a apresentação no Templo. Duas vezes o texto menciona que Maria "guardava essas coisas e as meditava no seu coração".</p>
-      <p>A tradição patrística afirma que Lucas entrevistou Maria. Durante os dois anos em Cesareia, com a Judeia a curta distância, seria possível que Lucas tivesse viajado até Jerusalém ou Éfeso para ouvi-la pessoalmente.</p>
-      <p>Não é possível provar. Mas o Evangelho de Lucas cheira a Maria de uma forma que nenhum outro Evangelho cheira — e isso precisa de explicação.</p>
-    </div>
-
-    <div class="sl-bloco">
-      <h3>O evangelista dos pobres, das mulheres e dos marginalizados</h3>
-      <p>Quem lê Lucas com atenção percebe rapidamente uma tendência clara: ele se interessa pelas pessoas que os poderosos ignoram. Os pastores do nascimento de Jesus eram trabalhadores de baixo status. As mulheres que acompanham Jesus têm nomes e histórias — algo incomum para a literatura do século I. Os pobres são abençoados; os ricos são advertidos. Os samaritanos são apresentados como heróis.</p>
-      <p>Lucas sabia o que era ser de fora — e encontrou em Jesus alguém que sempre abria a porta para os de fora.</p>
-    </div>
-
-    <div class="sl-bloco">
-      <h3>Os hinos de Lucas</h3>
-      <p>Um dos tesouros mais preciosos do Evangelho de Lucas são os quatro hinos preservados nos seus primeiros dois capítulos — cânticos que a Igreja canta há dois mil anos:</p>
-      <p>O <strong>Magnificat</strong> — o canto de Maria. O <strong>Benedictus</strong> — o canto de Zacarias. O <strong>Gloria in Excelsis</strong> — o canto dos anjos. O <strong>Nunc Dimittis</strong> — o canto do ancião Simeão.</p>
-      <p>Bach os musicou. Vivaldi os musicou. Centenas de compositores os musicaram. Lucas os preservou — e sem ele, estariam perdidos.</p>
-    </div>
-
-    <div class="sl-bloco">
-      <h3>A precisão histórica confirmada pela arqueologia</h3>
-      <p>Por muito tempo, críticos apontaram supostos erros nos textos de Lucas — especialmente nos Atos. O tempo foi mostrando o contrário. A arqueologia confirmou detalhe após detalhe: os títulos corretos dos magistrados de diferentes cidades, a existência do "pretório de Herodes" em Cesareia, a rota específica da viagem de naufrágio.</p>
-      <p>O arqueólogo Colin Hemer passou décadas verificando as afirmações dos Atos e concluiu que o texto demonstra um nível de precisão que só é possível em alguém que esteve nos lugares ou tinha acesso a fontes de primeira qualidade.</p>
-    </div>
-  </div>
-
-  <div class="sl-sep">· · ·</div>
-
-
-  <!-- ═══════════════════════════════════════ -->
-  <!-- SEÇÃO 5 — APÓS PAULO                   -->
-  <!-- ═══════════════════════════════════════ -->
-  <div class="sl-secao">
-    <div class="sl-secao-header">
-      <span class="sl-secao-num">05</span>
-      <div class="sl-secao-linha"></div>
-      <span class="sl-secao-titulo">Lucas Após a Morte de Paulo</span>
-    </div>
-
-    <div class="sl-bloco">
-      <h3>Depois do martírio de Paulo</h3>
-      <p>Paulo foi martyrizado em Roma por volta do ano 67 d.C. Lucas sobreviveu. O que aconteceu com ele depois é território de tradição, não de história documentada — mas as tradições que existem são antigas e merecem atenção.</p>
-      <p>A narrativa mais comum é que Lucas continuou sua missão como evangelista, pregando na Grécia — especialmente na Acaia, com cidades como Corinto, Atenas e Patras. Outras tradições falam da Dalmácia, da Macedônia, do Egito e da Bitínia.</p>
-    </div>
-
-    <div class="sl-bloco">
-      <h3>A ligação de Lucas com Filipos</h3>
-      <p>Entre todas as cidades onde Lucas trabalhou, Filipos parece ter ocupado um lugar especial. Foi lá que ele primeiro chegou com Paulo, testemunhou o milagre da jovem liberta e viu a comunidade cristã mais querida de Paulo ter seu início.</p>
-      <p>Há indícios nas passagens "nós" dos Atos de que Lucas permaneceu em Filipos por um período considerável, cuidando da jovem comunidade, enquanto Paulo seguia adiante.</p>
-    </div>
-
-    <div class="sl-bloco">
-      <h3>Os últimos anos — o silêncio da história</h3>
-      <p>Sobre os últimos anos de Lucas, a história guarda um silêncio frustrante. Sabemos que seus dois livros circularam nas comunidades cristãs e foram reconhecidos como autoritativos desde muito cedo. Mas sobre o homem que os escreveu, quase nada é documentado.</p>
-      <p>É o silêncio característico dos primeiros séculos cristãos: os que mais fizeram muitas vezes deixaram menos rastros históricos. Lucas escreveu sobre outros — e deixou que outros escrevessem sobre ele, depois.</p>
-    </div>
-  </div>
-
-  <div class="sl-sep">· · ·</div>
-
-
-  <!-- ═══════════════════════════════════════ -->
-  <!-- SEÇÃO 6 — A MORTE                      -->
-  <!-- ═══════════════════════════════════════ -->
-  <div class="sl-secao">
-    <div class="sl-secao-header">
-      <span class="sl-secao-num">06</span>
-      <div class="sl-secao-linha"></div>
-      <span class="sl-secao-titulo">A Morte de Lucas</span>
-    </div>
-
-    <div class="sl-bloco">
-      <h3>Mártir ou morte natural? O grande debate</h3>
-      <p>Lucas morreu como mártir ou viveu até a velhice e morreu em paz? As tradições antigas se dividem — e as duas linhas existem desde muito cedo na história da Igreja.</p>
-      <p>A tradição mais antiga e mais sustentada pelos Padres afirma que Lucas morreu de morte natural, com aproximadamente 84 anos, em Tebas, na Beócia (Grécia). Essa tradição é atestada por Eusébio de Cesareia no século IV. Para eles, Lucas foi um "confessor" — alguém que testemunhou a fé com coragem, mas não morreu assassinado por causa de Cristo.</p>
-      <p>Uma tradição posterior — e minoritária — afirma que Lucas foi martyrizado, tendo sido enforcado numa oliveira em Patras, no Peloponeso. A Igreja frequentemente o honra com o símbolo do martírio sem tomar posição definitiva sobre como ele morreu.</p>
-    </div>
-
-    <div class="sl-bloco">
-      <h3>As relíquias — de Tebas a Constantinopla a Pádua</h3>
-      <p>Segundo a tradição, Lucas foi sepultado em Tebas, na Grécia. Em 357 d.C., o imperador Constâncio II mandou transladar suas relíquias para Constantinopla. Séculos depois, foram transferidas para Pádua, na Itália, onde repousam até hoje na Basílica de Santa Justina.</p>
-      <p>Em 2001, pesquisadores realizaram um teste de DNA nas relíquias de Pádua — e o resultado foi compatível com um homem de origem sírio-grega do século I.</p>
-      <p>E em 2000, como gesto de reconciliação ecumênica, o Papa João Paulo II devolveu simbolicamente uma costela de São Lucas à Grécia — para a cidade de Tebas, onde tudo começou. Depois de mais de 1600 anos, uma parte de Lucas voltou para casa.</p>
-    </div>
-  </div>
-
-</div>
+<script>
+  function slMostrar(painel, btn) {
+    // Esconde todos os painéis
+    document.querySelectorAll('.sl-painel').forEach(function(p) {
+      p.classList.remove('ativo');
+    });
+    // Remove classe ativo de todos os botões
+    document.querySelectorAll('.sl-nav-btn').forEach(function(b) {
+      b.classList.remove('ativo');
+    });
+    // Mostra o painel selecionado
+    document.getElementById('sl-' + painel).classList.add('ativo');
+    // Ativa o botão clicado
+    btn.classList.add('ativo');
+    // Sobe para o topo suavemente
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
