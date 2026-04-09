@@ -700,34 +700,25 @@
 </div><!-- /sl-wrap -->
 
 <script>
-(function() {
   function slNavegar(btn) {
     var nomePainel = btn.getAttribute('data-painel');
     var wrap = btn.closest('.sl-wrap');
 
-    // Remove ativo de todos os painéis
     var paineis = wrap.querySelectorAll('.sl-painel');
     for (var i = 0; i < paineis.length; i++) {
       paineis[i].classList.remove('ativo');
     }
 
-    // Remove ativo de todos os botões
     var botoes = wrap.querySelectorAll('.sl-nav-btn');
     for (var j = 0; j < botoes.length; j++) {
       botoes[j].classList.remove('ativo');
     }
 
-    // Ativa o painel correto pelo data-nome
     var alvo = wrap.querySelector('[data-nome="' + nomePainel + '"]');
     if (alvo) {
       alvo.classList.add('ativo');
     }
 
-    // Ativa o botão
     btn.classList.add('ativo');
   }
-
-  // Expõe globalmente
-  window.slNavegar = slNavegar;
-})();
 </script>
