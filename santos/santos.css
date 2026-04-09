@@ -476,7 +476,6 @@
     line-height: 1.2;
 }
 
-/* Linha dourada abaixo do header */
 .modal-header-img::after {
     content: '';
     position: absolute;
@@ -517,7 +516,6 @@
     font-size: 1rem;
 }
 
-/* RESET da capitular — controlado pelo sao-lucas.html */
 .biografia-container p::first-letter {
     float: none !important;
     font-size: inherit !important;
@@ -558,7 +556,6 @@
     border-color: var(--gold);
 }
 
-/* Botão marcar linha */
 .toggle-highlight {
     position: fixed;
     top: 24px;
@@ -581,7 +578,6 @@
     border-color: var(--gold);
 }
 
-/* Botão finalizado */
 .btn-finalizado {
     display: block;
     margin: 40px auto 0;
@@ -657,6 +653,472 @@
 }
 
 /* =========================================
+   SANTOS — CSS UNIFICADO PARA TODOS OS HTMLs
+   ========================================= */
+
+/* RESET FIRST-LETTER */
+.sl-wrap p::first-letter,
+.sl-wrap .sl-milagre-card p::first-letter,
+.sl-wrap .sl-citacao p::first-letter,
+.sl-wrap .sl-destaque p::first-letter {
+    font-size: inherit !important;
+    float: none !important;
+    line-height: inherit !important;
+    font-weight: inherit !important;
+    color: inherit !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* CONTAINER */
+.sl-wrap {
+    font-family: 'Georgia', serif;
+    color: #1a1a1a;
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 8px 4px 60px;
+}
+
+/* INTRO */
+.sl-intro {
+    text-align: center;
+    padding: 32px 24px 40px;
+    border-bottom: 1px solid #e8e0d0;
+    margin-bottom: 48px;
+}
+
+.sl-intro p {
+    font-size: 15px;
+    color: #666;
+    font-style: italic;
+    line-height: 1.7;
+    max-width: 480px;
+    margin: 0 auto;
+}
+
+/* NAVEGAÇÃO POR ABAS */
+.sl-nav {
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    margin-bottom: 48px;
+    border-bottom: 1px solid #e8e0d0;
+}
+
+.sl-nav-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: 'Georgia', serif;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #aaa;
+    padding: 14px 28px;
+    position: relative;
+    transition: color 0.3s ease;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+}
+
+.sl-nav-btn:hover {
+    color: var(--gold);
+}
+
+.sl-nav-btn.ativo {
+    color: var(--gold);
+    border-bottom: 2px solid var(--gold);
+}
+
+/* PAINÉIS */
+.sl-painel {
+    display: none;
+}
+
+.sl-painel.ativo {
+    display: block;
+}
+
+/* SEÇÃO */
+.sl-secao {
+    margin-bottom: 56px;
+}
+
+.sl-secao-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 32px;
+}
+
+.sl-secao-num {
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: var(--gold);
+    text-transform: uppercase;
+    white-space: nowrap;
+    padding-top: 2px;
+}
+
+.sl-secao-linha {
+    flex: 1;
+    height: 1px;
+    background: #e8e0d0;
+}
+
+.sl-secao-titulo {
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: var(--gold);
+    text-transform: uppercase;
+    white-space: nowrap;
+    padding-top: 2px;
+}
+
+/* BLOCO */
+.sl-bloco {
+    margin-bottom: 40px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid #f0ece4;
+}
+
+.sl-bloco:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.sl-bloco h3 {
+    font-size: 17px;
+    font-weight: normal;
+    color: #111;
+    margin: 0 0 14px 0;
+    letter-spacing: 0.2px;
+    line-height: 1.4;
+}
+
+.sl-bloco p {
+    font-size: 15px;
+    color: #3a3a3a;
+    line-height: 1.85;
+    margin: 0 0 10px 0;
+    text-align: left;
+}
+
+.sl-bloco p:last-child {
+    margin-bottom: 0;
+}
+
+/* LETRA CAPITULAR */
+.sl-capitular {
+    font-size: 3.2em;
+    font-weight: bold;
+    color: var(--gold);
+    float: left;
+    line-height: 0.8;
+    margin-right: 10px;
+    margin-top: 6px;
+    font-family: 'Georgia', serif;
+}
+
+/* CITAÇÃO */
+.sl-citacao {
+    margin: 32px 0;
+    padding: 24px 32px;
+    border-left: 2px solid var(--gold);
+    background: #faf8f4;
+    border-radius: 0 8px 8px 0;
+    position: relative;
+}
+
+.sl-citacao::before {
+    content: '\201C';
+    font-size: 5em;
+    color: var(--gold);
+    position: absolute;
+    top: -8px;
+    left: 12px;
+    opacity: 0.12;
+    font-family: Georgia, serif;
+    line-height: 1;
+}
+
+.sl-citacao p {
+    font-size: 15px;
+    font-style: italic;
+    color: #444;
+    line-height: 1.75;
+    margin: 0 0 8px 0;
+}
+
+.sl-citacao .sl-fonte {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-style: normal;
+}
+
+/* DESTAQUE / PULLQUOTE */
+.sl-destaque {
+    background: linear-gradient(120deg, #faf8f4 0%, #f5efe3 100%);
+    padding: 24px 32px;
+    border-left: 3px solid var(--gold-light);
+    margin: 32px 0;
+    font-style: italic;
+    border-radius: 0 8px 8px 0;
+    font-size: 15px;
+    color: #444;
+    line-height: 1.85;
+}
+
+/* CARD DE MILAGRE / EVENTO */
+.sl-milagre-card {
+    background: #faf8f4;
+    border: 1px solid #e8e0d0;
+    border-left: 3px solid var(--gold);
+    border-radius: 0 8px 8px 0;
+    padding: 24px 28px;
+    margin-bottom: 24px;
+    position: relative;
+}
+
+.sl-milagre-card::after {
+    content: '✦';
+    position: absolute;
+    top: -13px;
+    right: 20px;
+    background: #faf8f4;
+    padding: 0 8px;
+    color: var(--gold-light);
+    font-size: 1.1em;
+}
+
+.sl-milagre-card h3 {
+    font-size: 15px;
+    font-weight: normal;
+    color: #111;
+    margin: 0 0 10px 0;
+    letter-spacing: 0.2px;
+    font-family: 'Georgia', serif;
+}
+
+.sl-milagre-card p {
+    font-size: 14px;
+    color: #555;
+    line-height: 1.8;
+    margin: 0;
+    text-align: left;
+}
+
+.sl-milagre-num {
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 8px;
+}
+
+/* SEÇÃO ESCURA */
+.sl-secao-escura {
+    background: linear-gradient(135deg, #1a1a1a 0%, #2c241b 100%);
+    color: #f5f0e8;
+    padding: 40px;
+    border-radius: 10px;
+    margin: 40px 0;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+}
+
+.sl-secao-escura .sl-secao-titulo,
+.sl-secao-escura .sl-secao-num {
+    color: var(--gold-light);
+}
+
+.sl-secao-escura .sl-secao-linha {
+    background: rgba(212,175,55,0.3);
+}
+
+.sl-secao-escura .sl-bloco p {
+    color: #e8dfd0;
+}
+
+.sl-secao-escura .sl-bloco h3 {
+    color: #f5f0e8;
+}
+
+.sl-secao-escura .sl-bloco {
+    border-bottom-color: rgba(255,255,255,0.07);
+}
+
+/* GRID DE INFO */
+.sl-info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: #e8e0d0;
+    border: 1px solid #e8e0d0;
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 40px;
+}
+
+.sl-info-item {
+    background: #faf8f4;
+    padding: 18px 20px;
+}
+
+.sl-info-label {
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 6px;
+}
+
+.sl-info-valor {
+    font-size: 14px;
+    color: #1a1a1a;
+    line-height: 1.5;
+}
+
+/* BOX DE LISTA */
+.sl-box {
+    background: #fff;
+    border: 1px solid #e8e0d0;
+    border-top: 3px solid var(--gold);
+    border-radius: 0 0 8px 8px;
+    padding: 28px 32px;
+    margin: 32px 0;
+}
+
+.sl-box h3 {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin: 0 0 20px 0;
+    text-align: center;
+}
+
+.sl-lista {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sl-lista li {
+    padding: 11px 0 11px 28px;
+    position: relative;
+    border-bottom: 1px solid #f0ece4;
+    font-size: 14px;
+    color: #3a3a3a;
+    line-height: 1.6;
+}
+
+.sl-lista li:last-child {
+    border-bottom: none;
+}
+
+.sl-lista li::before {
+    content: '❧';
+    position: absolute;
+    left: 0;
+    color: var(--gold);
+    font-size: 1em;
+}
+
+/* LINHA DO TEMPO */
+.sl-timeline {
+    border-left: 2px solid #e8e0d0;
+    padding-left: 24px;
+    margin: 32px 0;
+}
+
+.sl-timeline-item {
+    position: relative;
+    margin-bottom: 20px;
+    font-size: 14px;
+    color: #3a3a3a;
+    line-height: 1.7;
+}
+
+.sl-timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -30px;
+    top: 6px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--gold);
+}
+
+.sl-timeline-item strong {
+    color: var(--gold);
+    display: block;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+}
+
+/* NOTA */
+.sl-nota {
+    font-size: 12px;
+    color: #999;
+    font-style: italic;
+    margin-top: 6px;
+    line-height: 1.6;
+}
+
+/* SEPARADOR */
+.sl-sep {
+    text-align: center;
+    margin: 48px 0;
+    color: var(--gold-light);
+    font-size: 14px;
+    letter-spacing: 8px;
+}
+
+/* TAG */
+.sl-tag {
+    display: inline-block;
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    border: 1px solid var(--gold-light);
+    padding: 3px 10px;
+    border-radius: 2px;
+    margin-bottom: 12px;
+}
+
+/* ORAÇÃO */
+.sl-oracao {
+    background: linear-gradient(135deg, #faf8f4 0%, #f5efe3 100%);
+    border: 1px solid #e8e0d0;
+    border-radius: 8px;
+    padding: 36px 40px;
+    margin: 40px 0;
+    text-align: center;
+    font-style: italic;
+    font-size: 15px;
+    color: #444;
+    line-height: 2.1;
+}
+
+.sl-oracao .sl-oracao-titulo {
+    font-style: normal;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 24px;
+}
+
+/* =========================================
    RESPONSIVO
    ========================================= */
 @media (max-width: 768px) {
@@ -667,23 +1129,22 @@
     }
 
     .image-container { height: 150px; }
-
     .santo-card h3 { font-size: 0.95rem; }
-
-    .btn-primary {
-        font-size: 0.8rem;
-        padding: 10px 16px;
-    }
-
+    .btn-primary { font-size: 0.8rem; padding: 10px 16px; }
     .modal-header-img { min-height: 28vh; }
-
     .modal-body-padding { padding: 28px 18px 60px; }
-
-    .close-modal  { top: 16px; right: 16px; }
+    .close-modal { top: 16px; right: 16px; }
     .toggle-highlight { top: 16px; right: 68px; }
-
     .hist-card { width: 180px; }
     .hist-img-wrap { height: 130px; }
+    .sl-secao-escura { padding: 28px 20px; }
+    .sl-oracao { padding: 24px 20px; }
+    .sl-capitular { font-size: 2.5em; }
+    .sl-nav-btn { padding: 12px 14px; letter-spacing: 2px; font-size: 9px; }
+    .sl-bloco h3 { font-size: 15px; }
+    .sl-bloco p { font-size: 14px; }
+    .sl-citacao p { font-size: 14px; }
+    .sl-info-grid { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 480px) {
@@ -694,8 +1155,6 @@
     }
 
     #modalTitle { font-size: 1.4rem; letter-spacing: 1px; }
-
     .categorias-container { gap: 7px; padding: 14px; }
-
     .chip { font-size: 0.76rem; padding: 7px 13px; }
 }
