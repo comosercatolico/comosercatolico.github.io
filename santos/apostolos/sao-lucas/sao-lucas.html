@@ -699,47 +699,5 @@
 
 </div><!-- /sl-wrap -->
 
-<script>
-  (function () {
-    function init() {
-      var botoes = document.querySelectorAll('.sl-nav-btn');
 
-      if (botoes.length === 0) return;
 
-      botoes.forEach(function (btn) {
-        btn.addEventListener('click', function () {
-          var nomePainel = btn.getAttribute('data-painel');
-          var wrap = btn.closest('.sl-wrap');
-
-          wrap.querySelectorAll('.sl-painel').forEach(function (p) {
-            p.classList.remove('ativo');
-          });
-
-          wrap.querySelectorAll('.sl-nav-btn').forEach(function (b) {
-            b.classList.remove('ativo');
-          });
-
-          var alvo = wrap.querySelector('[data-nome="' + nomePainel + '"]');
-
-          console.log('painel procurado:', nomePainel);
-          console.log('elemento encontrado:', alvo);
-
-          if (alvo) alvo.classList.add('ativo');
-          btn.classList.add('ativo');
-        });
-      });
-    }
-
-    init();
-
-    var observer = new MutationObserver(function () {
-      var botoes = document.querySelectorAll('.sl-nav-btn');
-      if (botoes.length > 0) {
-        observer.disconnect();
-        init();
-      }
-    });
-
-    observer.observe(document.body, { childList: true, subtree: true });
-  })();
-</script>
