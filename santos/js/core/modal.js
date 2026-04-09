@@ -57,11 +57,9 @@ export async function abrirModal(nomeSanto, baseDados) {
     modal.classList.add("active");
     document.body.style.overflow = "hidden";
 
-    // 🔥 DETERMINA O CAMINHO CORRETO
     const pasta = santo.pasta || "doutores";
     const caminho = `/santos/${pasta}/${slug}.html`;
 
-    // 🔥 BADGE: usa a pasta para definir o título principal
     const tituloBadge = {
         "doutores":  "Doutor da Igreja",
         "apostolos": "Apóstolo & Evangelista",
@@ -96,6 +94,30 @@ export async function abrirModal(nomeSanto, baseDados) {
         setTimeout(() => {
             ativarLinhasClicaveis(slug);
         }, 100);
+
+        // 🔥 ATIVA NAVEGAÇÃO POR ABAS
+        setTimeout(() => {
+            const botoes = content.querySelectorAll('.sl-nav-btn');
+            botoes.forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    var nomePainel = btn.getAttribute('data-painel');
+                    var wrap = btn.closest('.sl-wrap');
+                    if (!wrap) return;
+
+                    wrap.querySelectorAll('.sl-painel').forEach(function(p) {
+                        p.classList.remove('ativo');
+                    });
+
+                    wrap.querySelectorAll('.sl-nav-btn').forEach(function(b) {
+                        b.classList.remove('ativo');
+                    });
+
+                    var alvo = wrap.querySelector('[data-nome="' + nomePainel + '"]');
+                    if (alvo) alvo.classList.add('ativo');
+                    btn.classList.add('ativo');
+                });
+            });
+        }, 200);
 
         // 🔥 BOTÃO DE MARCAR LINHA
         const btnHighlight = document.getElementById("toggleHighlight");
@@ -166,7 +188,6 @@ function ativarLinhasClicaveis(slug) {
         });
     });
 
-    // 🔥 RESTAURA MARCAÇÃO
     const salvo = localStorage.getItem(`linha-${slug}`);
     if (salvo !== null) {
         const alvo = container.querySelector(`.linha[data-index="${salvo}"]`);
