@@ -1,5 +1,4 @@
 <style>
-  /* RESET */
   .sl-wrap p::first-letter {
     font-size: inherit !important;
     float: none !important;
@@ -10,7 +9,6 @@
     padding: 0 !important;
   }
 
-  /* CONTAINER GERAL */
   .sl-wrap {
     font-family: 'Georgia', serif;
     color: #1a1a1a;
@@ -19,7 +17,6 @@
     padding: 8px 4px 60px;
   }
 
-  /* INTRO BLOCK */
   .sl-intro {
     text-align: center;
     padding: 32px 24px 40px;
@@ -36,7 +33,6 @@
     margin: 0 auto;
   }
 
-  /* ── NAVEGAÇÃO POR ABAS ── */
   .sl-nav {
     display: flex;
     justify-content: center;
@@ -70,7 +66,6 @@
     border-bottom: 2px solid #9a7c3f;
   }
 
-  /* PAINÉIS */
   .sl-painel {
     display: none;
   }
@@ -79,7 +74,6 @@
     display: block;
   }
 
-  /* SEÇÕES */
   .sl-secao {
     margin-bottom: 56px;
   }
@@ -115,7 +109,6 @@
     padding-top: 2px;
   }
 
-  /* BLOCOS */
   .sl-bloco {
     margin-bottom: 40px;
     padding-bottom: 40px;
@@ -148,7 +141,6 @@
     margin-bottom: 0;
   }
 
-  /* CITAÇÃO */
   .sl-citacao {
     margin: 32px 0;
     padding: 20px 28px;
@@ -173,20 +165,6 @@
     font-style: normal;
   }
 
-  /* TAG */
-  .sl-tag {
-    display: inline-block;
-    font-size: 10px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: #9a7c3f;
-    border: 1px solid #d4b87a;
-    padding: 2px 8px;
-    border-radius: 2px;
-    margin-bottom: 12px;
-  }
-
-  /* NOTA */
   .sl-nota {
     font-size: 12px;
     color: #999;
@@ -195,7 +173,6 @@
     line-height: 1.6;
   }
 
-  /* SEPARADOR */
   .sl-sep {
     text-align: center;
     margin: 48px 0;
@@ -204,7 +181,6 @@
     letter-spacing: 8px;
   }
 
-  /* GRID DE INFO — usado na aba Geral */
   .sl-info-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -236,7 +212,6 @@
     line-height: 1.5;
   }
 
-  /* MILAGRE CARD */
   .sl-milagre-card {
     background: #faf8f4;
     border: 1px solid #e8e0d0;
@@ -277,7 +252,7 @@
   }
 
   @media (max-width: 600px) {
-    .sl-nav-btn { padding: 12px 16px; letter-spacing: 2px; }
+    .sl-nav-btn { padding: 12px 14px; letter-spacing: 2px; font-size: 9px; }
     .sl-bloco h3 { font-size: 15px; }
     .sl-bloco p  { font-size: 14px; }
     .sl-citacao p { font-size: 14px; }
@@ -287,22 +262,18 @@
 
 <div class="sl-wrap">
 
-  <!-- INTRO -->
   <div class="sl-intro">
     <p>Médico, escritor, companheiro fiel de Paulo e testemunha da fé cristã nascente</p>
   </div>
 
-  <!-- NAVEGAÇÃO -->
   <nav class="sl-nav">
-    <button class="sl-nav-btn ativo" onclick="slMostrar('historia', this)">História</button>
-    <button class="sl-nav-btn" onclick="slMostrar('geral', this)">Geral</button>
-    <button class="sl-nav-btn" onclick="slMostrar('milagres', this)">Milagres</button>
+    <button class="sl-nav-btn ativo" data-painel="historia" onclick="slNavegar(this)">História</button>
+    <button class="sl-nav-btn" data-painel="geral" onclick="slNavegar(this)">Geral</button>
+    <button class="sl-nav-btn" data-painel="milagres" onclick="slNavegar(this)">Milagres</button>
   </nav>
 
-  <!-- ══════════════════════════════════════════════ -->
-  <!-- PAINEL: HISTÓRIA                              -->
-  <!-- ══════════════════════════════════════════════ -->
-  <div id="sl-historia" class="sl-painel ativo">
+  <!-- HISTÓRIA -->
+  <div class="sl-painel ativo" data-nome="historia">
 
     <div class="sl-secao">
       <div class="sl-secao-header">
@@ -500,7 +471,7 @@
 
       <div class="sl-bloco">
         <h3>O evangelista dos pobres, das mulheres e dos marginalizados</h3>
-        <p>Quem lê Lucas com atenção percebe rapidamente uma tendência clara: ele se interessa pelas pessoas que os poderosos ignoram. Os pastores do nascimento de Jesus eram trabalhadores de baixo status. As mulheres que acompanham Jesus têm nomes e histórias — algo incomum para a literatura do século I. Os pobres são abençoados; os ricos são advertidos. Os samaritanos são apresentados como heróis.</p>
+        <p>Quem lê Lucas com atenção percebe rapidamente uma tendência clara: ele se interessa pelas pessoas que os poderosos ignoram. Os pastores do nascimento de Jesus eram trabalhadores de baixo status. As mulheres que acompanham Jesus têm nomes e histórias. Os pobres são abençoados; os ricos são advertidos. Os samaritanos são apresentados como heróis.</p>
         <p>Lucas sabia o que era ser de fora — e encontrou em Jesus alguém que sempre abria a porta para os de fora.</p>
       </div>
 
@@ -558,7 +529,7 @@
       <div class="sl-bloco">
         <h3>Mártir ou morte natural? O grande debate</h3>
         <p>Lucas morreu como mártir ou viveu até a velhice e morreu em paz? As tradições antigas se dividem — e as duas linhas existem desde muito cedo na história da Igreja.</p>
-        <p>A tradição mais antiga e mais sustentada pelos Padres afirma que Lucas morreu de morte natural, com aproximadamente 84 anos, em Tebas, na Beócia (Grécia). Essa tradição é atestada por Eusébio de Cesareia no século IV. Para eles, Lucas foi um "confessor" — alguém que testemunhou a fé com coragem, mas não morreu assassinado por causa de Cristo.</p>
+        <p>A tradição mais antiga e mais sustentada pelos Padres afirma que Lucas morreu de morte natural, com aproximadamente 84 anos, em Tebas, na Beócia (Grécia). Essa tradição é atestada por Eusébio de Cesareia no século IV.</p>
         <p>Uma tradição posterior — e minoritária — afirma que Lucas foi martyrizado, tendo sido enforcado numa oliveira em Patras, no Peloponeso. A Igreja frequentemente o honra com o símbolo do martírio sem tomar posição definitiva sobre como ele morreu.</p>
       </div>
 
@@ -570,13 +541,11 @@
       </div>
     </div>
 
-  </div><!-- /painel historia -->
+  </div><!-- /historia -->
 
 
-  <!-- ══════════════════════════════════════════════ -->
-  <!-- PAINEL: GERAL                                 -->
-  <!-- ══════════════════════════════════════════════ -->
-  <div id="sl-geral" class="sl-painel">
+  <!-- GERAL -->
+  <div class="sl-painel" data-nome="geral">
 
     <div class="sl-secao">
       <div class="sl-secao-header">
@@ -592,7 +561,7 @@
         </div>
         <div class="sl-info-item">
           <span class="sl-info-label">Morte</span>
-          <span class="sl-info-valor">c. 84 d.C., Tebas (Grécia)</span>
+          <span class="sl-info-valor">c. 84 d.C., Tebas, Grécia</span>
         </div>
         <div class="sl-info-item">
           <span class="sl-info-label">Festa litúrgica</span>
@@ -604,7 +573,7 @@
         </div>
         <div class="sl-info-item">
           <span class="sl-info-label">Símbolo</span>
-          <span class="sl-info-valor">O boi alado (um dos quatro viventes)</span>
+          <span class="sl-info-valor">O boi alado</span>
         </div>
         <div class="sl-info-item">
           <span class="sl-info-label">Relíquias</span>
@@ -628,30 +597,7 @@
 
       <div class="sl-bloco">
         <h3>Lucas, o pintor — uma tradição venerável</h3>
-        <p>Uma das tradições mais belas — e mais difíceis de verificar — afirma que Lucas foi o primeiro a pintar o rosto de Maria. Segundo essa lenda, ele teria feito um retrato da Virgem ainda em vida, e a partir dele nasceria toda a tradição iconográfica mariana do Oriente e do Ocidente.</p>
-        <p>Diversas igrejas ao redor do mundo guardam ícones que se reivindicam "pintados por Lucas" — a mais famosa é a Nossa Senhora de Częstochowa, na Polônia, venerada há séculos como a "Madona Negra". Historicamente, os ícones são medievais. Mas a tradição tem raízes no século VI — e ela diz algo verdadeiro sobre Lucas mesmo que não seja literalmente factual: foi ele quem, com suas palavras, pintou o retrato mais vivo de Maria que o Novo Testamento preservou.</p>
-      </div>
-
-      <div class="sl-bloco">
-        <h3>Por que Lucas é padroeiro dos médicos</h3>
-        <p>A razão é direta: Paulo o chamou de "o médico amado", e essa profissão nunca foi esquecida pela tradição. Mas há algo mais profundo. A medicina de Lucas não era apenas uma ocupação — era uma forma de ver o mundo. Ele enxergava o sofrimento com atenção clínica e com compaixão humana ao mesmo tempo.</p>
-        <p>Quando Jesus cura no Evangelho de Lucas, as descrições são mais precisas clinicamente do que nos outros Evangelhos. Quando os pobres aparecem, aparecem com dignidade. O médico amado tornou-se padroeiro de todos que exercem a arte de curar.</p>
-      </div>
-    </div>
-
-    <div class="sl-sep">· · ·</div>
-
-    <div class="sl-secao">
-      <div class="sl-secao-header">
-        <span class="sl-secao-num">02</span>
-        <div class="sl-secao-linha"></div>
-        <span class="sl-secao-titulo">A Obra de Lucas no Cânon</span>
-      </div>
-
-      <div class="sl-bloco">
-        <h3>Quase um terço do Novo Testamento</h3>
-        <p>O Evangelho de Lucas é o maior dos quatro — em número de palavras, supera Mateus, Marcos e João. Os Atos dos Apóstolos, que também saíram da sua pena, têm extensão comparável. Juntos, os dois livros representam aproximadamente 27% de todo o Novo Testamento.</p>
-        <p>Um único autor, que não era apóstolo, que não conheceu Jesus pessoalmente, que chegou ao Evangelho de fora — e que acabou sendo o maior contribuidor individual para o texto sagrado que a Igreja herdou.</p>
+        <p>Uma das tradições mais belas afirma que Lucas foi o primeiro a pintar o rosto de Maria. Diversas igrejas ao redor do mundo guardam ícones que se reivindicam "pintados por Lucas" — a mais famosa é a Nossa Senhora de Częstochowa, na Polônia. Historicamente, os ícones são medievais. Mas a tradição tem raízes no século VI e diz algo verdadeiro sobre Lucas mesmo que não seja literalmente factual: foi ele quem, com suas palavras, pintou o retrato mais vivo de Maria que o Novo Testamento preservou.</p>
       </div>
 
       <div class="sl-bloco">
@@ -661,13 +607,11 @@
       </div>
     </div>
 
-  </div><!-- /painel geral -->
+  </div><!-- /geral -->
 
 
-  <!-- ══════════════════════════════════════════════ -->
-  <!-- PAINEL: MILAGRES                              -->
-  <!-- ══════════════════════════════════════════════ -->
-  <div id="sl-milagres" class="sl-painel">
+  <!-- MILAGRES -->
+  <div class="sl-painel" data-nome="milagres">
 
     <div class="sl-secao">
       <div class="sl-secao-header">
@@ -695,37 +639,37 @@
       <div class="sl-milagre-card">
         <span class="sl-milagre-num">Lucas 5:12–13</span>
         <h3>A cura do leproso</h3>
-        <p>Um homem "coberto de lepra" — a expressão é de Lucas, o único que especifica a gravidade da doença — prostrou-se diante de Jesus e pediu cura. Jesus o tocou. Tocou um leproso, quando a lei proibia qualquer contato. E o homem ficou limpo imediatamente. Lucas, o médico, registrou o que os olhos não conseguem ignorar: a cura foi instantânea e completa.</p>
+        <p>Um homem "coberto de lepra" — a expressão é de Lucas, o único que especifica a gravidade da doença — prostrou-se diante de Jesus e pediu cura. Jesus o tocou. Tocou um leproso, quando a lei proibia qualquer contato. E o homem ficou limpo imediatamente.</p>
       </div>
 
       <div class="sl-milagre-card">
         <span class="sl-milagre-num">Lucas 7:11–17</span>
         <h3>A ressurreição do filho da viúva de Naim</h3>
-        <p>Este milagre existe apenas no Evangelho de Lucas. Uma viúva perdera seu único filho — e o cortejo fúnebre saía da cidade quando Jesus chegou. Ele foi movido de compaixão, tocou o esquife e disse: "Jovem, eu te digo, levanta-te." O morto se sentou e começou a falar. A multidão que assistiu ao milagre reconheceu que um grande profeta havia surgido entre eles.</p>
+        <p>Este milagre existe apenas no Evangelho de Lucas. Uma viúva perdera seu único filho — e o cortejo fúnebre saía da cidade quando Jesus chegou. Ele foi movido de compaixão, tocou o esquife e disse: "Jovem, eu te digo, levanta-te." O morto se sentou e começou a falar.</p>
       </div>
 
       <div class="sl-milagre-card">
         <span class="sl-milagre-num">Lucas 13:10–17</span>
         <h3>A mulher curvada por dezoito anos</h3>
-        <p>Apenas em Lucas. Uma mulher que estava encurvada havia dezoito anos — impossibilitada de se endireitar — foi curada por Jesus numa sinagoga, no sábado. O dirigente da sinagoga ficou indignado. Jesus respondeu chamando-a de "filha de Abraão" — uma expressão de dignidade e pertença que o mundo havia negado a ela por quase duas décadas.</p>
+        <p>Apenas em Lucas. Uma mulher que estava encurvada havia dezoito anos foi curada por Jesus numa sinagoga, no sábado. Jesus a chamou de "filha de Abraão" — uma expressão de dignidade e pertença que o mundo havia negado a ela por quase duas décadas.</p>
       </div>
 
       <div class="sl-milagre-card">
         <span class="sl-milagre-num">Lucas 17:11–19</span>
         <h3>Os dez leprosos</h3>
-        <p>Dez leprosos foram curados de uma só vez. Dez. Mas apenas um voltou para agradecer — e era samaritano, o mais improvável de todos. Lucas preservou esse detalhe que diz tanto sobre gratidão, sobre fé e sobre quem realmente reconhece a graça quando a recebe. Jesus perguntou: "Não foram curados os dez? Onde estão os outros nove?"</p>
+        <p>Dez leprosos foram curados de uma só vez. Mas apenas um voltou para agradecer — e era samaritano, o mais improvável de todos. Jesus perguntou: "Não foram curados os dez? Onde estão os outros nove?"</p>
       </div>
 
       <div class="sl-milagre-card">
         <span class="sl-milagre-num">Lucas 22:50–51</span>
         <h3>A orelha do servo do sumo sacerdote</h3>
-        <p>No momento da prisão de Jesus, um dos discípulos cortou a orelha de um servo do sumo sacerdote. Lucas — e apenas Lucas — registra que Jesus tocou a orelha do homem e o curou. O último milagre de cura antes da Paixão. Realizado não por um amigo, mas por um homem que seria executado horas depois — em favor de alguém que havia vindo prendê-lo.</p>
+        <p>No momento da prisão de Jesus, um discípulo cortou a orelha de um servo do sumo sacerdote. Lucas — e apenas Lucas — registra que Jesus tocou a orelha do homem e o curou. O último milagre de cura antes da Paixão, realizado em favor de alguém que havia vindo prendê-lo.</p>
       </div>
 
       <div class="sl-milagre-card">
         <span class="sl-milagre-num">Atos 19:11–12</span>
         <h3>Os milagres extraordinários através de Paulo</h3>
-        <p>Lucas, nos Atos, narra que Deus realizava milagres extraordinários pelas mãos de Paulo — a ponto de que panos e aventais que tinham tocado o corpo de Paulo eram levados aos doentes, e estes ficavam curados, os espíritos malignos os abandonavam. Lucas, o médico que acompanhou Paulo, foi testemunha ocular de parte desses prodígios.</p>
+        <p>Lucas narra nos Atos que Deus realizava milagres extraordinários pelas mãos de Paulo — panos e aventais que tinham tocado seu corpo eram levados aos doentes, e estes ficavam curados. Lucas, o médico que acompanhou Paulo, foi testemunha ocular de parte desses prodígios.</p>
       </div>
     </div>
 
@@ -741,35 +685,49 @@
       <div class="sl-bloco">
         <h3>A devoção dos médicos e enfermos</h3>
         <p>Ao longo dos séculos, São Lucas tornou-se intercessor particular dos que sofrem e dos que curam. Médicos que enfrentam casos sem esperança, pacientes à beira da morte, famílias que velam um doente — todos encontraram em Lucas um patrono que conhece o sofrimento humano por dentro.</p>
-        <p>Não porque Lucas realizasse curas sobrenaturais em vida de forma documentada. Mas porque o homem que escreveu "a fé te salvou" em mais de uma ocasião entendeu que saúde e fé nunca estiveram separadas — e sua intercessão é invocada precisamente nessa fronteira entre o que a medicina pode fazer e o que só Deus pode fazer.</p>
+        <p>Não porque Lucas realizasse curas sobrenaturais em vida de forma documentada. Mas porque o homem que escreveu "a fé te salvou" em mais de uma ocasião entendeu que saúde e fé nunca estiveram separadas.</p>
       </div>
 
       <div class="sl-bloco">
         <h3>O ícone que cura — Nossa Senhora de Częstochowa</h3>
-        <p>A tradição afirma que o ícone de Nossa Senhora de Częstochowa, na Polônia — o mais venerado da Europa Oriental — foi pintado por São Lucas sobre uma tábua que pertenceu à Sagrada Família. Independentemente da historicidade, o ícone tornou-se centro de graças e curas relatadas por peregrinos de todo o mundo por séculos.</p>
-        <p>A ligação entre Lucas e Maria, entre o evangelista e a Mãe de Deus, faz sentido profundo: foi ele quem preservou as palavras dela, quem narrou sua história com mais ternura — e a tradição quis que esse vínculo continuasse além da morte, através de uma imagem pintada com as mãos do médico amado.</p>
+        <p>A tradição afirma que o ícone de Nossa Senhora de Częstochowa — o mais venerado da Europa Oriental — foi pintado por São Lucas sobre uma tábua que pertenceu à Sagrada Família. O ícone tornou-se centro de graças e curas relatadas por peregrinos de todo o mundo por séculos.</p>
+        <p>A ligação entre Lucas e Maria faz sentido profundo: foi ele quem preservou as palavras dela, quem narrou sua história com mais ternura — e a tradição quis que esse vínculo continuasse além da morte.</p>
       </div>
     </div>
 
-  </div><!-- /painel milagres -->
+  </div><!-- /milagres -->
 
 </div><!-- /sl-wrap -->
 
 <script>
-  function slMostrar(painel, btn) {
-    // Esconde todos os painéis
-    document.querySelectorAll('.sl-painel').forEach(function(p) {
-      p.classList.remove('ativo');
-    });
-    // Remove classe ativo de todos os botões
-    document.querySelectorAll('.sl-nav-btn').forEach(function(b) {
-      b.classList.remove('ativo');
-    });
-    // Mostra o painel selecionado
-    document.getElementById('sl-' + painel).classList.add('ativo');
-    // Ativa o botão clicado
+(function() {
+  function slNavegar(btn) {
+    var nomePainel = btn.getAttribute('data-painel');
+    var wrap = btn.closest('.sl-wrap');
+
+    // Remove ativo de todos os painéis
+    var paineis = wrap.querySelectorAll('.sl-painel');
+    for (var i = 0; i < paineis.length; i++) {
+      paineis[i].classList.remove('ativo');
+    }
+
+    // Remove ativo de todos os botões
+    var botoes = wrap.querySelectorAll('.sl-nav-btn');
+    for (var j = 0; j < botoes.length; j++) {
+      botoes[j].classList.remove('ativo');
+    }
+
+    // Ativa o painel correto pelo data-nome
+    var alvo = wrap.querySelector('[data-nome="' + nomePainel + '"]');
+    if (alvo) {
+      alvo.classList.add('ativo');
+    }
+
+    // Ativa o botão
     btn.classList.add('ativo');
-    // Sobe para o topo suavemente
-    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
+
+  // Expõe globalmente
+  window.slNavegar = slNavegar;
+})();
 </script>
