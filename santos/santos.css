@@ -38,13 +38,15 @@
     --radius-xs:   8px;
     --radius-full: 50px;
 
-    /* Sombras */
-    --shadow:    0 4px 20px rgba(0,0,0,0.07);
-    --shadow-md: 0 8px 24px rgba(0,0,0,0.12);
-    --shadow-lg: 0 16px 40px rgba(0,0,0,0.13);
+    /* Sombras — aprimoradas com camadas */
+    --shadow:    0 2px 8px rgba(0,0,0,0.05), 0 4px 20px rgba(0,0,0,0.07);
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.08), 0 8px 24px rgba(0,0,0,0.12);
+    --shadow-lg: 0 8px 24px rgba(0,0,0,0.10), 0 20px 48px rgba(0,0,0,0.15);
+    --shadow-gold: 0 8px 32px rgba(139, 111, 61, 0.18);
 
     /* Transições */
     --ease:        cubic-bezier(0.4, 0, 0.2, 1);
+    --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
     --duration:    0.3s;
     --duration-lg: 0.5s;
 
@@ -66,8 +68,6 @@
     box-sizing: border-box;
 }
 
-/* Reset universal de ::first-letter
-   Evita capitulares indesejadas em toda a app */
 .biografia-container p::first-letter,
 .sl-wrap p::first-letter,
 .sl-wrap .sl-milagre-card p::first-letter,
@@ -87,23 +87,31 @@
    3. COMPONENTES BASE REUTILIZÁVEIS
    ========================================= */
 
-/* 3.1 Badge genérico */
+/* 3.1 Badge genérico — com brilho sutil */
 .badge {
-    background:    var(--gold-pale);
+    background:    linear-gradient(135deg, var(--gold-pale), #fffaf0);
     color:         var(--gold);
-    font-size:     0.65rem;
+    font-size:     0.62rem;
     font-weight:   700;
     text-transform: uppercase;
-    letter-spacing: 0.8px;
-    padding:       4px 10px;
+    letter-spacing: 0.9px;
+    padding:       4px 11px;
     border-radius: 20px;
     border:        1px solid var(--gold-border);
     white-space:   nowrap;
+    box-shadow:    0 1px 4px rgba(139, 111, 61, 0.08);
+    transition:    all 0.2s var(--ease);
+}
+
+.badge:hover {
+    background:  linear-gradient(135deg, #f0e6d0, var(--gold-pale));
+    box-shadow:  0 2px 8px rgba(139, 111, 61, 0.15);
+    transform:   translateY(-1px);
 }
 
 /* 3.2 Botão primário */
 .btn-primary {
-    background:    var(--gold);
+    background:    linear-gradient(135deg, var(--gold) 0%, #a07840 100%);
     color:         var(--white);
     border:        none;
     padding:       12px 24px;
@@ -124,7 +132,7 @@
 }
 
 .btn-primary:hover {
-    background: var(--gold-light);
+    background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 100%);
     box-shadow: 0 6px 20px rgba(212, 175, 55, 0.35);
     transform:  translateY(-1px);
 }
@@ -146,13 +154,15 @@
 }
 
 /* =========================================
-   5. CARD DO SANTO
+   5. CARD DO SANTO — MELHORIAS VISUAIS
    ========================================= */
 .santo-card {
     background:    var(--white);
     border-radius: var(--radius);
     box-shadow:    var(--shadow);
-    border:        1px solid var(--border-card);
+
+    /* Borda com leve tom dourado */
+    border:        1px solid rgba(139, 111, 61, 0.10);
     overflow:      hidden;
     display:       flex;
     flex-direction: column;
@@ -163,9 +173,10 @@
     opacity:   0;
     transform: translateY(24px);
     transition:
-        opacity   0.4s var(--ease),
-        transform 0.4s var(--ease),
-        box-shadow 0.35s var(--ease);
+        opacity      0.4s var(--ease),
+        transform    0.4s var(--ease),
+        box-shadow   0.35s var(--ease),
+        border-color 0.35s var(--ease);
 }
 
 .santo-card.visible {
@@ -173,12 +184,32 @@
     transform: translateY(0);
 }
 
+/* Hover com elevação + glow dourado */
 .santo-card:hover {
-    transform:  translateY(-8px);
-    box-shadow: var(--shadow-lg);
+    transform:    translateY(-8px);
+    box-shadow:   var(--shadow-lg), var(--shadow-gold);
+    border-color: rgba(139, 111, 61, 0.22);
 }
 
-/* Wrapper interno (para overflow + flex) */
+/* Linha decorativa dourada no topo — aparece no hover */
+.santo-card::before {
+    content:    '';
+    position:   absolute;
+    top:        0;
+    left:       0;
+    right:      0;
+    height:     2px;
+    background: linear-gradient(90deg, transparent, var(--gold-light), transparent);
+    opacity:    0;
+    transition: opacity 0.35s var(--ease);
+    z-index:    var(--z-badge);
+}
+
+.santo-card:hover::before {
+    opacity: 1;
+}
+
+/* Wrapper interno */
 .santo-card .card-inner {
     display:        flex;
     flex-direction: column;
@@ -186,7 +217,7 @@
     position:       relative;
 }
 
-/* Imagem */
+/* ── Imagem ── */
 .santo-card .image-container {
     width:         calc(100% - 16px);
     height:        200px;
@@ -197,6 +228,21 @@
     position:      relative;
     z-index:       var(--z-card-content);
     flex-shrink:   0;
+}
+
+/* Gradiente sobre a imagem para legibilidade */
+.santo-card .image-container::after {
+    content:  '';
+    position: absolute;
+    inset:    0;
+    background: linear-gradient(
+        to bottom,
+        transparent 45%,
+        rgba(15, 10, 5, 0.45) 100%
+    );
+    border-radius: inherit;
+    z-index:  1;
+    pointer-events: none;
 }
 
 .santo-card .image-container img {
@@ -211,7 +257,7 @@
     transform: scale(1.07);
 }
 
-/* Badges container */
+/* ── Badges container ── */
 .santo-badge-container {
     display:         flex;
     flex-wrap:       wrap;
@@ -222,7 +268,7 @@
     z-index:         var(--z-card-content);
 }
 
-/* Conteúdo textual */
+/* ── Conteúdo textual ── */
 .santo-card-content {
     padding:    12px 20px 20px;
     text-align: center;
@@ -240,9 +286,60 @@
     transition:  color 0.4s ease;
 }
 
-/* Rodapé do card */
+/* Nome muda para dourado no hover */
+.santo-card:hover h3 {
+    color: var(--gold);
+}
+
+/* ── Rodapé ── */
 .card-footer {
     margin-top: 4px;
+}
+
+/* =========================================
+   5.1 BARRA DE PROGRESSO DO CARD — NOVO
+   ========================================= */
+
+/* Wrapper da barra no card principal */
+.card-progress-wrap {
+    padding:    0 20px 16px;
+    position:   relative;
+    z-index:    var(--z-card-content);
+}
+
+.card-progress-bar {
+    width:         100%;
+    height:        3px;
+    background:    var(--border-light);
+    border-radius: 10px;
+    overflow:      hidden;
+    margin-bottom: 6px;
+}
+
+.card-progress-fill {
+    height:     100%;
+    background: linear-gradient(90deg, var(--gold), var(--gold-light));
+    border-radius: 10px;
+    transition: width 1s var(--ease);
+}
+
+.card-progress-label {
+    display:        flex;
+    align-items:    center;
+    justify-content: flex-end;
+    gap:            5px;
+    font-size:      0.68rem;
+    color:          var(--text-muted);
+    letter-spacing: 0.3px;
+}
+
+/* Quando concluído */
+.card-progress-fill.concluido {
+    background: linear-gradient(90deg, var(--success), #6dd5a8);
+}
+
+.card-progress-label.concluido {
+    color: var(--success-dark);
 }
 
 /* =========================================
@@ -313,13 +410,15 @@
 .chip:hover {
     border-color: var(--gold);
     color:        var(--gold);
+    transform:    translateY(-1px);
+    box-shadow:   0 4px 12px rgba(139, 111, 61, 0.12);
 }
 
 .chip.active {
-    background:   var(--gold);
+    background:   linear-gradient(135deg, var(--gold) 0%, #a07840 100%);
     color:        var(--white);
     border-color: var(--gold);
-    box-shadow:   0 4px 14px rgba(139, 111, 61, 0.25);
+    box-shadow:   0 4px 14px rgba(139, 111, 61, 0.30);
 }
 
 .chip-count {
@@ -354,12 +453,24 @@
     padding:         0 2px;
 }
 
+/* Título com ornamento lateral */
 .historico-titulo {
     font-family:    'Libre Baskerville', serif;
     font-size:      1.05rem;
     color:          var(--text);
     margin:         0;
     letter-spacing: 0.2px;
+    display:        flex;
+    align-items:    center;
+    gap:            10px;
+}
+
+.historico-titulo::before {
+    content:    '';
+    display:    inline-block;
+    width:      24px;
+    height:     1px;
+    background: var(--gold);
 }
 
 .historico-limpar {
@@ -397,7 +508,7 @@
 }
 
 /* =========================================
-   8.1 CARD DO HISTÓRICO
+   8.1 CARD DO HISTÓRICO — MELHORADO
    ========================================= */
 .hist-card {
     flex-shrink:   0;
@@ -405,27 +516,46 @@
     background:    var(--white);
     border-radius: var(--radius);
     box-shadow:    var(--shadow);
-    border:        1px solid var(--border-card);
+    border:        1px solid rgba(139, 111, 61, 0.10);
     overflow:      hidden;
     position:      relative;
     cursor:        pointer;
     transition:
-        transform  var(--duration) var(--ease),
-        box-shadow var(--duration) var(--ease),
+        transform    var(--duration) var(--ease-spring),
+        box-shadow   var(--duration) var(--ease),
         border-color var(--duration) var(--ease);
 }
 
 .hist-card:hover {
-    transform:  translateY(-5px);
-    box-shadow: var(--shadow-lg);
+    transform:    translateY(-6px);
+    box-shadow:   var(--shadow-lg), var(--shadow-gold);
+    border-color: rgba(139, 111, 61, 0.22);
+}
+
+/* Linha dourada no topo no hover */
+.hist-card::before {
+    content:    '';
+    position:   absolute;
+    top:        0;
+    left:       0;
+    right:      0;
+    height:     2px;
+    background: linear-gradient(90deg, transparent, var(--gold-light), transparent);
+    opacity:    0;
+    transition: opacity 0.3s var(--ease);
+    z-index:    var(--z-badge);
+}
+
+.hist-card:hover::before {
+    opacity: 1;
 }
 
 /* Borda sutil quando concluído */
 .hist-card.lido {
-    border-color: rgba(76, 175, 130, 0.35);
+    border-color: rgba(76, 175, 130, 0.30);
 }
 
-/* Barra de progresso — base do card */
+/* Barra de progresso */
 .hist-progresso-barra {
     position:      absolute;
     bottom:        0;
@@ -435,23 +565,21 @@
     background:    var(--border-light);
     z-index:       var(--z-badge);
     overflow:      hidden;
-    border-radius: 0 0 var(--radius) var(--radius);
 }
 
 .hist-progresso-barra-fill {
-    height:        100%;
-    width:         0%;
-    background:    var(--gold);
+    height:     100%;
+    width:       0%;
+    background:  linear-gradient(90deg, var(--gold), var(--gold-light));
     border-radius: inherit;
-    transition:    width 1.3s var(--ease);
+    transition:  width 1.3s var(--ease);
 }
 
 .hist-card.lido .hist-progresso-barra-fill {
     width:      100%;
-    background: var(--success);
+    background: linear-gradient(90deg, var(--success), #6dd5a8);
 }
 
-/* Remove o fill de fundo antigo (não-deletável por segurança) */
 .hist-progresso-fill-bg {
     display: none !important;
 }
@@ -468,6 +596,21 @@
     z-index:       var(--z-card-content);
 }
 
+/* Gradiente sobre a imagem do histórico */
+.hist-img-wrap::after {
+    content:  '';
+    position: absolute;
+    inset:    0;
+    background: linear-gradient(
+        to bottom,
+        transparent 40%,
+        rgba(15, 10, 5, 0.40) 100%
+    );
+    border-radius: inherit;
+    z-index:  1;
+    pointer-events: none;
+}
+
 .hist-img-wrap img {
     width:      100%;
     height:     100%;
@@ -480,7 +623,7 @@
     transform: scale(1.06);
 }
 
-/* Badge LIDO */
+/* Badge LIDO — reposicionado sobre o gradiente */
 .hist-badge-lido {
     display:        none;
     position:       absolute;
@@ -488,13 +631,14 @@
     right:          8px;
     background:     var(--success);
     color:          var(--white);
-    font-size:      0.6rem;
+    font-size:      0.58rem;
     font-weight:    700;
     padding:        3px 9px;
     border-radius:  20px;
     z-index:        var(--z-badge);
-    letter-spacing: 0.6px;
+    letter-spacing: 0.7px;
     text-transform: uppercase;
+    box-shadow:     0 2px 8px rgba(76, 175, 130, 0.40);
 }
 
 .hist-card.lido .hist-badge-lido {
@@ -503,7 +647,7 @@
 
 /* Informações */
 .hist-info {
-    padding:    10px 14px 20px; /* 20px para não colar na barra */
+    padding:    10px 14px 20px;
     text-align: center;
     position:   relative;
     z-index:    var(--z-card-content);
@@ -516,7 +660,21 @@
     color:       var(--text);
     margin:      0 0 4px;
     line-height: 1.3;
-    transition:  color 0.4s ease;
+    transition:  color 0.3s ease;
+}
+
+.hist-card:hover .hist-nome {
+    color: var(--gold);
+}
+
+/* Divisor ornamental entre nome e porcentagem */
+.hist-info::before {
+    content:    '';
+    display:    block;
+    width:      28px;
+    height:     1px;
+    background: var(--gold-border);
+    margin:     0 auto 6px;
 }
 
 .hist-pct {
@@ -524,6 +682,10 @@
     color:          var(--text-muted);
     margin:         0;
     letter-spacing: 0.3px;
+    display:        flex;
+    align-items:    center;
+    justify-content: center;
+    gap:            4px;
 }
 
 /* =========================================
@@ -545,7 +707,6 @@
     display: flex;
 }
 
-/* Área de scroll */
 .modal-content {
     position:       fixed;
     inset:          0;
@@ -558,12 +719,11 @@
     scroll-behavior: smooth;
 }
 
-/* Animação de entrada */
 .modal-blur.active .modal-content {
     animation: fadeUp 0.35s var(--ease) both;
 }
 
-/* Header com imagem de fundo */
+/* Header com imagem */
 .modal-header-img {
     width:           100%;
     min-height:      36vh;
@@ -574,10 +734,9 @@
     display:         flex;
     align-items:     flex-end;
     justify-content: center;
-    padding:         0 20px 32px;
+    padding:         0 20px 40px;
 }
 
-/* Gradiente de fade sobre a imagem */
 .modal-header-img::before {
     content:  '';
     position: absolute;
@@ -592,16 +751,16 @@
     z-index: 1;
 }
 
-/* Linha dourada abaixo do título */
+/* Linha dourada — mais elegante */
 .modal-header-img::after {
     content:   '';
     position:  absolute;
     bottom:    0;
     left:      50%;
     transform: translateX(-50%);
-    width:     60px;
-    height:    2px;
-    background: var(--gold);
+    width:     80px;
+    height:    1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
     z-index:   3;
 }
 
@@ -647,7 +806,7 @@
     font-size:   1rem;
 }
 
-/* Botão fechar */
+/* Botão fechar — spring animation */
 .close-modal {
     position:      fixed;
     top:           24px;
@@ -666,7 +825,7 @@
     align-items:   center;
     justify-content: center;
     line-height:   1;
-    transition:    all var(--duration) var(--ease);
+    transition:    all var(--duration) var(--ease-spring);
 }
 
 .close-modal:hover {
@@ -674,6 +833,7 @@
     background:   var(--gold);
     color:        var(--white);
     border-color: var(--gold);
+    box-shadow:   var(--shadow-gold);
 }
 
 /* Botão toggle de marcação */
@@ -697,6 +857,7 @@
 .toggle-highlight:hover {
     background:   var(--gold-pale);
     border-color: var(--gold);
+    box-shadow:   var(--shadow-gold);
 }
 
 /* Botão Marcar como finalizado */
@@ -765,8 +926,6 @@
 /* =========================================
    11. CONTEÚDO DE BIOGRAFIA (sl-wrap)
    ========================================= */
-
-/* Contêiner raiz */
 .sl-wrap {
     font-family: 'Georgia', serif;
     color:       var(--text-dark);
@@ -775,7 +934,6 @@
     padding:     8px 4px 60px;
 }
 
-/* Intro */
 .sl-intro {
     text-align:    center;
     padding:       32px 24px 40px;
@@ -818,11 +976,10 @@
 .sl-nav-btn:hover { color: var(--gold); }
 
 .sl-nav-btn.ativo {
-    color:        var(--gold);
+    color:         var(--gold);
     border-bottom: 2px solid var(--gold);
 }
 
-/* Painéis */
 .sl-painel        { display: none; }
 .sl-painel.ativo  { display: block; }
 
@@ -901,7 +1058,7 @@
     margin:        32px 0;
     padding:       24px 32px;
     border-left:   2px solid var(--gold);
-    background:    var(--bg-card);
+    background:    linear-gradient(135deg, var(--bg-card) 0%, #f8f4ee 100%);
     border-radius: 0 var(--radius-xs) var(--radius-xs) 0;
     position:      relative;
 }
@@ -934,7 +1091,7 @@
     font-style:     normal;
 }
 
-/* Destaque / Pullquote */
+/* Destaque */
 .sl-destaque {
     background:    linear-gradient(120deg, var(--bg-card) 0%, #f5efe3 100%);
     padding:       24px 32px;
@@ -947,7 +1104,7 @@
     line-height:   1.85;
 }
 
-/* Card de milagre / evento */
+/* Card de milagre */
 .sl-milagre-card {
     background:    var(--bg-card);
     border:        1px solid var(--border-light);
@@ -956,6 +1113,11 @@
     padding:       24px 28px;
     margin-bottom: 24px;
     position:      relative;
+    transition:    box-shadow 0.25s ease;
+}
+
+.sl-milagre-card:hover {
+    box-shadow: 0 4px 20px rgba(139, 111, 61, 0.10);
 }
 
 .sl-milagre-card::after {
@@ -1027,6 +1189,11 @@
 .sl-info-item {
     background: var(--bg-card);
     padding:    18px 20px;
+    transition: background 0.2s ease;
+}
+
+.sl-info-item:hover {
+    background: #f0ead8;
 }
 
 .sl-info-label {
@@ -1076,6 +1243,12 @@
     font-size:     14px;
     color:         var(--text-body);
     line-height:   1.6;
+    transition:    padding-left 0.2s ease, color 0.2s ease;
+}
+
+.sl-lista li:hover {
+    padding-left: 32px;
+    color:        var(--text-dark);
 }
 
 .sl-lista li:last-child { border-bottom: none; }
@@ -1112,6 +1285,12 @@
     height:        8px;
     border-radius: 50%;
     background:    var(--gold);
+    box-shadow:    0 0 0 3px rgba(139, 111, 61, 0.15);
+    transition:    box-shadow 0.2s ease;
+}
+
+.sl-timeline-item:hover::before {
+    box-shadow: 0 0 0 5px rgba(139, 111, 61, 0.20);
 }
 
 .sl-timeline-item strong {
@@ -1191,34 +1370,34 @@
     to   { transform: translateX(-50%); }
 }
 
+@keyframes shimmer {
+    0%   { background-position: -200% center; }
+    100% { background-position:  200% center; }
+}
+
 /* =========================================
    13. RESPONSIVO — TABLET (≤ 768px)
    ========================================= */
 @media (max-width: 768px) {
 
-    /* Grid */
     .santos-grid {
         grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
         gap:     14px;
         padding: 20px 14px 40px;
     }
 
-    /* Cards */
     .santo-card .image-container { height: 150px; }
     .santo-card h3               { font-size: 0.95rem; }
     .btn-primary                 { font-size: 0.8rem; padding: 10px 16px; }
 
-    /* Histórico */
     .hist-card     { width: 180px; }
     .hist-img-wrap { height: 130px; }
 
-    /* Modal */
     .modal-header-img   { min-height: 28vh; }
     .modal-body-padding { padding: 28px 18px 60px; }
     .close-modal        { top: 16px; right: 16px; }
     .toggle-highlight   { top: 16px; right: 68px; }
 
-    /* Biografia */
     .sl-secao-escura  { padding: 28px 20px; }
     .sl-oracao        { padding: 24px 20px; }
     .sl-capitular     { font-size: 2.5em; }
@@ -1234,17 +1413,14 @@
    ========================================= */
 @media (max-width: 480px) {
 
-    /* Grid fixo 2 colunas */
     .santos-grid {
         grid-template-columns: repeat(2, 1fr);
         gap:     12px;
         padding: 16px 12px 40px;
     }
 
-    /* Modal */
     #modalTitle { font-size: 1.4rem; letter-spacing: 1px; }
 
-    /* Filtros */
     .categorias-container { gap: 7px; padding: 14px; }
     .chip                 { font-size: 0.76rem; padding: 7px 13px; }
 }
