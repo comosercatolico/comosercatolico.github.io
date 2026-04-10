@@ -1,189 +1,248 @@
 :root{
---cor-liturgica:#5b2c83;
+  --cor-liturgica:#5b2c83;
 }
 
 body{
-margin:0;
-font-family:"Inter",sans-serif;
-background:
-radial-gradient(circle at top, #ffffff, #f5f5f5 60%, #ececec);
+  margin:0;
+  font-family:"Inter",sans-serif;
+  background:
+    radial-gradient(circle at top, #ffffff, #f5f5f5 60%, #ececec);
 }
 
 body::before{
-content:"";
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background-image:
-repeating-linear-gradient(
-45deg,
-rgba(0,0,0,0.02) 0px,
-rgba(0,0,0,0.02) 2px,
-transparent 2px,
-transparent 4px
-);
-pointer-events:none;
-z-index:0;
+  content:"";
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background-image:
+    repeating-linear-gradient(
+      45deg,
+      rgba(0,0,0,0.02) 0px,
+      rgba(0,0,0,0.02) 2px,
+      transparent 2px,
+      transparent 4px
+    );
+  pointer-events:none;
+  z-index:0;
 }
 
-/* HEADER */
+/* ===== HEADER ===== */
 header{
-background:
-linear-gradient(rgba(0,0,0,0.7),rgba(0,0,0,0.7)),
-url("santos.png") center/cover;
-padding:90px 20px;
+  position:relative;
+  background:
+    linear-gradient(rgba(0,0,0,0.7),rgba(0,0,0,0.7)),
+    url("santos.png") center/cover;
+  padding:90px 20px 90px 20px;
+  text-align:left;
 }
 
 header h1{
-font-family:"Libre Baskerville",serif;
-font-size:48px;
-letter-spacing:4px;
-margin:0;
-color:white;
-text-shadow:0 4px 12px rgba(0,0,0,0.8);
+  font-family:"Libre Baskerville",serif;
+  font-size:48px;
+  letter-spacing:4px;
+  margin:0;
+  color:white;
+  text-shadow:0 4px 12px rgba(0,0,0,0.8);
 }
 
-/* BOTÃO MENU */
+header p{
+  margin:6px 0 0 0;
+  color:rgba(255,255,255,0.8);
+}
+
+/* ===== BOTÃO MENU HAMBURGUER ===== */
 .menu-btn{
-position:absolute;
-left:15px;
-top:20px;
-font-size:26px;
-cursor:pointer;
-background:rgba(0,0,0,0.7);
-padding:6px 12px;
-border-radius:6px;
-color:white;
+  display:none; /* escondido no desktop */
+  position:absolute;
+  left:15px;
+  top:20px;
+  font-size:26px;
+  cursor:pointer;
+  background:rgba(0,0,0,0.7);
+  padding:6px 12px;
+  border-radius:6px;
+  color:white;
+  z-index:500;
+  line-height:1;
 }
 
-/* MENU LATERAL */
+/* ===== OVERLAY ===== */
+.overlay{
+  display:none;
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.5);
+  z-index:998;
+}
+
+.overlay.ativo{
+  display:block;
+}
+
+/* ===== MENU LATERAL (SIDEBAR) ===== */
 .sidebar{
-position:fixed;
-left:-260px;
-top:0;
-width:260px;
-height:100%;
-background:#111;
-padding-top:60px;
-transition:0.3s;
-z-index:1000;
+  position:fixed;
+  left:-260px;
+  top:0;
+  width:260px;
+  height:100%;
+  background:#111;
+  padding-top:20px;
+  transition:left 0.3s ease;
+  z-index:999;
+  overflow-y:auto;
 }
 
 .sidebar a{
-display:block;
-color:white;
-padding:16px;
-text-decoration:none;
-font-size:17px;
-border-bottom:1px solid rgba(255,255,255,0.05);
+  display:block;
+  color:white;
+  padding:16px 20px;
+  text-decoration:none;
+  font-size:17px;
+  border-bottom:1px solid rgba(255,255,255,0.05);
+  transition:background 0.2s;
 }
 
 .sidebar a:hover{
-background:#8b6f3d;
+  background:#8b6f3d;
 }
 
-/* MENU */
+.sidebar hr{
+  border:none;
+  border-top:1px solid rgba(255,255,255,0.1);
+  margin:10px 0;
+}
+
+/* ===== MENU HORIZONTAL (DESKTOP) ===== */
 .menu{
-position:relative;
-display:flex;
-justify-content:center;
-gap:60px;
-background:#0b0b0b;
-padding:18px 0;
-font-family:'Inter',sans-serif;
+  position:relative;
+  display:flex;
+  justify-content:center;
+  gap:60px;
+  background:#0b0b0b;
+  padding:18px 0;
+  font-family:'Inter',sans-serif;
 }
 
 .menu-item{
-position:relative;
-color:white;
-text-decoration:none;
-font-size:16px;
-font-weight:500;
-padding:5px 10px;
-transition:0.3s;
+  position:relative;
+  color:white;
+  text-decoration:none;
+  font-size:16px;
+  font-weight:500;
+  padding:5px 10px;
+  transition:color 0.3s, transform 0.3s;
 }
 
 .menu-item:visited{
-color:white;
+  color:white;
 }
 
 .menu-item:hover{
-color:#d4b06a;
-transform:translateY(-2px);
+  color:#d4b06a;
+  transform:translateY(-2px);
 }
 
 .menu-item.active{
-font-weight:600;
+  font-weight:600;
 }
 
 .menu-indicator{
-position:absolute;
-bottom:0;
-height:3px;
-background:#d4b06a;
-border-radius:2px;
-transition:all 0.35s cubic-bezier(.4,0,.2,1);
-will-change:left,width;
+  position:absolute;
+  bottom:0;
+  height:3px;
+  background:#d4b06a;
+  border-radius:2px;
+  transition:all 0.35s cubic-bezier(.4,0,.2,1);
+  will-change:left,width;
 }
 
-/* CONTEÚDO */
+/* ===== CONTEÚDO PRINCIPAL ===== */
 #inicio{
-max-width:900px;
-margin:60px auto;
-padding:20px;
+  max-width:900px;
+  margin:60px auto;
+  padding:20px;
+  position:relative;
+  z-index:1;
 }
 
 main h2{
-font-family:"Libre Baskerville",serif;
-font-size:40px;
-margin-bottom:25px;
-color:#2c2c2c;
-letter-spacing:1px;
+  font-family:"Libre Baskerville",serif;
+  font-size:40px;
+  margin-bottom:25px;
+  color:#2c2c2c;
+  letter-spacing:1px;
 }
 
 main p{
-font-size:17px;
-line-height:1.8;
-margin-bottom:18px;
-color:#333;
+  font-size:17px;
+  line-height:1.8;
+  margin-bottom:18px;
+  color:#333;
 }
 
 .citacao{
-margin-top:30px;
-padding-left:15px;
-border-left:4px solid #8b6f3d;
-font-style:italic;
-color:#555;
+  margin-top:30px;
+  padding-left:15px;
+  border-left:4px solid #8b6f3d;
+  font-style:italic;
+  color:#555;
 }
 
-/* FOOTER */
+/* ===== FOOTER ===== */
 footer{
-background:rgba(0,0,0,0.75);
-color:white;
-text-align:center;
-padding:14px;
-margin-top:40px;
+  background:rgba(0,0,0,0.75);
+  color:white;
+  text-align:center;
+  padding:14px;
+  margin-top:40px;
+  position:relative;
+  z-index:1;
 }
 
+/* ===== FAIXA LITÚRGICA ===== */
 .faixa-liturgica{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-pointer-events:none;
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  pointer-events:none;
+  z-index:0;
 }
 
-/* ===================================
-   MOBILE - telas até 768px
-=================================== */
-@media (max-width: 768px) {
+/* ===============================
+   DESKTOP (acima de 768px)
+=============================== */
+@media (min-width:769px){
+
+  .menu-btn{
+    display:none;
+  }
+
+  .menu{
+    display:flex;
+  }
+
+  .sidebar{
+    left:-260px !important; /* sidebar nunca aparece no desktop */
+  }
+}
+
+/* ===============================
+   MOBILE (até 768px)
+=============================== */
+@media (max-width:768px){
 
   /* HEADER */
   header{
-    padding:40px 20px 30px 20px;
+    padding:50px 20px 30px 60px; /* espaço à esq. para o botão ☰ */
+    text-align:left;
   }
 
   header h1{
@@ -191,22 +250,23 @@ pointer-events:none;
     letter-spacing:2px;
   }
 
-  /* ESCONDE O MENU HORIZONTAL NO MOBILE */
-  /* (usa o menu lateral hamburguer) */
+  header p{
+    font-size:0.9rem;
+  }
+
+  /* MOSTRA O BOTÃO ☰ */
+  .menu-btn{
+    display:block;
+  }
+
+  /* ESCONDE O MENU HORIZONTAL */
   .menu{
     display:none;
   }
 
-  /* BOTÃO HAMBURGUER */
-  .menu-btn{
-    position:absolute;
-    left:15px;
-    top:15px;
-  }
-
   /* CONTEÚDO */
   #inicio{
-    margin:30px auto;
+    margin:25px auto;
     padding:15px;
   }
 
@@ -216,5 +276,16 @@ pointer-events:none;
 
   main p{
     font-size:1rem;
+    line-height:1.7;
+  }
+
+  .citacao{
+    font-size:0.95rem;
+  }
+
+  /* FOOTER */
+  footer{
+    font-size:0.85rem;
+    padding:12px;
   }
 }
