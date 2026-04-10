@@ -12,13 +12,74 @@
     color: #2c1f17;
     line-height: 1.8;
   }
+
+  /* ── BARRA DE PROGRESSO ── */
+  #progress-bar {
+    position: fixed;
+    top: 0; left: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #d4af37, #5b2c83);
+    width: 0%;
+    z-index: 9999;
+    transition: width 0.1s;
+  }
+
+  /* ── NAV LATERAL (desktop) ── */
+  .nav-lateral {
+    position: fixed;
+    left: 0; top: 50%;
+    transform: translateY(-50%);
+    width: 14px;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 8px 4px;
+    background: rgba(245,240,232,0.85);
+    border-radius: 0 8px 8px 0;
+    backdrop-filter: blur(4px);
+    box-shadow: 2px 0 8px rgba(0,0,0,0.08);
+  }
+  .nav-lateral a {
+    display: block;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: #d4c49a;
+    transition: all 0.2s;
+    position: relative;
+  }
+  .nav-lateral a:hover,
+  .nav-lateral a.ativa {
+    background: #5b2c83;
+    width: 10px; height: 10px;
+    margin-left: -2px;
+  }
+  .nav-lateral a::after {
+    content: attr(data-label);
+    position: absolute;
+    left: 18px; top: 50%;
+    transform: translateY(-50%);
+    background: #2c1f17;
+    color: #f5f0e8;
+    font-size: 0.7rem;
+    padding: 3px 8px;
+    border-radius: 4px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s;
+    font-family: Georgia, serif;
+  }
+  .nav-lateral a:hover::after { opacity: 1; }
+
+  /* ── LAYOUT ── */
   .pagina {
     max-width: 860px;
     margin: 0 auto;
-    padding: 40px 24px 80px;
+    padding: 40px 24px 80px 40px;
   }
 
-  /* HEADER */
+  /* ── HEADER ── */
   header {
     border-bottom: 3px solid #d4af37;
     padding-bottom: 28px;
@@ -31,64 +92,135 @@
     margin-bottom: 8px;
     letter-spacing: 0.5px;
   }
-  header .ano {
-    font-size: 1rem;
-    color: #8b6914;
-    font-style: italic;
-    letter-spacing: 1px;
-  }
-  header .local {
-    font-size: 0.95rem;
-    color: #666;
-    margin-top: 4px;
-  }
-  header .subtitulo {
-    margin-top: 14px;
-    font-size: 0.95rem;
-    color: #5b2c83;
-    font-style: italic;
-  }
+  header .ano { font-size: 1rem; color: #8b6914; font-style: italic; letter-spacing: 1px; }
+  header .local { font-size: 0.95rem; color: #666; margin-top: 4px; }
+  header .subtitulo { margin-top: 14px; font-size: 0.95rem; color: #5b2c83; font-style: italic; }
 
-  /* SUMÁRIO */
-  .sumario {
+  /* ── BADGES RÁPIDOS ── */
+  .badges-rapidos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    margin: 20px 0 0;
+  }
+  .badge-info {
+    background: #fff;
+    border: 1px solid #e0d4c0;
+    border-radius: 20px;
+    padding: 4px 14px;
+    font-size: 0.8rem;
+    color: #5b2c83;
+    font-style: normal;
+  }
+  .badge-info span { color: #8b6914; font-weight: 700; }
+
+  /* ── SUMÁRIO TABBED ── */
+  .sumario-tabbed {
     background: #fdf8ef;
     border: 1px solid #e0d4c0;
     border-left: 4px solid #d4af37;
     border-radius: 6px;
-    padding: 20px 24px;
     margin-bottom: 40px;
+    overflow: hidden;
   }
-  .sumario h3 {
-    font-size: 0.95rem;
+  .sumario-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 20px;
+    cursor: pointer;
+    user-select: none;
+    border-bottom: 1px solid #e0d4c0;
+  }
+  .sumario-header h3 {
+    font-size: 0.9rem;
     color: #8b6914;
     text-transform: uppercase;
     letter-spacing: 1px;
-    margin-bottom: 12px;
+    flex: 1;
   }
-  .sumario ol {
-    margin-left: 18px;
+  .sumario-toggle {
+    font-size: 1rem;
+    color: #5b2c83;
+    transition: transform 0.3s;
   }
-  .sumario ol li {
-    margin-bottom: 5px;
+  .sumario-toggle.aberto { transform: rotate(180deg); }
+
+  .sumario-grupos {
+    display: none;
   }
-  .sumario ol li a {
+  .sumario-grupos.visivel { display: block; }
+
+  .sumario-tabs {
+    display: flex;
+    border-bottom: 1px solid #e0d4c0;
+    overflow-x: auto;
+  }
+  .sumario-tab {
+    padding: 8px 16px;
+    font-size: 0.8rem;
+    color: #888;
+    cursor: pointer;
+    border: none;
+    background: none;
+    font-family: Georgia, serif;
+    white-space: nowrap;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+  }
+  .sumario-tab.ativa {
+    color: #5b2c83;
+    border-bottom-color: #5b2c83;
+    font-weight: 700;
+  }
+  .sumario-painel {
+    display: none;
+    padding: 16px 20px;
+  }
+  .sumario-painel.visivel { display: block; }
+  .sumario-painel ol { margin-left: 18px; }
+  .sumario-painel ol li { margin-bottom: 5px; }
+  .sumario-painel ol li a {
     color: #5b2c83;
     text-decoration: none;
-    font-size: 0.95rem;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 6px;
   }
-  .sumario ol li a:hover { text-decoration: underline; }
+  .sumario-painel ol li a:hover { text-decoration: underline; }
+  .sumario-painel ol li a .ic { font-size: 0.75rem; opacity: 0.7; }
+  .tempo-leitura {
+    font-size: 0.75rem;
+    color: #aaa;
+    margin-left: auto;
+  }
 
-  /* SEÇÕES */
+  /* ── SEÇÕES ── */
   .secao {
-    margin-bottom: 48px;
-    scroll-margin-top: 20px;
+    margin-bottom: 56px;
+    scroll-margin-top: 24px;
+  }
+  .secao-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 18px;
   }
   .secao h2 {
     font-size: 1.3rem;
     color: #5b2c83;
     border-left: 4px solid #d4af37;
     padding-left: 14px;
-    margin-bottom: 18px;
+  }
+  .secao-num {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: #d4af37;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-left: auto;
   }
   .secao h3 {
     font-size: 1.05rem;
@@ -97,18 +229,85 @@
     border-bottom: 1px dashed #d4af37;
     padding-bottom: 4px;
   }
-  .secao p {
-    margin-bottom: 13px;
-    text-align: justify;
-  }
-  .secao ul, .secao ol {
-    margin: 10px 0 14px 26px;
-  }
-  .secao ul li, .secao ol li {
-    margin-bottom: 8px;
-  }
+  .secao p { margin-bottom: 13px; text-align: justify; }
+  .secao ul, .secao ol { margin: 10px 0 14px 26px; }
+  .secao ul li, .secao ol li { margin-bottom: 8px; }
 
-  /* CAIXAS ESPECIAIS */
+  /* ── ACCORDION INTERNO ── */
+  .accordion {
+    border: 1px solid #e0d4c0;
+    border-radius: 8px;
+    margin: 14px 0;
+    overflow: hidden;
+  }
+  .accordion-btn {
+    width: 100%;
+    background: #faf5eb;
+    border: none;
+    padding: 13px 18px;
+    text-align: left;
+    font-family: Georgia, serif;
+    font-size: 0.95rem;
+    color: #2c1f17;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: background 0.2s;
+  }
+  .accordion-btn:hover { background: #f5edd8; }
+  .accordion-btn .acc-icon {
+    font-size: 0.85rem;
+    color: #5b2c83;
+    transition: transform 0.3s;
+    margin-left: auto;
+  }
+  .accordion-btn.aberto .acc-icon { transform: rotate(180deg); }
+  .accordion-btn strong { color: #5b2c83; }
+  .accordion-corpo {
+    display: none;
+    padding: 16px 18px;
+    background: #fff;
+    border-top: 1px solid #e0d4c0;
+  }
+  .accordion-corpo.visivel { display: block; }
+  .accordion-corpo p { margin-bottom: 10px; text-align: justify; font-size: 0.95rem; }
+  .accordion-corpo ul { margin: 8px 0 10px 22px; }
+  .accordion-corpo ul li { margin-bottom: 6px; font-size: 0.95rem; }
+
+  /* ── TABS INTERNAS ── */
+  .tabs-internas {
+    margin: 18px 0;
+    border: 1px solid #e0d4c0;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .tabs-internas-nav {
+    display: flex;
+    background: #faf5eb;
+    border-bottom: 1px solid #e0d4c0;
+    overflow-x: auto;
+  }
+  .tab-interna-btn {
+    padding: 10px 18px;
+    border: none;
+    background: none;
+    font-family: Georgia, serif;
+    font-size: 0.88rem;
+    color: #888;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .tab-interna-btn.ativa { color: #5b2c83; border-bottom-color: #5b2c83; font-weight: 700; }
+  .tab-interna-painel { display: none; padding: 18px; background: #fff; }
+  .tab-interna-painel.visivel { display: block; }
+  .tab-interna-painel p { font-size: 0.94rem; margin-bottom: 10px; text-align: justify; }
+  .tab-interna-painel ul { margin: 8px 0 10px 22px; }
+  .tab-interna-painel ul li { font-size: 0.94rem; margin-bottom: 7px; }
+
+  /* ── CAIXAS ESPECIAIS ── */
   .caixa-citacao {
     background: #fdf8ef;
     border-left: 4px solid #5b2c83;
@@ -119,13 +318,9 @@
     border-radius: 0 6px 6px 0;
   }
   .caixa-citacao cite {
-    display: block;
-    margin-top: 8px;
-    font-style: normal;
-    font-size: 0.85rem;
-    color: #888;
+    display: block; margin-top: 8px;
+    font-style: normal; font-size: 0.85rem; color: #888;
   }
-
   .caixa-destaque {
     background: #faf0d7;
     border: 1px solid #d4af37;
@@ -133,163 +328,323 @@
     padding: 18px 22px;
     margin: 18px 0;
   }
-  .caixa-destaque strong {
-    color: #5b2c83;
-  }
+  .caixa-destaque strong { color: #5b2c83; }
+  .caixa-destaque p { margin-bottom: 6px; }
 
+  .caixa-alerta {
+    background: #fff8f0;
+    border-left: 4px solid #e07b39;
+    border-radius: 0 8px 8px 0;
+    padding: 14px 18px;
+    margin: 16px 0;
+    font-size: 0.93rem;
+  }
+  .caixa-alerta strong { color: #b85c1a; }
+
+  /* ── CÂNONES ── */
+  .canones-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 12px;
+    margin: 18px 0;
+  }
   .caixa-canon {
     background: #f9f5ff;
     border: 1px solid #c9b8e8;
     border-radius: 6px;
-    padding: 14px 18px;
-    margin-bottom: 12px;
+    padding: 14px 16px;
+    cursor: pointer;
+    transition: box-shadow 0.2s, transform 0.2s;
   }
-  .caixa-canon .canon-num {
-    font-size: 0.78rem;
-    font-weight: 700;
-    color: #5b2c83;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 4px;
+  .caixa-canon:hover { box-shadow: 0 4px 12px rgba(91,44,131,0.12); transform: translateY(-2px); }
+  .caixa-canon.expandido { background: #f0ebff; border-color: #5b2c83; }
+  .canon-num {
+    font-size: 0.72rem; font-weight: 700; color: #5b2c83;
+    text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px;
   }
-  .caixa-canon p {
-    margin: 0;
-    font-size: 0.95rem;
-    text-align: left;
+  .canon-titulo { font-size: 0.9rem; font-weight: 700; color: #1a0f00; margin-bottom: 4px; }
+  .canon-resumo { font-size: 0.82rem; color: #666; }
+  .canon-detalhe {
+    display: none; margin-top: 12px; padding-top: 12px;
+    border-top: 1px dashed #c9b8e8; font-size: 0.88rem; color: #2c1f17;
+    line-height: 1.7;
   }
+  .caixa-canon.expandido .canon-detalhe { display: block; }
+  .canon-expandir {
+    font-size: 0.72rem; color: #5b2c83; margin-top: 8px; display: block;
+  }
+  .caixa-canon.expandido .canon-expandir::before { content: "▲ Recolher"; }
+  .caixa-canon:not(.expandido) .canon-expandir::before { content: "▼ Ver detalhes"; }
 
+  /* ── TABELAS ── */
   .tabela-figuras {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 16px 0;
-    font-size: 0.93rem;
+    width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.93rem;
   }
   .tabela-figuras th {
-    background: #5b2c83;
-    color: #fff;
-    padding: 10px 14px;
-    text-align: left;
-    font-weight: 600;
+    background: #5b2c83; color: #fff;
+    padding: 10px 14px; text-align: left; font-weight: 600;
   }
   .tabela-figuras td {
-    padding: 10px 14px;
-    border-bottom: 1px solid #e0d4c0;
-    vertical-align: top;
+    padding: 10px 14px; border-bottom: 1px solid #e0d4c0; vertical-align: top;
   }
-  .tabela-figuras tr:nth-child(even) td {
-    background: #faf5eb;
-  }
+  .tabela-figuras tr:nth-child(even) td { background: #faf5eb; }
+  .tabela-figuras tr:hover td { background: #f0ebff; transition: background 0.15s; }
 
-  .linha-tempo {
-    border-left: 3px solid #d4af37;
-    margin: 16px 0;
-    padding-left: 0;
-    list-style: none;
-  }
+  /* ── LINHA DO TEMPO ── */
+  .linha-tempo { border-left: 3px solid #d4af37; margin: 16px 0; padding-left: 0; list-style: none; }
   .linha-tempo li {
-    position: relative;
-    padding: 6px 0 6px 24px;
-    margin-bottom: 0;
+    position: relative; padding: 8px 0 8px 28px; margin-bottom: 2px;
   }
   .linha-tempo li::before {
     content: '';
-    position: absolute;
-    left: -7px;
-    top: 13px;
-    width: 11px;
-    height: 11px;
-    border-radius: 50%;
-    background: #d4af37;
-    border: 2px solid #f5f0e8;
+    position: absolute; left: -7px; top: 15px;
+    width: 11px; height: 11px;
+    border-radius: 50%; background: #d4af37; border: 2px solid #f5f0e8;
   }
   .linha-tempo li .lt-data {
-    font-weight: 700;
-    color: #8b6914;
-    font-size: 0.88rem;
-    margin-right: 8px;
+    font-weight: 700; color: #8b6914; font-size: 0.88rem; margin-right: 8px;
   }
+  .linha-tempo li:hover { background: rgba(212,175,55,0.06); border-radius: 0 6px 6px 0; }
 
-  /* BADGE TAG */
+  /* ── MAPA DE PARTIDOS ── */
+  .mapa-partidos {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 10px;
+    margin: 16px 0;
+  }
+  .partido-card {
+    border-radius: 8px;
+    padding: 14px;
+    border: 1px solid;
+  }
+  .partido-card h4 { font-size: 0.88rem; margin-bottom: 6px; }
+  .partido-card p { font-size: 0.82rem; line-height: 1.6; margin: 0; }
+  .partido-card.ariano { background: #fff4f0; border-color: #e8b4a0; }
+  .partido-card.ariano h4 { color: #b84c2c; }
+  .partido-card.niceno { background: #f0fff4; border-color: #a0d4b0; }
+  .partido-card.niceno h4 { color: #2c7a4a; }
+  .partido-card.centro { background: #f8f0ff; border-color: #c9b8e8; }
+  .partido-card.centro h4 { color: #5b2c83; }
+  .partido-card.homoiousiano { background: #fffbf0; border-color: #e8d4a0; }
+  .partido-card.homoiousiano h4 { color: #7a5c2c; }
+  .partido-card.anomoio { background: #fff0f8; border-color: #e8a0c4; }
+  .partido-card.anomoio h4 { color: #7a2c5c; }
+  .partido-card.marcelo { background: #f0f4ff; border-color: #a0b4e8; }
+  .partido-card.marcelo h4 { color: #2c4c7a; }
+
+  /* ── COMPARAÇÃO CREDOS ── */
+  .comp-credos {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 16px 0;
+  }
+  .comp-col {
+    border: 1px solid #e0d4c0;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .comp-col-header {
+    padding: 10px 14px;
+    font-size: 0.85rem;
+    font-weight: 700;
+  }
+  .comp-col-header.niceia325 { background: #d4af37; color: #1a0f00; }
+  .comp-col-header.nc381 { background: #5b2c83; color: #fff; }
+  .comp-col-corpo { padding: 14px; font-size: 0.88rem; line-height: 1.7; background: #fff; }
+  .comp-col-corpo .diff { background: #fff0c8; border-radius: 3px; padding: 0 3px; }
+  .comp-col-corpo .novo { background: #e8f5e9; border-radius: 3px; padding: 0 3px; }
+
+  /* ── GLOSSÁRIO INLINE ── */
+  .glossario-termo {
+    border-bottom: 1px dashed #5b2c83;
+    cursor: help;
+    color: #5b2c83;
+    position: relative;
+  }
+  .glossario-termo::after {
+    content: attr(data-def);
+    position: absolute;
+    bottom: 120%; left: 50%;
+    transform: translateX(-50%);
+    background: #2c1f17;
+    color: #f5f0e8;
+    font-size: 0.78rem;
+    padding: 6px 10px;
+    border-radius: 6px;
+    white-space: normal;
+    width: 220px;
+    text-align: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s;
+    z-index: 50;
+    font-style: normal;
+    line-height: 1.5;
+    font-family: Georgia, serif;
+  }
+  .glossario-termo:hover::after { opacity: 1; }
+
+  /* ── TAG BADGE ── */
   .tag {
-    display: inline-block;
+    display: inline-block; background: #5b2c83; color: #fff;
+    font-size: 0.72rem; padding: 2px 8px; border-radius: 20px;
+    margin-left: 6px; vertical-align: middle; font-style: normal; letter-spacing: 0.5px;
+  }
+  .tag.verde { background: #2c7a4a; }
+  .tag.laranja { background: #b85c1a; }
+
+  /* ── VOLTAR AO TOPO ── */
+  .btn-topo {
+    position: fixed;
+    bottom: 28px; right: 24px;
     background: #5b2c83;
     color: #fff;
-    font-size: 0.72rem;
-    padding: 2px 8px;
-    border-radius: 20px;
-    margin-left: 6px;
-    vertical-align: middle;
-    font-style: normal;
-    letter-spacing: 0.5px;
-  }
-
-  /* DIVISOR */
-  .divisor {
     border: none;
-    border-top: 1px dashed #d4af37;
-    margin: 36px 0;
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    font-size: 1.1rem;
+    cursor: pointer;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.2);
+    opacity: 0;
+    transition: opacity 0.3s;
+    z-index: 200;
   }
+  .btn-topo.visivel { opacity: 1; }
+  .btn-topo:hover { background: #4a2268; }
 
-  /* FOOTER */
+  /* ── DIVISOR ── */
+  .divisor { border: none; border-top: 1px dashed #d4af37; margin: 36px 0; }
+
+  /* ── FOOTER ── */
   footer {
-    border-top: 1px solid #d4af37;
-    padding-top: 20px;
-    margin-top: 60px;
-    text-align: center;
-    font-size: 0.85rem;
-    color: #888;
+    border-top: 1px solid #d4af37; padding-top: 20px; margin-top: 60px;
+    text-align: center; font-size: 0.85rem; color: #888;
   }
-  footer a {
-    color: #5b2c83;
-    text-decoration: none;
-  }
+  footer a { color: #5b2c83; text-decoration: none; }
   footer a:hover { text-decoration: underline; }
 
-  @media (max-width: 600px) {
+  /* ── RESPONSIVO ── */
+  @media (max-width: 700px) {
     header h1 { font-size: 1.7rem; }
+    .nav-lateral { display: none; }
+    .pagina { padding-left: 24px; }
+    .comp-credos { grid-template-columns: 1fr; }
     .tabela-figuras { font-size: 0.82rem; }
     .tabela-figuras th, .tabela-figuras td { padding: 8px 8px; }
   }
 </style>
 </head>
 <body>
+
+<div id="progress-bar"></div>
+
+<!-- NAV LATERAL -->
+<nav class="nav-lateral" id="navLateral">
+  <a href="#ficha" data-label="Ficha Técnica"></a>
+  <a href="#antecedentes" data-label="Antecedentes"></a>
+  <a href="#contexto" data-label="Contexto Histórico"></a>
+  <a href="#ario" data-label="Ário e o Arianismo"></a>
+  <a href="#partidos" data-label="Partidos Teológicos"></a>
+  <a href="#convocacao" data-label="Convocação"></a>
+  <a href="#participantes" data-label="Participantes"></a>
+  <a href="#debates" data-label="Debates"></a>
+  <a href="#filosofia" data-label="Filosofia Trinitária"></a>
+  <a href="#credo" data-label="O Credo"></a>
+  <a href="#canones" data-label="20 Cânones"></a>
+  <a href="#pascoa" data-label="A Páscoa"></a>
+  <a href="#melecio" data-label="Cisma Meleciano"></a>
+  <a href="#heresias" data-label="Heresias"></a>
+  <a href="#autoridades" data-label="Autoridades"></a>
+  <a href="#capadocios" data-label="Os Capadócios"></a>
+  <a href="#pos-concilio" data-label="Pós-Concílio"></a>
+  <a href="#recepcao" data-label="Recepção Ecumênica"></a>
+  <a href="#liturgia" data-label="Dimensão Litúrgica"></a>
+  <a href="#impacto" data-label="Impacto"></a>
+  <a href="#fontes" data-label="Fontes"></a>
+</nav>
+
+<button class="btn-topo" id="btnTopo" title="Voltar ao topo">↑</button>
+
 <div class="pagina">
 
-<!-- ═══════════════════════════════ HEADER ═══════════════════════════════ -->
-<header>
+<!-- ══════════════ HEADER ══════════════ -->
+<header id="topo">
   <h1>Concílio de Niceia I</h1>
   <p class="ano">325 d.C.</p>
   <p class="local">📍 Niceia, Bitínia (atual İznik, Turquia)</p>
   <p class="subtitulo">"O Concílio dos Concílios" — fundação da cristologia ortodoxa</p>
+  <div class="badges-rapidos">
+    <span class="badge-info">🏛️ <span>1.º</span> Concílio Ecumênico</span>
+    <span class="badge-info">👤 <span>c. 318</span> bispos</span>
+    <span class="badge-info">⚔️ Heresia: <span>Arianismo</span></span>
+    <span class="badge-info">📜 Palavra-chave: <span>Homoousios</span></span>
+    <span class="badge-info">👑 <span>Constantino I</span> convocador</span>
+    <span class="badge-info">📅 <span>20 mai – ago 325</span></span>
+  </div>
 </header>
 
-<!-- ═══════════════════════════════ SUMÁRIO ══════════════════════════════ -->
-<nav class="sumario">
-  <h3>📋 Sumário</h3>
-  <ol>
-    <li><a href="#ficha">Ficha Técnica</a></li>
-    <li><a href="#antecedentes">Antecedentes e Causas</a></li>
-    <li><a href="#contexto">Contexto Histórico Amplo</a></li>
-    <li><a href="#ario">Ário e o Arianismo</a></li>
-    <li><a href="#convocacao">Convocação e Abertura</a></li>
-    <li><a href="#participantes">Participantes e Figuras-Chave</a></li>
-    <li><a href="#debates">Debates Internos do Concílio</a></li>
-    <li><a href="#credo">O Credo de Niceia — Texto e Análise</a></li>
-    <li><a href="#canones">Os 20 Cânones Disciplinares</a></li>
-    <li><a href="#pascoa">A Questão da Páscoa</a></li>
-    <li><a href="#melecio">O Cisma Meleciano</a></li>
-    <li><a href="#heresias">Heresias Combatidas</a></li>
-    <li><a href="#autoridades">Papas, Imperadores e Autoridades</a></li>
-    <li><a href="#pos-concilio">Pós-Concílio e Crise Ariana</a></li>
-    <li><a href="#recepcao">Recepção Ecumênica</a></li>
-    <li><a href="#impacto">Impacto Duradouro para a Igreja</a></li>
-    <li><a href="#fontes">Fontes Primárias e Historiografia</a></li>
-  </ol>
+<!-- ══════════════ SUMÁRIO TABBED ══════════════ -->
+<nav class="sumario-tabbed">
+  <div class="sumario-header" id="sumarioHeader">
+    <h3>📋 Sumário Interativo</h3>
+    <span style="font-size:0.78rem;color:#aaa;">Clique para expandir</span>
+    <span class="sumario-toggle" id="sumarioToggle">▼</span>
+  </div>
+  <div class="sumario-grupos" id="sumarioGrupos">
+    <div class="sumario-tabs">
+      <button class="sumario-tab ativa" data-painel="p-hist">📜 Histórico</button>
+      <button class="sumario-tab" data-painel="p-dout">✝️ Doutrina</button>
+      <button class="sumario-tab" data-painel="p-disc">⚖️ Disciplina</button>
+      <button class="sumario-tab" data-painel="p-legado">🌍 Legado</button>
+    </div>
+    <div class="sumario-painel visivel" id="p-hist">
+      <ol>
+        <li><a href="#ficha"><span class="ic">📌</span>Ficha Técnica<span class="tempo-leitura">1 min</span></a></li>
+        <li><a href="#antecedentes"><span class="ic">📜</span>Antecedentes e Causas<span class="tempo-leitura">3 min</span></a></li>
+        <li><a href="#contexto"><span class="ic">🏛️</span>Contexto Histórico Amplo<span class="tempo-leitura">3 min</span></a></li>
+        <li><a href="#convocacao"><span class="ic">📣</span>Convocação e Abertura<span class="tempo-leitura">3 min</span></a></li>
+        <li><a href="#participantes"><span class="ic">👥</span>Participantes e Figuras-Chave<span class="tempo-leitura">4 min</span></a></li>
+        <li><a href="#autoridades"><span class="ic">👑</span>Papas, Imperadores e Autoridades<span class="tempo-leitura">4 min</span></a></li>
+        <li><a href="#pos-concilio"><span class="ic">🔄</span>Pós-Concílio: Crise Ariana<span class="tempo-leitura">5 min</span></a></li>
+      </ol>
+    </div>
+    <div class="sumario-painel" id="p-dout">
+      <ol>
+        <li><a href="#ario"><span class="ic">⛔</span>Ário e o Arianismo<span class="tempo-leitura">4 min</span></a></li>
+        <li><a href="#partidos"><span class="ic">🗂️</span>Os Seis Partidos Teológicos<span class="tempo-leitura">3 min</span></a></li>
+        <li><a href="#debates"><span class="ic">🗣️</span>Debates Internos<span class="tempo-leitura">3 min</span></a></li>
+        <li><a href="#filosofia"><span class="ic">🔬</span>Filosofia Trinitária: ousía e hypóstasis<span class="tempo-leitura">5 min</span></a></li>
+        <li><a href="#credo"><span class="ic">✝️</span>O Credo — Texto e Análise<span class="tempo-leitura">5 min</span></a></li>
+        <li><a href="#heresias"><span class="ic">⚠️</span>Heresias Combatidas<span class="tempo-leitura">3 min</span></a></li>
+        <li><a href="#capadocios"><span class="ic">🏔️</span>Os Capadócios e a Recepção Nicena<span class="tempo-leitura">4 min</span></a></li>
+      </ol>
+    </div>
+    <div class="sumario-painel" id="p-disc">
+      <ol>
+        <li><a href="#canones"><span class="ic">⚖️</span>Os 20 Cânones Disciplinares<span class="tempo-leitura">8 min</span></a></li>
+        <li><a href="#pascoa"><span class="ic">🌕</span>A Questão da Páscoa<span class="tempo-leitura">3 min</span></a></li>
+        <li><a href="#melecio"><span class="ic">✂️</span>O Cisma Meleciano<span class="tempo-leitura">3 min</span></a></li>
+      </ol>
+    </div>
+    <div class="sumario-painel" id="p-legado">
+      <ol>
+        <li><a href="#recepcao"><span class="ic">🌐</span>Recepção Ecumênica<span class="tempo-leitura">4 min</span></a></li>
+        <li><a href="#liturgia"><span class="ic">🕯️</span>Dimensão Litúrgica do Credo<span class="tempo-leitura">3 min</span></a></li>
+        <li><a href="#impacto"><span class="ic">🌍</span>Impacto Duradouro<span class="tempo-leitura">4 min</span></a></li>
+        <li><a href="#fontes"><span class="ic">📚</span>Fontes e Historiografia<span class="tempo-leitura">3 min</span></a></li>
+      </ol>
+    </div>
+  </div>
 </nav>
 
-<!-- ═══════════════════════════════ 1. FICHA ═════════════════════════════ -->
+<!-- ══════════════ 1. FICHA ══════════════ -->
 <div class="secao" id="ficha">
-  <h2>📌 Ficha Técnica</h2>
+  <div class="secao-header">
+    <h2>📌 Ficha Técnica</h2>
+    <span class="secao-num">01 / 21</span>
+  </div>
   <div class="caixa-destaque">
     <p><strong>Número:</strong> 1.º Concílio Ecumênico</p>
     <p><strong>Data:</strong> 20 de maio a agosto de 325 d.C.</p>
@@ -303,173 +658,185 @@
     <p><strong>Palavra-chave doutrinária:</strong> <em>Homoousios</em> (consubstancial)</p>
     <p><strong>Reconhecido por:</strong> Igreja Católica, Igreja Ortodoxa, Anglicanismo, Protestantismo histórico, Coptas, Armênios, Etíopes</p>
   </div>
+  <div class="caixa-alerta">
+    <strong>⚠️ Nota sobre as fontes:</strong> As atas do concílio não foram preservadas. Todo o conhecimento sobre seus debates internos vem de relatos posteriores — especialmente Eusébio de Cesareia (<em>Vita Constantini</em>) e Atanásio de Alexandria — todos parciais e escritos com objetivos apologéticos. A historiografia crítica moderna leva isso em conta ao interpretar os eventos.
+  </div>
 </div>
 
-<!-- ═══════════════════════════════ 2. ANTECEDENTES ═════════════════════ -->
+<!-- ══════════════ 2. ANTECEDENTES ══════════════ -->
 <div class="secao" id="antecedentes">
-  <h2>📜 Antecedentes e Causas Imediatas</h2>
+  <div class="secao-header"><h2>📜 Antecedentes e Causas Imediatas</h2></div>
 
-  <h3>A Situação da Igreja antes de 325</h3>
-  <p>Após séculos de perseguição, o Edito de Milão (313), promulgado por Constantino I e Licínio,
-  concedeu liberdade religiosa a todos os cultos no Império Romano, inaugurando uma era radicalmente
-  nova para o Cristianismo. Pela primeira vez a Igreja podia reunir-se, debater e estruturar-se
-  publicamente sem risco de martírio.</p>
-  <p>Paradoxalmente, essa liberdade trouxe consigo novas tensões internas. Sem o laço unificador
-  da perseguição externa, disputas doutrinárias, disciplinares e jurisdicionais emergiram com
-  força, ameaçando fragmentar uma Igreja que crescia em ritmo acelerado por todo o Mediterrâneo.</p>
-
-  <h3>O Caso de Ário em Alexandria</h3>
-  <p>Por volta de 318, o presbítero Ário — provavelmente discípulo de Luciano de Antioquia —
-  passou a pregar abertamente em Alexandria uma doutrina que seu bispo, Alexandre de Alexandria,
-  julgava gravemente errônea. A controvérsia escalou rapidamente, com Ário conquistando aliados
-  influentes, sobretudo Eusébio de Nicomédia, bispo de uma diocese próxima à corte imperial.</p>
-  <p>Alexandre convocou um sínodo local em Alexandria (c. 318–320), que condenou Ário e o
-  excomungou. Ário, porém, refugiou-se na Palestina e na Síria, continuando a propagar suas
-  ideias. Cartas foram trocadas por toda a ecúmena cristã, dividindo bispos e comunidades.
-  A querela deixara de ser um problema regional: tornara-se uma crise universal.</p>
-
-  <h3>A Intervenção de Constantino</h3>
-  <p>Constantino, recém-tornado senhor único do Império após derrotar Licínio (324), via a
-  disputa teológica como uma ameaça direta à unidade política do Estado. Enviou seu conselheiro
-  eclesiástico Ossius de Córdoba a Alexandria com uma carta conciliatória pedindo paz — missão
-  que fracassou. Diante disso, o imperador tomou a decisão sem precedentes de convocar um
-  concílio de âmbito universal: o primeiro da história cristã.</p>
-</div>
-
-<!-- ═══════════════════════════════ 3. CONTEXTO HISTÓRICO ════════════════ -->
-<div class="secao" id="contexto">
-  <h2>🏛️ Contexto Histórico Amplo</h2>
-
-  <h3>O Império Romano em 325</h3>
-  <p>Em 325, o Império Romano vivia um momento de rara unidade política. Após a longa crise do
-  século III, a Tetrarquia de Diocleciano havia estabilizado a administração imperial, mas também
-  gerado guerras civis entre imperadores rivais. Constantino, após eliminar seus coadjutores,
-  reinava sozinho sobre Oriente e Ocidente — o primeiro governante único desde Diocleciano.</p>
-  <p>A capital efetiva deslocava-se progressivamente para o Oriente. Constantino estava
-  justamente na fase de planejar a nova capital que chamaria de Constantinopla (fundada
-  oficialmente em 330). Niceia, na Bitínia, era de fácil acesso ao imperador em Nicomédia,
-  sua residência oriental, e oferecia infraestrutura palatina adequada para acolher centenas
-  de bispos vindos de todo o Mediterrâneo.</p>
-
-  <h3>O Papel Político do Cristianismo</h3>
-  <p>Constantino não era ainda batizado em 325 (recebeu o batismo apenas em seu leito de morte,
-  em 337), mas favorecia claramente o Cristianismo com isenções fiscais ao clero, financiamento
-  de basílicas e arbitragem de disputas eclesiásticas. Para ele, a unidade religiosa era
-  instrumento da unidade imperial: uma Igreja dividida significava um Império enfraquecido.</p>
-  <p>Esse entrelaçamento entre poder civil e autoridade eclesiástica que começou em Niceia
-  moldaria profundamente a relação entre Igreja e Estado por séculos, gerando tanto proteção
-  quanto interferências indevidas — um padrão que os historiadores chamam de <em>cesaropapismo</em>
-  em suas formas extremas.</p>
-
-  <h3>A Eclesiologia Pré-Nicena</h3>
-  <p>Antes de 325, a Igreja não possuía mecanismo formal para definir doutrina de modo
-  universalmente vinculante. Sínodos locais e regionais existiam desde o século II, mas suas
-  decisões valiam apenas para suas províncias. Niceia I inaugurou a instituição do Concílio
-  Ecumênico — uma assembleia de bispos de toda a Igreja que, sob a assistência do Espírito
-  Santo, define a fé com autoridade universal e irreformável.</p>
-</div>
-
-<!-- ═══════════════════════════════ 4. ÁRIO ══════════════════════════════ -->
-<div class="secao" id="ario">
-  <h2>⛔ Ário e o Arianismo</h2>
-
-  <h3>Quem era Ário?</h3>
-  <p>Ário (c. 256–336) nasceu provavelmente na Líbia e foi educado em Antioquia, na escola
-  teológica de Luciano — uma tradição que privilegiava a exegese literal das Escrituras e tendia
-  a subordinar o Filho ao Pai. Ordenado presbítero em Alexandria, tornou-se um pregador popular,
-  de aparência ascética e dotes oratórios consideráveis. Chegou a compor hinos e poemas
-  teológicos — a <em>Thalia</em> — para difundir suas ideias entre o povo.</p>
-
-  <h3>O Núcleo da Doutrina Ariana</h3>
-  <p>O arianismo não era uma negação grosseira da divindade de Cristo. Era uma doutrina
-  sofisticada que partia de premissas filosóficas e bíblicas aparentemente razoáveis:</p>
-  <ul>
-    <li><strong>Monoteísmo absoluto:</strong> Deus é rigorosamente Uno, ingênito, sem início.
-    Se o Filho fosse da mesma substância do Pai, haveria dois deuses — o que seria absurdo.</li>
-    <li><strong>O Filho como primeira criatura:</strong> O Logos foi gerado (criado) pelo Pai
-    antes de todos os séculos, como instrumento da criação. É o mais elevado dos seres, mas
-    ainda assim um ser criado.</li>
-    <li><strong>Subordinacionismo:</strong> O Filho é subordinado ao Pai em ser e em dignidade.
-    Textos como "o Pai é maior do que eu" (Jo 14,28) ou "meu Deus e vosso Deus" (Jo 20,17)
-    eram citados como suporte escriturístico.</li>
-    <li><strong>O lema central:</strong> <em>"Ên pote hote ouk ên"</em> — "Houve [um tempo]
-    quando Ele não era."</li>
-  </ul>
-
-  <div class="caixa-citacao">
-    "O Deus não gerou o Filho da sua própria substância, pois isso implicaria que Deus é
-    divisível e mutável; antes, o Filho foi criado do nada pela vontade de Deus."
-    <cite>— Ário, <em>Thalia</em> (fragmento preservado por Atanásio)</cite>
+  <div class="accordion">
+    <button class="accordion-btn" data-acc="ant1">
+      <strong>A Igreja após o Edito de Milão (313)</strong>
+      <span class="acc-icon">▼</span>
+    </button>
+    <div class="accordion-corpo" id="ant1">
+      <p>Após séculos de perseguição, o Edito de Milão (313), promulgado por Constantino I e Licínio, concedeu liberdade religiosa a todos os cultos no Império Romano, inaugurando uma era radicalmente nova para o Cristianismo. Pela primeira vez a Igreja podia reunir-se, debater e estruturar-se publicamente sem risco de martírio.</p>
+      <p>Paradoxalmente, essa liberdade trouxe consigo novas tensões internas. Sem o laço unificador da perseguição externa, disputas doutrinárias, disciplinares e jurisdicionais emergiram com força, ameaçando fragmentar uma Igreja que crescia em ritmo acelerado por todo o Mediterrâneo.</p>
+    </div>
   </div>
 
-  <h3>Por Que o Arianismo Era Atraente?</h3>
-  <p>O arianismo respondia a dificuldades filosóficas reais: como pode Deus ser absolutamente
-  simples e imutável e ao mesmo tempo ter um Filho da mesma substância? Como evitar o diteísmo?
-  Sua coerência aparente conquistou bispos cultos, povos germânicos (que seriam evangelizados
-  por missionários arianos) e, por alguns decênios após Niceia, vários imperadores.</p>
+  <div class="accordion">
+    <button class="accordion-btn" data-acc="ant2">
+      <strong>O Caso de Ário em Alexandria (c. 318)</strong>
+      <span class="acc-icon">▼</span>
+    </button>
+    <div class="accordion-corpo" id="ant2">
+      <p>Por volta de 318, o presbítero Ário — provavelmente discípulo de Luciano de Antioquia — passou a pregar abertamente em Alexandria uma doutrina que seu bispo, Alexandre de Alexandria, julgava gravemente errônea. A controvérsia escalou rapidamente, com Ário conquistando aliados influentes, sobretudo Eusébio de Nicomédia, bispo de uma diocese próxima à corte imperial.</p>
+      <p>Alexandre convocou um sínodo local em Alexandria (c. 318–320), que condenou Ário e o excomungou. Ário, porém, refugiou-se na Palestina e na Síria, continuando a propagar suas ideias. Cartas foram trocadas por toda a ecúmena cristã, dividindo bispos e comunidades. A querela deixara de ser um problema regional: tornara-se uma crise universal.</p>
+    </div>
+  </div>
 
-  <h3>A Resposta Ortodoxa Pré-Nicena</h3>
-  <p>Alexandre de Alexandria e seu jovem secretário Atanásio argumentavam que o arianismo
-  destruía a soteriologia cristã: se Cristo não é verdadeiramente Deus, não pode deificar os
-  homens; se não é verdadeiramente homem, não representa a humanidade diante do Pai. A salvação
-  exige um mediador que seja plenamente ambos. Era o argumento que Atanásio desenvolveria na
-  obra <em>De Incarnatione</em>.</p>
+  <div class="accordion">
+    <button class="accordion-btn" data-acc="ant3">
+      <strong>A Intervenção de Constantino e a Decisão de Convocar o Concílio</strong>
+      <span class="acc-icon">▼</span>
+    </button>
+    <div class="accordion-corpo" id="ant3">
+      <p>Constantino, recém-tornado senhor único do Império após derrotar Licínio (324), via a disputa teológica como uma ameaça direta à unidade política do Estado. Enviou seu conselheiro eclesiástico Ossius de Córdoba a Alexandria com uma carta conciliatória pedindo paz — missão que fracassou.</p>
+      <p>Diante disso, o imperador tomou a decisão sem precedentes de convocar um concílio de âmbito universal: o primeiro da história cristã. O Estado imperial financiaria as viagens e a estadia de todos os participantes — um esforço logístico e financeiro gigantesco.</p>
+    </div>
+  </div>
 </div>
 
-<!-- ═══════════════════════════════ 5. CONVOCAÇÃO ════════════════════════ -->
-<div class="secao" id="convocacao">
-  <h2>📣 Convocação, Logística e Abertura</h2>
+<!-- ══════════════ 3. CONTEXTO ══════════════ -->
+<div class="secao" id="contexto">
+  <div class="secao-header"><h2>🏛️ Contexto Histórico Amplo</h2></div>
 
-  <h3>A Decisão de Convocar o Concílio</h3>
-  <p>Após o fracasso da missão de Ossius em Alexandria, Constantino decidiu convocar um concílio
-  universal por cartas imperiais enviadas a todos os bispos do Império. A convocação era sem
-  precedentes: o Estado imperial financiaria as viagens e a estadia de todos os participantes —
-  o que, pela extensão do Império, representava um esforço logístico e financeiro gigantesco.</p>
-  <p>A escolha de Niceia (ao invés de Ancira, que havia sido cogitada) deveu-se à proximidade
-  com Nicomédia, residência imperial, e ao clima ameno no verão. O local seria o grande palácio
-  imperial da cidade.</p>
+  <div class="tabs-internas">
+    <div class="tabs-internas-nav">
+      <button class="tab-interna-btn ativa" data-tab="ctx1">O Império em 325</button>
+      <button class="tab-interna-btn" data-tab="ctx2">Política e Religião</button>
+      <button class="tab-interna-btn" data-tab="ctx3">Eclesiologia Pré-Nicena</button>
+    </div>
+    <div class="tab-interna-painel visivel" id="ctx1">
+      <p>Em 325, o Império Romano vivia um momento de rara unidade política. Após a longa crise do século III, a Tetrarquia de Diocleciano havia estabilizado a administração imperial, mas também gerado guerras civis entre imperadores rivais. Constantino, após eliminar seus coadjutores, reinava sozinho sobre Oriente e Ocidente.</p>
+      <p>A capital efetiva deslocava-se progressivamente para o Oriente. Constantino estava justamente na fase de planejar a nova capital que chamaria de Constantinopla (fundada oficialmente em 330). Niceia, na Bitínia, era de fácil acesso ao imperador em Nicomédia, sua residência oriental, e oferecia infraestrutura palatina adequada para acolher centenas de bispos.</p>
+    </div>
+    <div class="tab-interna-painel" id="ctx2">
+      <p>Constantino não era ainda batizado em 325 (recebeu o batismo apenas em seu leito de morte, em 337), mas favorecia claramente o Cristianismo com isenções fiscais ao clero, financiamento de basílicas e arbitragem de disputas eclesiásticas. Para ele, a unidade religiosa era instrumento da unidade imperial.</p>
+      <p>Esse entrelaçamento entre poder civil e autoridade eclesiástica que começou em Niceia moldaria profundamente a relação entre Igreja e Estado por séculos, gerando tanto proteção quanto interferências indevidas — um padrão que os historiadores chamam de <em>cesaropapismo</em> em suas formas extremas.</p>
+    </div>
+    <div class="tab-interna-painel" id="ctx3">
+      <p>Antes de 325, a Igreja não possuía mecanismo formal para definir doutrina de modo universalmente vinculante. Sínodos locais e regionais existiam desde o século II, mas suas decisões valiam apenas para suas províncias.</p>
+      <p>Niceia I inaugurou a instituição do <strong>Concílio Ecumênico</strong> — uma assembleia de bispos de toda a Igreja que, sob a assistência do Espírito Santo, define a fé com autoridade universal e irreformável. Este foi o legado institucional mais duradouro do concílio.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ 4. ÁRIO ══════════════ -->
+<div class="secao" id="ario">
+  <div class="secao-header"><h2>⛔ Ário e o Arianismo</h2></div>
+
+  <div class="tabs-internas">
+    <div class="tabs-internas-nav">
+      <button class="tab-interna-btn ativa" data-tab="ar1">Quem era Ário</button>
+      <button class="tab-interna-btn" data-tab="ar2">A Doutrina</button>
+      <button class="tab-interna-btn" data-tab="ar3">Por que era Atraente</button>
+      <button class="tab-interna-btn" data-tab="ar4">Resposta Ortodoxa</button>
+    </div>
+    <div class="tab-interna-painel visivel" id="ar1">
+      <p>Ário (c. 256–336) nasceu provavelmente na Líbia e foi educado em Antioquia, na escola teológica de Luciano — uma tradição que privilegiava a exegese literal das Escrituras e tendia a subordinar o Filho ao Pai. Ordenado presbítero em Alexandria, tornou-se um pregador popular, de aparência ascética e dotes oratórios consideráveis.</p>
+      <p>Chegou a compor hinos e poemas teológicos — a <em>Thalia</em> — para difundir suas ideias entre o povo comum. Esta estratégia de comunicação popular era inédita e revelava um communicator habilidoso. Após sua condenação, Atanásio preservou fragmentos da <em>Thalia</em> em suas obras polêmicas — as únicas fontes diretas do pensamento de Ário que sobreviveram.</p>
+    </div>
+    <div class="tab-interna-painel" id="ar2">
+      <p>O arianismo não era uma negação grosseira da divindade de Cristo. Era uma doutrina sofisticada com premissas filosóficas e bíblicas:</p>
+      <ul>
+        <li><strong>Monoteísmo absoluto:</strong> Deus é rigorosamente Uno, ingênito. Se o Filho fosse da mesma substância do Pai, haveria dois deuses.</li>
+        <li><strong>O Filho como primeira criatura:</strong> O Logos foi gerado (criado) pelo Pai antes de todos os séculos. É o mais elevado dos seres, mas ainda assim criado.</li>
+        <li><strong>Subordinacionismo:</strong> "O Pai é maior do que eu" (Jo 14,28); "meu Deus e vosso Deus" (Jo 20,17).</li>
+        <li><strong>O lema central:</strong> <em>"Ên pote hote ouk ên"</em> — "Houve [um tempo] quando Ele não era."</li>
+      </ul>
+      <div class="caixa-citacao" style="margin-top:12px;">
+        "O Deus não gerou o Filho da sua própria substância, pois isso implicaria que Deus é divisível e mutável; antes, o Filho foi criado do nada pela vontade de Deus."
+        <cite>— Ário, <em>Thalia</em> (fragmento preservado por Atanásio)</cite>
+      </div>
+    </div>
+    <div class="tab-interna-painel" id="ar3">
+      <p>O arianismo respondia a dificuldades filosóficas reais: como pode Deus ser absolutamente simples e imutável e ao mesmo tempo ter um Filho da mesma substância? Como evitar o diteísmo?</p>
+      <p>Sua coerência aparente conquistou bispos cultos, povos germânicos (que seriam evangelizados por missionários arianos) e, por alguns decênios após Niceia, vários imperadores. O arianismo não desapareceu em 325 — na verdade, por um período pareceu que havia vencido.</p>
+    </div>
+    <div class="tab-interna-painel" id="ar4">
+      <p>Alexandre de Alexandria e seu jovem secretário Atanásio argumentavam que o arianismo destruía a soteriologia cristã: se Cristo não é verdadeiramente Deus, não pode <span class="glossario-termo" data-def="Theosis: participação do ser humano na natureza divina; doutrina central da espiritualidade oriental">deificar</span> os homens; se não é verdadeiramente homem, não representa a humanidade diante do Pai.</p>
+      <p>A salvação exige um mediador que seja plenamente ambos. Era o argumento que Atanásio desenvolveria magistralmente na obra <em>De Incarnatione</em>: "Deus se fez homem para que o homem se fizesse Deus."</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ 5. PARTIDOS TEOLÓGICOS (NOVO) ══════════════ -->
+<div class="secao" id="partidos">
+  <div class="secao-header"><h2>🗂️ Os Seis Partidos Teológicos</h2><span class="secao-num">NOVO</span></div>
+  <p>O panorama teológico do séc. IV era muito mais fragmentado do que a narrativa simplificada de "Atanásio vs. Ário" sugere. Havia pelo menos seis posições distintas em campo:</p>
+
+  <div class="mapa-partidos">
+    <div class="partido-card ariano">
+      <h4>⛔ Arianos Estritos (<em>Anomoios</em>)</h4>
+      <p>O Filho é completamente <em>diferente</em> (ἀνόμοιος) do Pai em essência. Aécio e Eunômio foram seus representantes mais radicais no séc. IV. Minoria vocal.</p>
+    </div>
+    <div class="partido-card anomoio">
+      <h4>↘️ <em>Homoianos</em></h4>
+      <p>O Filho é <em>semelhante</em> ao Pai, segundo as Escrituras — sem especificar em quê. Fórmula vaga, preferida por imperadores que queriam unidade sem compromisso. Constâncio II a promoveu.</p>
+    </div>
+    <div class="partido-card homoiousiano">
+      <h4>🔶 <em>Homoiousianos</em></h4>
+      <p>O Filho é de substância <em>semelhante</em> (ὁμοιούσιος) ao Pai — não a mesma, mas análoga. Maioria dos bispos orientais. Eram o "centro moderado" que Niceia precisava conquistar.</p>
+    </div>
+    <div class="partido-card centro">
+      <h4>⚖️ Centro Eusebiano</h4>
+      <p>Liderado por Eusébio de Cesareia. Desconfortáveis com o arianismo mas também com o <em>homoousios</em> por seu histórico suspeito (Paulo de Samósata). Aceitaram Niceia sob pressão.</p>
+    </div>
+    <div class="partido-card niceno">
+      <h4>✅ Nicenos (<em>Homoousianos</em>)</h4>
+      <p>O Filho é da mesma substância (ὁμοούσιος) que o Pai. Alexandre, Atanásio e Ossius. Minoria determinada que conquistou a maioria ao mostrar que qualquer outra fórmula era ambígua.</p>
+    </div>
+    <div class="partido-card marcelo">
+      <h4>⚠️ Marcelanos</h4>
+      <p>Marcelo de Ancira, bispo niceno, foi além: interpretou o <em>homoousios</em> de modo quase sabeliano, comprometendo o próprio partido ortodoxo. Sua posição foi rejeitada depois.</p>
+    </div>
+  </div>
+
+  <div class="caixa-alerta">
+    <strong>Nota crítica:</strong> A distinção entre <em>homoousios</em> (mesma substância) e <em>homoiousios</em> (substância semelhante) é uma única letra grega — iota (ι). Isso levou ao dito histórico de que o destino da teologia cristã "dependeu de um iota". A frase exagera, mas captura a precisão terminológica exigida pelo debate.
+  </div>
+</div>
+
+<!-- ══════════════ 6. CONVOCAÇÃO ══════════════ -->
+<div class="secao" id="convocacao">
+  <div class="secao-header"><h2>📣 Convocação, Logística e Abertura</h2></div>
 
   <h3>Linha do Tempo do Concílio</h3>
   <ul class="linha-tempo">
-    <li><span class="lt-data">c. 318–320</span> Ário começa a pregar em Alexandria; sínodo
-    local o condena.</li>
-    <li><span class="lt-data">c. 320–324</span> A controvérsia se alastra pelo Oriente;
-    Eusébio de Nicomédia apoia Ário.</li>
-    <li><span class="lt-data">324</span> Constantino torna-se único imperador; envia Ossius
-    a Alexandria — missão fracassa.</li>
-    <li><span class="lt-data">início de 325</span> Constantino convoca o concílio universal;
-    cartas imperiais enviadas a todos os bispos.</li>
-    <li><span class="lt-data">20 mai. 325</span> Abertura solene no salão do palácio imperial
-    de Niceia; discurso de Constantino.</li>
-    <li><span class="lt-data">mai.–jun. 325</span> Debates sobre a doutrina ariana; proposta
-    e adoção do termo <em>homoousios</em>.</li>
-    <li><span class="lt-data">jun.–jul. 325</span> Redação e aprovação do Credo; debate sobre
-    a Páscoa e o cisma meleciano; promulgação dos 20 cânones.</li>
-    <li><span class="lt-data">25 jul. 325</span> Banquete imperial em comemoração dos 20 anos
-    de reinado de Constantino (vicennalia); encerramento festivo.</li>
-    <li><span class="lt-data">ago. 325</span> Dispersão dos bispos; exílio de Ário e dos
-    bispos dissidentes.</li>
+    <li><span class="lt-data">c. 318–320</span> Ário começa a pregar em Alexandria; sínodo local o condena.</li>
+    <li><span class="lt-data">c. 320–324</span> A controvérsia se alastra pelo Oriente; Eusébio de Nicomédia apoia Ário.</li>
+    <li><span class="lt-data">324</span> Constantino torna-se único imperador; envia Ossius a Alexandria — missão fracassa.</li>
+    <li><span class="lt-data">início de 325</span> Constantino convoca o concílio universal; cartas imperiais financiam viagens e estadia.</li>
+    <li><span class="lt-data">20 mai. 325</span> Abertura solene no salão do palácio imperial de Niceia; discurso de Constantino em latim.</li>
+    <li><span class="lt-data">mai.–jun. 325</span> Debates sobre a doutrina ariana; proposta e adoção do <em>homoousios</em>.</li>
+    <li><span class="lt-data">jun.–jul. 325</span> Redação e aprovação do Credo; debate sobre a Páscoa e o cisma meleciano; promulgação dos 20 cânones.</li>
+    <li><span class="lt-data">25 jul. 325</span> Banquete imperial (vicennalia — 20 anos de reinado); encerramento festivo.</li>
+    <li><span class="lt-data">ago. 325</span> Dispersão dos bispos; exílio de Ário e dos dois bispos dissidentes.</li>
   </ul>
 
-  <h3>A Cerimônia de Abertura</h3>
-  <p>A sessão inaugural foi descrita por Eusébio de Cesareia na <em>Vita Constantini</em>
-  com linguagem quase litúrgica. Os bispos — muitos deles com marcas físicas das perseguições
-  dioclesianas — foram recebidos como heróis. Constantino entrou por último, vestido de púrpura
-  e ouro, mas recusou sentar-se antes que os bispos lhe dessem permissão. Seu discurso
-  inaugural, pronunciado em latim e traduzido ao grego, rogava pela unidade e deploria a
-  discórdia eclesiástica como mais grave do que qualquer guerra.</p>
+  <div class="accordion">
+    <button class="accordion-btn" data-acc="conv1">
+      <strong>A Cerimônia de Abertura — detalhes</strong>
+      <span class="acc-icon">▼</span>
+    </button>
+    <div class="accordion-corpo" id="conv1">
+      <p>A sessão inaugural foi descrita por Eusébio de Cesareia na <em>Vita Constantini</em> com linguagem quase litúrgica. Os bispos — muitos deles com marcas físicas das perseguições dioclesianas — foram recebidos como heróis. Constantino entrou por último, vestido de púrpura e ouro, mas recusou sentar-se antes que os bispos lhe dessem permissão.</p>
+      <p>Seu discurso inaugural, pronunciado em latim e traduzido ao grego, rogava pela unidade e deplorava a discórdia eclesiástica como mais grave do que qualquer guerra. Entre os participantes estavam Pafnúcio do Egito (privado de um olho, aleijado de uma perna pela perseguição) e Paulo de Neocesareia (com as mãos paralisadas por ferro em brasa). Constantino teria besado reverentemente as feridas de Pafnúcio.</p>
+      <p><strong>Sobre as línguas:</strong> Os debates foram conduzidos em grego — a língua comum do Oriente cristão e da teologia patrística. Constantino falava latim e precisava de intérprete. Os bispos ocidentais (minoria) também dependiam de tradução. Esta barreira linguística ajuda a explicar por que o concílio foi dominado teologicamente por vozes orientais.</p>
+    </div>
+  </div>
 </div>
 
-<!-- ═══════════════════════════════ 6. PARTICIPANTES ════════════════════ -->
+<!-- ══════════════ 7. PARTICIPANTES ══════════════ -->
 <div class="secao" id="participantes">
-  <h2>👥 Participantes e Figuras-Chave</h2>
+  <div class="secao-header"><h2>👥 Participantes e Figuras-Chave</h2></div>
 
-  <h3>Número e Origem dos Bispos</h3>
-  <p>A tradição canônica fala em 318 bispos — número carregado de simbolismo bíblico (os
-  318 servos de Abraão em Gn 14,14). Estimativas históricas baseadas em listas de assinaturas
-  apontam para algo entre 250 e 320 bispos. A grande maioria vinha do Oriente grego; apenas
-  algumas dezenas eram do Ocidente latino. Além dos bispos, centenas de presbíteros, diáconos
-  e assistentes estavam presentes.</p>
+  <p>A tradição canônica fala em 318 bispos — número carregado de simbolismo bíblico (os 318 servos de Abraão em Gn 14,14). Estimativas históricas baseadas em listas de assinaturas apontam para algo entre 250 e 320 bispos. A grande maioria vinha do Oriente grego; apenas algumas dezenas eram do Ocidente latino.</p>
 
   <table class="tabela-figuras">
     <thead>
@@ -484,15 +851,14 @@
       <tr>
         <td><strong>Constantino I</strong></td>
         <td>Imperador</td>
-        <td>Convocador, financiador, presidente protocolar; pressionou pela unidade e pelo
-        <em>homoousios</em></td>
+        <td>Convocador, financiador, presidente protocolar; pressionou pelo <em>homoousios</em></td>
         <td>Politicamente pró-unidade; teologicamente maleável</td>
       </tr>
       <tr>
         <td><strong>Ossius de Córdoba</strong></td>
         <td>Bispo; conselheiro imperial</td>
-        <td>Presidiu os debates teológicos; provável redator ou co-redator do Credo</td>
-        <td>Firmemente pró-niceno (<em>homoousios</em>)</td>
+        <td>Presidiu os debates teológicos; provável introdutor do <em>homoousios</em></td>
+        <td>Firmemente pró-niceno</td>
       </tr>
       <tr>
         <td><strong>Alexandre de Alexandria</strong></td>
@@ -509,15 +875,20 @@
       <tr>
         <td><strong>Eusébio de Cesareia</strong></td>
         <td>Bispo de Cesareia; historiador</td>
-        <td>Propôs uma fórmula intermediária baseada no batismo; aceitou
-        <em>homoousios</em> por pressão imperial, mas com reservas</td>
-        <td>Moderado; tendência subordinacionista</td>
+        <td>Propôs credo batismal de Cesareia como base; aceitou <em>homoousios</em> com reservas</td>
+        <td>Moderado; subordinacionista suave</td>
       </tr>
       <tr>
         <td><strong>Eusébio de Nicomédia</strong></td>
         <td>Bispo de Nicomédia</td>
-        <td>Líder do partido ariano; recusou inicialmente assinar o Credo; exilado</td>
+        <td>Líder do partido ariano; recusou assinar; exilado</td>
         <td>Ariano</td>
+      </tr>
+      <tr>
+        <td><strong>Marcelo de Ancira</strong></td>
+        <td>Bispo de Ancira</td>
+        <td>Pró-niceno ardente; interpretação do <em>homoousios</em> considerada excessiva (quase sabeliana)</td>
+        <td>Niceno radical — depois condenado</td>
       </tr>
       <tr>
         <td><strong>Eustácio de Antioquia</strong></td>
@@ -528,17 +899,17 @@
       <tr>
         <td><strong>Macário de Jerusalém</strong></td>
         <td>Bispo de Jerusalém</td>
-        <td>Participou ativamente; obteve reconhecimento honorífico para Jerusalém</td>
+        <td>Obteve reconhecimento honorífico para Jerusalém (cânone 7)</td>
         <td>Pró-niceno</td>
       </tr>
       <tr>
         <td><strong>Nicolau de Mira</strong></td>
         <td>Bispo de Mira</td>
-        <td>Presente; a tradição (não documentada historicamente) conta que teria bofeteado Ário</td>
+        <td>Presente; a tradição (não documentada) conta que teria bofeteado Ário</td>
         <td>Pró-niceno</td>
       </tr>
       <tr>
-        <td><strong>Papas Vítor e Vincêncio</strong></td>
+        <td><strong>Vítor e Vincêncio</strong></td>
         <td>Presbíteros; legados do Papa Silvestre I</td>
         <td>Representaram Roma; assinaram o Credo em nome do pontífice</td>
         <td>Pró-niceno</td>
@@ -550,630 +921,400 @@
         <td>Ariano</td>
       </tr>
       <tr>
-        <td><strong>Melecianos</strong></td>
-        <td>Bispos cismáticos egípcios</td>
-        <td>Caso disciplinar tratado paralelamente ao dogmático</td>
-        <td>Cisma disciplinar</td>
+        <td><strong>Segundo de Ptolemaida e Teona de Marmarica</strong></td>
+        <td>Bispos</td>
+        <td>Únicos que se recusaram a assinar o Credo até o fim; exilados com Ário</td>
+        <td>Arianos irredutíveis</td>
       </tr>
     </tbody>
   </table>
-
-  <h3>Bispos com Marcas do Martírio</h3>
-  <p>Entre os participantes havia homens que haviam sobrevivido às perseguições de Diocleciano
-  (303–311) com marcas físicas permanentes: Pafnúcio do Egito (privado de um olho e aleijado
-  de uma perna), Paulo de Neocesareia (com as mãos paralisadas por ferro em brasa) e vários
-  outros. Constantino teria besado reverentemente as feridas de Pafnúcio — cena descrita por
-  historiadores posteriores como símbolo da nova aliança entre Império e Igreja.</p>
 </div>
 
-<!-- ═══════════════════════════════ 7. DEBATES ═══════════════════════════ -->
+<!-- ══════════════ 8. DEBATES ══════════════ -->
 <div class="secao" id="debates">
-  <h2>🗣️ Debates Internos do Concílio</h2>
+  <div class="secao-header"><h2>🗣️ Debates Internos do Concílio</h2></div>
 
-  <h3>As Três Posições em Debate</h3>
-  <p>O concílio não era uma unanimidade pré-fabricada. Três grandes correntes se confrontaram:</p>
-  <ul>
-    <li><strong>Partido Ariano:</strong> Liderado por Eusébio de Nicomédia. Defendia que o Filho
-    foi criado pelo Pai e é subordinado a Ele em ser. Minoria vocal mas influente.</li>
-    <li><strong>Partido Niceno (Alexandre, Ossius, Atanásio):</strong> Afirmava a plena divindade
-    do Filho, da mesma substância que o Pai. Maioria dos bispos, mas precisavam de uma fórmula
-    precisa.</li>
-    <li><strong>Partido do Centro (Eusébio de Cesareia e outros):</strong> Desconfortáveis com
-    o arianismo, mas também cautelosos com o termo <em>homoousios</em>, que não aparecia
-    explicitamente nas Escrituras e havia sido usado de modo suspeito pelo heresiarca Paulo de
-    Samósata no século anterior.</li>
-  </ul>
-
-  <h3>A Proposta de Eusébio de Cesareia</h3>
-  <p>Eusébio de Cesareia apresentou o Credo batismal da Igreja de Cesareia como base para o
-  acordo. Era uma formulação equilibrada, sem afirmar explicitamente o <em>homoousios</em>.
-  Os bispos arianos — percebendo que poderiam reinterpretar seus termos — pareciam dispostos
-  a aceitá-la. Foi justamente essa maleabilidade que levou o partido niceno a insistir em um
-  termo mais preciso e irrenunciável.</p>
-
-  <h3>A Adoção do <em>Homoousios</em></h3>
-  <p>O termo <em>homoousios</em> (ὁμοούσιος — "da mesma substância/essência") foi inserido no
-  Credo proposto por Eusébio, muito provavelmente por iniciativa de Ossius de Córdoba, com o
-  apoio decisivo de Constantino. O imperador, possivelmente aconselhado por Ossius, percebeu
-  que esse era o único termo que os arianos genuinamente não podiam assinar sem se contradizer.</p>
-
-  <div class="caixa-citacao">
-    "Uma única sílaba — <em>homoousios</em> — separou a ortodoxia do abismo."
-    <cite>— John Henry Newman, <em>The Arians of the Fourth Century</em></cite>
+  <div class="accordion">
+    <button class="accordion-btn" data-acc="deb1">
+      <strong>A Proposta de Eusébio de Cesareia e sua Rejeição Estratégica</strong>
+      <span class="acc-icon">▼</span>
+    </button>
+    <div class="accordion-corpo" id="deb1">
+      <p>Eusébio de Cesareia apresentou o Credo batismal da Igreja de Cesareia como base para o acordo. Era uma formulação equilibrada, sem afirmar explicitamente o <em>homoousios</em>. Os bispos arianos — percebendo que poderiam reinterpretar seus termos — pareciam dispostos a aceitá-la.</p>
+      <p>Foi justamente essa maleabilidade que levou o partido niceno a insistir em um termo mais preciso e irrenunciável. A lógica era simples: qualquer fórmula que os arianos pudessem aceitar de bom grado era uma fórmula insuficiente para excluir o arianismo.</p>
+    </div>
   </div>
 
-  <h3>As Resistências e o Desfecho</h3>
-  <p>Dois bispos — Segundo de Ptolemaida e Teona de Marmarica — recusaram-se a assinar e foram
-  exilados juntamente com Ário. Eusébio de Nicomédia e Teógnis de Niceia assinaram sob pressão,
-  mas foram exilados meses depois por terem comunicado-se com Ário. A votação final foi
-  esmagadoramente favorável ao Credo niceno.</p>
+  <div class="accordion">
+    <button class="accordion-btn" data-acc="deb2">
+      <strong>A Adoção do <em>Homoousios</em> — Como e Por Quê</strong>
+      <span class="acc-icon">▼</span>
+    </button>
+    <div class="accordion-corpo" id="deb2">
+      <p>O termo <em>homoousios</em> (ὁμοούσιος — "da mesma substância/essência") foi inserido no Credo proposto por Eusébio, muito provavelmente por iniciativa de Ossius de Córdoba, com o apoio decisivo de Constantino. O imperador, possivelmente aconselhado por Ossius, percebeu que esse era o único termo que os arianos genuinamente não podiam assinar sem se contradizer.</p>
+      <p>Havia resistências legítimas: o termo não aparecia explicitamente nas Escrituras e havia sido usado de modo suspeito pelo heresiarca Paulo de Samósata no século anterior. Eusébio de Cesareia enviou uma longa carta à sua diocese explicando por que, afinal, assinou — um documento valioso que sobreviveu e revela as tensões do momento.</p>
+      <div class="caixa-citacao">
+        "Uma única sílaba — <em>homoousios</em> — separou a ortodoxia do abismo."
+        <cite>— John Henry Newman, <em>The Arians of the Fourth Century</em></cite>
+      </div>
+    </div>
+  </div>
+
+  <div class="accordion">
+    <button class="accordion-btn" data-acc="deb3">
+      <strong>O Papel de Constantino no Processo — Até Onde Ele Interferiu?</strong>
+      <span class="acc-icon">▼</span>
+    </button>
+    <div class="accordion-corpo" id="deb3">
+      <p>A questão é historiograficamente sensível. Eusébio de Cesareia, escrevendo na <em>Vita Constantini</em>, apresenta o imperador quase como teólogo providencial. Outros historiadores modernos (especialmente Lewis Ayres em <em>Nicaea and Its Legacy</em>) argumentam que a influência de Constantino foi mais política do que teológica: ele queria unidade a qualquer preço, e o <em>homoousios</em> foi o preço que funcionou.</p>
+      <p>O que é certo: Constantino não votou nas decisões doutrinárias, mas sua presença transformou a dinâmica de poder. Bispos que discordavam do <em>homoousios</em> mas desejavam o favor imperial tinham razões extrateológicas para assinar. Isso não invalida o resultado, mas complexifica a narrativa de "consenso espontâneo".</p>
+    </div>
+  </div>
+
+  <div class="accordion">
+    <button class="accordion-btn" data-acc="deb4">
+      <strong>O Desfecho: Quem Assinou, Quem Recusou, Quem Foi Exilado</strong>
+      <span class="acc-icon">▼</span>
+    </button>
+    <div class="accordion-corpo" id="deb4">
+      <p>A votação final foi esmagadoramente favorável ao Credo niceno. Apenas dois bispos — Segundo de Ptolemaida e Teona de Marmarica — recusaram-se absolutamente a assinar e foram exilados juntamente com Ário.</p>
+      <p>Eusébio de Nicomédia e Teógnis de Niceia assinaram o Credo mas recusaram-se a assinar o decreto de excomunhão de Ário; foram exilados meses depois por terem comunicado-se com Ário após o concílio. Ários e seu exílio na Ilíria durou até cerca de 328.</p>
+    </div>
+  </div>
 </div>
 
-<!-- ═══════════════════════════════ 8. CREDO ═════════════════════════════ -->
+<!-- ══════════════ 9. FILOSOFIA TRINITÁRIA (NOVO) ══════════════ -->
+<div class="secao" id="filosofia">
+  <div class="secao-header"><h2>🔬 Filosofia Trinitária: <em>Ousía</em> e <em>Hypóstasis</em></h2><span class="secao-num">NOVO</span></div>
+
+  <p>O debate de Niceia não era apenas bíblico — era profundamente filosófico. Para entendê-lo, é preciso compreender dois termos gregos centrais cujo significado <em>era ele mesmo</em> o objeto da controvérsia:</p>
+
+  <div class="tabs-internas">
+    <div class="tabs-internas-nav">
+      <button class="tab-interna-btn ativa" data-tab="fil1">Ousía</button>
+      <button class="tab-interna-btn" data-tab="fil2">Hypóstasis</button>
+      <button class="tab-interna-btn" data-tab="fil3">A Confusão de Niceia</button>
+      <button class="tab-interna-btn" data-tab="fil4">Neoplatonismo</button>
+    </div>
+    <div class="tab-interna-painel visivel" id="fil1">
+      <p><strong><em>Ousía</em> (οὐσία)</strong> significa literalmente "ser", "essência" ou "substância". Em Aristóteles, designava o que uma coisa é fundamentalmente. Na teologia nicena, <em>ousía</em> refere-se ao que é comum entre Pai, Filho e Espírito Santo — o ser divino que os três compartilham integralmente. "Deus" (no sentido da natureza divina) é a <em>ousía</em>.</p>
+      <p>O problema: o termo nunca aparece explicitamente nas Escrituras com este significado teológico. Os arianos acusavam os nicenos de filosofar em vez de teologizar. Os nicenos respondiam que a filosofia era necessária para excluir interpretações erradas das Escrituras.</p>
+    </div>
+    <div class="tab-interna-painel" id="fil2">
+      <p><strong><em>Hypóstasis</em> (ὑπόστασις)</strong> significa literalmente "o que está abaixo" — a subsistência concreta, o modo de ser individual. Na teologia posterior (especialmente dos Capadócios), <em>hypóstasis</em> viria a designar as três "pessoas" da Trindade: Pai, Filho e Espírito Santo são três <em>hypostaseis</em> de uma única <em>ousía</em>.</p>
+      <p>Em 325, porém, <em>hypóstasis</em> ainda era frequentemente usada como sinônimo de <em>ousía</em>. O próprio Credo de Niceia anatematiza os que dizem que o Filho é "de outra <em>hypóstasis</em> ou substância (<em>ousía</em>)" — tratando os dois termos como equivalentes. Esta ambiguidade causaria enormes confusões nos decênios seguintes.</p>
+    </div>
+    <div class="tab-interna-painel" id="fil3">
+      <p>A ambiguidade entre <em>ousía</em> e <em>hypóstasis</em> em Niceia gerou um problema: bispos orientais que afirmavam "três <em>hypostaseis</em>" (querendo dizer três modos concretos de ser) foram acusados de subordinacionismo ou arianismo por bispos ocidentais que entendiam <em>hypóstasis</em> como sinônimo de <em>ousía</em> — e, portanto, "três <em>hypostaseis</em>" soava como "três essências", ou seja, triteísmo.</p>
+      <p>Esta confusão terminológica — não uma diferença real de fé — foi o combustível de décadas de acusações mútuas entre nicenos orientais e ocidentais. A solução definitiva viria com os Capadócios: <strong>mia ousía, treis hypostaseis</strong> — uma essência, três hipóstases.</p>
+    </div>
+    <div class="tab-interna-painel" id="fil4">
+      <p>Tanto arianos quanto nicenos operavam num ambiente intelectual saturado de <strong>neoplatonismo</strong> — especialmente a filosofia de Plotino (205–270). Para Plotino, o Uno absoluto era radicalmente transcendente e simples; dele emanava o Nous (Intelecto) e depois a Alma do Mundo.</p>
+      <p>Os arianos adaptaram este esquema: Deus (o Uno) gera o Logos (análogo ao Nous) como ser intermediário. Os nicenos resistiram a esta lógica emanacionista: o Filho não é um ser intermediário, mas é da mesma natureza do Pai — o que exigiu uma revisão criativa das categorias neoplatônicas à luz da Revelação cristã. Esta tensão entre fé e filosofia é um dos grandes dramas intelectuais da Patrística.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ 10. CREDO ══════════════ -->
 <div class="secao" id="credo">
-  <h2>✝️ O Credo de Niceia — Texto e Análise</h2>
+  <div class="secao-header"><h2>✝️ O Credo de Niceia — Texto e Análise</h2></div>
 
-  <h3>Texto Integral (versão de 325)</h3>
   <div class="caixa-destaque">
-    <p><em>"Cremos em um só Deus, Pai todo-poderoso, criador de todas as coisas visíveis e
-    invisíveis.</em></p>
-    <p><em>E em um só Senhor Jesus Cristo, o Filho de Deus, gerado do Pai como Unigênito,
-    isto é, da substância do Pai, Deus de Deus, Luz da Luz, Deus verdadeiro de Deus verdadeiro,
-    gerado, não criado, <strong>consubstancial ao Pai</strong> [homoousios tô Patri], por quem
-    todas as coisas foram feitas, tanto as do céu como as da terra; que por nós, homens, e por
-    nossa salvação desceu, se encarnou e se fez homem, sofreu e ressuscitou ao terceiro dia,
-    subiu aos céus e virá para julgar os vivos e os mortos.</em></p>
+    <p><em>"Cremos em um só Deus, Pai todo-poderoso, criador de todas as coisas visíveis e invisíveis.</em></p>
+    <p><em>E em um só Senhor Jesus Cristo, o Filho de Deus, gerado do Pai como Unigênito, isto é, da substância do Pai, Deus de Deus, Luz da Luz, Deus verdadeiro de Deus verdadeiro, gerado, não criado, <strong>consubstancial ao Pai</strong> [homoousios tô Patri], por quem todas as coisas foram feitas, tanto as do céu como as da terra; que por nós, homens, e por nossa salvação desceu, se encarnou e se fez homem, sofreu e ressuscitou ao terceiro dia, subiu aos céus e virá para julgar os vivos e os mortos.</em></p>
     <p><em>E no Espírito Santo.</em></p>
-    <p><em>Quanto aos que dizem: 'Houve [um tempo] quando Ele não era', ou 'Antes de ser gerado
-    não existia', ou 'Foi feito do nada', ou que afirmam que o Filho de Deus é de outra
-    hipóstase ou substância, ou que é criável ou mutável — a tais a Igreja Católica anatematiza."</em></p>
+    <p><em>Quanto aos que dizem: 'Houve [um tempo] quando Ele não era', ou 'Antes de ser gerado não existia', ou 'Foi feito do nada', ou que afirmam que o Filho de Deus é de outra hipóstase ou substância, ou que é criável ou mutável — a tais a Igreja Católica anatematiza."</em></p>
   </div>
 
-  <h3>Análise Cláusula por Cláusula</h3>
-  <ul>
-    <li><strong>"Gerado, não criado"</strong> — Distingue a geração eterna do Filho (processão
-    intradivina, sem início no tempo) da criação do mundo (ato externo de Deus, com início no
-    tempo). Ário confundia as duas.</li>
-    <li><strong>"Consubstancial ao Pai" (<em>homoousios</em>)</strong> — A chave dogmática:
-    o Filho não é semelhante ao Pai (<em>homoios</em>), nem de substância semelhante
-    (<em>homoiousios</em>), mas da mesmíssima substância divina.</li>
-    <li><strong>"Deus de Deus, Luz da Luz, Deus verdadeiro de Deus verdadeiro"</strong> —
-    Acumulação de afirmações que fecham qualquer interpretação subordinacionista.</li>
-    <li><strong>Os anátemas finais</strong> — Inéditos num credo batismal; mostram a urgência
-    de excluir explicitamente as proposições arianas.</li>
-    <li><strong>O Espírito Santo mencionado brevemente</strong> — A pneumatologia será
-    desenvolvida apenas em Constantinopla I (381).</li>
-  </ul>
+  <div class="accordion">
+    <button class="accordion-btn" data-acc="cr1">
+      <strong>Análise cláusula por cláusula</strong>
+      <span class="acc-icon">▼</span>
+    </button>
+    <div class="accordion-corpo" id="cr1">
+      <ul>
+        <li><strong>"Gerado, não criado"</strong> — Distingue a geração eterna do Filho (processão intradivina, sem início no tempo) da criação do mundo (ato externo de Deus, com início no tempo). Ário confundia as duas categorias deliberadamente.</li>
+        <li><strong>"Consubstancial ao Pai" (<em>homoousios</em>)</strong> — A chave dogmática: o Filho não é semelhante ao Pai (<em>homoios</em>), nem de substância semelhante (<em>homoiousios</em>), mas da mesmíssima substância divina.</li>
+        <li><strong>"Deus de Deus, Luz da Luz, Deus verdadeiro de Deus verdadeiro"</strong> — Acumulação de afirmações que fecham qualquer interpretação subordinacionista.</li>
+        <li><strong>Os anátemas finais</strong> — Inéditos num credo batismal; mostram a urgência de excluir explicitamente as proposições arianas. Foram suprimidos no Credo de 381.</li>
+        <li><strong>O Espírito Santo mencionado brevemente</strong> — A pneumatologia será desenvolvida apenas em Constantinopla I (381), onde combaterá os pneumatômacos ("combatentes contra o Espírito").</li>
+      </ul>
+    </div>
+  </div>
 
-  <h3>Diferença entre o Credo de Niceia (325) e o Niceno-Constantinopolitano (381)</h3>
-  <p>O Credo que se recita nas missas hoje é o Niceno-Constantinopolitano, aprovado em
-  Constantinopla I (381). Em relação ao original de 325, ele apresenta diferenças significativas:</p>
-  <ul>
-    <li>Ampliação da seção sobre o Espírito Santo: "Senhor e vivificador, que procede do Pai
-    [e do Filho — <em>Filioque</em>, adição latina posterior], que com o Pai e o Filho é
-    adorado e glorificado, que falou pelos profetas."</li>
-    <li>Supressão dos anátemas finais explícitos.</li>
-    <li>Adição de "e da Virgem Maria" e maior desenvolvimento das afirmações cristológicas.</li>
-    <li>A palavra "católica" e "apostólica" referindo-se à Igreja.</li>
-  </ul>
+  <h3>Comparação: Credo de Niceia (325) vs. Niceno-Constantinopolitano (381)</h3>
+  <div class="comp-credos">
+    <div class="comp-col">
+      <div class="comp-col-header niceia325">Niceia 325</div>
+      <div class="comp-col-corpo">
+        <p>…gerado do Pai como Unigênito, <span class="diff">isto é, da substância do Pai</span>…</p>
+        <p>…sofreu e ressuscitou…</p>
+        <p><em>E no Espírito Santo.</em></p>
+        <p><span class="diff">[Anátemas explícitos contra os arianos]</span></p>
+      </div>
+    </div>
+    <div class="comp-col">
+      <div class="comp-col-header nc381">Niceno-Constantinopolitano 381</div>
+      <div class="comp-col-corpo">
+        <p>…<span class="novo">e da Virgem Maria</span> se encarnou… sofreu, <span class="novo">foi crucificado sob Pôncio Pilatos</span>…</p>
+        <p><span class="novo">E no Espírito Santo, Senhor e vivificador, que procede do Pai, que com o Pai e o Filho é adorado e glorificado, que falou pelos profetas.</span></p>
+        <p><span class="novo">E na Igreja una, santa, católica e apostólica…</span></p>
+        <p><span class="diff">[Anátemas suprimidos]</span></p>
+      </div>
+    </div>
+  </div>
+  <p style="font-size:0.82rem;color:#888;margin-top:-8px;"><span style="background:#fff0c8;padding:0 4px;border-radius:3px;">amarelo</span> = modificado &nbsp; <span style="background:#e8f5e9;padding:0 4px;border-radius:3px;">verde</span> = adicionado em 381</p>
 </div>
 
-<!-- ═══════════════════════════════ 9. CÂNONES ═══════════════════════════ -->
+<!-- ══════════════ 11. CÂNONES ══════════════ -->
 <div class="secao" id="canones">
-  <h2>⚖️ Os 20 Cânones Disciplinares — Análise Completa</h2>
-  <p>Além da definição dogmática, o concílio promulgou 20 cânones de natureza disciplinar e
-  administrativa que regularam a vida da Igreja. São a primeira legislação eclesiástica de
-  alcance universal da história cristã.</p>
+  <div class="secao-header"><h2>⚖️ Os 20 Cânones Disciplinares</h2></div>
+  <p>Clique em qualquer cânone para expandir os detalhes. São a primeira legislação eclesiástica de alcance universal da história cristã.</p>
 
-  <div class="caixa-canon">
-    <div class="canon-num">Cânone 1</div>
-    <p><strong>Clérigos eunucos:</strong> Proíbe a ordenação de homens que se castraram
-    voluntariamente. Quem foi castrado por médicos ou por perseguidores (eunucos involuntários)
-    pode ser admitido ao clero. Visava coibir práticas ascéticas extremadas inspiradas em leituras
-    literalistas de Mt 19,12.</p>
+  <div class="canones-grid" id="canonesGrid">
+
+    <div class="caixa-canon" onclick="toggleCanon(this)">
+      <div class="canon-num">Cânone 1</div>
+      <div class="canon-titulo">Clérigos eunucos</div>
+      <div class="canon-resumo">Ordenação de eunucos voluntários</div>
+      <div class="canon-detalhe">Proíbe a ordenação de homens que se castraram voluntariamente. Quem foi castrado por médicos ou por perseguidores pode ser admitido ao clero. Visava coibir práticas ascéticas extremadas inspiradas em leituras literalistas de Mt 19,12.</div>
+      <span class="canon-expandir"></span>
+    </div>
+
+    <div class="caixa-canon" onclick="toggleCanon(this)">
+      <div class="canon-num">Cânone 2</div>
+      <div class="canon-titulo">Neófitos</div>
+      <div class="canon-resumo">Proibição de ordenar recém-batizados</div>
+      <div class="canon-detalhe">Proíbe a ordenação episcopal ou presbiteral de recém-batizados. É necessário um período de provação após o batismo. O caso de Ambrósio de Milão (ordenado bispo 8 dias após o batismo) era exceção extraordinária, não a regra.</div>
+      <span class="canon-expandir"></span>
+    </div>
+
+    <div class="caixa-canon" onclick="toggleCanon(this)">
+      <div class="canon-num">Cânone 3</div>
+      <div class="canon-titulo">Mulheres nas casas dos clérigos</div>
+      <div class="canon-resumo"><em>Syneisaktai</em> — virgens introduzidas</div>
+      <div class="canon-detalhe">Proíbe que bispos, presbíteros e diáconos mantenham em casa qualquer mulher "introduzida", exceto mãe, irmã, tia. Combatia a prática do celibato carismático partilhado (<em>virgines subintroductae</em>). Nota: Pafnúcio teria convencido o concílio a não impor o celibato universal — episódio historicamente controverso mas significativo.</div>
+      <span class="canon-expandir"></span>
+    </div>
+
+    <div class="caixa-canon" onclick="toggleCanon(this)">
+      <div class="canon-num">Cânone 4</div>
+      <div class="canon-titulo">Eleição de bispos</div>
+      <div class="canon-resumo">Sistema metropolitano da Igreja</div>
+      <div class="canon-detalhe">Um bispo deve ser eleito por todos os bispos da província e consagrado por pelo menos três, com consentimento dos demais. O metropolita confirma a eleição. Fundamento do sistema metropolitano — base da estrutura episcopal provincial que persiste até hoje.</div>
+      <span class="canon-expandir"></span>
+    </div>
+
+    <div class="caixa-canon" onclick="toggleCanon(this)">
+      <div class="canon-num">Cânone 5</div>
+      <div class="canon-titulo">Excomungados</div>
+      <div class="canon-resumo">Sínodos provinciais semestrais</div>
+      <div class="canon-detalhe">As excomunhões decididas por bispos devem ser respeitadas por toda a Igreja. Sínodos provinciais devem ocorrer duas vezes por ano para examinar casos de excomunhão injusta. Estabelece a colegialidade episcopal no exercício da disciplina.</div>
+      <span class="canon-expandir"></span>
+    </div>
+
+    <div class="caixa-canon" onclick="toggleCanon(this)">
+      <div class="canon-num">Cânone 6</div>
+      <div class="canon-titulo">Primados das grandes sés</div>
+      <div class="canon-resumo">Roma, Alexandria, Antioquia</div>
+      <div class="canon-detalhe">Reconhece os privilégios antigos de Roma, Alexandria e Antioquia sobre suas regiões. Base para o desenvolvimento das sés patriarcais. Católicos e ortodoxos interpretam diferentemente se este cânone implica jurisdição universal de Roma ou apenas primazia honorífica.</div>
+      <span class="canon-expandir"></span>
+    </div>
+
+    <div class="caixa-canon" onclick="toggleCanon(this)">
+      <div class="canon-num">Cânone 7</div>
+      <div class="canon-titulo">Honra de Jerusalém</div>
+      <div class="canon-resumo">Reconhecimento histórico-sagrado</div>
+      <div class="canon-detalhe">O bispo de Aelia Capitolina (Jerusalém) recebe honra especial, após o metropolita de Cesareia. Reconhece o prestígio histórico-sagrado de Jerusalém sem criar ainda um patriarcado formal (isso viria em Calcedônia, 451).</div>
+      <span class="canon-expandir"></span>
+    </div>
+
+    <div class="caixa-canon" onclick="toggleCanon(this)">
+      <div class="canon-num">Cânone 8</div>
+      <div class="canon-titulo">Os Novacianos</div>
+      <div class="canon-resumo">Reintegração de clérigos rigoristas</div>
+      <div class="canon-detalhe">Clérigos da seita novaciana podem ser recebidos na Igreja com imposição das mãos e manutenção de seu grau, desde que assinem profissão de fé. Novaciano (Roma, séc. III) negava o perdão a apóstatas e pecadores graves — criando uma Igreja separada que ainda existia no séc. IV.</div>
+      <span class="canon-expandir"></span>
+    </div>
+
+    <div class="caixa-canon" onclick="toggleCanon(this)">
+      <div class="canon-num">Cânone 9</div>
+      <div class="canon-titulo">Ordenações irregulares</div>
+      <div class="canon-resumo">Investigação prévia obrigatória</div>
+      <div class="canon-detalhe">Presbíteros ordenados sem investigação prévia de seus pecados, ou que confessaram pecados após a imposição das mãos, não devem ser aceitos. A Igreja não reconhece ordenações conferidas levianamente.</div>
+      <span class="canon-expandir"></span>
+    </div>
+
+    <div class="caixa-canon" onclick="toggleCanon(this)">
+      <div class="canon-num">Cânone 10</div>
+      <div class="canon-titulo">Apóstatas ordenados</div>
+      <div class="canon-resumo">Apostasia e irregularidade clerical</div>
+      <div class="canon-detalhe">Quem renegou a fé durante a perseguição e foi ordenado não pode permanecer no clero. Mesmo que os ordenadores ignorassem a apostasia, a irregularidade persiste. Distingue-se da penitência ordinária: a apostasia impede o ministério público.</div>
+      <span class="canon-expandir"></span>
+    </div>
+
+    <div class="caixa-canon" onclick="toggleCanon(this)">
+      <div class="canon-num">Cânone 11</div>
+      <div class="canon-titulo">Lapsos voluntários</div>
+      <div class="canon-resumo">12 anos de penitência pública</div>
+      <div class="canon-detalhe">Apostasia voluntária (sem coação): 12 anos de penitência pública em quatro estágios: <em>flentes</em> (fora da igreja), <em>audientes</em> (ouvem leituras, saem antes da missa dos fiéis), <em>substrati</em> (prostrados pedindo orações), <em>consistentes</em> (presentes mas sem comungar).</div>
+      <span class="canon-expandir"></span>
+    </div>
+
+    <div class="caixa-canon" onclick="toggleCanon(this)">
+      <div class="canon-num">Cânone 12</div>
+      <div class="canon-titulo">Militares apóstatas</div>
+      <div class="canon-resumo">13 anos de penitência (3+10)</div>
+      <div class="canon-detalhe">Cristãos que retornaram ao serviço militar pagão após a conversão devem cumprir 13 anos de penitência (3 como <em>audientes</em> e 10 como <em>substrati</em>). Em caso de doença grave, pode ser dada a comunhão antecipadamente.</div>
+      <span class="canon-expandir"></span>
+    </div>
+
+    <div class="caixa-canon" onclick="toggleCanon(this)">
+      <div class="canon-num">Cânone 13</div>
+      <div class="canon-titulo">Viáticos aos moribundos</div>
+      <div class="canon-resumo">Misericórdia prevalece sobre disciplina</div>
+      <div class="canon-detalhe">Ninguém deve ser privado da última comunhão em artigo de morte. Se o moribundo se recuperar, deverá retomar a penitência normalmente. Princípio: a misericórdia prevalece sobre a disciplina quando a morte se aproxima — norma que permanece no Direito Canônico.</div>
+      <span class="canon-expandir"></span>
+    </div>
+
+    <div class="caixa-canon" onclick="toggleCanon(this)">
+      <div class="canon-num">Cânone 14</div>
+      <div class="canon-titulo">Catecúmenos apóstatas</div>
+      <div class="canon-resumo">3 anos antes de retornar ao catecumenato</div>
+      <div class="canon-detalhe">Catecúmenos (ainda não batizados) que apostataram devem cumprir 3 anos como simples ouvintes antes de poder retornar ao catecumenato. Misericórdia proporcionalmente maior que com os batizados, pois o compromisso sacramental ainda não havia sido firmado.</div>
+      <span class="canon-expandir"></span>
+    </div>
+
+    <div class="caixa-canon" onclick="toggleCanon(this)">
+      <div class="canon-num">Cânone 15</div>
+      <div class="canon-titulo">Translação de clérigos</div>
+      <div class="canon-resumo">Proibição de mudar de diocese</div>
+      <div class="canon-detalhe">Bispos, presbíteros e diáconos não podem transferir-se de uma cidade para outra. Visa combater a ambição e garantir estabilidade pastoral. Os que se transferirem devem retornar à diocese de origem — princípio que gerará debates intermináveis na Idade Média.</div>
+      <span class="canon-expandir"></span>
+    </div>
+
+    <div class="caixa-canon" onclick="toggleCanon(this)">
+      <div class="canon-num">Cânone 16</div>
+      <div class="canon-titulo">Abandono da diocese</div>
+      <div class="canon-resumo">Princípio da incardinação</div>
+      <div class="canon-detalhe">Presbíteros ou diáconos que abandonaram sua diocese sem autorização não podem ser aceitos por outros bispos. O bispo acolhedor deve devolvê-los. Reforça o princípio da incardinação — o vínculo permanente entre o clérigo e sua diocese.</div>
+      <span class="canon-expandir"></span>
+    </div>
+
+    <div class="caixa-canon" onclick="toggleCanon(this)">
+      <div class="canon-num">Cânone 17</div>
+      <div class="canon-titulo">Usura clerical</div>
+      <div class="canon-resumo">Proibição absoluta de cobrar juros</div>
+      <div class="canon-detalhe">Proíbe absolutamente a cobrança de juros por bispos, presbíteros e diáconos. Quem praticar usura deve ser deposto. Fundamento moral: o clérigo não deve enriquecer à custa dos necessitados — eco de Lv 25,35–37 e Ez 18,8.</div>
+      <span class="canon-expandir"></span>
+    </div>
+
+    <div class="caixa-canon" onclick="toggleCanon(this)">
+      <div class="canon-num">Cânone 18</div>
+      <div class="canon-titulo">Diaconia e Eucaristia</div>
+      <div class="canon-resumo">Hierarquia das ordens sagradas</div>
+      <div class="canon-detalhe">Os diáconos não devem distribuir a Eucaristia aos presbíteros, pois são ministros inferiores a estes. Os diáconos não devem sentar-se entre os presbíteros. Define hierarquicamente as ordens sagradas e condena práticas que confundiam os graus ministeriais.</div>
+      <span class="canon-expandir"></span>
+    </div>
+
+    <div class="caixa-canon" onclick="toggleCanon(this)">
+      <div class="canon-num">Cânone 19</div>
+      <div class="canon-titulo">Os Paulianistas</div>
+      <div class="canon-resumo">Rebatismo dos seguidores de Paulo de Samósata</div>
+      <div class="canon-detalhe">Seguidores de Paulo de Samósata devem ser rebatizados (pois Paulo ensinava um monarquianismo dinâmico que esvaziava a Trindade). Nota importante: as <em>diaconisas</em> paulianistas devem ser recebidas como leigas — primeira menção conciliar ao ministério feminino e questão de seu estatuto.</div>
+      <span class="canon-expandir"></span>
+    </div>
+
+    <div class="caixa-canon" onclick="toggleCanon(this)">
+      <div class="canon-num">Cânone 20</div>
+      <div class="canon-titulo">Genuflexão nos domingos</div>
+      <div class="canon-resumo">Orar em pé — sinal da Ressurreição</div>
+      <div class="canon-detalhe">Proíbe ajoelhar-se durante a oração nos domingos e em todo o período pascal até Pentecostes. A oração de pé é sinal da Ressurreição. Esta prática litúrgica remonta à tradição apostólica (Tertuliano já a menciona). Persiste nas Igrejas Orientais até hoje.</div>
+      <span class="canon-expandir"></span>
+    </div>
+
   </div>
-
-  <div class="caixa-canon">
-    <div class="canon-num">Cânone 2</div>
-    <p><strong>Neófitos:</strong> Proíbe a ordenação episcopal ou presbiteral de recém-batizados.
-    É necessário um período de provação após o batismo. Fundo histórico: casos como o de
-    Ambrósio de Milão (ordenado bispo oito dias após o batismo) eram então exceções
-    extraordinárias, não a regra.</p>
-  </div>
-
-  <div class="caixa-canon">
-    <div class="canon-num">Cânone 3</div>
-    <p><strong>Mulheres nas casas dos clérigos (<em>syneisaktai</em>):</strong> Proíbe que
-    bispos, presbíteros e diáconos mantenham em casa qualquer mulher "introduzida", exceto
-    mãe, irmã, tia ou outras mulheres "acima de toda suspeita". Combatia a prática do
-    celibato carismático partilhado (<em>virgines subintroductae</em>).</p>
-  </div>
-
-  <div class="caixa-canon">
-    <div class="canon-num">Cânone 4</div>
-    <p><strong>Eleição e consagração de bispos:</strong> Um bispo deve ser eleito por todos
-    os bispos da província e consagrado por todos eles, ou pelo menos por três, com o
-    consentimento dos demais expresso por carta. O metropolita (bispo da capital provincial)
-    deve confirmar a eleição. Fundamento do sistema metropolitano da Igreja.</p>
-  </div>
-
-  <div class="caixa-canon">
-    <div class="canon-num">Cânone 5</div>
-    <p><strong>Excomungados:</strong> As excomunhões decididas por bispos individuais devem
-    ser respeitadas por toda a Igreja. Sínodos provinciais devem ser realizados duas vezes
-    por ano para examinar casos de excomunhão injusta. Estabelece a colegialidade episcopal
-    no exercício da disciplina.</p>
-  </div>
-
-  <div class="caixa-canon">
-    <div class="canon-num">Cânone 6</div>
-    <p><strong>Primados das grandes sés:</strong> Reconhece os privilégios antigos de Roma,
-    Alexandria e Antioquia sobre suas respectivas regiões (Itália e Ocidente; Egito e Líbia;
-    Síria e Oriente). Menciona também os costumes locais de outras igrejas. Base para o
-    desenvolvimento posterior da eclesiologia das sés patriarcais.</p>
-  </div>
-
-  <div class="caixa-canon">
-    <div class="canon-num">Cânone 7</div>
-    <p><strong>Honra especial de Jerusalém:</strong> O bispo de Aelia Capitolina (nome romano
-    de Jerusalém) recebe honra especial, após o bispo metropolitano de Cesareia. É o
-    reconhecimento do prestígio histórico-sagrado de Jerusalém, sem criar ainda um patriarcado
-    formal.</p>
-  </div>
-
-  <div class="caixa-canon">
-    <div class="canon-num">Cânone 8</div>
-    <p><strong>Os Novacianos:</strong> Os clérigos da seita novaciana (que negava o perdão
-    a apóstatas e a pecadores graves) podem ser recebidos na Igreja católica com imposição
-    das mãos e manutenção de seu grau clerical, desde que assinem uma profissão de fé e
-    acatem as normas da Igreja.</p>
-  </div>
-
-  <div class="caixa-canon">
-    <div class="canon-num">Cânone 9</div>
-    <p><strong>Ordenações irregulares:</strong> Presbíteros que foram ordenados sem investigação
-    prévia de seus pecados ou que confessaram pecados após a imposição das mãos não devem
-    ser aceitos. A Church não reconhece ordenações conferidas levianamente.</p>
-  </div>
-
-  <div class="caixa-canon">
-    <div class="canon-num">Cânone 10</div>
-    <p><strong>Apóstatas ordenados:</strong> Quem renegou a fé durante a perseguição e foi
-    ordenado não pode permanecer no clero. Mesmo que os ordenadores ignorassem a apostasia,
-    a irregularidade persiste.</p>
-  </div>
-
-  <div class="caixa-canon">
-    <div class="canon-num">Cânone 11</div>
-    <p><strong>Lapsos sem perseguição:</strong> Quem abandonou a fé sem coação (apostasia
-    voluntária) deve cumprir penitência pública de 12 anos. Distinguem-se categorias:
-    <em>flentes</em> (que choram fora da igreja), <em>audientes</em> (ouvem as leituras mas
-    saem antes da missa dos fiéis), <em>substrati</em> (prostrados pedindo orações),
-    <em>consistentes</em> (presentes mas sem comungar).</p>
-  </div>
-
-  <div class="caixa-canon">
-    <div class="canon-num">Cânone 12</div>
-    <p><strong>Militares apóstatas:</strong> Cristãos que retornaram ao serviço militar pagão
-    após a conversão, ou compraram cargos por corrupção, devem cumprir 13 anos de penitência
-    (3 como <em>audientes</em> e 10 como <em>substrati</em>), mas, em caso de doença grave,
-    pode ser-lhes dada a comunhão.</p>
-  </div>
-
-  <div class="caixa-canon">
-    <div class="canon-num">Cânone 13</div>
-    <p><strong>Viáticos aos moribundos:</strong> Ninguém deve ser privado da última comunhão
-    em artigo de morte. Se o moribundo se recuperar após receber os sacramentos como moribundo,
-    deverá retomar a penitência normalmente. Princípio: a misericórdia prevalece sobre a
-    disciplina quando a morte se aproxima.</p>
-  </div>
-
-  <div class="caixa-canon">
-    <div class="canon-num">Cânone 14</div>
-    <p><strong>Catecúmenos apóstatas:</strong> Catecúmenos (ainda não batizados) que
-    apostataram devem cumprir 3 anos como simples ouvintes antes de poder retornar ao
-    catecumenato. Grau de misericórdia proporcionalmente maior que com os batizados.</p>
-  </div>
-
-  <div class="caixa-canon">
-    <div class="canon-num">Cânone 15</div>
-    <p><strong>Translação de clérigos:</strong> Bispos, presbíteros e diáconos não podem
-    transferir-se de uma cidade para outra. Visa combater a ambição e garantir estabilidade
-    pastoral. Os que se transferirem devem retornar à diocese de origem.</p>
-  </div>
-
-  <div class="caixa-canon">
-    <div class="canon-num">Cânone 16</div>
-    <p><strong>Clérigos que abandonaram sua Igreja:</strong> Presbíteros ou diáconos que
-    abandoaram sua diocese sem autorização e se instalaram noutras igrejas não podem ser
-    aceitos. O bispo que os acolher deve devolvê-los. Reforça o princípio da incardinação.</p>
-  </div>
-
-  <div class="caixa-canon">
-    <div class="canon-num">Cânone 17</div>
-    <p><strong>Usura clerical:</strong> Proíbe absolutamente a cobrança de juros por bispos,
-    presbíteros e diáconos. Quem for encontrado praticando usura deve ser deposto.
-    Fundo moral: o clérigo não deve enriquecer à custa dos necessitados.</p>
-  </div>
-
-  <div class="caixa-canon">
-    <div class="canon-num">Cânone 18</div>
-    <p><strong>Diaconia e Eucaristia:</strong> Os diáconos não devem distribuir a Eucaristia
-    aos presbíteros, pois aqueles são ministros inferiores a estes. Os diáconos não devem
-    sentar-se entre os presbíteros. Define hierarquicamente as ordens sagradas e condena
-    práticas que confundiam os graus ministeriais.</p>
-  </div>
-
-  <div class="caixa-canon">
-    <div class="canon-num">Cânone 19</div>
-    <p><strong>Os Paulianistas:</strong> Os seguidores de Paulo de Samósata (heresiarca
-    monarquianista do séc. III) que querem aderir à Igreja devem ser rebatizados. Seus
-    clérigos, se mostrarem conduta irrepreensível, podem ser reordenados pelo bispo
-    local. As diaconisas paulianistas devem ser recebidas como leigas, pois sua "ordenação"
-    é inválida.</p>
-  </div>
-
-  <div class="caixa-canon">
-    <div class="canon-num">Cânone 20</div>
-    <p><strong>Genuflexão aos domingos e no Pentecostes:</strong> Proíbe ajoelhar-se durante
-    a oração nos domingos e durante todo o período pascal até Pentecostes. A oração de pé
-    é sinal da Ressurreição — a Igreja ora em pé como ressuscitada com Cristo. Esta prática
-    litúrgica remonta à tradição apostólica.</p>
-  </div>
-</div>
-
-<!-- ═══════════════════════════════ 10. PÁSCOA ══════════════════════════ -->
-<div class="secao" id="pascoa">
-  <h2>🌕 A Questão da Páscoa</h2>
-
-  <h3>O Problema Quartodecimano</h3>
-  <p>Uma das questões mais práticas e divisivas debatidas em Niceia foi a data da celebração
-  da Páscoa. Desde os primeiros séculos, duas tradições coexistiam:</p>
-  <ul>
-    <li><strong>Tradição quartodecimana:</strong> Predominante na Ásia Menor (especialmente
-    na Síria), celebrava a Páscoa no 14 de Nisã do calendário judaico — o dia da Páscoa hebraica
-    — independentemente do dia da semana. Reivindicava origem apostólica (João e Filipe).</li>
-    <li><strong>Tradição romana e alexandrina:</strong> Celebrava a Páscoa sempre no domingo
-    após o 14 de Nisã, enfatizando a Ressurreição (que ocorreu num domingo) como centro
-    da celebração.</li>
-  </ul>
-
-  <h3>A Decisão de Niceia</h3>
-  <p>O concílio determinou que a Páscoa seria celebrada no <strong>primeiro domingo após a
-  primeira lua cheia posterior ao equinócio de primavera</strong> — seguindo o método de
-  cálculo alexandrino, que usava o equinócio de 21 de março como referência fixa. Roma e
-  Alexandria foram encarregadas de calcular e comunicar a data anualmente.</p>
-  <p>Esta decisão tinha uma dimensão política explícita: Constantino queria que os cristãos
-  não mais compartilhassem a data de uma festa judaica. Sua carta aos bispos ausentes após
-  o concílio é eloquente: "Parecia indigno calcular esta festa santíssima segundo o costume
-  dos judeus, que mancharam suas mãos com um crime enorme."</p>
-
-  <h3>Consequências</h3>
-  <p>A questão nunca foi completamente resolvida. Diferentes métodos de calcular o equinócio
-  e a lua cheia levaram a discrepâncias que persistem até hoje: a Páscoa ortodoxa (que usa
-  o calendário juliano) frequentemente cai em data diferente da católica e protestante
-  (calendário gregoriano). É um dos temas centrais no diálogo ecumênico contemporâneo.</p>
-</div>
-
-<!-- ═══════════════════════════════ 11. MELECIANOS ══════════════════════ -->
-<div class="secao" id="melecio">
-  <h2>✂️ O Cisma Meleciano</h2>
-
-  <h3>Origem do Cisma</h3>
-  <p>Paralelamente à crise ariana, Niceia enfrentou um segundo problema: o cisma meleciano
-  no Egito. Melecianos eram seguidores de Melécio, bispo de Licópolis (Alto Egito), que durante
-  a perseguição de Diocleciano havia desobedecido ao bispo Pedro de Alexandria, ordenando
-  clérigos em dioceses alheias e recusando-se a seguir a política de clemência do bispo com
-  os <em>lapsi</em> (cristãos que tinham apostatado sob tortura).</p>
-  <p>Quando Pedro foi martirizado (311), Melécio continuou a agir independentemente, criando
-  uma hierarquia paralela no Egito. Seu rigorismo (recusava readmitir os apóstatas) era
-  oposto ao dos novacianos, mas o problema estrutural era o mesmo: uma Igreja dentro da Igreja.</p>
-
-  <h3>A Solução de Niceia</h3>
-  <p>O concílio foi relativamente misericordioso com os melecianos. As decisões foram:</p>
-  <ul>
-    <li>Melécio conservaria o título de bispo, mas sem jurisdição real e sem autoridade para
-    ordenar.</li>
-    <li>Os clérigos melecianos ordenados irregularmente seriam reconhecidos, mas subordinados
-    aos bispos católicos legítimos.</li>
-    <li>Ao morrer bispos melecianos, os católicos poderiam ser eleitos em seu lugar.</li>
-    <li>Os melecianos não poderiam eleger candidatos próprios sem aprovação de Alexandre
-    de Alexandria.</li>
-  </ul>
-  <p>A solução foi frágil: os melecianos logo se aliaram aos arianos, prolongando as disputas
-  eclesiásticas no Egito por décadas.</p>
-</div>
-
-<!-- ═══════════════════════════════ 12. HERESIAS ════════════════════════ -->
-<div class="secao" id="heresias">
-  <h2>⚠️ Heresias Combatidas</h2>
-
-  <h3>Arianismo <span class="tag">Principal</span></h3>
-  <p>Ver seção específica acima. O arianismo foi a razão de ser do concílio. Sua condenação
-  foi explícita, tanto no Credo (com o <em>homoousios</em>) como nos anátemas finais que
-  listavam e rejeitavam as proposições arianas uma a uma.</p>
-
-  <h3>Subordinacionismo Mitigado</h3>
-  <p>Mesmo entre os não-arianos, havia bispos que sustentavam formas suaves de
-  subordinacionismo — a ideia de que o Filho era de algum modo inferior ao Pai em ser ou
-  dignidade. Niceia condenou implicitamente todas essas posições ao insistir no
-  <em>homoousios</em>, embora a interpretação do termo continuasse controversa.</p>
-
-  <h3>Novacianism <span class="tag">Disciplinar</span></h3>
-  <p>O cânone 8 trata da reintegração dos novacianos. Novaciano (Roma, séc. III) havia
-  ensinado que a Igreja não tem poder de perdoar pecados graves pós-batismo (apostasia,
-  homicídio, adultério). Esta posição rigorista criou uma Igreja separada que ainda existia
-  no séc. IV. Niceia admitiu seus clérigos sem reordenação, mas exigiu total adesão à
-  doutrina e prática católica.</p>
-
-  <h3>Paulianismo <span class="tag">Cristológico</span></h3>
-  <p>O cânone 19 trata dos seguidores de Paulo de Samósata (bispo de Antioquia, condenado
-  em 268). Paulo ensinava um monarquianismo dinâmico: Jesus era um homem comum em quem o
-  Logos divino habitava como potência impessoal, não se unindo hipostaticamente a Ele. Seus
-  batizados eram considerados inválidos (pois batizavam em nome de um mero homem) e deveriam
-  ser rebatizados.</p>
-
-  <h3>Melecianism <span class="tag">Disciplinar</span></h3>
-  <p>Cisma disciplinar (não heresia doutrinária) tratado no cânone 19 e em decreto especial.
-  Ver seção sobre o Cisma Meleciano acima.</p>
-</div>
-
-<!-- ═══════════════════════════════ 13. AUTORIDADES ═════════════════════ -->
-<div class="secao" id="autoridades">
-  <h2>👑 Papas, Imperadores e Autoridades</h2>
-
-  <h3>O Imperador Constantino I (272–337)</h3>
-  <p>Constantino nasceu na Níssia (Mœsia Superior) e era filho de Constâncio Cloro e de
-  Helena (futura santa). Proclamado imperador pelas tropas em Eboracum (York) em 306, conquistou
-  o Ocidente ao derrotar Maxêncio em Mílvio (312) — batalha precedida, segundo a tradição,
-  pela visão do Chi-Rho e da inscrição <em>"In hoc signo vinces"</em>. Em 324, após eliminar
-  Licínio, tornou-se único governante do Império.</p>
-  <p>Seu papel em Niceia foi de convocador, financiador e árbitro político, não de árbitro
-  teológico. Presidiu a abertura e o encerramento; ao longo dos debates, sua influência foi
-  exercida nos bastidores — especialmente na promoção do <em>homoousios</em>. Não votou
-  nas decisões doutrinais.</p>
-  <p>O fato de Constantino não ser ainda batizado (e portanto tecnicamente não-membro pleno
-  da Igreja) em 325 tornou sua presença e influência teologicamente ambígua — uma tensão que
-  os Padres presentes viveram com desconforto, mas que aceitaram diante da proteção imperial
-  que a Igreja agora desfrutava.</p>
-
-  <h3>Papa Silvestre I (314–335)</h3>
-  <p>Silvestre I governa a Igreja de Roma durante todo o período de Niceia, mas sua ausência
-  física do concílio é historicamente certa. As razões invocadas (saúde frágil, distância) são
-  plausíveis. Enviou dois presbíteros — Vítor e Vincêncio — como seus legados, que assinaram
-  o Credo em seu nome. A tradição atribui a Silvestre e Constantino vários documentos e
-  acontecimentos (como a lendária "Doação de Constantino") que a historiografia moderna
-  demonstrou serem posteriores e apócrifos.</p>
-
-  <h3>Alexandre de Alexandria (312–328)</h3>
-  <p>Bispo de Alexandria desde 312, Alexandre foi o primeiro a confrontar Ário formalmente
-  e a lançar a crise que levaria a Niceia. Em Niceia, liderou o partido niceno ao lado de Ossius.
-  Faleceu três anos após o concílio, em 328, sendo sucedido por seu diácono Atanásio — que
-  levaria a bandeira nicena por mais de quarenta anos.</p>
-
-  <h3>Atanásio de Alexandria (c. 296–373)</h3>
-  <p>Presente em Niceia como jovem diácono e secretário de Alexandre, Atanásio tornar-se-ia
-  a figura mais determinante para a recepção de Niceia. Cinco vezes exilado por imperadores
-  pró-arianos (<em>"Athanasius contra mundum"</em> — Atanásio contra o mundo), manteve a
-  ortodoxia nicena com uma tenacidade que salvou o Credo de ser adulterado ou esquecido.
-  Doutor da Igreja, comemorado em 2 de maio.</p>
-</div>
-
-<!-- ═══════════════════════════════ 14. PÓS-CONCÍLIO ════════════════════ -->
-<div class="secao" id="pos-concilio">
-  <h2>🔄 Pós-Concílio: A Longa Crise Ariana (325–381)</h2>
-
-  <h3>O Retorno de Ário</h3>
-  <p>Exilado em 325, Ário foi reabilitado por Constantino por volta de 334–335, em parte pela
-  influência de Eusébio de Nicomédia — que havia retornado do exílio e conquistado a confiança
-  do imperador. Preparava-se um recebimento litúrgico de Ário em Constantinopla, mas ele morreu
-  subitamente em 336, num episódio descrito pelos nicenos como julgamento divino.</p>
-
-  <h3>Imperadores Pró-Arianos</h3>
-  <p>Após a morte de Constantino (337), o Império foi dividido entre seus filhos. Constâncio II,
-  que governou o Oriente e depois todo o Império (353–361), era abertamente simpatizante do
-  arianismo. Sob sua pressão, vários concílios produziram credos alternativos ao niceno:</p>
-  <ul>
-    <li><strong>Sirmium (351, 357, 358):</strong> As "blasfêmias de Sirmium" propunham fórmulas
-    que evitavam o <em>homoousios</em>.</li>
-    <li><strong>Rimini-Selêucia (359):</strong> Duplo concílio (Ocidente em Rimini, Oriente em
-    Selêucia) que adotou uma fórmula <em>homoiana</em> ("o Filho é semelhante ao Pai") —
-    levando Jerônimo a escrever: "O mundo acordou e descobriu-se ariano."</li>
-    <li><strong>Concílio de Tiro (335):</strong> Exilou Atanásio usando acusações disciplinares
-    fabricadas.</li>
-  </ul>
-
-  <h3>As Cinco Deportações de Atanásio</h3>
-  <ul class="linha-tempo">
-    <li><span class="lt-data">335–337</span> 1.ª deportação — para Tréveris (Gália), por
-    Constantino I.</li>
-    <li><span class="lt-data">339–346</span> 2.ª deportação — para Roma, por Constâncio II.</li>
-    <li><span class="lt-data">356–362</span> 3.ª deportação — para o deserto egípcio,
-    por Constâncio II.</li>
-    <li><span class="lt-data">362–363</span> 4.ª deportação — por Juliano Apóstata.</li>
-    <li><span class="lt-data">365–366</span> 5.ª deportação — por Valente.</li>
-  </ul>
-
-  <h3>A Resolução em Constantinopla I (381)</h3>
-  <p>O imperador Teodósio I, firmemente niceno, convocou o Segundo Concílio Ecumênico em
-  Constantinopla (381). Este concílio reafirmou e ampliou o Credo de Niceia, condenou o
-  arianismo residual (macedonianismo, pneumatômaco) e definiu a divindade do Espírito Santo —
-  lacuna deixada em 325. O Credo Niceno-Constantinopolitano resultante é o que a Igreja recita
-  até hoje.</p>
-
-  <h3>O Arianismo Germânico</h3>
-  <p>Mesmo após 381, o arianismo sobreviveu entre os povos germânicos evangelizados pelo bispo
-  Úlfilas (que havia traduzido a Bíblia ao gótico). Visigodos, Ostrogodos, Vândalos, Burgúndios
-  e Lombardos foram arianos por séculos. A conversão do rei visigodo Recaredo ao catolicismo
-  (589) e a dos lombardos ao longo do século VII marcaram o fim definitivo do arianismo
-  organizado no Ocidente.</p>
-</div>
-
-<!-- ═══════════════════════════════ 15. RECEPÇÃO ECUMÊNICA ══════════════ -->
-<div class="secao" id="recepcao">
-  <h2>🌐 Recepção Ecumênica — Como as Tradições Cristãs Recebem Niceia</h2>
-
-  <h3>Igreja Católica Romana</h3>
-  <p>Niceia I é o primeiro dos 21 concílios ecumênicos reconhecidos pela Igreja Católica. Seu
-  Credo e seus cânones têm autoridade dogmática e disciplinar plena. O <em>homoousios</em> é
-  considerado definição irreformável de fé.</p>
-
-  <h3>Igreja Ortodoxa</h3>
-  <p>As Igrejas Ortodoxas (grega, russa, sérvia, romena etc.) reconhecem os sete primeiros
-  concílios ecumênicos (até Niceia II em 787) como plenamente vinculantes. Niceia I ocupa
-  lugar especial de honra. Há, porém, diferenças quanto à interpretação da primazia romana
-  afirmada no Cânone 6 — os ortodoxos rejeitam a leitura católica de que implicaria
-  jurisdição universal do Papa.</p>
-
-  <h3>Igrejas Orientais Antigas (não-calcedonianas)</h3>
-  <p>As Igrejas Copta, Etiópica, Armênia, Síria Ocidental e Malanquesa aceitam Niceia I
-  plenamente (são calcedonianas até Niceia; rejeitam apenas Calcedônia em diante). O Credo
-  niceno é recitado em suas liturgias, embora em versões ligeiramente distintas.</p>
-
-  <h3>Igreja Assíria do Oriente (nestoriana)</h3>
-  <p>Aceita Niceia I, mas rejeita os concílios a partir de Éfeso (431). Recita uma versão
-  do Credo niceno em suas liturgias em aramaico.</p>
-
-  <h3>Igrejas da Reforma (Protestantismo histórico)</h3>
-  <p>Lutero, Calvino e os reformadores aceitaram Niceia I como concílio legítimo e seu Credo
-  como expressão fiel da Escritura. As confissões protestantes históricas (Confissão de
-  Augsburgo, Catecismo de Heidelberg, Confissão de Westminster) afirmam o Credo Niceno.
-  Denominações como Unitaristas e Testemunhas de Jeová rejeitam o <em>homoousios</em>,
-  retomando posições próximas ao arianismo.</p>
-
-  <h3>Anglicanismo</h3>
-  <p>Os 39 Artigos da Igreja da Inglaterra afirmam que os três primeiros concílios (incluindo
-  Niceia I) têm autoridade por estarem de acordo com as Escrituras. O Credo Niceno é parte
-  obrigatória do Book of Common Prayer.</p>
-
-  <h3>A Questão do <em>Filioque</em></h3>
-  <p>Um ponto de divergência entre católicos e ortodoxos que se liga indiretamente a Niceia é o
-  <em>Filioque</em> ("e do Filho") — adição latina ao Credo (afirmando que o Espírito procede
-  do Pai "e do Filho"). Os ortodoxos consideram esta adição unilateral e teologicamente
-  problemática. O concílio de 325 não tratou do tema, mas o debate parte da interpretação
-  da pneumatologia nicena.</p>
-</div>
-
-<!-- ═══════════════════════════════ 16. IMPACTO ══════════════════════════ -->
-<div class="secao" id="impacto">
-  <h2>🌍 Impacto Duradouro para a Igreja e para a Civilização</h2>
-
-  <h3>O Paradigma dos Concílios Ecumênicos</h3>
-  <p>Niceia I criou o modelo de governança teológica da Igreja: bispos de todo o mundo reunidos
-  em concílio, sob a assistência do Espírito Santo, definem a fé de modo irreformável. Este
-  paradigma — discutido, contestado, refinado — continuaria a moldar a eclesiologia cristã
-  por séculos, sendo a base sobre a qual repousa a autoridade de todos os demais concílios.</p>
-
-  <h3>O Credo como Elo Ecumênico Universal</h3>
-  <p>O Credo Niceno-Constantinopolitano (expansão do Credo de Niceia) é o único texto teológico
-  compartilhado por praticamente todas as tradições cristãs históricas — católicos, ortodoxos,
-  anglicanos, luteranos, reformados. É recitado em árabe no Cairo, em grego em Atenas, em
-  latim no Vaticano, em russo em Moscou, em amárico em Adis Abeba, em inglês em Londres.
-  Nenhum outro documento cristão tem alcance comparável.</p>
-
-  <h3>A Cristologia como Base da Soteriologia</h3>
-  <p>A definição do <em>homoousios</em> não foi apenas um exercício filosófico: ela definiu
-  o que é a salvação cristã. Se Cristo não é verdadeiramente Deus, sua morte na cruz é o
-  sacrifício de uma criatura — preciosa, mas finita. A teologia da redenção, da deificação
-  (<em>theosis</em>), da satisfação vicária e da encarnação reparadora depende inteiramente
-  da plena divindade do Salvador afirmada em Niceia.</p>
-
-  <h3>A Relação Igreja-Estado</h3>
-  <p>Niceia inaugurou — com todas as suas ambiguidades — o modelo de colaboração e tensão
-  entre autoridade eclesiástica e poder imperial que marcaria a Cristandade por mil anos.
-  O cesaropapismo (domínio do Estado sobre a Igreja) e o hierocratismo (domínio da Igreja
-  sobre o Estado) são dois polos extremos que emergiram da dialética aberta em 325. A
-  Reforma Gregoriana do séc. XI, a Querela das Investiduras, o galicanismo e o josefinismo
-  são capítulos desta história.</p>
-
-  <h3>Niceia e a Civilização Ocidental</h3>
-  <p>Ao definir a identidade cristã ortodoxa, Niceia contribuiu para a formação da identidade
-  cultural do Ocidente. A Europa medieval, com suas catedrais, universidades, direito canônico
-  e filosofia escolástica, repousa sobre uma concepção de Deus e de Cristo que Niceia
-  formulou. Sem Niceia, é difícil imaginar Agostinho, Tomás de Aquino, Dante ou a própria
-  estrutura intelectual da Escolástica.</p>
-
-  <h3>"O Concílio dos Concílios"</h3>
-  <p>O título não-oficial de Niceia I como "o Concílio dos Concílios" reflete seu estatuto
-  fundacional: é o ponto de referência ao qual todos os demais concílios recorrem para afirmar
-  sua continuidade com a tradição apostólica. Quando um concílio posterior precisa afirmar sua
-  legitimidade, volta a Niceia. É o metro-padrão da ortodoxia cristológica.</p>
-</div>
-
-<!-- ═══════════════════════════════ 17. FONTES ═══════════════════════════ -->
-<div class="secao" id="fontes">
-  <h2>📚 Fontes Primárias e Historiografia</h2>
-
-  <h3>Fontes Primárias</h3>
-  <ul>
-    <li><strong>Eusébio de Cesareia</strong> — <em>Vita Constantini</em>, livros II–III:
-    relato contemporâneo, mas panegírico e parcial. Fonte insubstituível para a atmosfera
-    do concílio.</li>
-    <li><strong>Atanásio de Alexandria</strong> — <em>De Decretis Nicaenae Synodi</em>:
-    defesa aprofundada das decisões de Niceia, escrita décadas depois; rica em argumentação
-    teológica.</li>
-    <li><strong>Atanásio</strong> — <em>Historia Arianorum ad Monachos</em>: relato dos
-    conflitos pós-nicenos, fonte fundamental para as perseguições anti-nicenas.</li>
-    <li><strong>Sócrates Escolástico</strong> — <em>Historia Ecclesiastica</em>, livro I:
-    história eclesiástica do séc. V, bem documentada, independente de Eusébio.</li>
-    <li><strong>Sozômeno</strong> — <em>Historia Ecclesiastica</em>, livro I: outra história
-    eclesiástica do séc. V, com informações complementares.</li>
-    <li><strong>Teodoreto de Ciro</strong> — <em>Historia Ecclesiastica</em>: perspectiva
-    antioquena; útil para os concílios pós-nicenos.</li>
-    <li><strong>Carta de Constantino aos bispos ausentes</strong> — Preservada por Eusébio;
-    revela a motivação política do concílio e a posição imperial sobre a data da Páscoa.</li>
-    <li><strong>Canônes de Niceia</strong> — Preservados em grego e latim; editados
-    criticamente em Mansi, <em>Sacrorum Conciliorum Nova et Amplissima Collectio</em>,
-    vol. II.</li>
-  </ul>
-
-  <h3>Obras de Referência Modernas</h3>
-  <ul>
-    <li><strong>R. P. C. Hanson</strong> — <em>The Search for the Christian Doctrine of God:
-    The Arian Controversy 318–381</em> (1988): obra monumental, a mais completa sobre
-    a crise ariana.</li>
-    <li><strong>John Henry Newman</strong> — <em>The Arians of the Fourth Century</em> (1833):
-    clássico da teologia anglicana/católica; ainda valioso pela análise das posições.</li>
-    <li><strong>Lewis Ayres</strong> — <em>Nicaea and Its Legacy</em> (2004): revisão
-    historiográfica recente, questiona leituras simplistas do concílio.</li>
-    <li><strong>Frances Young</strong> — <em>From Nicaea to Chalcedon</em> (2010): contexto
-    patrístico amplo.</li>
-    <li><strong>Yves-Marie Duval</strong> e outros — artigos em <em>Dictionnaire de Théologie
-    Catholique</em>, verbete "Nicée (Concile de)".</li>
-    <li><strong>Denzinger-Hünermann</strong> — <em>Enchiridion Symbolorum</em>: texto oficial
-    do Credo niceno com fontes e comentário.</li>
-  </ul>
-
-  <h3>Para Leitura das Fontes em Português</h3>
-  <ul>
-    <li>Atanásio de Alexandria, obras selecionadas disponíveis em traduções espanholas e
-    italianas na <em>Biblioteca de Patrística</em>.</li>
-    <li>Eusébio de Cesareia, <em>História Eclesiástica</em> — tradução brasileira pela
-    editora Paulus.</li>
-    <li>Os cânones de Niceia em tradução comentada em: Compêndio dos Decretos, Definições e
-    Declarações da Igreja em Matéria de Fé e Moral, ed. Paulinas (baseado no Denzinger).</li>
-  </ul>
 </div>
 
 <hr class="divisor">
 
-<!-- FOOTER -->
-<footer>
-  <p>
-    Concílio 1 de 21 reconhecidos pela Igreja Católica &nbsp;·&nbsp;
-    <a href="../index.html">← Voltar ao índice</a>
-    &nbsp;·&nbsp;
-    <a href="constantinopla-i.html">Próximo: Constantinopla I (381) →</a>
-  </p>
-  <p style="margin-top: 10px;">
-    Lux Fidei © 2026 — <em>"A verdade é o bem do intelecto."</em>
-  </p>
-  <p style="margin-top: 6px; font-size: 0.78rem;">
-    Fontes: Eusébio de Cesareia, Atanásio de Alexandria, Sócrates Escolástico,
-    Sozômeno, Denzinger-Hünermann, R.P.C. Hanson, Lewis Ayres.
-  </p>
-</footer>
+<!-- FIM DA PARTE 1 — continua na parte 2 -->
 
+<script>
+/* ── PROGRESSO ── */
+window.addEventListener('scroll', () => {
+  const doc = document.documentElement;
+  const prog = (doc.scrollTop / (doc.scrollHeight - doc.clientHeight)) * 100;
+  document.getElementById('progress-bar').style.width = prog + '%';
+  document.getElementById('btnTopo').classList.toggle('visivel', doc.scrollTop > 400);
+  atualizarNavLateral();
+});
+
+document.getElementById('btnTopo').addEventListener('click', () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+/* ── SUMÁRIO ── */
+document.getElementById('sumarioHeader').addEventListener('click', () => {
+  const g = document.getElementById('sumarioGrupos');
+  const t = document.getElementById('sumarioToggle');
+  g.classList.toggle('visivel');
+  t.classList.toggle('aberto');
+});
+
+document.querySelectorAll('.sumario-tab').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.sumario-tab').forEach(b => b.classList.remove('ativa'));
+    document.querySelectorAll('.sumario-painel').forEach(p => p.classList.remove('visivel'));
+    btn.classList.add('ativa');
+    document.getElementById(btn.dataset.painel).classList.add('visivel');
+  });
+});
+
+/* ── ACCORDION ── */
+document.querySelectorAll('.accordion-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const corpo = document.getElementById(btn.dataset.acc);
+    const aberto = corpo.classList.contains('visivel');
+    document.querySelectorAll('.accordion-corpo').forEach(c => c.classList.remove('visivel'));
+    document.querySelectorAll('.accordion-btn').forEach(b => b.classList.remove('aberto'));
+    if (!aberto) {
+      corpo.classList.add('visivel');
+      btn.classList.add('aberto');
+    }
+  });
+});
+
+/* ── TABS INTERNAS ── */
+document.querySelectorAll('.tab-interna-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const nav = btn.closest('.tabs-internas-nav');
+    const container = btn.closest('.tabs-internas');
+    nav.querySelectorAll('.tab-interna-btn').forEach(b => b.classList.remove('ativa'));
+    container.querySelectorAll('.tab-interna-painel').forEach(p => p.classList.remove('visivel'));
+    btn.classList.add('ativa');
+    document.getElementById(btn.dataset.tab).classList.add('visivel');
+  });
+});
+
+/* ── CÂNONES ── */
+function toggleCanon(el) {
+  el.classList.toggle('expandido');
+}
+
+/* ── NAV LATERAL ── */
+function atualizarNavLateral() {
+  const secoes = document.querySelectorAll('.secao');
+  const links = document.querySelectorAll('.nav-lateral a');
+  let atual = '';
+  secoes.forEach(s => {
+    if (s.getBoundingClientRect().top <= 80) atual = s.id;
+  });
+  links.forEach(l => {
+    l.classList.toggle('ativa', l.getAttribute('href') === '#' + atual);
+  });
+}
+</script>
 </div>
 </body>
 </html>
