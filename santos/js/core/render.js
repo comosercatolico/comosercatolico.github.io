@@ -37,7 +37,53 @@ function _getImgSrc(slug) {
 }
 
 // ─────────────────────────────────────────────
-//  FALLBACK DE IMAGEM (centralizado)
+//  COR DOMINANTE (cache no localStorage)
+// ─────────────────────────────────────────────
+function _getCorDominanteCache(slug) {
+    const cached = localStorage.getItem(`cor-dominante-${slug}`);
+    return cached ? JSON.parse(cached) : null;
+}
+
+async function _extrairECachearCor(slug, imgEl) {
+    const cacheKey = `cor-dominante-${slug}`;
+    if (localStorage.getItem(cacheKey)) return;
+
+    const extrair = (src) => new Promise((resolve) => {
+        const img = new Image();
+        img.crossOrigin = 'anonymous';
+        img.onload = () => {
+            try {
+                const canvas = document.createElement('canvas');
+                canvas.width = 50; canvas.height = 50;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0, 50, 50);
+                const data = ctx.getImageData(0, 0, 50, 50).data;
+                let r = 0, g = 0, b = 0, count = 0;
+                for (let i = 0; i < data.length; i += 16) {
+                    r += data[i]; g += data[i+1]; b += data[i+2]; count++;
+                }
+                r = Math.round(r/count);
+                g = Math.round(g/count);
+                b = Math.round(b/count);
+                const esc = (v) => Math.max(0, v - 50);
+                resolve({
+                    fill:  `linear-gradient(180deg,rgba(${r},${g},${b},0.88) 0%,rgba(${esc(r)},${esc(g)},${esc(b)},0.98) 100%)`,
+                    badge: `rgba(${r},${g},${b},0.92)`
+                });
+            } catch { resolve(null); }
+        };
+        img.onerror = () => resolve(null);
+        img.src = src;
+    });
+
+    // Tenta png depois jpg
+    let cor = await extrair(`imagens/santos/${slug}.png`);
+    if (!cor) cor = await extrair(`imagens/santos/${slug}.jpg`);
+    if (cor) localStorage.setItem(cacheKey, JSON.stringify(cor));
+}
+
+// ─────────────────────────────────────────────
+//  FALLBACK DE IMAGEM
 // ─────────────────────────────────────────────
 const IMG_FALLBACK_HANDLER = `
     if (!this._triedJpg) {
@@ -50,7 +96,7 @@ const IMG_FALLBACK_HANDLER = `
 `.replace(/\s+/g, ' ').trim();
 
 // ─────────────────────────────────────────────
-//  FILL LÍQUIDO (reutilizável)
+//  FILL LÍQUIDO
 // ─────────────────────────────────────────────
 function _criarFill(slug, corFill) {
     return `
@@ -79,7 +125,7 @@ function _criarFill(slug, corFill) {
 }
 
 // ─────────────────────────────────────────────
-//  MINI BARRA DE PROGRESSO (reutilizável)
+//  MINI BARRA DE PROGRESSO
 // ─────────────────────────────────────────────
 function _criarMiniBarra(progresso, lido, modo = 'grid') {
     if (progresso === 0 && !lido) return '';
@@ -87,31 +133,26 @@ function _criarMiniBarra(progresso, lido, modo = 'grid') {
     const labelStatus = _labelStatus(progresso, lido);
     const largura     = lido ? 100 : progresso;
     const isHist      = modo === 'hist';
-
-    const corTexto = isHist ? 'rgba(255,255,255,0.9)' : 'rgba(255,255,255,0.9)';
-    const corBarra = 'rgba(255,255,255,0.2)';
-    const corFill  = 'rgba(255,255,255,0.75)';
-    const margin   = isHist ? '6px 0 2px' : '-4px 0 10px';
-    const gap      = '6px';
-    const fontSize = isHist ? '0.62rem' : '0.65rem';
+    const margin      = isHist ? '6px 0 2px' : '-4px 0 10px';
+    const fontSize    = isHist ? '0.62rem' : '0.65rem';
 
     return `
-        <div style="margin:${margin}; display:flex; align-items:center; gap:${gap};">
+        <div style="margin:${margin}; display:flex; align-items:center; gap:6px;">
             <div style="
                 flex:1; height:3px;
-                background:${corBarra};
+                background:rgba(255,255,255,0.2);
                 border-radius:2px; overflow:hidden;
             ">
                 <div style="
                     height:100%; width:0%;
-                    background:${corFill};
+                    background:rgba(255,255,255,0.75);
                     border-radius:2px;
                     transition:width 1.2s cubic-bezier(0.4,0,0.2,1);
                 " data-bar-width="${largura}"></div>
             </div>
             <span style="
                 font-size:${fontSize}; font-weight:700;
-                color:${corTexto};
+                color:rgba(255,255,255,0.9);
                 white-space:nowrap; letter-spacing:0.5px;
                 text-shadow:0 1px 3px rgba(0,0,0,0.2);
             ">${labelStatus}</span>
@@ -125,11 +166,8 @@ function _criarMiniBarra(progresso, lido, modo = 'grid') {
 function _animarElementos(container, slug, alturaFill, delay = 80) {
     requestAnimationFrame(() => {
         setTimeout(() => {
-            // Anima fill líquido
             const fill = container.querySelector(`[data-fill-slug="${slug}"]`);
             if (fill) fill.style.height = alturaFill;
-
-            // Anima barras de progresso
             container.querySelectorAll('[data-bar-width]').forEach(bar => {
                 bar.style.width = `${bar.dataset.barWidth}%`;
             });
@@ -138,53 +176,75 @@ function _animarElementos(container, slug, alturaFill, delay = 80) {
 }
 
 // ─────────────────────────────────────────────
-//  CORES (centralizadas)
+//  CORES
 // ─────────────────────────────────────────────
-function _getCorFill(lido, progresso) {
-    if (lido)         return 'linear-gradient(180deg, #4caf82 0%, #388e60 100%)';
-    if (progresso > 0) return 'linear-gradient(180deg, #5ba3d9 0%, #4a8fc2 100%)';
+function _getCorFill(lido, progresso, cor = null) {
+    if (lido && cor)    return cor.fill;
+    if (lido)           return 'linear-gradient(180deg, #4caf82 0%, #388e60 100%)';
+    if (progresso > 0)  return 'linear-gradient(180deg, #5ba3d9 0%, #4a8fc2 100%)';
     return null;
 }
 
 function _getBtnConfig(lido, progresso) {
-    if (lido)          return { label: 'Reler Biografia',   icon: 'fa-redo'      };
-    if (progresso > 0) return { label: 'Continuar lendo',   icon: 'fa-book-open' };
-    return               { label: 'Ler Biografia',          icon: 'fa-book-open' };
+    if (lido)          return { label: 'Reler Biografia',  icon: 'fa-redo'      };
+    if (progresso > 0) return { label: 'Continuar lendo',  icon: 'fa-book-open' };
+    return               { label: 'Ler Biografia',         icon: 'fa-book-open' };
 }
 
 // ─────────────────────────────────────────────
 //  BADGE DE STATUS (sobre a imagem)
 // ─────────────────────────────────────────────
-function _criarBadgeStatus(lido, progresso) {
+function _criarBadgeStatus(lido, progresso, slug, cor = null) {
+    const base = `
+        position:absolute; top:8px; right:8px;
+        color:#fff; font-size:0.6rem; font-weight:700;
+        padding:3px 8px; border-radius:20px;
+        letter-spacing:0.5px;
+        backdrop-filter:blur(4px);
+        -webkit-backdrop-filter:blur(4px);
+        box-shadow:0 2px 6px rgba(0,0,0,0.25);
+        z-index:4;
+    `;
+
     if (lido) {
-        return `
-            <span style="
-                position:absolute; top:10px; right:10px;
-                background:rgba(76,175,130,0.92);
-                color:#fff; font-size:0.6rem; font-weight:700;
-                padding:3px 8px; border-radius:20px;
-                letter-spacing:0.5px;
-                backdrop-filter:blur(4px);
-                box-shadow:0 2px 6px rgba(0,0,0,0.2);
-                z-index:4;
-            ">✓ LIDO</span>
-        `;
+        const bg = cor ? cor.badge : 'rgba(76,175,130,0.92)';
+        return `<span data-badge-slug="${slug}" style="${base} background:${bg};">✓ LIDO</span>`;
     }
     if (progresso > 0) {
-        return `
-            <span style="
-                position:absolute; top:10px; right:10px;
-                background:rgba(91,163,217,0.92);
-                color:#fff; font-size:0.6rem; font-weight:700;
-                padding:3px 8px; border-radius:20px;
-                letter-spacing:0.5px;
-                backdrop-filter:blur(4px);
-                box-shadow:0 2px 6px rgba(0,0,0,0.2);
-                z-index:4;
-            ">${progresso}%</span>
-        `;
+        return `<span data-badge-slug="${slug}" style="${base} background:rgba(91,163,217,0.92);">${progresso}%</span>`;
     }
-    return '';
+    return `<span data-badge-slug="${slug}" style="${base} display:none;"></span>`;
+}
+
+// ─────────────────────────────────────────────
+//  BADGES DE CATEGORIA (overlay na imagem)
+// ─────────────────────────────────────────────
+function _criarBadgesCategorias(categorias) {
+    return `
+        <div style="
+            position:absolute; top:8px; left:8px;
+            display:flex; flex-wrap:wrap; gap:4px;
+            z-index:4;
+            max-width:calc(100% - 70px);
+        ">
+            ${categorias.map(c => `
+                <span style="
+                    background:rgba(0,0,0,0.52);
+                    color:#fff;
+                    font-size:0.58rem;
+                    font-weight:700;
+                    padding:3px 8px;
+                    border-radius:20px;
+                    letter-spacing:0.5px;
+                    backdrop-filter:blur(6px);
+                    -webkit-backdrop-filter:blur(6px);
+                    white-space:nowrap;
+                    text-transform:uppercase;
+                    box-shadow:0 1px 4px rgba(0,0,0,0.2);
+                ">${c}</span>
+            `).join('')}
+        </div>
+    `;
 }
 
 // ─────────────────────────────────────────────
@@ -203,7 +263,8 @@ export function renderizarGrid(lista, grid, abrirModal) {
         const slug      = _slugify(santo.nome);
         const progresso = _getProgresso(slug);
         const lido      = _getLido(slug);
-        const corFill   = _getCorFill(lido, progresso);
+        const cor       = _getCorDominanteCache(slug);
+        const corFill   = _getCorFill(lido, progresso, cor);
         const alturaFill = lido ? '100%' : `${progresso}%`;
         const btn       = _getBtnConfig(lido, progresso);
         const corNome   = (lido || progresso >= 50) ? '#ffffff' : '';
@@ -219,19 +280,10 @@ export function renderizarGrid(lista, grid, abrirModal) {
             ">
                 ${corFill ? _criarFill(slug, corFill) : ''}
 
-                <!-- BADGES DE CATEGORIA -->
-                <div class="santo-badge-container" style="
-                    position:relative; z-index:3;
-                    padding:10px 10px 4px;
-                    display:flex; flex-wrap:wrap; gap:4px;
-                ">
-                    ${santo.categorias.map(c => `<span class="badge">${c}</span>`).join('')}
-                </div>
-
-                <!-- IMAGEM COM PROPORÇÃO FIXA -->
+                <!-- IMAGEM + BADGES OVERLAY -->
                 <div style="
                     position:relative; z-index:3;
-                    margin:6px 8px;
+                    margin:8px 8px 0;
                     border-radius:12px;
                     overflow:hidden;
                     aspect-ratio:3/4;
@@ -251,13 +303,14 @@ export function renderizarGrid(lista, grid, abrirModal) {
                             transition:transform 0.6s ease;
                         "
                     >
-                    ${_criarBadgeStatus(lido, progresso)}
+                    ${_criarBadgesCategorias(santo.categorias)}
+                    ${_criarBadgeStatus(lido, progresso, slug, cor)}
                 </div>
 
                 <!-- CONTEÚDO -->
                 <div class="santo-card-content" style="
                     position:relative; z-index:3;
-                    padding:8px 12px 14px;
+                    padding:10px 12px 14px;
                     display:flex; flex-direction:column;
                     flex:1;
                 ">
@@ -287,6 +340,9 @@ export function renderizarGrid(lista, grid, abrirModal) {
         const img = card.querySelector('img');
         card.addEventListener('mouseenter', () => img.style.transform = 'scale(1.05)');
         card.addEventListener('mouseleave', () => img.style.transform = 'scale(1)');
+
+        // Extrai cor dominante após imagem carregar (para próxima visita)
+        img.addEventListener('load', () => _extrairECachearCor(slug, img), { once: true });
 
         _animarElementos(card, slug, alturaFill, 80 + (index % 15) * 30);
 
@@ -334,7 +390,8 @@ export function renderizarHistorico(baseDados, abrirModal) {
         const slug       = _slugify(nome);
         const progresso  = _getProgresso(slug);
         const lido       = _getLido(slug);
-        const corFill    = _getCorFill(lido, progresso);
+        const cor        = _getCorDominanteCache(slug);
+        const corFill    = _getCorFill(lido, progresso, cor);
         const alturaFill = lido ? '100%' : `${progresso}%`;
         const corNome    = (lido || progresso >= 50) ? '#ffffff' : '';
 
@@ -356,19 +413,10 @@ export function renderizarHistorico(baseDados, abrirModal) {
             ">
                 ${corFill ? _criarFill(slug, corFill) : ''}
 
-                <!-- BADGES -->
-                <div class="santo-badge-container" style="
-                    position:relative; z-index:3;
-                    padding:10px 10px 4px;
-                    display:flex; flex-wrap:wrap; gap:4px;
-                ">
-                    ${santo.categorias.map(c => `<span class="badge">${c}</span>`).join('')}
-                </div>
-
-                <!-- IMAGEM COM PROPORÇÃO FIXA -->
+                <!-- IMAGEM + BADGES OVERLAY -->
                 <div style="
                     position:relative; z-index:3;
-                    margin:6px 8px;
+                    margin:8px 8px 0;
                     border-radius:12px;
                     overflow:hidden;
                     aspect-ratio:3/4;
@@ -388,7 +436,8 @@ export function renderizarHistorico(baseDados, abrirModal) {
                             transition:transform 0.6s ease;
                         "
                     >
-                    ${_criarBadgeStatus(lido, progresso)}
+                    ${_criarBadgesCategorias(santo.categorias)}
+                    ${_criarBadgeStatus(lido, progresso, slug, cor)}
                 </div>
 
                 <!-- INFO -->
@@ -419,7 +468,10 @@ export function renderizarHistorico(baseDados, abrirModal) {
         card.addEventListener('mouseenter', () => img.style.transform = 'scale(1.05)');
         card.addEventListener('mouseleave', () => img.style.transform = 'scale(1)');
 
-        // Acessibilidade: Enter/Space abre modal
+        // Extrai cor dominante após imagem carregar
+        img.addEventListener('load', () => _extrairECachearCor(slug, img), { once: true });
+
+        // Acessibilidade
         card.addEventListener('keydown', (e) => {
             if (e.key === 'Enter' || e.key === ' ') {
                 e.preventDefault();
