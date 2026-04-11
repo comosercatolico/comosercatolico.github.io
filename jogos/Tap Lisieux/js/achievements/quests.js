@@ -1157,3 +1157,4 @@ const Quests = (() => {
     });
 
 })();
+window.Quests = Quests;
