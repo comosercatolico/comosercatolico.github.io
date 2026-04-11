@@ -409,3 +409,22 @@ const TAM_TEXTO = Object.freeze({
     levelup: 26,
     padrao:  20
 });
+// ← adiciona essas no final do arquivo
+window.BALANCE            = BALANCE;
+window.RARIDADE           = RARIDADE;
+window.COR_RARIDADE       = COR_RARIDADE;
+window.GLOW_RARIDADE      = GLOW_RARIDADE;
+window.MOEDA_TIPO         = MOEDA_TIPO;
+window.ESTADO_JOGO        = ESTADO_JOGO;
+window.EVENTOS            = EVENTOS;
+window.NOMES_ESTAGIO      = NOMES_ESTAGIO;
+window.TIPOS_MONSTROS     = TIPOS_MONSTROS;
+window.FALAS_MONSTROS     = FALAS_MONSTROS;
+window.POOL_HEROIS        = POOL_HEROIS;
+window.POOL_ARMAS         = POOL_ARMAS;
+window.POOL_GACHA_TOTAL   = POOL_GACHA_TOTAL;
+window.OBJETOS_LOBBY      = OBJETOS_LOBBY;
+window.COR_TEXTO          = COR_TEXTO;
+window.TAM_TEXTO          = TAM_TEXTO;
+window.CATEGORIA_CONQUISTA= CATEGORIA_CONQUISTA;
+window.TIPO_MISSAO        = TIPO_MISSAO;
