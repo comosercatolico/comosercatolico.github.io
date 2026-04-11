@@ -649,3 +649,6 @@ const Toast = (() => {
     });
 
 })();
+
+
+window.Toast = Toast; // ← adiciona essa
