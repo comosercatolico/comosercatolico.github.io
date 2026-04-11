@@ -762,3 +762,4 @@ const RendererBattle = (() => {
     });
 
 })();
+window.RendererBattle = RendererBattle;
