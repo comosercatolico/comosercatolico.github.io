@@ -92,23 +92,18 @@ const assets = {
 };
 
 function carregarAssets() {
-    // Cenário de fundo
     const imgCenario       = new Image();
     imgCenario.crossOrigin = "anonymous";
     imgCenario.onload      = () => { assets.cenario = imgCenario; };
     imgCenario.onerror     = () => { console.warn("Cenário não carregado — usando fallback."); };
     imgCenario.src         = ASSET_BASE + "piso-de-batalha/cenario1.png";
 
-    // ── CHÃO: carrega piso1.png ──
-    // A imagem tem fundo transparente/preto e mostra a plataforma
-    // Vamos desenhá-la na parte inferior do canvas mantendo proporção
     const imgChao          = new Image();
     imgChao.crossOrigin    = "anonymous";
     imgChao.onload         = () => { assets.chao = imgChao; };
     imgChao.onerror        = () => { console.warn("Chão não carregado — usando fallback."); };
     imgChao.src            = ASSET_BASE + "piso-de-batalha/piso1.png";
 
-    // Sprites da santa (8 frames)
     for (let i = 1; i <= 8; i++) {
         const img          = new Image();
         img.crossOrigin    = "anonymous";
@@ -300,21 +295,35 @@ function formatarNum(n) {
 }
 
 // ════════════════════════════════════════
-//  HELPERS DE POSIÇÃO
+//  HELPERS DE POSIÇÃO — estilo Tap Titans
 //
-//  • Santa: lado ESQUERDO (25%)
-//  • Monstro: lado DIREITO mas mais ao CENTRO (62%)
-//  • ChaoY: linha do chão em 75%
+//  ┌─────────────────────────┐
+//  │         [HP BAR]        │
+//  │                         │
+//  │           😈  ← CENTRO  │  Y = 38%
+//  │          (grande)       │
+//  │                         │
+//  │         🧎              │  Y = chão
+//  │   ══════════════════    │  Y = 78%
+//  └─────────────────────────┘
+//
+//  Monstro : X=50% (centro), Y=38% (topo-centro)
+//  Santa   : X=42% (ligeiramente à esquerda do centro),
+//            base no chão (Y=78%)
 // ════════════════════════════════════════
-function getChaoY()    { return canvas.height * 0.75; }
-function getSantaX()   { return canvas.width  * 0.22; }
 
-// ── Monstro mais centralizado ──
-function getMonstroX() { return canvas.width  * 0.62; }
-function getMonstroY() { return canvas.height * 0.48; }
+// Linha do chão — onde os pés da santa e a sombra do monstro ficam
+function getChaoY()    { return canvas.height * 0.78; }
+
+// Santa: levemente à esquerda do centro, olhando para o monstro
+function getSantaX()   { return canvas.width  * 0.38; }
+
+// Monstro: CENTRO horizontal, terço superior da tela
+function getMonstroX() { return canvas.width  * 0.50; }
+function getMonstroY() { return canvas.height * 0.38; }
 
 // ════════════════════════════════════════
-//  HELPER — imagem pronta
+//  HELPER — imagem pronta para uso
 // ════════════════════════════════════════
 function imagemPronta(img) {
     return img && img.complete && img.naturalWidth > 0;
@@ -328,7 +337,7 @@ function desenharFundoBatalha() {
     const H  = canvas.height;
     const cy = getChaoY();
 
-    // ── CENÁRIO (cover: cobre tela inteira mantendo proporção) ──
+    // ── CENÁRIO: cover (cobre tela inteira mantendo proporção) ──
     if (imagemPronta(assets.cenario)) {
         const img = assets.cenario;
         const esc = Math.max(W / img.naturalWidth, H / img.naturalHeight);
@@ -339,43 +348,33 @@ function desenharFundoBatalha() {
         desenharFundoFallback(W, H, cy);
     }
 
-    // ══════════════════════════════════════
-    //  CHÃO — piso1.png
-    //
-    //  A imagem é uma plataforma isométrica
-    //  com fundo transparente.
-    //  → Desenhamos ela CENTRALIZADA
-    //    na linha do chão, mantendo proporção.
-    //  → Largura = 100% do canvas
-    //  → Altura calculada proporcionalmente
-    // ══════════════════════════════════════
+    // ── CHÃO: piso1.png ──
+    // A imagem é uma plataforma isométrica (fundo transparente/preto).
+    // Desenhamos com largura total do canvas, mantendo proporção.
+    // Ajustamos pisoY para que a SUPERFÍCIE da plataforma fique em cy.
+    // A superfície da plataforma fica aproximadamente nos 28% superiores
+    // da imagem (o restante é a lateral/base da pedra).
     if (imagemPronta(assets.chao)) {
         const img   = assets.chao;
-
-        // Largura total do canvas, altura proporcional
         const pisoW = W;
         const pisoH = img.naturalHeight * (W / img.naturalWidth);
-
-        // Posiciona: topo da imagem fica em cy (linha do chão)
-        // A imagem tem espaço vazio em cima, então subimos um pouco
-        // para a SUPERFÍCIE da plataforma ficar exatamente em cy
-        const pisoY = cy - pisoH * 0.30; // 30% da altura é a parte acima da superfície
-
+        // offset: sobe a imagem para que o topo da plataforma alinhe com cy
+        const pisoY = cy - pisoH * 0.28;
         ctx.drawImage(img, 0, pisoY, pisoW, pisoH);
-
     } else {
         desenharChaoFallback(W, H, cy);
     }
 
-    // Sombra suave de transição topo do chão
-    const gs = ctx.createLinearGradient(0, cy - 30, 0, cy + 20);
+    // Sombra suave na borda superior do chão
+    const gs = ctx.createLinearGradient(0, cy - 30, 0, cy + 15);
     gs.addColorStop(0, "rgba(0,0,0,0)");
-    gs.addColorStop(1, "rgba(0,0,0,0.25)");
+    gs.addColorStop(1, "rgba(0,0,0,0.22)");
     ctx.fillStyle = gs;
-    ctx.fillRect(0, cy - 30, W, 50);
+    ctx.fillRect(0, cy - 30, W, 45);
 }
 
 function desenharFundoFallback(W, H, cy) {
+    // Gradiente noturno
     const g = ctx.createLinearGradient(0, 0, 0, cy);
     g.addColorStop(0,    "#050210");
     g.addColorStop(0.45, "#0e0930");
@@ -383,7 +382,7 @@ function desenharFundoFallback(W, H, cy) {
     ctx.fillStyle = g;
     ctx.fillRect(0, 0, W, H);
 
-    // Estrelas com twinkle
+    // Estrelas twinkle
     const t = Date.now();
     for (let i = 0; i < 90; i++) {
         const sx = (i * 191 + 7)  % W;
@@ -396,7 +395,7 @@ function desenharFundoFallback(W, H, cy) {
     }
     ctx.globalAlpha = 1;
 
-    // Lua
+    // Lua com halo
     const luaX = W * 0.78, luaY = H * 0.15;
     const gl   = ctx.createRadialGradient(luaX, luaY, 0, luaX, luaY, 58);
     gl.addColorStop(0,   "rgba(255,245,190,1)");
@@ -407,7 +406,7 @@ function desenharFundoFallback(W, H, cy) {
     ctx.arc(luaX, luaY, 58, 0, Math.PI * 2);
     ctx.fill();
 
-    // Montanhas
+    // Silhueta de montanhas
     const pontos = [
         [0,0],[0.10,0.22],[0.22,0.09],[0.36,0.28],[0.50,0.07],
         [0.63,0.25],[0.76,0.11],[0.89,0.23],[1,0]
@@ -430,6 +429,7 @@ function desenharChaoFallback(W, H, cy) {
     ctx.fillStyle = g;
     ctx.fillRect(0, cy, W, chaoH);
 
+    // Linha de glow na borda
     const gl = ctx.createLinearGradient(0, 0, W, 0);
     gl.addColorStop(0,   "rgba(100,50,220,0)");
     gl.addColorStop(0.3, "rgba(160,80,255,0.55)");
@@ -446,8 +446,11 @@ function desenharChaoFallback(W, H, cy) {
 // ════════════════════════════════════════
 //  PERSONAGEM — Santa Teresinha
 //
-//  CORREÇÃO: flip horizontal para a santa
-//  ficar de FRENTE para o monstro (direita)
+//  Layout estilo Tap Titans:
+//  • Pequena, no chão, levemente à esquerda do centro
+//  • Virada para a DIREITA (onde está o monstro)
+//  • O sprite original olha para a ESQUERDA →
+//    aplicamos scale(-1,1) para espelhar
 // ════════════════════════════════════════
 const pb = {
     atacando:  0,
@@ -467,11 +470,13 @@ function atualizarPB() {
 function desenharPB() {
     const px   = getSantaX();
     const py   = getChaoY();
-    const ALTO = canvas.height * 0.32;
 
-    // Empurrão ao atacar
+    // Santa menor que o monstro — estilo TT2
+    const ALTO = canvas.height * 0.20;
+
+    // Leve avanço para frente ao atacar
     const offX = pb.atacando > 0
-        ? Math.sin((pb.atacando / pb.durAtaque) * Math.PI) * 18
+        ? Math.sin((pb.atacando / pb.durAtaque) * Math.PI) * 14
         : 0;
 
     const img = assets.santa[pb.frame];
@@ -481,18 +486,21 @@ function desenharPB() {
 
         // Sombra elíptica no chão
         ctx.save();
-        ctx.fillStyle = "rgba(0,0,0,0.35)";
+        ctx.fillStyle = "rgba(0,0,0,0.32)";
         ctx.beginPath();
-        ctx.ellipse(px + offX, py + 6, lar * 0.36, 8, 0, 0, Math.PI * 2);
+        ctx.ellipse(px + offX, py + 5, lar * 0.38, 7, 0, 0, Math.PI * 2);
         ctx.fill();
         ctx.restore();
 
         // ── FLIP HORIZONTAL ──
-        // Espelha o sprite para a santa olhar para a DIREITA (onde está o monstro)
+        // O sprite olha para a esquerda → espelhamos para ela
+        // olhar para a DIREITA (onde está o monstro no centro)
         ctx.save();
-        ctx.translate(px + offX, py - ALTO / 2);
-        ctx.scale(-1, 1); // espelha horizontalmente
-        ctx.drawImage(img, -lar / 2, -ALTO / 2, lar, ALTO);
+        // Ponto de referência: centro-base do sprite
+        ctx.translate(px + offX, py);
+        ctx.scale(-1, 1);
+        // Desenha de cima para baixo a partir de py
+        ctx.drawImage(img, -lar / 2, -ALTO, lar, ALTO);
         ctx.restore();
 
     } else {
@@ -503,20 +511,20 @@ function desenharPB() {
 function desenharSantaFallback(px, py, ALTO, offX) {
     const r = ALTO * 0.13;
     ctx.save();
-    ctx.shadowBlur  = 20;
+    ctx.shadowBlur  = 18;
     ctx.shadowColor = "rgba(200,150,255,0.8)";
 
     // Cabeça
     ctx.fillStyle = "#e8c5ff";
     ctx.beginPath();
-    ctx.arc(px + offX, py - ALTO * 0.80, r, 0, Math.PI * 2);
+    ctx.arc(px + offX, py - ALTO * 0.82, r, 0, Math.PI * 2);
     ctx.fill();
 
     // Auréola dourada
     ctx.strokeStyle = "#ffd700";
     ctx.lineWidth   = 2.5;
     ctx.beginPath();
-    ctx.ellipse(px + offX, py - ALTO * 0.80 - r * 1.05, r * 1.15, r * 0.32, 0, 0, Math.PI * 2);
+    ctx.ellipse(px + offX, py - ALTO * 0.82 - r * 1.05, r * 1.15, r * 0.32, 0, 0, Math.PI * 2);
     ctx.stroke();
 
     // Manto / corpo
@@ -529,27 +537,29 @@ function desenharSantaFallback(px, py, ALTO, offX) {
     ctx.closePath();
     ctx.fill();
 
-    // Braço erguido — aponta para a DIREITA (monstro)
+    // Braço aponta para a DIREITA (monstro no centro)
     ctx.strokeStyle = "#c4b5fd";
     ctx.lineWidth   = 3;
     ctx.beginPath();
-    ctx.moveTo(px + offX + r * 0.35, py - ALTO * 0.55);
-    ctx.lineTo(px + offX + r * 1.35, py - ALTO * 0.73);
+    ctx.moveTo(px + offX + r * 0.35, py - ALTO * 0.58);
+    ctx.lineTo(px + offX + r * 1.40, py - ALTO * 0.74);
     ctx.stroke();
 
     // Rosa na mão
-    ctx.font         = `${r * 1.5}px serif`;
+    ctx.font         = `${r * 1.4}px serif`;
     ctx.textAlign    = "center";
     ctx.textBaseline = "middle";
-    ctx.fillText("🌹", px + offX + r * 1.6, py - ALTO * 0.78);
+    ctx.fillText("🌹", px + offX + r * 1.65, py - ALTO * 0.78);
 
     ctx.restore();
 }
 
 // ════════════════════════════════════════
-//  MONSTRO
-//  CORREÇÃO: posicionado mais ao centro
-//  getMonstroX() = 62%, getMonstroY() = 48%
+//  MONSTRO — estilo Tap Titans
+//
+//  • CENTRO horizontal (50%)
+//  • Terço superior da tela (38%)
+//  • Grande — domina a cena
 // ════════════════════════════════════════
 function emojiMonstroAtual() {
     const tipo = tiposMonstros[tipoMonstroIdx(estagio)];
@@ -561,58 +571,63 @@ function emojiMonstroAtual() {
 }
 
 function desenharMonstro() {
+    // Decrementa em único lugar
     if (hitState.flash    > 0) hitState.flash--;
     if (hitState.tremendo > 0) hitState.tremendo--;
 
-    const ox  = hitState.tremendo > 0 ? (Math.random() - 0.5) * 18 : 0;
-    const oy  = hitState.tremendo > 0 ? (Math.random() - 0.5) * 10 : 0;
+    const ox  = hitState.tremendo > 0 ? (Math.random() - 0.5) * 16 : 0;
+    const oy  = hitState.tremendo > 0 ? (Math.random() - 0.5) * 9  : 0;
     const pct = Math.max(0.05, inimigo.maxHp > 0 ? inimigo.hp / inimigo.maxHp : 1);
 
-    // Tamanho maior para ficar mais imponente no centro
-    const tam = canvas.height * (0.22 + pct * 0.07);
+    // Tamanho grande — ocupa boa parte da tela como no TT2
+    const tam = canvas.height * (0.36 + pct * 0.06);
+
     const mx  = getMonstroX() + ox;
     const my  = getMonstroY() + oy;
 
+    // Glow pulsante
     ctx.save();
     if (hitState.flash > 0) {
         ctx.filter      = "sepia(1) saturate(20) hue-rotate(300deg)";
         ctx.globalAlpha = 0.88;
     }
-    ctx.shadowBlur  = 35 + Math.sin(Date.now() * 0.004) * 14;
-    ctx.shadowColor = pct < 0.25 ? "rgba(255,220,0,0.9)" : "rgba(255,50,50,0.80)";
+    ctx.shadowBlur  = 40 + Math.sin(Date.now() * 0.004) * 15;
+    ctx.shadowColor = pct < 0.25
+        ? "rgba(255,220,0,0.95)"
+        : "rgba(255,50,50,0.80)";
     ctx.font         = `${tam}px serif`;
     ctx.textAlign    = "center";
     ctx.textBaseline = "middle";
     ctx.fillText(emojiMonstroAtual(), mx, my);
     ctx.restore();
 
-    // Sombra no chão
+    // Sombra no chão (posição fixa, sem tremor)
     ctx.save();
-    ctx.fillStyle = "rgba(0,0,0,0.25)";
+    ctx.fillStyle = "rgba(0,0,0,0.22)";
     ctx.beginPath();
-    ctx.ellipse(getMonstroX(), getChaoY() + 5, tam * 0.30, 10, 0, 0, Math.PI * 2);
+    ctx.ellipse(getMonstroX(), getChaoY() + 6, tam * 0.28, 11, 0, 0, Math.PI * 2);
     ctx.fill();
     ctx.restore();
 }
 
 // ════════════════════════════════════════
-//  ROSAS DO CÉU
+//  ROSAS DO CÉU — flutuam, não caem
 // ════════════════════════════════════════
 let flores       = [];
 let floresAtaque = [];
 
 function criarFlorCeu(randPos = false) {
     const baseX = canvas.width  * (0.04 + Math.random() * 0.90);
-    const baseY = canvas.height * (0.04 + Math.random() * (randPos ? 0.58 : 0.50));
+    const baseY = canvas.height * (0.03 + Math.random() * (randPos ? 0.55 : 0.48));
     return {
         baseX, baseY, x: baseX, y: baseY,
-        size:  20 + Math.random() * 16,
+        size:  18 + Math.random() * 14,
         fase:  Math.random() * Math.PI * 2,
         fasev: Math.random() * Math.PI * 2,
-        ampH:  5 + Math.random() * 8,
-        ampV:  2 + Math.random() * 3,
+        ampH:  5  + Math.random() * 8,
+        ampV:  2  + Math.random() * 3,
         spd:   0.0007 + Math.random() * 0.0006,
-        alpha: 0.65 + Math.random() * 0.30
+        alpha: 0.60 + Math.random() * 0.35
     };
 }
 
@@ -641,10 +656,10 @@ function desenharFloresCeu() {
     });
 }
 
+// Dispara a rosa mais próxima do monstro em direção a ele
 function dispararFlor() {
     if (flores.length === 0) return;
 
-    // Rosa mais próxima do monstro
     let idx = 0, dist = Infinity;
     flores.forEach((f, i) => {
         const d = Math.hypot(f.x - getMonstroX(), f.y - getMonstroY());
@@ -668,6 +683,7 @@ function dispararFlor() {
         acertou: false
     });
 
+    // Repõe com nova rosa
     flores[idx] = criarFlorCeu(true);
 }
 
@@ -739,7 +755,7 @@ let moedasAnim = [];
 
 function criarMoedaCaindo() {
     moedasAnim.push({
-        x:    getMonstroX() + (Math.random() - 0.5) * 80,
+        x:    getMonstroX() + (Math.random() - 0.5) * 100,
         y:    getMonstroY(),
         vy:   -(3.5 + Math.random() * 2.5),
         vx:   (Math.random() - 0.5) * 2.5,
@@ -772,8 +788,8 @@ let textos = [];
 
 function criarTexto(valor, tipo) {
     textos.push({
-        x:    getMonstroX() + (Math.random() - 0.5) * 80,
-        y:    getMonstroY() - 60,
+        x:    getMonstroX() + (Math.random() - 0.5) * 90,
+        y:    getMonstroY() - 70,
         valor, tipo, vida: 75
     });
 }
@@ -781,27 +797,27 @@ function criarTexto(valor, tipo) {
 function desenharTextos() {
     textos.forEach(t => {
         ctx.save();
-        ctx.globalAlpha  = Math.min(1, t.vida / 20);
-        let cor = "#fff", tam = 19;
-        if      (t.tipo === "levelup") { cor = "#ffd700"; tam = 24; }
-        else if (t.tipo === "dps")     { cor = "#aaffaa"; tam = 13; }
-        else if (t.tipo === "click")   { cor = "#ff9de2"; tam = 20; }
-        ctx.font         = `bold ${tam}px 'Nunito', sans-serif`;
-        ctx.textAlign    = "center";
-        ctx.strokeStyle  = "rgba(0,0,0,0.85)";
-        ctx.lineWidth    = 4;
+        ctx.globalAlpha = Math.min(1, t.vida / 20);
+        let cor = "#fff", tam = 20;
+        if      (t.tipo === "levelup") { cor = "#ffd700"; tam = 26; }
+        else if (t.tipo === "dps")     { cor = "#aaffaa"; tam = 14; }
+        else if (t.tipo === "click")   { cor = "#ff9de2"; tam = 22; }
+        ctx.font        = `bold ${tam}px 'Nunito', sans-serif`;
+        ctx.textAlign   = "center";
+        ctx.strokeStyle = "rgba(0,0,0,0.9)";
+        ctx.lineWidth   = 4;
         ctx.strokeText(t.valor, t.x, t.y);
-        ctx.fillStyle    = cor;
+        ctx.fillStyle   = cor;
         ctx.fillText(t.valor, t.x, t.y);
         ctx.restore();
-        t.y -= 1.7;
+        t.y -= 1.8;
         t.vida--;
     });
     textos = textos.filter(t => t.vida > 0);
 }
 
 // ════════════════════════════════════════
-//  EVENTOS
+//  EVENTOS DE INPUT
 // ════════════════════════════════════════
 canvas.addEventListener("click", () => {
     if (!emBatalha) return;
@@ -837,12 +853,25 @@ setInterval(() => {
 // ════════════════════════════════════════
 window.desenharBatalha = function () {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    desenharFundoBatalha();           // cenário + chão
-    atualizarFloresCeu();    desenharFloresCeu();
-    atualizarFloresAtaque(); desenharFloresAtaque();
-    atualizarParticulas();   desenharParticulas();
-    atualizarMoedas();       desenharMoedas();
-    atualizarPB();           desenharPB();  // santa (lado esquerdo, virada p/ direita)
-    desenharMonstro();                // monstro (centro-direita)
-    desenharTextos();
+
+    desenharFundoBatalha();            // 1. cenário + chão (piso1.png)
+
+    atualizarFloresCeu();              // 2. rosas decorativas no céu
+    desenharFloresCeu();
+
+    atualizarFloresAtaque();           // 3. rosas voando em direção ao monstro
+    desenharFloresAtaque();
+
+    atualizarParticulas();             // 4. partículas de impacto
+    desenharParticulas();
+
+    atualizarMoedas();                 // 5. moedas caindo ao matar
+    desenharMoedas();
+
+    desenharMonstro();                 // 6. monstro grande no centro
+
+    atualizarPB();                     // 7. santa pequena no chão
+    desenharPB();
+
+    desenharTextos();                  // 8. textos de dano flutuantes
 };
