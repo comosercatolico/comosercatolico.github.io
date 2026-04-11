@@ -523,3 +523,4 @@ const Camera = (() => {
     });
 
 })();
+window.Camera = Camera; // ← adiciona essa
