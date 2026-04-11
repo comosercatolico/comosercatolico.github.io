@@ -1,557 +1,569 @@
-// ═══════════════════════════════════════════════════════════
-//  jogos/Tap Lisieux/js/main.js
-//  Entry point do jogo — inicializa tudo na ordem correta.
+// ═══════════════════════════════════════════════════════
+//  MAIN.JS — Entry point do jogo Tap Lisieux
+//  Inicializa todos os módulos na ordem correta,
+//  exibe tela de loading com progresso real,
+//  e conecta sistemas novos + legados em paralelo.
 //
-//  Fluxo:
-//  1. Verifica suporte do navegador
-//  2. Inicializa módulos base (logger, eventos, DOM)
-//  3. Carrega assets com barra de progresso
-//  4. Carrega save do jogador
-//  5. Inicializa sistemas de lógica
-//  6. Inicializa sistemas de UI
-//  7. Inicia loop de renderização
+//  Arquitetura de inicialização:
+//  FASE 1 → Verificação de suporte
+//  FASE 2 → Módulos base (logger, events, dom, utils)
+//  FASE 3 → Assets (imagens)
+//  FASE 4 → Canvas
+//  FASE 5 → Estado + Save
+//  FASE 6 → Sistemas de lógica
+//  FASE 7 → UI
+//  FASE 8 → Input + Áudio
+//  FASE 9 → Renderer (loop)
+//  FASE 10→ Pós-init (eventos, autosave, debug)
 //
-//  Depende de: TODOS os módulos (carregados antes no HTML)
-// ═══════════════════════════════════════════════════════════
+//  Depende de: TODOS os módulos carregados antes no HTML
+// ═══════════════════════════════════════════════════════
 
 "use strict";
 
-// ════════════════════════════════════════
-//  VERIFICAÇÃO DE SUPORTE
-//  Detecta navegadores muito antigos antes
-//  de qualquer inicialização
-// ════════════════════════════════════════
-
-(function verificarSuporteNavegador() {
+// ════════════════════════════════════════════════════════
+// FASE 1 — VERIFICAÇÃO DE SUPORTE
+// Roda ANTES de qualquer módulo — síncrono e imediato
+// ════════════════════════════════════════════════════════
+(function _verificarSuporte() {
     const requisitos = [
-        { api: typeof Map          !== "undefined", nome: "Map"           },
-        { api: typeof Set          !== "undefined", nome: "Set"           },
-        { api: typeof Promise      !== "undefined", nome: "Promise"       },
-        { api: typeof localStorage !== "undefined", nome: "localStorage"  },
-        { api: typeof requestAnimationFrame !== "undefined", nome: "requestAnimationFrame" },
-        { api: !!document.createElement("canvas").getContext, nome: "Canvas 2D" }
+        { ok: typeof Map                              !== "undefined", nome: "Map"                    },
+        { ok: typeof Set                              !== "undefined", nome: "Set"                    },
+        { ok: typeof Promise                          !== "undefined", nome: "Promise"                },
+        { ok: typeof requestAnimationFrame            !== "undefined", nome: "requestAnimationFrame"  },
+        { ok: typeof localStorage                     !== "undefined", nome: "localStorage"           },
+        { ok: typeof performance?.now                 === "function",  nome: "performance.now"        },
+        { ok: !!document.createElement("canvas").getContext,           nome: "Canvas 2D"              },
     ];
 
-    const falhou = requisitos.filter(r => !r.api);
+    const falhou = requisitos.filter(r => !r.ok);
+    if (falhou.length === 0) return;
 
-    if (falhou.length > 0) {
-        document.body.innerHTML = `
-            <div style="
-                font-family: sans-serif;
-                text-align: center;
-                padding: 60px 20px;
-                color: #fff;
-                background: #0a0118;
-                min-height: 100vh;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-            ">
-                <div style="font-size: 48px; margin-bottom: 20px;">🌹</div>
-                <h2 style="color:#f5a623; margin-bottom:12px;">Navegador incompatível</h2>
-                <p style="color:#aaa; max-width:400px; line-height:1.6;">
-                    Seu navegador não suporta: 
-                    <strong style="color:#ff6b6b">
-                        ${falhou.map(r => r.nome).join(", ")}
-                    </strong>.<br><br>
-                    Por favor, use Chrome, Firefox, Edge ou Safari atualizados.
-                </p>
-            </div>`;
-        throw new Error(`[Main] Navegador incompatível: ${falhou.map(r => r.nome).join(", ")}`);
-    }
+    const lista = falhou.map(r => r.nome).join(", ");
+
+    document.body.innerHTML = `
+        <div style="
+            min-height:100vh; display:flex; flex-direction:column;
+            align-items:center; justify-content:center;
+            font-family:'Nunito',sans-serif; background:#06030f; color:#fff;
+            padding:40px 20px; text-align:center; box-sizing:border-box;">
+            <div style="font-size:52px; margin-bottom:16px">🌹</div>
+            <h2 style="color:#f5a623; font-size:22px; margin-bottom:12px">
+                Navegador incompatível
+            </h2>
+            <p style="color:rgba(255,255,255,0.6); max-width:380px; line-height:1.7; font-size:14px">
+                Seu navegador não suporta:<br>
+                <strong style="color:#ff6b6b">${lista}</strong><br><br>
+                Use Chrome 90+, Firefox 90+, Edge 90+ ou Safari 15+.
+            </p>
+        </div>`;
+
+    throw new Error(`[Main] Suporte insuficiente: ${lista}`);
 })();
 
-// ════════════════════════════════════════
-//  CONTROLE DA TELA DE LOADING
-// ════════════════════════════════════════
-
+// ════════════════════════════════════════════════════════
+// TELA DE LOADING
+// Controla a barra de progresso exibida na inicialização
+// ════════════════════════════════════════════════════════
 const Loading = (() => {
-    const _el    = document.getElementById("telaLoading");
-    const _barra = document.getElementById("loadingBarra");
-    const _texto = document.getElementById("loadingTexto");
+    const _raiz    = document.getElementById("telaLoading");
+    const _barra   = document.getElementById("loadingBarra");
+    const _texto   = document.getElementById("loadingTexto");
+    const _subTexto= document.getElementById("loadingSubTexto");
 
-    let _progresso = 0;
+    let _pct = 0;
 
-    function setProgresso(pct, mensagem) {
-        _progresso = Math.min(100, Math.max(0, pct));
-        if (_barra) _barra.style.width = _progresso + "%";
-        if (_texto && mensagem) _texto.textContent = mensagem;
+    function progresso(pct, msg, sub) {
+        _pct = Math.max(_pct, Math.min(100, pct));   // nunca regride
+        if (_barra)    _barra.style.width   = `${_pct}%`;
+        if (_texto  && msg) _texto.textContent = msg;
+        if (_subTexto && sub !== undefined) _subTexto.textContent = sub;
     }
 
     function esconder() {
-        if (!_el) return;
-        _el.style.transition = "opacity 0.6s ease";
-        _el.style.opacity    = "0";
-        setTimeout(() => {
-            _el.style.display = "none";
-        }, 650);
+        if (!_raiz) return;
+        _raiz.style.transition = "opacity 0.55s ease";
+        _raiz.style.opacity    = "0";
+        setTimeout(() => { if (_raiz) _raiz.style.display = "none"; }, 580);
     }
 
-    return { setProgresso, esconder };
+    function erroFatal(mensagem, detalhes) {
+        if (!_raiz) return;
+        _raiz.style.opacity = "1";
+        _raiz.style.display = "flex";
+        _raiz.innerHTML = `
+            <div id="loadingConteudo" style="text-align:center">
+                <div style="font-size:48px; margin-bottom:16px">⚠️</div>
+                <h2 style="color:#f5a623; margin-bottom:10px">Erro ao iniciar</h2>
+                <p style="color:rgba(255,255,255,0.6); font-size:13px;
+                           max-width:320px; line-height:1.7; margin-bottom:20px">
+                    ${mensagem ?? "Ocorreu um erro inesperado."}
+                </p>
+                <button onclick="location.reload()"
+                    style="background:linear-gradient(135deg,#6d28d9,#9d4edd);
+                           border:none; border-radius:12px; color:#fff;
+                           padding:12px 28px; font-size:14px; font-weight:700;
+                           cursor:pointer; font-family:inherit">
+                    🔄 Recarregar
+                </button>
+                ${detalhes ? `
+                <details style="margin-top:20px; color:#555; font-size:11px; max-width:320px">
+                    <summary style="cursor:pointer; color:#777; user-select:none">
+                        Detalhes técnicos
+                    </summary>
+                    <pre style="margin-top:8px; text-align:left; white-space:pre-wrap;
+                                word-break:break-all; color:#f87171">${detalhes}</pre>
+                </details>` : ""}
+            </div>`;
+    }
+
+    return { progresso, esconder, erroFatal };
 })();
 
-// ════════════════════════════════════════
-//  ENTRY POINT PRINCIPAL
-// ════════════════════════════════════════
+// ════════════════════════════════════════════════════════
+// REGISTRO DE MÓDULOS
+// Detecta quais módulos estão presentes (novo vs legado)
+// ════════════════════════════════════════════════════════
+const _M = (() => {
+    /** Retorna o módulo se existir, senão null */
+    function get(nome) {
+        try { return typeof window[nome] !== "undefined" ? window[nome] : null; }
+        catch { return null; }
+    }
 
+    /** Chama fn no módulo se existir */
+    function chamar(nome, fn, ...args) {
+        const m = get(nome);
+        if (!m) return false;
+        if (typeof m[fn] !== "function") return false;
+        try   { m[fn](...args); return true; }
+        catch(e) { console.warn(`[Main] ${nome}.${fn}() falhou:`, e); return false; }
+    }
+
+    /** Verifica e loga se módulo está ausente */
+    function checar(nome, obrigatorio = false) {
+        const presente = get(nome) !== null;
+        if (!presente) {
+            obrigatorio
+                ? console.error(`[Main] ❌ Módulo obrigatório ausente: ${nome}`)
+                : console.warn( `[Main] ⚠️ Módulo opcional ausente: ${nome}`);
+        }
+        return presente;
+    }
+
+    return { get, chamar, checar };
+})();
+
+// ════════════════════════════════════════════════════════
+// ENTRY POINT
+// ════════════════════════════════════════════════════════
 document.addEventListener("DOMContentLoaded", async () => {
     try {
-        await inicializarJogo();
-    } catch (erro) {
-        _tratarErroFatal(erro);
+        await _inicializarJogo();
+    } catch(e) {
+        console.error("[Main] ERRO FATAL:", e);
+        Loading.erroFatal(
+            "Ocorreu um erro inesperado ao iniciar o jogo.",
+            e?.stack ?? e?.message ?? String(e)
+        );
     }
 });
 
-async function inicializarJogo() {
+// ════════════════════════════════════════════════════════
+// INICIALIZAÇÃO PRINCIPAL
+// ════════════════════════════════════════════════════════
+async function _inicializarJogo() {
+    const t0 = performance.now();
 
-    console.log("🌹 Tap Lisieux — iniciando...");
-    const tempoInicio = performance.now();
+    _log("🌹 Tap Lisieux — iniciando...");
 
-    // ── ETAPA 1: Logger (primeiro de tudo) ──────────────────
-    Loading.setProgresso(5, "Inicializando...");
+    // ── FASE 2: Módulos base ─────────────────────────────
+    Loading.progresso(5, "Inicializando...", "Módulos base");
+    _inicializarBase();
 
-    if (typeof Logger !== "undefined") {
-        Logger.init?.();
-        Logger.info?.("Main", "Logger inicializado.");
-    }
-
-    // ── ETAPA 2: EventBus ───────────────────────────────────
-    Loading.setProgresso(10, "Carregando sistema de eventos...");
-
-    _checar("EventBus", typeof EventBus !== "undefined");
-
-    // ── ETAPA 3: Cache do DOM ───────────────────────────────
-    Loading.setProgresso(15, "Preparando interface...");
-
-    _checar("DOM", typeof DOM !== "undefined");
-
-    // ── ETAPA 4: Utils ──────────────────────────────────────
-    Loading.setProgresso(18, "Carregando utilitários...");
-
-    _checar("Utils", typeof Utils !== "undefined");
-
-    // Expõe formatarNum globalmente para compatibilidade
-    // com chamadas diretas ainda não refatoradas
-    if (typeof formatarNum === "undefined") {
-        window.formatarNum = Utils.formatarNum;
-    }
-
-    // ── ETAPA 5: Constantes ─────────────────────────────────
-    Loading.setProgresso(20, "Carregando configurações...");
-
-    _checar("BALANCE", typeof BALANCE !== "undefined");
-
-    // ── ETAPA 6: Assets ─────────────────────────────────────
-    Loading.setProgresso(22, "Carregando imagens...");
-
+    // ── FASE 3: Assets ───────────────────────────────────
+    Loading.progresso(12, "Carregando imagens...", "Assets");
     await _carregarAssets();
 
-    // ── ETAPA 7: Canvas e contexto 2D ───────────────────────
-    Loading.setProgresso(50, "Preparando canvas...");
-
+    // ── FASE 4: Canvas ───────────────────────────────────
+    Loading.progresso(48, "Preparando canvas...", "Renderização");
     _inicializarCanvas();
 
-    // ── ETAPA 8: Estado global ──────────────────────────────
-    Loading.setProgresso(55, "Inicializando estado do jogo...");
+    // ── FASE 5: Estado + Save ────────────────────────────
+    Loading.progresso(54, "Carregando progresso...", "Save");
+    const dadosSave = await _inicializarEstadoESave();
 
-    _inicializarEstado();
+    // ── FASE 6: Sistemas de lógica ───────────────────────
+    Loading.progresso(62, "Inicializando sistemas...", "Lógica");
+    _inicializarSistemas();
 
-    // ── ETAPA 9: Economia ───────────────────────────────────
-    Loading.setProgresso(58, "Inicializando economia...");
-
-    if (typeof Economy !== "undefined") Economy.init?.();
-
-    // ── ETAPA 10: Upgrades ──────────────────────────────────
-    Loading.setProgresso(61, "Inicializando upgrades...");
-
-    if (typeof Upgrades !== "undefined") Upgrades.init?.();
-
-    // ── ETAPA 11: Inimigos ──────────────────────────────────
-    Loading.setProgresso(64, "Configurando inimigos...");
-
-    if (typeof Enemy !== "undefined") Enemy.init?.();
-
-    // ── ETAPA 12: Sistema de batalha ────────────────────────
-    Loading.setProgresso(67, "Inicializando batalha...");
-
-    if (typeof Battle !== "undefined") Battle.init?.();
-
-    // ── ETAPA 13: Sistema de experiência ────────────────────
-    Loading.setProgresso(69, "Inicializando experiência...");
-
-    if (typeof Experience !== "undefined") Experience.init?.();
-
-    // ── ETAPA 14: Sistema de combo ──────────────────────────
-    Loading.setProgresso(71, "Inicializando combo...");
-
-    if (typeof ComboSystem !== "undefined") ComboSystem.init?.();
-
-    // ── ETAPA 15: Pool de items do Gacha ────────────────────
-    Loading.setProgresso(73, "Carregando pool de invocação...");
-
-    if (typeof GachaPool !== "undefined") GachaPool.init?.();
-
-    // ── ETAPA 16: Inventário ────────────────────────────────
-    Loading.setProgresso(75, "Inicializando inventário...");
-
-    if (typeof Inventory !== "undefined") Inventory.init?.();
-
-    // ── ETAPA 17: Sistema Gacha ─────────────────────────────
-    Loading.setProgresso(77, "Inicializando invocação...");
-
-    if (typeof GachaSystem !== "undefined") GachaSystem.init?.();
-
-    // ── ETAPA 18: Prestígio ─────────────────────────────────
-    Loading.setProgresso(79, "Inicializando prestígio...");
-
-    if (typeof Prestige !== "undefined") Prestige.init?.();
-
-    // ── ETAPA 19: Save — carrega progresso salvo ────────────
-    Loading.setProgresso(82, "Carregando progresso salvo...");
-
-    await _carregarSave();
-
-    // ── ETAPA 20: Conquistas ────────────────────────────────
-    Loading.setProgresso(85, "Carregando conquistas...");
-
-    if (typeof AchievementSystem !== "undefined") {
-        AchievementSystem.init?.();
-    }
-
-    // ── ETAPA 21: Missões ───────────────────────────────────
-    Loading.setProgresso(87, "Carregando missões...");
-
-    if (typeof QuestSystem !== "undefined") {
-        QuestSystem.init?.();
-    }
-
-    // ── ETAPA 22: UI ────────────────────────────────────────
-    Loading.setProgresso(90, "Inicializando interface...");
-
+    // ── FASE 7: UI ───────────────────────────────────────
+    Loading.progresso(78, "Construindo interface...", "UI");
     _inicializarUI();
 
-    // ── ETAPA 23: Input ─────────────────────────────────────
-    Loading.setProgresso(93, "Registrando controles...");
+    // ── FASE 8: Input + Áudio ────────────────────────────
+    Loading.progresso(88, "Registrando controles...", "Input / Áudio");
+    _inicializarInputAudio();
 
-    if (typeof Input !== "undefined") {
-        Input.init?.();
-    } else {
-        // Fallback: registra inputs diretamente
-        // (compatibilidade enquanto input.js não está implementado)
-        _registrarInputsFallback();
-    }
-
-    // ── ETAPA 24: Áudio ─────────────────────────────────────
-    Loading.setProgresso(95, "Inicializando áudio...");
-
-    if (typeof Audio !== "undefined") Audio.init?.();
-
-    // ── ETAPA 25: Renderer — inicia o loop ──────────────────
-    Loading.setProgresso(98, "Iniciando renderização...");
-
+    // ── FASE 9: Renderer (loop) ──────────────────────────
+    Loading.progresso(94, "Iniciando renderização...", "Loop");
     _iniciarLoop();
 
-    // ── ETAPA 26: Auto-save ─────────────────────────────────
-    _iniciarAutoSave();
+    // ── FASE 10: Pós-init ────────────────────────────────
+    Loading.progresso(98, "Finalizando...", "");
+    _posInit(dadosSave);
 
-    // ── ETAPA 27: Eventos globais de sistema ────────────────
-    _registrarEventosSistema();
+    // ── CONCLUÍDO ────────────────────────────────────────
+    Loading.progresso(100, "Pronto! 🌹");
+    const ms = (performance.now() - t0).toFixed(0);
+    _log(`✅ Jogo iniciado em ${ms}ms`);
 
-    // ── CONCLUÍDO ───────────────────────────────────────────
-    Loading.setProgresso(100, "Pronto!");
-
-    const tempoTotal = ((performance.now() - tempoInicio) / 1000).toFixed(2);
-    console.log(`✅ Tap Lisieux iniciado em ${tempoTotal}s`);
-
-    // Esconde a tela de loading após pequeno delay
-    setTimeout(() => Loading.esconder(), 400);
-
-    // Notifica que o jogo está pronto
-    EventBus.emit("jogo:pronto", { tempoInicializacao: tempoTotal });
+    setTimeout(() => {
+        Loading.esconder();
+        _emitir("jogo:pronto", { ms: Number(ms) });
+    }, 350);
 }
 
-// ════════════════════════════════════════
-//  CARREGAR ASSETS
-// ════════════════════════════════════════
+// ════════════════════════════════════════════════════════
+// FASE 2 — MÓDULOS BASE
+// ════════════════════════════════════════════════════════
+function _inicializarBase() {
+    // Logger
+    _M.chamar("Logger", "init");
 
-async function _carregarAssets() {
-    // Se AssetLoader estiver implementado, usa ele
-    if (typeof AssetLoader !== "undefined" && AssetLoader.carregar) {
-        return new Promise((resolve) => {
-            AssetLoader.onProgresso = (pct) => {
-                // Mapeia progresso de assets para 22%-50% da barra
-                Loading.setProgresso(22 + pct * 0.28, `Carregando assets... ${pct}%`);
-            };
-            AssetLoader.onCompleto = () => resolve();
-            AssetLoader.carregar();
-        });
+    // Verifica módulos obrigatórios
+    _M.checar("EventBus", true);
+    _M.checar("DOM",      true);
+    _M.checar("Utils",    true);
+
+    // Expõe formatarNum globalmente para código legado
+    if (typeof window.formatarNum === "undefined") {
+        window.formatarNum = _M.get("Utils")?.formatarNum
+            ?? (n => n >= 1e9 ? (n/1e9).toFixed(1)+"B"
+                   : n >= 1e6 ? (n/1e6).toFixed(1)+"M"
+                   : n >= 1e3 ? (n/1e3).toFixed(1)+"K"
+                   : String(Math.floor(n)));
     }
 
-    // Fallback: carrega assets diretamente
-    // (compatibilidade com game-batalha.js e game-lobby.js)
-    return new Promise((resolve) => {
-        if (typeof carregarAssets === "function") {
-            carregarAssets();
+    // Módulos opcionais
+    _M.checar("BALANCE");
+    _M.checar("Toast");
+    _M.checar("Camera");
+
+    _log("Fase 2 OK — Módulos base.");
+}
+
+// ════════════════════════════════════════════════════════
+// FASE 3 — ASSETS
+// ════════════════════════════════════════════════════════
+async function _carregarAssets() {
+    return new Promise(resolve => {
+
+        // Módulo AssetLoader novo
+        const AL = _M.get("AssetLoader");
+        if (AL?.carregar) {
+            AL.onProgresso = pct => {
+                Loading.progresso(12 + pct * 0.36, "Carregando imagens...", `${pct}%`);
+            };
+            AL.onCompleto = () => {
+                _log("AssetLoader: completo.");
+                resolve();
+            };
+            AL.carregar();
+            return;
         }
-        // Aguarda 800ms para assets começarem a carregar
+
+        // Fallback: chama função legada do game-batalha.js
+        if (typeof window.carregarAssets === "function") {
+            window.carregarAssets();
+        }
+
+        // Dá 800ms para as imagens começarem a carregar
+        // (as imagens legadas carregam em background)
         setTimeout(resolve, 800);
     });
 }
 
-// ════════════════════════════════════════
-//  INICIALIZAR CANVAS
-// ════════════════════════════════════════
-
+// ════════════════════════════════════════════════════════
+// FASE 4 — CANVAS
+// ════════════════════════════════════════════════════════
 function _inicializarCanvas() {
-    // O canvas pode já ter sido inicializado pelo game-lobby.js
-    // Se não, inicializa aqui
     const canvas = document.getElementById("game");
-    if (!canvas) {
-        throw new Error("[Main] Canvas #game não encontrado no DOM.");
-    }
+    if (!canvas) throw new Error("[Main] Canvas #game não encontrado no DOM.");
 
-    // Garante tamanho correto
-    if (!canvas.width || canvas.width === 300) {
+    // Tamanho correto (browsers às vezes defaultam 300×150)
+    canvas.width  = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    // Expõe globalmente para código legado
+    window.canvas = window.canvas ?? canvas;
+    window.ctx    = window.ctx    ?? (() => {
+        const c = canvas.getContext("2d");
+        c.imageSmoothingEnabled = false;
+        return c;
+    })();
+
+    // Injeta no Renderer e nos módulos que precisam
+    _M.chamar("RendererLobby",  "init", canvas, window.ctx);
+    _M.chamar("RendererBattle", "init", canvas, window.ctx);
+    _M.chamar("Effects",        "init", canvas, window.ctx);
+    _M.chamar("Input",          "init", canvas);
+
+    // Resize responsivo com debounce
+    const _onResize = _debounce(() => {
         canvas.width  = window.innerWidth;
         canvas.height = window.innerHeight;
-    }
-
-    // Expõe globalmente para módulos que ainda referenciam diretamente
-    if (typeof window.canvas === "undefined") {
-        window.canvas = canvas;
-    }
-    if (typeof window.ctx === "undefined") {
-        window.ctx = canvas.getContext("2d");
         window.ctx.imageSmoothingEnabled = false;
-    }
+        _M.chamar("RendererLobby",  "aoRedimensionar");
+        _M.chamar("Camera",         "redimensionar");
+        _emitir("canvas:resize", { w: canvas.width, h: canvas.height });
+    }, 150);
 
-    // Resize responsivo
-    window.addEventListener("resize", Utils.debounce(() => {
-        canvas.width  = window.innerWidth;
-        canvas.height = window.innerHeight;
-        EventBus.emit("canvas:resize", {
-            largura: canvas.width,
-            altura:  canvas.height
-        });
-    }, 150));
+    window.addEventListener("resize", _onResize);
+
+    _log("Fase 4 OK — Canvas.");
 }
 
-// ════════════════════════════════════════
-//  INICIALIZAR ESTADO
-// ════════════════════════════════════════
+// ════════════════════════════════════════════════════════
+// FASE 5 — ESTADO + SAVE
+// Retorna os dados do save para uso posterior
+// ════════════════════════════════════════════════════════
+async function _inicializarEstadoESave() {
+    // Inicializa GameState
+    _M.chamar("GameState", "init");
 
-function _inicializarEstado() {
-    // Se GameState estiver implementado, usa ele
-    if (typeof GameState !== "undefined" && GameState.init) {
-        GameState.init();
-        return;
+    // Garante variáveis globais legadas caso GameState não exista
+    _garantirVariaveisLegadas();
+
+    // Carrega o save
+    let dadosSave = null;
+
+    const SS = _M.get("SaveSystem");
+    if (SS) {
+        // SaveSystem modular novo (tem init que carrega e aplica)
+        if (typeof SS.init === "function") {
+            dadosSave = SS.init();   // retorna os dados carregados
+        } else {
+            // SaveSystem do game-ui.js (tem carregar e aplica via inicializarSave)
+            if (typeof window.inicializarSave === "function") {
+                window.inicializarSave();
+            } else {
+                dadosSave = SS.carregar?.();
+                if (dadosSave) _aplicarSaveLegado(dadosSave);
+            }
+        }
+    } else if (typeof window.inicializarSave === "function") {
+        window.inicializarSave();
     }
 
-    // Fallback: garante que as variáveis globais existem
-    // (compatibilidade com game-batalha.js enquanto
-    //  state.js não está implementado)
-    if (typeof window.moeda     === "undefined") window.moeda     = BALANCE.MOEDA_INICIAL ?? 0;
-    if (typeof window.gema      === "undefined") window.gema      = BALANCE.GEMA_INICIAL  ?? 50;
-    if (typeof window.estagio   === "undefined") window.estagio   = 1;
-    if (typeof window.emBatalha === "undefined") window.emBatalha = false;
+    _log("Fase 5 OK — Estado + Save.");
+    return dadosSave;
+}
 
-    if (typeof window.personagem === "undefined") {
-        window.personagem = { nivel: 1, exp: 0, expMax: 100 };
-    }
-    if (typeof window.inimigo === "undefined") {
-        window.inimigo = { nome: "", hp: 0, maxHp: 0, nivel: 1, rMoeda: 0, rGema: 0 };
-    }
+function _garantirVariaveisLegadas() {
+    const B = _M.get("BALANCE") ?? {};
+    if (typeof window.moeda      === "undefined") window.moeda      = B.MOEDA_INICIAL  ?? 0;
+    if (typeof window.gema       === "undefined") window.gema       = B.GEMA_INICIAL   ?? 50;
+    if (typeof window.estagio    === "undefined") window.estagio    = 1;
+    if (typeof window.emBatalha  === "undefined") window.emBatalha  = false;
+    if (typeof window.personagem === "undefined") window.personagem = { nivel:1, exp:0, expMax:100 };
+    if (typeof window.inimigo    === "undefined") window.inimigo    = { nome:"", hp:0, maxHp:0, nivel:1, rMoeda:0, rGema:0 };
 
-    // Contadores para conquistas
     window._totalKills      = window._totalKills      ?? 0;
     window._totalUpgrades   = window._totalUpgrades   ?? 0;
     window._totalPrestígios = window._totalPrestígios ?? 0;
 }
 
-// ════════════════════════════════════════
-//  CARREGAR SAVE
-// ════════════════════════════════════════
-
-async function _carregarSave() {
-    // Se SaveSystem modular estiver implementado, usa ele
-    if (typeof SaveSystem !== "undefined" && SaveSystem.carregar) {
-
-        // Verifica se é o SaveSystem novo (modular) ou o antigo
-        const isNovo = SaveSystem.init && typeof SaveSystem.init === "function";
-
-        if (isNovo) {
-            SaveSystem.init();
-            return;
-        }
-
-        // Compatibilidade com SaveSystem do game-ui.js
-        if (typeof inicializarSave === "function") {
-            inicializarSave();
-            return;
-        }
-
-        // SaveSystem novo sem init — chama carregar manualmente
-        const save = SaveSystem.carregar();
-        if (save) {
-            _aplicarSave(save);
-        }
-
-        return;
-    }
-
-    // Fallback: tenta carregar save legado
-    if (typeof inicializarSave === "function") {
-        inicializarSave();
-    }
-}
-
-function _aplicarSave(save) {
+function _aplicarSaveLegado(save) {
     try {
-        if (typeof window.moeda     !== "undefined") window.moeda     = save.moeda     ?? 0;
-        if (typeof window.gema      !== "undefined") window.gema      = save.gema      ?? 50;
-        if (typeof window.estagio   !== "undefined") window.estagio   = save.estagio   ?? 1;
-        if (typeof window.upgrades  !== "undefined" && save.upgrades) {
+        if (!save) return;
+        const B = _M.get("BALANCE") ?? {};
+        window.moeda  = save.moeda  ?? B.MOEDA_INICIAL ?? 0;
+        window.gema   = save.gema   ?? B.GEMA_INICIAL  ?? 50;
+        window.estagio= save.estagio ?? 1;
+
+        if (save.upgrades && window.upgrades) {
             Object.entries(save.upgrades).forEach(([k, nivel]) => {
                 if (window.upgrades[k]) window.upgrades[k].nivel = nivel;
             });
         }
-        if (typeof window.personagem !== "undefined" && save.personagem) {
+        if (save.personagem && window.personagem) {
             Object.assign(window.personagem, save.personagem);
         }
-        if (typeof window.heroisObtidos      !== "undefined" && save.herois) {
-            window.heroisObtidos = save.herois;
+        if (save.herois)  window.heroisObtidos        = save.herois;
+        if (save.equips)  window.equipamentosObtidos  = save.equips;
+        if (save.pity)    _M.get("GachaSystem")?.setPity?.(save.pity);
+        if (save.conquistas && window.conquistasDesbloqueadas) {
+            save.conquistas.forEach(id => window.conquistasDesbloqueadas.add(id));
         }
-        if (typeof window.equipamentosObtidos !== "undefined" && save.equips) {
-            window.equipamentosObtidos = save.equips;
-        }
-        if (typeof GachaSystem !== "undefined" && save.pity) {
-            GachaSystem.setPity?.(save.pity);
-        }
-        if (typeof conquistasDesbloqueadas !== "undefined" && save.conquistas) {
-            save.conquistas.forEach(id => conquistasDesbloqueadas.add(id));
-        }
-
-        // Progresso offline
-        _calcularProgressoOffline(save);
-
-        console.log("[Main] Save carregado com sucesso.");
-    } catch (e) {
-        console.warn("[Main] Erro ao aplicar save:", e);
+    } catch(e) {
+        console.warn("[Main] _aplicarSaveLegado falhou:", e);
     }
 }
 
-function _calcularProgressoOffline(save) {
-    if (!save?.timestamp) return;
+// ════════════════════════════════════════════════════════
+// FASE 6 — SISTEMAS DE LÓGICA
+// ════════════════════════════════════════════════════════
+function _inicializarSistemas() {
+    const sistemas = [
+        // [nome do módulo, nome do método de init]
+        ["Economy",      "init"],
+        ["Upgrades",     "init"],
+        ["Experience",   "init"],
+        ["ComboSystem",  "init"],
+        ["Enemy",        "init"],
+        ["Damage",       "init"],
+        ["Battle",       "init"],
+        ["GachaPool",    "init"],
+        ["Inventory",    "init"],
+        ["GachaSystem",  "init"],
+        ["Prestige",     "init"],
+        ["Achievements", "init"],
+        ["Quests",       "init"],
+    ];
 
-    const agora        = Date.now();
-    const segundos     = Math.floor((agora - save.timestamp) / 1000);
-    const maxSeg       = (BALANCE.MAX_OFFLINE_HORAS ?? 8) * 3600;
-    const tempoEfetivo = Math.min(segundos, maxSeg);
-
-    if (tempoEfetivo < 60) return;
-
-    // Calcula DPS atual
-    const dpsAtual = typeof calcDps === "function"
-        ? calcDps()
-        : (window.upgrades?.dps?.valor ?? 0);
-
-    const moedasGanhas = Math.floor(dpsAtual * tempoEfetivo * 0.5);
-    if (moedasGanhas <= 0) return;
-
-    window.moeda = (window.moeda ?? 0) + moedasGanhas;
-
-    // Mostra toast após UI estar pronta
-    setTimeout(() => {
-        const tempo = Utils.formatarTempo(tempoEfetivo * 1000);
-        if (typeof ToastSystem !== "undefined") {
-            ToastSystem.mostrar(
-                `⏰ Offline ${tempo} → +${Utils.formatarNum(moedasGanhas)} 🪙`,
-                "sucesso",
-                5000
-            );
+    sistemas.forEach(([nome, fn]) => {
+        if (_M.chamar(nome, fn)) {
+            _log(`  ✓ ${nome}`);
         }
-        EventBus.emit("moeda:update", window.moeda);
-    }, 1500);
-}
-
-// ════════════════════════════════════════
-//  INICIALIZAR UI
-// ════════════════════════════════════════
-
-function _inicializarUI() {
-    // Módulos de UI novos
-    if (typeof UIModals    !== "undefined") UIModals.init?.();
-    if (typeof UIHud       !== "undefined") UIHud.init?.();
-    if (typeof UIBattle    !== "undefined") UIBattle.init?.();
-    if (typeof UIUpgrades  !== "undefined") UIUpgrades.init?.();
-    if (typeof UIGacha     !== "undefined") UIGacha.init?.();
-    if (typeof UIConfig    !== "undefined") UIConfig.init?.();
-
-    // Fallback: funções de UI do game-ui.js
-    if (typeof atualizarHUDLobby   === "function") atualizarHUDLobby();
-    if (typeof atualizarUIUpgrades  === "function") atualizarUIUpgrades();
-    if (typeof atualizarListaInvocacao === "function") atualizarListaInvocacao();
-    if (typeof atualizarBotaoPrestigiar === "function") atualizarBotaoPrestigiar();
-
-    // Sincroniza nível da Santa em todos os elementos .santaLvUI
-    document.querySelectorAll(".santaLvUI").forEach(el => {
-        el.textContent = window.personagem?.nivel ?? 1;
     });
 
-    console.log("[Main] UI inicializada.");
+    // Configura o primeiro inimigo
+    if (typeof window.configurarInimigo === "function") {
+        window.configurarInimigo(window.estagio ?? 1);
+    }
+
+    _log("Fase 6 OK — Sistemas.");
 }
 
-// ════════════════════════════════════════
-//  LOOP PRINCIPAL DE RENDERIZAÇÃO
-// ════════════════════════════════════════
+// ════════════════════════════════════════════════════════
+// FASE 7 — UI
+// ════════════════════════════════════════════════════════
+function _inicializarUI() {
+    const uiModulos = [
+        "UIModals",
+        "UIHud",
+        "UIBattle",
+        "UIUpgrades",
+        "UIGacha",
+        "UIConfig",
+    ];
 
-let _loopAtivo    = false;
-let _ultimoFrame  = 0;
-let _fps          = 0;
-let _contadorFPS  = 0;
-let _tempoFPS     = 0;
+    uiModulos.forEach(nome => {
+        if (_M.chamar(nome, "init")) {
+            _log(`  ✓ ${nome}`);
+        }
+    });
+
+    // Fallbacks para funções legadas do game-ui.js
+    _chamarLegado("atualizarHUDLobby");
+    _chamarLegado("atualizarUIUpgrades");
+    _chamarLegado("atualizarListaInvocacao");
+    _chamarLegado("atualizarBotaoPrestigiar");
+
+    // Sincroniza nível da Santa
+    const nivel = _M.get("GameState")?.get("nivelPersonagem")
+                ?? window.personagem?.nivel
+                ?? 1;
+    document.querySelectorAll(".santaLvUI").forEach(el => {
+        el.textContent = nivel;
+    });
+
+    _log("Fase 7 OK — UI.");
+}
+
+// ════════════════════════════════════════════════════════
+// FASE 8 — INPUT + ÁUDIO
+// ════════════════════════════════════════════════════════
+function _inicializarInputAudio() {
+    // Input.init() já foi chamado com o canvas na fase 4
+    // (Input precisa do canvas — inicializado junto com ele)
+    // Aqui apenas garantimos o fallback se não foi inicializado
+    if (!_M.chamar("Input", "init", window.canvas)) {
+        _registrarInputFallback();
+    }
+
+    // Áudio — lazy (cria AudioContext só após primeiro gesto)
+    _M.chamar("Audio", "init");
+
+    _log("Fase 8 OK — Input + Áudio.");
+}
+
+// ════════════════════════════════════════════════════════
+// FASE 9 — LOOP DE RENDERIZAÇÃO
+// ════════════════════════════════════════════════════════
+
+// Estado do loop
+const _loopState = {
+    rodando  : false,
+    rafId    : null,
+    ultimo   : 0,
+    fps      : 0,
+    frames   : 0,
+    tempoFPS : 0,
+    countFPS : 0,
+};
 
 function _iniciarLoop() {
-    if (_loopAtivo) return;
-    _loopAtivo   = true;
-    _ultimoFrame = performance.now();
-    requestAnimationFrame(_loop);
-    console.log("[Main] Loop de renderização iniciado.");
+    if (_loopState.rodando) return;
+    _loopState.rodando = true;
+    _loopState.ultimo  = performance.now();
+    _loopState.rafId   = requestAnimationFrame(_frame);
+    _log("Loop iniciado.");
 }
 
-function _loop(agora) {
-    if (!_loopAtivo) return;
+function _pararLoop() {
+    _loopState.rodando = false;
+    if (_loopState.rafId) {
+        cancelAnimationFrame(_loopState.rafId);
+        _loopState.rafId = null;
+    }
+}
 
-    // Delta time (ms entre frames)
-    const delta = agora - _ultimoFrame;
-    _ultimoFrame = agora;
+function _frame(agora) {
+    // Agenda próximo frame ANTES do trabalho (garante continuidade mesmo em erro)
+    _loopState.rafId = requestAnimationFrame(_frame);
+    if (!_loopState.rodando) return;
 
-    // Contador de FPS
-    _contadorFPS++;
-    _tempoFPS += delta;
-    if (_tempoFPS >= 1000) {
-        _fps       = _contadorFPS;
-        _contadorFPS = 0;
-        _tempoFPS    = 0;
-        EventBus.emit("fps:update", _fps);
+    const delta = Math.min(agora - _loopState.ultimo, 100);   // cap 100ms
+    _loopState.ultimo = agora;
+    _loopState.frames++;
+
+    // FPS
+    _loopState.countFPS++;
+    _loopState.tempoFPS += delta;
+    if (_loopState.tempoFPS >= 1000) {
+        _loopState.fps      = _loopState.countFPS;
+        _loopState.countFPS = 0;
+        _loopState.tempoFPS = 0;
+        _emitir("fps:update", _loopState.fps);
     }
 
-    // Renderização — usa Renderer modular ou fallback
-    if (typeof Renderer !== "undefined" && Renderer.loop) {
-        Renderer.loop(agora, delta);
+    // Atualiza câmera
+    const emBatalha = _emBatalha();
+    try { _M.get("Camera")?.atualizar(emBatalha); } catch(_) {}
+
+    // Emite evento de pre-frame (ripples, etc.)
+    _emitir("renderer:preframe", { ctx: window.ctx, delta });
+
+    // ── Renderização ──
+    const Renderer = _M.get("Renderer");
+    if (Renderer?.loop) {
+        // Renderer modular
+        try { Renderer.loop(agora, delta); } catch(e) {
+            console.error("[Loop] Renderer.loop falhou:", e);
+        }
     } else {
-        _loopFallback();
+        // Fallback legado
+        _loopFallback(delta);
     }
 
-    requestAnimationFrame(_loop);
+    // Tick dos módulos de UI que precisam atualizar a cada frame
+    try { _M.get("UIHud")?.tick?.();    } catch(_) {}
+    try { _M.get("UIBattle")?.tick?.(); } catch(_) {}
+    try { _M.get("Effects")?.atualizar?.(); } catch(_) {}
 }
 
-/**
- * Fallback do loop — compatibilidade com
- * game-batalha.js e game-lobby.js enquanto
- * os renderers modulares não estão prontos.
- */
 function _loopFallback() {
     const canvas = window.canvas;
     const ctx    = window.ctx;
@@ -559,266 +571,321 @@ function _loopFallback() {
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    if (window.emBatalha) {
-        // Renderiza batalha
-        if (typeof window.desenharBatalha === "function") {
-            window.desenharBatalha();
+    try {
+        if (window.emBatalha) {
+            window.desenharBatalha?.();
+            // UI de batalha — throttled internamente
+            if (typeof atualizarUIBatalha === "function") atualizarUIBatalha();
+        } else {
+            window.desenharLobby?.();
         }
-        // Atualiza UI de batalha (throttled)
-        if (typeof atualizarUIBatalha === "function") {
-            atualizarUIBatalha();
-        }
-    } else {
-        // Renderiza lobby
-        if (typeof window.desenharLobby === "function") {
-            window.desenharLobby();
-        }
+    } catch(e) {
+        console.error("[Loop] Fallback falhou:", e);
     }
 }
 
-// ════════════════════════════════════════
-//  AUTO-SAVE
-// ════════════════════════════════════════
+// ════════════════════════════════════════════════════════
+// FASE 10 — PÓS-INICIALIZAÇÃO
+// ════════════════════════════════════════════════════════
+function _posInit(dadosSave) {
+    _iniciarAutoSave();
+    _registrarEventosSistema();
+    _registrarVisibilidade();
+    _notificarOffline(dadosSave);
 
+    // Verificação inicial de conquistas
+    setTimeout(() => {
+        _M.chamar("Achievements", "verificar");
+    }, 600);
+
+    _log("Fase 10 OK — Pós-init.");
+}
+
+// ════════════════════════════════════════════════════════
+// AUTO-SAVE
+// ════════════════════════════════════════════════════════
 function _iniciarAutoSave() {
-    const intervalo = BALANCE.SAVE_INTERVALO_MS ?? 30_000;
+    const intervalo = _M.get("BALANCE")?.SAVE_INTERVALO_MS ?? 30_000;
 
-    setInterval(() => {
-        _salvar();
-    }, intervalo);
+    setInterval(_salvar, intervalo);
 
-    // Salva ao fechar / minimizar
-    window.addEventListener("beforeunload",    () => _salvar());
-    window.addEventListener("visibilitychange", () => {
-        if (document.visibilityState === "hidden") _salvar();
-    });
-
-    console.log(`[Main] Auto-save ativo (a cada ${intervalo / 1000}s).`);
+    _log(`Auto-save configurado (${intervalo / 1000}s).`);
 }
 
 function _salvar() {
     try {
-        // Usa SaveSystem modular se disponível
-        if (typeof SaveSystem !== "undefined" && SaveSystem.salvar) {
-            SaveSystem.salvar();
-            return;
-        }
-        console.warn("[Main] SaveSystem não encontrado — save ignorado.");
-    } catch (e) {
-        console.error("[Main] Falha ao salvar:", e);
+        const SS = _M.get("SaveSystem");
+        if (SS?.salvar) { SS.salvar(); return; }
+        console.warn("[Main] SaveSystem.salvar não encontrado.");
+    } catch(e) {
+        console.error("[Main] Falha no save:", e);
     }
 }
 
-// ════════════════════════════════════════
-//  INPUTS FALLBACK
-//  Registra inputs diretamente enquanto
-//  input.js não está implementado
-// ════════════════════════════════════════
+// ════════════════════════════════════════════════════════
+// EVENTOS DE SISTEMA
+// ════════════════════════════════════════════════════════
+function _registrarEventosSistema() {
+    const EB = _M.get("EventBus");
+    if (!EB) return;
 
-function _registrarInputsFallback() {
+    // ── Contadores globais (suporte ao código legado) ──
+    EB.on("kill:registrado",  () => { window._totalKills      = (window._totalKills      ?? 0) + 1; });
+    EB.on("upgrade:comprado", () => { window._totalUpgrades   = (window._totalUpgrades   ?? 0) + 1; });
+    EB.on("prestigio:feito",  () => { window._totalPrestígios = (window._totalPrestígios ?? 0) + 1; _salvar(); });
+
+    // ── Sincroniza HUD ao mudar moeda/gema ──
+    EB.on("moeda:update", () => {
+        _chamarLegado("atualizarHUDLobby");
+        _M.get("UIHud")?.atualizar?.();
+    });
+    EB.on("gema:update", () => {
+        _chamarLegado("atualizarHUDLobby");
+        _M.get("UIHud")?.atualizar?.();
+    });
+
+    // ── Mudança de modo batalha ↔ lobby ──
+    EB.on("batalha:iniciou", () => {
+        window.emBatalha = true;
+        _chamarLegado("iniciarBatalha");
+        _M.get("Effects")?.inicializarFlores?.();
+    });
+    EB.on("batalha:saiu", () => {
+        window.emBatalha = false;
+        _chamarLegado("sairBatalha");
+        _salvar();
+    });
+
+    // ── Salva em eventos críticos ──
+    EB.on("gacha:pull",               _salvar);
+    EB.on("conquista:desbloqueada",   _salvar);
+    EB.on("quest:coletada",           _salvar);
+    EB.on("nivel:up",                 _salvar);
+
+    // ── Debug ──
+    EB.on("fps:update", fps => {
+        // Atualiza title da aba em dev
+        if (_isDev()) {
+            document.title = `[${fps}fps] Tap Lisieux`;
+        }
+    });
+
+    // ── Erros capturados de outros módulos ──
+    EB.on("modulo:erro", ({ modulo, erro }) => {
+        console.error(`[Sistema] Erro em ${modulo}:`, erro);
+    });
+
+    _log("Eventos de sistema registrados.");
+}
+
+// ════════════════════════════════════════════════════════
+// VISIBILIDADE DA ABA
+// ════════════════════════════════════════════════════════
+function _registrarVisibilidade() {
+    document.addEventListener("visibilitychange", () => {
+        if (document.visibilityState === "hidden") {
+            _salvar();
+            _emitir("jogo:saiu");
+        } else {
+            _emitir("jogo:voltou");
+        }
+    });
+
+    window.addEventListener("beforeunload", _salvar);
+    window.addEventListener("pagehide",     _salvar);   // iOS Safari
+}
+
+// ════════════════════════════════════════════════════════
+// PROGRESSO OFFLINE
+// ════════════════════════════════════════════════════════
+function _notificarOffline(dadosSave) {
+    if (!dadosSave?.timestamp) return;
+
+    const agora    = Date.now();
+    const deltaMs  = agora - dadosSave.timestamp;
+    const maxMs    = (_M.get("BALANCE")?.MAX_OFFLINE_HORAS ?? 8) * 3_600_000;
+    const efetivoMs= Math.min(deltaMs, maxMs);
+    const segundos = Math.floor(efetivoMs / 1000);
+
+    if (segundos < 60) return;   // menos de 1 min — ignora
+
+    // Calcula DPS offline
+    let dps = 0;
+    try   { dps = _M.get("Damage")?.calcDps?.() ?? 0; }
+    catch { dps = Math.floor(2 * Math.pow(1.60, (dadosSave.nivelDps ?? 1) - 1)); }
+
+    const moedas = Math.floor(dps * segundos * 0.5);
+    if (moedas <= 0) return;
+
+    // Aplica moedas
+    try {
+        _M.get("GameState")?.increment("moeda", moedas);
+        _emitir("moeda:update", { valor: _M.get("GameState")?.get("moeda"), delta: moedas });
+    } catch(_) {
+        window.moeda = (window.moeda ?? 0) + moedas;
+    }
+
+    // Toast com delay (garante que Toast está pronto)
+    setTimeout(() => {
+        const fmt  = window.formatarNum ?? (n => String(n));
+        const h    = Math.floor(segundos / 3600);
+        const m    = Math.floor((segundos % 3600) / 60);
+        const s    = segundos % 60;
+        const txt  = h > 0 ? `${h}h ${m}min` : m > 0 ? `${m}min` : `${s}s`;
+
+        const Toast = _M.get("Toast");
+        try {
+            Toast?.sucesso
+                ? Toast.sucesso(`⏰ Offline ${txt} → +${fmt(moedas)} 🪙`)
+                : Toast?.mostrar?.(`⏰ Offline ${txt} → +${fmt(moedas)} 🪙`, "sucesso", 6000);
+        } catch(_) {}
+
+        _emitir("save:offline", { segundos, moedas, dps });
+    }, 2000);
+}
+
+// ════════════════════════════════════════════════════════
+// INPUT FALLBACK (enquanto input.js não está carregado)
+// ════════════════════════════════════════════════════════
+function _registrarInputFallback() {
     const canvas = window.canvas;
     if (!canvas) return;
 
-    // Click no canvas
-    canvas.addEventListener("click", () => {
+    const _click = () => {
         if (!window.emBatalha) return;
-        if (typeof darDano === "function") {
-            darDano(
-                typeof calcDanoClick === "function" ? calcDanoClick() : 1,
-                "click"
-            );
-        }
+        const dano = typeof calcDanoClick === "function" ? calcDanoClick() : 1;
+        if (typeof darDano === "function") darDano(dano, "click");
         if (typeof dispararAtaquePersonagem === "function") dispararAtaquePersonagem();
         if (typeof dispararFlor             === "function") dispararFlor();
+        _emitir("damage:click", { valor: dano });
+    };
 
-        EventBus.emit("click:batalha");
-    });
+    canvas.addEventListener("click",      _click);
+    canvas.addEventListener("touchstart", e => { e.preventDefault(); _click(); }, { passive: false });
+    canvas.addEventListener("touchend",   e => e.preventDefault(), { passive: false });
 
-    // Touch no canvas (mobile)
-    canvas.addEventListener("touchstart", (e) => {
-        e.preventDefault();
-        if (!window.emBatalha) return;
-        if (typeof darDano === "function") {
-            darDano(
-                typeof calcDanoClick === "function" ? calcDanoClick() : 1,
-                "click"
-            );
-        }
-        if (typeof dispararAtaquePersonagem === "function") dispararAtaquePersonagem();
-        if (typeof dispararFlor             === "function") dispararFlor();
-
-        EventBus.emit("click:batalha");
-    }, { passive: false });
-
-    // Previne zoom duplo toque no mobile
-    canvas.addEventListener("touchend", (e) => {
-        e.preventDefault();
-    }, { passive: false });
-
-    // Tecla ESC — fecha modais
-    document.addEventListener("keydown", (e) => {
+    // ESC fecha modais
+    document.addEventListener("keydown", e => {
         if (e.key !== "Escape") return;
-        const modais = [
-            "janelaConfig", "modalInvocar", "modalEquipar",
-            "modalConquistas", "modalMissoes", "modalConfirmReset"
-        ];
-        modais.forEach(id => {
+        ["janelaConfig","modalInvocar","modalEquipar",
+         "modalConquistas","modalMissoes"].forEach(id => {
             const el = document.getElementById(id);
-            if (el && el.style.display !== "none") el.style.display = "none";
+            if (el) el.style.display = "none";
         });
-        EventBus.emit("modal:fechado", { tecla: "ESC" });
+        _emitir("modal:fechado", { origem: "ESC" });
     });
 
-    console.log("[Main] Inputs fallback registrados.");
+    console.warn("[Main] Input fallback ativo — input.js não encontrado.");
 }
 
-// ════════════════════════════════════════
-//  EVENTOS DE SISTEMA
-//  Reage a eventos globais do jogo
-// ════════════════════════════════════════
+// ════════════════════════════════════════════════════════
+// UTILITÁRIOS INTERNOS
+// ════════════════════════════════════════════════════════
 
-function _registrarEventosSistema() {
+function _emitir(evento, dados) {
+    try { _M.get("EventBus")?.emit(evento, dados); } catch(_) {}
+}
 
-    // Quando um inimigo morre — registra kill
-    EventBus.on("kill:registrado", () => {
-        window._totalKills = (window._totalKills ?? 0) + 1;
-    });
-
-    // Quando upgrade é comprado
-    EventBus.on("upgrade:comprado", () => {
-        window._totalUpgrades = (window._totalUpgrades ?? 0) + 1;
-    });
-
-    // Quando prestígio é feito
-    EventBus.on("prestigio:feito", () => {
-        window._totalPrestígios = (window._totalPrestígios ?? 0) + 1;
-        _salvar(); // salva imediatamente após prestígio
-    });
-
-    // Quando conquista é desbloqueada
-    EventBus.on("conquista:desbloqueada", (conquista) => {
-        console.log(`[Main] 🏆 Conquista: ${conquista.nome}`);
-    });
-
-    // Quando quest é completada
-    EventBus.on("quest:completada", (quest) => {
-        console.log(`[Main] 📋 Quest completa: ${quest.nome}`);
-        // Atualiza badge no botão de missões
-        const badge = document.getElementById("questBadge");
-        if (badge) badge.style.display = "flex";
-    });
-
-    // Quando moeda/gema muda — atualiza HUD
-    EventBus.on("moeda:update", () => {
-        if (typeof atualizarHUDLobby === "function") atualizarHUDLobby();
-        if (typeof UIHud !== "undefined") UIHud.atualizar?.();
-    });
-    EventBus.on("gema:update", () => {
-        if (typeof atualizarHUDLobby === "function") atualizarHUDLobby();
-        if (typeof UIHud !== "undefined") UIHud.atualizar?.();
-    });
-
-    // Quando jogo fica em segundo plano
-    document.addEventListener("visibilitychange", () => {
-        if (document.visibilityState === "visible") {
-            EventBus.emit("jogo:voltou");
-            console.log("[Main] Jogo retomado.");
-        } else {
-            EventBus.emit("jogo:saiu");
-            _salvar();
+function _chamarLegado(fn, ...args) {
+    if (typeof window[fn] === "function") {
+        try { window[fn](...args); } catch(e) {
+            console.warn(`[Main] ${fn}() falhou:`, e);
         }
-    });
-}
-
-// ════════════════════════════════════════
-//  TRATAMENTO DE ERRO FATAL
-// ════════════════════════════════════════
-
-function _tratarErroFatal(erro) {
-    console.error("[Main] ERRO FATAL:", erro);
-
-    const tela = document.getElementById("telaLoading");
-    if (tela) {
-        tela.innerHTML = `
-            <div id="loadingConteudo">
-                <div style="font-size:48px; margin-bottom:16px;">⚠️</div>
-                <h2 style="color:#f5a623; font-family:'Cinzel',serif; margin-bottom:12px;">
-                    Erro ao iniciar
-                </h2>
-                <p style="color:#aaa; font-size:14px; max-width:300px;
-                           line-height:1.6; margin-bottom:24px;">
-                    Ocorreu um erro inesperado.<br>
-                    Tente recarregar a página.
-                </p>
-                <button
-                    onclick="location.reload()"
-                    style="
-                        background: linear-gradient(135deg,#7c3aed,#a855f7);
-                        border: none;
-                        border-radius: 12px;
-                        color: #fff;
-                        padding: 12px 28px;
-                        font-size: 15px;
-                        font-weight: 700;
-                        cursor: pointer;
-                        font-family: 'Nunito', sans-serif;
-                    ">
-                    🔄 Recarregar
-                </button>
-                <details style="margin-top:20px; color:#666; font-size:11px; max-width:300px;">
-                    <summary style="cursor:pointer; color:#888;">Detalhes do erro</summary>
-                    <pre style="margin-top:8px; text-align:left; white-space:pre-wrap;
-                                word-break:break-all;">
-${erro?.message ?? String(erro)}
-                    </pre>
-                </details>
-            </div>`;
-        tela.style.opacity = "1";
-        tela.style.display = "flex";
     }
 }
 
-// ════════════════════════════════════════
-//  HELPERS INTERNOS
-// ════════════════════════════════════════
-
-/**
- * Verifica se um módulo está presente.
- * Lança warning mas não bloqueia — o jogo tenta
- * continuar mesmo sem módulos opcionais.
- */
-function _checar(nome, condicao) {
-    if (!condicao) {
-        console.warn(`[Main] Módulo não encontrado: ${nome}`);
-    }
+function _emBatalha() {
+    try   { return _M.get("GameState")?.get("emBatalha") === true ?? window.emBatalha; }
+    catch { return window.emBatalha ?? false; }
 }
 
-// ════════════════════════════════════════
-//  API PÚBLICA
-//  Exposta em window para debug no console
-// ════════════════════════════════════════
+function _isDev() {
+    return location.hostname === "localhost" ||
+           location.hostname === "127.0.0.1" ||
+           location.search.includes("debug");
+}
 
+function _log(...args) {
+    try   { _M.get("Logger")?.info?.("[Main]", ...args); }
+    catch { console.log("[Main]", ...args); }
+}
+
+function _debounce(fn, ms) {
+    let t;
+    return (...args) => {
+        clearTimeout(t);
+        t = setTimeout(() => fn(...args), ms);
+    };
+}
+
+// ════════════════════════════════════════════════════════
+// API PÚBLICA — window.TapLisieux
+// Para debug no console do navegador
+// ════════════════════════════════════════════════════════
 window.TapLisieux = Object.freeze({
-    get fps()          { return _fps; },
-    get versao()       { return "2.0.0"; },
-    salvar:            () => _salvar(),
-    pausar:            () => { _loopAtivo = false; },
-    retomar:           () => { if (!_loopAtivo) { _loopAtivo = true; requestAnimationFrame(_loop); } },
+    versao : "2.0.0",
+
+    get fps()     { return _loopState.fps;     },
+    get frames()  { return _loopState.frames;  },
+    get rodando() { return _loopState.rodando; },
+
+    salvar  : _salvar,
+    pausar  : _pararLoop,
+    retomar : () => {
+        if (!_loopState.rodando) {
+            _loopState.rodando = true;
+            _loopState.ultimo  = performance.now();
+            _loopState.rafId   = requestAnimationFrame(_frame);
+        }
+    },
+
     debug: {
-        pools: () => {
-            if (typeof PoolParticulas !== "undefined") PoolParticulas.debug("Partículas");
-            if (typeof PoolTextos     !== "undefined") PoolTextos.debug("Textos");
-            if (typeof PoolMoedas     !== "undefined") PoolMoedas.debug("Moedas");
-            if (typeof PoolProjéteis  !== "undefined") PoolProjéteis.debug("Projéteis");
+        estado() {
+            console.table({
+                moeda      : window.moeda,
+                gema       : window.gema,
+                estagio    : window.estagio,
+                emBatalha  : window.emBatalha,
+                nivelSanta : window.personagem?.nivel,
+                fps        : _loopState.fps,
+                frames     : _loopState.frames,
+            });
         },
-        estado: () => console.table({
-            moeda:      window.moeda,
-            gema:       window.gema,
-            estagio:    window.estagio,
-            emBatalha:  window.emBatalha,
-            nivel:      window.personagem?.nivel,
-            fps:        _fps
-        }),
-        eventBus: () => console.log("[Debug] EventBus ativo.")
-    }
+        modulos() {
+            const nomes = [
+                "Logger","EventBus","DOM","Utils","BALANCE",
+                "GameState","SaveSystem","Economy","Upgrades",
+                "Experience","ComboSystem","Enemy","Damage","Battle",
+                "GachaPool","Inventory","GachaSystem","Prestige",
+                "AssetLoader","Effects","Camera",
+                "RendererLobby","RendererBattle","Renderer",
+                "UIModals","UIHud","UIBattle","UIUpgrades","UIGacha","UIConfig",
+                "Achievements","Quests","Input","Audio","Toast",
+            ];
+            const resultado = {};
+            nomes.forEach(n => { resultado[n] = _M.get(n) ? "✅" : "❌"; });
+            console.table(resultado);
+            return resultado;
+        },
+        save() {
+            console.log(_M.get("SaveSystem")?.info?.() ?? "SaveSystem não disponível");
+        },
+        renderer() {
+            console.log({
+                lobby  : _M.get("RendererLobby")?.stats?.(),
+                battle : _M.get("RendererBattle")?.stats?.(),
+                effects: _M.get("Effects")?.stats?.(),
+                loop   : { fps: _loopState.fps, frames: _loopState.frames },
+            });
+        },
+        achievements() {
+            console.table(_M.get("Achievements")?.stats?.());
+        },
+        quests() {
+            console.table(_M.get("Quests")?.stats?.());
+        },
+        audio() {
+            console.table(_M.get("Audio")?.stats?.());
+        },
+    },
 });
