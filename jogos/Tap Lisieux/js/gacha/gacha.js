@@ -833,3 +833,4 @@ const GachaSystem = (() => {
     });
 
 })();
+window.GachaSystem = GachaSystem;
