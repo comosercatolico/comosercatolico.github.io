@@ -882,3 +882,4 @@ const Enemy = (() => {
     });
 
 })();
+window.Enemy = Enemy;
