@@ -452,3 +452,4 @@ const EventBus = (() => {
     });
 
 })();
+window.EventBus = EventBus; // ← adiciona essa
