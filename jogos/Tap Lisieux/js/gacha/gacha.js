@@ -1,617 +1,688 @@
 // ═══════════════════════════════════════════════════════════
-//  BATTLE.JS
-//  Controlador central da batalha.
+//  GACHA.JS
+//  Sistema completo de invocação (gacha).
 //
 //  PROBLEMA QUE RESOLVE:
-//  No código antigo, a lógica de batalha estava espalhada
-//  em game-batalha.js misturada com renderização. iniciarBatalha()
-//  manipulava o DOM diretamente, matarInimigo() calculava
-//  recompensas inline, e não havia máquina de estados.
+//  No código antigo, "invocar(qtd)" era uma função solta em
+//  game-ui.js que misturava cálculo de raridade, pity, custo,
+//  UI e inventário em ~50 linhas. Sem banner, sem garantia
+//  de épico, sem histórico estruturado, sem animação.
 //
 //  SOLUÇÃO:
-//  Controlador puro de lógica — sem tocar no DOM, sem canvas.
-//  Usa uma máquina de estados explícita para garantir que
-//  transições impossíveis sejam bloqueadas.
+//  Sistema modular com pipeline de pull separado em etapas
+//  claras, múltiplos tipos de pity, banners configuráveis
+//  e histórico completo.
 //
-//  MÁQUINA DE ESTADOS:
-//  ┌──────────────┐   iniciar()  ┌──────────────┐
-//  │   LOBBY      │ ───────────► │  INICIANDO   │
-//  └──────────────┘              └──────┬───────┘
-//         ▲                            │ (assets prontos)
-//         │                            ▼
-//         │             ┌──────────────────────────┐
-//    sair()│             │        EM_BATALHA        │
-//         │             │  (loop de kills/estágios) │
-//         │             └──────────┬───┬───────────┘
-//         │                        │   │
-//         │           kill()       │   │ irEstagio()
-//         │           avançar()    ▼   ▼ irChefe()
-//         │             ┌──────────────────────────┐
-//         │             │    AVANÇANDO_ESTAGIO      │
-//         │             └──────────────────────────┘
-//         │
-//         └──────────── sair() de qualquer estado ativo
+//  SISTEMA DE PITY:
+//  ┌───────────────────────────────────────────────────────┐
+//  │  PITY LENDÁRIO                                        │
+//  │  - Pulls 1-74  : chance base (0.6%)                  │
+//  │  - Pulls 75-89 : soft pity (+6% por pull)            │
+//  │  - Pull 90     : garantido (hard pity)               │
+//  │  - Reseta ao obter lendário                          │
+//  ├───────────────────────────────────────────────────────┤
+//  │  PITY ÉPICO                                           │
+//  │  - Garantido a cada 10 pulls sem épico ou lendário   │
+//  ├───────────────────────────────────────────────────────┤
+//  │  GARANTIA DE BANNER                                   │
+//  │  - 50% chance do lendário ser do rate-up             │
+//  │  - Se não cair rate-up, o próximo lendário é garante │
+//  └───────────────────────────────────────────────────────┘
 //
-//  FLUXO DE KILL:
-//  1. Enemy.receberDano() → hp ≤ 0 → Enemy.matar()
-//  2. EventBus emite "kill:registrado"
-//  3. Battle ouve → Economy.ganhar(moeda/gema)
-//  4. Battle ouve → Experience.ganhar(xp)
-//  5. Battle ouve → avançar estágio
-//  6. Enemy.configurar(novoEstagio)
-//  7. Effects.criarMoedas() e Effects.dispararFlores()
-//  8. Achievements.verificar()
+//  PIPELINE DE UM PULL:
+//  1. Verificar custo → Economy.gastar()
+//  2. _selecionarRaridade()  → aplica pity
+//  3. _selecionarItem()      → filtra por raridade no banner
+//  4. _aplicarGarantia()     → verifica garantia de rate-up
+//  5. Inventory.adicionar()  → salva no inventário
+//  6. _atualizarPity()       → incrementa/reseta contadores
+//  7. EventBus.emit()        → notifica UI e efeitos
 //
 //  API:
-//    Battle.iniciar()              → inicia batalha
-//    Battle.sair()                 → volta ao lobby
-//    Battle.irEstagio(n)           → vai para estágio N
-//    Battle.irEstagioAnterior()    → estágio - 1
-//    Battle.irProximoEstagio()     → estágio + 1
-//    Battle.irParaChefe()          → próximo chefe
-//    Battle.prestigiar()           → prestige (se elegível)
-//    Battle.estado()               → estado atual da máquina
-//    Battle.estagio()              → estágio atual
-//    Battle.podePrestígiar()       → boolean
-//    Battle.infoAtual()            → objeto completo para UI
+//    GachaSystem.invocar(qtd, bannerId)    → ResultadoPull[]
+//    GachaSystem.pityAtual(bannerId)       → { lendario, epico }
+//    GachaSystem.historico(ultimos)        → registros
+//    GachaSystem.custoTotal(qtd, bannerId) → number
+//    GachaSystem.infoBanner(bannerId)      → objeto completo
+//    GachaSystem.simularPull(bannerId)     → preview sem gastar
+//    GachaSystem.snapshot()               → para save
+//    GachaSystem.carregar(dados)          → restaura do save
 //
-//  Depende de: constants.js, state.js, event-bus.js,
-//              enemy.js, damage.js, economy.js, logger.js,
-//              experience.js, combo.js
-//  Usado por: main.js, input.js, ui-battle.js, prestige.js
+//  Depende de: constants.js, economy.js, inventory.js,
+//              gacha-pool.js, event-bus.js, logger.js, state.js
+//  Usado por: ui-gacha.js
 // ═══════════════════════════════════════════════════════════
 
 "use strict";
 
-const Battle = (() => {
+const GachaSystem = (() => {
 
     // ════════════════════════════════════════
     // LOGGER
     // ════════════════════════════════════════
     const _log = (() => {
-        try   { return Logger.de("Battle"); }
+        try   { return Logger.de("Gacha"); }
         catch { return {
             debug : () => {},
             info  : () => {},
-            warn  : (...a) => console.warn("[Battle]",  ...a),
-            error : (...a) => console.error("[Battle]", ...a)
+            warn  : (...a) => console.warn("[Gacha]",  ...a),
+            error : (...a) => console.error("[Gacha]", ...a)
         }; }
     })();
 
     // ════════════════════════════════════════
-    // MÁQUINA DE ESTADOS
+    // CONFIGURAÇÃO DE PITY E CHANCES
     // ════════════════════════════════════════
-    const ESTADO = Object.freeze({
-        LOBBY              : "LOBBY",
-        INICIANDO          : "INICIANDO",
-        EM_BATALHA         : "EM_BATALHA",
-        AVANCANDO_ESTAGIO  : "AVANCANDO_ESTAGIO",
-        PAUSADO            : "PAUSADO",
-        SAINDO             : "SAINDO"
+    const CFG = Object.freeze({
+        // Lendário
+        LEND_CHANCE_BASE    : 0.006,   // 0.6% base
+        LEND_HARD_PITY      : 90,      // garantido no pull 90
+        LEND_SOFT_PITY      : 75,      // soft pity começa aqui
+        LEND_SOFT_BONUS     : 0.06,    // +6% por pull acima do soft pity
+
+        // Épico
+        EPICO_CHANCE_BASE   : 0.051,   // 5.1% base
+        EPICO_PITY          : 10,      // garantido a cada 10 pulls sem épico+
+
+        // Raro
+        RARO_CHANCE_BASE    : 0.201,   // 20.1% base
+
+        // Garantia de rate-up (50/50)
+        RATE_UP_CHANCE      : 0.50,
+
+        // Custos padrão (fallback se o banner não definir)
+        CUSTO_X1_PADRAO     : 100,
+        CUSTO_X10_PADRAO    : 900,
+
+        // Limites
+        MAX_PULL_UNICO      : 100,     // máximo de pulls por chamada
+        HISTORICO_MAX       : 500
     });
 
-    let _estadoAtual = ESTADO.LOBBY;
+    // ════════════════════════════════════════
+    // ESTADO POR BANNER
+    // Cada banner tem seu próprio pity e garantia
+    // ════════════════════════════════════════
 
-    // Transições válidas
-    const _TRANSICOES = Object.freeze({
-        [ESTADO.LOBBY]             : [ESTADO.INICIANDO],
-        [ESTADO.INICIANDO]         : [ESTADO.EM_BATALHA, ESTADO.LOBBY],
-        [ESTADO.EM_BATALHA]        : [ESTADO.AVANCANDO_ESTAGIO, ESTADO.PAUSADO, ESTADO.SAINDO],
-        [ESTADO.AVANCANDO_ESTAGIO] : [ESTADO.EM_BATALHA, ESTADO.SAINDO],
-        [ESTADO.PAUSADO]           : [ESTADO.EM_BATALHA, ESTADO.SAINDO],
-        [ESTADO.SAINDO]            : [ESTADO.LOBBY]
-    });
+    /**
+     * @typedef {object} EstadoBanner
+     * @property {number}  pityLend        — pulls desde o último lendário
+     * @property {number}  pityEpico       — pulls desde o último épico ou lendário
+     * @property {boolean} garantiaRateUp  — true se o próximo lend é rate-up garantido
+     */
 
-    function _transicionar(novoEstado) {
-        const permitidos = _TRANSICOES[_estadoAtual] ?? [];
-        if (!permitidos.includes(novoEstado)) {
-            _log.warn(
-                `Transição inválida: ${_estadoAtual} → ${novoEstado}.` +
-                ` Permitidos: [${permitidos.join(", ")}]`
-            );
-            return false;
+    // bannerId → EstadoBanner
+    const _estadoBanners = new Map();
+
+    function _getBannerEstado(bannerId) {
+        if (!_estadoBanners.has(bannerId)) {
+            _estadoBanners.set(bannerId, {
+                pityLend       : 0,
+                pityEpico      : 0,
+                garantiaRateUp : false
+            });
         }
-        _log.debug(`Estado: ${_estadoAtual} → ${novoEstado}`);
-        _estadoAtual = novoEstado;
-        return true;
+        return _estadoBanners.get(bannerId);
     }
 
     // ════════════════════════════════════════
-    // CONFIGURAÇÃO
+    // HISTÓRICO GLOBAL DE PULLS
     // ════════════════════════════════════════
-    const CFG = Object.freeze({
-        ESTAGIO_MIN          : 1,
-        ESTAGIO_PRESTIGIO    : 60,    // estágio mínimo para prestigiar
-        DELAY_AVANCAR_MS     : 300,   // delay entre kill e próximo inimigo
-        DPS_INTERVALO_MS     : 1000,  // ms entre ticks de DPS
-        FALA_INTERVALO_MS    : 8000,  // ms entre tentativas de fala
-        KILLS_POR_ESTAGIO    : 1,     // kills necessários para avançar (futura expansão)
-        MAX_ESTAGIO_PULO     : 100,   // limite de pulo manual de estágio
-    });
 
-    // ════════════════════════════════════════
-    // ESTADO INTERNO
-    // ════════════════════════════════════════
-    let _estagio      = 1;
-    let _killsEstagio = 0;   // kills no estágio atual (para multi-kill futuramente)
+    /**
+     * @typedef {object} RegistroPull
+     * @property {string}  bannerId
+     * @property {string}  itemId
+     * @property {string}  itemNome
+     * @property {string}  raridade
+     * @property {boolean} critico      — false (reservado)
+     * @property {boolean} foiPity      — lendário por pity?
+     * @property {boolean} foiRateUp    — foi o item de rate-up?
+     * @property {number}  pityNoMomento
+     * @property {number}  pullNumGlobal
+     * @property {number}  timestamp
+     */
+    const _historico = [];
+    let   _pullsGlobais = 0;
 
-    // Timers internos
-    let _timerDps     = null;
-    let _timerFala    = null;
-    let _timerAvancar = null;
-
-    // Estatísticas da sessão de batalha
+    // Estatísticas globais
     const _stats = {
-        totalKillsSessao  : 0,
-        totalEstagiosSessao: 0,
-        chefesVencidos    : 0,
-        elitesVencidos    : 0,
-        tempoInicioMs     : 0,
-        moedasGanhasSessao: 0,
-        gemasGanhasSessao : 0
+        totalPulls    : 0,
+        totalLendarios: 0,
+        totalEpicos   : 0,
+        totalRaros    : 0,
+        totalComuns   : 0,
+        gemasGastas   : 0,
+        porBanner     : {}    // bannerId → { pulls, lendarios }
     };
 
     // ════════════════════════════════════════
-    // INICIAR BATALHA
+    // CÁLCULO DE CHANCE COM PITY
+    // ════════════════════════════════════════
+    function _calcChanceLendario(pity) {
+        if (pity >= CFG.LEND_HARD_PITY)  return 1.0;
+        if (pity >= CFG.LEND_SOFT_PITY) {
+            const bonus = CFG.LEND_SOFT_BONUS * (pity - CFG.LEND_SOFT_PITY);
+            return Math.min(1.0, CFG.LEND_CHANCE_BASE + bonus);
+        }
+        return CFG.LEND_CHANCE_BASE;
+    }
+
+    function _calcChanceEpico(pityEpico) {
+        // Pity épico: garante épico+ a cada N pulls
+        if (pityEpico >= CFG.EPICO_PITY) return 1.0;
+        return CFG.EPICO_CHANCE_BASE;
+    }
+
+    // ════════════════════════════════════════
+    // SELECIONAR RARIDADE
+    // ════════════════════════════════════════
+    function _selecionarRaridade(estado) {
+        const r = Math.random();
+
+        const chanceLend  = _calcChanceLendario(estado.pityLend);
+        const chanceEpico = _calcChanceEpico(estado.pityEpico);
+
+        if (r < chanceLend)                     return "Lendário";
+        if (r < chanceLend + chanceEpico)        return "Épico";
+        if (r < chanceLend + chanceEpico + CFG.RARO_CHANCE_BASE) return "Raro";
+        return "Comum";
+    }
+
+    // ════════════════════════════════════════
+    // SELECIONAR ITEM
+    // ════════════════════════════════════════
+    function _selecionarItem(raridade, bannerId, estado) {
+        let pool = [];
+
+        try {
+            pool = GachaPool.porRaridade(raridade, bannerId);
+        } catch (e) {
+            _log.error("_selecionarItem(): GachaPool.porRaridade falhou:", e);
+        }
+
+        if (pool.length === 0) {
+            _log.warn(`Pool vazia para "${raridade}" no banner "${bannerId}". Fallback Comum.`);
+            try {
+                pool = GachaPool.porRaridade("Comum", bannerId);
+            } catch { /* não crítico */ }
+        }
+
+        if (pool.length === 0) {
+            _log.error("Pool completamente vazia! Verificar GachaPool.");
+            return null;
+        }
+
+        // Aplica garantia de rate-up para lendários
+        if (raridade === "Lendário") {
+            return _aplicarGarantiaRateUp(pool, bannerId, estado);
+        }
+
+        return pool[Math.floor(Math.random() * pool.length)];
+    }
+
+    // ════════════════════════════════════════
+    // GARANTIA DE RATE-UP (50/50)
+    // ════════════════════════════════════════
+    function _aplicarGarantiaRateUp(poolLend, bannerId, estado) {
+        let bannerDef = null;
+        try { bannerDef = GachaPool.banner(bannerId); } catch { /* não crítico */ }
+
+        const rateUpIds = bannerDef?.rateUp ?? [];
+
+        // Se não há rate-up no banner, retorna qualquer lendário
+        if (rateUpIds.length === 0) {
+            return poolLend[Math.floor(Math.random() * poolLend.length)];
+        }
+
+        const poolRateUp = poolLend.filter(i => rateUpIds.includes(i.id));
+        const poolNormal = poolLend.filter(i => !rateUpIds.includes(i.id));
+
+        // Garantia ativa ou ganhou o 50/50
+        const ganhouRateUp = estado.garantiaRateUp || Math.random() < CFG.RATE_UP_CHANCE;
+
+        if (ganhouRateUp && poolRateUp.length > 0) {
+            estado.garantiaRateUp = false; // reseta garantia
+            return poolRateUp[Math.floor(Math.random() * poolRateUp.length)];
+        } else {
+            // Perdeu o 50/50 — próximo lendário é garantido rate-up
+            estado.garantiaRateUp = true;
+            const fallback = poolNormal.length > 0 ? poolNormal : poolLend;
+            return fallback[Math.floor(Math.random() * fallback.length)];
+        }
+    }
+
+    // ════════════════════════════════════════
+    // ATUALIZAR PITY APÓS PULL
+    // ════════════════════════════════════════
+    function _atualizarPity(estado, raridade) {
+        const foiLend  = raridade === "Lendário";
+        const foiEpico = raridade === "Épico" || foiLend;
+
+        // Pity lendário
+        if (foiLend) {
+            estado.pityLend = 0;
+        } else {
+            estado.pityLend++;
+        }
+
+        // Pity épico reseta em épico OU lendário
+        if (foiEpico) {
+            estado.pityEpico = 0;
+        } else {
+            estado.pityEpico++;
+        }
+    }
+
+    // ════════════════════════════════════════
+    // EXECUTAR UM PULL (interno)
     // ════════════════════════════════════════
 
     /**
-     * Inicia a batalha a partir do lobby.
-     * Configura UI, inimigo e loops de DPS/Fala.
+     * Executa um único pull sem cobrar custo.
+     * O custo é cobrado uma vez pela função invocar().
      *
-     * @returns {boolean} — true se iniciou com sucesso
+     * @param {string} bannerId
+     * @returns {RegistroPull|null}
      */
-    function iniciar() {
-        if (!_transicionar(ESTADO.INICIANDO)) return false;
+    function _executarUmPull(bannerId) {
+        const estado   = _getBannerEstado(bannerId);
+        const pityAntes = estado.pityLend;
 
-        _log.info(`Iniciando batalha — Estágio ${_estagio}`);
+        const raridade = _selecionarRaridade(estado);
+        const item     = _selecionarItem(raridade, bannerId, estado);
 
-        // Restaura estágio do GameState (se houver save)
+        if (!item) {
+            _log.error(`_executarUmPull("${bannerId}"): item nulo após seleção.`);
+            return null;
+        }
+
+        _atualizarPity(estado, raridade);
+
+        _pullsGlobais++;
+
+        const foiPity   = raridade === "Lendário" && pityAntes >= CFG.LEND_SOFT_PITY;
+        const bannerDef = (() => { try { return GachaPool.banner(bannerId); } catch { return null; } })();
+        const foiRateUp = raridade === "Lendário" && (bannerDef?.rateUp ?? []).includes(item.id);
+
+        const registro = {
+            bannerId,
+            itemId        : item.id,
+            itemNome      : item.nome,
+            raridade,
+            foiPity,
+            foiRateUp,
+            garantiaAtiva : estado.garantiaRateUp,
+            pityNoMomento : pityAntes,
+            pityEpicoMom  : estado.pityEpico,
+            pullNumGlobal : _pullsGlobais,
+            timestamp     : Date.now()
+        };
+
+        // Adiciona ao inventário
         try {
-            const estagioSalvo = GameState.get("estagio");
-            if (estagioSalvo && estagioSalvo >= CFG.ESTAGIO_MIN) {
-                _estagio = estagioSalvo;
-            }
-        } catch { /* usa valor atual */ }
+            Inventory.adicionar(item);
+        } catch (e) {
+            _log.error(`_executarUmPull(): Inventory.adicionar falhou:`, e);
+        }
 
-        // Reseta estado de sessão
-        _killsEstagio = 0;
-        _stats.tempoInicioMs     = Date.now();
-        _stats.totalKillsSessao  = 0;
-        _stats.totalEstagiosSessao = 0;
-        _stats.moedasGanhasSessao = 0;
-        _stats.gemasGanhasSessao  = 0;
+        // Registra no histórico
+        _historico.push(registro);
+        if (_historico.length > CFG.HISTORICO_MAX) _historico.shift();
+
+        // Atualiza stats
+        _stats.totalPulls++;
+        if (!_stats.porBanner[bannerId]) {
+            _stats.porBanner[bannerId] = { pulls: 0, lendarios: 0 };
+        }
+        _stats.porBanner[bannerId].pulls++;
+
+        switch (raridade) {
+            case "Lendário": _stats.totalLendarios++; _stats.porBanner[bannerId].lendarios++; break;
+            case "Épico"   : _stats.totalEpicos++;    break;
+            case "Raro"    : _stats.totalRaros++;     break;
+            default        : _stats.totalComuns++;    break;
+        }
+
+        _log.debug(
+            `Pull: ${item.emoji} ${item.nome} (${raridade})` +
+            ` | Pity: ${pityAntes} → ${estado.pityLend}` +
+            (foiPity   ? " [PITY]"    : "") +
+            (foiRateUp ? " [RATE-UP]" : "")
+        );
+
+        return registro;
+    }
+
+    // ════════════════════════════════════════
+    // CUSTO TOTAL
+    // ════════════════════════════════════════
+
+    /**
+     * Calcula o custo total de N pulls em um banner.
+     * Aplica desconto de x10 automaticamente.
+     *
+     * @param {number} qtd
+     * @param {string} [bannerId="padrao"]
+     * @returns {number}
+     */
+    function custoTotal(qtd, bannerId = "padrao") {
+        let bannerDef = null;
+        try { bannerDef = GachaPool.banner(bannerId); } catch { /* não crítico */ }
+
+        const custoX1  = bannerDef?.custoX1  ?? CFG.CUSTO_X1_PADRAO;
+        const custoX10 = bannerDef?.custoX10 ?? CFG.CUSTO_X10_PADRAO;
+
+        if (qtd <= 0) return 0;
+
+        const lotes10  = Math.floor(qtd / 10);
+        const resto    = qtd % 10;
+
+        return (lotes10 * custoX10) + (resto * custoX1);
+    }
+
+    // ════════════════════════════════════════
+    // INVOCAR — API PRINCIPAL
+    // ════════════════════════════════════════
+
+    /**
+     * Executa N pulls em um banner, cobra o custo e retorna resultados.
+     *
+     * @param {number} qtd                — quantidade (1, 10, etc.)
+     * @param {string} [bannerId="padrao"]
+     * @returns {{
+     *   sucesso    : boolean,
+     *   resultados : RegistroPull[],
+     *   resumo     : { lend, epico, raro, comum, custoGasto },
+     *   pityDepois : { lend, epico }
+     * }}
+     *
+     * @example
+     * GachaSystem.invocar(1);
+     * GachaSystem.invocar(10, "herois");
+     * GachaSystem.invocar(1, "sao_miguel_rateup");
+     */
+    function invocar(qtd = 1, bannerId = "padrao") {
+        // Validações
+        if (typeof qtd !== "number" || qtd < 1 || !Number.isInteger(qtd)) {
+            _log.warn(`invocar(): qtd inválida "${qtd}".`);
+            return _resultadoFalha("Quantidade inválida.");
+        }
+
+        if (qtd > CFG.MAX_PULL_UNICO) {
+            _log.warn(`invocar(): qtd ${qtd} > MAX ${CFG.MAX_PULL_UNICO}. Limitando.`);
+            qtd = CFG.MAX_PULL_UNICO;
+        }
+
+        // Verifica se o banner existe e está ativo
+        let bannerDef = null;
+        try { bannerDef = GachaPool.banner(bannerId); } catch { /* não crítico */ }
+
+        if (!bannerDef) {
+            _log.warn(`invocar(): banner "${bannerId}" não encontrado. Usando padrão.`);
+            bannerId = "padrao";
+        }
+
+        // Calcula e cobra custo
+        const custo = custoTotal(qtd, bannerId);
+
+        const gastou = (() => {
+            try {
+                return Economy.gastar("gema", custo, `gacha:${bannerId}:x${qtd}`);
+            } catch (e) {
+                _log.error("invocar(): Economy.gastar falhou:", e);
+                return false;
+            }
+        })();
+
+        if (!gastou) {
+            _log.warn(`invocar(): gemas insuficientes. Custo: ${custo}`);
+            return _resultadoFalha("Gemas insuficientes!");
+        }
+
+        _stats.gemasGastas += custo;
+
+        // Executa pulls
+        const resultados = [];
+
+        for (let i = 0; i < qtd; i++) {
+            const registro = _executarUmPull(bannerId);
+            if (registro) resultados.push(registro);
+        }
+
+        // Monta resumo
+        const resumo = _calcResumo(resultados, custo);
 
         // Atualiza GameState
         try {
-            GameState.set("emBatalha", true);
-            GameState.set("estagio",   _estagio);
+            const estado = _getBannerEstado(bannerId);
+            GameState.set("pityGacha", estado.pityLend);
         } catch { /* não crítico */ }
 
-        // Configura o primeiro inimigo
-        try {
-            Enemy.configurar(_estagio);
-        } catch (e) {
-            _log.error("iniciar(): Enemy.configurar falhou:", e);
-            _transicionar(ESTADO.LOBBY);
-            return false;
-        }
-
-        // Inicia loops
-        _iniciarTimers();
-
-        // Transição para EM_BATALHA
-        _transicionar(ESTADO.EM_BATALHA);
-
-        _log.info(`Batalha iniciada — Estágio ${_estagio}`);
-
-        // Emite evento
-        try {
-            EventBus.emit("batalha:iniciou", {
-                estagio : _estagio,
-                chefe   : Enemy.ehChefe(_estagio)
-            });
-        } catch { /* não crítico */ }
-
-        return true;
-    }
-
-    // ════════════════════════════════════════
-    // SAIR DA BATALHA
-    // ════════════════════════════════════════
-
-    /**
-     * Encerra a batalha e volta ao lobby.
-     * Salva o progresso automaticamente.
-     */
-    function sair() {
-        if (_estadoAtual === ESTADO.LOBBY) return;
-        if (!_transicionar(ESTADO.SAINDO)) return;
-
-        _log.info("Saindo da batalha...");
-
-        // Para todos os timers
-        _pararTimers();
-
-        // Reseta combo
-        try { ComboSystem.resetar(); } catch { /* não crítico */ }
-
-        // Reseta estado de sessão no GameState
-        try {
-            GameState.set("emBatalha",        false);
-            GameState.set("hitStateTremendo", 0);
-            GameState.set("hitStateFlash",    0);
-            GameState.set("falaAtiva",        false);
-        } catch { /* não crítico */ }
-
-        // Salva progresso
-        try { SaveSystem.salvar(); } catch { /* não crítico */ }
-
-        _transicionar(ESTADO.LOBBY);
+        // Emite eventos
+        _emitirEventos(resultados, resumo, bannerId);
 
         _log.info(
-            `Batalha encerrada.` +
-            ` Kills: ${_stats.totalKillsSessao}` +
-            ` | Estágios: ${_stats.totalEstagiosSessao}` +
-            ` | +${_fmt(_stats.moedasGanhasSessao)}🪙`
+            `invocar(x${qtd}, "${bannerId}") — Custo: ${custo}💎` +
+            ` | Lend: ${resumo.lend} | Épico: ${resumo.epico}`
         );
 
-        try {
-            EventBus.emit("batalha:saiu", {
-                estagio : _estagio,
-                stats   : { ..._stats }
-            });
-        } catch { /* não crítico */ }
-    }
-
-    // ════════════════════════════════════════
-    // TIMERS INTERNOS
-    // ════════════════════════════════════════
-    function _iniciarTimers() {
-        _pararTimers(); // garante que não há duplicatas
-
-        // Timer de DPS
-        _timerDps = setInterval(() => {
-            if (_estadoAtual !== ESTADO.EM_BATALHA) return;
-            try { Damage.aplicarDps(); } catch { /* não crítico */ }
-        }, CFG.DPS_INTERVALO_MS);
-
-        // Timer de falas do inimigo
-        _timerFala = setInterval(() => {
-            if (_estadoAtual !== ESTADO.EM_BATALHA) return;
-            try { Enemy.falarAleatorio(); } catch { /* não crítico */ }
-        }, CFG.FALA_INTERVALO_MS);
-    }
-
-    function _pararTimers() {
-        if (_timerDps     !== null) { clearInterval(_timerDps);     _timerDps     = null; }
-        if (_timerFala    !== null) { clearInterval(_timerFala);     _timerFala    = null; }
-        if (_timerAvancar !== null) { clearTimeout(_timerAvancar);   _timerAvancar = null; }
-    }
-
-    // ════════════════════════════════════════
-    // PROCESSAR KILL (via EventBus)
-    // ════════════════════════════════════════
-    function _onKill({ rMoeda = 0, rGema = 0, chefe = false, elite = false, estagio: e } = {}) {
-        if (_estadoAtual !== ESTADO.EM_BATALHA) return;
-
-        _stats.totalKillsSessao++;
-        _killsEstagio++;
-
-        if (chefe)  _stats.chefesVencidos++;
-        if (elite)  _stats.elitesVencidos++;
-
-        // Recompensas via Economy
-        try {
-            if (rMoeda > 0) {
-                Economy.ganharComBonus("moeda", rMoeda, `kill:estagio${e}`);
-                _stats.moedasGanhasSessao += rMoeda;
-            }
-            if (rGema > 0) {
-                Economy.ganhar("gema", rGema, chefe ? "kill:chefe" : "kill:normal");
-                _stats.gemasGanhasSessao += rGema;
-            }
-        } catch (err) {
-            _log.error("_onKill(): Economy falhou:", err);
-        }
-
-        // Incrementa contador global de kills
-        try { GameState.increment("totalKills"); } catch { /* não crítico */ }
-
-        // Efeitos visuais via EventBus
-        try {
-            EventBus.emit("effects:moedas_caindo", {
-                qtd : Math.min(5, 1 + Math.floor(rMoeda / 10)),
-                x   : null   // renderer usa posição do monstro
-            });
-        } catch { /* não crítico */ }
-
-        // Verifica conquistas
-        try {
-            EventBus.emit("conquistas:verificar");
-        } catch { /* não crítico */ }
-
-        // Avança estágio após delay
-        if (_killsEstagio >= CFG.KILLS_POR_ESTAGIO) {
-            _killsEstagio = 0;
-            _timerAvancar = setTimeout(() => {
-                _avancarEstagio();
-            }, CFG.DELAY_AVANCAR_MS);
-        }
-    }
-
-    // ════════════════════════════════════════
-    // AVANÇAR ESTÁGIO (interno)
-    // ════════════════════════════════════════
-    function _avancarEstagio() {
-        if (_estadoAtual !== ESTADO.EM_BATALHA) return;
-        if (!_transicionar(ESTADO.AVANCANDO_ESTAGIO)) return;
-
-        _estagio++;
-        _stats.totalEstagiosSessao++;
-
-        try { GameState.set("estagio", _estagio); } catch { /* não crítico */ }
-
-        _log.info(`Estágio avançou → ${_estagio}${Enemy.ehChefe(_estagio) ? " 👿 CHEFE!" : ""}`);
-
-        // Notifica chefe
-        if (Enemy.ehChefeElite(_estagio)) {
-            try { Toast.lendario(`⚡ ARQUIDEMÔNIO! Estágio ${_estagio}`); } catch { /* não crítico */ }
-        } else if (Enemy.ehChefe(_estagio)) {
-            try { Toast.aviso(`👿 CHEFE! Estágio ${_estagio}`); } catch { /* não crítico */ }
-        }
-
-        // Configura novo inimigo
-        try {
-            Enemy.configurar(_estagio);
-        } catch (e) {
-            _log.error("_avancarEstagio(): Enemy.configurar falhou:", e);
-        }
-
-        // Emite evento
-        try {
-            EventBus.emit("estagio:avancou", {
-                estagio : _estagio,
-                chefe   : Enemy.ehChefe(_estagio),
-                elite   : Enemy.ehChefeElite(_estagio)
-            });
-        } catch { /* não crítico */ }
-
-        _transicionar(ESTADO.EM_BATALHA);
-    }
-
-    // ════════════════════════════════════════
-    // NAVEGAÇÃO MANUAL DE ESTÁGIO
-    // ════════════════════════════════════════
-
-    /**
-     * Navega para um estágio específico.
-     * Validado para não ultrapassar o máximo atingido.
-     *
-     * @param {number} n
-     * @returns {boolean}
-     */
-    function irEstagio(n) {
-        if (_estadoAtual !== ESTADO.EM_BATALHA) {
-            _log.warn("irEstagio(): não está em batalha.");
-            return false;
-        }
-
-        if (typeof n !== "number" || n < CFG.ESTAGIO_MIN) {
-            _log.warn(`irEstagio(${n}): valor inválido.`);
-            return false;
-        }
-
-        // Não pode pular mais de MAX_ESTAGIO_PULO estágios à frente
-        const max = _estagio + CFG.MAX_ESTAGIO_PULO;
-        const alvo = Math.min(n, max);
-
-        if (alvo === _estagio) return false;
-
-        _estagio      = Math.max(CFG.ESTAGIO_MIN, alvo);
-        _killsEstagio = 0;
-
-        try { GameState.set("estagio", _estagio); } catch { /* não crítico */ }
-        try { Enemy.configurar(_estagio); } catch { /* não crítico */ }
-        try { ComboSystem.resetar(); } catch { /* não crítico */ }
-
-        _log.info(`Navegou para estágio ${_estagio}`);
-
-        try {
-            EventBus.emit("estagio:navegou", { estagio: _estagio, manual: true });
-        } catch { /* não crítico */ }
-
-        return true;
-    }
-
-    /**
-     * Vai para o estágio anterior.
-     * @returns {boolean}
-     */
-    function irEstagioAnterior() {
-        return irEstagio(_estagio - 1);
-    }
-
-    /**
-     * Vai para o próximo estágio (sem matar inimigo).
-     * @returns {boolean}
-     */
-    function irProximoEstagio() {
-        return irEstagio(_estagio + 1);
-    }
-
-    /**
-     * Vai para o próximo chefe (múltiplo de 10).
-     * @returns {boolean}
-     */
-    function irParaChefe() {
-        const proximo = Math.ceil((_estagio + 1) / 10) * 10;
-        return irEstagio(proximo);
-    }
-
-    /**
-     * Vai para o próximo chefe élite (múltiplo de 50).
-     * @returns {boolean}
-     */
-    function irParaElite() {
-        const proximo = Math.ceil((_estagio + 1) / 50) * 50;
-        return irEstagio(proximo);
-    }
-
-    // ════════════════════════════════════════
-    // PAUSA
-    // ════════════════════════════════════════
-
-    /**
-     * Pausa a batalha (DPS e falas param).
-     * Útil ao abrir modais durante a batalha.
-     */
-    function pausar() {
-        if (_estadoAtual !== ESTADO.EM_BATALHA) return;
-        _transicionar(ESTADO.PAUSADO);
-        _pararTimers();
-        _log.debug("Batalha pausada.");
-
-        try { EventBus.emit("batalha:pausada"); } catch { /* não crítico */ }
-    }
-
-    /**
-     * Retoma a batalha após pausa.
-     */
-    function retomar() {
-        if (_estadoAtual !== ESTADO.PAUSADO) return;
-        _transicionar(ESTADO.EM_BATALHA);
-        _iniciarTimers();
-        _log.debug("Batalha retomada.");
-
-        try { EventBus.emit("batalha:retomada"); } catch { /* não crítico */ }
-    }
-
-    // ════════════════════════════════════════
-    // PRESTÍGIO
-    // ════════════════════════════════════════
-
-    /**
-     * Verifica se o jogador pode prestigiar.
-     * @returns {boolean}
-     */
-    function podePrestígiar() {
-        return _estagio >= CFG.ESTAGIO_PRESTIGIO;
-    }
-
-    /**
-     * Executa o prestígio se elegível.
-     * Delega para Prestige.js toda a lógica de reset.
-     *
-     * @returns {boolean}
-     */
-    function prestigiar() {
-        if (!podePrestígiar()) {
-            _log.warn(
-                `prestigiar(): requer estágio ${CFG.ESTAGIO_PRESTIGIO}.` +
-                ` Atual: ${_estagio}.`
-            );
-            try {
-                Toast.aviso(
-                    `🌟 Alcance o estágio ${CFG.ESTAGIO_PRESTIGIO} para prestigiar!` +
-                    ` (Atual: ${_estagio})`
-                );
-            } catch { /* não crítico */ }
-            return false;
-        }
-
-        try {
-            if (typeof Prestige !== "undefined") {
-                return Prestige.executar();
-            }
-        } catch (e) {
-            _log.error("prestigiar(): Prestige.executar() falhou:", e);
-        }
-
-        // Fallback se Prestige.js não estiver carregado
-        _log.warn("prestigiar(): Prestige.js não disponível — executando fallback.");
-        _executarPrestigioFallback();
-        return true;
-    }
-
-    function _executarPrestigioFallback() {
-        const totalAnt = (() => {
-            try { return GameState.get("totalPrestígios") ?? 0; } catch { return 0; }
-        })();
-
-        _estagio      = CFG.ESTAGIO_MIN;
-        _killsEstagio = 0;
-
-        try { GameState.resetGrupo("run"); } catch { /* não crítico */ }
-        try { GameState.set("estagio", _estagio); } catch { /* não crítico */ }
-        try { GameState.increment("totalPrestígios"); } catch { /* não crítico */ }
-        try { Upgrades.resetar(); } catch { /* não crítico */ }
-        try { Economy._setDireto("moeda", 0); } catch { /* não crítico */ }
-        try { Enemy.configurar(_estagio); } catch { /* não crítico */ }
-
-        try {
-            Toast.nivel("🌸 PRESTÍGIO! Recomeçando mais forte!");
-        } catch { /* não crítico */ }
-
-        try {
-            EventBus.emit("prestigio:feito", {
-                total     : totalAnt + 1,
-                estagioMax: _estagio
-            });
-        } catch { /* não crítico */ }
-
-        _log.info(`Prestígio #${totalAnt + 1} executado.`);
-    }
-
-    // ════════════════════════════════════════
-    // LEITURA
-    // ════════════════════════════════════════
-
-    /** Estado atual da máquina. */
-    function estado()        { return _estadoAtual;           }
-
-    /** Estágio atual. */
-    function estagio()       { return _estagio;               }
-
-    /** True se está em batalha ativa (não pausado). */
-    function emBatalha()     { return _estadoAtual === ESTADO.EM_BATALHA; }
-
-    /** True se pausado. */
-    function pausado()       { return _estadoAtual === ESTADO.PAUSADO; }
-
-    /**
-     * Objeto completo para a UI atualizar de uma vez.
-     *
-     * @returns {{
-     *   estado, estagio, emBatalha, pausado,
-     *   podePrestígiar, chefe, elite,
-     *   nomeEstagio, inimigo, damage,
-     *   stats
-     * }}
-     */
-    function infoAtual() {
-        const inimigo = (() => {
-            try { return Enemy.infoAtual(); } catch { return null; }
-        })();
-
-        const damageInfo = (() => {
-            try { return Damage.simular("click"); } catch { return null; }
-        })();
+        const estadoFinal = _getBannerEstado(bannerId);
 
         return {
-            estado          : _estadoAtual,
-            estagio         : _estagio,
-            emBatalha       : emBatalha(),
-            pausado         : pausado(),
-            podePrestígiar  : podePrestígiar(),
-            chefe           : Enemy.ehChefe(_estagio),
-            elite           : Enemy.ehChefeElite(_estagio),
-            nomeEstagio     : Enemy.nomeEstagio(_estagio),
-            inimigo,
-            damageClick     : damageInfo?.semCrit ?? 0,
-            dps             : (() => { try { return Damage.calcDps(); } catch { return 0; } })(),
-            stats           : { ..._stats }
+            sucesso    : true,
+            resultados,
+            resumo,
+            pityDepois : {
+                lend  : estadoFinal.pityLend,
+                epico : estadoFinal.pityEpico,
+                garantiaRateUp: estadoFinal.garantiaRateUp
+            }
         };
+    }
+
+    // ════════════════════════════════════════
+    // CALCULAR RESUMO DOS PULLS
+    // ════════════════════════════════════════
+    function _calcResumo(resultados, custoGasto) {
+        return {
+            lend      : resultados.filter(r => r.raridade === "Lendário").length,
+            epico     : resultados.filter(r => r.raridade === "Épico").length,
+            raro      : resultados.filter(r => r.raridade === "Raro").length,
+            comum     : resultados.filter(r => r.raridade === "Comum").length,
+            rateUps   : resultados.filter(r => r.foiRateUp).length,
+            pitys     : resultados.filter(r => r.foiPity).length,
+            custoGasto,
+            melhor    : resultados.reduce((m, r) => {
+                const peso = { "Lendário": 4, "Épico": 3, "Raro": 2, "Comum": 1 };
+                return !m || (peso[r.raridade] ?? 0) > (peso[m.raridade] ?? 0) ? r : m;
+            }, null)
+        };
+    }
+
+    // ════════════════════════════════════════
+    // EMITIR EVENTOS
+    // ════════════════════════════════════════
+    function _emitirEventos(resultados, resumo, bannerId) {
+        try {
+            // Evento principal do gacha
+            EventBus.emit("gacha:pull", {
+                resultados,
+                resumo,
+                bannerId
+            });
+
+            // Evento por raridade dos melhores itens
+            if (resumo.lend > 0) {
+                const lendarios = resultados.filter(r => r.raridade === "Lendário");
+                lendarios.forEach(r => {
+                    EventBus.emit("gacha:pull:lendario", {
+                        item     : Inventory.possui(r.itemId)
+                            ? { id: r.itemId, nome: r.itemNome }
+                            : null,
+                        foiRateUp: r.foiRateUp,
+                        foiPity  : r.foiPity
+                    });
+                });
+
+                // Toast especial
+                const primeiro = lendarios[0];
+                Toast.mostrar(
+                    `🌟 LENDÁRIO! ${primeiro.itemNome}` +
+                    (primeiro.foiRateUp ? " ⭐ RATE-UP!" : ""),
+                    { tipo: "lendario", duracao: 6000, icone: "🌟" }
+                );
+            }
+
+            if (resumo.epico > 0 && resumo.lend === 0) {
+                EventBus.emit("gacha:pull:epico", { qtd: resumo.epico });
+            }
+
+            // Atualiza conquistas
+            EventBus.emit("conquistas:verificar");
+
+        } catch (e) {
+            _log.error("_emitirEventos(): falhou:", e);
+        }
+    }
+
+    // ════════════════════════════════════════
+    // RESULTADO DE FALHA
+    // ════════════════════════════════════════
+    function _resultadoFalha(motivo) {
+        return {
+            sucesso    : false,
+            resultados : [],
+            resumo     : { lend: 0, epico: 0, raro: 0, comum: 0, custoGasto: 0, melhor: null },
+            pityDepois : null,
+            motivo
+        };
+    }
+
+    // ════════════════════════════════════════
+    // SIMULAR PULL (sem gastar gemas)
+    // Para preview na UI
+    // ════════════════════════════════════════
+
+    /**
+     * Simula as probabilidades de N pulls sem gastar nada.
+     * Útil para mostrar preview na UI.
+     *
+     * @param {string} [bannerId="padrao"]
+     * @returns {{
+     *   chanceLend      : number,   — % chance de ao menos 1 lendário em x10
+     *   pityAtual       : number,
+     *   pullsParaHard   : number,
+     *   pullsParaSoft   : number,
+     *   custoX1         : number,
+     *   custoX10        : number,
+     *   garantiaRateUp  : boolean
+     * }}
+     */
+    function simularPull(bannerId = "padrao") {
+        const estado     = _getBannerEstado(bannerId);
+        const pity       = estado.pityLend;
+        const chanceUm   = _calcChanceLendario(pity);
+        // Chance de ao menos 1 lendário em 10 pulls
+        const chance10   = 1 - Math.pow(1 - chanceUm, 10);
+
+        let custoX1  = CFG.CUSTO_X1_PADRAO;
+        let custoX10 = CFG.CUSTO_X10_PADRAO;
+        try {
+            const b  = GachaPool.banner(bannerId);
+            custoX1  = b?.custoX1  ?? CFG.CUSTO_X1_PADRAO;
+            custoX10 = b?.custoX10 ?? CFG.CUSTO_X10_PADRAO;
+        } catch { /* não crítico */ }
+
+        return {
+            chanceLend      : parseFloat((chanceUm  * 100).toFixed(2)),
+            chanceLend10    : parseFloat((chance10  * 100).toFixed(2)),
+            pityAtual       : pity,
+            pityEpico       : estado.pityEpico,
+            pullsParaHard   : Math.max(0, CFG.LEND_HARD_PITY - pity),
+            pullsParaSoft   : Math.max(0, CFG.LEND_SOFT_PITY - pity),
+            pullsParaEpico  : Math.max(0, CFG.EPICO_PITY - estado.pityEpico),
+            custoX1,
+            custoX10,
+            garantiaRateUp  : estado.garantiaRateUp,
+            saldoGema       : (() => { try { return Economy.saldo("gema"); } catch { return 0; } })(),
+            podeX1          : (() => { try { return Economy.podeGastar("gema", custoX1); } catch { return false; } })(),
+            podeX10         : (() => { try { return Economy.podeGastar("gema", custoX10); } catch { return false; } })(),
+        };
+    }
+
+    // ════════════════════════════════════════
+    // LEITURA DE PITY
+    // ════════════════════════════════════════
+
+    /**
+     * Retorna o estado de pity de um banner.
+     * @param {string} [bannerId="padrao"]
+     * @returns {{ lendario, epico, garantiaRateUp }}
+     */
+    function pityAtual(bannerId = "padrao") {
+        const e = _getBannerEstado(bannerId);
+        return {
+            lendario      : e.pityLend,
+            epico         : e.pityEpico,
+            garantiaRateUp: e.garantiaRateUp,
+            pullsParaHard : Math.max(0, CFG.LEND_HARD_PITY - e.pityLend),
+            pullsParaSoft : Math.max(0, CFG.LEND_SOFT_PITY - e.pityLend),
+            esSoftPity    : e.pityLend >= CFG.LEND_SOFT_PITY
+        };
+    }
+
+    // ════════════════════════════════════════
+    // INFO COMPLETA DO BANNER PARA UI
+    // ════════════════════════════════════════
+
+    /**
+     * Retorna objeto completo do banner para a UI renderizar.
+     * @param {string} [bannerId="padrao"]
+     */
+    function infoAtual(bannerId = "padrao") {
+        const simulacao = simularPull(bannerId);
+        const pity      = pityAtual(bannerId);
+
+        let bannerDef = null;
+        try { bannerDef = GachaPool.banner(bannerId); } catch { /* não crítico */ }
+
+        return {
+            banner   : bannerDef,
+            bannerId,
+            pity,
+            simulacao,
+            historicoBanner: historico(20).filter(h => h.bannerId === bannerId),
+            texto: {
+                pity : `🎯 Pity: ${pity.lendario}/${CFG.LEND_HARD_PITY}` +
+                       ` · Lendário em ${pity.pullsParaHard} pull${pity.pullsParaHard !== 1 ? "s" : ""}` +
+                       (pity.esSoftPity ? " ⚡ SOFT PITY!" : ""),
+                epico: `🔮 Épico garantido em ${pity.pullsParaEpico ?? 0} pull${pity.pullsParaEpico !== 1 ? "s" : ""}`,
+                garantia: pity.garantiaRateUp
+                    ? "⭐ Próximo lendário é RATE-UP GARANTIDO!"
+                    : ""
+            }
+        };
+    }
+
+    // ════════════════════════════════════════
+    // HISTÓRICO
+    // ════════════════════════════════════════
+
+    /**
+     * @param {number} [ultimos]
+     * @returns {RegistroPull[]}
+     */
+    function historico(ultimos) {
+        const h = [..._historico];
+        return ultimos ? h.slice(-ultimos) : h;
+    }
+
+    /**
+     * Retorna apenas os lendários do histórico.
+     */
+    function historicoLendarios() {
+        return _historico.filter(r => r.raridade === "Lendário");
     }
 
     // ════════════════════════════════════════
@@ -619,25 +690,82 @@ const Battle = (() => {
     // ════════════════════════════════════════
 
     /**
-     * Retorna estatísticas da sessão atual de batalha.
+     * Retorna estatísticas globais do gacha.
      */
     function stats() {
-        const tempoMs = _stats.tempoInicioMs > 0
-            ? Date.now() - _stats.tempoInicioMs
-            : 0;
+        const total = _stats.totalPulls;
+        return {
+            totalPulls      : total,
+            totalLendarios  : _stats.totalLendarios,
+            totalEpicos     : _stats.totalEpicos,
+            totalRaros      : _stats.totalRaros,
+            totalComuns     : _stats.totalComuns,
+            gemasGastas     : _stats.gemasGastas,
+            taxaLend        : total > 0 ? (_stats.totalLendarios / total * 100).toFixed(2) + "%" : "0%",
+            taxaEpico       : total > 0 ? (_stats.totalEpicos    / total * 100).toFixed(2) + "%" : "0%",
+            porBanner       : { ..._stats.porBanner },
+            mediaGemasLend  : _stats.totalLendarios > 0
+                ? Math.floor(_stats.gemasGastas / _stats.totalLendarios)
+                : 0
+        };
+    }
 
-        const killsPorMin = tempoMs > 0
-            ? (_stats.totalKillsSessao / (tempoMs / 60000)).toFixed(1)
-            : "0";
+    // ════════════════════════════════════════
+    // SAVE / LOAD
+    // ════════════════════════════════════════
+
+    /**
+     * Retorna snapshot para o SaveSystem.
+     */
+    function snapshot() {
+        const estadosBanners = {};
+        _estadoBanners.forEach((estado, bannerId) => {
+            estadosBanners[bannerId] = { ...estado };
+        });
 
         return {
-            ..._stats,
-            tempoSessaoMs   : tempoMs,
-            tempoSessaoMin  : (tempoMs / 60000).toFixed(1),
-            killsPorMinuto  : killsPorMin,
-            estagioAtual    : _estagio,
-            estadoMaquina   : _estadoAtual
+            estadosBanners,
+            pullsGlobais   : _pullsGlobais,
+            historico      : _historico.slice(-100), // salva últimos 100
+            stats          : { ..._stats }
         };
+    }
+
+    /**
+     * Restaura do save.
+     */
+    function carregar(dados) {
+        if (typeof dados !== "object" || dados === null) {
+            _log.warn("carregar(): dados inválidos.");
+            return;
+        }
+
+        // Restaura estados de banner
+        if (dados.estadosBanners) {
+            for (const [id, estado] of Object.entries(dados.estadosBanners)) {
+                _estadoBanners.set(id, {
+                    pityLend       : estado.pityLend       ?? 0,
+                    pityEpico      : estado.pityEpico      ?? 0,
+                    garantiaRateUp : estado.garantiaRateUp ?? false
+                });
+            }
+        }
+
+        // Fallback: pity salvo no formato antigo
+        if (dados.pityLend !== undefined && !dados.estadosBanners) {
+            _getBannerEstado("padrao").pityLend = dados.pityLend ?? 0;
+        }
+
+        if (dados.pullsGlobais) _pullsGlobais = dados.pullsGlobais;
+
+        if (Array.isArray(dados.historico)) {
+            dados.historico.forEach(r => _historico.push(r));
+        }
+
+        _log.debug(
+            `carregar(): ${_estadoBanners.size} banner(s) restaurados.` +
+            ` Pity padrão: ${_getBannerEstado("padrao").pityLend}`
+        );
     }
 
     // ════════════════════════════════════════
@@ -646,115 +774,62 @@ const Battle = (() => {
     function logStatus() {
         try { if (!Logger.isDev) return; } catch { return; }
 
-        Logger.grupo("Battle — Status", () => {
+        Logger.grupo("GachaSystem — Status", () => {
             const s = stats();
-            _log.debug(`Estado         : ${_estadoAtual}`);
-            _log.debug(`Estágio        : ${_estagio}`);
-            _log.debug(`Chefe          : ${Enemy.ehChefe(_estagio)}`);
-            _log.debug(`Pode prestigiar: ${podePrestígiar()}`);
-            _log.debug(`Kills sessão   : ${s.totalKillsSessao}`);
-            _log.debug(`Estágios sess. : ${s.totalEstagiosSessao}`);
-            _log.debug(`Moedas sess.   : ${_fmt(s.moedasGanhasSessao)}`);
-            _log.debug(`Tempo          : ${s.tempoSessaoMin}min`);
-            _log.debug(`Kills/min      : ${s.killsPorMinuto}`);
+            _log.debug(`Total pulls    : ${s.totalPulls}`);
+            _log.debug(`Lendários      : ${s.totalLendarios} (${s.taxaLend})`);
+            _log.debug(`Épicos         : ${s.totalEpicos} (${s.taxaEpico})`);
+            _log.debug(`Gemas gastas   : ${s.gemasGastas}💎`);
+            _log.debug(`Gemas/Lendário : ${s.mediaGemasLend}💎`);
+            _estadoBanners.forEach((e, id) => {
+                _log.debug(`Banner "${id}": pity ${e.pityLend}/${CFG.LEND_HARD_PITY} | épico ${e.pityEpico}/${CFG.EPICO_PITY}`);
+            });
         }, true);
     }
 
     // ════════════════════════════════════════
-    // UTILITÁRIOS INTERNOS
-    // ════════════════════════════════════════
-    function _fmt(n) {
-        try   { return Utils.formatarNum(n); }
-        catch {
-            if (n >= 1e9) return (n / 1e9).toFixed(1)  + "B";
-            if (n >= 1e6) return (n / 1e6).toFixed(1)  + "M";
-            if (n >= 1e3) return (n / 1e3).toFixed(1)  + "K";
-            return String(Math.floor(n ?? 0));
-        }
-    }
-
-    // ════════════════════════════════════════
-    // REAGIR A EVENTOS DO JOGO
+    // REAGIR A EVENTOS
     // ════════════════════════════════════════
     try {
-        // Kill registrado pelo Enemy.js
-        EventBus.on("kill:registrado", _onKill);
-
-        // Pausa ao abrir modal
-        EventBus.on("modal:aberto", () => {
-            if (emBatalha()) pausar();
-        });
-
-        EventBus.on("modal:fechado", () => {
-            if (pausado()) retomar();
-        });
-
-        // Prestígio externo (Prestige.js reseta e emite)
-        EventBus.on("prestigio:feito", () => {
-            _estagio      = CFG.ESTAGIO_MIN;
-            _killsEstagio = 0;
-            try { GameState.set("estagio", _estagio); } catch { /* não crítico */ }
-
-            // Só reinicia o inimigo se estiver em batalha
-            if (emBatalha() || pausado()) {
-                try { Enemy.configurar(_estagio); } catch { /* não crítico */ }
-            }
-        });
-
-        // Salvar ao fechar aba
-        EventBus.on("app:visibilidade_oculta", () => {
-            if (_estadoAtual !== ESTADO.LOBBY) {
-                try { SaveSystem.salvar(); } catch { /* não crítico */ }
-            }
-        });
-
-        // Reset total
         EventBus.on("state:reset:total", () => {
-            _pararTimers();
-            _estagio      = CFG.ESTAGIO_MIN;
-            _killsEstagio = 0;
-            _estadoAtual  = ESTADO.LOBBY;
+            _estadoBanners.clear();
+            _historico.length = 0;
+            _pullsGlobais     = 0;
+            _stats.totalPulls = 0;
+            _stats.totalLendarios = 0;
+            _stats.totalEpicos    = 0;
+            _stats.gemasGastas    = 0;
+            _log.info("GachaSystem resetado.");
         });
-
-    } catch (e) {
-        _log.warn("Falha ao registrar listeners:", e);
-    }
+    } catch { /* não crítico */ }
 
     // ════════════════════════════════════════
     // EXPORTAÇÃO
     // ════════════════════════════════════════
     return Object.freeze({
-        // Ciclo de vida
-        iniciar,
-        sair,
-        pausar,
-        retomar,
-
-        // Navegação
-        irEstagio,
-        irEstagioAnterior,
-        irProximoEstagio,
-        irParaChefe,
-        irParaElite,
-
-        // Prestígio
-        prestigiar,
-        podePrestígiar,
+        // API principal
+        invocar,
+        custoTotal,
 
         // Leitura
-        estado,
-        estagio,
-        emBatalha,
-        pausado,
+        pityAtual,
         infoAtual,
+        simularPull,
+
+        // Histórico
+        historico,
+        historicoLendarios,
+
+        // Save/Load
+        snapshot,
+        carregar,
 
         // Diagnóstico
         stats,
         logStatus,
 
         // Constantes (readonly)
-        get ESTADO() { return ESTADO; },
-        get CFG()    { return CFG;    }
+        get CFG() { return CFG; }
     });
 
 })();
