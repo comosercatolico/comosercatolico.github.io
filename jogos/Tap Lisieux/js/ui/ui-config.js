@@ -1100,3 +1100,4 @@ const UIConfig = (() => {
     });
 
 })();
+window.UIConfig = UIConfig;
