@@ -463,3 +463,4 @@ const Utils = (() => {
     });
 
 })();
+window.Utils = Utils; // ← adiciona ess
