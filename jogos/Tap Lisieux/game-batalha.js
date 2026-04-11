@@ -91,50 +91,31 @@ const assets = {
     santa:   new Array(8).fill(null)
 };
 
-// Estado de carregamento dos assets
-const assetsStatus = {
-    cenarioOk: false,
-    chaoOk:    false,
-    chaoErro:  false
-};
-
 function carregarAssets() {
-    // ── Cenário de fundo ──
     const imgCenario       = new Image();
     imgCenario.crossOrigin = "anonymous";
-    imgCenario.onload = () => {
-        assets.cenario        = imgCenario;
-        assetsStatus.cenarioOk = true;
-        console.log("✅ Cenário carregado:",
-            imgCenario.naturalWidth, "x", imgCenario.naturalHeight);
+    imgCenario.onload      = () => {
+        assets.cenario = imgCenario;
+        console.log("✅ Cenário:", imgCenario.naturalWidth, "x", imgCenario.naturalHeight);
     };
-    imgCenario.onerror = () => {
-        console.warn("⚠️ Cenário não carregado — usando fallback.");
-    };
-    imgCenario.src = ASSET_BASE + "piso-de-batalha/cenario1.png";
+    imgCenario.onerror = () => console.warn("⚠️ Cenário não carregado.");
+    imgCenario.src     = ASSET_BASE + "piso-de-batalha/cenario1.png";
 
-    // ── Chão / plataforma ──
     const imgChao       = new Image();
     imgChao.crossOrigin = "anonymous";
-    imgChao.onload = () => {
-        assets.chao        = imgChao;
-        assetsStatus.chaoOk = true;
-        console.log("✅ Chão carregado:",
-            imgChao.naturalWidth, "x", imgChao.naturalHeight);
+    imgChao.onload      = () => {
+        assets.chao = imgChao;
+        console.log("✅ Chão:", imgChao.naturalWidth, "x", imgChao.naturalHeight);
     };
-    imgChao.onerror = () => {
-        assetsStatus.chaoErro = true;
-        console.warn("⚠️ Chão não carregado — usando fallback.");
-    };
-    imgChao.src = ASSET_BASE + "piso-de-batalha/piso1.png";
+    imgChao.onerror = () => console.warn("⚠️ Chão não carregado.");
+    imgChao.src     = ASSET_BASE + "piso-de-batalha/piso1.png";
 
-    // ── Sprites da santa (8 frames de animação) ──
     for (let i = 1; i <= 8; i++) {
         const img       = new Image();
         img.crossOrigin = "anonymous";
         const idx       = i - 1;
         img.onload  = () => { assets.santa[idx] = img; };
-        img.onerror = () => { console.warn(`⚠️ Santa frame ${i} não carregado.`); };
+        img.onerror = () => console.warn(`⚠️ Santa frame ${i} não carregado.`);
         img.src     = ASSET_BASE + "animation_summon/str-conjurando" + i + ".png";
     }
 }
@@ -175,7 +156,7 @@ function nomeStageName(e) {
 }
 
 // ════════════════════════════════════════
-//  FALAS DO MONSTRO
+//  FALAS
 // ════════════════════════════════════════
 let timerFala = null;
 let falaAtiva = false;
@@ -197,7 +178,7 @@ function exibirFala(nomeBase) {
 }
 
 // ════════════════════════════════════════
-//  CONFIGURAR INIMIGO
+//  INIMIGO
 // ════════════════════════════════════════
 function configurarInimigo(e) {
     const idx   = tipoMonstroIdx(e);
@@ -212,9 +193,6 @@ function configurarInimigo(e) {
     setTimeout(() => exibirFala(tipo.nome), 900);
 }
 
-// ════════════════════════════════════════
-//  SISTEMA DE DANO
-// ════════════════════════════════════════
 function darDano(valor, tipo) {
     if (!emBatalha || valor <= 0) return;
     inimigo.hp        -= valor;
@@ -244,9 +222,6 @@ function atualizarBotaoPrestigiar() {
     btnP.innerText = estagio >= 60 ? "🌟 Prestigiar!" : "Alcance o Est. 60";
 }
 
-// ════════════════════════════════════════
-//  EXP / LEVEL UP
-// ════════════════════════════════════════
 function ganharExp(qtd) {
     personagem.exp += qtd;
     while (personagem.exp >= personagem.expMax) {
@@ -260,9 +235,6 @@ function ganharExp(qtd) {
     });
 }
 
-// ════════════════════════════════════════
-//  PRESTÍGIO
-// ════════════════════════════════════════
 function prestigiar() {
     if (estagio < 60) return;
     estagio = 1;
@@ -321,7 +293,7 @@ function irParaChefe() {
 }
 
 // ════════════════════════════════════════
-//  FORMATAÇÃO DE NÚMEROS
+//  FORMATAÇÃO
 // ════════════════════════════════════════
 function formatarNum(n) {
     if (n >= 1_000_000_000) return (n / 1_000_000_000).toFixed(1) + "B";
@@ -332,24 +304,12 @@ function formatarNum(n) {
 
 // ════════════════════════════════════════
 //  HELPERS DE POSIÇÃO — estilo Tap Titans
-//
-//  ┌──────────────────────────────┐
-//  │          [HP BAR]            │
-//  │                              │
-//  │             😈               │ ← Monstro GRANDE no centro (Y 38%)
-//  │                              │
-//  │         🧎‍♀️                  │ ← Santa pequena (Y = chão)
-//  │  ════════════════════════    │ ← Chão piso1.png (Y 78%)
-//  └──────────────────────────────┘
 // ════════════════════════════════════════
 function getChaoY()    { return canvas.height * 0.78; }
-function getSantaX()   { return canvas.width  * 0.46; } // levemente à esq. do centro
-function getMonstroX() { return canvas.width  * 0.50; } // centro exato
-function getMonstroY() { return canvas.height * 0.38; } // terço superior
+function getSantaX()   { return canvas.width  * 0.46; }
+function getMonstroX() { return canvas.width  * 0.50; }
+function getMonstroY() { return canvas.height * 0.38; }
 
-// ════════════════════════════════════════
-//  HELPER — verifica se imagem está pronta
-// ════════════════════════════════════════
 function imagemPronta(img) {
     return img && img.complete && img.naturalWidth > 0;
 }
@@ -357,74 +317,103 @@ function imagemPronta(img) {
 // ════════════════════════════════════════
 //  DESENHAR FUNDO
 //
-//  ORDEM CORRETA:
-//  1. Cenário (fundo)
-//  2. Chão / piso1.png (frente do cenário)
-//  3. Sombra de transição
-//
-//  O piso1.png tem fundo PRETO (não transparente).
-//  Usamos globalCompositeOperation = "screen" para
-//  o fundo preto desaparecer e só a plataforma aparecer.
+//  SOLUÇÃO DO CHÃO:
+//  O piso1.png é 1024x1024 com fundo PRETO.
+//  Em vez de blend modes, usamos um canvas
+//  auxiliar offline para recortar apenas a
+//  plataforma (removendo o preto) antes de
+//  desenhar no canvas principal.
 // ════════════════════════════════════════
+
+// Canvas auxiliar — criado uma vez, reutilizado
+let _chaoCanvas  = null;
+let _chaoCtx     = null;
+let _chaoProcessado = false;
+
+function processarChao() {
+    // Só processa uma vez
+    if (_chaoProcessado) return;
+    if (!imagemPronta(assets.chao)) return;
+
+    const img = assets.chao;
+    _chaoCanvas        = document.createElement("canvas");
+    _chaoCanvas.width  = img.naturalWidth;
+    _chaoCanvas.height = img.naturalHeight;
+    _chaoCtx           = _chaoCanvas.getContext("2d");
+
+    // Desenha a imagem original
+    _chaoCtx.drawImage(img, 0, 0);
+
+    // Pega pixels e torna o preto transparente
+    const imageData = _chaoCtx.getImageData(0, 0, _chaoCanvas.width, _chaoCanvas.height);
+    const data      = imageData.data;
+
+    for (let i = 0; i < data.length; i += 4) {
+        const r = data[i];
+        const g = data[i + 1];
+        const b = data[i + 2];
+        // Se o pixel for muito escuro (fundo preto) → torna transparente
+        const brilho = (r + g + b) / 3;
+        if (brilho < 30) {
+            data[i + 3] = 0; // alpha = 0 (transparente)
+        } else if (brilho < 60) {
+            // Borda suave — semi-transparente
+            data[i + 3] = Math.floor(((brilho - 30) / 30) * 255);
+        }
+    }
+
+    _chaoCtx.putImageData(imageData, 0, 0);
+    _chaoProcessado = true;
+    console.log("✅ Chão processado — fundo preto removido.");
+}
+
 function desenharFundoBatalha() {
     const W  = canvas.width;
     const H  = canvas.height;
     const cy = getChaoY();
 
-    // ── 1. CENÁRIO (sempre primeiro — fica atrás de tudo) ──
+    // ── 1. CENÁRIO (fundo — source-over padrão) ──
     if (imagemPronta(assets.cenario)) {
         const img = assets.cenario;
         const esc = Math.max(W / img.naturalWidth, H / img.naturalHeight);
         const dw  = img.naturalWidth  * esc;
         const dh  = img.naturalHeight * esc;
-        ctx.save();
-        ctx.globalAlpha             = 1.0;
-        ctx.globalCompositeOperation = "source-over";
         ctx.drawImage(img, (W - dw) / 2, (H - dh) / 2, dw, dh);
-        ctx.restore();
     } else {
-        // Fallback: gradiente noturno + estrelas + lua + montanhas
         desenharFundoFallback(W, H, cy);
     }
 
-    // ── 2. CHÃO / piso1.png (na frente do cenário) ──
-    //
-    // piso1.png tem fundo PRETO → usamos "screen" blend mode:
-    // pixels pretos (0,0,0) somem, pixels claros da plataforma aparecem.
-    // Isso faz o chão aparecer naturalmente sobre o cenário.
+    // ── 2. CHÃO (piso1.png — na frente do cenário) ──
     if (imagemPronta(assets.chao)) {
-        const img   = assets.chao;
-        const pisoW = W;
-        const pisoH = img.naturalHeight * (W / img.naturalWidth);
+        // Processa o chão na primeira vez (remove fundo preto)
+        processarChao();
 
-        // A superfície da plataforma fica nos primeiros ~28% da altura da imagem.
-        // Calculamos pisoY para que essa superfície alinhe com getChaoY().
-        const pisoY = cy - pisoH * 0.28;
+        const srcCanvas = _chaoProcessado ? _chaoCanvas : assets.chao;
+        const pisoW     = W;
+        const pisoH     = assets.chao.naturalHeight * (W / assets.chao.naturalWidth);
 
-        ctx.save();
-        ctx.globalAlpha              = 1.0;
-        ctx.globalCompositeOperation = "screen"; // ← fundo preto some, plataforma aparece
-        ctx.drawImage(img, 0, pisoY, pisoW, pisoH);
-        ctx.restore();
+        // A superfície da plataforma está nos primeiros 30% da altura
+        // Ajustamos Y para alinhar a superfície com getChaoY()
+        const pisoY = cy - pisoH * 0.30;
+
+        ctx.drawImage(srcCanvas, 0, pisoY, pisoW, pisoH);
 
     } else {
-        // Fallback: gradiente roxo + linha de glow
         desenharChaoFallback(W, H, cy);
     }
 
-    // ── 3. Sombra suave na borda superior do chão ──
-    const gs = ctx.createLinearGradient(0, cy - 30, 0, cy + 20);
+    // ── 3. Sombra de transição suave ──
+    const gs = ctx.createLinearGradient(0, cy - 20, 0, cy + 30);
     gs.addColorStop(0, "rgba(0,0,0,0)");
-    gs.addColorStop(1, "rgba(0,0,0,0.30)");
+    gs.addColorStop(1, "rgba(0,0,0,0.28)");
     ctx.fillStyle = gs;
-    ctx.fillRect(0, cy - 30, W, 50);
+    ctx.fillRect(0, cy - 20, W, 50);
 }
 
 // ════════════════════════════════════════
-//  FALLBACK — Fundo noturno
+//  FALLBACKS
 // ════════════════════════════════════════
 function desenharFundoFallback(W, H, cy) {
-    // Gradiente noturno
     const g = ctx.createLinearGradient(0, 0, 0, cy);
     g.addColorStop(0,    "#050210");
     g.addColorStop(0.45, "#0e0930");
@@ -432,7 +421,6 @@ function desenharFundoFallback(W, H, cy) {
     ctx.fillStyle = g;
     ctx.fillRect(0, 0, W, H);
 
-    // Estrelas com efeito twinkle
     const t = Date.now();
     for (let i = 0; i < 90; i++) {
         const sx = (i * 191 + 7)  % W;
@@ -445,7 +433,6 @@ function desenharFundoFallback(W, H, cy) {
     }
     ctx.globalAlpha = 1;
 
-    // Lua com halo
     const luaX = W * 0.78, luaY = H * 0.15;
     const gl   = ctx.createRadialGradient(luaX, luaY, 0, luaX, luaY, 58);
     gl.addColorStop(0,   "rgba(255,245,190,1)");
@@ -456,7 +443,6 @@ function desenharFundoFallback(W, H, cy) {
     ctx.arc(luaX, luaY, 58, 0, Math.PI * 2);
     ctx.fill();
 
-    // Silhueta de montanhas
     const pontos = [
         [0,0],[0.10,0.22],[0.22,0.09],[0.36,0.28],[0.50,0.07],
         [0.63,0.25],[0.76,0.11],[0.89,0.23],[1,0]
@@ -470,9 +456,6 @@ function desenharFundoFallback(W, H, cy) {
     ctx.fill();
 }
 
-// ════════════════════════════════════════
-//  FALLBACK — Chão roxo
-// ════════════════════════════════════════
 function desenharChaoFallback(W, H, cy) {
     const g = ctx.createLinearGradient(0, cy, 0, H);
     g.addColorStop(0,   "#2a1060");
@@ -497,11 +480,11 @@ function desenharChaoFallback(W, H, cy) {
 // ════════════════════════════════════════
 //  PERSONAGEM — Santa Teresinha
 //
-//  • Pequena (20% da altura) — escala TT2
-//  • Base dos pés exatamente em getChaoY()
-//  • Virada para a DIREITA (flip horizontal)
-//    pois o sprite original olha para esquerda
-//  • Leve avanço ao atacar
+//  • Pequena (20% altura) — escala TT2
+//  • Pés em getChaoY()
+//  • Virada para DIREITA (flip horizontal)
+//    sprite original olha para esquerda →
+//    scale(-1,1) corrige isso
 // ════════════════════════════════════════
 const pb = {
     atacando:  0,
@@ -520,10 +503,9 @@ function atualizarPB() {
 
 function desenharPB() {
     const px   = getSantaX();
-    const py   = getChaoY();          // pés da santa no chão
-    const ALTO = canvas.height * 0.20; // santa pequena, escala TT2
+    const py   = getChaoY();
+    const ALTO = canvas.height * 0.20;
 
-    // Avanço suave ao atacar
     const offX = pb.atacando > 0
         ? Math.sin((pb.atacando / pb.durAtaque) * Math.PI) * 14
         : 0;
@@ -533,21 +515,22 @@ function desenharPB() {
     if (imagemPronta(img)) {
         const lar = ALTO * (img.naturalWidth / img.naturalHeight);
 
-        // Sombra elíptica no chão
+        // Sombra no chão
         ctx.save();
-        ctx.globalCompositeOperation = "source-over";
         ctx.fillStyle = "rgba(0,0,0,0.30)";
         ctx.beginPath();
         ctx.ellipse(px + offX, py + 5, lar * 0.40, 7, 0, 0, Math.PI * 2);
         ctx.fill();
         ctx.restore();
 
-        // Sprite com flip horizontal
-        // translate para (px+offX, py) → ponto base = pés da santa
-        // scale(-1,1) → espelha para olhar à direita
-        // drawImage de -ALTO até 0 em Y → sprite cresce para cima
+        // ── FLIP HORIZONTAL ──
+        // O sprite olha para a ESQUERDA.
+        // Espelhamos com scale(-1,1) para olhar para a DIREITA
+        // (onde está o monstro no centro da tela).
+        //
+        // Referência: translate para (px+offX, py) = ponto dos pés
+        // Depois desenha de Y=-ALTO até Y=0 (crescendo para cima)
         ctx.save();
-        ctx.globalCompositeOperation = "source-over";
         ctx.translate(px + offX, py);
         ctx.scale(-1, 1);
         ctx.drawImage(img, -lar / 2, -ALTO, lar, ALTO);
@@ -558,32 +541,23 @@ function desenharPB() {
     }
 }
 
-// ════════════════════════════════════════
-//  FALLBACK — Santa desenhada com canvas
-// ════════════════════════════════════════
 function desenharSantaFallback(px, py, ALTO, offX) {
     const r = ALTO * 0.13;
     ctx.save();
     ctx.shadowBlur  = 18;
     ctx.shadowColor = "rgba(200,150,255,0.8)";
 
-    // Cabeça
     ctx.fillStyle = "#e8c5ff";
     ctx.beginPath();
     ctx.arc(px + offX, py - ALTO * 0.82, r, 0, Math.PI * 2);
     ctx.fill();
 
-    // Auréola
     ctx.strokeStyle = "#ffd700";
     ctx.lineWidth   = 2.5;
     ctx.beginPath();
-    ctx.ellipse(
-        px + offX, py - ALTO * 0.82 - r * 1.05,
-        r * 1.15, r * 0.32, 0, 0, Math.PI * 2
-    );
+    ctx.ellipse(px + offX, py - ALTO * 0.82 - r * 1.05, r * 1.15, r * 0.32, 0, 0, Math.PI * 2);
     ctx.stroke();
 
-    // Manto
     ctx.fillStyle = "#6d28d9";
     ctx.beginPath();
     ctx.moveTo(px + offX - r * 0.5,  py - ALTO * 0.66);
@@ -593,7 +567,6 @@ function desenharSantaFallback(px, py, ALTO, offX) {
     ctx.closePath();
     ctx.fill();
 
-    // Braço apontando para a direita (monstro)
     ctx.strokeStyle = "#c4b5fd";
     ctx.lineWidth   = 3;
     ctx.beginPath();
@@ -601,12 +574,10 @@ function desenharSantaFallback(px, py, ALTO, offX) {
     ctx.lineTo(px + offX + r * 1.40, py - ALTO * 0.74);
     ctx.stroke();
 
-    // Rosa na mão
     ctx.font         = `${r * 1.4}px serif`;
     ctx.textAlign    = "center";
     ctx.textBaseline = "middle";
     ctx.fillText("🌹", px + offX + r * 1.65, py - ALTO * 0.78);
-
     ctx.restore();
 }
 
@@ -623,44 +594,31 @@ function emojiMonstroAtual() {
 }
 
 function desenharMonstro() {
-    // Decrementa contadores em único lugar
     if (hitState.flash    > 0) hitState.flash--;
     if (hitState.tremendo > 0) hitState.tremendo--;
 
-    // Tremor de impacto
     const ox  = hitState.tremendo > 0 ? (Math.random() - 0.5) * 16 : 0;
     const oy  = hitState.tremendo > 0 ? (Math.random() - 0.5) * 9  : 0;
     const pct = Math.max(0.05, inimigo.maxHp > 0 ? inimigo.hp / inimigo.maxHp : 1);
-
-    // Grande — domina a tela como no TT2
     const tam = canvas.height * (0.36 + pct * 0.06);
     const mx  = getMonstroX() + ox;
     const my  = getMonstroY() + oy;
 
     ctx.save();
-    ctx.globalCompositeOperation = "source-over";
-
-    // Flash vermelho ao receber dano
     if (hitState.flash > 0) {
         ctx.filter      = "sepia(1) saturate(20) hue-rotate(300deg)";
         ctx.globalAlpha = 0.90;
     }
-
-    // Glow pulsante
     ctx.shadowBlur  = 40 + Math.sin(Date.now() * 0.004) * 15;
-    ctx.shadowColor = pct < 0.25
-        ? "rgba(255,220,0,0.95)"
-        : "rgba(255,50,50,0.80)";
-
+    ctx.shadowColor = pct < 0.25 ? "rgba(255,220,0,0.95)" : "rgba(255,50,50,0.80)";
     ctx.font         = `${tam}px serif`;
     ctx.textAlign    = "center";
     ctx.textBaseline = "middle";
     ctx.fillText(emojiMonstroAtual(), mx, my);
     ctx.restore();
 
-    // Sombra no chão (posição fixa — sem tremor)
+    // Sombra no chão
     ctx.save();
-    ctx.globalCompositeOperation = "source-over";
     ctx.fillStyle = "rgba(0,0,0,0.20)";
     ctx.beginPath();
     ctx.ellipse(getMonstroX(), getChaoY() + 6, tam * 0.28, 11, 0, 0, Math.PI * 2);
@@ -669,7 +627,7 @@ function desenharMonstro() {
 }
 
 // ════════════════════════════════════════
-//  ROSAS DO CÉU — flutuam, nunca caem
+//  ROSAS DO CÉU
 // ════════════════════════════════════════
 let flores       = [];
 let floresAtaque = [];
@@ -707,15 +665,13 @@ function desenharFloresCeu() {
     ctx.textBaseline = "middle";
     flores.forEach(f => {
         ctx.save();
-        ctx.globalAlpha              = f.alpha;
-        ctx.globalCompositeOperation = "source-over";
-        ctx.font                     = `${f.size}px serif`;
+        ctx.globalAlpha = f.alpha;
+        ctx.font        = `${f.size}px serif`;
         ctx.fillText("🌹", f.x, f.y);
         ctx.restore();
     });
 }
 
-// Dispara a rosa mais próxima do monstro
 function dispararFlor() {
     if (flores.length === 0) return;
 
@@ -737,9 +693,7 @@ function dispararFlor() {
         vx: Math.cos(ag) * sp,
         vy: Math.sin(ag) * sp,
         tx, ty,
-        size:    fo.size,
-        vida:    Math.ceil(d / sp) + 8,
-        acertou: false
+        size: fo.size, vida: Math.ceil(d / sp) + 8, acertou: false
     });
 
     flores[idx] = criarFlorCeu(true);
@@ -747,12 +701,9 @@ function dispararFlor() {
 
 function atualizarFloresAtaque() {
     floresAtaque.forEach(f => {
-        f.x += f.vx;
-        f.y += f.vy;
-        f.vida--;
+        f.x += f.vx; f.y += f.vy; f.vida--;
         if (!f.acertou && Math.hypot(f.x - f.tx, f.y - f.ty) < 28) {
-            f.acertou = true;
-            f.vida    = 0;
+            f.acertou = true; f.vida = 0;
             for (let p = 0; p < 8; p++) criarParticula(f.x, f.y);
         }
     });
@@ -764,16 +715,15 @@ function desenharFloresAtaque() {
     ctx.textBaseline = "middle";
     floresAtaque.forEach(f => {
         ctx.save();
-        ctx.globalAlpha              = Math.min(1, f.vida / 10);
-        ctx.globalCompositeOperation = "source-over";
-        ctx.font                     = `${f.size}px serif`;
+        ctx.globalAlpha = Math.min(1, f.vida / 10);
+        ctx.font        = `${f.size}px serif`;
         ctx.fillText("🌹", f.x, f.y);
         ctx.restore();
     });
 }
 
 // ════════════════════════════════════════
-//  PARTÍCULAS DE IMPACTO
+//  PARTÍCULAS
 // ════════════════════════════════════════
 let particulas = [];
 
@@ -782,8 +732,7 @@ function criarParticula(x, y) {
     const spd = 1.5 + Math.random() * 3.5;
     particulas.push({
         x, y,
-        vx:   Math.cos(ang) * spd,
-        vy:   Math.sin(ang) * spd,
+        vx: Math.cos(ang) * spd, vy: Math.sin(ang) * spd,
         vida: 22 + Math.random() * 14,
         size: 5  + Math.random() * 8,
         cor:  `hsl(${325 + Math.random() * 50},90%,65%)`
@@ -791,21 +740,15 @@ function criarParticula(x, y) {
 }
 
 function atualizarParticulas() {
-    particulas.forEach(p => {
-        p.x  += p.vx;
-        p.y  += p.vy;
-        p.vy += 0.13; // gravidade suave
-        p.vida--;
-    });
+    particulas.forEach(p => { p.x += p.vx; p.y += p.vy; p.vy += 0.13; p.vida--; });
     particulas = particulas.filter(p => p.vida > 0);
 }
 
 function desenharParticulas() {
     particulas.forEach(p => {
         ctx.save();
-        ctx.globalAlpha              = Math.min(1, p.vida / 12);
-        ctx.globalCompositeOperation = "source-over";
-        ctx.fillStyle                = p.cor;
+        ctx.globalAlpha = Math.min(1, p.vida / 12);
+        ctx.fillStyle   = p.cor;
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.size * 0.5, 0, Math.PI * 2);
         ctx.fill();
@@ -830,12 +773,7 @@ function criarMoedaCaindo() {
 }
 
 function atualizarMoedas() {
-    moedasAnim.forEach(m => {
-        m.x  += m.vx;
-        m.y  += m.vy;
-        m.vy += 0.22;
-        m.vida--;
-    });
+    moedasAnim.forEach(m => { m.x += m.vx; m.y += m.vy; m.vy += 0.22; m.vida--; });
     moedasAnim = moedasAnim.filter(m => m.vida > 0);
 }
 
@@ -844,23 +782,22 @@ function desenharMoedas() {
     ctx.textBaseline = "middle";
     moedasAnim.forEach(m => {
         ctx.save();
-        ctx.globalAlpha              = Math.min(1, m.vida / 18);
-        ctx.globalCompositeOperation = "source-over";
-        ctx.font                     = `${m.size}px serif`;
+        ctx.globalAlpha = Math.min(1, m.vida / 18);
+        ctx.font        = `${m.size}px serif`;
         ctx.fillText("🪙", m.x, m.y);
         ctx.restore();
     });
 }
 
 // ════════════════════════════════════════
-//  TEXTOS FLUTUANTES DE DANO
+//  TEXTOS FLUTUANTES
 // ════════════════════════════════════════
 let textos = [];
 
 function criarTexto(valor, tipo) {
     textos.push({
-        x:    getMonstroX() + (Math.random() - 0.5) * 90,
-        y:    getMonstroY() - 70,
+        x: getMonstroX() + (Math.random() - 0.5) * 90,
+        y: getMonstroY() - 70,
         valor, tipo, vida: 75
     });
 }
@@ -868,8 +805,7 @@ function criarTexto(valor, tipo) {
 function desenharTextos() {
     textos.forEach(t => {
         ctx.save();
-        ctx.globalAlpha              = Math.min(1, t.vida / 20);
-        ctx.globalCompositeOperation = "source-over";
+        ctx.globalAlpha = Math.min(1, t.vida / 20);
 
         let cor = "#ffffff", tam = 20;
         if      (t.tipo === "levelup") { cor = "#ffd700"; tam = 26; }
@@ -892,7 +828,7 @@ function desenharTextos() {
 }
 
 // ════════════════════════════════════════
-//  EVENTOS DE INPUT
+//  EVENTOS
 // ════════════════════════════════════════
 canvas.addEventListener("click", () => {
     if (!emBatalha) return;
@@ -910,15 +846,12 @@ canvas.addEventListener("touchstart", (e) => {
 }, { passive: false });
 
 // ════════════════════════════════════════
-//  TIMERS AUTOMÁTICOS
+//  TIMERS
 // ════════════════════════════════════════
-
-// DPS automático a cada segundo
 setInterval(() => {
     if (emBatalha) darDano(calcDps(), "dps");
 }, DPS_INTERVALO_MS);
 
-// Falas aleatórias do monstro
 setInterval(() => {
     if (!emBatalha || falaAtiva) return;
     if (Math.random() < FALA_CHANCE) {
@@ -927,41 +860,41 @@ setInterval(() => {
 }, FALA_INTERVALO_MS);
 
 // ════════════════════════════════════════
-//  LOOP PRINCIPAL DE DESENHO
+//  LOOP PRINCIPAL
 //
-//  Ordem de renderização (painter's algorithm):
-//  1. Cenário (fundo)          — desenharFundoBatalha()
-//  2. Chão / piso1.png         — dentro de desenharFundoBatalha()
-//  3. Sombra de transição      — dentro de desenharFundoBatalha()
-//  4. Rosas decorativas        — flutuam no céu
-//  5. Rosas projéteis          — voam para o monstro
-//  6. Partículas               — impacto nas rosas
-//  7. Moedas                   — caem ao matar inimigo
-//  8. Monstro                  — grande, no centro
-//  9. Santa                    — pequena, no chão, na frente
-// 10. Textos de dano           — flutuam acima do monstro
+//  Ordem de renderização:
+//  1  Cenário (fundo)
+//  2  Chão / piso1.png (fundo preto removido)
+//  3  Sombra de transição
+//  4  Rosas decorativas no céu
+//  5  Rosas projéteis voando
+//  6  Partículas de impacto
+//  7  Moedas caindo
+//  8  Monstro (grande, centro)
+//  9  Santa (pequena, chão, frente do monstro)
+//  10 Textos de dano flutuantes
 // ════════════════════════════════════════
 window.desenharBatalha = function () {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    desenharFundoBatalha();        // 1-3: cenário + chão + sombra
+    desenharFundoBatalha();        // 1-3
 
-    atualizarFloresCeu();          // 4: rosas do céu
+    atualizarFloresCeu();          // 4
     desenharFloresCeu();
 
-    atualizarFloresAtaque();       // 5: rosas projéteis
+    atualizarFloresAtaque();       // 5
     desenharFloresAtaque();
 
-    atualizarParticulas();         // 6: partículas de impacto
+    atualizarParticulas();         // 6
     desenharParticulas();
 
-    atualizarMoedas();             // 7: moedas caindo
+    atualizarMoedas();             // 7
     desenharMoedas();
 
-    desenharMonstro();             // 8: monstro (atrás da santa)
+    desenharMonstro();             // 8
 
-    atualizarPB();                 // 9: santa (na frente do monstro)
+    atualizarPB();                 // 9
     desenharPB();
 
-    desenharTextos();              // 10: textos flutuantes
+    desenharTextos();              // 10
 };
