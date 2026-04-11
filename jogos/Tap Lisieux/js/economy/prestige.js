@@ -726,3 +726,4 @@ const Prestige = (() => {
     });
 
 })();
+window.Prestige = Prestige;
