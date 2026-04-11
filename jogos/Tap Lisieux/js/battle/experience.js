@@ -651,3 +651,4 @@ const Experience = (() => {
     });
 
 })();
+window.Experience = Experience;
