@@ -57,7 +57,6 @@ const SaveSystem = (() => {
 
     // ════════════════════════════════════════════════════
     // CRC32 — checksum para detectar corrupção
-    // Implementação simples sem dependências
     // ════════════════════════════════════════════════════
     const _CRC_TABLE = (() => {
         const t = new Uint32Array(256);
@@ -88,7 +87,6 @@ const SaveSystem = (() => {
         } catch(e) {
             _log.warn("snapshot via GameState falhou — usando fallback:", e);
 
-            // Fallback: lê variáveis globais legadas se existirem
             return {
                 moeda               : window.moeda                ?? 0,
                 gema                : window.gema                 ?? 50,
@@ -144,7 +142,6 @@ const SaveSystem = (() => {
             localStorage.setItem(chave, valor);
             return true;
         } catch(e) {
-            // QuotaExceededError — tenta limpar slot antigo
             _log.warn("localStorage cheio — tentando emergência:", e);
             try {
                 sessionStorage.setItem(chave, valor);
@@ -166,13 +163,12 @@ const SaveSystem = (() => {
     }
 
     function _remover(chave) {
-        try { localStorage.removeItem(chave);  } catch(_) {}
+        try { localStorage.removeItem(chave);   } catch(_) {}
         try { sessionStorage.removeItem(chave); } catch(_) {}
     }
 
     // ════════════════════════════════════════════════════
     // SLOT DUPLO — rotação A/B
-    // Garante que sempre há um save válido disponível
     // ════════════════════════════════════════════════════
     function _slotProximo(slot) {
         return slot === "A" ? "B" : "A";
@@ -188,14 +184,13 @@ const SaveSystem = (() => {
     function _migrar(dados, versaoOrigem) {
         let d = { ...dados };
 
-        // v1 → v2: adiciona campos de personagem
+        // v1 → v2
         if (versaoOrigem < 2) {
-            d.nivelPersonagem  = d.personagem?.nivel ?? 1;
-            d.expPersonagem    = d.personagem?.exp   ?? 0;
+            d.nivelPersonagem  = d.personagem?.nivel  ?? 1;
+            d.expPersonagem    = d.personagem?.exp    ?? 0;
             d.expMaxPersonagem = d.personagem?.expMax ?? 100;
             delete d.personagem;
 
-            // upgrades eram objeto com 'nivel' dentro
             if (d.upgrades && typeof d.upgrades === "object") {
                 d.nivelForca      = d.upgrades.forca?.nivel      ?? 1;
                 d.nivelRosa       = d.upgrades.rosa?.nivel       ?? 1;
@@ -204,7 +199,6 @@ const SaveSystem = (() => {
                 delete d.upgrades;
             }
 
-            // conquistasDesbloqueadas era um Set serializado como array
             if (Array.isArray(d.conquistas)) {
                 d.conquistasIds = d.conquistas;
                 delete d.conquistas;
@@ -213,19 +207,18 @@ const SaveSystem = (() => {
             _log.info("Save migrado: v1 → v2");
         }
 
-        // v2 → v3: adiciona campos de config e stats
+        // v2 → v3
         if (versaoOrigem < 3) {
-            d.volumeMusica       = d.volumeMusica   ?? 0.7;
-            d.volumeSfx          = d.volumeSfx      ?? 0.8;
-            d.qualidade          = d.qualidade       ?? "alto";
-            d.totalPrestígios    = d.totalPrestígios ?? 0;
-            d.totalKills         = d.totalKills      ?? 0;
-            d.totalUpgrades      = d.totalUpgrades   ?? 0;
+            d.volumeMusica         = d.volumeMusica         ?? 0.7;
+            d.volumeSfx            = d.volumeSfx            ?? 0.8;
+            d.qualidade            = d.qualidade            ?? "alto";
+            d.totalPrestígios      = d.totalPrestígios      ?? 0;
+            d.totalKills           = d.totalKills           ?? 0;
+            d.totalUpgrades        = d.totalUpgrades        ?? 0;
             d.titulosDesbloqueados = d.titulosDesbloqueados ?? [];
-            d.maiorCombo         = d.maiorCombo      ?? 0;
-            d.totalChefes        = d.totalChefes     ?? 0;
+            d.maiorCombo           = d.maiorCombo           ?? 0;
+            d.totalChefes          = d.totalChefes          ?? 0;
 
-            // pity era top-level, agora fica em GameState
             if (typeof d.pity === "number") {
                 d.pityGacha = d.pity;
                 delete d.pity;
@@ -250,14 +243,11 @@ const SaveSystem = (() => {
             timestamp: Date.now(),
         };
 
-        const raw = _serializar(dados);
-
-        // Grava no slot alternado (não sobrescreve o slot atual ainda)
+        const raw      = _serializar(dados);
         const slotNovo = _slotProximo(_slotAtivo);
         const sucesso  = _escrever(_chaveSlot(slotNovo), raw);
 
         if (sucesso) {
-            // Só então atualiza o meta (qual slot é o mais recente)
             _escrever(CFG.KEY_META, JSON.stringify({
                 slot     : slotNovo,
                 timestamp: dados.timestamp,
@@ -267,7 +257,6 @@ const SaveSystem = (() => {
             _ultimoSalvo = dados.timestamp;
         }
 
-        // Sempre atualiza backup em memória
         _backupMemoria = dados;
 
         try { EventBus.emit("save:salvo", { timestamp: dados.timestamp, slot: slotNovo }); }
@@ -281,7 +270,6 @@ const SaveSystem = (() => {
     // CARREGAR
     // ════════════════════════════════════════════════════
     function carregar() {
-        // 1. Lê meta para saber qual slot é o mais recente
         const metaRaw  = _ler(CFG.KEY_META);
         let   slotPref = "A";
 
@@ -292,7 +280,6 @@ const SaveSystem = (() => {
             } catch(_) {}
         }
 
-        // 2. Tenta carregar slot preferido primeiro, depois o alternativo
         const slots = [slotPref, _slotProximo(slotPref)];
 
         for (const slot of slots) {
@@ -304,13 +291,11 @@ const SaveSystem = (() => {
             }
         }
 
-        // 3. Nenhum slot válido — tenta backup em memória
         if (_backupMemoria) {
             _log.warn("Nenhum slot válido — usando backup em memória.");
             return _backupMemoria;
         }
 
-        // 4. Tenta salves legados (v1/v2)
         const legado = _tentarCarregarLegado();
         if (legado) return legado;
 
@@ -325,13 +310,11 @@ const SaveSystem = (() => {
         try {
             const dados = _deserializar(raw);
 
-            // Verifica versão
             if (!CFG.VERSOES_SUPORTADAS.includes(dados.versao)) {
                 _log.warn(`Slot ${slot}: versão ${dados.versao} não suportada.`);
                 return null;
             }
 
-            // Migra se necessário
             const migrado = dados.versao < CFG.VERSAO
                 ? _migrar(dados, dados.versao)
                 : dados;
@@ -346,7 +329,6 @@ const SaveSystem = (() => {
     }
 
     function _tentarCarregarLegado() {
-        // Chaves de versões antigas
         const chavesLegadas = [
             "taplisieux_save_v2",
             "taplisieux_save_v1",
@@ -362,14 +344,10 @@ const SaveSystem = (() => {
                 if (!dados) continue;
 
                 const versaoOrigem = dados.versao ?? 1;
-                const migrado = _migrar(dados, versaoOrigem);
+                const migrado      = _migrar(dados, versaoOrigem);
 
                 _log.info(`Save legado carregado de "${chave}" (v${versaoOrigem} → v${CFG.VERSAO})`);
-
-                // Apaga a chave legada após migrar
                 _remover(chave);
-
-                // Salva imediatamente no novo formato
                 setTimeout(salvar, 500);
 
                 return migrado;
@@ -395,11 +373,10 @@ const SaveSystem = (() => {
         } catch(e) {
             _log.warn("GameState.carregar falhou — aplicando manualmente:", e);
 
-            // Fallback: aplica nas variáveis globais legadas
             try {
-                if (typeof window.moeda  !== "undefined") window.moeda  = dados.moeda  ?? 0;
-                if (typeof window.gema   !== "undefined") window.gema   = dados.gema   ?? 50;
-                if (typeof window.estagio!== "undefined") window.estagio= dados.estagio?? 1;
+                if (typeof window.moeda   !== "undefined") window.moeda   = dados.moeda   ?? 0;
+                if (typeof window.gema    !== "undefined") window.gema    = dados.gema    ?? 50;
+                if (typeof window.estagio !== "undefined") window.estagio = dados.estagio ?? 1;
 
                 if (window.personagem) {
                     window.personagem.nivel  = dados.nivelPersonagem  ?? 1;
@@ -424,21 +401,18 @@ const SaveSystem = (() => {
     function calcularOffline(dados) {
         if (!dados?.timestamp) return null;
 
-        const agora       = Date.now();
-        const delta       = agora - dados.timestamp;
-        const maxMs       = CFG.OFFLINE_MAX_HORAS * 3_600_000;
-        const efetivo     = Math.min(delta, maxMs);
-        const segundos    = Math.floor(efetivo / 1000);
+        const agora    = Date.now();
+        const delta    = agora - dados.timestamp;
+        const maxMs    = CFG.OFFLINE_MAX_HORAS * 3_600_000;
+        const efetivo  = Math.min(delta, maxMs);
+        const segundos = Math.floor(efetivo / 1000);
 
-        if (segundos < 60) return null;   // menos de 1 min — ignora
+        if (segundos < 60) return null;
 
-        // Calcula DPS offline
         let dps = 0;
         try {
-            // Tenta usar o módulo Damage
             dps = Damage.calcDps?.() ?? 0;
         } catch(_) {
-            // Fallback: calcula do snapshot
             try {
                 const nivel = dados.nivelDps ?? 1;
                 dps = Math.floor(2 * Math.pow(1.60, nivel - 1));
@@ -456,7 +430,6 @@ const SaveSystem = (() => {
 
         if (moedasGanhas <= 0) return resultado;
 
-        // Aplica as moedas
         try {
             GameState.increment("moeda", moedasGanhas);
             EventBus.emit("moeda:update", {
@@ -464,7 +437,6 @@ const SaveSystem = (() => {
                 delta: moedasGanhas,
             });
         } catch(_) {
-            // Fallback legado
             if (typeof window.moeda !== "undefined") {
                 window.moeda += moedasGanhas;
             }
@@ -473,7 +445,6 @@ const SaveSystem = (() => {
         return resultado;
     }
 
-    /** Exibe toast com o progresso offline */
     function _notificarOffline(resultado) {
         if (!resultado || resultado.moedasGanhas <= 0) return;
 
@@ -489,13 +460,11 @@ const SaveSystem = (() => {
         try   { fmt = Utils.formatarNum(moedasGanhas); }
         catch { fmt = String(moedasGanhas); }
 
-        try {
-            Toast.sucesso(`⏰ Offline por ${txt}\n+${fmt} 🪙 coletadas!`, 6000);
-        } catch(_) {}
+        try { Toast.sucesso(`⏰ Offline por ${txt}\n+${fmt} 🪙 coletadas!`, 6000); }
+        catch(_) {}
 
-        try {
-            EventBus.emit("save:offline", resultado);
-        } catch(_) {}
+        try { EventBus.emit("save:offline", resultado); }
+        catch(_) {}
     }
 
     // ════════════════════════════════════════════════════
@@ -504,21 +473,14 @@ const SaveSystem = (() => {
     function iniciarAutoSave() {
         if (_autoSaveTimer) clearInterval(_autoSaveTimer);
 
-        _autoSaveTimer = setInterval(() => {
-            salvar();
-        }, CFG.AUTO_SAVE_MS);
+        _autoSaveTimer = setInterval(() => salvar(), CFG.AUTO_SAVE_MS);
 
-        // Salva ao fechar a aba
-        window.addEventListener("beforeunload", () => salvar());
-
-        // Salva ao minimizar / trocar de aba
+        window.addEventListener("beforeunload",    () => salvar());
+        window.addEventListener("pagehide",        () => salvar());
+        window.addEventListener("blur",            () => salvar());
         document.addEventListener("visibilitychange", () => {
             if (document.visibilityState === "hidden") salvar();
         });
-
-        // Salva em mobile ao perder foco
-        window.addEventListener("pagehide", () => salvar());
-        window.addEventListener("blur",     () => salvar());
 
         _log.debug(`Auto-save configurado (${CFG.AUTO_SAVE_MS / 1000}s).`);
     }
@@ -559,9 +521,9 @@ const SaveSystem = (() => {
         const blob = new Blob([json], { type: "application/json" });
         const url  = URL.createObjectURL(blob);
 
-        const a       = document.createElement("a");
-        a.href        = url;
-        a.download    = `santa_teresinha_save_${new Date().toISOString().slice(0, 10)}.json`;
+        const a    = document.createElement("a");
+        a.href     = url;
+        a.download = `santa_teresinha_save_${new Date().toISOString().slice(0, 10)}.json`;
         a.click();
 
         URL.revokeObjectURL(url);
@@ -579,7 +541,6 @@ const SaveSystem = (() => {
                 throw new Error("JSON inválido.");
             }
 
-            // Migra se necessário
             const versao  = dados.versao ?? 1;
             const migrado = versao < CFG.VERSAO
                 ? _migrar(dados, versao)
@@ -600,15 +561,15 @@ const SaveSystem = (() => {
     }
 
     // ════════════════════════════════════════════════════
-    // INFORMAÇÕES DO SAVE
+    // INFORMAÇÕES
     // ════════════════════════════════════════════════════
     function info() {
         const metaRaw = _ler(CFG.KEY_META);
         let meta      = null;
         try { meta = metaRaw ? JSON.parse(metaRaw) : null; } catch(_) {}
 
-        const slotA  = _ler(CFG.KEY_SLOT_A);
-        const slotB  = _ler(CFG.KEY_SLOT_B);
+        const slotA = _ler(CFG.KEY_SLOT_A);
+        const slotB = _ler(CFG.KEY_SLOT_B);
 
         return {
             slotAtivo   : _slotAtivo,
@@ -637,18 +598,17 @@ const SaveSystem = (() => {
         if (dados) {
             aplicar(dados);
 
-            // 3. Calcula e notifica progresso offline
+            // 3. Progresso offline
             const offline = calcularOffline(dados);
             if (offline) {
-                // Pequeno delay para garantir que o Toast já foi inicializado
                 setTimeout(() => _notificarOffline(offline), 1500);
             }
         }
 
-        // 4. Inicia auto-save
+        // 4. Auto-save
         iniciarAutoSave();
 
-        // 5. Registra eventos
+        // 5. Eventos
         _registrarEventos();
 
         _log.info(`SaveSystem inicializado. Slot: ${_slotAtivo}. Save: ${dados ? "carregado" : "novo"}.`);
@@ -660,26 +620,13 @@ const SaveSystem = (() => {
     // ════════════════════════════════════════════════════
     function _registrarEventos() {
         try {
-            // Salva imediatamente ao fazer prestígio
-            EventBus.on("prestigio:feito", () => salvar());
-
-            // Salva ao comprar item no gacha
-            EventBus.on("gacha:pull",      () => salvar());
-
-            // Salva ao desbloquear conquista
+            EventBus.on("prestigio:feito",        () => salvar());
+            EventBus.on("gacha:pull",             () => salvar());
             EventBus.on("conquista:desbloqueada", () => salvar());
-
-            // Salva ao coletar quest
-            EventBus.on("quest:coletada",  () => salvar());
-
-            // Salva ao sair da batalha
-            EventBus.on("batalha:saiu",    () => salvar());
-
-            // Força save via evento (ui-config usa isso)
-            EventBus.on("save:forcar",     () => salvar());
-
-            // Limpa save via evento
-            EventBus.on("save:limpar",     () => {
+            EventBus.on("quest:coletada",         () => salvar());
+            EventBus.on("batalha:saiu",           () => salvar());
+            EventBus.on("save:forcar",            () => salvar());
+            EventBus.on("save:limpar", () => {
                 limpar();
                 setTimeout(() => location.reload(), 500);
             });
@@ -716,3 +663,6 @@ const SaveSystem = (() => {
     });
 
 })();
+
+// ✅ Expõe globalmente para que main.js e outros módulos possam acessar
+window.SaveSystem = SaveSystem;
