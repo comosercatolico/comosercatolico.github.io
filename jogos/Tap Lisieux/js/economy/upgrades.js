@@ -686,3 +686,4 @@ const Upgrades = (() => {
     });
 
 })();
+window.Upgrades = Upgrades;
