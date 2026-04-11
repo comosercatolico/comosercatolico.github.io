@@ -738,3 +738,4 @@ const UIBattle = (() => {
     });
 
 })();
+window.UIBattle = UIBattle;
