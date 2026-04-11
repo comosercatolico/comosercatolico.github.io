@@ -552,3 +552,4 @@ const UIHud = (() => {
     });
 
 })();
+window.UIHud = UIHud;
