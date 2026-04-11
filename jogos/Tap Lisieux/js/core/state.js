@@ -560,3 +560,4 @@ const GameState = (() => {
     });
 
 })();
+window.GameState = GameState; // ← adiciona essa
