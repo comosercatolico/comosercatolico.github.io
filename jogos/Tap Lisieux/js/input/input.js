@@ -749,3 +749,4 @@ const Input = (() => {
     });
 
 })();
+window.Input = Input;
