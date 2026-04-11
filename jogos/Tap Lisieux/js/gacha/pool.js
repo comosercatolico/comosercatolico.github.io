@@ -807,3 +807,4 @@ const GachaPool = (() => {
     });
 
 })();
+window.GachaPool = GachaPool;
