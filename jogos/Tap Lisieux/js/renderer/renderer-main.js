@@ -533,3 +533,4 @@ const Renderer = (() => {
     });
 
 })();
+window.Renderer = Renderer;
