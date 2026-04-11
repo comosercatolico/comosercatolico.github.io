@@ -758,3 +758,4 @@ const Battle = (() => {
     });
 
 })();
+window.Battle = Battle;
