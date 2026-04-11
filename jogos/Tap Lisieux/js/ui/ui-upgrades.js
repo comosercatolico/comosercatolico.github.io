@@ -779,3 +779,4 @@ const UIUpgrades = (() => {
     });
 
 })();
+window.UIUpgrades = UIUpgrades;
