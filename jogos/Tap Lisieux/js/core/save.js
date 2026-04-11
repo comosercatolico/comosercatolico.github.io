@@ -29,34 +29,32 @@ const SaveSystem = (() => {
     // CONFIGURAÇÃO
     // ════════════════════════════════════════════════════
     const CFG = Object.freeze({
-        // Chaves no localStorage
         KEY_SLOT_A        : "taplisieux_save_A_v3",
         KEY_SLOT_B        : "taplisieux_save_B_v3",
-        KEY_META          : "taplisieux_meta_v3",     // qual slot é o mais recente
-
-        // Versão do schema de save
+        KEY_META          : "taplisieux_meta_v3",
         VERSAO            : 3,
-
-        // Intervalos
         AUTO_SAVE_MS      : 30_000,
         OFFLINE_MAX_HORAS : 8,
-        OFFLINE_EFICIENCIA: 0.5,    // 50% do DPS conta offline
-
-        // Migração — versões antigas
+        OFFLINE_EFICIENCIA: 0.5,
         VERSOES_SUPORTADAS: [1, 2, 3],
+
+        // Chaves que são metadados do save e NÃO devem
+        // ser passadas ao GameState.carregar()
+        CHAVES_META: ["versao", "timestamp", "exportado",
+                      "titulosDesbloqueados", "maiorCombo", "totalChefes"],
     });
 
     // ════════════════════════════════════════════════════
     // ESTADO INTERNO
     // ════════════════════════════════════════════════════
-    let _autoSaveTimer   = null;
-    let _backupMemoria   = null;    // último save em memória (fallback)
-    let _ultimoSalvo     = 0;
-    let _slotAtivo       = "A";     // qual slot foi carregado
-    let _inicializado    = false;
+    let _autoSaveTimer = null;
+    let _backupMemoria = null;
+    let _ultimoSalvo   = 0;
+    let _slotAtivo     = "A";
+    let _inicializado  = false;
 
     // ════════════════════════════════════════════════════
-    // CRC32 — checksum para detectar corrupção
+    // CRC32
     // ════════════════════════════════════════════════════
     const _CRC_TABLE = (() => {
         const t = new Uint32Array(256);
@@ -79,14 +77,13 @@ const SaveSystem = (() => {
     }
 
     // ════════════════════════════════════════════════════
-    // SNAPSHOT — captura o estado atual para salvar
+    // SNAPSHOT
     // ════════════════════════════════════════════════════
     function _snapshot() {
         try {
             return GameState.snapshot();
         } catch(e) {
             _log.warn("snapshot via GameState falhou — usando fallback:", e);
-
             return {
                 moeda               : window.moeda                ?? 0,
                 gema                : window.gema                 ?? 50,
@@ -120,12 +117,10 @@ const SaveSystem = (() => {
     function _deserializar(raw) {
         const envelope = JSON.parse(raw);
 
-        // Formato legado (sem envelope)
         if (!envelope.crc || !envelope.payload) {
             return JSON.parse(raw);
         }
 
-        // Verifica CRC
         const crcCalculado = _crc32(envelope.payload);
         if (crcCalculado !== envelope.crc) {
             throw new Error(`CRC inválido: esperado ${envelope.crc}, calculado ${crcCalculado}`);
@@ -135,7 +130,7 @@ const SaveSystem = (() => {
     }
 
     // ════════════════════════════════════════════════════
-    // STORAGE — tenta localStorage, cai para sessionStorage
+    // STORAGE
     // ════════════════════════════════════════════════════
     function _escrever(chave, valor) {
         try {
@@ -168,23 +163,17 @@ const SaveSystem = (() => {
     }
 
     // ════════════════════════════════════════════════════
-    // SLOT DUPLO — rotação A/B
+    // SLOT DUPLO
     // ════════════════════════════════════════════════════
-    function _slotProximo(slot) {
-        return slot === "A" ? "B" : "A";
-    }
-
-    function _chaveSlot(slot) {
-        return slot === "A" ? CFG.KEY_SLOT_A : CFG.KEY_SLOT_B;
-    }
+    function _slotProximo(slot) { return slot === "A" ? "B" : "A"; }
+    function _chaveSlot(slot)   { return slot === "A" ? CFG.KEY_SLOT_A : CFG.KEY_SLOT_B; }
 
     // ════════════════════════════════════════════════════
-    // MIGRAÇÃO DE VERSÕES ANTIGAS
+    // MIGRAÇÃO
     // ════════════════════════════════════════════════════
     function _migrar(dados, versaoOrigem) {
         let d = { ...dados };
 
-        // v1 → v2
         if (versaoOrigem < 2) {
             d.nivelPersonagem  = d.personagem?.nivel  ?? 1;
             d.expPersonagem    = d.personagem?.exp    ?? 0;
@@ -207,7 +196,6 @@ const SaveSystem = (() => {
             _log.info("Save migrado: v1 → v2");
         }
 
-        // v2 → v3
         if (versaoOrigem < 3) {
             d.volumeMusica         = d.volumeMusica         ?? 0.7;
             d.volumeSfx            = d.volumeSfx            ?? 0.8;
@@ -315,11 +303,9 @@ const SaveSystem = (() => {
                 return null;
             }
 
-            const migrado = dados.versao < CFG.VERSAO
+            return dados.versao < CFG.VERSAO
                 ? _migrar(dados, dados.versao)
                 : dados;
-
-            return migrado;
 
         } catch(e) {
             _log.warn(`Slot ${slot} corrompido: ${e.message}`);
@@ -367,9 +353,18 @@ const SaveSystem = (() => {
         if (!dados) return false;
 
         try {
-            GameState.carregar(dados);
+            // ✅ Remove metadados do save antes de passar ao GameState
+            // Evita os avisos "chave desconhecida ignorada"
+            const estadoPuro = Object.fromEntries(
+                Object.entries(dados).filter(
+                    ([chave]) => !CFG.CHAVES_META.includes(chave)
+                )
+            );
+
+            GameState.carregar(estadoPuro);
             _log.debug("Save aplicado ao GameState.");
             return true;
+
         } catch(e) {
             _log.warn("GameState.carregar falhou — aplicando manualmente:", e);
 
@@ -475,9 +470,9 @@ const SaveSystem = (() => {
 
         _autoSaveTimer = setInterval(() => salvar(), CFG.AUTO_SAVE_MS);
 
-        window.addEventListener("beforeunload",    () => salvar());
-        window.addEventListener("pagehide",        () => salvar());
-        window.addEventListener("blur",            () => salvar());
+        window.addEventListener("beforeunload",       () => salvar());
+        window.addEventListener("pagehide",           () => salvar());
+        window.addEventListener("blur",               () => salvar());
         document.addEventListener("visibilitychange", () => {
             if (document.visibilityState === "hidden") salvar();
         });
@@ -493,7 +488,7 @@ const SaveSystem = (() => {
     }
 
     // ════════════════════════════════════════════════════
-    // LIMPAR (reset total)
+    // LIMPAR
     // ════════════════════════════════════════════════════
     function limpar() {
         _remover(CFG.KEY_SLOT_A);
@@ -591,24 +586,18 @@ const SaveSystem = (() => {
         if (_inicializado) return null;
         _inicializado = true;
 
-        // 1. Carrega save
         const dados = carregar();
 
-        // 2. Aplica ao GameState
         if (dados) {
             aplicar(dados);
 
-            // 3. Progresso offline
             const offline = calcularOffline(dados);
             if (offline) {
                 setTimeout(() => _notificarOffline(offline), 1500);
             }
         }
 
-        // 4. Auto-save
         iniciarAutoSave();
-
-        // 5. Eventos
         _registrarEventos();
 
         _log.info(`SaveSystem inicializado. Slot: ${_slotAtivo}. Save: ${dados ? "carregado" : "novo"}.`);
