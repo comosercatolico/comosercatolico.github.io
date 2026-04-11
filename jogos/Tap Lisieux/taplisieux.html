@@ -10,12 +10,10 @@
 
     <title>Santa Teresinha Idle</title>
 
-    <!-- ── Fontes ── -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Nunito:wght@400;600;800&display=swap" rel="stylesheet">
 
-    <!-- ── Estilos ── -->
     <link rel="stylesheet" href="taplisieux.css">
 </head>
 <body>
@@ -32,6 +30,7 @@
             <div id="loadingBarra"></div>
         </div>
         <p id="loadingTexto">Carregando...</p>
+        <p id="loadingSubTexto" style="font-size:12px;color:rgba(255,255,255,0.4);margin-top:4px;"></p>
     </div>
 </div>
 
@@ -51,9 +50,31 @@
     </div>
 
     <div id="lobbyMoedas" aria-live="polite">
-        <div class="moedaHUD" title="Energia">⚡ <span id="hudEnergiaVal">100/100</span></div>
+
+        <!-- Energia com barra -->
+        <div class="moedaHUD" title="Energia">
+            ⚡ <span id="hudEnergiaVal">100/100</span>
+            <!-- ✅ Barra de energia — procurada por ui-hud.js -->
+            <div style="width:60px; background:rgba(255,255,255,0.1); border-radius:2px; height:3px; margin-top:2px;">
+                <div id="hudEnergiaBar"
+                     style="height:100%; width:100%; background:linear-gradient(90deg,#56ccf2,#2f80ed); border-radius:2px; transition:width 0.6s linear;">
+                </div>
+            </div>
+        </div>
+
         <div class="moedaHUD" title="Moedas">🪙 <span id="hudMoedaVal">0</span></div>
         <div class="moedaHUD" title="Gemas">💎 <span id="hudGemaVal">50</span></div>
+
+    </div>
+
+    <!-- ✅ Barra de XP — procurada por ui-hud.js -->
+    <div id="hudXpContainer"
+         style="position:absolute; bottom:0; left:0; right:0; height:3px;
+                background:rgba(255,255,255,0.08); overflow:hidden;">
+        <div id="hudXpFill"
+             style="height:100%; width:0%; background:linear-gradient(90deg,#9d4edd,#c084fc);
+                    border-radius:0 2px 2px 0; transition:width 0.3s ease;">
+        </div>
     </div>
 
 </div>
@@ -63,7 +84,7 @@
 ══════════════════════════════════════════════════════ -->
 <div id="lobbybotoes" role="navigation" aria-label="Menu principal">
 
-    <button class="btnLobby" onclick="AchievementSystem.abrirTela()" aria-label="Conquistas">
+    <button class="btnLobby" onclick="Achievements.abrirTela?.()" aria-label="Conquistas">
         <span class="btnIcon">🏆</span>
         <span class="btnLabel">Conquistas</span>
         <span id="conquistaBadge" class="notifBadge" style="display:none;"></span>
@@ -84,7 +105,7 @@
         <span class="btnLabel">Equipar</span>
     </button>
 
-    <button class="btnLobby" onclick="QuestSystem.abrirModal()" aria-label="Missões diárias">
+    <button class="btnLobby" onclick="Quests.abrirModal?.()" aria-label="Missões diárias">
         <span class="btnIcon">📋</span>
         <span class="btnLabel">Missões</span>
         <span id="questBadge" class="notifBadge" style="display:none;"></span>
@@ -176,14 +197,21 @@
             🎯 Pity: 0/90 · Lendário garantido em 90 pulls
         </div>
 
+        <!-- ✅ Barra de pity — procurada por ui-gacha.js -->
+        <div id="pityBarWrap" style="margin:6px 0 10px;"></div>
+
         <div id="invocarResultado" class="resultadoInvocar" role="status" aria-live="polite"></div>
 
+        <!-- ✅ Stats do pull x10 -->
+        <div id="pullStats"></div>
+
         <div class="invocarBotoes">
-            <button class="btnInvocar" onclick="GachaSystem.invocar(1)" aria-label="Invocar 1 vez por 100 gemas">
+            <!-- ✅ IDs adicionados — procurados por ui-gacha.js -->
+            <button id="btnInvocar1" class="btnInvocar" aria-label="Invocar 1 vez por 100 gemas">
                 <span>Invocar x1</span>
                 <span class="custo">💎 100</span>
             </button>
-            <button class="btnInvocar destaque" onclick="GachaSystem.invocar(10)" aria-label="Invocar 10 vezes por 900 gemas">
+            <button id="btnInvocar10" class="btnInvocar destaque" aria-label="Invocar 10 vezes por 900 gemas">
                 <span>Invocar x10</span>
                 <span class="custo">💎 900 <small>(−10%)</small></span>
             </button>
@@ -284,17 +312,17 @@
 
         <div id="questResetTimer" class="timerReset" aria-live="polite">⏱️ Carregando...</div>
 
-        <button class="btnColetarTodas" onclick="QuestSystem.coletarTodas()">
+        <button class="btnColetarTodas" onclick="Quests.coletarTodas?.()">
             🎁 Coletar todas completas
         </button>
 
         <div class="missaoSecaoTitulo">☀️ Missões Diárias</div>
-        <div id="listaQuestsDiarias" class="upgradeScroll" aria-live="polite" aria-label="Missões diárias">
+        <div id="listaQuestsDiarias" class="upgradeScroll" aria-live="polite">
             <p class="dica">Carregando missões...</p>
         </div>
 
         <div class="missaoSecaoTitulo" style="margin-top:14px;">🌙 Missões Semanais</div>
-        <div id="listaQuestsSemanais" class="upgradeScroll" aria-live="polite" aria-label="Missões semanais">
+        <div id="listaQuestsSemanais" class="upgradeScroll" aria-live="polite">
             <p class="dica">Carregando missões...</p>
         </div>
     </div>
@@ -338,16 +366,26 @@
 
     <!-- Topo: Estágio + Navegação -->
     <div id="batalhaNavTopo" role="navigation" aria-label="Navegação de estágio">
-        <button class="navBtn" onclick="Battle.irEstagioAnterior()" aria-label="Estágio anterior">◀</button>
+
+        <!-- ✅ IDs adicionados — procurados por ui-battle.js -->
+        <button id="btnEstagioAntes"
+                class="navBtn"
+                onclick="Battle.irEstagioAnterior()"
+                aria-label="Estágio anterior">◀</button>
 
         <div id="estagioInfo" aria-live="polite">
             <div id="estagioNum">1</div>
             <div id="estagioNome">Jardim das Sombras</div>
         </div>
 
-        <button class="navBtn" onclick="Battle.irProximoEstagio()" aria-label="Próximo estágio">▶</button>
+        <button id="btnEstagioProximo"
+                class="navBtn"
+                onclick="Battle.irProximoEstagio()"
+                aria-label="Próximo estágio">▶</button>
 
-        <button id="btnEnfrentarChefe" onclick="Battle.irParaChefe()" aria-label="Enfrentar chefe">
+        <button id="btnEnfrentarChefe"
+                onclick="Battle.irParaChefe()"
+                aria-label="Enfrentar chefe">
             👿 Enfrentar Chefe
         </button>
     </div>
@@ -378,6 +416,15 @@
     <!-- Fala do monstro -->
     <div id="falaInimigo" role="status" aria-live="polite">
         <div id="falaTexto"></div>
+    </div>
+
+    <!-- ✅ Combo display — procurado por ui-battle.js -->
+    <div id="comboDisplay"
+         class="oculto"
+         style="position:absolute; top:18%; left:50%; transform:translateX(-50%);
+                font-size:16px; font-weight:800; color:#ffd700;
+                text-shadow:0 0 10px rgba(255,215,0,0.7);
+                pointer-events:none; z-index:10;">
     </div>
 
     <!-- Painel inferior -->
@@ -553,10 +600,10 @@
                 </div>
 
                 <div style="display:flex; gap:8px; margin-bottom:10px;">
-                    <button class="btnInvocar small" onclick="GachaSystem.invocar(1)" aria-label="Invocar 1 vez">
+                    <button class="btnInvocar small" onclick="UIGacha.invocar?.(1)" aria-label="Invocar 1 vez">
                         ✨ x1 · 💎 100
                     </button>
-                    <button class="btnInvocar small destaque" onclick="GachaSystem.invocar(10)" aria-label="Invocar 10 vezes">
+                    <button class="btnInvocar small destaque" onclick="UIGacha.invocar?.(10)" aria-label="Invocar 10 vezes">
                         ✨ x10 · 💎 900
                     </button>
                 </div>
@@ -571,7 +618,7 @@
                     ⏱️ Carregando...
                 </div>
 
-                <button class="btnColetarTodas small" onclick="QuestSystem.coletarTodas()">
+                <button class="btnColetarTodas small" onclick="Quests.coletarTodas?.()">
                     🎁 Coletar todas
                 </button>
 
@@ -603,9 +650,7 @@
 </div><!-- /uiBatalha -->
 
 <!-- ══════════════════════════════════════════════════════
-     SCRIPTS — Ordem obrigatória de carregamento
-     Cada arquivo só pode ser carregado depois de
-     todos os seus dependentes estarem prontos.
+     SCRIPTS
 ══════════════════════════════════════════════════════ -->
 
 <!-- FASE 1 — Base absoluta (sem dependências) -->
