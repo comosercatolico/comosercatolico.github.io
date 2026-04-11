@@ -644,3 +644,4 @@ const RendererLobby = (() => {
     });
 
 })();
+window.RendererLobby = RendererLobby;
