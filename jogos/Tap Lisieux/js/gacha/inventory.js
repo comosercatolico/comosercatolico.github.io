@@ -845,3 +845,4 @@ const Inventory = (() => {
     });
 
 })();
+window.Inventory = Inventory;
