@@ -949,3 +949,4 @@ const UIGacha = (() => {
     });
 
 })();
+window.UIGacha = UIGacha;
