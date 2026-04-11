@@ -1,16 +1,16 @@
 // ═══════════════════════════════════════════════════════
-//  RENDERER-MAIN.JS
-//  Loop principal de renderização:
-//  - requestAnimationFrame com delta time real
-//  - Decide lobby vs batalha via GameState
-//  - FPS counter + frame budget monitor
-//  - Pausa automática quando aba fica oculta
-//  - Resize responsivo do canvas
-//  - Câmera shake integrada com Camera.js
+// RENDERER-MAIN.JS
+// Loop principal de renderização:
+// - requestAnimationFrame com delta time real
+// - Decide lobby vs batalha via GameState
+// - FPS counter + frame budget monitor
+// - Pausa automática quando aba fica oculta
+// - Resize responsivo do canvas
+// - Câmera shake integrada com Camera.js
 //
-//  Depende de: renderer-lobby.js, renderer-battle.js,
-//              state.js, camera.js, effects.js
-//  Usado por: main.js
+// Depende de: renderer-lobby.js, renderer-battle.js,
+// state.js, camera.js, effects.js
+// Usado por: main.js
 // ═══════════════════════════════════════════════════════
 
 "use strict";
@@ -56,9 +56,9 @@ const Renderer = (() => {
     // ESTADO DO LOOP
     // ════════════════════════════════════════════════════
     const _loop = {
-        rodando      : false,
-        rafId        : null,
-        pausado      : false,    // tab oculta
+        rodando        : false,
+        rafId          : null,
+        pausado        : false,    // tab oculta
         ultimoTimestamp: 0,
     };
 
@@ -67,9 +67,9 @@ const Renderer = (() => {
     // Garante animações independentes do FPS real
     // ════════════════════════════════════════════════════
     const _delta = {
-        ms        : CFG.FRAME_BUDGET_MS,   // delta suavizado atual
-        msBruto   : CFG.FRAME_BUDGET_MS,   // delta bruto do frame
-        fator     : 1.0,                   // delta / frame_budget (1.0 = 60fps perfeito)
+        ms      : CFG.FRAME_BUDGET_MS,   // delta suavizado atual
+        msBruto : CFG.FRAME_BUDGET_MS,   // delta bruto do frame
+        fator   : 1.0,                   // delta / frame_budget (1.0 = 60fps perfeito)
     };
 
     function _calcularDelta(timestamp) {
@@ -147,9 +147,9 @@ const Renderer = (() => {
     // Mede quanto tempo cada frame levou para renderizar
     // ════════════════════════════════════════════════════
     const _budget = {
-        ultimoInicio  : 0,
-        mediaMs       : 0,
-        alertas       : 0,    // frames acima do budget
+        ultimoInicio : 0,
+        mediaMs      : 0,
+        alertas      : 0,    // frames acima do budget
     };
 
     function _budgetInicio() {
@@ -207,7 +207,7 @@ const Renderer = (() => {
         _ctx.imageSmoothingEnabled = false;
 
         // Notifica submódulos
-        try { RendererLobby.aoRedimensionar();  } catch(_) {}
+        try { RendererLobby.aoRedimensionar();   } catch(_) {}
         try { Camera.lobby.centralizarMapa?.();  } catch(_) {}
 
         try {
@@ -232,8 +232,32 @@ const Renderer = (() => {
     // ASSETS — obtém do AssetLoader
     // ════════════════════════════════════════════════════
     function _obterAssets() {
-        try   { return AssetLoader.assets; }
-        catch { return {}; }
+        try {
+            const AL = AssetLoader;
+            return {
+                // Tiles
+                estrada    : AL.get("estrada"),
+                gramas     : [0,1,2,3,4].map(i => AL.get(`grama_${i}`)),
+
+                // Objetos do lobby
+                biblioteca : AL.get("biblioteca"),
+                mesa       : AL.get("mesa"),
+                cadeiraEsq : AL.get("cadeira_esq"),
+                cadeiraDir : AL.get("cadeira_dir"),
+
+                // NPC (frames de animação)
+                santaAnda  : [0,1,2,3,4,5,6,7,8].map(i => AL.get(`npc_anda_${i}`)),
+
+                // Batalha
+                cenario    : AL.get("cenario"),
+                piso       : AL.get("piso"),
+
+                // Santa batalha (frames)
+                santa      : [0,1,2,3,4,5,6,7].map(i => AL.get(`santa_${i}`)),
+            };
+        } catch(e) {
+            return {};
+        }
     }
 
     // ════════════════════════════════════════════════════
@@ -374,12 +398,12 @@ const Renderer = (() => {
             );
         } catch(_) {}
 
-        const PAD  = 10;
-        const LH   = 16;
-        const W    = 260;
-        const H    = linhas.length * LH + PAD * 2;
-        const X    = 8;
-        const Y    = 8;
+        const PAD = 10;
+        const LH  = 16;
+        const W   = 260;
+        const H   = linhas.length * LH + PAD * 2;
+        const X   = 8;
+        const Y   = 8;
 
         _ctx.save();
 
@@ -456,7 +480,7 @@ const Renderer = (() => {
         _verificarModoDebug();
         _registrarVisibilidade();
 
-        _loop.rodando       = true;
+        _loop.rodando        = true;
         _loop.ultimoTimestamp = 0;
 
         _log.info("Renderer iniciado.");
@@ -495,23 +519,23 @@ const Renderer = (() => {
     // ════════════════════════════════════════════════════
     function stats() {
         return {
-            rodando  : _loop.rodando,
-            pausado  : _loop.pausado,
-            fps      : {
+            rodando : _loop.rodando,
+            pausado : _loop.pausado,
+            fps     : {
                 media : Math.round(_fps.media),
                 min   : Math.round(_fps.min),
                 max   : Math.round(_fps.max),
                 total : _fps.total,
             },
-            delta    : {
+            delta   : {
                 ms    : +_delta.ms.toFixed(2),
                 fator : +_delta.fator.toFixed(3),
             },
-            budget   : {
+            budget  : {
                 mediaMs : +_budget.mediaMs.toFixed(2),
                 alertas : _budget.alertas,
             },
-            canvas   : _canvas
+            canvas  : _canvas
                 ? { w: _canvas.width, h: _canvas.height }
                 : null,
         };
@@ -533,4 +557,5 @@ const Renderer = (() => {
     });
 
 })();
+
 window.Renderer = Renderer;
