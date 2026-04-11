@@ -4,21 +4,21 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-    --cor-fundo:      #0b0c1a;
-    --cor-painel:     #12112a;
-    --cor-painel2:    #1a1838;
-    --cor-borda:      #2e2c5a;
+    --cor-fundo:      #07060f;
+    --cor-painel:     #100f26;
+    --cor-painel2:    #18163a;
+    --cor-borda:      #2b2858;
     --cor-acento:     #f5a623;
     --cor-acento2:    #e8416f;
     --cor-verde:      #4caf7d;
     --cor-azul:       #4a90d9;
     --cor-roxo:       #9b59b6;
-    --cor-texto:      #e8e4f0;
-    --cor-texto2:     #9490b0;
+    --cor-texto:      #ede9f8;
+    --cor-texto2:     #8c88a8;
     --fonte-titulo:   'Cinzel', serif;
     --fonte-corpo:    'Nunito', sans-serif;
     --r:              12px;
-    --sombra:         0 4px 24px rgba(0,0,0,0.5);
+    --sombra:         0 4px 24px rgba(0,0,0,0.6);
 }
 
 body {
@@ -27,6 +27,7 @@ body {
     color: var(--cor-texto);
     overflow: hidden;
     user-select: none;
+    -webkit-tap-highlight-color: transparent;
 }
 
 canvas {
@@ -46,18 +47,18 @@ canvas {
     justify-content: space-between;
     align-items: center;
     padding: 8px 14px;
-    background: linear-gradient(180deg, rgba(8,7,20,0.95) 0%, rgba(8,7,20,0.7) 100%);
+    background: linear-gradient(180deg, rgba(5,4,14,0.96) 0%, rgba(5,4,14,0.6) 100%);
     border-bottom: 1px solid var(--cor-borda);
     z-index: 80;
-    backdrop-filter: blur(6px);
+    backdrop-filter: blur(8px);
 }
 
 #lobbyHUDEsq { display: flex; gap: 8px; }
-#lobbyMoedas { display: flex; gap: 8px; align-items: center; }
+#lobbyMoedas { display: flex; gap: 6px; align-items: center; }
 
 .moedaHUD {
     background: rgba(255,255,255,0.06);
-    border: 1px solid rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.10);
     border-radius: 20px;
     padding: 5px 14px;
     font-size: 13px;
@@ -66,12 +67,12 @@ canvas {
     backdrop-filter: blur(4px);
     transition: background 0.2s;
 }
-.moedaHUD:hover { background: rgba(255,255,255,0.1); }
+.moedaHUD:hover { background: rgba(255,255,255,0.10); }
 
 .btnTop {
-    background: rgba(255,255,255,0.08);
+    background: rgba(255,255,255,0.07);
     color: var(--cor-texto);
-    border: 1px solid rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.13);
     border-radius: 10px;
     padding: 7px 12px;
     font-size: 15px;
@@ -79,7 +80,7 @@ canvas {
     transition: all 0.15s;
     backdrop-filter: blur(4px);
 }
-.btnTop:hover { background: rgba(255,255,255,0.16); transform: translateY(-1px); }
+.btnTop:hover { background: rgba(255,255,255,0.14); transform: translateY(-1px); }
 .btnTop:active { transform: translateY(1px); }
 
 /* ═══════════════════════════════════════
@@ -89,13 +90,12 @@ canvas {
     position: fixed;
     bottom: 0; left: 0; right: 0;
     display: flex;
-    gap: 0;
+    gap: 12px;
     z-index: 80;
-    background: linear-gradient(0deg, rgba(8,7,20,0.98) 0%, rgba(8,7,20,0.7) 100%);
+    background: linear-gradient(0deg, rgba(5,4,14,0.98) 0%, rgba(5,4,14,0.65) 100%);
     border-top: 1px solid var(--cor-borda);
     padding: 10px 20px 20px;
     justify-content: center;
-    gap: 12px;
 }
 
 .btnLobby {
@@ -103,7 +103,7 @@ canvas {
     flex-direction: column;
     align-items: center;
     gap: 4px;
-    background: linear-gradient(160deg, #2a2850 0%, #1a1838 100%);
+    background: linear-gradient(160deg, #252345 0%, #181632 100%);
     color: var(--cor-texto);
     border: 1px solid var(--cor-borda);
     border-radius: 14px;
@@ -118,26 +118,26 @@ canvas {
     text-transform: uppercase;
     letter-spacing: 0.5px;
 }
-.btnLobby:hover { transform: translateY(-3px); filter: brightness(1.2); }
-.btnLobby:active { transform: translateY(0px); }
-.btnLobby .btnIcon { font-size: 22px; }
+.btnLobby:hover  { transform: translateY(-3px); filter: brightness(1.2); }
+.btnLobby:active { transform: translateY(0); }
+.btnLobby .btnIcon  { font-size: 22px; }
 .btnLobby .btnLabel { font-size: 11px; }
 
 .btnLobby.gacha {
-    background: linear-gradient(160deg, #4a3800 0%, #2d2200 100%);
+    background: linear-gradient(160deg, #3e2e00 0%, #281d00 100%);
     border-color: var(--cor-acento);
-    box-shadow: 0 2px 16px rgba(245,166,35,0.25), inset 0 1px 0 rgba(255,255,255,0.08);
+    box-shadow: 0 2px 16px rgba(245,166,35,0.22), inset 0 1px 0 rgba(255,255,255,0.07);
     color: var(--cor-acento);
 }
-.btnLobby.gacha:hover { box-shadow: 0 4px 24px rgba(245,166,35,0.45); }
+.btnLobby.gacha:hover { box-shadow: 0 4px 24px rgba(245,166,35,0.42); }
 
 .btnLobby.batalha {
-    background: linear-gradient(160deg, #3d0b1a 0%, #240710 100%);
+    background: linear-gradient(160deg, #3d0b1a 0%, #250710 100%);
     border-color: var(--cor-acento2);
-    box-shadow: 0 2px 16px rgba(232,65,111,0.25), inset 0 1px 0 rgba(255,255,255,0.08);
+    box-shadow: 0 2px 16px rgba(232,65,111,0.22), inset 0 1px 0 rgba(255,255,255,0.07);
     color: var(--cor-acento2);
 }
-.btnLobby.batalha:hover { box-shadow: 0 4px 24px rgba(232,65,111,0.45); }
+.btnLobby.batalha:hover { box-shadow: 0 4px 24px rgba(232,65,111,0.42); }
 
 /* ═══════════════════════════════════════
    MODAIS
@@ -146,16 +146,16 @@ canvas {
     position: fixed;
     top: 0; left: 0;
     width: 100vw; height: 100vh;
-    background: rgba(0,0,0,0.78);
+    background: rgba(0,0,0,0.80);
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: 500;
-    backdrop-filter: blur(3px);
+    backdrop-filter: blur(4px);
 }
 
 .modalBox {
-    background: linear-gradient(160deg, #16142e 0%, #0e0c24 100%);
+    background: linear-gradient(160deg, #15132c 0%, #0d0b22 100%);
     border: 1px solid var(--cor-borda);
     border-radius: 18px;
     padding: 22px;
@@ -163,7 +163,7 @@ canvas {
     max-width: 460px;
     max-height: 88vh;
     overflow-y: auto;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.7);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.75);
 }
 .modalBox.grande { max-width: 540px; }
 .modalBox.small  { max-width: 360px; }
@@ -186,16 +186,16 @@ canvas {
 }
 
 .btnFecharModal {
-    background: rgba(232,65,111,0.15);
+    background: rgba(232,65,111,0.14);
     color: var(--cor-acento2);
-    border: 1px solid rgba(232,65,111,0.4);
+    border: 1px solid rgba(232,65,111,0.38);
     border-radius: 8px;
     padding: 5px 12px;
     cursor: pointer;
     font-size: 16px;
     transition: all 0.15s;
 }
-.btnFecharModal:hover { background: rgba(232,65,111,0.3); }
+.btnFecharModal:hover { background: rgba(232,65,111,0.28); }
 
 .secaoTitulo {
     color: var(--cor-acento);
@@ -213,23 +213,12 @@ canvas {
 /* ═══════════════════════════════════════
    GACHA / INVOCAR
 ═══════════════════════════════════════ */
-.taxasRaridade {
-    display: flex;
-    gap: 6px;
-    margin-bottom: 14px;
-    flex-wrap: wrap;
-}
-.taxa {
-    padding: 3px 10px;
-    border-radius: 20px;
-    font-size: 11px;
-    font-weight: 800;
-    border: 1px solid;
-}
-.taxa.comum   { background: rgba(150,150,150,0.15); border-color: #888; color: #bbb; }
-.taxa.raro    { background: rgba(68,136,255,0.15);  border-color: #4488ff; color: #6ba3ff; }
-.taxa.epico   { background: rgba(170,68,255,0.15);  border-color: #aa44ff; color: #c480ff; }
-.taxa.lendario{ background: rgba(255,170,0,0.15);   border-color: var(--cor-acento); color: var(--cor-acento); }
+.taxasRaridade { display: flex; gap: 6px; margin-bottom: 14px; flex-wrap: wrap; }
+.taxa { padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 800; border: 1px solid; }
+.taxa.comum    { background: rgba(150,150,150,0.12); border-color: #777; color: #aaa; }
+.taxa.raro     { background: rgba(68,136,255,0.12);  border-color: #4488ff; color: #6ba3ff; }
+.taxa.epico    { background: rgba(170,68,255,0.12);  border-color: #aa44ff; color: #c480ff; }
+.taxa.lendario { background: rgba(255,170,0,0.12);   border-color: var(--cor-acento); color: var(--cor-acento); }
 
 .resultadoInvocar {
     min-height: 28px;
@@ -238,39 +227,31 @@ canvas {
     font-style: italic;
     margin-bottom: 14px;
     padding: 8px 12px;
-    background: rgba(255,255,255,0.04);
+    background: rgba(255,255,255,0.03);
     border-radius: 8px;
     border-left: 3px solid var(--cor-acento);
     color: var(--cor-acento);
 }
 .resultadoInvocar.small { font-size: 12px; min-height: 20px; padding: 5px 10px; }
 
-.invocarBotoes {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 16px;
-}
+.invocarBotoes { display: flex; gap: 10px; margin-bottom: 16px; }
 .btnInvocar {
     flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 2px;
-    background: linear-gradient(160deg, #2a2850 0%, #1a1838 100%);
+    display: flex; flex-direction: column; align-items: center; gap: 2px;
+    background: linear-gradient(160deg, #252345 0%, #181632 100%);
     border: 1px solid var(--cor-borda);
     border-radius: 12px;
     padding: 12px 8px;
     color: var(--cor-texto);
     font-family: var(--fonte-corpo);
-    font-weight: 800;
-    font-size: 14px;
+    font-weight: 800; font-size: 14px;
     cursor: pointer;
     transition: all 0.15s;
 }
 .btnInvocar .custo { font-size: 12px; color: #88eeff; }
 .btnInvocar:hover { filter: brightness(1.2); transform: translateY(-2px); }
 .btnInvocar.destaque {
-    background: linear-gradient(160deg, #4a3800 0%, #2d2200 100%);
+    background: linear-gradient(160deg, #3e2e00 0%, #281d00 100%);
     border-color: var(--cor-acento);
     color: var(--cor-acento);
 }
@@ -282,14 +263,9 @@ canvas {
 .gridItens.small { gap: 4px; }
 
 .itemTag {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    border-radius: 8px;
-    padding: 4px 10px;
-    font-size: 12px;
-    font-weight: 700;
-    border: 1px solid;
+    display: inline-flex; align-items: center; gap: 4px;
+    border-radius: 8px; padding: 4px 10px;
+    font-size: 12px; font-weight: 700; border: 1px solid;
     background: rgba(0,0,0,0.3);
     transition: transform 0.1s;
 }
@@ -299,12 +275,9 @@ canvas {
    PERSONAGEM / EQUIPAR CARD
 ═══════════════════════════════════════ */
 .personagemCard {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    background: rgba(255,255,255,0.04);
-    border-radius: 12px;
-    padding: 12px;
+    display: flex; align-items: center; gap: 12px;
+    background: rgba(255,255,255,0.03);
+    border-radius: 12px; padding: 12px;
     border: 1px solid var(--cor-borda);
     margin-bottom: 8px;
     transition: border-color 0.2s;
@@ -317,7 +290,7 @@ canvas {
 .badge { background: var(--cor-acento); color: #000; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 800; }
 
 /* ═══════════════════════════════════════
-   UI DE BATALHA
+   UI DE BATALHA  ─ Estilo Tap Titans 2
 ═══════════════════════════════════════ */
 #uiBatalha {
     position: fixed;
@@ -328,26 +301,26 @@ canvas {
     flex-direction: column;
     pointer-events: none;
 }
-/* só os elementos interativos recebem eventos */
 #uiBatalha button,
 #batalhaNavTopo,
 #painelInferior,
 #statsRapidos,
 #btnSairBatalha { pointer-events: auto; }
 
-/* ── NAV TOPO (estágio) ── */
+/* ── NAV TOPO ─ estágio + setas + chefe ── */
 #batalhaNavTopo {
     position: absolute;
     top: 0; left: 0; right: 0;
     display: flex;
     align-items: center;
     gap: 8px;
-    padding: 8px 12px;
-    background: linear-gradient(180deg, rgba(8,7,20,0.96) 0%, transparent 100%);
+    padding: 8px 12px 6px;
+    background: linear-gradient(180deg, rgba(5,4,14,0.97) 0%, rgba(5,4,14,0.0) 100%);
+    pointer-events: auto;
 }
 
 .navBtn {
-    background: rgba(255,255,255,0.08);
+    background: rgba(255,255,255,0.07);
     border: 1px solid var(--cor-borda);
     border-radius: 8px;
     padding: 6px 14px;
@@ -355,21 +328,29 @@ canvas {
     color: var(--cor-texto2);
     cursor: pointer;
     transition: all 0.15s;
+    font-family: var(--fonte-corpo);
 }
-.navBtn:hover { background: rgba(255,255,255,0.15); color: var(--cor-texto); }
+.navBtn:hover { background: rgba(255,255,255,0.13); color: var(--cor-texto); }
+.navBtn:active { transform: scale(0.95); }
 
-#estagioInfo { flex: 1; text-align: center; }
+#estagioInfo { flex: 1; text-align: center; line-height: 1; }
 #estagioNum {
     font-family: var(--fonte-titulo);
-    font-size: 22px;
+    font-size: 24px;
     font-weight: 900;
     color: var(--cor-acento);
+    text-shadow: 0 0 16px rgba(245,166,35,0.55);
     line-height: 1;
 }
-#estagioNome { font-size: 11px; color: var(--cor-texto2); }
+#estagioNome {
+    font-size: 11px;
+    color: var(--cor-texto2);
+    letter-spacing: 0.5px;
+    margin-top: 1px;
+}
 
 #btnEnfrentarChefe {
-    background: linear-gradient(135deg, #c0392b, #8e1a10);
+    background: linear-gradient(135deg, #b03020, #7a1508);
     color: white;
     border: none;
     border-radius: 10px;
@@ -378,80 +359,85 @@ canvas {
     font-size: 12px;
     font-weight: 800;
     cursor: pointer;
-    box-shadow: 0 2px 10px rgba(192,57,43,0.5);
+    box-shadow: 0 3px 12px rgba(180,50,30,0.55);
     transition: all 0.15s;
+    white-space: nowrap;
 }
-#btnEnfrentarChefe:hover { filter: brightness(1.2); transform: scale(1.05); }
+#btnEnfrentarChefe:hover { filter: brightness(1.2); transform: scale(1.04); }
 
-/* ── BARRA HP ── */
+/* ── BARRA HP INIMIGO ── */
 #hpAreaBatalha {
     position: absolute;
-    top: 54px; left: 50%;
+    top: 56px; left: 50%;
     transform: translateX(-50%);
-    width: 58%;
-    min-width: 280px;
+    width: 60%;
+    min-width: 270px;
+    max-width: 480px;
+    pointer-events: none;
 }
 
 #hpNomeRow {
     display: flex;
     justify-content: space-between;
+    align-items: baseline;
     margin-bottom: 4px;
 }
 #nomeInimigo {
     font-weight: 800;
     font-size: 13px;
     color: #ffcccc;
-    text-shadow: 0 0 10px rgba(255,100,100,0.6);
+    text-shadow: 0 0 12px rgba(255,100,100,0.65);
 }
-#hpNumero { font-size: 13px; color: var(--cor-texto2); }
+#hpNumero { font-size: 12px; color: var(--cor-texto2); font-weight: 700; }
 
 #hpBarraContainer {
     position: relative;
     width: 100%;
-    height: 14px;
-    background: rgba(0,0,0,0.5);
+    height: 16px;
+    background: rgba(0,0,0,0.55);
     border-radius: 20px;
-    border: 1px solid rgba(255,100,100,0.35);
+    border: 1px solid rgba(255,100,100,0.30);
     overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.5);
 }
 #hpInimigo {
     height: 100%;
     width: 100%;
-    background: linear-gradient(90deg, #c0392b 0%, #e74c3c 50%, #ff6b6b 100%);
+    background: linear-gradient(90deg, #a02020 0%, #d43535 45%, #ff5858 100%);
     border-radius: 20px;
     transition: width 0.18s ease-out;
-    position: relative;
 }
 #hpBrilho {
     position: absolute;
     top: 0; left: 0; right: 0;
-    height: 40%;
-    background: rgba(255,255,255,0.15);
+    height: 42%;
+    background: rgba(255,255,255,0.18);
     border-radius: 20px 20px 0 0;
     pointer-events: none;
 }
 
-/* ── MOEDA CENTRO (igual TT2) ── */
+/* ── MOEDA CENTRO (TT2) ── */
 #moedaCentro {
     position: absolute;
-    top: 100px; left: 50%;
+    top: 106px; left: 50%;
     transform: translateX(-50%);
     display: flex;
     align-items: center;
     gap: 6px;
-    font-size: 26px;
+    font-size: 28px;
     font-weight: 900;
     color: var(--cor-acento);
-    text-shadow: 0 2px 10px rgba(245,166,35,0.6);
+    text-shadow: 0 2px 12px rgba(245,166,35,0.65);
     font-family: var(--fonte-titulo);
     pointer-events: none;
+    white-space: nowrap;
 }
-#moedaCentroIcon { font-size: 24px; }
+#moedaCentroIcon { font-size: 22px; }
 
 /* ── FALA DO MONSTRO ── */
 #falaInimigo {
     position: absolute;
-    top: 148px; left: 50%;
+    top: 150px; left: 50%;
     transform: translateX(-50%);
     pointer-events: none;
     opacity: 0;
@@ -460,76 +446,75 @@ canvas {
 }
 #falaInimigo.visivel { opacity: 1; }
 #falaTexto {
-    background: rgba(20, 5, 5, 0.92);
-    border: 1px solid rgba(255, 80, 80, 0.5);
-    border-radius: 12px;
-    padding: 8px 16px;
+    background: rgba(18,4,4,0.94);
+    border: 1px solid rgba(255,70,70,0.45);
+    border-radius: 14px;
+    padding: 8px 18px;
     font-size: 13px;
     color: #ffbbbb;
     font-style: italic;
-    white-space: nowrap;
-    max-width: 70vw;
+    max-width: 72vw;
     white-space: normal;
     text-align: center;
     box-shadow: 0 4px 20px rgba(255,50,50,0.2);
 }
 
-/* ── PAINEL INFERIOR ── */
+/* ── PAINEL INFERIOR ─ idêntico ao TT2 ── */
 #painelInferior {
     position: absolute;
     bottom: 0; left: 0; right: 0;
+    display: flex;
+    flex-direction: column;
 }
 
+/* Barra de stats rápidos */
 #statsRapidos {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 6px 16px;
-    background: rgba(8,7,20,0.92);
+    background: rgba(5,4,14,0.95);
     border-top: 1px solid var(--cor-borda);
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 700;
+    gap: 8px;
 }
-#danoTaqueUI { color: var(--cor-acento); }
-#moedaUIBatalha { color: #ffd700; }
-#gemaUIBatalha  { color: #88eeff; }
+#danoTaqueUI   { color: var(--cor-acento); }
+#moedaUIBatalha{ color: #ffd070; }
+#gemaUIBatalha { color: #88eeff; }
 
-/* ── ABAS RODAPÉ (estilo TT2) ── */
+/* Abas rodapé */
 #abaRodape {
     display: flex;
-    background: rgba(10,9,25,0.98);
+    background: rgba(5,4,14,0.98);
     border-top: 1px solid var(--cor-borda);
 }
 .abaRodapeBtn {
     flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 2px;
+    display: flex; flex-direction: column; align-items: center; gap: 2px;
     padding: 8px 4px 6px;
     background: transparent;
     border: none;
     border-top: 3px solid transparent;
     color: var(--cor-texto2);
     font-family: var(--fonte-corpo);
-    font-size: 10px;
-    font-weight: 700;
+    font-size: 10px; font-weight: 700;
     cursor: pointer;
     transition: all 0.15s;
     text-transform: uppercase;
     letter-spacing: 0.3px;
 }
 .abaRodapeBtn .abaIcon { font-size: 18px; }
-.abaRodapeBtn:hover { color: var(--cor-texto); }
+.abaRodapeBtn:hover { color: var(--cor-texto); background: rgba(255,255,255,0.03); }
 .abaRodapeBtn.ativa {
     color: var(--cor-acento);
     border-top-color: var(--cor-acento);
-    background: rgba(245,166,35,0.06);
+    background: rgba(245,166,35,0.05);
 }
 
-/* ── CONTEÚDO DA ABA ── */
+/* Conteúdo da aba */
 #abaConteudo {
-    background: rgba(10,9,25,0.98);
+    background: rgba(5,4,14,0.98);
     border-top: 1px solid var(--cor-borda);
     overflow-y: auto;
     max-height: 240px;
@@ -542,77 +527,67 @@ canvas {
 .abaPanel { padding: 10px 14px 12px; }
 .upgradeScroll { display: flex; flex-direction: column; gap: 6px; }
 
-/* ── ITEM DE UPGRADE ── */
+/* Item de upgrade */
 .upgradeItem {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    background: rgba(255,255,255,0.03);
-    border: 1px solid rgba(255,255,255,0.06);
+    display: flex; align-items: center; gap: 12px;
+    background: rgba(255,255,255,0.025);
+    border: 1px solid rgba(255,255,255,0.055);
     border-radius: 10px;
     padding: 8px 12px;
     transition: background 0.15s;
 }
-.upgradeItem:hover { background: rgba(255,255,255,0.06); }
+.upgradeItem:hover { background: rgba(255,255,255,0.05); }
 .upIcone { font-size: 22px; width: 28px; text-align: center; }
-.upInfo { flex: 1; display: flex; flex-direction: column; gap: 1px; }
-.upNome { font-size: 13px; font-weight: 800; color: var(--cor-texto); }
-.upDesc { font-size: 11px; color: var(--cor-texto2); }
+.upInfo  { flex: 1; display: flex; flex-direction: column; gap: 1px; }
+.upNome  { font-size: 13px; font-weight: 800; color: var(--cor-texto); }
+.upDesc  { font-size: 11px; color: var(--cor-texto2); }
 
 .btnUp {
-    background: linear-gradient(135deg, #2e5c2e, #1a3a1a);
-    color: #7ee87e;
-    border: 1px solid #3a7a3a;
+    background: linear-gradient(135deg, #1e5c1e, #0e3a0e);
+    color: #70e870;
+    border: 1px solid #2e7a2e;
     border-radius: 8px;
     padding: 6px 14px;
     font-family: var(--fonte-corpo);
-    font-size: 12px;
-    font-weight: 800;
+    font-size: 12px; font-weight: 800;
     cursor: pointer;
     white-space: nowrap;
-    min-width: 80px;
-    text-align: center;
+    min-width: 80px; text-align: center;
     transition: all 0.15s;
     box-shadow: 0 2px 8px rgba(0,0,0,0.3);
 }
-.btnUp:hover { filter: brightness(1.25); transform: scale(1.04); }
+.btnUp:hover    { filter: brightness(1.25); transform: scale(1.04); }
+.btnUp:active   { transform: scale(0.98); }
 .btnUp:disabled { background: #1a1a28; color: #555; border-color: #333; cursor: not-allowed; transform: none; filter: none; }
 
-/* PRESTIGIAR */
+/* Prestigiar */
 .prestigiarBox {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    background: linear-gradient(135deg, rgba(40,30,5,0.8), rgba(30,20,5,0.8));
-    border: 1px solid rgba(245,166,35,0.3);
+    display: flex; align-items: center; gap: 12px;
+    background: linear-gradient(135deg, rgba(36,26,4,0.85), rgba(22,15,2,0.85));
+    border: 1px solid rgba(245,166,35,0.28);
     border-radius: 10px;
     padding: 10px 12px;
     margin-top: 6px;
 }
 .prestigiarInfo { flex: 1; }
-.prestigiarInfo b { font-size: 13px; color: var(--cor-acento); }
+.prestigiarInfo b     { font-size: 13px; color: var(--cor-acento); }
 .prestigiarInfo small { display: block; font-size: 11px; color: var(--cor-texto2); margin-top: 3px; }
 .btnPrestigiar {
-    background: var(--cor-acento);
-    color: #000;
-    border: none;
-    border-radius: 8px;
+    background: var(--cor-acento); color: #000;
+    border: none; border-radius: 8px;
     padding: 8px 14px;
-    font-family: var(--fonte-corpo);
-    font-size: 12px;
-    font-weight: 800;
-    cursor: pointer;
-    white-space: nowrap;
+    font-family: var(--fonte-corpo); font-size: 12px; font-weight: 800;
+    cursor: pointer; white-space: nowrap;
     transition: all 0.15s;
 }
 .btnPrestigiar:hover:not(:disabled) { filter: brightness(1.15); }
 .btnPrestigiar:disabled { background: #333; color: #888; cursor: not-allowed; }
 
-/* ── BOTÃO MINIMIZAR ── */
+/* Botão minimizar */
 #btnMinimizar {
     position: absolute;
     top: -30px; right: 12px;
-    background: rgba(10,9,25,0.95);
+    background: rgba(5,4,14,0.96);
     border: 1px solid var(--cor-borda);
     border-bottom: none;
     border-radius: 8px 8px 0 0;
@@ -622,24 +597,23 @@ canvas {
     cursor: pointer;
     transition: all 0.15s;
 }
-#btnMinimizar:hover { color: var(--cor-texto); background: rgba(255,255,255,0.06); }
+#btnMinimizar:hover { color: var(--cor-texto); background: rgba(255,255,255,0.05); }
 
-/* ── SAIR BATALHA ── */
+/* Sair da batalha */
 #btnSairBatalha {
     position: absolute;
     top: 9px; right: 12px;
-    background: rgba(192,57,43,0.18);
-    color: #ff7b7b;
-    border: 1px solid rgba(192,57,43,0.45);
+    background: rgba(180,45,35,0.16);
+    color: #ff7070;
+    border: 1px solid rgba(180,45,35,0.42);
     border-radius: 8px;
     padding: 6px 14px;
-    font-size: 12px;
-    font-weight: 800;
+    font-size: 12px; font-weight: 800;
     cursor: pointer;
     transition: all 0.15s;
     pointer-events: auto;
 }
-#btnSairBatalha:hover { background: rgba(192,57,43,0.35); color: #fff; }
+#btnSairBatalha:hover { background: rgba(180,45,35,0.32); color: #fff; }
 
 /* ═══════════════════════════════════════
    CARDS PÁGINA PRINCIPAL (mantido)
