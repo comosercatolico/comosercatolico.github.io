@@ -532,3 +532,4 @@ const UIModals = (() => {
     });
 
 })();
+window.UIModals = UIModals;
