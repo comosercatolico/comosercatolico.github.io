@@ -66,17 +66,17 @@
 // Controla a barra de progresso exibida na inicialização
 // ════════════════════════════════════════════════════════
 const Loading = (() => {
-    const _raiz    = document.getElementById("telaLoading");
-    const _barra   = document.getElementById("loadingBarra");
-    const _texto   = document.getElementById("loadingTexto");
-    const _subTexto= document.getElementById("loadingSubTexto");
+    const _raiz     = document.getElementById("telaLoading");
+    const _barra    = document.getElementById("loadingBarra");
+    const _texto    = document.getElementById("loadingTexto");
+    const _subTexto = document.getElementById("loadingSubTexto");
 
     let _pct = 0;
 
     function progresso(pct, msg, sub) {
         _pct = Math.max(_pct, Math.min(100, pct));   // nunca regride
-        if (_barra)    _barra.style.width   = `${_pct}%`;
-        if (_texto  && msg) _texto.textContent = msg;
+        if (_barra)               _barra.style.width   = `${_pct}%`;
+        if (_texto    && msg)     _texto.textContent    = msg;
         if (_subTexto && sub !== undefined) _subTexto.textContent = sub;
     }
 
@@ -259,27 +259,61 @@ function _inicializarBase() {
 async function _carregarAssets() {
     return new Promise(resolve => {
 
-        // Módulo AssetLoader novo
         const AL = _M.get("AssetLoader");
+
         if (AL?.carregar) {
-            AL.onProgresso = pct => {
-                Loading.progresso(12 + pct * 0.36, "Carregando imagens...", `${pct}%`);
-            };
-            AL.onCompleto = () => {
-                _log("AssetLoader: completo.");
+            const EB = _M.get("EventBus");
+
+            // Guarda se já resolveu para não chamar resolve() duas vezes
+            let _resolvido = false;
+            const _resolver = () => {
+                if (_resolvido) return;
+                _resolvido = true;
                 resolve();
             };
-            AL.carregar();
+
+            if (EB) {
+                // ✅ Escuta eventos que o AssetLoader já emite internamente
+                // em vez de tentar atribuir propriedades no objeto congelado
+                EB.on("assets:progresso", ({ pct }) => {
+                    Loading.progresso(
+                        12 + pct * 36,
+                        "Carregando imagens...",
+                        `${Math.round(pct * 100)}%`
+                    );
+                });
+
+                // Resolve quando tudo terminar com sucesso
+                EB.on("assets:completo", () => {
+                    _log("AssetLoader: completo.");
+                    _resolver();
+                });
+
+                // Resolve mesmo se assets críticos falharem
+                // (AssetLoader já cria fallbacks visuais automaticamente)
+                EB.on("assets:erro_critico", ({ assets }) => {
+                    console.warn("[Main] Assets críticos falharam:", assets);
+                    _resolver();
+                });
+            }
+
+            // Inicia o carregamento
+            AL.carregar()
+                .then(() => _resolver())   // garante resolve mesmo sem EventBus
+                .catch(e => {
+                    console.warn("[Main] AssetLoader.carregar() falhou:", e);
+                    _resolver();           // nunca trava o jogo
+                });
+
             return;
         }
 
-        // Fallback: chama função legada do game-batalha.js
+        // ── Fallback legado ──────────────────────────────
         if (typeof window.carregarAssets === "function") {
             window.carregarAssets();
         }
 
-        // Dá 800ms para as imagens começarem a carregar
-        // (as imagens legadas carregam em background)
+        // Dá 800ms para as imagens começarem a carregar em background
         setTimeout(resolve, 800);
     });
 }
@@ -314,8 +348,8 @@ function _inicializarCanvas() {
         canvas.width  = window.innerWidth;
         canvas.height = window.innerHeight;
         window.ctx.imageSmoothingEnabled = false;
-        _M.chamar("RendererLobby",  "aoRedimensionar");
-        _M.chamar("Camera",         "redimensionar");
+        _M.chamar("RendererLobby", "aoRedimensionar");
+        _M.chamar("Camera",        "redimensionar");
         _emitir("canvas:resize", { w: canvas.width, h: canvas.height });
     }, 150);
 
@@ -340,11 +374,9 @@ async function _inicializarEstadoESave() {
 
     const SS = _M.get("SaveSystem");
     if (SS) {
-        // SaveSystem modular novo (tem init que carrega e aplica)
         if (typeof SS.init === "function") {
-            dadosSave = SS.init();   // retorna os dados carregados
+            dadosSave = SS.init();
         } else {
-            // SaveSystem do game-ui.js (tem carregar e aplica via inicializarSave)
             if (typeof window.inicializarSave === "function") {
                 window.inicializarSave();
             } else {
@@ -378,9 +410,9 @@ function _aplicarSaveLegado(save) {
     try {
         if (!save) return;
         const B = _M.get("BALANCE") ?? {};
-        window.moeda  = save.moeda  ?? B.MOEDA_INICIAL ?? 0;
-        window.gema   = save.gema   ?? B.GEMA_INICIAL  ?? 50;
-        window.estagio= save.estagio ?? 1;
+        window.moeda   = save.moeda   ?? B.MOEDA_INICIAL ?? 0;
+        window.gema    = save.gema    ?? B.GEMA_INICIAL  ?? 50;
+        window.estagio = save.estagio ?? 1;
 
         if (save.upgrades && window.upgrades) {
             Object.entries(save.upgrades).forEach(([k, nivel]) => {
@@ -390,9 +422,9 @@ function _aplicarSaveLegado(save) {
         if (save.personagem && window.personagem) {
             Object.assign(window.personagem, save.personagem);
         }
-        if (save.herois)  window.heroisObtidos        = save.herois;
-        if (save.equips)  window.equipamentosObtidos  = save.equips;
-        if (save.pity)    _M.get("GachaSystem")?.setPity?.(save.pity);
+        if (save.herois)      window.heroisObtidos       = save.herois;
+        if (save.equips)      window.equipamentosObtidos = save.equips;
+        if (save.pity)        _M.get("GachaSystem")?.setPity?.(save.pity);
         if (save.conquistas && window.conquistasDesbloqueadas) {
             save.conquistas.forEach(id => window.conquistasDesbloqueadas.add(id));
         }
@@ -406,7 +438,6 @@ function _aplicarSaveLegado(save) {
 // ════════════════════════════════════════════════════════
 function _inicializarSistemas() {
     const sistemas = [
-        // [nome do módulo, nome do método de init]
         ["Economy",      "init"],
         ["Upgrades",     "init"],
         ["Experience",   "init"],
@@ -476,9 +507,8 @@ function _inicializarUI() {
 // FASE 8 — INPUT + ÁUDIO
 // ════════════════════════════════════════════════════════
 function _inicializarInputAudio() {
-    // Input.init() já foi chamado com o canvas na fase 4
-    // (Input precisa do canvas — inicializado junto com ele)
-    // Aqui apenas garantimos o fallback se não foi inicializado
+    // Input.init() já foi chamado com o canvas na fase 4.
+    // Aqui garantimos o fallback se não foi inicializado.
     if (!_M.chamar("Input", "init", window.canvas)) {
         _registrarInputFallback();
     }
@@ -493,7 +523,6 @@ function _inicializarInputAudio() {
 // FASE 9 — LOOP DE RENDERIZAÇÃO
 // ════════════════════════════════════════════════════════
 
-// Estado do loop
 const _loopState = {
     rodando  : false,
     rafId    : null,
@@ -521,7 +550,7 @@ function _pararLoop() {
 }
 
 function _frame(agora) {
-    // Agenda próximo frame ANTES do trabalho (garante continuidade mesmo em erro)
+    // Agenda próximo frame ANTES do trabalho
     _loopState.rafId = requestAnimationFrame(_frame);
     if (!_loopState.rodando) return;
 
@@ -539,28 +568,26 @@ function _frame(agora) {
         _emitir("fps:update", _loopState.fps);
     }
 
-    // Atualiza câmera
+    // Câmera
     const emBatalha = _emBatalha();
     try { _M.get("Camera")?.atualizar(emBatalha); } catch(_) {}
 
-    // Emite evento de pre-frame (ripples, etc.)
+    // Pre-frame (ripples, partículas, etc.)
     _emitir("renderer:preframe", { ctx: window.ctx, delta });
 
     // ── Renderização ──
     const Renderer = _M.get("Renderer");
     if (Renderer?.loop) {
-        // Renderer modular
         try { Renderer.loop(agora, delta); } catch(e) {
             console.error("[Loop] Renderer.loop falhou:", e);
         }
     } else {
-        // Fallback legado
         _loopFallback(delta);
     }
 
-    // Tick dos módulos de UI que precisam atualizar a cada frame
-    try { _M.get("UIHud")?.tick?.();    } catch(_) {}
-    try { _M.get("UIBattle")?.tick?.(); } catch(_) {}
+    // Tick de UI e efeitos
+    try { _M.get("UIHud")?.tick?.();        } catch(_) {}
+    try { _M.get("UIBattle")?.tick?.();     } catch(_) {}
     try { _M.get("Effects")?.atualizar?.(); } catch(_) {}
 }
 
@@ -574,7 +601,6 @@ function _loopFallback() {
     try {
         if (window.emBatalha) {
             window.desenharBatalha?.();
-            // UI de batalha — throttled internamente
             if (typeof atualizarUIBatalha === "function") atualizarUIBatalha();
         } else {
             window.desenharLobby?.();
@@ -593,7 +619,6 @@ function _posInit(dadosSave) {
     _registrarVisibilidade();
     _notificarOffline(dadosSave);
 
-    // Verificação inicial de conquistas
     setTimeout(() => {
         _M.chamar("Achievements", "verificar");
     }, 600);
@@ -606,9 +631,7 @@ function _posInit(dadosSave) {
 // ════════════════════════════════════════════════════════
 function _iniciarAutoSave() {
     const intervalo = _M.get("BALANCE")?.SAVE_INTERVALO_MS ?? 30_000;
-
     setInterval(_salvar, intervalo);
-
     _log(`Auto-save configurado (${intervalo / 1000}s).`);
 }
 
@@ -629,12 +652,12 @@ function _registrarEventosSistema() {
     const EB = _M.get("EventBus");
     if (!EB) return;
 
-    // ── Contadores globais (suporte ao código legado) ──
+    // Contadores globais (suporte ao código legado)
     EB.on("kill:registrado",  () => { window._totalKills      = (window._totalKills      ?? 0) + 1; });
     EB.on("upgrade:comprado", () => { window._totalUpgrades   = (window._totalUpgrades   ?? 0) + 1; });
     EB.on("prestigio:feito",  () => { window._totalPrestígios = (window._totalPrestígios ?? 0) + 1; _salvar(); });
 
-    // ── Sincroniza HUD ao mudar moeda/gema ──
+    // Sincroniza HUD ao mudar moeda/gema
     EB.on("moeda:update", () => {
         _chamarLegado("atualizarHUDLobby");
         _M.get("UIHud")?.atualizar?.();
@@ -644,7 +667,7 @@ function _registrarEventosSistema() {
         _M.get("UIHud")?.atualizar?.();
     });
 
-    // ── Mudança de modo batalha ↔ lobby ──
+    // Mudança de modo batalha ↔ lobby
     EB.on("batalha:iniciou", () => {
         window.emBatalha = true;
         _chamarLegado("iniciarBatalha");
@@ -656,21 +679,18 @@ function _registrarEventosSistema() {
         _salvar();
     });
 
-    // ── Salva em eventos críticos ──
-    EB.on("gacha:pull",               _salvar);
-    EB.on("conquista:desbloqueada",   _salvar);
-    EB.on("quest:coletada",           _salvar);
-    EB.on("nivel:up",                 _salvar);
+    // Salva em eventos críticos
+    EB.on("gacha:pull",             _salvar);
+    EB.on("conquista:desbloqueada", _salvar);
+    EB.on("quest:coletada",         _salvar);
+    EB.on("nivel:up",               _salvar);
 
-    // ── Debug ──
+    // Debug — atualiza title da aba em dev
     EB.on("fps:update", fps => {
-        // Atualiza title da aba em dev
-        if (_isDev()) {
-            document.title = `[${fps}fps] Tap Lisieux`;
-        }
+        if (_isDev()) document.title = `[${fps}fps] Tap Lisieux`;
     });
 
-    // ── Erros capturados de outros módulos ──
+    // Erros capturados de outros módulos
     EB.on("modulo:erro", ({ modulo, erro }) => {
         console.error(`[Sistema] Erro em ${modulo}:`, erro);
     });
@@ -701,11 +721,11 @@ function _registrarVisibilidade() {
 function _notificarOffline(dadosSave) {
     if (!dadosSave?.timestamp) return;
 
-    const agora    = Date.now();
-    const deltaMs  = agora - dadosSave.timestamp;
-    const maxMs    = (_M.get("BALANCE")?.MAX_OFFLINE_HORAS ?? 8) * 3_600_000;
-    const efetivoMs= Math.min(deltaMs, maxMs);
-    const segundos = Math.floor(efetivoMs / 1000);
+    const agora     = Date.now();
+    const deltaMs   = agora - dadosSave.timestamp;
+    const maxMs     = (_M.get("BALANCE")?.MAX_OFFLINE_HORAS ?? 8) * 3_600_000;
+    const efetivoMs = Math.min(deltaMs, maxMs);
+    const segundos  = Math.floor(efetivoMs / 1000);
 
     if (segundos < 60) return;   // menos de 1 min — ignora
 
@@ -727,11 +747,11 @@ function _notificarOffline(dadosSave) {
 
     // Toast com delay (garante que Toast está pronto)
     setTimeout(() => {
-        const fmt  = window.formatarNum ?? (n => String(n));
-        const h    = Math.floor(segundos / 3600);
-        const m    = Math.floor((segundos % 3600) / 60);
-        const s    = segundos % 60;
-        const txt  = h > 0 ? `${h}h ${m}min` : m > 0 ? `${m}min` : `${s}s`;
+        const fmt = window.formatarNum ?? (n => String(n));
+        const h   = Math.floor(segundos / 3600);
+        const m   = Math.floor((segundos % 3600) / 60);
+        const s   = segundos % 60;
+        const txt = h > 0 ? `${h}h ${m}min` : m > 0 ? `${m}min` : `${s}s`;
 
         const Toast = _M.get("Toast");
         try {
@@ -745,7 +765,7 @@ function _notificarOffline(dadosSave) {
 }
 
 // ════════════════════════════════════════════════════════
-// INPUT FALLBACK (enquanto input.js não está carregado)
+// INPUT FALLBACK
 // ════════════════════════════════════════════════════════
 function _registrarInputFallback() {
     const canvas = window.canvas;
@@ -754,9 +774,9 @@ function _registrarInputFallback() {
     const _click = () => {
         if (!window.emBatalha) return;
         const dano = typeof calcDanoClick === "function" ? calcDanoClick() : 1;
-        if (typeof darDano === "function") darDano(dano, "click");
-        if (typeof dispararAtaquePersonagem === "function") dispararAtaquePersonagem();
-        if (typeof dispararFlor             === "function") dispararFlor();
+        if (typeof darDano                    === "function") darDano(dano, "click");
+        if (typeof dispararAtaquePersonagem   === "function") dispararAtaquePersonagem();
+        if (typeof dispararFlor               === "function") dispararFlor();
         _emitir("damage:click", { valor: dano });
     };
 
@@ -800,7 +820,7 @@ function _emBatalha() {
 }
 
 function _isDev() {
-    return location.hostname === "localhost" ||
+    return location.hostname === "localhost"  ||
            location.hostname === "127.0.0.1" ||
            location.search.includes("debug");
 }
