@@ -1,631 +1,661 @@
-/* ═══════════════════════════════════════
-   RESET & BASE
-═══════════════════════════════════════ */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+// ═══════════════════════════════════════
+//  GAME-BATALHA.JS  — Estilo Tap Titans 2
+// ═══════════════════════════════════════
 
-:root {
-    --cor-fundo:      #07060f;
-    --cor-painel:     #100f26;
-    --cor-painel2:    #18163a;
-    --cor-borda:      #2b2858;
-    --cor-acento:     #f5a623;
-    --cor-acento2:    #e8416f;
-    --cor-verde:      #4caf7d;
-    --cor-azul:       #4a90d9;
-    --cor-roxo:       #9b59b6;
-    --cor-texto:      #ede9f8;
-    --cor-texto2:     #8c88a8;
-    --fonte-titulo:   'Cinzel', serif;
-    --fonte-corpo:    'Nunito', sans-serif;
-    --r:              12px;
-    --sombra:         0 4px 24px rgba(0,0,0,0.6);
-}
+const ASSET_BASE = "https://comosercatolico.github.io/jogos/Tap%20Lisieux/tiles/";
 
-body {
-    background: var(--cor-fundo);
-    font-family: var(--fonte-corpo);
-    color: var(--cor-texto);
-    overflow: hidden;
-    user-select: none;
-    -webkit-tap-highlight-color: transparent;
-}
+// ── Economia ──
+let moeda = 0, gema = 50;
 
-canvas {
-    display: block;
-    position: fixed;
-    top: 0; left: 0;
-    z-index: 0;
+// ── Upgrades ──
+const upgrades = {
+    forca:     { nivel:1, base:5,  mult:1.50, cBase:15, cCres:1.60,
+                 get dano(){ return Math.floor(this.base * Math.pow(this.mult, this.nivel-1)); },
+                 get custo(){ return Math.floor(this.cBase * Math.pow(this.cCres, this.nivel-1)); } },
+    rosa:      { nivel:1, base:3,  mult:1.40, cBase:20, cCres:1.65,
+                 get dano(){ return Math.floor(this.base * Math.pow(this.mult, this.nivel-1)); },
+                 get custo(){ return Math.floor(this.cBase * Math.pow(this.cCres, this.nivel-1)); } },
+    velocidade:{ nivel:1, base:1.0,mult:1.10, cBase:30, cCres:1.70,
+                 get bonus(){ return parseFloat((this.base * Math.pow(this.mult, this.nivel-1)).toFixed(2)); },
+                 get custo(){ return Math.floor(this.cBase * Math.pow(this.cCres, this.nivel-1)); } },
+    dps:       { nivel:1, base:2,  mult:1.60, cBase:25, cCres:1.70,
+                 get valor(){ return Math.floor(this.base * Math.pow(this.mult, this.nivel-1)); },
+                 get custo(){ return Math.floor(this.cBase * Math.pow(this.cCres, this.nivel-1)); } }
+};
+
+function calcDanoClick() { return Math.floor((upgrades.forca.dano + upgrades.rosa.dano) * upgrades.velocidade.bonus); }
+function calcDps()        { return upgrades.dps.valor; }
+
+function comprarUpgrade(tipo) {
+    const up = upgrades[tipo];
+    if (moeda < up.custo) return;
+    moeda -= up.custo;
+    up.nivel++;
+    atualizarUIUpgrades();
+    atualizarUIBatalha();
 }
 
-/* ═══════════════════════════════════════
-   LOBBY HUD (TOPO)
-═══════════════════════════════════════ */
-#lobbyHUD {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 8px 14px;
-    background: linear-gradient(180deg, rgba(5,4,14,0.96) 0%, rgba(5,4,14,0.6) 100%);
-    border-bottom: 1px solid var(--cor-borda);
-    z-index: 80;
-    backdrop-filter: blur(8px);
+// ── Personagem ──
+let personagem = { nivel: 1, exp: 0, expMax: 100 };
+
+// ── Estado de batalha ──
+let emBatalha = false;
+let estagio   = 1;
+let textos    = [];
+
+// ── Inimigo ──
+let inimigo = { nome: "", hp: 0, maxHp: 0, nivel: 1, rMoeda: 0, rGema: 0 };
+
+// ── Hit state ──
+const hitState = { tremendo: 0, flash: 0 };
+
+// ════════════════════════════════════════
+//  ASSETS
+// ════════════════════════════════════════
+const assets = {
+    cenario: null,
+    chao:    null,
+    santa:   [],
+};
+
+function carregarAssets() {
+    const imgCenario = new Image();
+    imgCenario.crossOrigin = "anonymous";
+    imgCenario.onload  = () => { assets.cenario = imgCenario; };
+    imgCenario.src = ASSET_BASE + "piso-de-batalha/cenario1.png";
+
+    const imgChao = new Image();
+    imgChao.crossOrigin = "anonymous";
+    imgChao.onload  = () => { assets.chao = imgChao; };
+    imgChao.src = ASSET_BASE + "piso-de-batalha/piso1.png";
+
+    for (let i = 1; i <= 8; i++) {
+        const img = new Image();
+        img.crossOrigin = "anonymous";
+        const idx = i - 1;
+        img.onload = () => { assets.santa[idx] = img; };
+        img.src = ASSET_BASE + "animation_summon/str-conjurando" + i + ".png";
+    }
+}
+carregarAssets();
+
+// ════════════════════════════════════════
+//  NOMES / MONSTROS
+// ════════════════════════════════════════
+const nomesEstagio = [
+    "Jardim das Sombras","Cripta Maldita","Floresta Corrompida",
+    "Vale das Trevas","Torre do Mal","Abismo Profundo",
+    "Santuário Profanado","Catedral Sombria","Portal Infernal","Domínio do Caos"
+];
+
+const tiposMonstros = [
+    { nome:"Demônio",          emojis:{ normal:"😈", dor:"😖", medo:"😱", raiva:"👿" } },
+    { nome:"Espírito Maligno", emojis:{ normal:"👻", dor:"😵", medo:"😨", raiva:"💢" } },
+    { nome:"Sombra Corrompida",emojis:{ normal:"🕷", dor:"💀", medo:"😰", raiva:"🕷" } },
+    { nome:"Chefe das Trevas", emojis:{ normal:"💀", dor:"😣", medo:"😱", raiva:"😡" } },
+    { nome:"Anjo Caído",       emojis:{ normal:"😤", dor:"🥴", medo:"😰", raiva:"🔥" } }
+];
+
+const falasMonstros = {
+    "Demônio":          ["Você é uma inútil mesmo!","Nem suas orações te salvam!","Que fraquinha!","Vai chorar pro seu Deus?"],
+    "Espírito Maligno": ["Florzinhas? Ridículo!","Desista, santinha!","Sua fé não vale nada!"],
+    "Sombra Corrompida":["A escuridão vence a luz!","Suas rosas não têm poder aqui!"],
+    "Chefe das Trevas": ["Eu sou eterno!","A santa mais fraca que já enfrentei!"],
+    "Anjo Caído":       ["Caí por escolha!","Agora sirvo a mim mesmo!"]
+};
+
+function tipoMonstroIdx(e) {
+    if (e % 10 === 0) return 3;
+    return Math.floor((e - 1) / 3) % (tiposMonstros.length - 1);
+}
+function nomeStageName(e) { return nomesEstagio[(e - 1) % nomesEstagio.length]; }
+
+let timerFala = null, falaAtiva = false;
+function exibirFala(nomeBase) {
+    const falas = falasMonstros[nomeBase] || falasMonstros["Demônio"];
+    const txt   = falas[Math.floor(Math.random() * falas.length)];
+    const el    = document.getElementById("falaInimigo");
+    const tel   = document.getElementById("falaTexto");
+    if (!el || !tel) return;
+    tel.innerText = `"${txt}"`;
+    el.classList.add("visivel");
+    falaAtiva = true;
+    if (timerFala) clearTimeout(timerFala);
+    timerFala = setTimeout(() => { el.classList.remove("visivel"); falaAtiva = false; }, 3500);
 }
 
-#lobbyHUDEsq { display: flex; gap: 8px; }
-#lobbyMoedas { display: flex; gap: 6px; align-items: center; }
-
-.moedaHUD {
-    background: rgba(255,255,255,0.06);
-    border: 1px solid rgba(255,255,255,0.10);
-    border-radius: 20px;
-    padding: 5px 14px;
-    font-size: 13px;
-    font-weight: 800;
-    color: var(--cor-texto);
-    backdrop-filter: blur(4px);
-    transition: background 0.2s;
-}
-.moedaHUD:hover { background: rgba(255,255,255,0.10); }
-
-.btnTop {
-    background: rgba(255,255,255,0.07);
-    color: var(--cor-texto);
-    border: 1px solid rgba(255,255,255,0.13);
-    border-radius: 10px;
-    padding: 7px 12px;
-    font-size: 15px;
-    cursor: pointer;
-    transition: all 0.15s;
-    backdrop-filter: blur(4px);
-}
-.btnTop:hover { background: rgba(255,255,255,0.14); transform: translateY(-1px); }
-.btnTop:active { transform: translateY(1px); }
-
-/* ═══════════════════════════════════════
-   BOTÕES DO LOBBY (RODAPÉ)
-═══════════════════════════════════════ */
-#lobbybotoes {
-    position: fixed;
-    bottom: 0; left: 0; right: 0;
-    display: flex;
-    gap: 12px;
-    z-index: 80;
-    background: linear-gradient(0deg, rgba(5,4,14,0.98) 0%, rgba(5,4,14,0.65) 100%);
-    border-top: 1px solid var(--cor-borda);
-    padding: 10px 20px 20px;
-    justify-content: center;
+function configurarInimigo(e) {
+    const idx   = tipoMonstroIdx(e);
+    const tipo  = tiposMonstros[idx];
+    const chefe = e % 10 === 0;
+    inimigo.nome   = tipo.nome + (chefe ? " [CHEFE]" : "") + " Lv." + e;
+    inimigo.nivel  = e;
+    inimigo.maxHp  = Math.floor(80 * Math.pow(1.22, e));
+    inimigo.hp     = inimigo.maxHp;
+    inimigo.rMoeda = Math.floor(10 * Math.pow(1.15, e));
+    inimigo.rGema  = chefe ? Math.floor(5 + e / 5) : (Math.random() < 0.05 ? 1 : 0);
+    setTimeout(() => exibirFala(tipo.nome), 900);
 }
 
-.btnLobby {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 4px;
-    background: linear-gradient(160deg, #252345 0%, #181632 100%);
-    color: var(--cor-texto);
-    border: 1px solid var(--cor-borda);
-    border-radius: 14px;
-    padding: 12px 20px 10px;
-    font-family: var(--fonte-corpo);
-    font-size: 11px;
-    font-weight: 800;
-    cursor: pointer;
-    min-width: 88px;
-    transition: all 0.15s;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.05);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-.btnLobby:hover  { transform: translateY(-3px); filter: brightness(1.2); }
-.btnLobby:active { transform: translateY(0); }
-.btnLobby .btnIcon  { font-size: 22px; }
-.btnLobby .btnLabel { font-size: 11px; }
-
-.btnLobby.gacha {
-    background: linear-gradient(160deg, #3e2e00 0%, #281d00 100%);
-    border-color: var(--cor-acento);
-    box-shadow: 0 2px 16px rgba(245,166,35,0.22), inset 0 1px 0 rgba(255,255,255,0.07);
-    color: var(--cor-acento);
-}
-.btnLobby.gacha:hover { box-shadow: 0 4px 24px rgba(245,166,35,0.42); }
-
-.btnLobby.batalha {
-    background: linear-gradient(160deg, #3d0b1a 0%, #250710 100%);
-    border-color: var(--cor-acento2);
-    box-shadow: 0 2px 16px rgba(232,65,111,0.22), inset 0 1px 0 rgba(255,255,255,0.07);
-    color: var(--cor-acento2);
-}
-.btnLobby.batalha:hover { box-shadow: 0 4px 24px rgba(232,65,111,0.42); }
-
-/* ═══════════════════════════════════════
-   MODAIS
-═══════════════════════════════════════ */
-.modalOverlay {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100vw; height: 100vh;
-    background: rgba(0,0,0,0.80);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 500;
-    backdrop-filter: blur(4px);
+function iniciarBatalha() {
+    emBatalha = true;
+    document.getElementById("uiBatalha").style.display = "flex";
+    document.getElementById("lobbyHUD").style.display  = "none";
+    document.getElementById("lobbybotoes").style.display = "none";
+    inicializarFlores();
+    configurarInimigo(estagio);
+    atualizarUIBatalha();
+    atualizarUIUpgrades();
 }
 
-.modalBox {
-    background: linear-gradient(160deg, #15132c 0%, #0d0b22 100%);
-    border: 1px solid var(--cor-borda);
-    border-radius: 18px;
-    padding: 22px;
-    width: 92%;
-    max-width: 460px;
-    max-height: 88vh;
-    overflow-y: auto;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.75);
-}
-.modalBox.grande { max-width: 540px; }
-.modalBox.small  { max-width: 360px; }
-.modalBox::-webkit-scrollbar { width: 4px; }
-.modalBox::-webkit-scrollbar-thumb { background: var(--cor-borda); border-radius: 4px; }
-
-.modalTopo {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 18px;
-    padding-bottom: 14px;
-    border-bottom: 1px solid var(--cor-borda);
-}
-.modalTopo h2 {
-    font-family: var(--fonte-titulo);
-    font-size: 17px;
-    color: var(--cor-acento);
-    letter-spacing: 1px;
+function sairBatalha() {
+    emBatalha = false;
+    document.getElementById("uiBatalha").style.display   = "none";
+    document.getElementById("lobbyHUD").style.display    = "flex";
+    document.getElementById("lobbybotoes").style.display = "flex";
+    floresAtaque = [];
 }
 
-.btnFecharModal {
-    background: rgba(232,65,111,0.14);
-    color: var(--cor-acento2);
-    border: 1px solid rgba(232,65,111,0.38);
-    border-radius: 8px;
-    padding: 5px 12px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: all 0.15s;
-}
-.btnFecharModal:hover { background: rgba(232,65,111,0.28); }
+function irEstagioAnterior() { if (estagio > 1) { estagio--; configurarInimigo(estagio); atualizarUIBatalha(); } }
+function irProximoEstagio()  { estagio++; configurarInimigo(estagio); atualizarUIBatalha(); }
+function irParaChefe()       { estagio = Math.ceil(estagio / 10) * 10; configurarInimigo(estagio); atualizarUIBatalha(); }
 
-.secaoTitulo {
-    color: var(--cor-acento);
-    font-family: var(--fonte-titulo);
-    font-size: 13px;
-    letter-spacing: 1px;
-    margin: 14px 0 8px;
-    text-transform: uppercase;
+function darDano(valor, tipo) {
+    if (!emBatalha) return;
+    inimigo.hp -= valor;
+    hitState.tremendo = 14;
+    hitState.flash    = 10;
+    criarTexto("-" + formatarNum(valor), tipo);
+    if (inimigo.hp <= 0) matarInimigo();
 }
 
-.dica { color: var(--cor-texto2); font-size: 12px; margin-top: 10px; }
-.configLabel { display: block; color: var(--cor-texto2); font-size: 12px; margin-bottom: 6px; margin-top: 10px; }
-.slider { width: 100%; accent-color: var(--cor-acento); }
-
-/* ═══════════════════════════════════════
-   GACHA / INVOCAR
-═══════════════════════════════════════ */
-.taxasRaridade { display: flex; gap: 6px; margin-bottom: 14px; flex-wrap: wrap; }
-.taxa { padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 800; border: 1px solid; }
-.taxa.comum    { background: rgba(150,150,150,0.12); border-color: #777; color: #aaa; }
-.taxa.raro     { background: rgba(68,136,255,0.12);  border-color: #4488ff; color: #6ba3ff; }
-.taxa.epico    { background: rgba(170,68,255,0.12);  border-color: #aa44ff; color: #c480ff; }
-.taxa.lendario { background: rgba(255,170,0,0.12);   border-color: var(--cor-acento); color: var(--cor-acento); }
-
-.resultadoInvocar {
-    min-height: 28px;
-    font-size: 15px;
-    font-weight: 800;
-    font-style: italic;
-    margin-bottom: 14px;
-    padding: 8px 12px;
-    background: rgba(255,255,255,0.03);
-    border-radius: 8px;
-    border-left: 3px solid var(--cor-acento);
-    color: var(--cor-acento);
-}
-.resultadoInvocar.small { font-size: 12px; min-height: 20px; padding: 5px 10px; }
-
-.invocarBotoes { display: flex; gap: 10px; margin-bottom: 16px; }
-.btnInvocar {
-    flex: 1;
-    display: flex; flex-direction: column; align-items: center; gap: 2px;
-    background: linear-gradient(160deg, #252345 0%, #181632 100%);
-    border: 1px solid var(--cor-borda);
-    border-radius: 12px;
-    padding: 12px 8px;
-    color: var(--cor-texto);
-    font-family: var(--fonte-corpo);
-    font-weight: 800; font-size: 14px;
-    cursor: pointer;
-    transition: all 0.15s;
-}
-.btnInvocar .custo { font-size: 12px; color: #88eeff; }
-.btnInvocar:hover { filter: brightness(1.2); transform: translateY(-2px); }
-.btnInvocar.destaque {
-    background: linear-gradient(160deg, #3e2e00 0%, #281d00 100%);
-    border-color: var(--cor-acento);
-    color: var(--cor-acento);
-}
-.btnInvocar.small { font-size: 12px; padding: 8px 6px; border-radius: 8px; }
-
-.inventarioGrid { display: flex; flex-direction: column; gap: 12px; }
-.inventarioSecao h4 { color: var(--cor-texto2); font-size: 12px; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
-.gridItens { display: flex; flex-wrap: wrap; gap: 6px; }
-.gridItens.small { gap: 4px; }
-
-.itemTag {
-    display: inline-flex; align-items: center; gap: 4px;
-    border-radius: 8px; padding: 4px 10px;
-    font-size: 12px; font-weight: 700; border: 1px solid;
-    background: rgba(0,0,0,0.3);
-    transition: transform 0.1s;
-}
-.itemTag:hover { transform: scale(1.05); }
-
-/* ═══════════════════════════════════════
-   PERSONAGEM / EQUIPAR CARD
-═══════════════════════════════════════ */
-.personagemCard {
-    display: flex; align-items: center; gap: 12px;
-    background: rgba(255,255,255,0.03);
-    border-radius: 12px; padding: 12px;
-    border: 1px solid var(--cor-borda);
-    margin-bottom: 8px;
-    transition: border-color 0.2s;
-}
-.personagemCard.ativo { border-color: var(--cor-acento); }
-.personagemIcone { font-size: 38px; width: 52px; text-align: center; }
-.personagemInfo { flex: 1; display: flex; flex-direction: column; gap: 3px; }
-.personagemInfo b { font-size: 14px; }
-.personagemInfo small { color: var(--cor-texto2); font-size: 12px; }
-.badge { background: var(--cor-acento); color: #000; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 800; }
-
-/* ═══════════════════════════════════════
-   UI DE BATALHA  ─ Estilo Tap Titans 2
-═══════════════════════════════════════ */
-#uiBatalha {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100vw; height: 100vh;
-    z-index: 200;
-    display: flex;
-    flex-direction: column;
-    pointer-events: none;
-}
-#uiBatalha button,
-#batalhaNavTopo,
-#painelInferior,
-#statsRapidos,
-#btnSairBatalha { pointer-events: auto; }
-
-/* ── NAV TOPO ─ estágio + setas + chefe ── */
-#batalhaNavTopo {
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 8px 12px 6px;
-    background: linear-gradient(180deg, rgba(5,4,14,0.97) 0%, rgba(5,4,14,0.0) 100%);
-    pointer-events: auto;
+function matarInimigo() {
+    moeda += inimigo.rMoeda;
+    if (inimigo.rGema > 0) gema += inimigo.rGema;
+    for (let i = 0; i < Math.min(5, 1 + Math.floor(inimigo.rMoeda / 10)); i++) criarMoedaCaindo();
+    ganharExp(5 + estagio * 2);
+    estagio++;
+    floresAtaque = [];
+    configurarInimigo(estagio);
+    atualizarUIBatalha();
+    const btnP = document.getElementById("btnPrestigiar");
+    if (btnP) {
+        if (estagio >= 60) { btnP.disabled = false; btnP.innerText = "🌟 Prestigiar!"; }
+        else { btnP.disabled = true; btnP.innerText = `Alcance o Est. 60`; }
+    }
 }
 
-.navBtn {
-    background: rgba(255,255,255,0.07);
-    border: 1px solid var(--cor-borda);
-    border-radius: 8px;
-    padding: 6px 14px;
-    font-size: 16px;
-    color: var(--cor-texto2);
-    cursor: pointer;
-    transition: all 0.15s;
-    font-family: var(--fonte-corpo);
-}
-.navBtn:hover { background: rgba(255,255,255,0.13); color: var(--cor-texto); }
-.navBtn:active { transform: scale(0.95); }
-
-#estagioInfo { flex: 1; text-align: center; line-height: 1; }
-#estagioNum {
-    font-family: var(--fonte-titulo);
-    font-size: 24px;
-    font-weight: 900;
-    color: var(--cor-acento);
-    text-shadow: 0 0 16px rgba(245,166,35,0.55);
-    line-height: 1;
-}
-#estagioNome {
-    font-size: 11px;
-    color: var(--cor-texto2);
-    letter-spacing: 0.5px;
-    margin-top: 1px;
+function ganharExp(qtd) {
+    personagem.exp += qtd;
+    while (personagem.exp >= personagem.expMax) {
+        personagem.exp    -= personagem.expMax;
+        personagem.nivel++;
+        personagem.expMax  = Math.floor(100 * Math.pow(1.3, personagem.nivel - 1));
+        criarTexto("LEVEL UP! Lv." + personagem.nivel, "levelup");
+    }
+    ["santaLvUI","santaLvUI2"].forEach(id => { const e = document.getElementById(id); if(e) e.innerText = personagem.nivel; });
 }
 
-#btnEnfrentarChefe {
-    background: linear-gradient(135deg, #b03020, #7a1508);
-    color: white;
-    border: none;
-    border-radius: 10px;
-    padding: 8px 14px;
-    font-family: var(--fonte-corpo);
-    font-size: 12px;
-    font-weight: 800;
-    cursor: pointer;
-    box-shadow: 0 3px 12px rgba(180,50,30,0.55);
-    transition: all 0.15s;
-    white-space: nowrap;
-}
-#btnEnfrentarChefe:hover { filter: brightness(1.2); transform: scale(1.04); }
-
-/* ── BARRA HP INIMIGO ── */
-#hpAreaBatalha {
-    position: absolute;
-    top: 56px; left: 50%;
-    transform: translateX(-50%);
-    width: 60%;
-    min-width: 270px;
-    max-width: 480px;
-    pointer-events: none;
+function prestigiar() {
+    if (estagio < 60) return;
+    estagio = 1; moeda = 0;
+    Object.values(upgrades).forEach(u => { u.nivel = 1; });
+    configurarInimigo(1);
+    atualizarUIBatalha();
+    atualizarUIUpgrades();
+    criarTexto("✨ PRESTIGIADO!", "levelup");
 }
 
-#hpNomeRow {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    margin-bottom: 4px;
-}
-#nomeInimigo {
-    font-weight: 800;
-    font-size: 13px;
-    color: #ffcccc;
-    text-shadow: 0 0 12px rgba(255,100,100,0.65);
-}
-#hpNumero { font-size: 12px; color: var(--cor-texto2); font-weight: 700; }
+setInterval(() => { if (emBatalha) darDano(calcDps(), "dps"); }, 1000);
+setInterval(() => {
+    if (!emBatalha || falaAtiva) return;
+    if (Math.random() < 0.3) exibirFala(tiposMonstros[tipoMonstroIdx(estagio)].nome);
+}, 9000);
 
-#hpBarraContainer {
-    position: relative;
-    width: 100%;
-    height: 16px;
-    background: rgba(0,0,0,0.55);
-    border-radius: 20px;
-    border: 1px solid rgba(255,100,100,0.30);
-    overflow: hidden;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.5);
-}
-#hpInimigo {
-    height: 100%;
-    width: 100%;
-    background: linear-gradient(90deg, #a02020 0%, #d43535 45%, #ff5858 100%);
-    border-radius: 20px;
-    transition: width 0.18s ease-out;
-}
-#hpBrilho {
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 42%;
-    background: rgba(255,255,255,0.18);
-    border-radius: 20px 20px 0 0;
-    pointer-events: none;
-}
+canvas.addEventListener("click", () => {
+    if (!emBatalha) return;
+    darDano(calcDanoClick(), "click");
+    dispararAtaquePersonagem();
+    dispararFlor();
+});
 
-/* ── MOEDA CENTRO (TT2) ── */
-#moedaCentro {
-    position: absolute;
-    top: 106px; left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 28px;
-    font-weight: 900;
-    color: var(--cor-acento);
-    text-shadow: 0 2px 12px rgba(245,166,35,0.65);
-    font-family: var(--fonte-titulo);
-    pointer-events: none;
-    white-space: nowrap;
-}
-#moedaCentroIcon { font-size: 22px; }
+// ════════════════════════════════════════
+//  HELPERS DE POSIÇÃO
+// ════════════════════════════════════════
+function getChaoY()    { return canvas.height * 0.72; }
+function getSantaX()   { return canvas.width  * 0.28; }
+function getMonstroX() { return canvas.width  * 0.70; }
+function getMonstroY() { return canvas.height * 0.52; }
 
-/* ── FALA DO MONSTRO ── */
-#falaInimigo {
-    position: absolute;
-    top: 150px; left: 50%;
-    transform: translateX(-50%);
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.4s;
-    z-index: 10;
-}
-#falaInimigo.visivel { opacity: 1; }
-#falaTexto {
-    background: rgba(18,4,4,0.94);
-    border: 1px solid rgba(255,70,70,0.45);
-    border-radius: 14px;
-    padding: 8px 18px;
-    font-size: 13px;
-    color: #ffbbbb;
-    font-style: italic;
-    max-width: 72vw;
-    white-space: normal;
-    text-align: center;
-    box-shadow: 0 4px 20px rgba(255,50,50,0.2);
-}
+// ════════════════════════════════════════
+//  FUNDO — cenário + chão
+// ════════════════════════════════════════
+function desenharFundoBatalha() {
+    const W  = canvas.width;
+    const H  = canvas.height;
+    const cy = getChaoY();
 
-/* ── PAINEL INFERIOR ─ idêntico ao TT2 ── */
-#painelInferior {
-    position: absolute;
-    bottom: 0; left: 0; right: 0;
-    display: flex;
-    flex-direction: column;
-}
+    // ── CENÁRIO (cobre tela inteira, tipo "cover") ──
+    if (assets.cenario && assets.cenario.complete && assets.cenario.naturalWidth > 0) {
+        const img  = assets.cenario;
+        const escX = W / img.naturalWidth;
+        const escY = H / img.naturalHeight;
+        const esc  = Math.max(escX, escY);
+        const dw   = img.naturalWidth  * esc;
+        const dh   = img.naturalHeight * esc;
+        ctx.drawImage(img, (W - dw) / 2, (H - dh) / 2, dw, dh);
+    } else {
+        // fallback: gradiente noturno
+        const g = ctx.createLinearGradient(0, 0, 0, cy);
+        g.addColorStop(0,    "#050210");
+        g.addColorStop(0.45, "#0e0930");
+        g.addColorStop(1,    "#221470");
+        ctx.fillStyle = g;
+        ctx.fillRect(0, 0, W, H);
 
-/* Barra de stats rápidos */
-#statsRapidos {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 6px 16px;
-    background: rgba(5,4,14,0.95);
-    border-top: 1px solid var(--cor-borda);
-    font-size: 12px;
-    font-weight: 700;
-    gap: 8px;
-}
-#danoTaqueUI   { color: var(--cor-acento); }
-#moedaUIBatalha{ color: #ffd070; }
-#gemaUIBatalha { color: #88eeff; }
+        // estrelas
+        for (let i = 0; i < 90; i++) {
+            const sx = (i * 191 + 7) % W;
+            const sy = (i * 97  + 13) % (cy * 0.75);
+            ctx.globalAlpha = (Math.abs(Math.sin(Date.now() * 0.0008 + i)) * 0.6 + 0.3) * 0.55;
+            ctx.fillStyle   = "#fff";
+            ctx.beginPath(); ctx.arc(sx, sy, i % 3 === 0 ? 2 : 1.2, 0, Math.PI * 2); ctx.fill();
+        }
+        ctx.globalAlpha = 1;
 
-/* Abas rodapé */
-#abaRodape {
-    display: flex;
-    background: rgba(5,4,14,0.98);
-    border-top: 1px solid var(--cor-borda);
-}
-.abaRodapeBtn {
-    flex: 1;
-    display: flex; flex-direction: column; align-items: center; gap: 2px;
-    padding: 8px 4px 6px;
-    background: transparent;
-    border: none;
-    border-top: 3px solid transparent;
-    color: var(--cor-texto2);
-    font-family: var(--fonte-corpo);
-    font-size: 10px; font-weight: 700;
-    cursor: pointer;
-    transition: all 0.15s;
-    text-transform: uppercase;
-    letter-spacing: 0.3px;
-}
-.abaRodapeBtn .abaIcon { font-size: 18px; }
-.abaRodapeBtn:hover { color: var(--cor-texto); background: rgba(255,255,255,0.03); }
-.abaRodapeBtn.ativa {
-    color: var(--cor-acento);
-    border-top-color: var(--cor-acento);
-    background: rgba(245,166,35,0.05);
+        // lua
+        const luaX = W * 0.78, luaY = H * 0.15;
+        const gl   = ctx.createRadialGradient(luaX, luaY, 0, luaX, luaY, 58);
+        gl.addColorStop(0,   "rgba(255,245,190,1)");
+        gl.addColorStop(0.5, "rgba(255,220,120,0.45)");
+        gl.addColorStop(1,   "rgba(255,200,80,0)");
+        ctx.fillStyle = gl;
+        ctx.beginPath(); ctx.arc(luaX, luaY, 58, 0, Math.PI * 2); ctx.fill();
+
+        // montanhas
+        ctx.fillStyle = "rgba(12,6,32,0.85)";
+        ctx.beginPath(); ctx.moveTo(0, cy);
+        [[0,0],[0.1,0.22],[0.22,0.09],[0.36,0.28],[0.5,0.07],[0.63,0.25],[0.76,0.11],[0.89,0.23],[1,0]]
+            .forEach(([x, y]) => ctx.lineTo(W * x, cy - H * 0.3 * y));
+        ctx.lineTo(W, cy); ctx.closePath(); ctx.fill();
+    }
+
+    // ── CHÃO (piso1.png esticado na faixa inferior) ──
+    const chaoH = H - cy;
+    if (assets.chao && assets.chao.complete && assets.chao.naturalWidth > 0) {
+        ctx.drawImage(assets.chao, 0, cy, W, chaoH);
+    } else {
+        // fallback gradiente roxo
+        const g = ctx.createLinearGradient(0, cy, 0, H);
+        g.addColorStop(0,   "#2a1060");
+        g.addColorStop(0.3, "#1a0840");
+        g.addColorStop(1,   "#080420");
+        ctx.fillStyle = g;
+        ctx.fillRect(0, cy, W, chaoH);
+
+        // linha de glow
+        const gl = ctx.createLinearGradient(0, 0, W, 0);
+        gl.addColorStop(0,   "rgba(100,50,220,0)");
+        gl.addColorStop(0.3, "rgba(160,80,255,0.55)");
+        gl.addColorStop(0.7, "rgba(160,80,255,0.55)");
+        gl.addColorStop(1,   "rgba(100,50,220,0)");
+        ctx.strokeStyle = gl; ctx.lineWidth = 2.5;
+        ctx.beginPath(); ctx.moveTo(0, cy); ctx.lineTo(W, cy); ctx.stroke();
+    }
+
+    // sombra de transição suave (sempre presente)
+    const gs = ctx.createLinearGradient(0, cy - 20, 0, cy + 35);
+    gs.addColorStop(0, "rgba(0,0,0,0)");
+    gs.addColorStop(1, "rgba(0,0,0,0.40)");
+    ctx.fillStyle = gs;
+    ctx.fillRect(0, cy - 20, W, 55);
 }
 
-/* Conteúdo da aba */
-#abaConteudo {
-    background: rgba(5,4,14,0.98);
-    border-top: 1px solid var(--cor-borda);
-    overflow-y: auto;
-    max-height: 240px;
-    transition: max-height 0.3s ease;
-}
-#abaConteudo.minimizado { max-height: 0; overflow: hidden; }
-#abaConteudo::-webkit-scrollbar { width: 3px; }
-#abaConteudo::-webkit-scrollbar-thumb { background: var(--cor-borda); border-radius: 3px; }
+// ════════════════════════════════════════
+//  PERSONAGEM — Santa Teresinha
+//  • posição X=28%, base no chão (72%)
+//  • sprite anima frames de conjurar
+//  • de frente para o monstro (olhando à direita)
+// ════════════════════════════════════════
+const pb = {
+    atacando: 0, durAtaque: 28,
+    frame: 0, tempo: 0
+};
 
-.abaPanel { padding: 10px 14px 12px; }
-.upgradeScroll { display: flex; flex-direction: column; gap: 6px; }
+function dispararAtaquePersonagem() { pb.atacando = pb.durAtaque; }
 
-/* Item de upgrade */
-.upgradeItem {
-    display: flex; align-items: center; gap: 12px;
-    background: rgba(255,255,255,0.025);
-    border: 1px solid rgba(255,255,255,0.055);
-    border-radius: 10px;
-    padding: 8px 12px;
-    transition: background 0.15s;
+function atualizarPB() {
+    pb.tempo++;
+    if (pb.tempo >= 5) { pb.tempo = 0; pb.frame = (pb.frame + 1) % 8; }
+    if (pb.atacando > 0) pb.atacando--;
 }
-.upgradeItem:hover { background: rgba(255,255,255,0.05); }
-.upIcone { font-size: 22px; width: 28px; text-align: center; }
-.upInfo  { flex: 1; display: flex; flex-direction: column; gap: 1px; }
-.upNome  { font-size: 13px; font-weight: 800; color: var(--cor-texto); }
-.upDesc  { font-size: 11px; color: var(--cor-texto2); }
 
-.btnUp {
-    background: linear-gradient(135deg, #1e5c1e, #0e3a0e);
-    color: #70e870;
-    border: 1px solid #2e7a2e;
-    border-radius: 8px;
-    padding: 6px 14px;
-    font-family: var(--fonte-corpo);
-    font-size: 12px; font-weight: 800;
-    cursor: pointer;
-    white-space: nowrap;
-    min-width: 80px; text-align: center;
-    transition: all 0.15s;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-}
-.btnUp:hover    { filter: brightness(1.25); transform: scale(1.04); }
-.btnUp:active   { transform: scale(0.98); }
-.btnUp:disabled { background: #1a1a28; color: #555; border-color: #333; cursor: not-allowed; transform: none; filter: none; }
+function desenharPB() {
+    const px   = getSantaX();
+    const py   = getChaoY();
+    const ALTO = canvas.height * 0.30;
+    const offX = pb.atacando > 0 ? Math.sin((pb.atacando / pb.durAtaque) * Math.PI) * 16 : 0;
+    const img  = assets.santa[pb.frame];
 
-/* Prestigiar */
-.prestigiarBox {
-    display: flex; align-items: center; gap: 12px;
-    background: linear-gradient(135deg, rgba(36,26,4,0.85), rgba(22,15,2,0.85));
-    border: 1px solid rgba(245,166,35,0.28);
-    border-radius: 10px;
-    padding: 10px 12px;
-    margin-top: 6px;
-}
-.prestigiarInfo { flex: 1; }
-.prestigiarInfo b     { font-size: 13px; color: var(--cor-acento); }
-.prestigiarInfo small { display: block; font-size: 11px; color: var(--cor-texto2); margin-top: 3px; }
-.btnPrestigiar {
-    background: var(--cor-acento); color: #000;
-    border: none; border-radius: 8px;
-    padding: 8px 14px;
-    font-family: var(--fonte-corpo); font-size: 12px; font-weight: 800;
-    cursor: pointer; white-space: nowrap;
-    transition: all 0.15s;
-}
-.btnPrestigiar:hover:not(:disabled) { filter: brightness(1.15); }
-.btnPrestigiar:disabled { background: #333; color: #888; cursor: not-allowed; }
+    if (img && img.complete && img.naturalWidth > 0) {
+        const lar = ALTO * (img.naturalWidth / img.naturalHeight);
 
-/* Botão minimizar */
-#btnMinimizar {
-    position: absolute;
-    top: -30px; right: 12px;
-    background: rgba(5,4,14,0.96);
-    border: 1px solid var(--cor-borda);
-    border-bottom: none;
-    border-radius: 8px 8px 0 0;
-    color: var(--cor-texto2);
-    padding: 4px 14px;
-    font-size: 13px;
-    cursor: pointer;
-    transition: all 0.15s;
-}
-#btnMinimizar:hover { color: var(--cor-texto); background: rgba(255,255,255,0.05); }
+        // sombra no chão
+        ctx.save();
+        ctx.fillStyle = "rgba(0,0,0,0.30)";
+        ctx.beginPath();
+        ctx.ellipse(px + offX, py + 5, lar * 0.34, 7, 0, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
 
-/* Sair da batalha */
-#btnSairBatalha {
-    position: absolute;
-    top: 9px; right: 12px;
-    background: rgba(180,45,35,0.16);
-    color: #ff7070;
-    border: 1px solid rgba(180,45,35,0.42);
-    border-radius: 8px;
-    padding: 6px 14px;
-    font-size: 12px; font-weight: 800;
-    cursor: pointer;
-    transition: all 0.15s;
-    pointer-events: auto;
-}
-#btnSairBatalha:hover { background: rgba(180,45,35,0.32); color: #fff; }
+        // sprite — de frente (sem flip)
+        ctx.drawImage(img, px + offX - lar / 2, py - ALTO, lar, ALTO);
 
-/* ═══════════════════════════════════════
-   CARDS PÁGINA PRINCIPAL (mantido)
-═══════════════════════════════════════ */
-.jogos-list{display:flex;flex-direction:column;gap:30px;}
-.jogo-card-horizontal{display:flex;background:linear-gradient(145deg,#fff,#f7f7f7);border-radius:16px;overflow:hidden;box-shadow:0 8px 20px rgba(0,0,0,.15);transition:transform .3s,box-shadow .3s;}
-.jogo-card-horizontal:hover{transform:translateY(-5px);box-shadow:0 15px 35px rgba(0,0,0,.25);}
-.jogo-card-horizontal .jogo-thumb{flex:0 0 180px;}
-.jogo-card-horizontal .jogo-thumb img{width:100%;height:100%;object-fit:cover;}
-.jogo-card-horizontal .jogo-info{padding:20px 25px;flex:1;display:flex;flex-direction:column;justify-content:space-between;}
-.jogo-card-horizontal .jogo-info h3{font-family:'Libre Baskerville',serif;font-size:1.6rem;margin-bottom:8px;color:#2c1f17;}
-.jogo-card-horizontal .jogo-info p{font-size:1rem;color:#555;margin-bottom:20px;line-height:1.4;}
-.jogo-card-horizontal .btn-jogar{align-self:flex-start;text-decoration:none;font-weight:600;background:#f44336;color:white;padding:10px 20px;border-radius:8px;transition:background .3s,transform .2s;}
-.jogo-card-horizontal .btn-jogar:hover{background:#d32f2f;transform:translateY(-2px);}
-@media(max-width:768px){.jogo-card-horizontal{flex-direction:column;}.jogo-card-horizontal .jogo-thumb{width:100%;height:200px;}.jogo-card-horizontal .jogo-info{padding:15px 20px;}}
+    } else {
+        // Fallback: silhueta de santa com auréola
+        const r = ALTO * 0.13;
+        ctx.save();
+        ctx.shadowBlur  = 20;
+        ctx.shadowColor = "rgba(200,150,255,0.8)";
+
+        // cabeça
+        ctx.fillStyle = "#e8c5ff";
+        ctx.beginPath();
+        ctx.arc(px + offX, py - ALTO * 0.80, r, 0, Math.PI * 2);
+        ctx.fill();
+
+        // auréola dourada
+        ctx.strokeStyle = "#ffd700"; ctx.lineWidth = 2.5;
+        ctx.beginPath();
+        ctx.ellipse(px + offX, py - ALTO * 0.80 - r * 1.05, r * 1.15, r * 0.32, 0, 0, Math.PI * 2);
+        ctx.stroke();
+
+        // manto/corpo
+        ctx.fillStyle = "#6d28d9";
+        ctx.beginPath();
+        ctx.moveTo(px + offX - r * 0.5, py - ALTO * 0.66);
+        ctx.lineTo(px + offX - r * 0.85, py);
+        ctx.lineTo(px + offX + r * 0.85, py);
+        ctx.lineTo(px + offX + r * 0.5,  py - ALTO * 0.66);
+        ctx.closePath();
+        ctx.fill();
+
+        // braço erguido segurando rosa
+        ctx.strokeStyle = "#c4b5fd"; ctx.lineWidth = 3;
+        ctx.beginPath();
+        ctx.moveTo(px + offX + r * 0.35, py - ALTO * 0.55);
+        ctx.lineTo(px + offX + r * 1.35, py - ALTO * 0.73);
+        ctx.stroke();
+
+        ctx.font = `${r * 1.5}px serif`;
+        ctx.textAlign = "center"; ctx.textBaseline = "middle";
+        ctx.fillText("🌹", px + offX + r * 1.6, py - ALTO * 0.78);
+
+        ctx.restore();
+    }
+}
+
+// ════════════════════════════════════════
+//  MONSTRO — posição X=70%, acima do chão
+// ════════════════════════════════════════
+function emojiMonstroAtual() {
+    const idx  = tipoMonstroIdx(estagio);
+    const tipo = tiposMonstros[idx];
+    const pct  = inimigo.maxHp > 0 ? inimigo.hp / inimigo.maxHp : 1;
+    if (hitState.flash > 0) return tipo.emojis.dor;
+    if (pct < 0.2) return tipo.emojis.medo;
+    if (pct < 0.5) return tipo.emojis.raiva;
+    return tipo.emojis.normal;
+}
+
+function desenharMonstro() {
+    if (hitState.flash > 0) hitState.flash--;
+    let ox = 0, oy = 0;
+    if (hitState.tremendo > 0) {
+        hitState.tremendo--;
+        ox = (Math.random() - 0.5) * 18;
+        oy = (Math.random() - 0.5) * 10;
+    }
+
+    const pct = Math.max(0.05, inimigo.maxHp > 0 ? inimigo.hp / inimigo.maxHp : 1);
+    const tam = canvas.height * (0.20 + pct * 0.06);
+    const mx  = getMonstroX() + ox;
+    const my  = getMonstroY() + oy;
+
+    ctx.save();
+    if (hitState.flash > 0) {
+        ctx.filter = "sepia(1) saturate(20) hue-rotate(300deg)";
+        ctx.globalAlpha = 0.88;
+    }
+    ctx.shadowBlur  = 30 + Math.sin(Date.now() * 0.004) * 12;
+    ctx.shadowColor = pct < 0.25 ? "rgba(255,220,0,0.9)" : "rgba(255,50,50,0.75)";
+    ctx.font = `${tam}px serif`;
+    ctx.textAlign    = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillText(emojiMonstroAtual(), mx, my);
+    ctx.restore();
+
+    // sombra no chão
+    ctx.save();
+    ctx.fillStyle = "rgba(0,0,0,0.22)";
+    ctx.beginPath();
+    ctx.ellipse(getMonstroX(), getChaoY() + 4, tam * 0.28, 9, 0, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+}
+
+// ════════════════════════════════════════
+//  ROSAS DO CÉU
+//  ✦ Ficam PARADAS em pé (upright) no céu
+//  ✦ Leve flutuação suave (não caem)
+//  ✦ A cada click UMA voa em direção ao monstro
+// ════════════════════════════════════════
+const QTD_FLORES_CEU = 14;
+let flores = [], floresAtaque = [];
+
+function criarFlorCeu(randPos = false) {
+    const baseX = canvas.width  * (0.04 + Math.random() * 0.90);
+    const baseY = randPos
+        ? canvas.height * (0.04 + Math.random() * 0.58)
+        : canvas.height * (0.04 + Math.random() * 0.50);
+    return {
+        baseX, baseY,
+        x: baseX,
+        y: baseY,
+        size:  20 + Math.random() * 16,
+        fase:  Math.random() * Math.PI * 2,
+        fasev: Math.random() * Math.PI * 2,
+        ampH:  5 + Math.random() * 8,       // oscilação horizontal
+        ampV:  2 + Math.random() * 3,       // oscilação vertical
+        spd:   0.0007 + Math.random() * 0.0006,
+        alpha: 0.65 + Math.random() * 0.30
+    };
+}
+
+function inicializarFlores() {
+    flores = [];
+    for (let i = 0; i < QTD_FLORES_CEU; i++) flores.push(criarFlorCeu(true));
+    floresAtaque = [];
+}
+
+function atualizarFloresCeu() {
+    const t = Date.now();
+    flores.forEach(f => {
+        // oscila ao redor da posição base — nunca cai
+        f.x = f.baseX + Math.sin(t * f.spd + f.fase)        * f.ampH;
+        f.y = f.baseY + Math.sin(t * f.spd * 0.65 + f.fasev) * f.ampV;
+    });
+}
+
+function desenharFloresCeu() {
+    flores.forEach(f => {
+        ctx.save();
+        ctx.globalAlpha = f.alpha;
+        // SEM rotação → rosa fica em pé (upright)
+        ctx.font = `${f.size}px serif`;
+        ctx.textAlign    = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillText("🌹", f.x, f.y);
+        ctx.restore();
+    });
+}
+
+// Dispara UMA rosa (a mais próxima do monstro) em direção a ele
+function dispararFlor() {
+    if (flores.length === 0) return;
+
+    // escolhe a rosa mais próxima do monstro
+    let idx  = 0;
+    let dist = Infinity;
+    flores.forEach((f, i) => {
+        const d = Math.hypot(f.x - getMonstroX(), f.y - getMonstroY());
+        if (d < dist) { dist = d; idx = i; }
+    });
+
+    const fo = flores[idx];
+    const tx = getMonstroX() + (Math.random() - 0.5) * 50;
+    const ty = getMonstroY() + (Math.random() - 0.5) * 50;
+    const d  = Math.hypot(tx - fo.x, ty - fo.y);
+    const sp = 10 + Math.random() * 4;
+    const ag = Math.atan2(ty - fo.y, tx - fo.x);
+
+    floresAtaque.push({
+        x: fo.x, y: fo.y,
+        vx: Math.cos(ag) * sp,
+        vy: Math.sin(ag) * sp,
+        tx, ty,
+        size: fo.size,
+        vida: Math.ceil(d / sp) + 8,
+        acertou: false
+    });
+
+    // repõe a rosa lançada com uma nova
+    flores[idx] = criarFlorCeu(true);
+}
+
+function atualizarFloresAtaque() {
+    floresAtaque.forEach(f => {
+        f.x += f.vx; f.y += f.vy; f.vida--;
+        if (!f.acertou && Math.hypot(f.x - f.tx, f.y - f.ty) < 28) {
+            f.acertou = true; f.vida = 0;
+            for (let p = 0; p < 8; p++) criarParticula(f.x, f.y);
+        }
+    });
+    floresAtaque = floresAtaque.filter(f => f.vida > 0);
+}
+
+function desenharFloresAtaque() {
+    floresAtaque.forEach(f => {
+        ctx.save();
+        ctx.globalAlpha = Math.min(1, f.vida / 10);
+        // rosa mantém posição upright durante o voo
+        ctx.font = `${f.size}px serif`;
+        ctx.textAlign    = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillText("🌹", f.x, f.y);
+        ctx.restore();
+    });
+}
+
+// ════════════════════════════════════════
+//  PARTÍCULAS
+// ════════════════════════════════════════
+let particulas = [];
+function criarParticula(x, y) {
+    const ang = Math.random() * Math.PI * 2;
+    const spd = 1.5 + Math.random() * 3.5;
+    particulas.push({
+        x, y, vx: Math.cos(ang) * spd, vy: Math.sin(ang) * spd,
+        vida: 22 + Math.random() * 14,
+        size: 5  + Math.random() * 8,
+        cor: `hsl(${325 + Math.random() * 50},90%,65%)`
+    });
+}
+function atualizarParticulas() {
+    particulas.forEach(p => { p.x += p.vx; p.y += p.vy; p.vy += 0.13; p.vida--; });
+    particulas = particulas.filter(p => p.vida > 0);
+}
+function desenharParticulas() {
+    particulas.forEach(p => {
+        ctx.save();
+        ctx.globalAlpha = Math.min(1, p.vida / 12);
+        ctx.fillStyle = p.cor;
+        ctx.beginPath(); ctx.arc(p.x, p.y, p.size * 0.5, 0, Math.PI * 2); ctx.fill();
+        ctx.restore();
+    });
+}
+
+// ════════════════════════════════════════
+//  MOEDAS CAINDO
+// ════════════════════════════════════════
+let moedasAnim = [];
+function criarMoedaCaindo() {
+    moedasAnim.push({
+        x: getMonstroX() + (Math.random() - 0.5) * 80,
+        y: getMonstroY(),
+        vy: -(3.5 + Math.random() * 2.5),
+        vx: (Math.random() - 0.5) * 2.5,
+        vida: 65,
+        size: 20 + Math.random() * 10
+    });
+}
+function atualizarMoedas() {
+    moedasAnim.forEach(m => { m.x += m.vx; m.y += m.vy; m.vy += 0.22; m.vida--; });
+    moedasAnim = moedasAnim.filter(m => m.vida > 0);
+}
+function desenharMoedas() {
+    moedasAnim.forEach(m => {
+        ctx.save();
+        ctx.globalAlpha = Math.min(1, m.vida / 18);
+        ctx.font = `${m.size}px serif`;
+        ctx.textAlign = "center"; ctx.textBaseline = "middle";
+        ctx.fillText("🪙", m.x, m.y);
+        ctx.restore();
+    });
+}
+
+// ════════════════════════════════════════
+//  TEXTOS FLUTUANTES
+// ════════════════════════════════════════
+function criarTexto(valor, tipo) {
+    textos.push({
+        x: getMonstroX() + (Math.random() - 0.5) * 80,
+        y: getMonstroY() - 50,
+        valor, tipo, vida: 75
+    });
+}
+
+function desenharTextos() {
+    textos.forEach(t => {
+        const alpha = Math.min(1, t.vida / 20);
+        ctx.save();
+        ctx.globalAlpha = alpha;
+        let cor = "#fff", tam = 19;
+        if (t.tipo === "levelup") { cor = "#ffd700"; tam = 24; }
+        else if (t.tipo === "dps")   { cor = "#aaffaa"; tam = 13; }
+        else if (t.tipo === "click") { cor = "#ff9de2"; tam = 20; }
+        ctx.font = `bold ${tam}px 'Nunito', sans-serif`;
+        ctx.textAlign = "center";
+        ctx.strokeStyle = "rgba(0,0,0,0.85)"; ctx.lineWidth = 4;
+        ctx.strokeText(t.valor, t.x, t.y);
+        ctx.fillStyle = cor;
+        ctx.fillText(t.valor, t.x, t.y);
+        ctx.restore();
+        t.y -= 1.7; t.vida--;
+    });
+    textos = textos.filter(t => t.vida > 0);
+}
+
+// ════════════════════════════════════════
+//  LOOP PRINCIPAL
+// ════════════════════════════════════════
+window.desenharBatalha = function () {
+    desenharFundoBatalha();
+    atualizarFloresCeu();    desenharFloresCeu();
+    atualizarFloresAtaque(); desenharFloresAtaque();
+    atualizarParticulas();   desenharParticulas();
+    atualizarMoedas();       desenharMoedas();
+    atualizarPB();           desenharPB();
+    desenharMonstro();
+    desenharTextos();
+};
