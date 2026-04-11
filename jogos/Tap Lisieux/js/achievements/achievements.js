@@ -1,792 +1,1011 @@
-// ═══════════════════════════════════════════════════════════
-//  jogos/Tap Lisieux/js/achievements/achievements.js
-//  Sistema de Conquistas — Tap Lisieux
+// ═══════════════════════════════════════════════════════
+//  ACHIEVEMENTS.JS
+//  Sistema de Conquistas completo:
+//  - Definição declarativa de conquistas
+//  - Verificação reativa via EventBus
+//  - Recompensas (moeda, gema, título)
+//  - Progressão parcial (ex: 47/100 kills)
+//  - Categorias: Batalha, Progressão, Coleção, Especial
+//  - Toast especial por raridade da conquista
+//  - Badge no HUD atualizado
+//  - Persistência via GameState
 //
-//  Depende de: game-ui.js (ToastSystem, EventBus, DOM,
-//              formatarNum, conquistasDesbloqueadas)
-//              game-batalha.js (moeda, gema, estagio,
-//              personagem, heroisObtidos, equipamentosObtidos)
-//
-//  ATENÇÃO: Remova do game-ui.js as seguintes seções:
-//  - const CONQUISTAS_DEF = [...]
-//  - const conquistasDesbloqueadas = new Set()
-//  - function verificarConquistas()
-//  - function atualizarTelaConquistas()
-//  - Os EventBus.on de conquistas no final do game-ui.js
-// ═══════════════════════════════════════════════════════════
+//  Depende de: event-bus.js, state.js, economy.js,
+//              toast.js, dom-cache.js
+//  Usado por: main.js
+// ═══════════════════════════════════════════════════════
 
 "use strict";
 
-const AchievementSystem = (() => {
+const Achievements = (() => {
 
-    // ════════════════════════════════════════
-    //  DEFINIÇÃO DAS CONQUISTAS
-    //  Cada conquista é imutável após criação
-    // ════════════════════════════════════════
+    // ── Logger ───────────────────────────────────────────
+    const _log = (() => {
+        try   { return Logger.de("Achievements"); }
+        catch { return { debug:()=>{}, info:()=>{}, warn:()=>{}, error:()=>{} }; }
+    })();
 
-    const CONQUISTAS_DEF = Object.freeze([
+    // ════════════════════════════════════════════════════
+    // CATEGORIAS
+    // ════════════════════════════════════════════════════
+    const CAT = Object.freeze({
+        BATALHA    : { id: "batalha",    label: "⚔️ Batalha",     cor: "#ff6b6b" },
+        PROGRESSAO : { id: "progressao", label: "📈 Progressão",  cor: "#4a8fff" },
+        COLECAO    : { id: "colecao",    label: "🗝️ Coleção",    cor: "#b44dff" },
+        ESPECIAL   : { id: "especial",   label: "✨ Especial",    cor: "#f5a623" },
+    });
 
-        // ── COMBATE ─────────────────────────────
-        {
-            id:         "primeiro_kill",
-            categoria:  "combate",
-            nome:       "Primeira Batalha",
-            desc:       "Derrote seu primeiro inimigo",
-            emoji:      "⚔️",
-            recompensa: { gema: 10, moeda: 0 },
-            check:      () => _contadores.kills >= 1
-        },
-        {
-            id:         "kill_10",
-            categoria:  "combate",
-            nome:       "Guerreira",
-            desc:       "Derrote 10 inimigos",
-            emoji:      "💀",
-            recompensa: { gema: 20, moeda: 0 },
-            check:      () => _contadores.kills >= 10
-        },
-        {
-            id:         "kill_100",
-            categoria:  "combate",
-            nome:       "Caçadora Santa",
-            desc:       "Derrote 100 inimigos",
-            emoji:      "🗡️",
-            recompensa: { gema: 50, moeda: 0 },
-            check:      () => _contadores.kills >= 100
-        },
-        {
-            id:         "kill_500",
-            categoria:  "combate",
-            nome:       "Exterminadora",
-            desc:       "Derrote 500 inimigos",
-            emoji:      "💥",
-            recompensa: { gema: 100, moeda: 0 },
-            check:      () => _contadores.kills >= 500
-        },
-        {
-            id:         "kill_1000",
-            categoria:  "combate",
-            nome:       "Anjo da Destruição",
-            desc:       "Derrote 1.000 inimigos",
-            emoji:      "👼",
-            recompensa: { gema: 250, moeda: 0 },
-            check:      () => _contadores.kills >= 1000
-        },
-        {
-            id:         "primeiro_chefe",
-            categoria:  "combate",
-            nome:       "Caçadora de Chefes",
-            desc:       "Derrote seu primeiro chefe (Estágio 10)",
-            emoji:      "👑",
-            recompensa: { gema: 30, moeda: 0 },
-            check:      () => _contadores.chefes >= 1
-        },
-        {
-            id:         "chefes_10",
-            categoria:  "combate",
-            nome:       "Matadora de Gigantes",
-            desc:       "Derrote 10 chefes",
-            emoji:      "🏆",
-            recompensa: { gema: 80, moeda: 0 },
-            check:      () => _contadores.chefes >= 10
-        },
+    // ════════════════════════════════════════════════════
+    // RARIDADES DE CONQUISTA
+    // (independente da raridade de itens do gacha)
+    // ════════════════════════════════════════════════════
+    const RAR = Object.freeze({
+        BRONZE   : { id: "bronze",   label: "Bronze",   cor: "#cd7f32", iconeUI: "🥉" },
+        PRATA    : { id: "prata",    label: "Prata",    cor: "#c0c0c0", iconeUI: "🥈" },
+        OURO     : { id: "ouro",     label: "Ouro",     cor: "#ffd700", iconeUI: "🥇" },
+        PLATINA  : { id: "platina",  label: "Platina",  cor: "#e5e4e2", iconeUI: "💎" },
+        SAGRADA  : { id: "sagrada",  label: "Sagrada",  cor: "#f5a623", iconeUI: "✨" },
+    });
 
-        // ── ESTÁGIOS ────────────────────────────
+    // ════════════════════════════════════════════════════
+    // DEFINIÇÃO DAS CONQUISTAS
+    //
+    // Estrutura:
+    // {
+    //   id         : string único
+    //   categoria  : CAT.*
+    //   raridade   : RAR.*
+    //   emoji      : string
+    //   nome       : string
+    //   desc       : string
+    //   recompensa : { moeda?, gema?, titulo? }
+    //   meta       : number (para progressão)        [opcional]
+    //   progresso  : (estado) => number              [opcional, para barra]
+    //   check      : (estado) => boolean
+    //   oculta     : boolean                         [opcional, mystery]
+    //   serie      : string                          [opcional, agrupa em série]
+    // }
+    // ════════════════════════════════════════════════════
+    const DEFS = Object.freeze([
+
+        // ── SÉRIE: Kills ────────────────────────────────
         {
-            id:         "estagio_10",
-            categoria:  "estagio",
-            nome:       "Exploradora",
-            desc:       "Alcance o estágio 10",
-            emoji:      "🗺️",
-            recompensa: { gema: 30, moeda: 0 },
-            check:      () => (typeof estagio !== "undefined") && estagio >= 10
+            id        : "kill_1",
+            serie     : "kills",
+            categoria : CAT.BATALHA,
+            raridade  : RAR.BRONZE,
+            emoji     : "⚔️",
+            nome      : "Primeira Batalha",
+            desc      : "Derrote seu primeiro inimigo",
+            meta      : 1,
+            progresso : s => s.totalKills ?? 0,
+            check     : s => (s.totalKills ?? 0) >= 1,
+            recompensa: { gema: 5 },
         },
         {
-            id:         "estagio_25",
-            categoria:  "estagio",
-            nome:       "Destemida",
-            desc:       "Alcance o estágio 25",
-            emoji:      "🌄",
-            recompensa: { gema: 60, moeda: 0 },
-            check:      () => (typeof estagio !== "undefined") && estagio >= 25
+            id        : "kill_10",
+            serie     : "kills",
+            categoria : CAT.BATALHA,
+            raridade  : RAR.BRONZE,
+            emoji     : "💀",
+            nome      : "Guerreira",
+            desc      : "Derrote 10 inimigos",
+            meta      : 10,
+            progresso : s => s.totalKills ?? 0,
+            check     : s => (s.totalKills ?? 0) >= 10,
+            recompensa: { gema: 15 },
         },
         {
-            id:         "estagio_50",
-            categoria:  "estagio",
-            nome:       "Peregrina",
-            desc:       "Alcance o estágio 50",
-            emoji:      "🌟",
-            recompensa: { gema: 100, moeda: 0 },
-            check:      () => (typeof estagio !== "undefined") && estagio >= 50
+            id        : "kill_100",
+            serie     : "kills",
+            categoria : CAT.BATALHA,
+            raridade  : RAR.PRATA,
+            emoji     : "🗡️",
+            nome      : "Caçadora Santa",
+            desc      : "Derrote 100 inimigos",
+            meta      : 100,
+            progresso : s => s.totalKills ?? 0,
+            check     : s => (s.totalKills ?? 0) >= 100,
+            recompensa: { gema: 40 },
         },
         {
-            id:         "estagio_100",
-            categoria:  "estagio",
-            nome:       "Lenda Viva",
-            desc:       "Alcance o estágio 100",
-            emoji:      "🌠",
-            recompensa: { gema: 200, moeda: 0 },
-            check:      () => (typeof estagio !== "undefined") && estagio >= 100
+            id        : "kill_1000",
+            serie     : "kills",
+            categoria : CAT.BATALHA,
+            raridade  : RAR.OURO,
+            emoji     : "🏹",
+            nome      : "Aniquiladora",
+            desc      : "Derrote 1.000 inimigos",
+            meta      : 1000,
+            progresso : s => s.totalKills ?? 0,
+            check     : s => (s.totalKills ?? 0) >= 1000,
+            recompensa: { gema: 120 },
         },
         {
-            id:         "estagio_200",
-            categoria:  "estagio",
-            nome:       "Transcendente",
-            desc:       "Alcance o estágio 200",
-            emoji:      "✨",
-            recompensa: { gema: 500, moeda: 0 },
-            check:      () => (typeof estagio !== "undefined") && estagio >= 200
+            id        : "kill_10000",
+            serie     : "kills",
+            categoria : CAT.BATALHA,
+            raridade  : RAR.PLATINA,
+            emoji     : "⚰️",
+            nome      : "Flagelo das Trevas",
+            desc      : "Derrote 10.000 inimigos",
+            meta      : 10000,
+            progresso : s => s.totalKills ?? 0,
+            check     : s => (s.totalKills ?? 0) >= 10000,
+            recompensa: { gema: 400 },
         },
 
-        // ── UPGRADES ────────────────────────────
+        // ── SÉRIE: Estágios ─────────────────────────────
         {
-            id:         "upgrade_1",
-            categoria:  "upgrade",
-            nome:       "Primeiros Passos",
-            desc:       "Faça seu primeiro upgrade",
-            emoji:      "📈",
-            recompensa: { gema: 5, moeda: 0 },
-            check:      () => _contadores.upgrades >= 1
+            id        : "estagio_10",
+            serie     : "estagios",
+            categoria : CAT.PROGRESSAO,
+            raridade  : RAR.BRONZE,
+            emoji     : "🗺️",
+            nome      : "Exploradora",
+            desc      : "Alcance o estágio 10",
+            meta      : 10,
+            progresso : s => s.estagio ?? 1,
+            check     : s => (s.estagio ?? 1) >= 10,
+            recompensa: { gema: 20 },
         },
         {
-            id:         "upgrade_10",
-            categoria:  "upgrade",
-            nome:       "Aprimorada",
-            desc:       "Faça 10 upgrades",
-            emoji:      "⚡",
-            recompensa: { gema: 0, moeda: 500 },
-            check:      () => _contadores.upgrades >= 10
+            id        : "estagio_30",
+            serie     : "estagios",
+            categoria : CAT.PROGRESSAO,
+            raridade  : RAR.PRATA,
+            emoji     : "🌍",
+            nome      : "Peregrina",
+            desc      : "Alcance o estágio 30",
+            meta      : 30,
+            progresso : s => s.estagio ?? 1,
+            check     : s => (s.estagio ?? 1) >= 30,
+            recompensa: { gema: 60 },
         },
         {
-            id:         "upgrade_50",
-            categoria:  "upgrade",
-            nome:       "Mestre dos Upgrades",
-            desc:       "Faça 50 upgrades",
-            emoji:      "🔧",
-            recompensa: { gema: 50, moeda: 0 },
-            check:      () => _contadores.upgrades >= 50
+            id        : "estagio_60",
+            serie     : "estagios",
+            categoria : CAT.PROGRESSAO,
+            raridade  : RAR.OURO,
+            emoji     : "🌟",
+            nome      : "Conquistadora",
+            desc      : "Alcance o estágio 60",
+            meta      : 60,
+            progresso : s => s.estagio ?? 1,
+            check     : s => (s.estagio ?? 1) >= 60,
+            recompensa: { gema: 150 },
         },
         {
-            id:         "upgrade_100",
-            categoria:  "upgrade",
-            nome:       "Maximizada",
-            desc:       "Faça 100 upgrades",
-            emoji:      "💎",
-            recompensa: { gema: 150, moeda: 0 },
-            check:      () => _contadores.upgrades >= 100
-        },
-
-        // ── GACHA / ITENS ────────────────────────
-        {
-            id:         "primeiro_lend",
-            categoria:  "gacha",
-            nome:       "Abençoada",
-            desc:       "Obtenha um item Lendário",
-            emoji:      "🌟",
-            recompensa: { gema: 100, moeda: 0 },
-            check:      () => _temItemRaridade("Lendário")
-        },
-        {
-            id:         "primeiro_epico",
-            categoria:  "gacha",
-            nome:       "Escolhida",
-            desc:       "Obtenha um item Épico",
-            emoji:      "💜",
-            recompensa: { gema: 30, moeda: 0 },
-            check:      () => _temItemRaridade("Épico")
-        },
-        {
-            id:         "invocar_10",
-            categoria:  "gacha",
-            nome:       "Invocadora",
-            desc:       "Faça 10 invocações",
-            emoji:      "🎴",
-            recompensa: { gema: 20, moeda: 0 },
-            check:      () => _contadores.invocacoes >= 10
-        },
-        {
-            id:         "invocar_50",
-            categoria:  "gacha",
-            nome:       "Devota",
-            desc:       "Faça 50 invocações",
-            emoji:      "🌸",
-            recompensa: { gema: 75, moeda: 0 },
-            check:      () => _contadores.invocacoes >= 50
-        },
-        {
-            id:         "colecionar_5",
-            categoria:  "gacha",
-            nome:       "Colecionadora",
-            desc:       "Obtenha 5 itens diferentes",
-            emoji:      "📦",
-            recompensa: { gema: 40, moeda: 0 },
-            check:      () => _totalItensUnicos() >= 5
+            id        : "estagio_100",
+            serie     : "estagios",
+            categoria : CAT.PROGRESSAO,
+            raridade  : RAR.PLATINA,
+            emoji     : "🏔️",
+            nome      : "Ascendida",
+            desc      : "Alcance o estágio 100",
+            meta      : 100,
+            progresso : s => s.estagio ?? 1,
+            check     : s => (s.estagio ?? 1) >= 100,
+            recompensa: { gema: 300, titulo: "Ascendida" },
         },
 
-        // ── PRESTÍGIO ────────────────────────────
+        // ── SÉRIE: Level up ─────────────────────────────
         {
-            id:         "primeiro_prestigio",
-            categoria:  "prestigio",
-            nome:       "Renascida",
-            desc:       "Faça seu primeiro Prestígio",
-            emoji:      "🌸",
-            recompensa: { gema: 200, moeda: 0 },
-            check:      () => _contadores.prestigios >= 1
+            id        : "nivel_5",
+            serie     : "nivel",
+            categoria : CAT.PROGRESSAO,
+            raridade  : RAR.BRONZE,
+            emoji     : "⭐",
+            nome      : "Em Crescimento",
+            desc      : "Chegue ao nível 5",
+            meta      : 5,
+            progresso : s => s.nivelPersonagem ?? 1,
+            check     : s => (s.nivelPersonagem ?? 1) >= 5,
+            recompensa: { gema: 10 },
         },
         {
-            id:         "prestigio_3",
-            categoria:  "prestigio",
-            nome:       "Ciclo Eterno",
-            desc:       "Faça 3 prestígios",
-            emoji:      "♾️",
-            recompensa: { gema: 400, moeda: 0 },
-            check:      () => _contadores.prestigios >= 3
+            id        : "nivel_20",
+            serie     : "nivel",
+            categoria : CAT.PROGRESSAO,
+            raridade  : RAR.PRATA,
+            emoji     : "🌙",
+            nome      : "Florescendo",
+            desc      : "Chegue ao nível 20",
+            meta      : 20,
+            progresso : s => s.nivelPersonagem ?? 1,
+            check     : s => (s.nivelPersonagem ?? 1) >= 20,
+            recompensa: { gema: 80, titulo: "Florescida" },
         },
         {
-            id:         "prestigio_10",
-            categoria:  "prestigio",
-            nome:       "Divina",
-            desc:       "Faça 10 prestígios",
-            emoji:      "👼",
-            recompensa: { gema: 1000, moeda: 0 },
-            check:      () => _contadores.prestigios >= 10
-        },
-
-        // ── ECONOMIA ────────────────────────────
-        {
-            id:         "moeda_1000",
-            categoria:  "economia",
-            nome:       "Primeiras Riquezas",
-            desc:       "Acumule 1.000 moedas de uma vez",
-            emoji:      "🪙",
-            recompensa: { gema: 10, moeda: 0 },
-            check:      () => (typeof moeda !== "undefined") && moeda >= 1000
-        },
-        {
-            id:         "moeda_1M",
-            categoria:  "economia",
-            nome:       "Tesoureira",
-            desc:       "Acumule 1 milhão de moedas de uma vez",
-            emoji:      "💰",
-            recompensa: { gema: 50, moeda: 0 },
-            check:      () => (typeof moeda !== "undefined") && moeda >= 1_000_000
+            id        : "nivel_50",
+            serie     : "nivel",
+            categoria : CAT.PROGRESSAO,
+            raridade  : RAR.OURO,
+            emoji     : "☀️",
+            nome      : "Radiante",
+            desc      : "Chegue ao nível 50",
+            meta      : 50,
+            progresso : s => s.nivelPersonagem ?? 1,
+            check     : s => (s.nivelPersonagem ?? 1) >= 50,
+            recompensa: { gema: 200, titulo: "Radiante" },
         },
 
-        // ── NÍVEL ───────────────────────────────
+        // ── SÉRIE: Upgrades ─────────────────────────────
         {
-            id:         "nivel_5",
-            categoria:  "nivel",
-            nome:       "Em Crescimento",
-            desc:       "Santa Teresinha alcança o nível 5",
-            emoji:      "🌱",
-            recompensa: { gema: 15, moeda: 0 },
-            check:      () => (typeof personagem !== "undefined") && personagem.nivel >= 5
+            id        : "upgrade_5",
+            serie     : "upgrades",
+            categoria : CAT.PROGRESSAO,
+            raridade  : RAR.BRONZE,
+            emoji     : "📈",
+            nome      : "Aprimorada",
+            desc      : "Faça 5 upgrades",
+            meta      : 5,
+            progresso : s => s.totalUpgrades ?? 0,
+            check     : s => (s.totalUpgrades ?? 0) >= 5,
+            recompensa: { moeda: 200 },
         },
         {
-            id:         "nivel_10",
-            categoria:  "nivel",
-            nome:       "Jovem Santa",
-            desc:       "Santa Teresinha alcança o nível 10",
-            emoji:      "🌷",
-            recompensa: { gema: 30, moeda: 0 },
-            check:      () => (typeof personagem !== "undefined") && personagem.nivel >= 10
+            id        : "upgrade_50",
+            serie     : "upgrades",
+            categoria : CAT.PROGRESSAO,
+            raridade  : RAR.PRATA,
+            emoji     : "🔧",
+            nome      : "Artífice",
+            desc      : "Faça 50 upgrades",
+            meta      : 50,
+            progresso : s => s.totalUpgrades ?? 0,
+            check     : s => (s.totalUpgrades ?? 0) >= 50,
+            recompensa: { gema: 35 },
         },
         {
-            id:         "nivel_25",
-            categoria:  "nivel",
-            nome:       "Santa Poderosa",
-            desc:       "Santa Teresinha alcança o nível 25",
-            emoji:      "🌹",
-            recompensa: { gema: 75, moeda: 0 },
-            check:      () => (typeof personagem !== "undefined") && personagem.nivel >= 25
-        },
-        {
-            id:         "nivel_50",
-            categoria:  "nivel",
-            nome:       "Santa Transcendida",
-            desc:       "Santa Teresinha alcança o nível 50",
-            emoji:      "👸",
-            recompensa: { gema: 200, moeda: 0 },
-            check:      () => (typeof personagem !== "undefined") && personagem.nivel >= 50
+            id        : "upgrade_200",
+            serie     : "upgrades",
+            categoria : CAT.PROGRESSAO,
+            raridade  : RAR.OURO,
+            emoji     : "⚙️",
+            nome      : "Mestra das Artes",
+            desc      : "Faça 200 upgrades",
+            meta      : 200,
+            progresso : s => s.totalUpgrades ?? 0,
+            check     : s => (s.totalUpgrades ?? 0) >= 200,
+            recompensa: { gema: 100 },
         },
 
+        // ── SÉRIE: Prestígio ────────────────────────────
+        {
+            id        : "prestigio_1",
+            serie     : "prestigio",
+            categoria : CAT.ESPECIAL,
+            raridade  : RAR.OURO,
+            emoji     : "🌸",
+            nome      : "Renascida",
+            desc      : "Faça seu primeiro Prestígio",
+            meta      : 1,
+            progresso : s => s.totalPrestígios ?? 0,
+            check     : s => (s.totalPrestígios ?? 0) >= 1,
+            recompensa: { gema: 200, titulo: "Renascida" },
+        },
+        {
+            id        : "prestigio_5",
+            serie     : "prestigio",
+            categoria : CAT.ESPECIAL,
+            raridade  : RAR.PLATINA,
+            emoji     : "🔁",
+            nome      : "Eterna",
+            desc      : "Faça 5 Prestígios",
+            meta      : 5,
+            progresso : s => s.totalPrestígios ?? 0,
+            check     : s => (s.totalPrestígios ?? 0) >= 5,
+            recompensa: { gema: 500, titulo: "Eterna" },
+        },
+        {
+            id        : "prestigio_10",
+            serie     : "prestigio",
+            categoria : CAT.ESPECIAL,
+            raridade  : RAR.SAGRADA,
+            emoji     : "♾️",
+            nome      : "Transcendida",
+            desc      : "Faça 10 Prestígios",
+            meta      : 10,
+            progresso : s => s.totalPrestígios ?? 0,
+            check     : s => (s.totalPrestígios ?? 0) >= 10,
+            recompensa: { gema: 1000, titulo: "Transcendida" },
+        },
+
+        // ── SÉRIE: Gacha/Coleção ────────────────────────
+        {
+            id        : "primeiro_lend",
+            serie     : "gacha",
+            categoria : CAT.COLECAO,
+            raridade  : RAR.OURO,
+            emoji     : "✨",
+            nome      : "Abençoada",
+            desc      : "Obtenha seu primeiro item Lendário",
+            check     : s => {
+                const h = Array.isArray(s.heroisObtidos)       ? s.heroisObtidos       : [];
+                const e = Array.isArray(s.equipamentosObtidos) ? s.equipamentosObtidos : [];
+                return [...h, ...e].some(i => i.raridade === "Lendário");
+            },
+            recompensa: { gema: 100 },
+        },
+        {
+            id        : "colecao_10",
+            serie     : "gacha",
+            categoria : CAT.COLECAO,
+            raridade  : RAR.PRATA,
+            emoji     : "🗃️",
+            nome      : "Colecionadora",
+            desc      : "Obtenha 10 itens únicos",
+            meta      : 10,
+            progresso : s => {
+                const h = Array.isArray(s.heroisObtidos)       ? s.heroisObtidos       : [];
+                const e = Array.isArray(s.equipamentosObtidos) ? s.equipamentosObtidos : [];
+                return h.length + e.length;
+            },
+            check: s => {
+                const h = Array.isArray(s.heroisObtidos)       ? s.heroisObtidos       : [];
+                const e = Array.isArray(s.equipamentosObtidos) ? s.equipamentosObtidos : [];
+                return h.length + e.length >= 10;
+            },
+            recompensa: { gema: 50 },
+        },
+        {
+            id        : "colecao_epico",
+            serie     : "gacha",
+            categoria : CAT.COLECAO,
+            raridade  : RAR.PLATINA,
+            emoji     : "💜",
+            nome      : "Épica",
+            desc      : "Obtenha 3 itens Épicos",
+            meta      : 3,
+            progresso : s => {
+                const h = Array.isArray(s.heroisObtidos)       ? s.heroisObtidos       : [];
+                const e = Array.isArray(s.equipamentosObtidos) ? s.equipamentosObtidos : [];
+                return [...h, ...e].filter(i => i.raridade === "Épico").length;
+            },
+            check: s => {
+                const h = Array.isArray(s.heroisObtidos)       ? s.heroisObtidos       : [];
+                const e = Array.isArray(s.equipamentosObtidos) ? s.equipamentosObtidos : [];
+                return [...h, ...e].filter(i => i.raridade === "Épico").length >= 3;
+            },
+            recompensa: { gema: 150 },
+        },
+
+        // ── ESPECIAIS / OCULTAS ─────────────────────────
+        {
+            id        : "primeiro_chefe",
+            categoria : CAT.BATALHA,
+            raridade  : RAR.PRATA,
+            emoji     : "👹",
+            nome      : "Mata-Chefes",
+            desc      : "Derrote seu primeiro Chefe",
+            check     : s => (s.totalChefes ?? 0) >= 1,
+            recompensa: { gema: 30 },
+        },
+        {
+            id        : "chefe_10",
+            categoria : CAT.BATALHA,
+            raridade  : RAR.OURO,
+            emoji     : "👑",
+            nome      : "Caçadora de Chefes",
+            desc      : "Derrote 10 Chefes",
+            meta      : 10,
+            progresso : s => s.totalChefes ?? 0,
+            check     : s => (s.totalChefes ?? 0) >= 10,
+            recompensa: { gema: 80 },
+        },
+        {
+            id        : "combo_10",
+            categoria : CAT.BATALHA,
+            raridade  : RAR.PRATA,
+            emoji     : "🔥",
+            nome      : "Em Chamas",
+            desc      : "Alcance 10 hits de combo",
+            check     : s => (s.maiorCombo ?? 0) >= 10,
+            recompensa: { gema: 25 },
+        },
+        {
+            id        : "sem_gastar_estagio5",
+            categoria : CAT.ESPECIAL,
+            raridade  : RAR.SAGRADA,
+            emoji     : "🙏",
+            nome      : "Fé Pura",
+            desc      : "Chegue ao estágio 5 sem comprar upgrades",
+            oculta    : true,
+            check     : s => (s.estagio ?? 1) >= 5 && (s.totalUpgrades ?? 0) === 0,
+            recompensa: { gema: 300, titulo: "Pura Fé" },
+        },
     ]);
 
-    // ════════════════════════════════════════
-    //  ESTADO INTERNO
-    // ════════════════════════════════════════
+    // ════════════════════════════════════════════════════
+    // ESTADO INTERNO
+    // ════════════════════════════════════════════════════
+    const _desbloqueadas = new Set();    // IDs desbloqueados
+    let   _inicializado  = false;
 
-    // IDs das conquistas desbloqueadas — compartilhado com game-ui.js
-    // via window para compatibilidade com o SaveSystem existente
-    const _desbloqueadas = new Set();
-
-    // Contadores internos (persistidos separadamente)
-    let _contadores = {
-        kills:       0,
-        chefes:      0,
-        upgrades:    0,
-        invocacoes:  0,
-        prestigios:  0
-    };
-
-    // Controle anti-spam de notificação (máx 1 por 800ms)
-    let _filaNotificacao = [];
-    let _processandoFila = false;
-
-    // ════════════════════════════════════════
-    //  HELPERS INTERNOS
-    // ════════════════════════════════════════
-
-    function _temItemRaridade(raridade) {
-        if (typeof heroisObtidos === "undefined" ||
-            typeof equipamentosObtidos === "undefined") return false;
-        return [...heroisObtidos, ...equipamentosObtidos]
-            .some(i => i.raridade === raridade);
+    // ════════════════════════════════════════════════════
+    // HELPERS
+    // ════════════════════════════════════════════════════
+    function _fmt(n) {
+        try   { return Utils.formatarNum(n); }
+        catch { return String(Math.floor(n ?? 0)); }
     }
 
-    function _totalItensUnicos() {
-        if (typeof heroisObtidos === "undefined" ||
-            typeof equipamentosObtidos === "undefined") return 0;
-        const nomes = new Set([
-            ...heroisObtidos.map(i => i.nome),
-            ...equipamentosObtidos.map(i => i.nome)
-        ]);
-        return nomes.size;
+    function _snapshot() {
+        try   { return GameState.snapshot(); }
+        catch { return {}; }
     }
 
-    // ════════════════════════════════════════
-    //  VERIFICAÇÃO DE CONQUISTAS
-    //  Chamada após cada evento relevante.
-    //  Só itera conquistas ainda não desbloqueadas.
-    // ════════════════════════════════════════
+    function _contarDesbloqueadas() {
+        return _desbloqueadas.size;
+    }
 
+    // ════════════════════════════════════════════════════
+    // VERIFICAR CONQUISTAS
+    // Chamado reativamente via EventBus
+    // ════════════════════════════════════════════════════
     function verificar() {
-        CONQUISTAS_DEF.forEach(c => {
-            if (_desbloqueadas.has(c.id)) return;
+        if (!_inicializado) return;
+
+        const estado = _snapshot();
+
+        DEFS.forEach(def => {
+            if (_desbloqueadas.has(def.id)) return;
 
             let passou = false;
-            try { passou = c.check(); } catch { return; }
-            if (!passou) return;
+            try { passou = def.check(estado); }
+            catch(e) { _log.warn(`Erro no check de "${def.id}":`, e); return; }
 
-            _desbloquear(c);
+            if (passou) _desbloquear(def, estado);
         });
     }
 
-    function _desbloquear(conquista) {
-        _desbloqueadas.add(conquista.id);
+    // ════════════════════════════════════════════════════
+    // DESBLOQUEAR
+    // ════════════════════════════════════════════════════
+    function _desbloquear(def, estado) {
+        _desbloqueadas.add(def.id);
 
-        // Expõe para o SaveSystem existente em game-ui.js
-        if (typeof conquistasDesbloqueadas !== "undefined") {
-            conquistasDesbloqueadas.add(conquista.id);
-        }
+        // Persiste no GameState
+        try {
+            const ids = GameState.get("conquistasIds") ?? [];
+            if (!ids.includes(def.id)) {
+                GameState.push("conquistasIds", def.id);
+            }
+        } catch(_) {}
 
         // Aplica recompensa
-        if (conquista.recompensa.gema > 0 && typeof gema !== "undefined") {
-            gema += conquista.recompensa.gema;
-        }
-        if (conquista.recompensa.moeda > 0 && typeof moeda !== "undefined") {
-            moeda += conquista.recompensa.moeda;
-        }
+        _aplicarRecompensa(def);
 
-        // Enfileira notificação (evita toasts sobrepostos)
-        _filaNotificacao.push(conquista);
-        _processarFilaNotificacao();
+        // Notificações
+        _notificar(def);
 
-        // Emite evento para outros módulos (QuestSystem, etc.)
-        if (typeof EventBus !== "undefined") {
-            EventBus.emit("conquista:desbloqueada", conquista);
-            EventBus.emit("moeda:update", typeof moeda !== "undefined" ? moeda : 0);
-            EventBus.emit("gema:update",  typeof gema  !== "undefined" ? gema  : 0);
-        }
+        // Atualiza badge no HUD
+        _atualizarBadge();
 
-        // Texto flutuante no canvas (se estiver em batalha)
-        if (typeof criarTexto === "function" && typeof emBatalha !== "undefined" && emBatalha) {
-            criarTexto(`🏆 ${conquista.nome}!`, "levelup");
-        }
+        // Emite evento
+        try {
+            EventBus.emit("conquista:desbloqueada", {
+                id       : def.id,
+                nome     : def.nome,
+                raridade : def.raridade.id,
+                recompensa: def.recompensa,
+            });
+        } catch(_) {}
 
-        // Persiste
-        _salvar();
-
-        // Atualiza UI de conquistas se estiver visível
-        _atualizarTelaConquistas();
-
-        console.log(`[Achievements] ✅ Desbloqueada: ${conquista.emoji} ${conquista.nome}`);
+        _log.info(`Conquista desbloqueada: "${def.nome}" [${def.raridade.label}]`);
     }
 
-    // ════════════════════════════════════════
-    //  FILA DE NOTIFICAÇÕES
-    //  Toasts com 900ms de intervalo entre si
-    // ════════════════════════════════════════
+    // ════════════════════════════════════════════════════
+    // RECOMPENSA
+    // ════════════════════════════════════════════════════
+    function _aplicarRecompensa(def) {
+        const r = def.recompensa ?? {};
 
-    function _processarFilaNotificacao() {
-        if (_processandoFila || _filaNotificacao.length === 0) return;
-        _processandoFila = true;
-
-        const c = _filaNotificacao.shift();
-
-        if (typeof ToastSystem !== "undefined") {
-            const recomp = [];
-            if (c.recompensa.gema  > 0) recomp.push(`💎 ${c.recompensa.gema}`);
-            if (c.recompensa.moeda > 0) recomp.push(`🪙 ${formatarNum(c.recompensa.moeda)}`);
-            const recompTxt = recomp.length > 0 ? ` (+${recomp.join(" + ")})` : "";
-
-            ToastSystem.mostrar(
-                `🏆 ${c.emoji} ${c.nome}${recompTxt}`,
-                "sucesso",
-                4500
-            );
+        try {
+            if (r.moeda) {
+                GameState.increment("moeda", r.moeda);
+                EventBus.emit("moeda:update", { valor: GameState.get("moeda"), delta: r.moeda });
+            }
+            if (r.gema) {
+                GameState.increment("gema", r.gema);
+                EventBus.emit("gema:update", { valor: GameState.get("gema"), delta: r.gema });
+            }
+            if (r.titulo) {
+                // Armazena título desbloqueado
+                const titulos = GameState.get("titulosDesbloqueados") ?? [];
+                if (!titulos.includes(r.titulo)) {
+                    GameState.push("titulosDesbloqueados", r.titulo);
+                }
+            }
+        } catch(e) {
+            _log.error("Erro ao aplicar recompensa:", e);
         }
-
-        setTimeout(() => {
-            _processandoFila = false;
-            _processarFilaNotificacao();
-        }, 900);
     }
 
-    // ════════════════════════════════════════
-    //  REGISTRAR EVENTOS (contadores)
-    //  Atualiza contadores internos via EventBus
-    // ════════════════════════════════════════
+    // ════════════════════════════════════════════════════
+    // NOTIFICAÇÃO — toast por raridade
+    // ════════════════════════════════════════════════════
+    function _notificar(def) {
+        const r     = def.raridade;
+        const recomp = _textoRecompensa(def.recompensa);
 
-    function _registrarEventos() {
-        if (typeof EventBus === "undefined") return;
+        // Mensagem do toast
+        const msg = `${def.emoji} ${def.nome}\n${def.desc}${recomp ? `\n🎁 ${recomp}` : ""}`;
 
-        // Kill registrado
-        EventBus.on("kill:registrado", (dados) => {
-            _contadores.kills++;
+        try {
+            switch (r.id) {
+                case "sagrada":
+                    Toast.lendario?.(msg) ?? Toast.mostrar(msg, "lendario", 7000);
+                    break;
+                case "platina":
+                    Toast.mostrar(msg, "lendario", 6000);
+                    break;
+                case "ouro":
+                    Toast.mostrar(msg, "sucesso", 5000);
+                    break;
+                default:
+                    Toast.mostrar(msg, "info", 4000);
+            }
+        } catch(_) {}
 
-            // Detecta chefe (estágio múltiplo de 10)
-            if (typeof estagio !== "undefined" && estagio % 10 === 0) {
-                _contadores.chefes++;
+        // Partículas para conquistas especiais
+        if (r.id === "sagrada" || r.id === "platina") {
+            try { Effects.criarParticulas(window.innerWidth / 2, 80, 25); } catch(_) {}
+        }
+    }
+
+    function _textoRecompensa(r) {
+        if (!r) return "";
+        const partes = [];
+        if (r.gema)   partes.push(`💎 +${_fmt(r.gema)}`);
+        if (r.moeda)  partes.push(`🪙 +${_fmt(r.moeda)}`);
+        if (r.titulo) partes.push(`🏷️ "${r.titulo}"`);
+        return partes.join("  ");
+    }
+
+    // ════════════════════════════════════════════════════
+    // BADGE NO HUD
+    // ════════════════════════════════════════════════════
+    function _atualizarBadge() {
+        // Conta conquistas desbloqueadas recentes (não vistas)
+        try { UIHud.setBadge("conquistaBadge", 1); } catch(_) {}
+
+        // Mostra badge no HTML diretamente como fallback
+        try {
+            const el = document.getElementById("conquistaBadge");
+            if (el) {
+                el.style.display = "inline-flex";
+                el.textContent   = "!";
+            }
+        } catch(_) {}
+    }
+
+    // ════════════════════════════════════════════════════
+    // PROGRESSO DE UMA CONQUISTA (0~1)
+    // ════════════════════════════════════════════════════
+    function progressoPct(id) {
+        const def    = DEFS.find(d => d.id === id);
+        if (!def)    return 0;
+        if (_desbloqueadas.has(id)) return 1;
+        if (!def.progresso || !def.meta) return 0;
+
+        try {
+            const estado = _snapshot();
+            const atual  = def.progresso(estado) ?? 0;
+            return Math.min(1, atual / def.meta);
+        } catch { return 0; }
+    }
+
+    // ════════════════════════════════════════════════════
+    // RENDER DA TELA DE CONQUISTAS
+    // ════════════════════════════════════════════════════
+
+    // CSS injetado uma vez
+    function _injetarCSS() {
+        if (document.getElementById("__achiev_css__")) return;
+
+        const s = document.createElement("style");
+        s.id    = "__achiev_css__";
+        s.textContent = `
+            .__achiev_filtros__ {
+                display         : flex;
+                gap             : 6px;
+                flex-wrap       : wrap;
+                margin-bottom   : 10px;
+            }
+            .__achiev_filtro__ {
+                padding         : 3px 12px;
+                border-radius   : 20px;
+                border          : 1px solid rgba(255,255,255,0.15);
+                background      : rgba(255,255,255,0.05);
+                color           : rgba(255,255,255,0.55);
+                font-size       : 11px;
+                font-weight     : 600;
+                cursor          : pointer;
+                transition      : all 0.15s;
+            }
+            .__achiev_filtro__.ativo {
+                background      : rgba(157,78,221,0.3);
+                border-color    : #9d4edd;
+                color           : #fff;
             }
 
-            // Mantém compatibilidade com game-ui.js
-            window._totalKills = _contadores.kills;
+            .__achiev_card__ {
+                display         : flex;
+                align-items     : center;
+                gap             : 10px;
+                padding         : 10px 12px;
+                border-radius   : 10px;
+                border          : 1px solid rgba(255,255,255,0.07);
+                background      : rgba(255,255,255,0.03);
+                margin-bottom   : 6px;
+                transition      : background 0.15s, border-color 0.15s;
+            }
+            .__achiev_card__.desbloqueada {
+                background      : rgba(255,255,255,0.06);
+                border-color    : rgba(255,255,255,0.14);
+            }
+            .__achiev_card__.bloqueada { opacity: 0.50; }
 
-            verificar();
-        });
-
-        // Upgrade comprado
-        EventBus.on("upgrade:comprado", () => {
-            _contadores.upgrades++;
-            window._totalUpgrades = _contadores.upgrades;
-            verificar();
-        });
-
-        // Gacha pull
-        EventBus.on("gacha:pull", (dados) => {
-            const qtd = dados?.resultados?.length ?? 1;
-            _contadores.invocacoes += qtd;
-            verificar();
-        });
-
-        // Prestígio
-        EventBus.on("prestigio:feito", () => {
-            _contadores.prestigios++;
-            window._totalPrestígios = _contadores.prestigios;
-            verificar();
-        });
-
-        // Estágio atualizado
-        EventBus.on("estagio:update", () => verificar());
-
-        // Moeda / gema atualizados
-        EventBus.on("moeda:update", () => verificar());
-        EventBus.on("gema:update",  () => verificar());
-
-        // Item equipado (pode desbloquear conquistas de coleção)
-        EventBus.on("item:equipado", () => verificar());
+            .__achiev_icone__ {
+                font-size       : 28px;
+                width           : 38px;
+                text-align      : center;
+                flex-shrink     : 0;
+            }
+            .__achiev_info__  { flex: 1; min-width: 0; }
+            .__achiev_nome__ {
+                font-size       : 13px;
+                font-weight     : 700;
+                color           : #fff;
+                display         : flex;
+                align-items     : center;
+                gap             : 6px;
+            }
+            .__achiev_rar__ {
+                font-size       : 10px;
+                font-weight     : 700;
+                padding         : 1px 6px;
+                border-radius   : 4px;
+            }
+            .__achiev_desc__ {
+                font-size       : 11px;
+                color           : rgba(255,255,255,0.50);
+                margin-top      : 2px;
+            }
+            .__achiev_recomp__ {
+                font-size       : 11px;
+                color           : #c084fc;
+                margin-top      : 2px;
+            }
+            .__achiev_prog_wrap__ {
+                height          : 4px;
+                background      : rgba(255,255,255,0.10);
+                border-radius   : 2px;
+                margin-top      : 5px;
+                overflow        : hidden;
+            }
+            .__achiev_prog_fill__ {
+                height          : 100%;
+                border-radius   : 2px;
+                background      : linear-gradient(90deg, #6d28d9, #9d4edd);
+                transition      : width 0.5s ease;
+            }
+            .__achiev_status__ {
+                font-size       : 20px;
+                flex-shrink     : 0;
+            }
+            .__achiev_resumo__ {
+                text-align      : center;
+                font-size       : 12px;
+                color           : rgba(255,255,255,0.45);
+                margin-bottom   : 10px;
+                padding         : 8px;
+                background      : rgba(255,255,255,0.04);
+                border-radius   : 8px;
+            }
+            .__achiev_resumo__ strong { color: #c084fc; }
+        `;
+        document.head.appendChild(s);
     }
 
-    // ════════════════════════════════════════
-    //  RENDER DA TELA DE CONQUISTAS
-    //  Substitui atualizarTelaConquistas() do game-ui.js
-    // ════════════════════════════════════════
+    let _filtroCategoria = "todos";
+    let _filtroStatus    = "todos";  // "todos" | "desbloqueada" | "bloqueada"
 
-    // Mapa de cores por categoria
-    const _COR_CATEGORIA = Object.freeze({
-        combate:  "#ff6b6b",
-        estagio:  "#4a8fff",
-        upgrade:  "#f5a623",
-        gacha:    "#b44dff",
-        prestigio:"#ff9de2",
-        economia: "#44ff88",
-        nivel:    "#ffd700"
-    });
+    function renderTela(containerId) {
+        const container = document.getElementById(containerId);
+        if (!container) return;
 
-    const _LABEL_CATEGORIA = Object.freeze({
-        combate:  "⚔️ Combate",
-        estagio:  "🗺️ Estágios",
-        upgrade:  "📈 Upgrades",
-        gacha:    "✨ Invocação",
-        prestigio:"🌸 Prestígio",
-        economia: "🪙 Economia",
-        nivel:    "⭐ Nível"
-    });
+        _injetarCSS();
 
-    function _atualizarTelaConquistas() {
-        const el = typeof DOM !== "undefined"
-            ? DOM.get("listaConquistas")
-            : document.getElementById("listaConquistas");
-        if (!el) return;
+        const estado = _snapshot();
+        const total  = DEFS.filter(d => !d.oculta || _desbloqueadas.has(d.id)).length;
+        const desbloq = _desbloqueadas.size;
 
-        // Agrupa por categoria
-        const grupos = {};
-        CONQUISTAS_DEF.forEach(c => {
-            if (!grupos[c.categoria]) grupos[c.categoria] = [];
-            grupos[c.categoria].push(c);
+        // Filtros de categoria
+        const categorias = [
+            { id: "todos",    label: "🏆 Todos"  },
+            { id: CAT.BATALHA.id,    label: CAT.BATALHA.label    },
+            { id: CAT.PROGRESSAO.id, label: CAT.PROGRESSAO.label },
+            { id: CAT.COLECAO.id,    label: CAT.COLECAO.label    },
+            { id: CAT.ESPECIAL.id,   label: CAT.ESPECIAL.label   },
+        ];
+
+        // Filtros de status
+        const statusOpts = [
+            { id: "todos",        label: "Todos"         },
+            { id: "desbloqueada", label: "✅ Obtidas"    },
+            { id: "bloqueada",    label: "🔒 Bloqueadas" },
+        ];
+
+        // Filtra conquistas
+        const visiveis = DEFS.filter(d => {
+            if (d.oculta && !_desbloqueadas.has(d.id)) return false;
+
+            const catOk = _filtroCategoria === "todos"
+                || d.categoria.id === _filtroCategoria;
+
+            const statusOk = _filtroStatus === "todos"
+                || (_filtroStatus === "desbloqueada" &&  _desbloqueadas.has(d.id))
+                || (_filtroStatus === "bloqueada"    && !_desbloqueadas.has(d.id));
+
+            return catOk && statusOk;
         });
 
-        const totalDesbloqueadas = _desbloqueadas.size;
-        const total = CONQUISTAS_DEF.length;
+        // Ordena: desbloqueadas primeiro, depois por raridade
+        const ordRar = { sagrada: 0, platina: 1, ouro: 2, prata: 3, bronze: 4 };
+        visiveis.sort((a, b) => {
+            const da = _desbloqueadas.has(a.id);
+            const db = _desbloqueadas.has(b.id);
+            if (da !== db) return da ? -1 : 1;
+            return (ordRar[a.raridade.id] ?? 9) - (ordRar[b.raridade.id] ?? 9);
+        });
 
-        // Cabeçalho com progresso geral
-        let html = `
-            <div style="
-                text-align: center;
-                padding: 8px 0 14px;
-                color: #aaa;
-                font-size: 13px;
-            ">
-                🏆 ${totalDesbloqueadas} / ${total} conquistas desbloqueadas
-                <div style="
-                    background: rgba(255,255,255,0.08);
-                    border-radius: 999px;
-                    height: 6px;
-                    margin: 8px 0 0;
-                    overflow: hidden;
-                ">
-                    <div style="
-                        width: ${Math.round((totalDesbloqueadas / total) * 100)}%;
-                        height: 100%;
-                        background: #ffd700;
-                        border-radius: 999px;
-                        transition: width 0.5s ease;
-                    "></div>
-                </div>
-            </div>`;
+        // Render
+        container.innerHTML = "";
 
-        // Renderiza cada categoria
-        Object.entries(grupos).forEach(([categoria, lista]) => {
-            const corCat   = _COR_CATEGORIA[categoria]  ?? "#aaa";
-            const labelCat = _LABEL_CATEGORIA[categoria] ?? categoria;
-            const qtdCat   = lista.filter(c => _desbloqueadas.has(c.id)).length;
+        // Resumo
+        const resumo = document.createElement("div");
+        resumo.className = "__achiev_resumo__";
+        resumo.innerHTML =
+            `<strong>${desbloq}</strong> / ${total} conquistas desbloqueadas ` +
+            `<span style="color:#ffd700">${"⭐".repeat(Math.min(5, Math.floor(desbloq / Math.max(1, total) * 5)))}</span>`;
+        container.appendChild(resumo);
 
-            html += `
-                <div style="
-                    margin-bottom: 6px;
-                    border-left: 3px solid ${corCat};
-                    padding-left: 10px;
-                    color: ${corCat};
-                    font-size: 12px;
-                    font-weight: 700;
-                    letter-spacing: 0.5px;
-                ">
-                    ${labelCat}
-                    <span style="color:#aaa;font-weight:400">
-                        (${qtdCat}/${lista.length})
-                    </span>
-                </div>`;
+        // Filtros de categoria
+        _renderFiltros(container, categorias, statusOpts, containerId);
 
-            lista.forEach(c => {
-                const desbloqueada = _desbloqueadas.has(c.id);
-                const recomp = [];
-                if (c.recompensa.gema  > 0) recomp.push(`💎 ${c.recompensa.gema}`);
-                if (c.recompensa.moeda > 0) recomp.push(`🪙 ${formatarNum(c.recompensa.moeda)}`);
-                const recompTxt = recomp.join(" + ");
+        // Cards
+        if (visiveis.length === 0) {
+            const vazio = document.createElement("p");
+            vazio.style.cssText = "text-align:center;color:rgba(255,255,255,0.35);padding:20px 0;font-size:13px";
+            vazio.textContent   = "Nenhuma conquista nesta categoria.";
+            container.appendChild(vazio);
+            return;
+        }
 
-                html += `
-                    <div style="
-                        display: flex;
-                        align-items: center;
-                        gap: 10px;
-                        background: rgba(255,255,255,0.03);
-                        border: 1px solid ${desbloqueada ? corCat + "55" : "rgba(255,255,255,0.07)"};
-                        border-radius: 10px;
-                        padding: 9px 12px;
-                        margin-bottom: 6px;
-                        opacity: ${desbloqueada ? 1 : 0.45};
-                        transition: opacity 0.3s ease;
-                    ">
-                        <div style="
-                            font-size: 22px;
-                            min-width: 32px;
-                            text-align: center;
-                            filter: ${desbloqueada ? "none" : "grayscale(1)"};
-                        ">
-                            ${desbloqueada ? c.emoji : "🔒"}
-                        </div>
-                        <div style="flex: 1; min-width: 0;">
-                            <div style="
-                                font-weight: 700;
-                                font-size: 13px;
-                                color: ${desbloqueada ? "#fff" : "#888"};
-                                white-space: nowrap;
-                                overflow: hidden;
-                                text-overflow: ellipsis;
-                            ">
-                                ${c.nome}
-                            </div>
-                            <div style="font-size: 11px; color: #777; margin-top: 2px;">
-                                ${c.desc}
-                            </div>
-                            ${recompTxt ? `
-                            <div style="font-size: 11px; color: #f5a623; margin-top: 3px;">
-                                Recompensa: ${recompTxt}
-                            </div>` : ""}
-                        </div>
-                        ${desbloqueada
-                            ? `<span style="color:#44ff88; font-size:18px; flex-shrink:0;">✅</span>`
-                            : `<span style="color:#555; font-size:12px; flex-shrink:0;">🔒</span>`
-                        }
-                    </div>`;
+        visiveis.forEach(def => _renderCard(def, estado, container));
+    }
+
+    function _renderFiltros(container, categorias, statusOpts, containerId) {
+        const wrap = document.createElement("div");
+        wrap.className = "__achiev_filtros__";
+
+        categorias.forEach(c => {
+            const btn = document.createElement("button");
+            btn.className   = "__achiev_filtro__" + (c.id === _filtroCategoria ? " ativo" : "");
+            btn.textContent = c.label;
+            btn.addEventListener("click", () => {
+                _filtroCategoria = c.id;
+                renderTela(containerId);
+            });
+            wrap.appendChild(btn);
+        });
+
+        // Separador visual
+        const sep = document.createElement("span");
+        sep.style.cssText = "border-left:1px solid rgba(255,255,255,0.15);margin:0 4px";
+        wrap.appendChild(sep);
+
+        statusOpts.forEach(s => {
+            const btn = document.createElement("button");
+            btn.className   = "__achiev_filtro__" + (s.id === _filtroStatus ? " ativo" : "");
+            btn.textContent = s.label;
+            btn.addEventListener("click", () => {
+                _filtroStatus = s.id;
+                renderTela(containerId);
+            });
+            wrap.appendChild(btn);
+        });
+
+        container.appendChild(wrap);
+    }
+
+    function _renderCard(def, estado, container) {
+        const desbloq = _desbloqueadas.has(def.id);
+        const r       = def.raridade;
+        const pct     = progressoPct(def.id);
+
+        const card = document.createElement("div");
+        card.className = `__achiev_card__ ${desbloq ? "desbloqueada" : "bloqueada"}`;
+        if (desbloq) card.style.borderColor = r.cor + "44";
+
+        // Ícone
+        const icone = document.createElement("div");
+        icone.className   = "__achiev_icone__";
+        icone.textContent = desbloq ? def.emoji : "🔒";
+
+        // Info
+        const info = document.createElement("div");
+        info.className = "__achiev_info__";
+
+        const nome = document.createElement("div");
+        nome.className = "__achiev_nome__";
+        nome.innerHTML =
+            `${def.nome}` +
+            `<span class="__achiev_rar__"
+                style="background:${r.cor}22;color:${r.cor};border:1px solid ${r.cor}44">
+                ${r.iconeUI} ${r.label}
+            </span>`;
+
+        const desc = document.createElement("div");
+        desc.className   = "__achiev_desc__";
+        desc.textContent = def.desc;
+
+        const recomp = document.createElement("div");
+        recomp.className = "__achiev_recomp__";
+        recomp.textContent = `🎁 ${_textoRecompensa(def.recompensa)}`;
+
+        info.appendChild(nome);
+        info.appendChild(desc);
+        info.appendChild(recomp);
+
+        // Barra de progresso (se não desbloqueada e tem meta)
+        if (!desbloq && def.meta && def.progresso) {
+            try {
+                const atual = def.progresso(estado) ?? 0;
+                const progWrap = document.createElement("div");
+                progWrap.className = "__achiev_prog_wrap__";
+
+                const progFill = document.createElement("div");
+                progFill.className = "__achiev_prog_fill__";
+                progFill.style.width = `${(pct * 100).toFixed(1)}%`;
+
+                progWrap.appendChild(progFill);
+                info.appendChild(progWrap);
+
+                const progTxt = document.createElement("div");
+                progTxt.style.cssText = "font-size:10px;color:rgba(255,255,255,0.35);margin-top:2px";
+                progTxt.textContent   = `${_fmt(atual)} / ${_fmt(def.meta)}`;
+                info.appendChild(progTxt);
+            } catch(_) {}
+        }
+
+        // Status
+        const status = document.createElement("div");
+        status.className   = "__achiev_status__";
+        status.textContent = desbloq ? "✅" : "";
+
+        card.appendChild(icone);
+        card.appendChild(info);
+        card.appendChild(status);
+        container.appendChild(card);
+    }
+
+    // ════════════════════════════════════════════════════
+    // CARREGAR SAVE
+    // ════════════════════════════════════════════════════
+    function _carregarSave() {
+        try {
+            const ids = GameState.get("conquistasIds") ?? [];
+            ids.forEach(id => _desbloqueadas.add(id));
+            _log.debug(`${_desbloqueadas.size} conquistas carregadas do save.`);
+        } catch(e) {
+            _log.warn("Erro ao carregar conquistas:", e);
+        }
+    }
+
+    // ════════════════════════════════════════════════════
+    // REGISTRAR EVENTOS
+    // Verificação reativa — não usa polling
+    // ════════════════════════════════════════════════════
+    function _registrarEventos() {
+        try {
+            // Eventos que podem desbloquear conquistas
+            const gatilhos = [
+                "kill:registrado",
+                "estagio:avancou",
+                "nivel:up",
+                "upgrade:comprado",
+                "prestigio:feito",
+                "gacha:pull",
+                "gacha:pull:lendario",
+                "item:equipado",
+                "combo:atualizado",
+                "state:carregado",
+            ];
+
+            gatilhos.forEach(ev => {
+                EventBus.on(ev, () => verificar());
             });
 
-            // Espaçamento entre categorias
-            html += `<div style="height: 8px;"></div>`;
-        });
+            // Evento específico de kill de chefe
+            EventBus.on("kill:registrado", ({ chefe }) => {
+                if (chefe) {
+                    try { GameState.increment("totalChefes", 1); } catch(_) {}
+                }
+                verificar();
+            });
 
-        el.innerHTML = html;
-    }
+            // Maior combo
+            EventBus.on("combo:atualizado", ({ combo }) => {
+                try {
+                    const maiorAtual = GameState.get("maiorCombo") ?? 0;
+                    if (combo > maiorAtual) GameState.set("maiorCombo", combo);
+                } catch(_) {}
+                verificar();
+            });
 
-    // ════════════════════════════════════════
-    //  SAVE / LOAD
-    //  Chave separada do save principal para
-    //  não conflitar com o SaveSystem existente
-    // ════════════════════════════════════════
+            // Tela de conquistas aberta
+            EventBus.on("modal:aberto", ({ id }) => {
+                if (id === "modalConquistas") {
+                    renderTela("listaConquistas");
+                    // Limpa badge ao abrir
+                    try { UIHud.setBadge("conquistaBadge", 0); } catch(_) {}
+                    try {
+                        const el = document.getElementById("conquistaBadge");
+                        if (el) el.style.display = "none";
+                    } catch(_) {}
+                }
+            });
 
-    const _SAVE_KEY = "taplisieux_achievements_v1";
-
-    function _salvar() {
-        try {
-            localStorage.setItem(_SAVE_KEY, JSON.stringify({
-                desbloqueadas: [..._desbloqueadas],
-                contadores:    { ..._contadores }
-            }));
-        } catch (e) {
-            console.warn("[Achievements] Falha ao salvar:", e);
+            _log.debug("Eventos registrados.");
+        } catch(e) {
+            _log.warn("EventBus indisponível:", e);
         }
     }
 
-    function _carregar() {
-        try {
-            const raw = localStorage.getItem(_SAVE_KEY);
-            if (!raw) return;
+    // ════════════════════════════════════════════════════
+    // INICIALIZAÇÃO
+    // ════════════════════════════════════════════════════
+    function init() {
+        _injetarCSS();
+        _carregarSave();
+        _registrarEventos();
+        _inicializado = true;
 
-            const data = JSON.parse(raw);
+        // Verificação inicial (conquistas já merecidas no load)
+        setTimeout(verificar, 500);
 
-            // Restaura conquistas desbloqueadas
-            if (Array.isArray(data.desbloqueadas)) {
-                data.desbloqueadas.forEach(id => {
-                    _desbloqueadas.add(id);
-                    // Sincroniza com o Set do game-ui.js
-                    if (typeof conquistasDesbloqueadas !== "undefined") {
-                        conquistasDesbloqueadas.add(id);
-                    }
-                });
-            }
-
-            // Restaura contadores
-            if (data.contadores) {
-                Object.assign(_contadores, data.contadores);
-                // Sincroniza globals do game-ui.js
-                window._totalKills      = _contadores.kills;
-                window._totalUpgrades   = _contadores.upgrades;
-                window._totalPrestígios = _contadores.prestigios;
-            }
-
-        } catch {
-            console.warn("[Achievements] Save corrompido — resetando contadores.");
-            _contadores = { kills:0, chefes:0, upgrades:0, invocacoes:0, prestigios:0 };
-        }
+        _log.info(`Achievements inicializado. ${DEFS.length} conquistas definidas.`);
     }
 
-    // ════════════════════════════════════════
-    //  INTEGRAÇÃO COM SAVESYSTEM EXISTENTE
-    //  O SaveSystem em game-ui.js salva
-    //  conquistasDesbloqueadas (Set) no save principal.
-    //  Aqui garantimos que ao carregar o save principal,
-    //  nosso Set interno também seja preenchido.
-    // ════════════════════════════════════════
-
-    function _sincronizarComSavePrincipal() {
-        if (typeof conquistasDesbloqueadas === "undefined") return;
-        conquistasDesbloqueadas.forEach(id => _desbloqueadas.add(id));
-    }
-
-    // ════════════════════════════════════════
-    //  API PÚBLICA
-    // ════════════════════════════════════════
-
-    /**
-     * Retorna estatísticas das conquistas.
-     */
-    function obterResumo() {
+    // ════════════════════════════════════════════════════
+    // DIAGNÓSTICO
+    // ════════════════════════════════════════════════════
+    function stats() {
         return {
-            total:         CONQUISTAS_DEF.length,
+            total        : DEFS.length,
             desbloqueadas: _desbloqueadas.size,
-            contadores:    { ..._contadores }
+            ids          : [..._desbloqueadas],
+            pct          : `${Math.round((_desbloqueadas.size / DEFS.length) * 100)}%`,
         };
     }
 
-    /**
-     * Verifica manualmente (útil para chamar após load).
-     */
-    function verificarTodas() {
-        verificar();
-    }
-
-    /**
-     * Abre/atualiza a tela de conquistas (chamado pelo botão na UI).
-     */
-    function abrirTela() {
-        _atualizarTelaConquistas();
-        const el = typeof DOM !== "undefined"
-            ? DOM.get("modalConquistas")
-            : document.getElementById("modalConquistas");
-        if (el) el.style.display = "flex";
-    }
-
-    /**
-     * Inicializa o sistema. Chamado pelo DOMContentLoaded.
-     */
-    function init() {
-        _carregar();
-        _sincronizarComSavePrincipal();
-        _registrarEventos();
-        _atualizarTelaConquistas();
-
-        // Verificação inicial (pega conquistas que já foram cumpridas antes)
-        setTimeout(() => verificar(), 500);
-
-        console.log(
-            `[Achievements] Sistema inicializado. ` +
-            `${_desbloqueadas.size}/${CONQUISTAS_DEF.length} desbloqueadas.`
-        );
-    }
-
-    // ════════════════════════════════════════
-    //  EXPOSIÇÃO PÚBLICA
-    // ════════════════════════════════════════
-    return {
+    // ════════════════════════════════════════════════════
+    // API PÚBLICA
+    // ════════════════════════════════════════════════════
+    return Object.freeze({
         init,
-        verificar:      verificarTodas,
-        abrirTela,
-        obterResumo,
-        atualizarUI:    _atualizarTelaConquistas,
+        verificar,
+        renderTela,
+        progressoPct,
+        estaDesbloqueada : id => _desbloqueadas.has(id),
+        stats,
 
-        // Acesso somente-leitura para outros módulos
-        get desbloqueadas() { return new Set(_desbloqueadas); },
-        get contadores()    { return { ..._contadores };       },
-        get lista()         { return CONQUISTAS_DEF;           }
-    };
+        // Para testes/debug
+        get defs() { return DEFS; },
+    });
 
 })();
-
-// ════════════════════════════════════════
-//  INICIALIZAÇÃO
-// ════════════════════════════════════════
-document.addEventListener("DOMContentLoaded", () => {
-    // Aguarda o SaveSystem do game-ui.js inicializar primeiro
-    setTimeout(() => AchievementSystem.init(), 100);
-});
