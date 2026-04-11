@@ -588,3 +588,4 @@ const ComboSystem = (() => {
     });
 
 })();
+window.ComboSystem = ComboSystem;
