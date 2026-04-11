@@ -607,3 +607,4 @@ const Effects = (() => {
     });
 
 })();
+window.Effects = Effects;
