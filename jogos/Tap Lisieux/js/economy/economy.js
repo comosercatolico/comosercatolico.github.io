@@ -738,3 +738,4 @@ const Economy = (() => {
     });
 
 })();
+window.Economy = Economy;
