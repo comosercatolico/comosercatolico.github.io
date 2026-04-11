@@ -688,3 +688,4 @@ const Damage = (() => {
     });
 
 })();
+window.Damage = Damage;
