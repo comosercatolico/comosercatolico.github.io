@@ -392,3 +392,6 @@ const Logger = (() => {
     });
 
 })();
+
+
+window.Logger = Logger; // ← adiciona essa
