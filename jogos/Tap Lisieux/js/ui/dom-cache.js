@@ -491,3 +491,4 @@ const DOM = (() => {
     });
 
 })();
+window.DOM = DOM; // ← adiciona essa
