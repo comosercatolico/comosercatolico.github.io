@@ -73,8 +73,8 @@ const Loading = (() => {
 
     function progresso(pct, msg, sub) {
         _pct = Math.max(_pct, Math.min(100, pct));
-        if (_barra)                         _barra.style.width  = `${_pct}%`;
-        if (_texto    && msg)               _texto.textContent  = msg;
+        if (_barra)                         _barra.style.width    = `${_pct}%`;
+        if (_texto    && msg)               _texto.textContent    = msg;
         if (_subTexto && sub !== undefined) _subTexto.textContent = sub;
     }
 
@@ -170,29 +170,29 @@ async function _inicializarJogo() {
     const t0 = performance.now();
     _log("🌹 Tap Lisieux — iniciando...");
 
-    Loading.progresso(5,  "Inicializando...",        "Módulos base");
+    Loading.progresso(5,  "Inicializando...",         "Módulos base");
     _inicializarBase();
 
-    Loading.progresso(12, "Carregando imagens...",   "Assets");
-    await _carregarAssets();                          // ← aguarda assets 100%
+    Loading.progresso(12, "Carregando imagens...",    "Assets");
+    await _carregarAssets();                           // ← await real
 
-    Loading.progresso(48, "Preparando canvas...",    "Renderização");
+    Loading.progresso(48, "Preparando canvas...",     "Renderização");
     _inicializarCanvas();
 
-    Loading.progresso(54, "Carregando progresso...", "Save");
+    Loading.progresso(54, "Carregando progresso...",  "Save");
     const dadosSave = await _inicializarEstadoESave();
 
-    Loading.progresso(62, "Inicializando sistemas...","Lógica");
+    Loading.progresso(62, "Inicializando sistemas...", "Lógica");
     _inicializarSistemas();
 
-    Loading.progresso(78, "Construindo interface...", "UI");
+    Loading.progresso(78, "Construindo interface...",  "UI");
     _inicializarUI();
 
-    Loading.progresso(88, "Registrando controles...", "Input / Áudio");
+    Loading.progresso(88, "Registrando controles...",  "Input / Áudio");
     _inicializarInputAudio();
 
     Loading.progresso(94, "Iniciando renderização...", "Loop");
-    _iniciarLoop();                                   // ← Renderer.start()
+    _iniciarLoop();
 
     Loading.progresso(98, "Finalizando...", "");
     _posInit(dadosSave);
@@ -234,13 +234,13 @@ function _inicializarBase() {
 
 // ════════════════════════════════════════════════════════
 // FASE 3 — ASSETS
-// ✅ CORRIGIDO: garante que AssetLoader.carregar() é
-//    chamado e aguardado antes de prosseguir
+// ✅ Usa await direto em AL.carregar() — sem depender
+//    de eventos para resolver a Promise
 // ════════════════════════════════════════════════════════
 async function _carregarAssets() {
     const AL = _M.get("AssetLoader");
 
-    // ── Sem AssetLoader → fallback legado ───────────────
+    // ── Sem AssetLoader → fallback legado ──────────────
     if (!AL?.carregar) {
         if (typeof window.carregarAssets === "function") {
             window.carregarAssets();
@@ -250,52 +250,35 @@ async function _carregarAssets() {
         return;
     }
 
-    // ── Já carregou numa corrida anterior ───────────────
+    // ── Já carregado ────────────────────────────────────
     if (AL.estado === "COMPLETO") {
         _log("Fase 3 OK — assets já estavam em cache.");
+        // Notifica o renderer para montar o cache de assets
+        _emitir("assets:completo", {});
         return;
     }
 
-    // ── Carregamento real ────────────────────────────────
-    return new Promise(resolve => {
-        let _resolvido = false;
-        const _resolver = () => {
-            if (_resolvido) return;
-            _resolvido = true;
-            _log("Fase 3 OK — assets carregados.");
-            resolve();
-        };
+    // ── Carregamento real — await direto ────────────────
+    // Registra progresso visual via EventBus (não bloqueia)
+    const EB = _M.get("EventBus");
+    if (EB) {
+        EB.on("assets:progresso", ({ pct }) => {
+            Loading.progresso(
+                12 + Math.round(pct * 36),
+                "Carregando imagens...",
+                `${Math.round(pct * 100)}%`
+            );
+        });
+    }
 
-        const EB = _M.get("EventBus");
-        if (EB) {
-            // Progresso visual
-            EB.on("assets:progresso", ({ pct }) => {
-                Loading.progresso(
-                    12 + Math.round(pct * 36),
-                    "Carregando imagens...",
-                    `${Math.round(pct * 100)}%`
-                );
-            });
-
-            // Sucesso
-            EB.on("assets:completo", _resolver);
-
-            // Falha parcial — jogo continua com fallbacks
-            EB.on("assets:erro_critico", ({ assets }) => {
-                console.warn("[Main] Assets críticos falharam:", assets);
-                _resolver();
-            });
-        }
-
-        // Inicia carregamento — .then() garante resolve
-        // mesmo se EventBus não estiver disponível
-        AL.carregar()
-            .then(_resolver)
-            .catch(e => {
-                console.warn("[Main] AssetLoader.carregar() rejeitou:", e);
-                _resolver();
-            });
-    });
+    try {
+        // ✅ await direto — espera o carregamento terminar de verdade
+        await AL.carregar();
+        _log(`Fase 3 OK — ${AL.statsDetalhado().cacheSize} assets no cache.`);
+    } catch(e) {
+        console.warn("[Main] AssetLoader.carregar() rejeitou:", e);
+        // Continua mesmo com erro — assets não críticos têm fallback visual
+    }
 }
 
 // ════════════════════════════════════════════════════════
@@ -464,8 +447,6 @@ function _inicializarInputAudio() {
 
 // ════════════════════════════════════════════════════════
 // FASE 9 — LOOP DE RENDERIZAÇÃO
-// ✅ CORRIGIDO: delega ao Renderer centralizado
-//    (renderer-main.js) em vez de loop próprio
 // ════════════════════════════════════════════════════════
 const _loopState = {
     rodando  : false,
@@ -486,13 +467,11 @@ function _iniciarLoop() {
         return;
     }
 
-    // ── Tenta usar o Renderer centralizado ──────────────
     const R = _M.get("Renderer");
     if (R?.start) {
         R.start(canvas);
         _loopState.rodando = true;
 
-        // Sincroniza stats para TapLisieux.debug
         setInterval(() => {
             try {
                 const s = R.stats?.();
@@ -506,7 +485,6 @@ function _iniciarLoop() {
         return;
     }
 
-    // ── Fallback: loop próprio (sem renderer-main.js) ───
     console.warn("[Main] Renderer centralizado não encontrado — usando loop fallback.");
     _loopState.rodando = true;
     _loopState.ultimo  = performance.now();
@@ -516,19 +494,14 @@ function _iniciarLoop() {
 
 function _pararLoop() {
     _loopState.rodando = false;
-
-    // Para o Renderer centralizado se existir
     const R = _M.get("Renderer");
     if (R?.stop) { R.stop(); return; }
-
-    // Para o fallback
     if (_loopState.rafId) {
         cancelAnimationFrame(_loopState.rafId);
         _loopState.rafId = null;
     }
 }
 
-// Loop fallback — só usado se renderer-main.js não existir
 function _frameFallback(agora) {
     _loopState.rafId = requestAnimationFrame(_frameFallback);
     if (!_loopState.rodando) return;
@@ -578,9 +551,7 @@ function _posInit(dadosSave) {
     _registrarEventosSistema();
     _registrarVisibilidade();
     _notificarOffline(dadosSave);
-
     setTimeout(() => { _M.chamar("Achievements", "verificar"); }, 600);
-
     _log("Fase 10 OK — Pós-init.");
 }
 
@@ -809,15 +780,15 @@ window.TapLisieux = Object.freeze({
     debug: {
         estado() {
             console.table({
-                moeda        : window.moeda,
-                gema         : window.gema,
-                estagio      : window.estagio,
-                emBatalha    : window.emBatalha,
-                nivelSanta   : window.personagem?.nivel,
-                fps          : _loopState.fps,
-                frames       : _loopState.frames,
-                assetEstado  : _M.get("AssetLoader")?.estado,
-                assetCache   : _M.get("AssetLoader")?.statsDetalhado().cacheSize,
+                moeda       : window.moeda,
+                gema        : window.gema,
+                estagio     : window.estagio,
+                emBatalha   : window.emBatalha,
+                nivelSanta  : window.personagem?.nivel,
+                fps         : _loopState.fps,
+                frames      : _loopState.frames,
+                assetEstado : _M.get("AssetLoader")?.estado,
+                assetCache  : _M.get("AssetLoader")?.statsDetalhado().cacheSize,
             });
         },
         modulos() {
@@ -841,10 +812,10 @@ window.TapLisieux = Object.freeze({
             if (!AL) { console.warn("AssetLoader não encontrado."); return; }
             console.table(AL.statsDetalhado());
         },
-        save()        { console.log(_M.get("SaveSystem")?.info?.() ?? "SaveSystem não disponível"); },
-        renderer()    { console.log({ lobby: _M.get("RendererLobby")?.stats?.(), battle: _M.get("RendererBattle")?.stats?.(), effects: _M.get("Effects")?.stats?.(), loop: { fps: _loopState.fps, frames: _loopState.frames } }); },
-        achievements(){ console.table(_M.get("Achievements")?.stats?.()); },
-        quests()      { console.table(_M.get("Quests")?.stats?.());       },
-        audio()       { console.table(_M.get("Audio")?.stats?.());        },
+        save()         { console.log(_M.get("SaveSystem")?.info?.() ?? "SaveSystem não disponível"); },
+        renderer()     { console.log({ lobby: _M.get("RendererLobby")?.stats?.(), battle: _M.get("RendererBattle")?.stats?.(), effects: _M.get("Effects")?.stats?.(), loop: { fps: _loopState.fps, frames: _loopState.frames } }); },
+        achievements() { console.table(_M.get("Achievements")?.stats?.());  },
+        quests()       { console.table(_M.get("Quests")?.stats?.());        },
+        audio()        { console.table(_M.get("Audio")?.stats?.());         },
     },
 });
