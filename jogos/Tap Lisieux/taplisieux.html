@@ -2,561 +2,263 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="theme-color" content="#0a0118">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="description" content="Santa Teresinha Idle — Um jogo de clique sagrado">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Santa Teresinha Idle</title>
-
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Nunito:wght@400;600;800&display=swap" rel="stylesheet">
-
     <link rel="stylesheet" href="taplisieux.css">
 </head>
 <body>
 
-<!-- ══════════════════════════════════════════════════════
-     TELA DE LOADING
-══════════════════════════════════════════════════════ -->
-<div id="telaLoading">
-    <div id="loadingConteudo">
-        <div id="loadingEmoji">🌹</div>
-        <h1 id="loadingTitulo">Santa Teresinha</h1>
-        <p id="loadingSubtitulo">Idle RPG</p>
-        <div id="loadingBarraContainer">
-            <div id="loadingBarra"></div>
-        </div>
-        <p id="loadingTexto">Carregando...</p>
-        <p id="loadingSubTexto" style="font-size:12px;color:rgba(255,255,255,0.4);margin-top:4px;"></p>
-    </div>
-</div>
+<!-- ══════════════════════════════════
+     CANVAS (lobby + batalha desenhados aqui)
+══════════════════════════════════ -->
+<canvas id="game"></canvas>
 
-<!-- ══════════════════════════════════════════════════════
-     CANVAS PRINCIPAL
-══════════════════════════════════════════════════════ -->
-<canvas id="game" aria-label="Área de jogo" role="img"></canvas>
-
-<!-- ══════════════════════════════════════════════════════
-     LOBBY HUD — TOPO
-══════════════════════════════════════════════════════ -->
-<div id="lobbyHUD" role="banner" aria-label="HUD principal">
-
+<!-- ══════════════════════════════════
+     LOBBY HUD (topo)
+══════════════════════════════════ -->
+<div id="lobbyHUD">
     <div id="lobbyHUDEsq">
-        <button class="btnTop" onclick="UIConfig.abrir()" aria-label="Configurações" title="Configurações">⚙</button>
-        <button class="btnTop" onclick="UIConfig.voltarSite()" aria-label="Voltar ao site" title="Voltar">◀</button>
+        <button class="btnTop" onclick="abrirConfig()">⚙</button>
+        <button class="btnTop" onclick="voltarSite()">◀</button>
     </div>
-
-    <div id="lobbyMoedas" aria-live="polite">
-
-        <div class="moedaHUD" title="Energia">
-            ⚡ <span id="hudEnergiaVal">100/100</span>
-            <div style="width:60px; background:rgba(255,255,255,0.1); border-radius:2px; height:3px; margin-top:2px;">
-                <div id="hudEnergiaBar"
-                     style="height:100%; width:100%; background:linear-gradient(90deg,#56ccf2,#2f80ed); border-radius:2px; transition:width 0.6s linear;">
-                </div>
-            </div>
-        </div>
-
+    <div id="lobbyMoedas">
+        <div class="moedaHUD" title="Energia">⚡ <span id="hudEnergiaVal">100/100</span></div>
         <div class="moedaHUD" title="Moedas">🪙 <span id="hudMoedaVal">0</span></div>
         <div class="moedaHUD" title="Gemas">💎 <span id="hudGemaVal">50</span></div>
-
     </div>
-
-    <div id="hudXpContainer"
-         style="position:absolute; bottom:0; left:0; right:0; height:3px;
-                background:rgba(255,255,255,0.08); overflow:hidden;">
-        <div id="hudXpFill"
-             style="height:100%; width:0%; background:linear-gradient(90deg,#9d4edd,#c084fc);
-                    border-radius:0 2px 2px 0; transition:width 0.3s ease;">
-        </div>
-    </div>
-
 </div>
 
-<!-- ══════════════════════════════════════════════════════
-     BOTÕES DO LOBBY — RODAPÉ
-══════════════════════════════════════════════════════ -->
-<div id="lobbybotoes" role="navigation" aria-label="Menu principal">
-
-    <button class="btnLobby" onclick="Achievements.abrirTela?.()" aria-label="Conquistas">
-        <span class="btnIcon">🏆</span>
-        <span class="btnLabel">Conquistas</span>
-        <span id="conquistaBadge" class="notifBadge" style="display:none;"></span>
-    </button>
-
-    <button class="btnLobby gacha" onclick="UIGacha.abrir()" aria-label="Invocar heróis">
+<!-- ══════════════════════════════════
+     BOTÕES DO LOBBY (rodapé)
+══════════════════════════════════ -->
+<div id="lobbybotoes">
+    <button class="btnLobby gacha" onclick="abrirModalInvocar()">
         <span class="btnIcon">✨</span>
         <span class="btnLabel">Invocar</span>
     </button>
-
-    <button class="btnLobby batalha" onclick="Battle.iniciar()" aria-label="Ir para batalha">
+    <button class="btnLobby batalha" onclick="iniciarBatalha()">
         <span class="btnIcon">⚔</span>
         <span class="btnLabel">Batalhar</span>
     </button>
-
-    <button class="btnLobby" onclick="UIGacha.abrirEquipar()" aria-label="Equipar itens">
+    <button class="btnLobby" onclick="abrirModalEquipar()">
         <span class="btnIcon">🗡</span>
         <span class="btnLabel">Equipar</span>
     </button>
-
-    <button class="btnLobby" onclick="Quests.abrirModal?.()" aria-label="Missões diárias">
-        <span class="btnIcon">📋</span>
-        <span class="btnLabel">Missões</span>
-        <span id="questBadge" class="notifBadge" style="display:none;"></span>
-    </button>
-
 </div>
 
-<!-- ══════════════════════════════════════════════════════
-     MODAL — CONFIGURAÇÕES
-══════════════════════════════════════════════════════ -->
-<div id="janelaConfig"
-     class="modalOverlay"
-     style="display:none;"
-     role="dialog"
-     aria-modal="true"
-     aria-labelledby="tituloConfig"
-     onclick="UIModals.fecharSeFora(event,'janelaConfig')">
-
+<!-- ══════════════════════════════════
+     MODAL: CONFIGURAÇÕES
+══════════════════════════════════ -->
+<div id="janelaConfig" class="modalOverlay" style="display:none;" onclick="fecharSeForaModal(event,'janelaConfig')">
     <div class="modalBox small">
         <div class="modalTopo">
-            <h2 id="tituloConfig">⚙ Configurações</h2>
-            <button class="btnFecharModal" onclick="UIModals.fechar('janelaConfig')" aria-label="Fechar">✕</button>
+            <h2>⚙ Configurações</h2>
+            <button class="btnFecharModal" onclick="fecharConfig()">✕</button>
         </div>
-
-        <div class="configSecao">
-            <label class="configLabel" for="volumeSlider">🎵 Volume da música</label>
-            <input type="range" class="slider" id="volumeSlider"
-                   min="0" max="1" step="0.01" value="0.5"
-                   aria-label="Volume da música">
-        </div>
-
-        <div class="configSecao">
-            <label class="configLabel" for="sfxSlider">🔊 Efeitos sonoros</label>
-            <input type="range" class="slider" id="sfxSlider"
-                   min="0" max="1" step="0.01" value="0.7"
-                   aria-label="Volume dos efeitos">
-        </div>
-
-        <div class="configSecao">
-            <label class="configLabel">🎨 Qualidade visual</label>
-            <div class="configOpcoes">
-                <button class="btnOpcao ativo" id="qualBaixa" onclick="UIConfig.setQualidade('baixa')">Baixa</button>
-                <button class="btnOpcao"       id="qualMedia" onclick="UIConfig.setQualidade('media')">Média</button>
-                <button class="btnOpcao"       id="qualAlta"  onclick="UIConfig.setQualidade('alta')">Alta</button>
-            </div>
-        </div>
-
-        <div class="configSecao">
-            <label class="configLabel">💾 Dados do jogo</label>
-            <div style="display:flex; gap:8px; flex-wrap:wrap;">
-                <button class="btnConfig" onclick="UIConfig.salvarAgora()">Salvar agora</button>
-                <button class="btnConfig perigo" onclick="UIConfig.confirmarReset()">Resetar save</button>
-            </div>
-        </div>
-
-        <div class="configSecao" style="padding-top:8px; border-top:1px solid rgba(255,255,255,0.08);">
-            <button class="btnConfig" onclick="UIConfig.voltarSite()" style="width:100%;">
-                ◀ Voltar ao site
-            </button>
-        </div>
+        <label class="configLabel">Volume da música</label>
+        <input type="range" class="slider" min="0" max="1" step="0.01" id="volumeSlider">
+        <label class="configLabel" style="margin-top:14px;">Efeitos sonoros</label>
+        <input type="range" class="slider" min="0" max="1" step="0.01" id="sfxSlider">
     </div>
 </div>
 
-<!-- ══════════════════════════════════════════════════════
-     MODAL — INVOCAR (GACHA)
-══════════════════════════════════════════════════════ -->
-<div id="modalInvocar"
-     class="modalOverlay"
-     style="display:none;"
-     role="dialog"
-     aria-modal="true"
-     aria-labelledby="tituloInvocar"
-     onclick="UIModals.fecharSeFora(event,'modalInvocar')">
-
+<!-- ══════════════════════════════════
+     MODAL: INVOCAR (GACHA)
+══════════════════════════════════ -->
+<div id="modalInvocar" class="modalOverlay" style="display:none;" onclick="fecharSeForaModal(event,'modalInvocar')">
     <div class="modalBox grande">
         <div class="modalTopo">
-            <h2 id="tituloInvocar">✨ Convocação Sagrada</h2>
-            <button class="btnFecharModal" onclick="UIModals.fechar('modalInvocar')" aria-label="Fechar">✕</button>
+            <h2>✨ Convocação Sagrada</h2>
+            <button class="btnFecharModal" onclick="fecharModal('modalInvocar')">✕</button>
         </div>
 
-        <div class="taxasRaridade" role="list" aria-label="Taxas de raridade">
-            <span class="taxa comum"    role="listitem">Comum 74,3%</span>
-            <span class="taxa raro"     role="listitem">Raro 20,1%</span>
-            <span class="taxa epico"    role="listitem">Épico 5,1%</span>
-            <span class="taxa lendario" role="listitem">Lendário 0,6%</span>
+        <!-- Taxas de raridade -->
+        <div class="taxasRaridade">
+            <span class="taxa comum">Comum 74%</span>
+            <span class="taxa raro">Raro 20%</span>
+            <span class="taxa epico">Épico 4%</span>
+            <span class="taxa lendario">Lendário 1%</span>
         </div>
 
-        <div id="pityInfo" class="pityInfo" aria-live="polite">
-            🎯 Pity: 0/90 · Lendário garantido em 90 pulls
-        </div>
-
-        <div id="pityBarWrap" style="margin:6px 0 10px;"></div>
-
-        <div id="invocarResultado" class="resultadoInvocar" role="status" aria-live="polite"></div>
-
-        <div id="pullStats"></div>
+        <div id="invocarResultado" class="resultadoInvocar"></div>
 
         <div class="invocarBotoes">
-            <button id="btnInvocar1" class="btnInvocar" aria-label="Invocar 1 vez por 100 gemas">
+            <button class="btnInvocar" onclick="invocar(1)">
                 <span>Invocar x1</span>
                 <span class="custo">💎 100</span>
             </button>
-            <button id="btnInvocar10" class="btnInvocar destaque" aria-label="Invocar 10 vezes por 900 gemas">
+            <button class="btnInvocar destaque" onclick="invocar(10)">
                 <span>Invocar x10</span>
-                <span class="custo">💎 900 <small>(−10%)</small></span>
+                <span class="custo">💎 1.000</span>
             </button>
         </div>
 
         <div class="inventarioGrid">
             <div class="inventarioSecao">
                 <h4>👤 Heróis obtidos</h4>
-                <div id="listaHerois" class="gridItens" aria-live="polite">
-                    <p class="dica">Nenhum herói ainda. Invoque para obter!</p>
-                </div>
+                <div id="listaHerois" class="gridItens"></div>
             </div>
             <div class="inventarioSecao">
                 <h4>🌹 Armas obtidas</h4>
-                <div id="listaEquipamentos" class="gridItens" aria-live="polite">
-                    <p class="dica">Nenhuma arma ainda. Invoque para obter!</p>
-                </div>
+                <div id="listaEquipamentos" class="gridItens"></div>
             </div>
         </div>
     </div>
 </div>
 
-<!-- ══════════════════════════════════════════════════════
-     MODAL — EQUIPAR
-══════════════════════════════════════════════════════ -->
-<div id="modalEquipar"
-     class="modalOverlay"
-     style="display:none;"
-     role="dialog"
-     aria-modal="true"
-     aria-labelledby="tituloEquipar"
-     onclick="UIModals.fecharSeFora(event,'modalEquipar')">
-
+<!-- ══════════════════════════════════
+     MODAL: EQUIPAR
+══════════════════════════════════ -->
+<div id="modalEquipar" class="modalOverlay" style="display:none;" onclick="fecharSeForaModal(event,'modalEquipar')">
     <div class="modalBox grande">
         <div class="modalTopo">
-            <h2 id="tituloEquipar">🗡 Equipamentos</h2>
-            <button class="btnFecharModal" onclick="UIModals.fechar('modalEquipar')" aria-label="Fechar">✕</button>
+            <h2>🗡 Equipamentos</h2>
+            <button class="btnFecharModal" onclick="fecharModal('modalEquipar')">✕</button>
         </div>
 
-        <div class="personagemCard ativo" role="article" aria-label="Personagem ativo">
+        <div class="personagemCard ativo">
             <div class="personagemIcone">🌸</div>
             <div class="personagemInfo">
                 <b>Santa Teresinha</b>
-                <small>
-                    Lv. <span class="santaLvUI">1</span>
-                    &nbsp;|&nbsp;
-                    Arma: <span id="armaEquipadaNome">Rosas Sagradas 🌹</span>
-                </small>
+                <small>Lv. <span id="santaLvUI">1</span> &nbsp;|&nbsp; Arma: Rosas Sagradas 🌹</small>
             </div>
             <span class="badge">Ativo</span>
         </div>
 
         <h4 class="secaoTitulo">Armas disponíveis</h4>
-        <div id="listaEquipamentosEquipar" aria-live="polite">
-            <p class="dica">Obtenha armas via invocação!</p>
-        </div>
+        <div id="listaEquipamentosEquipar"></div>
+        <p class="dica">Obtenha armas via invocação!</p>
     </div>
 </div>
 
-<!-- ══════════════════════════════════════════════════════
-     MODAL — CONQUISTAS
-══════════════════════════════════════════════════════ -->
-<div id="modalConquistas"
-     class="modalOverlay"
-     style="display:none;"
-     role="dialog"
-     aria-modal="true"
-     aria-labelledby="tituloConquistas"
-     onclick="UIModals.fecharSeFora(event,'modalConquistas')">
+<!-- ══════════════════════════════════
+     UI DE BATALHA (overlay sobre canvas)
+══════════════════════════════════ -->
+<div id="uiBatalha" style="display:none;">
 
-    <div class="modalBox grande">
-        <div class="modalTopo">
-            <h2 id="tituloConquistas">🏆 Conquistas</h2>
-            <button class="btnFecharModal" onclick="UIModals.fechar('modalConquistas')" aria-label="Fechar">✕</button>
-        </div>
-        <div id="listaConquistas" class="upgradeScroll" aria-live="polite" aria-label="Lista de conquistas">
-            <p class="dica">Carregando conquistas...</p>
-        </div>
-    </div>
-</div>
-
-<!-- ══════════════════════════════════════════════════════
-     MODAL — MISSÕES
-══════════════════════════════════════════════════════ -->
-<div id="modalMissoes"
-     class="modalOverlay"
-     style="display:none;"
-     role="dialog"
-     aria-modal="true"
-     aria-labelledby="tituloMissoes"
-     onclick="UIModals.fecharSeFora(event,'modalMissoes')">
-
-    <div class="modalBox grande">
-        <div class="modalTopo">
-            <h2 id="tituloMissoes">📋 Missões</h2>
-            <button class="btnFecharModal" onclick="UIModals.fechar('modalMissoes')" aria-label="Fechar">✕</button>
-        </div>
-
-        <div id="questResetTimer" class="timerReset" aria-live="polite">⏱️ Carregando...</div>
-
-        <button class="btnColetarTodas" onclick="Quests.coletarTodas?.()">
-            🎁 Coletar todas completas
-        </button>
-
-        <div class="missaoSecaoTitulo">☀️ Missões Diárias</div>
-        <div id="listaQuestsDiarias" class="upgradeScroll" aria-live="polite">
-            <p class="dica">Carregando missões...</p>
-        </div>
-
-        <div class="missaoSecaoTitulo" style="margin-top:14px;">🌙 Missões Semanais</div>
-        <div id="listaQuestsSemanais" class="upgradeScroll" aria-live="polite">
-            <p class="dica">Carregando missões...</p>
-        </div>
-    </div>
-</div>
-
-<!-- ══════════════════════════════════════════════════════
-     MODAL — CONFIRMAÇÃO DE RESET
-══════════════════════════════════════════════════════ -->
-<div id="modalConfirmReset"
-     class="modalOverlay"
-     style="display:none;"
-     role="alertdialog"
-     aria-modal="true"
-     aria-labelledby="tituloReset"
-     aria-describedby="descReset">
-
-    <div class="modalBox small">
-        <div class="modalTopo">
-            <h2 id="tituloReset">⚠️ Resetar Save</h2>
-        </div>
-        <p id="descReset" style="color:#ccc; font-size:14px; margin:12px 0 20px; line-height:1.6;">
-            Tem certeza? Todo o progresso,<br>
-            moedas, itens e conquistas serão<br>
-            <strong style="color:#ff4444;">permanentemente apagados.</strong>
-        </p>
-        <div style="display:flex; gap:10px;">
-            <button class="btnConfig" style="flex:1;" onclick="UIModals.fechar('modalConfirmReset')">
-                Cancelar
-            </button>
-            <button class="btnConfig perigo" style="flex:1;" onclick="UIConfig.executarReset()">
-                ⚠️ Confirmar Reset
-            </button>
-        </div>
-    </div>
-</div>
-
-<!-- ══════════════════════════════════════════════════════
-     UI DE BATALHA
-══════════════════════════════════════════════════════ -->
-<div id="uiBatalha" style="display:none;" role="main" aria-label="Interface de batalha">
-
-    <div id="batalhaNavTopo" role="navigation" aria-label="Navegação de estágio">
-
-        <button id="btnEstagioAntes"
-                class="navBtn"
-                onclick="Battle.irEstagioAnterior()"
-                aria-label="Estágio anterior">◀</button>
-
-        <div id="estagioInfo" aria-live="polite">
+    <!-- TOPO: estágio + botões de navegação (igual TT2) -->
+    <div id="batalhaNavTopo">
+        <div id="btnEstagioAnterior" class="navBtn" onclick="irEstagioAnterior()">◀</div>
+        <div id="estagioInfo">
             <div id="estagioNum">1</div>
             <div id="estagioNome">Jardim das Sombras</div>
         </div>
-
-        <button id="btnEstagioProximo"
-                class="navBtn"
-                onclick="Battle.irProximoEstagio()"
-                aria-label="Próximo estágio">▶</button>
-
-        <button id="btnEnfrentarChefe"
-                onclick="Battle.irParaChefe()"
-                aria-label="Enfrentar chefe">
-            👿 Enfrentar Chefe
-        </button>
+        <div id="btnProximoEstagio" class="navBtn" onclick="irProximoEstagio()">▶</div>
+        <button id="btnEnfrentarChefe" onclick="irParaChefe()">👿 Enfrentar Chefe</button>
     </div>
 
-    <div id="hpAreaBatalha" role="region" aria-label="HP do inimigo">
+    <!-- BARRA HP INIMIGO (estilo TT2: no topo central) -->
+    <div id="hpAreaBatalha">
         <div id="hpNomeRow">
-            <span id="nomeInimigo" aria-live="polite">Demônio</span>
-            <span id="hpNumero"    aria-live="polite">100 / 100</span>
+            <span id="nomeInimigo">Demônio</span>
+            <span id="hpNumero">100 / 100</span>
         </div>
-        <div id="hpBarraContainer"
-             role="progressbar"
-             aria-valuemin="0"
-             aria-valuemax="100"
-             aria-valuenow="100"
-             aria-label="HP do inimigo">
+        <div id="hpBarraContainer">
             <div id="hpInimigo"></div>
             <div id="hpBrilho"></div>
         </div>
     </div>
 
-    <div id="moedaCentro" aria-live="polite">
+    <!-- MOEDAS CAINDO (igual TT2: moeda grande no centro) -->
+    <div id="moedaCentro">
         <span id="moedaCentroIcon">🪙</span>
         <span id="moedaCentroVal">0</span>
     </div>
 
-    <div id="falaInimigo" role="status" aria-live="polite">
+    <!-- FALA DO MONSTRO (balão de fala) -->
+    <div id="falaInimigo">
         <div id="falaTexto"></div>
     </div>
 
-    <div id="comboDisplay"
-         class="oculto"
-         style="position:absolute; top:18%; left:50%; transform:translateX(-50%);
-                font-size:16px; font-weight:800; color:#ffd700;
-                text-shadow:0 0 10px rgba(255,215,0,0.7);
-                pointer-events:none; z-index:10;">
-    </div>
-
+    <!-- PAINEL INFERIOR (estilo TT2 completo) -->
     <div id="painelInferior">
 
-        <div id="statsRapidos" aria-label="Estatísticas de batalha">
+        <!-- BARRA de stats rápidos (dano / DPS) -->
+        <div id="statsRapidos">
             <span id="danoTaqueUI">👆 0 Dano de Toque</span>
             <span id="gemaUIBatalha">💎 50</span>
             <span id="moedaUIBatalha">🪙 0</span>
         </div>
 
-        <div id="abaRodape" role="tablist" aria-label="Abas do painel">
-
-            <button class="abaRodapeBtn ativa"
-                    role="tab" aria-selected="true"
-                    aria-controls="abaUpgrades"
-                    data-aba="upgrades"
-                    onclick="UIUpgrades.abrirAba('upgrades',this)">
+        <!-- ABAS (igual TT2: ícones no rodapé) -->
+        <div id="abaRodape">
+            <button class="abaRodapeBtn ativa" data-aba="upgrades" onclick="abrirAba('upgrades',this)">
                 <span class="abaIcon">⬆</span>
                 <span class="abaTexto">Habilidades</span>
             </button>
-
-            <button class="abaRodapeBtn"
-                    role="tab" aria-selected="false"
-                    aria-controls="abaHerois"
-                    data-aba="herois"
-                    onclick="UIUpgrades.abrirAba('herois',this)">
+            <button class="abaRodapeBtn" data-aba="herois" onclick="abrirAba('herois',this)">
                 <span class="abaIcon">👤</span>
                 <span class="abaTexto">Heróis</span>
             </button>
-
-            <button class="abaRodapeBtn"
-                    role="tab" aria-selected="false"
-                    aria-controls="abaArmas"
-                    data-aba="armas"
-                    onclick="UIUpgrades.abrirAba('armas',this)">
+            <button class="abaRodapeBtn" data-aba="armas" onclick="abrirAba('armas',this)">
                 <span class="abaIcon">🌹</span>
                 <span class="abaTexto">Armas</span>
             </button>
-
-            <button class="abaRodapeBtn"
-                    role="tab" aria-selected="false"
-                    aria-controls="abaInvocacao"
-                    data-aba="invocacao"
-                    onclick="UIUpgrades.abrirAba('invocacao',this)">
+            <button class="abaRodapeBtn" data-aba="invocacao" onclick="abrirAba('invocacao',this)">
                 <span class="abaIcon">✨</span>
                 <span class="abaTexto">Invocar</span>
             </button>
-
-            <button class="abaRodapeBtn"
-                    role="tab" aria-selected="false"
-                    aria-controls="abaMissoesBatalha"
-                    data-aba="missoesBatalha"
-                    onclick="UIUpgrades.abrirAba('missoesBatalha',this)">
-                <span class="abaIcon">📋</span>
-                <span class="abaTexto">Missões</span>
-                <span id="questBadgeBatalha" class="notifBadge" style="display:none;"></span>
-            </button>
-
         </div>
 
+        <!-- CONTEÚDO DA ABA -->
         <div id="abaConteudo">
 
-            <div id="abaUpgrades" class="abaPanel" role="tabpanel" aria-label="Habilidades">
+            <!-- ABA UPGRADES (habilidades de Santa) -->
+            <div id="abaUpgrades" class="abaPanel">
                 <div class="upgradeScroll">
-
                     <div class="upgradeItem" id="upForca">
                         <div class="upIcone">⚔</div>
                         <div class="upInfo">
                             <span class="upNome">Força de Ataque</span>
                             <span class="upDesc" id="forcaDesc">Nv.1 · +5 dano/toque</span>
                         </div>
-                        <button class="btnUp" id="btnForca"
-                                onclick="Upgrades.comprar('forca')"
-                                aria-label="Comprar upgrade de Força">
-                            🪙 15
-                        </button>
+                        <button class="btnUp" onclick="comprarUpgrade('forca')" id="btnForca">🪙 15</button>
                     </div>
-
                     <div class="upgradeItem" id="upRosa">
                         <div class="upIcone">🌹</div>
                         <div class="upInfo">
                             <span class="upNome">Poder das Rosas</span>
                             <span class="upDesc" id="rosaDesc">Nv.1 · +3 dano/toque</span>
                         </div>
-                        <button class="btnUp" id="btnRosa"
-                                onclick="Upgrades.comprar('rosa')"
-                                aria-label="Comprar upgrade de Rosa">
-                            🪙 20
-                        </button>
+                        <button class="btnUp" onclick="comprarUpgrade('rosa')" id="btnRosa">🪙 20</button>
                     </div>
-
                     <div class="upgradeItem" id="upVel">
                         <div class="upIcone">⚡</div>
                         <div class="upInfo">
                             <span class="upNome">Rapidez Celestial</span>
                             <span class="upDesc" id="velDesc">Nv.1 · x1 velocidade</span>
                         </div>
-                        <button class="btnUp" id="btnVelocidade"
-                                onclick="Upgrades.comprar('velocidade')"
-                                aria-label="Comprar upgrade de Velocidade">
-                            🪙 30
-                        </button>
+                        <button class="btnUp" onclick="comprarUpgrade('velocidade')" id="btnVelocidade">🪙 30</button>
                     </div>
-
                     <div class="upgradeItem" id="upDps">
                         <div class="upIcone">🙏</div>
                         <div class="upInfo">
                             <span class="upNome">Fé Passiva (DPS)</span>
                             <span class="upDesc" id="dpsDesc">Nv.1 · +2 DPS</span>
                         </div>
-                        <button class="btnUp" id="btnDps"
-                                onclick="Upgrades.comprar('dps')"
-                                aria-label="Comprar upgrade de DPS">
-                            🪙 25
-                        </button>
+                        <button class="btnUp" onclick="comprarUpgrade('dps')" id="btnDps">🪙 25</button>
                     </div>
-
+                    <!-- Prestigiar (igual TT2) -->
                     <div class="prestigiarBox">
                         <div class="prestigiarInfo">
                             <b>🌟 Prestigiar</b>
-                            <small>
-                                Reinicie em troca de Relíquias Sagradas.<br>
-                                Disponível no Estágio 60.
-                            </small>
+                            <small>Reinicie em troca de Relíquias Sagradas. Disponível no Estágio 60.</small>
                         </div>
-                        <button class="btnPrestigiar"
-                                id="btnPrestigiar"
-                                onclick="Prestige.executar()"
-                                disabled
-                                aria-label="Prestigiar — disponível no estágio 60">
-                            Alcance o Est. 60
-                        </button>
+                        <button class="btnPrestigiar" id="btnPrestigiar" onclick="prestigiar()" disabled>Alcance o Est. 60</button>
                     </div>
-
                 </div>
             </div>
 
-            <div id="abaHerois" class="abaPanel" role="tabpanel" aria-label="Heróis" style="display:none;">
+            <!-- ABA HERÓIS -->
+            <div id="abaHerois" class="abaPanel" style="display:none;">
                 <div class="upgradeScroll" id="listaHeroisBatalha">
-                    <div class="personagemCard ativo" role="article">
+                    <div class="personagemCard ativo">
                         <div class="personagemIcone">🌸</div>
                         <div class="personagemInfo">
                             <b>Santa Teresinha</b>
-                            <small>Lv. <span class="santaLvUI">1</span> · Rosas Sagradas</small>
+                            <small>Lv. <span id="santaLvUI2">1</span> · Rosas Sagradas</small>
                         </div>
                         <span class="badge">Ativo</span>
                     </div>
@@ -564,132 +266,41 @@
                 </div>
             </div>
 
-            <div id="abaArmas" class="abaPanel" role="tabpanel" aria-label="Armas" style="display:none;">
+            <!-- ABA ARMAS -->
+            <div id="abaArmas" class="abaPanel" style="display:none;">
                 <div class="upgradeScroll" id="listaArmasBatalha">
                     <p class="dica">Nenhuma arma extra ainda. Invoque para obter!</p>
                 </div>
             </div>
 
-            <div id="abaInvocacao" class="abaPanel" role="tabpanel" aria-label="Invocar" style="display:none;">
-
-                <div id="invocarResultado2" class="resultadoInvocar small" role="status" aria-live="polite"></div>
-
-                <div id="pityInfoBatalha" class="pityInfo small" aria-live="polite">
-                    🎯 Pity: 0/90
+            <!-- ABA INVOCAÇÃO (dentro da batalha) -->
+            <div id="abaInvocacao" class="abaPanel" style="display:none;">
+                <div id="invocarResultado2" class="resultadoInvocar small"></div>
+                <div style="display:flex;gap:8px;margin-bottom:10px;">
+                    <button class="btnInvocar small" onclick="invocar(1)">✨ x1 · 💎100</button>
+                    <button class="btnInvocar small destaque" onclick="invocar(10)">✨ x10 · 💎1k</button>
                 </div>
-
-                <div style="display:flex; gap:8px; margin-bottom:10px;">
-                    <button class="btnInvocar small" onclick="UIGacha.invocar?.(1)" aria-label="Invocar 1 vez">
-                        ✨ x1 · 💎 100
-                    </button>
-                    <button class="btnInvocar small destaque" onclick="UIGacha.invocar?.(10)" aria-label="Invocar 10 vezes">
-                        ✨ x10 · 💎 900
-                    </button>
-                </div>
-
-                <div id="listaHeroisBatalha2" class="gridItens small" aria-live="polite"></div>
-            </div>
-
-            <div id="abaMissoesBatalha" class="abaPanel" role="tabpanel" aria-label="Missões" style="display:none;">
-
-                <div id="questResetTimerBatalha" class="timerReset small" aria-live="polite">
-                    ⏱️ Carregando...
-                </div>
-
-                <button class="btnColetarTodas small" onclick="Quests.coletarTodas?.()">
-                    🎁 Coletar todas
-                </button>
-
-                <div style="font-size:11px; color:#f5a623; font-weight:700; margin:6px 0 4px;">☀️ Diárias</div>
-                <div id="listaQuestsDiariasBatalha" class="upgradeScroll" aria-live="polite">
-                    <p class="dica">Carregando...</p>
-                </div>
-
-                <div style="font-size:11px; color:#b44dff; font-weight:700; margin:6px 0 4px;">🌙 Semanais</div>
-                <div id="listaQuestsSemanaisBatalha" class="upgradeScroll" aria-live="polite">
-                    <p class="dica">Carregando...</p>
-                </div>
-
+                <div id="listaHeroisBatalha2" class="gridItens small"></div>
             </div>
 
         </div><!-- /abaConteudo -->
 
-        <button id="btnMinimizar"
-                onclick="UIUpgrades.togglePainel()"
-                aria-label="Minimizar painel"
-                aria-expanded="true">▼</button>
+        <!-- BOTÃO MINIMIZAR (igual TT2) -->
+        <button id="btnMinimizar" onclick="togglePainel()">▲</button>
 
     </div><!-- /painelInferior -->
 
-    <button id="btnSairBatalha" onclick="Battle.sair()" aria-label="Sair da batalha">
-        ✕ Sair
-    </button>
+    <!-- BOTÃO SAIR -->
+    <button id="btnSairBatalha" onclick="sairBatalha()">✕ Sair</button>
 
 </div><!-- /uiBatalha -->
 
-<!-- ══════════════════════════════════════════════════════
-     SCRIPTS
-     ✅ Todos com defer — garante que o DOM está pronto
-        e que os scripts executam na ordem correta
-        sem bloquear o parse do HTML
-══════════════════════════════════════════════════════ -->
-
-<!-- FASE 1 — Base absoluta (sem dependências) -->
-<script defer src="js/utils/utils.js"></script>
-<script defer src="js/utils/object-pool.js"></script>
-<script defer src="js/core/constants.js"></script>
-<script defer src="js/core/logger.js"></script>
-<script defer src="js/ui/dom-cache.js"></script>
-<script defer src="js/ui/toast.js"></script>
-
-<!-- FASE 2 — Comunicação e estado -->
-<script defer src="js/core/event-bus.js"></script>
-<script defer src="js/core/state.js"></script>
-<script defer src="js/renderer/camera.js"></script>
-
-<!-- FASE 3 — Sistemas de dados puros -->
-<script defer src="js/economy/economy.js"></script>
-<script defer src="js/economy/upgrades.js"></script>
-<script defer src="js/battle/experience.js"></script>
-<script defer src="js/battle/combo.js"></script>
-<script defer src="js/gacha/pool.js"></script>
-<script defer src="js/gacha/inventory.js"></script>
-
-<!-- FASE 4 — Lógica principal -->
-<script defer src="js/battle/enemy.js"></script>
-<script defer src="js/battle/damage.js"></script>
-<script defer src="js/battle/battle.js"></script>
-<script defer src="js/gacha/gacha.js"></script>
-<script defer src="js/economy/prestige.js"></script>
-
-<!-- FASE 5 — Assets e efeitos visuais -->
-<script defer src="js/renderer/asset-loader.js"></script>
-<script defer src="js/renderer/effects.js"></script>
-
-<!-- FASE 6 — Renderização -->
-<script defer src="js/renderer/renderer-lobby.js"></script>
-<script defer src="js/renderer/renderer-battle.js"></script>
-<script defer src="js/renderer/renderer-main.js"></script>
-
-<!-- FASE 7 — Interface do usuário -->
-<script defer src="js/ui/ui-modals.js"></script>
-<script defer src="js/ui/ui-hud.js"></script>
-<script defer src="js/ui/ui-battle.js"></script>
-<script defer src="js/ui/ui-upgrades.js"></script>
-<script defer src="js/ui/ui-gacha.js"></script>
-<script defer src="js/ui/ui-config.js"></script>
-
-<!-- FASE 8 — Conquistas e missões -->
-<script defer src="js/achievements/achievements.js"></script>
-<script defer src="js/achievements/quests.js"></script>
-
-<!-- FASE 9 — Input e áudio -->
-<script defer src="js/input/input.js"></script>
-<script defer src="js/audio/audio.js"></script>
-
-<!-- FASE 10 — Save e entry point (SEMPRE por último) -->
-<script defer src="js/core/save.js"></script>
-<script defer src="js/main.js"></script>
-
+<!-- ══════════════════════════════════
+     SCRIPTS (ordem importa!)
+══════════════════════════════════ -->
+<script src="game-lobby.js"></script>
+<script src="game-batalha.js"></script>
+<script src="game-ui.js"></script>
+<script src="taplisieux.js"></script>
 </body>
 </html>
