@@ -32,13 +32,12 @@ const RendererLobby = (() => {
         // NPC
         NPC_ESCALA        : 0.28,
         NPC_FRAMES        : 9,
-        NPC_FRAME_DURACAO : 8,      // ticks por frame
-        NPC_VELOCIDADE    : 0.03,   // tiles por tick
+        NPC_FRAME_DURACAO : 8,
+        NPC_VELOCIDADE    : 0.03,
 
         // Visual
         SOMBRA_OBJETO_ALPHA : 0.25,
         SOMBRA_OBJETO_H     : 5,
-        NEVOA_INICIO        : 0.55, // % altura onde névoa começa
         NEVOA_ALPHA         : 0.18,
 
         // Variação de grama
@@ -58,28 +57,45 @@ const RendererLobby = (() => {
     let _ctx    = null;
 
     // ════════════════════════════════════════════════════
-    // MAPA — tiles e dados
+    // ASSETS — cache local para não depender do objeto
+    // externo a cada frame
     // ════════════════════════════════════════════════════
+    let _assets         = null;   // último objeto assets recebido
+    let _assetsOk       = false;  // true quando tiles críticos existem
+    let _assetsChecados = false;  // evita checar todo frame
 
-    /**
-     * Tipos de tile:
-     *   0-4 → grama (variação visual)
-     *   5   → estrada
-     */
-    let _mapa = [];         // _mapa[y][x] = { tipo, sombra, luz }
+    function _checarAssets(assets) {
+        if (_assetsChecados && _assetsOk) return;
 
-    /** Conjunto de coords de estrada para o pathfinding do NPC */
-    const _estradaSet = new Set(); // "x,y"
+        _assets = assets;
+
+        // Verifica se tiles críticos estão presentes
+        const temEstrada = assets?.estrada?.complete && assets.estrada.naturalWidth > 0;
+        const temGrama   = assets?.gramas?.[0]?.complete && assets.gramas[0].naturalWidth > 0;
+
+        _assetsOk       = temEstrada && temGrama;
+        _assetsChecados = true;
+
+        if (_assetsOk) {
+            _log.info("Assets do lobby prontos para renderizar.");
+        }
+    }
+
+    // ════════════════════════════════════════════════════
+    // MAPA
+    // ════════════════════════════════════════════════════
+    let _mapa = [];
+    const _estradaSet = new Set();
 
     function _eEstrada(x, y) {
         return _estradaSet.has(`${x},${y}`);
     }
 
     function _construirMapa() {
-        const cX = Math.floor(MAP_W / 2);  // centro X
-        const cY = Math.floor(MAP_H / 2);  // centro Y
-        const esY = 12;                     // estrada horizontal superior
-        const lC  = 1;                      // largura do caminho (±lC tiles)
+        const cX  = Math.floor(MAP_W / 2);
+        const cY  = Math.floor(MAP_H / 2);
+        const esY = 12;
+        const lC  = 1;
 
         _mapa = [];
         _estradaSet.clear();
@@ -88,26 +104,16 @@ const RendererLobby = (() => {
             _mapa[y] = [];
             for (let x = 0; x < MAP_W; x++) {
 
-                // --- Define tipo ---
-                let tipo = Math.floor(Math.random() * CFG.GRAMAS_QTD); // 0-4 grama
+                let tipo = Math.floor(Math.random() * CFG.GRAMAS_QTD);
 
-                // Estrada horizontal central
                 if (y >= cY - lC && y <= cY + lC) tipo = 5;
-                // Estrada vertical central
                 if (x >= cX - lC && x <= cX + lC) tipo = 5;
-                // Estrada horizontal superior
                 if (y >= esY - lC && y <= esY + lC) tipo = 5;
-                // Conexão vertical: une cX ao trecho superior
                 if (x >= cX - lC && x <= cX + lC &&
                     y >= Math.min(esY, cY) && y <= Math.max(esY, cY)) tipo = 5;
 
-                // --- Variação de sombra por tile ---
-                const sombra = tipo === 5
-                    ? 0
-                    : Math.random() * 0.06;   // grama tem micro-sombras
-
-                // --- Variação de luz (seed por posição) ---
-                const luzFase = (x * 7 + y * 13) % 628 / 100;
+                const sombra   = tipo === 5 ? 0 : Math.random() * 0.06;
+                const luzFase  = (x * 7 + y * 13) % 628 / 100;
 
                 _mapa[y][x] = { tipo, sombra, luzFase };
 
@@ -115,26 +121,21 @@ const RendererLobby = (() => {
             }
         }
 
-        _log.info(`Mapa construído: ${MAP_W}×${MAP_H} tiles, ${_estradaSet.size} estrada`);
+        _log.info(`Mapa construído: ${MAP_W}×${MAP_H}, estrada: ${_estradaSet.size} tiles`);
     }
 
     // ════════════════════════════════════════════════════
     // OBJETOS DO LOBBY
     // ════════════════════════════════════════════════════
-
-    /**
-     * layer 0 → desenhado ANTES do NPC
-     * layer 1 → desenhado DEPOIS do NPC (frente)
-     */
     const _objetos = [
-        { tipo: "biblioteca",  tileX: 7,          tileY: 10,         escala: 0.9,  layer: 0 },
-        { tipo: "cadeiraEsq",  tileX: 50 - 1.77,  tileY: 50 - 0.20, escala: 0.22, layer: 0 },
-        { tipo: "cadeiraDir",  tileX: 50 + 1.77,  tileY: 50 - 0.20, escala: 0.22, layer: 0 },
-        { tipo: "mesa",        tileX: 50,          tileY: 50,         escala: 0.42, layer: 1 },
+        { tipo: "biblioteca", tileX: 7,         tileY: 10,         escala: 0.9,  layer: 0 },
+        { tipo: "cadeiraEsq", tileX: 50 - 1.77, tileY: 50 - 0.20, escala: 0.22, layer: 0 },
+        { tipo: "cadeiraDir", tileX: 50 + 1.77, tileY: 50 - 0.20, escala: 0.22, layer: 0 },
+        { tipo: "mesa",       tileX: 50,         tileY: 50,         escala: 0.42, layer: 1 },
     ];
 
     // ════════════════════════════════════════════════════
-    // NPC — Santa Teresinha andando
+    // NPC
     // ════════════════════════════════════════════════════
     const _npc = {
         tileX   : 50,
@@ -142,21 +143,12 @@ const RendererLobby = (() => {
         dirX    : 1,
         dirY    : 0,
         frame   : 0,
-        tick    : 0,       // controla troca de frame
+        tick    : 0,
         escala  : CFG.NPC_ESCALA,
-        sombra  : 0.30,
-        // Smooth position (interpolada entre tiles)
         renderX : 50,
         renderY : 50,
     };
 
-    /**
-     * Escolhe nova direção para o NPC.
-     * Regras:
-     *  - Só anda em tiles de estrada
-     *  - Não vai na direção oposta (evita zigue-zague)
-     *  - Prioriza continuar em frente quando possível
-     */
     function _escolherDirecao() {
         const cx = Math.round(_npc.tileX);
         const cy = Math.round(_npc.tileY);
@@ -168,11 +160,9 @@ const RendererLobby = (() => {
             { x:  0, y: -1 },
         ];
 
-        // Direção oposta (a evitar)
         const opX = -_npc.dirX;
         const opY = -_npc.dirY;
 
-        // Direções válidas: dentro do mapa, na estrada, não é oposta
         const validas = dirs.filter(d => {
             const nx = cx + d.x;
             const ny = cy + d.y;
@@ -184,7 +174,6 @@ const RendererLobby = (() => {
         });
 
         if (validas.length === 0) {
-            // Sem saída — permite voltar
             const qualquer = dirs.filter(d => {
                 const nx = cx + d.x;
                 const ny = cy + d.y;
@@ -198,7 +187,6 @@ const RendererLobby = (() => {
             return;
         }
 
-        // 70% chance de continuar em frente se possível
         const emFrente = validas.find(d => d.x === _npc.dirX && d.y === _npc.dirY);
         if (emFrente && Math.random() < 0.70) {
             _npc.dirX = emFrente.x;
@@ -211,15 +199,12 @@ const RendererLobby = (() => {
     }
 
     function _atualizarNPC() {
-        // Avança posição
         _npc.tileX += _npc.dirX * CFG.NPC_VELOCIDADE;
         _npc.tileY += _npc.dirY * CFG.NPC_VELOCIDADE;
 
-        // Smooth render position (lerp suave)
         _npc.renderX += (_npc.tileX - _npc.renderX) * 0.25;
         _npc.renderY += (_npc.tileY - _npc.renderY) * 0.25;
 
-        // Verifica se chegou perto do centro do próximo tile
         const cx = Math.round(_npc.tileX);
         const cy = Math.round(_npc.tileY);
 
@@ -227,13 +212,11 @@ const RendererLobby = (() => {
             Math.abs(_npc.tileX - cx) < CFG.NPC_VELOCIDADE &&
             Math.abs(_npc.tileY - cy) < CFG.NPC_VELOCIDADE
         ) {
-            // Snap ao centro do tile
             _npc.tileX = cx;
             _npc.tileY = cy;
             _escolherDirecao();
         }
 
-        // Animação de frame
         _npc.tick++;
         if (_npc.tick >= CFG.NPC_FRAME_DURACAO) {
             _npc.tick  = 0;
@@ -245,11 +228,10 @@ const RendererLobby = (() => {
     // CÂMERA
     // ════════════════════════════════════════════════════
     const _cam = {
-        x  : 0,
-        y  : 0,
-        vx : 0,     // velocidade inercial
-        vy : 0,
-        // drag state
+        x      : 0,
+        y      : 0,
+        vx     : 0,
+        vy     : 0,
         _drag  : false,
         _lastX : 0,
         _lastY : 0,
@@ -257,8 +239,10 @@ const RendererLobby = (() => {
     };
 
     function _camLimitar() {
-        const maxX = MAP_W * TILE - (_canvas?.width  ?? 800);
-        const maxY = MAP_H * TILE - (_canvas?.height ?? 600);
+        const W   = _canvas?.width  ?? 800;
+        const H   = _canvas?.height ?? 600;
+        const maxX = MAP_W * TILE - W;
+        const maxY = MAP_H * TILE - H;
         _cam.x = Math.max(0, Math.min(maxX, _cam.x));
         _cam.y = Math.max(0, Math.min(maxY, _cam.y));
     }
@@ -274,24 +258,69 @@ const RendererLobby = (() => {
         _camLimitar();
     }
 
-    /** Centraliza câmera em um ponto do mapa (tile coords) */
     function centralizar(tileX, tileY) {
-        _cam.x  = tileX * TILE - (_canvas?.width  ?? 800)  / 2;
-        _cam.y  = tileY * TILE - (_canvas?.height ?? 600) / 2;
+        const W = _canvas?.width  ?? 800;
+        const H = _canvas?.height ?? 600;
+        _cam.x  = tileX * TILE - W / 2;
+        _cam.y  = tileY * TILE - H / 2;
         _cam.vx = 0;
         _cam.vy = 0;
         _camLimitar();
     }
 
     // ════════════════════════════════════════════════════
-    // DRAW — CHÃO (Tilemap com culling)
+    // DRAW — FALLBACK (quando assets ainda não carregaram)
+    // ════════════════════════════════════════════════════
+    function _desenharFallback() {
+        const W = _canvas.width;
+        const H = _canvas.height;
+
+        // Fundo verde escuro
+        _ctx.fillStyle = "#2d5a27";
+        _ctx.fillRect(0, 0, W, H);
+
+        // Grade simples de tiles
+        const startX = Math.max(0, Math.floor(_cam.x / TILE));
+        const startY = Math.max(0, Math.floor(_cam.y / TILE));
+        const endX   = Math.min(MAP_W, startX + Math.ceil(W / TILE) + 1);
+        const endY   = Math.min(MAP_H, startY + Math.ceil(H / TILE) + 1);
+
+        for (let y = startY; y < endY; y++) {
+            for (let x = startX; x < endX; x++) {
+                const tile = _mapa[y]?.[x];
+                if (!tile) continue;
+
+                const dx = Math.floor(x * TILE - _cam.x);
+                const dy = Math.floor(y * TILE - _cam.y);
+
+                _ctx.fillStyle = tile.tipo === 5 ? "#7c6a44" : "#3a8c3f";
+                _ctx.fillRect(dx, dy, TILE - 1, TILE - 1);
+            }
+        }
+
+        // NPC fallback
+        _desenharNPCFallback();
+
+        // Texto informativo
+        _ctx.save();
+        _ctx.fillStyle    = "rgba(0,0,0,0.5)";
+        _ctx.fillRect(W/2 - 120, H/2 - 20, 240, 36);
+        _ctx.font         = "13px 'Nunito', sans-serif";
+        _ctx.fillStyle    = "rgba(255,255,255,0.8)";
+        _ctx.textAlign    = "center";
+        _ctx.textBaseline = "middle";
+        _ctx.fillText("⏳ Carregando assets...", W / 2, H / 2);
+        _ctx.restore();
+    }
+
+    // ════════════════════════════════════════════════════
+    // DRAW — CHÃO
     // ════════════════════════════════════════════════════
     function _desenharChao(assets) {
-        const W  = _canvas.width;
-        const H  = _canvas.height;
-        const t  = Date.now();
+        const W = _canvas.width;
+        const H = _canvas.height;
+        const t = Date.now();
 
-        // Viewport culling — só desenha tiles visíveis
         const startX = Math.max(0, Math.floor(_cam.x / TILE) - 1);
         const startY = Math.max(0, Math.floor(_cam.y / TILE) - 1);
         const endX   = Math.min(MAP_W, startX + Math.ceil(W / TILE) + 2);
@@ -305,7 +334,6 @@ const RendererLobby = (() => {
                 const dx = Math.floor(x * TILE - _cam.x);
                 const dy = Math.floor(y * TILE - _cam.y);
 
-                // Escolhe imagem
                 let img;
                 if (tile.tipo === 5) {
                     img = assets.estrada;
@@ -316,18 +344,15 @@ const RendererLobby = (() => {
                 if (img?.complete && img.naturalWidth > 0) {
                     _ctx.drawImage(img, dx, dy, TILE, TILE);
                 } else {
-                    // Fallback cor
                     _ctx.fillStyle = tile.tipo === 5 ? "#7c6a44" : "#3a8c3f";
                     _ctx.fillRect(dx, dy, TILE, TILE);
                 }
 
-                // Micro-sombra de variação de grama
                 if (tile.sombra > 0) {
                     _ctx.fillStyle = `rgba(0,0,0,${tile.sombra})`;
                     _ctx.fillRect(dx, dy, TILE, TILE);
                 }
 
-                // Luz ambiente pulsante (só grama)
                 if (tile.tipo !== 5) {
                     const luzAlpha = Math.sin(t * CFG.LUZ_FREQ + tile.luzFase) * CFG.LUZ_AMP;
                     if (luzAlpha > 0) {
@@ -338,85 +363,70 @@ const RendererLobby = (() => {
             }
         }
 
-        // Névoa nas bordas do mapa (atmosfera)
         _desenharNevoaBordas(W, H);
     }
 
-    /** Névoa suave nas 4 bordas do viewport */
     function _desenharNevoaBordas(W, H) {
         const fade = 80;
-
         const bordas = [
-            { x: 0,      y: 0,      w: W,    h: fade, dir: "bottom" },
-            { x: 0,      y: H-fade, w: W,    h: fade, dir: "top"    },
-            { x: 0,      y: 0,      w: fade, h: H,    dir: "right"  },
-            { x: W-fade, y: 0,      w: fade, h: H,    dir: "left"   },
+            { x: 0,      y: 0,      w: W,    h: fade, x1: 0, y1: 0,      x2: 0,      y2: fade  },
+            { x: 0,      y: H-fade, w: W,    h: fade, x1: 0, y1: H,      x2: 0,      y2: H-fade},
+            { x: 0,      y: 0,      w: fade, h: H,    x1: 0, y1: 0,      x2: fade,   y2: 0     },
+            { x: W-fade, y: 0,      w: fade, h: H,    x1: W, y1: 0,      x2: W-fade, y2: 0     },
         ];
 
         bordas.forEach(b => {
-            let g;
-            if (b.dir === "bottom") {
-                g = _ctx.createLinearGradient(0, b.y, 0, b.y + b.h);
-            } else if (b.dir === "top") {
-                g = _ctx.createLinearGradient(0, b.y + b.h, 0, b.y);
-            } else if (b.dir === "right") {
-                g = _ctx.createLinearGradient(b.x, 0, b.x + b.w, 0);
-            } else {
-                g = _ctx.createLinearGradient(b.x + b.w, 0, b.x, 0);
-            }
-            g.addColorStop(0,   `rgba(10,8,20,${CFG.NEVOA_ALPHA})`);
-            g.addColorStop(1,   "rgba(10,8,20,0)");
+            const g = _ctx.createLinearGradient(b.x1, b.y1, b.x2, b.y2);
+            g.addColorStop(0, `rgba(10,8,20,${CFG.NEVOA_ALPHA})`);
+            g.addColorStop(1, "rgba(10,8,20,0)");
             _ctx.fillStyle = g;
             _ctx.fillRect(b.x, b.y, b.w, b.h);
         });
     }
 
     // ════════════════════════════════════════════════════
-    // DRAW — OBJETOS (ordenados por Y para pseudo-3D)
+    // DRAW — OBJETOS
     // ════════════════════════════════════════════════════
     function _desenharObjetos(assets, layer) {
-        // Ordena por tileY dentro do layer — pseudo-isométrico
-        const filtrados = _objetos
+        _objetos
             .filter(o => o.layer === layer)
-            .sort((a, b) => a.tileY - b.tileY);
+            .sort((a, b) => a.tileY - b.tileY)
+            .forEach(obj => {
+                const img = assets[obj.tipo];
+                if (!img?.complete || img.naturalWidth === 0) return;
 
-        filtrados.forEach(obj => {
-            const img = assets[obj.tipo];
-            if (!img?.complete || img.naturalWidth === 0) return;
+                const larg = img.width  * obj.escala;
+                const alt  = img.height * obj.escala;
 
-            const larg = img.width  * obj.escala;
-            const alt  = img.height * obj.escala;
+                const bX = obj.tileX * TILE + TILE / 2 - _cam.x;
+                const bY = obj.tileY * TILE + TILE       - _cam.y;
 
-            // Base do objeto = canto inferior do tile
-            const bX = obj.tileX * TILE + TILE / 2 - _cam.x;
-            const bY = obj.tileY * TILE + TILE       - _cam.y;
+                if (bX + larg / 2 < 0 || bX - larg / 2 > _canvas.width)  return;
+                if (bY < 0            || bY - alt        > _canvas.height) return;
 
-            // Culling — não desenha se fora do viewport
-            if (bX + larg / 2 < 0 || bX - larg / 2 > _canvas.width)  return;
-            if (bY < 0            || bY - alt         > _canvas.height) return;
+                const dx = Math.floor(bX - larg / 2);
+                const dy = Math.floor(bY - alt);
 
-            const dx = Math.floor(bX - larg / 2);
-            const dy = Math.floor(bY - alt);
+                _ctx.save();
+                _ctx.fillStyle = `rgba(0,0,0,${CFG.SOMBRA_OBJETO_ALPHA})`;
+                _ctx.beginPath();
+                _ctx.ellipse(bX, bY - CFG.SOMBRA_OBJETO_H, larg * 0.35, 7, 0, 0, Math.PI * 2);
+                _ctx.fill();
+                _ctx.restore();
 
-            // Sombra elíptica no chão
-            _ctx.save();
-            _ctx.fillStyle = `rgba(0,0,0,${CFG.SOMBRA_OBJETO_ALPHA})`;
-            _ctx.beginPath();
-            _ctx.ellipse(bX, bY - CFG.SOMBRA_OBJETO_H, larg * 0.35, 7, 0, 0, Math.PI * 2);
-            _ctx.fill();
-            _ctx.restore();
-
-            // Objeto
-            _ctx.drawImage(img, dx, dy, larg, alt);
-        });
+                _ctx.drawImage(img, dx, dy, larg, alt);
+            });
     }
 
     // ════════════════════════════════════════════════════
-    // DRAW — NPC Santa
+    // DRAW — NPC
     // ════════════════════════════════════════════════════
     function _desenharNPC(assets) {
         const frames = assets.santaAnda;
-        if (!frames?.length) return;
+        if (!frames?.length) {
+            _desenharNPCFallback();
+            return;
+        }
 
         const img = frames[_npc.frame];
         if (!img?.complete || img.naturalWidth === 0) {
@@ -427,18 +437,16 @@ const RendererLobby = (() => {
         const larg = img.width  * _npc.escala;
         const alt  = img.height * _npc.escala;
 
-        // Posição renderizada (suavizada)
         const bX = _npc.renderX * TILE + TILE / 2 - _cam.x;
         const bY = _npc.renderY * TILE + TILE       - _cam.y;
 
         const dx = Math.floor(bX - larg / 2);
         const dy = Math.floor(bY - alt);
 
-        // Culling
         if (bX + larg < 0 || bX - larg > _canvas.width)  return;
         if (bY < 0        || bY - alt  > _canvas.height)  return;
 
-        // Sombra elíptica
+        // Sombra
         _ctx.save();
         _ctx.fillStyle = "rgba(0,0,0,0.22)";
         _ctx.beginPath();
@@ -446,19 +454,21 @@ const RendererLobby = (() => {
         _ctx.fill();
         _ctx.restore();
 
-        // Halo suave (efeito "personagem jogável")
+        // Halo
         _ctx.save();
-        const halo = _ctx.createRadialGradient(bX, bY - alt * 0.5, 2, bX, bY - alt * 0.5, larg * 0.7);
-        halo.addColorStop(0,   "rgba(255,220,255,0.10)");
-        halo.addColorStop(1,   "rgba(255,220,255,0.00)");
+        const halo = _ctx.createRadialGradient(
+            bX, bY - alt * 0.5, 2,
+            bX, bY - alt * 0.5, larg * 0.7
+        );
+        halo.addColorStop(0, "rgba(255,220,255,0.10)");
+        halo.addColorStop(1, "rgba(255,220,255,0.00)");
         _ctx.fillStyle = halo;
         _ctx.fillRect(dx - 10, dy - 10, larg + 20, alt + 20);
         _ctx.restore();
 
-        // Flip horizontal: se andando para esquerda, espelha o sprite
+        // Sprite (com flip horizontal)
         _ctx.save();
         if (_npc.dirX < 0) {
-            // Espelha em relação ao centro do sprite
             _ctx.translate(bX, 0);
             _ctx.scale(-1, 1);
             _ctx.drawImage(img, -larg / 2, dy, larg, alt);
@@ -468,7 +478,6 @@ const RendererLobby = (() => {
         _ctx.restore();
     }
 
-    /** NPC Fallback: boneca simples quando sprite não carregou */
     function _desenharNPCFallback() {
         const bX = _npc.renderX * TILE + TILE / 2 - _cam.x;
         const bY = _npc.renderY * TILE + TILE       - _cam.y;
@@ -482,10 +491,8 @@ const RendererLobby = (() => {
         _ctx.arc(bX, bY - r * 2.5, r, 0, Math.PI * 2);
         _ctx.fill();
         _ctx.stroke();
-
         _ctx.fillStyle = "#6d28d9";
         _ctx.fillRect(bX - r * 0.7, bY - r * 1.6, r * 1.4, r * 1.8);
-
         _ctx.font         = "14px serif";
         _ctx.textAlign    = "center";
         _ctx.textBaseline = "bottom";
@@ -496,14 +503,16 @@ const RendererLobby = (() => {
 
     // ════════════════════════════════════════════════════
     // RENDER PRINCIPAL
-    // Ordem:
-    //  1. Chão (com névoa)
-    //  2. Objetos layer 0 (atrás do NPC)
-    //  3. NPC
-    //  4. Objetos layer 1 (frente do NPC)
     // ════════════════════════════════════════════════════
     function _render(assets) {
         _ctx.clearRect(0, 0, _canvas.width, _canvas.height);
+
+        // ✅ Se assets não estão prontos, desenha fallback
+        // mas ainda mostra o mapa com cores sólidas
+        if (!_assetsOk) {
+            _desenharFallback();
+            return;
+        }
 
         _desenharChao(assets);
         _desenharObjetos(assets, 0);
@@ -512,12 +521,11 @@ const RendererLobby = (() => {
     }
 
     // ════════════════════════════════════════════════════
-    // INPUT — Câmera arrastável
+    // INPUT
     // ════════════════════════════════════════════════════
     function _registrarInput() {
         if (!_canvas) return;
 
-        // ── Mouse ──
         _canvas.addEventListener("mousedown", e => {
             _cam._drag  = true;
             _cam._lastX = e.clientX;
@@ -526,24 +534,21 @@ const RendererLobby = (() => {
             _cam.vy     = 0;
         });
 
-        window.addEventListener("mouseup", () => {
-            _cam._drag = false;
-        });
+        window.addEventListener("mouseup", () => { _cam._drag = false; });
 
         window.addEventListener("mousemove", e => {
             if (!_cam._drag) return;
-            const dx  = e.clientX - _cam._lastX;
-            const dy  = e.clientY - _cam._lastY;
-            _cam.vx   = -dx;
-            _cam.vy   = -dy;
-            _cam.x   -= dx;
-            _cam.y   -= dy;
+            const dx    = e.clientX - _cam._lastX;
+            const dy    = e.clientY - _cam._lastY;
+            _cam.vx     = -dx;
+            _cam.vy     = -dy;
+            _cam.x     -= dx;
+            _cam.y     -= dy;
             _cam._lastX = e.clientX;
             _cam._lastY = e.clientY;
             _camLimitar();
         });
 
-        // ── Touch ──
         _canvas.addEventListener("touchstart", e => {
             if (e.touches.length !== 1) return;
             _cam._drag  = true;
@@ -553,9 +558,7 @@ const RendererLobby = (() => {
             _cam.vy     = 0;
         }, { passive: true });
 
-        window.addEventListener("touchend", () => {
-            _cam._drag = false;
-        });
+        window.addEventListener("touchend", () => { _cam._drag = false; });
 
         window.addEventListener("touchmove", e => {
             if (!_cam._drag || e.touches.length !== 1) return;
@@ -574,9 +577,14 @@ const RendererLobby = (() => {
     }
 
     // ════════════════════════════════════════════════════
-    // ATUALIZAR (chamado a cada frame pelo renderer-main)
+    // ATUALIZAR — chamado a cada frame
     // ════════════════════════════════════════════════════
     function atualizar(assets) {
+        if (!_canvas || !_ctx) return;
+
+        // Checa assets uma vez quando ficam prontos
+        _checarAssets(assets);
+
         _atualizarNPC();
         _camAtualizarInercia();
         _render(assets);
@@ -591,7 +599,7 @@ const RendererLobby = (() => {
     }
 
     // ════════════════════════════════════════════════════
-    // INICIALIZAÇÃO
+    // INIT
     // ════════════════════════════════════════════════════
     function init(canvas, ctx) {
         if (!canvas || !ctx) {
@@ -601,18 +609,20 @@ const RendererLobby = (() => {
 
         _canvas = canvas;
         _ctx    = ctx;
-
-        // Desativa suavização — pixel art nítido
         _ctx.imageSmoothingEnabled = false;
 
-        // Constrói mapa
         _construirMapa();
-
-        // Câmera começa centralizada no meio do mapa
         centralizar(MAP_W / 2, MAP_H / 2);
-
-        // Input
         _registrarInput();
+
+        // Invalida cache de assets quando recarregam
+        try {
+            EventBus.on("assets:completo", () => {
+                _assetsOk       = false;
+                _assetsChecados = false;
+                _log.debug("Cache de assets invalidado — será rechecado no próximo frame.");
+            });
+        } catch(_) {}
 
         _log.info("RendererLobby inicializado.");
     }
@@ -622,9 +632,27 @@ const RendererLobby = (() => {
     // ════════════════════════════════════════════════════
     function stats() {
         return {
-            camera  : { x: Math.floor(_cam.x), y: Math.floor(_cam.y), vx: _cam.vx.toFixed(2), vy: _cam.vy.toFixed(2) },
-            npc     : { tileX: _npc.tileX.toFixed(2), tileY: _npc.tileY.toFixed(2), frame: _npc.frame, dir: { x: _npc.dirX, y: _npc.dirY } },
-            mapa    : { w: MAP_W, h: MAP_H, estrada: _estradaSet.size },
+            camera : {
+                x  : Math.floor(_cam.x),
+                y  : Math.floor(_cam.y),
+                vx : _cam.vx.toFixed(2),
+                vy : _cam.vy.toFixed(2),
+            },
+            npc    : {
+                tileX : _npc.tileX.toFixed(2),
+                tileY : _npc.tileY.toFixed(2),
+                frame : _npc.frame,
+                dir   : { x: _npc.dirX, y: _npc.dirY },
+            },
+            mapa   : {
+                w       : MAP_W,
+                h       : MAP_H,
+                estrada : _estradaSet.size,
+            },
+            assets : {
+                ok       : _assetsOk,
+                checados : _assetsChecados,
+            },
         };
     }
 
@@ -638,10 +666,10 @@ const RendererLobby = (() => {
         centralizar,
         stats,
 
-        // Expõe câmera para input.js se precisar
         get camX() { return _cam.x; },
         get camY() { return _cam.y; },
     });
 
 })();
+
 window.RendererLobby = RendererLobby;
