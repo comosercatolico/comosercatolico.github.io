@@ -213,7 +213,7 @@ const BattleRenderer = (() => {
         const pct = Math.max(0.05, ini.maxHp > 0 ? ini.hp / ini.maxHp : 1);
 
         // ↓ Tamanho do monstro — aumenta o 0.65 para ficar maior
-        const tam = canvas.height * (0.80 + pct * 0.05);
+        const tam = canvas.height * (0.88 + pct * 0.05);
 
         const ox = hit.tremendo > 0 ? (Math.random() - 0.5) * 18 : 0;
         const oy = hit.tremendo > 0 ? (Math.random() - 0.5) * 10 : 0;
@@ -221,7 +221,7 @@ const BattleRenderer = (() => {
 
         // ↓ Base do monstro toca o topo do chão
         // my = centro vertical do monstro
-        const my = chaoY(canvas) - tam * 0.3 + oy;
+        const my = chaoY(canvas) - tam * -0.3 + oy;
 
         const imgMonstro = (hit.flash > 0 && imgOk(assets.monstroHitado))
             ? assets.monstroHitado
