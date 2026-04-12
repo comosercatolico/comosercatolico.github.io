@@ -27,30 +27,21 @@ const Renderer = (() => {
     // CONFIGURAÇÃO
     // ════════════════════════════════════════════════════
     const CFG = Object.freeze({
-        // FPS
         FPS_ALVO          : 60,
-        FPS_JANELA        : 60,      // amostras para média
-        FPS_DISPLAY_MS    : 500,     // atualiza display a cada Xms
-
-        // Delta time
-        DELTA_MAX_MS      : 100,     // cap — evita "espiral da morte"
-        DELTA_SUAVE_FATOR : 0.1,     // lerp para suavização do delta
-
-        // Frame budget (ms disponíveis por frame a 60fps)
+        FPS_JANELA        : 60,
+        FPS_DISPLAY_MS    : 500,
+        DELTA_MAX_MS      : 100,
+        DELTA_SUAVE_FATOR : 0.1,
         FRAME_BUDGET_MS   : 1000 / 60,
-
-        // Pausa quando aba oculta
         PAUSAR_EM_HIDDEN  : true,
-
-        // Canvas
-        PIXEL_RATIO       : true,    // usa devicePixelRatio
+        PIXEL_RATIO       : true,
     });
 
     // ════════════════════════════════════════════════════
     // REFERÊNCIAS
     // ════════════════════════════════════════════════════
-    let _canvas  = null;
-    let _ctx     = null;
+    let _canvas = null;
+    let _ctx    = null;
 
     // ════════════════════════════════════════════════════
     // ESTADO DO LOOP
@@ -58,28 +49,23 @@ const Renderer = (() => {
     const _loop = {
         rodando        : false,
         rafId          : null,
-        pausado        : false,    // tab oculta
+        pausado        : false,
         ultimoTimestamp: 0,
     };
 
     // ════════════════════════════════════════════════════
     // DELTA TIME
-    // Garante animações independentes do FPS real
     // ════════════════════════════════════════════════════
     const _delta = {
-        ms      : CFG.FRAME_BUDGET_MS,   // delta suavizado atual
-        msBruto : CFG.FRAME_BUDGET_MS,   // delta bruto do frame
-        fator   : 1.0,                   // delta / frame_budget (1.0 = 60fps perfeito)
+        ms      : CFG.FRAME_BUDGET_MS,
+        msBruto : CFG.FRAME_BUDGET_MS,
+        fator   : 1.0,
     };
 
     function _calcularDelta(timestamp) {
-        const bruto = timestamp - _loop.ultimoTimestamp;
+        const bruto  = timestamp - _loop.ultimoTimestamp;
         _loop.ultimoTimestamp = timestamp;
-
-        // Cap para evitar saltos enormes após tab inativa
         const capado = Math.min(bruto, CFG.DELTA_MAX_MS);
-
-        // Suavização exponencial
         _delta.msBruto = capado;
         _delta.ms      = _delta.ms + (capado - _delta.ms) * CFG.DELTA_SUAVE_FATOR;
         _delta.fator   = _delta.ms / CFG.FRAME_BUDGET_MS;
@@ -95,7 +81,7 @@ const Renderer = (() => {
         min           : 60,
         max           : 60,
         ultimoDisplay : 0,
-        total         : 0,          // frames desde init
+        total         : 0,
     };
 
     function _registrarFPS(timestamp) {
@@ -105,7 +91,6 @@ const Renderer = (() => {
         _fps.indice++;
         _fps.total++;
 
-        // Atualiza estatísticas a cada CFG.FPS_DISPLAY_MS
         if (timestamp - _fps.ultimoDisplay >= CFG.FPS_DISPLAY_MS) {
             _fps.ultimoDisplay = timestamp;
 
@@ -123,7 +108,6 @@ const Renderer = (() => {
             _fps.min   = min;
             _fps.max   = max;
 
-            // Emite evento para HUD de debug
             try {
                 EventBus.emit("renderer:fps", {
                     media : Math.round(_fps.media),
@@ -135,7 +119,6 @@ const Renderer = (() => {
                 });
             } catch(_) {}
 
-            // Warning se FPS caiu muito
             if (_fps.media < 30) {
                 _log.warn(`FPS baixo: ${Math.round(_fps.media)} (min:${Math.round(_fps.min)})`);
             }
@@ -144,12 +127,11 @@ const Renderer = (() => {
 
     // ════════════════════════════════════════════════════
     // FRAME BUDGET MONITOR
-    // Mede quanto tempo cada frame levou para renderizar
     // ════════════════════════════════════════════════════
     const _budget = {
         ultimoInicio : 0,
         mediaMs      : 0,
-        alertas      : 0,    // frames acima do budget
+        alertas      : 0,
     };
 
     function _budgetInicio() {
@@ -174,14 +156,9 @@ const Renderer = (() => {
     function _setupCanvas(canvas) {
         _canvas = canvas;
         _ctx    = canvas.getContext("2d");
-
-        // Desativa suavização — pixel art nítido
         _ctx.imageSmoothingEnabled = false;
-
         _redimensionar();
-
         window.addEventListener("resize", _redimensionar);
-
         _log.debug(`Canvas configurado: ${canvas.width}×${canvas.height}`);
     }
 
@@ -192,23 +169,16 @@ const Renderer = (() => {
         const W   = window.innerWidth;
         const H   = window.innerHeight;
 
-        // Tamanho CSS (visual)
         _canvas.style.width  = W + "px";
         _canvas.style.height = H + "px";
+        _canvas.width        = Math.floor(W * dpr);
+        _canvas.height       = Math.floor(H * dpr);
 
-        // Tamanho real em pixels (para telas HiDPI / Retina)
-        _canvas.width  = Math.floor(W * dpr);
-        _canvas.height = Math.floor(H * dpr);
-
-        // Escala o ctx para compensar o dpr
         _ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-
-        // Reimporta configurações que o resize reseta
         _ctx.imageSmoothingEnabled = false;
 
-        // Notifica submódulos
-        try { RendererLobby.aoRedimensionar();   } catch(_) {}
-        try { Camera.lobby.centralizarMapa?.();  } catch(_) {}
+        try { RendererLobby.aoRedimensionar();  } catch(_) {}
+        try { Camera.lobby.centralizarMapa?.(); } catch(_) {}
 
         try {
             EventBus.emit("renderer:resize", { width: W, height: H, dpr });
@@ -218,7 +188,7 @@ const Renderer = (() => {
     }
 
     // ════════════════════════════════════════════════════
-    // CÂMERA SHAKE — offset aplicado ao canvas
+    // CÂMERA SHAKE
     // ════════════════════════════════════════════════════
     function _obterShake() {
         try {
@@ -229,12 +199,26 @@ const Renderer = (() => {
     }
 
     // ════════════════════════════════════════════════════
-    // ASSETS — obtém do AssetLoader
+    // ASSETS — cache interno para não chamar AL.get()
+    // 60 vezes por segundo e não spam o console
     // ════════════════════════════════════════════════════
+    let _assetsCache   = null;
+    let _assetsCacheOk = false;
+
     function _obterAssets() {
+        // Retorna cache se já foi montado com sucesso
+        if (_assetsCacheOk) return _assetsCache;
+
+        // Só monta quando AssetLoader terminar de carregar
+        try {
+            if (AssetLoader.estado !== "COMPLETO") return _assetsCache ?? {};
+        } catch(_) {
+            return {};
+        }
+
         try {
             const AL = AssetLoader;
-            return {
+            _assetsCache = {
                 // Tiles
                 estrada    : AL.get("estrada"),
                 gramas     : [0,1,2,3,4].map(i => AL.get(`grama_${i}`)),
@@ -255,10 +239,27 @@ const Renderer = (() => {
                 // Santa batalha (frames)
                 santa      : [0,1,2,3,4,5,6,7].map(i => AL.get(`santa_${i}`)),
             };
+
+            // Só marca como ok se ao menos os tiles críticos existem
+            _assetsCacheOk = !!(
+                _assetsCache.estrada &&
+                _assetsCache.gramas[0]
+            );
+
+            return _assetsCache;
         } catch(e) {
-            return {};
+            return _assetsCache ?? {};
         }
     }
+
+    // Invalida o cache quando assets recarregam
+    try {
+        EventBus.on("assets:completo", () => {
+            _assetsCache   = null;
+            _assetsCacheOk = false;
+            _log.debug("Cache de assets invalidado — será remontado no próximo frame.");
+        });
+    } catch(_) {}
 
     // ════════════════════════════════════════════════════
     // ESTADO — decide o que renderizar
@@ -272,32 +273,25 @@ const Renderer = (() => {
     // LOOP PRINCIPAL
     // ════════════════════════════════════════════════════
     function _frame(timestamp) {
-        // Agenda próximo frame ANTES de qualquer trabalho
-        // (garante que mesmo um erro não trava o loop)
         _loop.rafId = requestAnimationFrame(_frame);
 
-        // Pausa quando aba está oculta
         if (_loop.pausado) {
             _loop.ultimoTimestamp = timestamp;
             return;
         }
 
-        // Primeiro frame — inicializa timestamp
         if (_loop.ultimoTimestamp === 0) {
             _loop.ultimoTimestamp = timestamp;
             return;
         }
 
-        // ── Métricas ──
         _calcularDelta(timestamp);
         _registrarFPS(timestamp);
         _budgetInicio();
 
-        // ── Atualiza câmera ──
         const emBatalha = _emBatalha();
         try { Camera.atualizar(emBatalha); } catch(_) {}
 
-        // ── Renderiza ──
         const assets = _obterAssets();
 
         if (emBatalha) {
@@ -306,12 +300,9 @@ const Renderer = (() => {
             _renderLobby(assets);
         }
 
-        // ── Effects.atualizar (sempre, para não perder animações em transições) ──
         try { Effects.atualizar(); } catch(_) {}
 
-        // ── Overlay de debug (só em dev) ──
         _desenharDebugOverlay(timestamp);
-
         _budgetFim();
     }
 
@@ -320,7 +311,6 @@ const Renderer = (() => {
     // ════════════════════════════════════════════════════
     function _renderBatalha(assets) {
         const shake = _obterShake();
-
         try {
             RendererBattle.desenhar(assets, shake.x, shake.y);
         } catch(e) {
@@ -343,7 +333,6 @@ const Renderer = (() => {
 
     // ════════════════════════════════════════════════════
     // TELA DE FALLBACK
-    // Exibida quando um renderer trava — o jogo não morre
     // ════════════════════════════════════════════════════
     function _desenharTelaDeFallback(label) {
         if (!_ctx) return;
@@ -365,7 +354,6 @@ const Renderer = (() => {
 
     // ════════════════════════════════════════════════════
     // DEBUG OVERLAY
-    // Exibido apenas em modo dev (localhost / ?debug)
     // ════════════════════════════════════════════════════
     let _debugAtivo = false;
 
@@ -387,9 +375,9 @@ const Renderer = (() => {
             `Frame: ${_budget.mediaMs.toFixed(1)}ms  Lentos: ${_budget.alertas}`,
             `Total frames: ${_fps.total}`,
             `Modo: ${_emBatalha() ? "BATALHA" : "LOBBY"}`,
+            `Assets: ${_assetsCacheOk ? "✅ cache ok" : "⏳ aguardando"}`,
         ];
 
-        // Stats do Effects se disponível
         try {
             const ef = Effects.stats();
             linhas.push(
@@ -407,26 +395,21 @@ const Renderer = (() => {
 
         _ctx.save();
 
-        // Fundo semi-transparente
         _ctx.fillStyle = "rgba(0,0,0,0.65)";
         _ctx.beginPath();
         _ctx.roundRect?.(X, Y, W, H, 6) ?? _ctx.rect(X, Y, W, H);
         _ctx.fill();
 
-        // Borda
         _ctx.strokeStyle = "rgba(255,255,255,0.15)";
         _ctx.lineWidth   = 1;
         _ctx.stroke();
 
-        // Texto
         _ctx.font         = "bold 11px 'Courier New', monospace";
         _ctx.textAlign    = "left";
         _ctx.textBaseline = "top";
 
         linhas.forEach((linha, i) => {
-            // Cor por tipo de linha
             if (i === 0) {
-                // FPS — verde se ok, amarelo se médio, vermelho se ruim
                 _ctx.fillStyle = _fps.media >= 50 ? "#44ff88"
                                : _fps.media >= 30 ? "#f5a623"
                                : "#ff4444";
@@ -435,7 +418,6 @@ const Renderer = (() => {
             } else {
                 _ctx.fillStyle = "rgba(255,255,255,0.80)";
             }
-
             _ctx.fillText(linha, X + PAD, Y + PAD + i * LH);
         });
 
@@ -455,7 +437,7 @@ const Renderer = (() => {
                 try { EventBus.emit("renderer:pausado"); } catch(_) {}
             } else {
                 _loop.pausado = false;
-                _loop.ultimoTimestamp = 0;   // reset delta para evitar salto
+                _loop.ultimoTimestamp = 0;
                 _log.debug("Loop retomado.");
                 try { EventBus.emit("renderer:retomado"); } catch(_) {}
             }
@@ -480,12 +462,10 @@ const Renderer = (() => {
         _verificarModoDebug();
         _registrarVisibilidade();
 
-        _loop.rodando        = true;
+        _loop.rodando         = true;
         _loop.ultimoTimestamp = 0;
 
         _log.info("Renderer iniciado.");
-
-        // Kick-off do loop
         _loop.rafId = requestAnimationFrame(_frame);
     }
 
@@ -535,6 +515,10 @@ const Renderer = (() => {
                 mediaMs : +_budget.mediaMs.toFixed(2),
                 alertas : _budget.alertas,
             },
+            assets  : {
+                cacheOk : _assetsCacheOk,
+                estado  : (() => { try { return AssetLoader.estado; } catch(_) { return "?"; } })(),
+            },
             canvas  : _canvas
                 ? { w: _canvas.width, h: _canvas.height }
                 : null,
@@ -550,7 +534,6 @@ const Renderer = (() => {
         screenshot,
         stats,
 
-        // Expõe delta para animações externas (battle.js, effects.js)
         get delta()  { return _delta.fator; },
         get fps()    { return Math.round(_fps.media); },
         get rodando(){ return _loop.rodando; },
