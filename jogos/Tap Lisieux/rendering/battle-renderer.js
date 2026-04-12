@@ -75,14 +75,24 @@ const BattleRenderer = (() => {
     function _fundo(ctx, canvas) {
         const W = canvas.width, H = canvas.height, cy = chaoY(canvas);
 
-        // Fallback ativo para teste (cenário comentado)
-        _fundoFallback(ctx, W, H, cy);
+        // Cenário de fundo
+        if (imgOk(assets.cenario)) {
+            const i   = assets.cenario;
+            const esc = Math.max(W / i.naturalWidth, H / i.naturalHeight);
+            const dw  = i.naturalWidth * esc, dh = i.naturalHeight * esc;
+            ctx.drawImage(i, (W - dw) / 2, (H - dh) / 2, dw, dh);
+        } else {
+            _fundoFallback(ctx, W, H, cy);
+        }
 
+        // Chão
         if (imgOk(assets.chao)) {
             const src = assets.chao;
+            // Escala o chão para ocupar 35% da largura proporcional
+            const escala = 0.45;
             const pw  = W;
-            const ph  = src.naturalHeight * (W / src.naturalWidth);
-            const py  = cy - ph * 0.55;
+            const ph  = src.naturalHeight * (W / src.naturalWidth) * escala;
+            const py  = cy - ph * 0.35;
             ctx.drawImage(src, 0, py, pw, ph);
         } else {
             _chaoFallback(ctx, W, H, cy);
