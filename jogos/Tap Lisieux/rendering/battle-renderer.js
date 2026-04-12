@@ -62,13 +62,12 @@ const BattleRenderer = (() => {
     // ════════════════════════════════════════
 
     // ↓ Linha do topo do chão — aumenta para descer, diminui para subir
-    function chaoY(canvas)  { return canvas.height * 0.74; }
+    function chaoY(canvas)    { return canvas.height * 0.74; }
 
-    // ↓ Santa — posição X (0.38 = esquerda, 0.50 = centro)
-    function santaX(canvas) { return canvas.width  * 0.38; }
-
-    // ↓ Monstro — posição X (centro da tela)
-    function monstroX(canvas) { return canvas.width * 0.58; }
+    // ↓ Santa e Monstro no mesmo centro
+    function centroX(canvas)  { return canvas.width  * 0.50; }
+    function santaX(canvas)   { return centroX(canvas); }
+    function monstroX(canvas) { return centroX(canvas); }
 
     // ════════════════════════════════════════
     //  FUNDO (cenário)
@@ -96,7 +95,6 @@ const BattleRenderer = (() => {
         const cy = chaoY(canvas);
 
         if (imgOk(assets.chao)) {
-            // Chão começa no cy e vai até o fim da tela
             ctx.drawImage(assets.chao, 0, cy, W, H - cy);
         } else {
             _chaoFallback(ctx, W, H, cy);
@@ -153,19 +151,20 @@ const BattleRenderer = (() => {
 
     function _desenharPB(ctx, canvas) {
         const px = santaX(canvas);
-        const py = chaoY(canvas); // pés tocam exatamente o topo do chão
+
+        // ↓ Pés da santa — toca o topo do chão
+        const py = chaoY(canvas);
 
         // ↓ Altura da santa — aumenta para ficar maior
         const ALT  = canvas.height * 0.22;
         const offX = pb.atacando > 0
             ? Math.sin((pb.atacando / pb.durAtaque) * Math.PI) * 14
             : 0;
-        const img  = assets.santa[pb.frame];
+        const img = assets.santa[pb.frame];
 
         if (imgOk(img)) {
             const lar = ALT * (img.naturalWidth / img.naturalHeight);
 
-            // Sombra no chão
             ctx.save();
             ctx.fillStyle = 'rgba(0,0,0,0.28)';
             ctx.beginPath();
@@ -173,7 +172,6 @@ const BattleRenderer = (() => {
             ctx.fill();
             ctx.restore();
 
-            // Sprite — pés em py, cresce para cima
             ctx.save();
             ctx.translate(px + offX, py);
             ctx.scale(-1, 1);
@@ -221,9 +219,9 @@ const BattleRenderer = (() => {
         const oy = hit.tremendo > 0 ? (Math.random() - 0.5) * 10 : 0;
         const mx = monstroX(canvas) + ox;
 
-        // ↓ Afunda no chão — 0.07 = 7% do tamanho fica abaixo do chão
-        const afunda = tam * 0.07;
-        const my     = chaoY(canvas) - tam * 0.5 + afunda + oy;
+        // ↓ Base do monstro toca o topo do chão
+        // my = centro vertical do monstro
+        const my = chaoY(canvas) - tam * 0.5 + oy;
 
         const imgMonstro = (hit.flash > 0 && imgOk(assets.monstroHitado))
             ? assets.monstroHitado
@@ -264,9 +262,9 @@ const BattleRenderer = (() => {
         const H  = canvas.height;
         const cy = chaoY(canvas);
         const mx = monstroX(canvas);
-        const my = cy - canvas.height * 0.30; // centro aproximado do monstro
+        const my = cy - canvas.height * 0.30;
 
-        const BOSS_R   = 200; // raio de exclusão ao redor do monstro
+        const BOSS_R   = 200;
         const TETO_Y   = H * 0.04;
         const CHAO_Y   = cy * 0.80;
         const MIN_DIST = 52;
@@ -500,7 +498,7 @@ const BattleRenderer = (() => {
         _atualizarFloresAtt();
         _desenharFloresAtt(ctx);
 
-        // 4. Monstro — ATRÁS do chão
+        // 4. Monstro — atrás do chão
         _desenharMonstro(ctx, canvas);
 
         // 5. Chão — na frente do monstro
