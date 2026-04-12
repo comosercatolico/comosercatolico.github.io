@@ -61,14 +61,14 @@ const BattleRenderer = (() => {
     //  HELPERS DE POSIÇÃO
     // ════════════════════════════════════════
 
-    // ↓ Linha do topo do chão — sobe/desce tudo (0.74 = 74% da altura)
-    function chaoY(canvas)    { return canvas.height * 0.74; }
+    // ↓ Linha do topo do chão — aumenta para descer, diminui para subir
+    function chaoY(canvas)  { return canvas.height * 0.74; }
 
-    // ↓ Posição X da santa — aumenta para ir mais para o centro (era 0.46)
-    function santaX(canvas)   { return canvas.width  * 0.50; }
+    // ↓ Santa — posição X (0.38 = esquerda, 0.50 = centro)
+    function santaX(canvas) { return canvas.width  * 0.38; }
 
-    // ↓ Posição X do monstro
-    function monstroX(canvas) { return canvas.width  * 0.62; }
+    // ↓ Monstro — posição X (centro da tela)
+    function monstroX(canvas) { return canvas.width * 0.58; }
 
     // ════════════════════════════════════════
     //  FUNDO (cenário)
@@ -79,7 +79,8 @@ const BattleRenderer = (() => {
         if (imgOk(assets.cenario)) {
             const i   = assets.cenario;
             const esc = Math.max(W / i.naturalWidth, H / i.naturalHeight);
-            const dw  = i.naturalWidth * esc, dh = i.naturalHeight * esc;
+            const dw  = i.naturalWidth  * esc;
+            const dh  = i.naturalHeight * esc;
             ctx.drawImage(i, (W - dw) / 2, (H - dh) / 2, dw, dh);
         } else {
             _fundoFallback(ctx, W, H, cy);
@@ -95,7 +96,7 @@ const BattleRenderer = (() => {
         const cy = chaoY(canvas);
 
         if (imgOk(assets.chao)) {
-            // Chão ocupa do cy até o fim da tela
+            // Chão começa no cy e vai até o fim da tela
             ctx.drawImage(assets.chao, 0, cy, W, H - cy);
         } else {
             _chaoFallback(ctx, W, H, cy);
@@ -126,7 +127,8 @@ const BattleRenderer = (() => {
         gl.addColorStop(0,   'rgba(255,248,200,1)');
         gl.addColorStop(0.5, 'rgba(255,220,130,0.40)');
         gl.addColorStop(1,   'rgba(255,200,80,0)');
-        ctx.fillStyle = gl; ctx.beginPath(); ctx.arc(lx, ly, 62, 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = gl;
+        ctx.beginPath(); ctx.arc(lx, ly, 62, 0, Math.PI * 2); ctx.fill();
     }
 
     function _chaoFallback(ctx, W, H, cy) {
@@ -150,16 +152,14 @@ const BattleRenderer = (() => {
     }
 
     function _desenharPB(ctx, canvas) {
-        const px  = santaX(canvas);
-        const cy  = chaoY(canvas);
+        const px = santaX(canvas);
+        const py = chaoY(canvas); // pés tocam exatamente o topo do chão
 
-        // ↓ Altura da santa — aumenta para ficar maior (0.22 = 22% da tela)
-        const ALT = canvas.height * 0.22;
-
-        // Pés da santa tocam exatamente o topo do chão
-        const py  = cy;
-
-        const offX = pb.atacando > 0 ? Math.sin((pb.atacando / pb.durAtaque) * Math.PI) * 14 : 0;
+        // ↓ Altura da santa — aumenta para ficar maior
+        const ALT  = canvas.height * 0.22;
+        const offX = pb.atacando > 0
+            ? Math.sin((pb.atacando / pb.durAtaque) * Math.PI) * 14
+            : 0;
         const img  = assets.santa[pb.frame];
 
         if (imgOk(img)) {
@@ -173,7 +173,7 @@ const BattleRenderer = (() => {
             ctx.fill();
             ctx.restore();
 
-            // Sprite espelhado, pés em py
+            // Sprite — pés em py, cresce para cima
             ctx.save();
             ctx.translate(px + offX, py);
             ctx.scale(-1, 1);
@@ -214,23 +214,23 @@ const BattleRenderer = (() => {
         const ini = BattleState.inimigo;
         const pct = Math.max(0.05, ini.maxHp > 0 ? ini.hp / ini.maxHp : 1);
 
-        // ↓ Tamanho do monstro — aumenta o 0.38 para ficar maior
-        const tam = canvas.height * (0.38 + pct * 0.05);
+        // ↓ Tamanho do monstro — aumenta o 0.65 para ficar maior
+        const tam = canvas.height * (0.65 + pct * 0.05);
 
         const ox = hit.tremendo > 0 ? (Math.random() - 0.5) * 18 : 0;
         const oy = hit.tremendo > 0 ? (Math.random() - 0.5) * 10 : 0;
         const mx = monstroX(canvas) + ox;
 
-        // ↓ Quanto o monstro afunda no chão — 0.12 = 12% da altura fica abaixo
-        const afunda = canvas.height * 0.12;
-        const my = chaoY(canvas) - tam * 0.5 + afunda + oy;
+        // ↓ Afunda no chão — 0.07 = 7% do tamanho fica abaixo do chão
+        const afunda = tam * 0.07;
+        const my     = chaoY(canvas) - tam * 0.5 + afunda + oy;
 
         const imgMonstro = (hit.flash > 0 && imgOk(assets.monstroHitado))
             ? assets.monstroHitado
             : assets.monstroNormal;
 
         ctx.save();
-        ctx.shadowBlur  = 38 + Math.sin(Date.now() * 0.004) * 14;
+        ctx.shadowBlur  = 42 + Math.sin(Date.now() * 0.004) * 14;
         ctx.shadowColor = pct < 0.25 ? 'rgba(255,220,0,1)' : 'rgba(255,50,50,0.9)';
 
         if (imgOk(imgMonstro)) {
@@ -239,7 +239,8 @@ const BattleRenderer = (() => {
         } else {
             const tipo = tiposMonstros[ini.tipo] ?? tiposMonstros[0];
             ctx.font = `${tam}px serif`;
-            ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+            ctx.textAlign    = 'center';
+            ctx.textBaseline = 'middle';
             ctx.fillText(tipo.emojis.normal, mx, my);
         }
 
@@ -263,9 +264,9 @@ const BattleRenderer = (() => {
         const H  = canvas.height;
         const cy = chaoY(canvas);
         const mx = monstroX(canvas);
-        const my = canvas.height * 0.45;
+        const my = cy - canvas.height * 0.30; // centro aproximado do monstro
 
-        const BOSS_R   = 180;
+        const BOSS_R   = 200; // raio de exclusão ao redor do monstro
         const TETO_Y   = H * 0.04;
         const CHAO_Y   = cy * 0.80;
         const MIN_DIST = 52;
@@ -284,10 +285,7 @@ const BattleRenderer = (() => {
             const sobrep = posicoes.some(p => Math.hypot(p.x - x, p.y - y) < MIN_DIST);
             if (sobrep) continue;
 
-            posicoes.push({
-                x, y, size,
-                glowFase: Math.random() * Math.PI * 2,
-            });
+            posicoes.push({ x, y, size, glowFase: Math.random() * Math.PI * 2 });
         }
 
         return posicoes;
@@ -356,8 +354,8 @@ const BattleRenderer = (() => {
 
             if (f.glow > 0) {
                 const grd = ctx.createRadialGradient(0, 0, 0, 0, 0, glowRaio);
-                grd.addColorStop(0,   `rgba(255, 60, 60, ${0.55 * f.glow * glowPulse})`);
-                grd.addColorStop(0.5, `rgba(255, 20, 20, ${0.25 * f.glow})`);
+                grd.addColorStop(0,   `rgba(255,60,60,${0.55 * f.glow * glowPulse})`);
+                grd.addColorStop(0.5, `rgba(255,20,20,${0.25 * f.glow})`);
                 grd.addColorStop(1,   'rgba(255,0,0,0)');
                 ctx.fillStyle = grd;
                 ctx.beginPath();
@@ -375,7 +373,7 @@ const BattleRenderer = (() => {
     // ════════════════════════════════════════
     function dispararFlor(canvas) {
         const mx = monstroX(canvas);
-        const my = chaoY(canvas) - canvas.height * 0.15;
+        const my = chaoY(canvas) - canvas.height * 0.30;
 
         let melhor = null, melhorDist = Infinity;
         flores.forEach(f => {
@@ -436,16 +434,16 @@ const BattleRenderer = (() => {
     let particulas = [];
 
     function _criarParticula(x, y) {
-        const ang = Math.random() * Math.PI * 2;
-        const spd = 1.5 + Math.random() * 4;
-        const emojis = ['✨', '🌹', '💫', '⭐'];
+        const ang      = Math.random() * Math.PI * 2;
+        const spd      = 1.5 + Math.random() * 4;
+        const emojis   = ['✨', '🌹', '💫', '⭐'];
         const useEmoji = Math.random() < 0.4;
         particulas.push({
             x, y,
             vx: Math.cos(ang) * spd, vy: Math.sin(ang) * spd,
             vida: 25 + Math.random() * 15,
             size: useEmoji ? 12 + Math.random() * 6 : 4 + Math.random() * 7,
-            cor: `hsl(${320 + Math.random() * 60},95%,68%)`,
+            cor:  `hsl(${320 + Math.random() * 60},95%,68%)`,
             emoji: useEmoji ? emojis[Math.floor(Math.random() * emojis.length)] : null,
         });
     }
@@ -461,10 +459,10 @@ const BattleRenderer = (() => {
 
     function criarMoeda(canvas) {
         const mx = monstroX(canvas);
-        const my = chaoY(canvas) - canvas.height * 0.15;
+        const my = chaoY(canvas) - canvas.height * 0.30;
         moedas.push({
-            x: mx + (Math.random() - 0.5) * 110,
-            y: my,
+            x:  mx + (Math.random() - 0.5) * 110,
+            y:  my,
             vy: -(3.5 + Math.random() * 2.8),
             vx: (Math.random() - 0.5) * 2.8,
             vida: 70, size: 20 + Math.random() * 11,
@@ -478,7 +476,7 @@ const BattleRenderer = (() => {
 
     function criarTexto(valor, tipo, canvas) {
         const mx = monstroX(canvas);
-        const my = chaoY(canvas) - canvas.height * 0.25;
+        const my = chaoY(canvas) - canvas.height * 0.45;
         textos.push({
             x: mx + (Math.random() - 0.5) * 100,
             y: my,
