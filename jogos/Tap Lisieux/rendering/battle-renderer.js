@@ -82,7 +82,7 @@ const BattleRenderer = (() => {
             const src = assets.chao;
             const pw  = W;
             const ph  = src.naturalHeight * (W / src.naturalWidth);
-            const py  = cy - ph * 0.30;
+            const py  = cy - ph * 0.55;
             ctx.drawImage(src, 0, py, pw, ph);
         } else {
             _chaoFallback(ctx, W, H, cy);
