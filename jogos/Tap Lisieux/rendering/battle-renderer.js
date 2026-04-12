@@ -60,7 +60,26 @@ const BattleRenderer = (() => {
     // ════════════════════════════════════════
     //  HELPERS DE POSIÇÃO
     // ════════════════════════════════════════
-    function chaoY(canvas)    { return canvas.height * 0.74; }
+
+    // ─────────────────────────────────────────────────────────
+    // POSICIONAMENTO VERTICAL DO CHÃO:
+    //   Aumente o valor (ex: 0.80) para descer a linha do chão.
+    //   Diminua (ex: 0.65) para subir a linha do chão.
+    // ─────────────────────────────────────────────────────────
+    function chaoY(canvas) { return canvas.height * 0.74; }
+
+    // ─────────────────────────────────────────────────────────
+    // POSICIONAMENTO HORIZONTAL DOS PERSONAGENS:
+    //   0.50 = centro exato da tela.
+    //   Diminua (ex: 0.30) para mover tudo para a ESQUERDA.
+    //   Aumente (ex: 0.70) para mover tudo para a DIREITA.
+    //
+    //   Se quiser Santa e Monstro em lados opostos, separe
+    //   as funções santaX e monstroX com valores diferentes,
+    //   por exemplo:
+    //     santaX  → canvas.width * 0.25   (esquerda)
+    //     monstroX → canvas.width * 0.70  (direita)
+    // ─────────────────────────────────────────────────────────
     function centroX(canvas)  { return canvas.width  * 0.50; }
     function santaX(canvas)   { return centroX(canvas); }
     function monstroX(canvas) { return centroX(canvas); }
@@ -137,17 +156,17 @@ const BattleRenderer = (() => {
     //  PERSONAGEM (Santa Teresinha) — Conjuração Ping-Pong
     // ════════════════════════════════════════
     const pb = {
-        frame:       0,       // frame atual (0–7)
-        direcao:     1,       // +1 avança  /  -1 recua
-        tempo:       0,       // contador de ticks
-        conjurando:  false,   // está animando agora?
-        TICK_NORMAL: 6,       // ticks por frame normal
-        TICK_ULTIMO: 38,      // ticks no frame do ápice
-        FRAME_MAX:   7,       // último frame (índice 0-based)
-        offX:        0,       // sacudida no ápice
+        frame:       0,     // frame atual (0–7)
+        direcao:     1,     // +1 avança  /  -1 recua
+        tempo:       0,     // contador de ticks
+        conjurando:  false, // está animando agora?
+        TICK_NORMAL: 6,     // ticks por frame normal
+        TICK_ULTIMO: 38,    // ticks no frame do ápice (último frame)
+        FRAME_MAX:   7,     // índice do último frame (0-based, total 8 frames)
+        offX:        0,     // vibração horizontal no ápice
     };
 
-    // Flores pedem conjuração → Santa começa animação
+    // Flores pediram conjuração → Santa inicia animação do zero
     EventBus.on('flores:conjurar', () => {
         if (!pb.conjurando) {
             pb.conjurando = true;
@@ -158,16 +177,16 @@ const BattleRenderer = (() => {
     });
 
     function _atualizarPB() {
+        // Parada: trava no frame 0, sem vibração
         if (!pb.conjurando) {
             pb.frame = 0;
             pb.offX  = 0;
             return;
         }
 
-        // Duração do frame atual
         const duracao = pb.frame === pb.FRAME_MAX
-            ? pb.TICK_ULTIMO
-            : pb.TICK_NORMAL;
+            ? pb.TICK_ULTIMO   // ápice demora mais
+            : pb.TICK_NORMAL;  // frames normais
 
         pb.tempo++;
 
@@ -175,14 +194,14 @@ const BattleRenderer = (() => {
             pb.tempo = 0;
             pb.frame += pb.direcao;
 
-            // Chegou no ápice → inverte e dispara reset das flores
+            // Chegou no ápice → inverte direção e dispara reset das flores
             if (pb.frame >= pb.FRAME_MAX) {
                 pb.frame   = pb.FRAME_MAX;
                 pb.direcao = -1;
                 EventBus.emit('flores:resetar');
             }
 
-            // Voltou ao início → para animação
+            // Voltou ao frame 0 vindo de trás → encerra animação
             if (pb.frame <= 0 && pb.direcao === -1) {
                 pb.frame      = 0;
                 pb.conjurando = false;
@@ -190,33 +209,57 @@ const BattleRenderer = (() => {
             }
         }
 
-        // Vibração suave no ápice
-        if (pb.frame === pb.FRAME_MAX) {
-            pb.offX = Math.sin(Date.now() * 0.018) * 3.5;
-        } else {
-            pb.offX = 0;
-        }
+        // Vibração sutil só no ápice
+        pb.offX = pb.frame === pb.FRAME_MAX
+            ? Math.sin(Date.now() * 0.018) * 3.5
+            : 0;
     }
 
     function _desenharPB(ctx, canvas) {
-        const px  = santaX(canvas);
-        const py  = chaoY(canvas) + 40;
-        const ALT = canvas.height * 0.30;
+        // ─────────────────────────────────────────────────────
+        // POSIÇÃO HORIZONTAL DA SANTA:
+        //   Troque santaX(canvas) por um número fixo ou por
+        //   canvas.width * 0.XX para mover para esquerda/direita.
+        //   Ex: const px = canvas.width * 0.25;  → esquerda
+        // ─────────────────────────────────────────────────────
+        const px = santaX(canvas);
+
+        // ─────────────────────────────────────────────────────
+        // POSIÇÃO VERTICAL (PÉS DA SANTA):
+        //   chaoY(canvas) é a linha do chão.
+        //   O +40 empurra os pés um pouco para baixo do chão
+        //   (evita flutuar). Aumente para afundar mais,
+        //   diminua ou zere para ela ficar mais em cima.
+        // ─────────────────────────────────────────────────────
+        const py = chaoY(canvas) + 40;
+
+        // ─────────────────────────────────────────────────────
+        // TAMANHO DA SANTA:
+        //   Aumente o 0.30 para deixá-la maior.
+        //   Diminua para deixá-la menor.
+        //   Ex: canvas.height * 0.40 → 40% da altura da tela
+        // ─────────────────────────────────────────────────────
+        const ALT  = canvas.height * 0.30;
         const offX = pb.offX;
         const img  = assets.santa[pb.frame];
 
         if (imgOk(img)) {
             const lar = ALT * (img.naturalWidth / img.naturalHeight);
 
-            // Sombra no chão
+            // Sombra elíptica no chão REMOVIDA conforme solicitado.
+            // Para reativar, descomente o bloco abaixo:
+            /*
             ctx.save();
             ctx.fillStyle = 'rgba(0,0,0,0.28)';
             ctx.beginPath();
             ctx.ellipse(px + offX, py + 5, lar * 0.38, 7, 0, 0, Math.PI * 2);
             ctx.fill();
             ctx.restore();
+            */
 
-            // Aura roxa no ápice da conjuração
+            // Efeito de aura no ápice REMOVIDO conforme solicitado.
+            // Para reativar, descomente o bloco abaixo:
+            /*
             if (pb.conjurando && pb.frame === pb.FRAME_MAX) {
                 ctx.save();
                 const pulso     = 0.5 + Math.sin(Date.now() * 0.012) * 0.5;
@@ -233,8 +276,9 @@ const BattleRenderer = (() => {
                 ctx.fill();
                 ctx.restore();
             }
+            */
 
-            // Partículas mágicas subindo durante conjuração
+            // Partículas mágicas subindo durante a conjuração
             if (pb.conjurando && Math.random() < 0.35) {
                 const t = pb.frame / pb.FRAME_MAX;
                 _criarParticulaMagica(
@@ -244,7 +288,13 @@ const BattleRenderer = (() => {
                 );
             }
 
-            // Personagem espelhada
+            // ─────────────────────────────────────────────────
+            // ESPELHAMENTO HORIZONTAL:
+            //   ctx.scale(-1, 1) espelha a Santa para ela
+            //   olhar para a direita (padrão atual).
+            //   Remova o scale(-1,1) e troque por scale(1,1)
+            //   (ou apague a linha) para ela olhar para a esquerda.
+            // ─────────────────────────────────────────────────
             ctx.save();
             ctx.translate(px + offX, py);
             ctx.scale(-1, 1);
@@ -286,11 +336,31 @@ const BattleRenderer = (() => {
         const ini = BattleState.inimigo;
         const pct = Math.max(0.05, ini.maxHp > 0 ? ini.hp / ini.maxHp : 1);
 
+        // ─────────────────────────────────────────────────────
+        // TAMANHO DO MONSTRO:
+        //   O valor base é 0.88 (88% da altura da tela).
+        //   Diminua para deixar menor, aumente para maior.
+        //   Ex: canvas.height * 0.55  → monstro bem menor
+        // ─────────────────────────────────────────────────────
         const tam = canvas.height * (0.88 + pct * 0.05);
 
         const ox = hit.tremendo > 0 ? (Math.random() - 0.5) * 18 : 0;
         const oy = hit.tremendo > 0 ? (Math.random() - 0.5) * 10 : 0;
+
+        // ─────────────────────────────────────────────────────
+        // POSIÇÃO HORIZONTAL DO MONSTRO:
+        //   Troque monstroX(canvas) por canvas.width * 0.XX
+        //   Ex: canvas.width * 0.70  → monstro na direita
+        // ─────────────────────────────────────────────────────
         const mx = monstroX(canvas) + ox;
+
+        // ─────────────────────────────────────────────────────
+        // POSIÇÃO VERTICAL DO MONSTRO:
+        //   chaoY(canvas) é a linha do chão.
+        //   O - tam * 0.10 faz o monstro ficar semi-enterrado.
+        //   Aumente o 0.10 para subi-lo mais,
+        //   diminua para afundá-lo mais no chão.
+        // ─────────────────────────────────────────────────────
         const my = chaoY(canvas) - tam * 0.10 + oy;
 
         const imgMonstro = (hit.flash > 0 && imgOk(assets.monstroHitado))
@@ -381,7 +451,7 @@ const BattleRenderer = (() => {
         };
     }
 
-    // Verifica se precisa conjurar → avisa Santa
+    // Verifica se flores estão acabando → pede conjuração à Santa
     function _checarReabastecimento() {
         const vivas = flores.filter(f => f.viva).length;
         if (vivas <= FLORES_REABAST) {
@@ -389,7 +459,7 @@ const BattleRenderer = (() => {
         }
     }
 
-    // Santa chegou no ápice → flores reaparecem com animação
+    // Santa atingiu o ápice → flores reaparecem com animação de surgimento
     EventBus.on('flores:resetar', () => {
         _posFixas.forEach((pos, idx) => {
             const jaExiste = flores.some(f => f.idx === idx && f.viva);
@@ -525,7 +595,7 @@ const BattleRenderer = (() => {
         });
     }
 
-    // Partículas mágicas que sobem durante conjuração
+    // Partículas mágicas leves que sobem durante a conjuração
     function _criarParticulaMagica(x, y, intensidade) {
         const cores = [
             `hsl(${270 + Math.random() * 60},100%,75%)`,
@@ -606,7 +676,7 @@ const BattleRenderer = (() => {
         particulas.forEach(p => {
             p.x += p.vx;
             p.y += p.vy;
-            // Partículas mágicas sobem sem gravidade pesada
+            // Mágicas sobem levemente; normais caem com gravidade
             p.vy += p.magica ? 0.03 : 0.14;
             p.vida--;
         });
