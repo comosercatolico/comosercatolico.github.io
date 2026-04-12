@@ -97,14 +97,17 @@ const BattleRenderer = (() => {
     function _fundo(ctx, canvas) {
         const W = canvas.width, H = canvas.height, cy = chaoY(canvas);
 
-        if (imgOk(assets.cenario)) {
-            const i   = assets.cenario;
-            const esc = Math.max(W / i.naturalWidth, H / i.naturalHeight);
-            const dw  = i.naturalWidth * esc, dh = i.naturalHeight * esc;
-            ctx.drawImage(i, (W - dw) / 2, (H - dh) / 2, dw, dh);
-        } else {
-            _fundoFallback(ctx, W, H, cy);
-        }
+        // CENÁRIO COMENTADO TEMPORARIAMENTE PARA TESTE
+        // if (imgOk(assets.cenario)) {
+        //     const i   = assets.cenario;
+        //     const esc = Math.max(W / i.naturalWidth, H / i.naturalHeight);
+        //     const dw  = i.naturalWidth * esc, dh = i.naturalHeight * esc;
+        //     ctx.drawImage(i, (W - dw) / 2, (H - dh) / 2, dw, dh);
+        // } else {
+        //     _fundoFallback(ctx, W, H, cy);
+        // }
+
+        _fundoFallback(ctx, W, H, cy); // força fallback enquanto testa
 
         if (imgOk(assets.chao)) {
             processarChao();
@@ -264,17 +267,15 @@ const BattleRenderer = (() => {
     // ════════════════════════════════════════
     //  FLORES — Sistema completo
     // ════════════════════════════════════════
-    const FLORES_MAX      = 30;
-    const FLORES_REABAST  = 5;   // quando chegar nesse número, reabastece
-    const FLOR_TAM_MIN    = 28;
-    const FLOR_TAM_MAX    = 42;
+    const FLORES_MAX     = 30;
+    const FLORES_REABAST = 5;
+    const FLOR_TAM_MIN   = 28;
+    const FLOR_TAM_MAX   = 42;
 
-    // Posições fixas geradas uma vez por canvas size
-    let _posFixas    = [];   // [{x, y, size, glowFase}] — nunca mudam
-    let flores       = [];   // flores vivas no campo
-    let floresAtt    = [];   // flores em voo
+    let _posFixas = [];
+    let flores    = [];
+    let floresAtt = [];
 
-    // Gera as 30 posições fixas respeitando zonas proibidas
     function _gerarPosFixas(canvas) {
         const W   = canvas.width;
         const H   = canvas.height;
@@ -282,11 +283,10 @@ const BattleRenderer = (() => {
         const mx  = monstroX(canvas);
         const my  = monstroY(canvas);
 
-        // Zona proibida: boss (raio 180) e chão (abaixo de cy * 0.68)
         const BOSS_R   = 180;
-        const TETO_Y   = H * 0.04;  // não pode ficar acima disso
-        const CHAO_Y   = cy * 0.68; // não pode ficar abaixo disso
-        const MIN_DIST = 52;        // distância mínima entre flores
+        const TETO_Y   = H * 0.04;
+        const CHAO_Y   = cy * 0.68;
+        const MIN_DIST = 52;
 
         const posicoes = [];
         let tentativas = 0;
@@ -297,81 +297,70 @@ const BattleRenderer = (() => {
             const y    = TETO_Y + Math.random() * (CHAO_Y - TETO_Y);
             const size = FLOR_TAM_MIN + Math.random() * (FLOR_TAM_MAX - FLOR_TAM_MIN);
 
-            // Checa zona do boss
             if (Math.hypot(x - mx, y - my) < BOSS_R) continue;
 
-            // Checa sobreposição com outras flores
             const sobrep = posicoes.some(p => Math.hypot(p.x - x, p.y - y) < MIN_DIST);
             if (sobrep) continue;
 
             posicoes.push({
                 x, y, size,
-                glowFase: Math.random() * Math.PI * 2, // fase individual do glow
+                glowFase: Math.random() * Math.PI * 2,
             });
         }
 
         return posicoes;
     }
 
-    // Inicializa flores a partir das posições fixas
     function initFlores(canvas) {
         _posFixas = _gerarPosFixas(canvas);
         flores    = _posFixas.map((p, i) => _criarFlor(p, i, true));
         floresAtt = [];
     }
 
-    // Cria objeto flor a partir de uma posição fixa
-    // spawnImediato = true → já aparece visível (sem animação)
     function _criarFlor(pos, idx, spawnImediato = false) {
         return {
-            idx,                        // índice na posição fixa
-            x:      pos.x,
-            y:      pos.y,
-            size:   pos.size,
-            glowFase: pos.glowFase,
-            alpha:  spawnImediato ? 1 : 0,      // começa invisível se for conjuração
-            glow:   spawnImediato ? 1 : 0,
-            conjurando: !spawnImediato,          // está em animação de conjuração?
-            conjFrames: 0,                       // frames decorridos da conjuração
-            conjDur:    45,                      // duração da animação (frames)
-            viva: true,
+            idx,
+            x:          pos.x,
+            y:          pos.y,
+            size:       pos.size,
+            glowFase:   pos.glowFase,
+            alpha:      spawnImediato ? 1 : 0,
+            glow:       spawnImediato ? 1 : 0,
+            conjurando: !spawnImediato,
+            conjFrames: 0,
+            conjDur:    45,
+            viva:       true,
         };
     }
 
-    // Verifica se precisa reabastecer e faz o reabastecimento
     function _checarReabastecimento() {
         const vivas = flores.filter(f => f.viva).length;
         if (vivas <= FLORES_REABAST) {
             _posFixas.forEach((pos, idx) => {
-                // Só adiciona de volta as que não estão vivas
                 const jaExiste = flores.some(f => f.idx === idx && f.viva);
                 if (!jaExiste) {
-                    flores.push(_criarFlor(pos, idx, false)); // com animação
+                    flores.push(_criarFlor(pos, idx, false));
                 }
             });
         }
     }
 
-    // Atualiza animação de conjuração
     function _atualizarFlores() {
         flores.forEach(f => {
             if (!f.conjurando) return;
             f.conjFrames++;
             const t = f.conjFrames / f.conjDur;
-            f.alpha = Math.min(1, t * 1.4);        // fade in
-            f.glow  = Math.sin(t * Math.PI);       // glow sobe e estabiliza
+            f.alpha = Math.min(1, t * 1.4);
+            f.glow  = Math.sin(t * Math.PI);
             if (f.conjFrames >= f.conjDur) {
                 f.conjurando = false;
                 f.alpha = 1;
                 f.glow  = 1;
             }
         });
-
-        // Remove flores mortas que já saíram como projétil
         flores = flores.filter(f => f.viva);
     }
 
-    // Desenha todas as flores no campo
     function _desenharFlores(ctx, canvas) {
         if (!imgOk(assets.flor)) return;
         const t = Date.now();
@@ -379,7 +368,6 @@ const BattleRenderer = (() => {
         flores.forEach(f => {
             if (!f.viva) return;
 
-            // Glow pulsante suave (individual por fase)
             const glowPulse = 0.6 + Math.sin(t * 0.002 + f.glowFase) * 0.4;
             const glowRaio  = f.size * 0.7 * glowPulse;
 
@@ -387,7 +375,6 @@ const BattleRenderer = (() => {
             ctx.globalAlpha = f.alpha;
             ctx.translate(f.x, f.y);
 
-            // Brilho vermelho atrás da flor
             if (f.glow > 0) {
                 const grd = ctx.createRadialGradient(0, 0, 0, 0, 0, glowRaio);
                 grd.addColorStop(0,   `rgba(255, 60, 60, ${0.55 * f.glow * glowPulse})`);
@@ -399,7 +386,6 @@ const BattleRenderer = (() => {
                 ctx.fill();
             }
 
-            // Flor centralizada
             ctx.drawImage(assets.flor, -f.size / 2, -f.size / 2, f.size, f.size);
             ctx.restore();
         });
@@ -409,7 +395,6 @@ const BattleRenderer = (() => {
     //  FLORES PROJÉTEIS
     // ════════════════════════════════════════
     function dispararFlor(canvas) {
-        // Pega a flor viva mais próxima do boss
         const mx = monstroX(canvas);
         const my = monstroY(canvas);
 
@@ -422,10 +407,7 @@ const BattleRenderer = (() => {
 
         if (!melhor) return;
 
-        // Calcula ângulo em direção ao boss
         const angulo = Math.atan2(my - melhor.y, mx - melhor.x);
-
-        // Destino com pequeno spread
         const tx = mx + (Math.random() - 0.5) * 70;
         const ty = my + (Math.random() - 0.5) * 70;
         const sp = 10 + Math.random() * 5;
@@ -437,15 +419,12 @@ const BattleRenderer = (() => {
             vy:      Math.sin(angulo) * sp,
             tx, ty,
             size:    melhor.size,
-            angulo,                          // ângulo fixo apontando pro boss
+            angulo,
             vida:    Math.ceil(melhorDist / sp) + 10,
             acertou: false,
         });
 
-        // Remove a flor do campo
         melhor.viva = false;
-
-        // Verifica reabastecimento
         _checarReabastecimento();
     }
 
@@ -470,7 +449,7 @@ const BattleRenderer = (() => {
             ctx.save();
             ctx.globalAlpha = Math.min(1, f.vida / 12);
             ctx.translate(f.x, f.y);
-            ctx.rotate(f.angulo + Math.PI / 2); // aponta cabeça pro boss
+            ctx.rotate(f.angulo + Math.PI / 2);
             ctx.drawImage(assets.flor, -f.size / 2, -f.size / 2, f.size, f.size);
             ctx.restore();
         });
@@ -538,15 +517,12 @@ const BattleRenderer = (() => {
     function render(ctx, canvas) {
         _fundo(ctx, canvas);
 
-        // Atualiza e desenha flores no campo
         _atualizarFlores();
         _desenharFlores(ctx, canvas);
 
-        // Flores projéteis
         _atualizarFloresAtt();
         _desenharFloresAtt(ctx);
 
-        // Partículas
         particulas.forEach(p => {
             p.x += p.vx; p.y += p.vy; p.vy += 0.14; p.vida--;
         });
@@ -564,7 +540,6 @@ const BattleRenderer = (() => {
             ctx.restore();
         });
 
-        // Moedas
         moedas.forEach(m => { m.x += m.vx; m.y += m.vy; m.vy += 0.22; m.vida--; });
         moedas = moedas.filter(m => m.vida > 0);
         ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
@@ -573,14 +548,11 @@ const BattleRenderer = (() => {
             ctx.font = `${m.size}px serif`; ctx.fillText('🪙', m.x, m.y); ctx.restore();
         });
 
-        // Monstro
         _desenharMonstro(ctx, canvas);
 
-        // Santa
         _atualizarPB();
         _desenharPB(ctx, canvas);
 
-        // Textos flutuantes
         ctx.textAlign = 'center';
         textos.forEach(t => {
             ctx.save();
