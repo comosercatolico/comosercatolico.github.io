@@ -64,9 +64,14 @@ const BattleRenderer = (() => {
     // ════════════════════════════════════════
     //  HELPERS
     // ════════════════════════════════════════
-    function chaoY(canvas)    { return canvas.height * 0.78; }
+
+    // ↓ Linha do chão — sobe/desce o chão e tudo que pousa nele
+    function chaoY(canvas)    { return canvas.height * 0.74; }
+
     function santaX(canvas)   { return canvas.width  * 0.46; }
     function monstroX(canvas) { return canvas.width  * 0.50; }
+
+    // ↓ Altura do monstro na tela — diminui o número para subir, aumenta para descer
     function monstroY(canvas) { return canvas.height * 0.38; }
 
     // ════════════════════════════════════════
@@ -84,29 +89,30 @@ const BattleRenderer = (() => {
         } else {
             _fundoFallback(ctx, W, H, cy);
         }
+    }
 
-        // Chão
+    function _desenharChao(ctx, canvas) {
+        const W  = canvas.width;
+        const H  = canvas.height;
+        const cy = chaoY(canvas);
+
         if (imgOk(assets.chao)) {
             const src = assets.chao;
-            // Escala o chão para ocupar 35% da largura proporcional
-            const escala = 0.45;
-            const pw  = W;
-            const ph  = src.naturalHeight * (W / src.naturalWidth) * escala;
-            const py  = cy - ph * 0.35;
-            ctx.drawImage(src, 0, py, pw, ph);
+
+            // ↓ Altura do chão — aumenta para o chão ser mais alto na tela
+            const ph = H - cy;
+
+            // ↓ py = onde o topo do chão começa — cy o alinha com a linha do chão
+            const py = cy;
+
+            ctx.drawImage(src, 0, py, W, ph);
         } else {
             _chaoFallback(ctx, W, H, cy);
         }
-
-        const gs = ctx.createLinearGradient(0, cy - 18, 0, cy + 32);
-        gs.addColorStop(0, 'rgba(0,0,0,0)');
-        gs.addColorStop(1, 'rgba(0,0,0,0.32)');
-        ctx.fillStyle = gs;
-        ctx.fillRect(0, cy - 18, W, 50);
     }
 
     function _fundoFallback(ctx, W, H, cy) {
-        const g = ctx.createLinearGradient(0, 0, 0, cy);
+        const g = ctx.createLinearGradient(0, 0, 0, H);
         g.addColorStop(0,    '#030110');
         g.addColorStop(0.45, '#0a0728');
         g.addColorStop(1,    '#1c0f5e');
@@ -208,11 +214,17 @@ const BattleRenderer = (() => {
 
         const ini = BattleState.inimigo;
         const pct = Math.max(0.05, ini.maxHp > 0 ? ini.hp / ini.maxHp : 1);
-        const tam = canvas.height * (0.36 + pct * 0.06);
+
+        // ↓ Tamanho do monstro — aumenta o 0.42 para ficar maior
+        const tam = canvas.height * (0.42 + pct * 0.06);
+
         const ox  = hit.tremendo > 0 ? (Math.random() - 0.5) * 18 : 0;
         const oy  = hit.tremendo > 0 ? (Math.random() - 0.5) * 10 : 0;
         const mx  = monstroX(canvas) + ox;
-        const my  = monstroY(canvas) + oy;
+
+        // ↓ Quanto o monstro afunda no chão — 0.08 = 8% da altura afundado
+        const afunda  = canvas.height * 0.08;
+        const my = chaoY(canvas) - tam * 0.5 + afunda + oy;
 
         const imgMonstro = (hit.flash > 0 && imgOk(assets.monstroHitado))
             ? assets.monstroHitado
@@ -232,13 +244,6 @@ const BattleRenderer = (() => {
             ctx.fillText(tipo.emojis.normal, mx, my);
         }
 
-        ctx.restore();
-
-        ctx.save();
-        ctx.fillStyle = 'rgba(0,0,0,0.18)';
-        ctx.beginPath();
-        ctx.ellipse(monstroX(canvas), chaoY(canvas) + 6, tam * 0.28, 11, 0, 0, Math.PI * 2);
-        ctx.fill();
         ctx.restore();
     }
 
@@ -493,14 +498,25 @@ const BattleRenderer = (() => {
     //  RENDER COMPLETO
     // ════════════════════════════════════════
     function render(ctx, canvas) {
+
+        // 1. Cenário de fundo
         _fundo(ctx, canvas);
 
+        // 2. Flores decorativas
         _atualizarFlores();
         _desenharFlores(ctx, canvas);
 
+        // 3. Flores projéteis
         _atualizarFloresAtt();
         _desenharFloresAtt(ctx);
 
+        // 4. Monstro — ATRÁS do chão
+        _desenharMonstro(ctx, canvas);
+
+        // 5. Chão — na frente do monstro
+        _desenharChao(ctx, canvas);
+
+        // 6. Partículas
         particulas.forEach(p => {
             p.x += p.vx; p.y += p.vy; p.vy += 0.14; p.vida--;
         });
@@ -518,6 +534,7 @@ const BattleRenderer = (() => {
             ctx.restore();
         });
 
+        // 7. Moedas
         moedas.forEach(m => { m.x += m.vx; m.y += m.vy; m.vy += 0.22; m.vida--; });
         moedas = moedas.filter(m => m.vida > 0);
         ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
@@ -526,11 +543,11 @@ const BattleRenderer = (() => {
             ctx.font = `${m.size}px serif`; ctx.fillText('🪙', m.x, m.y); ctx.restore();
         });
 
-        _desenharMonstro(ctx, canvas);
-
+        // 8. Santa — na frente de tudo
         _atualizarPB();
         _desenharPB(ctx, canvas);
 
+        // 9. Textos flutuantes
         ctx.textAlign = 'center';
         textos.forEach(t => {
             ctx.save();
