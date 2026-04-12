@@ -231,7 +231,7 @@ const BattleRenderer = (() => {
         //   (evita flutuar). Aumente para afundar mais,
         //   diminua ou zere para ela ficar mais em cima.
         // ─────────────────────────────────────────────────────
-        const py = chaoY(canvas) + 120;
+        const py = chaoY(canvas) + 110;
 
         // ─────────────────────────────────────────────────────
         // TAMANHO DA SANTA:
