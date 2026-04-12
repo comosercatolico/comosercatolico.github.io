@@ -17,8 +17,6 @@ const BattleRenderer = (() => {
         flor:          null,
     };
 
-    let _chaoCanvas = null, _chaoCtx = null, _chaoOk = false;
-
     function carregarAssets() {
         const base = CONFIG.ASSET_BASE;
 
@@ -56,26 +54,6 @@ const BattleRenderer = (() => {
         fl.src = base + 'armas/flor-basica.png';
     }
 
-    function processarChao() {
-        if (_chaoOk || !imgOk(assets.chao)) return;
-        const src = assets.chao;
-        _chaoCanvas = document.createElement('canvas');
-        _chaoCanvas.width  = src.naturalWidth;
-        _chaoCanvas.height = src.naturalHeight;
-        _chaoCtx = _chaoCanvas.getContext('2d');
-        _chaoCtx.drawImage(src, 0, 0);
-
-        const id   = _chaoCtx.getImageData(0, 0, _chaoCanvas.width, _chaoCanvas.height);
-        const data = id.data;
-        for (let i = 0; i < data.length; i += 4) {
-            const brilho = (data[i] + data[i+1] + data[i+2]) / 3;
-            if      (brilho < 28)  data[i+3] = 0;
-            else if (brilho < 60)  data[i+3] = Math.floor(((brilho - 28) / 32) * 255);
-        }
-        _chaoCtx.putImageData(id, 0, 0);
-        _chaoOk = true;
-    }
-
     // ════════════════════════════════════════
     //  HIT STATE
     // ════════════════════════════════════════
@@ -97,24 +75,14 @@ const BattleRenderer = (() => {
     function _fundo(ctx, canvas) {
         const W = canvas.width, H = canvas.height, cy = chaoY(canvas);
 
-        // CENÁRIO COMENTADO TEMPORARIAMENTE PARA TESTE
-        // if (imgOk(assets.cenario)) {
-        //     const i   = assets.cenario;
-        //     const esc = Math.max(W / i.naturalWidth, H / i.naturalHeight);
-        //     const dw  = i.naturalWidth * esc, dh = i.naturalHeight * esc;
-        //     ctx.drawImage(i, (W - dw) / 2, (H - dh) / 2, dw, dh);
-        // } else {
-        //     _fundoFallback(ctx, W, H, cy);
-        // }
-
-        _fundoFallback(ctx, W, H, cy); // força fallback enquanto testa
+        // Fallback ativo para teste (cenário comentado)
+        _fundoFallback(ctx, W, H, cy);
 
         if (imgOk(assets.chao)) {
-            processarChao();
-            const src  = _chaoOk ? _chaoCanvas : assets.chao;
-            const pw   = W;
-            const ph   = assets.chao.naturalHeight * (W / assets.chao.naturalWidth);
-            const py   = cy - ph * 0.30;
+            const src = assets.chao;
+            const pw  = W;
+            const ph  = src.naturalHeight * (W / src.naturalWidth);
+            const py  = cy - ph * 0.30;
             ctx.drawImage(src, 0, py, pw, ph);
         } else {
             _chaoFallback(ctx, W, H, cy);
@@ -132,7 +100,7 @@ const BattleRenderer = (() => {
         g.addColorStop(0,    '#030110');
         g.addColorStop(0.45, '#0a0728');
         g.addColorStop(1,    '#1c0f5e');
-        ctx.fillStyle = g; ctx.fillRect(0, 0, W, cy);
+        ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
 
         const t = Date.now();
         for (let i = 0; i < 120; i++) {
@@ -277,11 +245,11 @@ const BattleRenderer = (() => {
     let floresAtt = [];
 
     function _gerarPosFixas(canvas) {
-        const W   = canvas.width;
-        const H   = canvas.height;
-        const cy  = chaoY(canvas);
-        const mx  = monstroX(canvas);
-        const my  = monstroY(canvas);
+        const W  = canvas.width;
+        const H  = canvas.height;
+        const cy = chaoY(canvas);
+        const mx = monstroX(canvas);
+        const my = monstroY(canvas);
 
         const BOSS_R   = 180;
         const TETO_Y   = H * 0.04;
