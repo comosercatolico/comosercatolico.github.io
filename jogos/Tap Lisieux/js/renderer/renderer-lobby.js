@@ -1,542 +1,413 @@
-// ═══════════════════════════════════════════════════════
-//  RENDERER-LOBBY.JS
-// ═══════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════════
+//  ASSET-LOADER.JS — CORRIGIDO
+//  Correções aplicadas:
+//  1. window.AssetLoader = AssetLoader adicionado no final
+//  2. _esconderLoading() REMOVIDO — main.js controla o loading
+//  3. _promiseGlobal retorna corretamente em chamadas repetidas
+// ═══════════════════════════════════════════════════════════
 
 "use strict";
 
-const RendererLobby = (() => {
+const AssetLoader = (() => {
 
     const _log = (() => {
-        try   { return Logger.de("RendererLobby"); }
-        catch { return { debug:()=>{}, info:()=>{}, warn:()=>{}, error:()=>{} }; }
+        try   { return Logger.de("AssetLoader"); }
+        catch { return {
+            debug : () => {},
+            info  : () => {},
+            warn  : (...a) => console.warn("[AssetLoader]",  ...a),
+            error : (...a) => console.error("[AssetLoader]", ...a)
+        }; }
     })();
 
-    // ════════════════════════════════════════════════════
-    // CONFIGURAÇÃO
-    // ════════════════════════════════════════════════════
     const CFG = Object.freeze({
-        TILE              : 32,
-        MAP_W             : 100,
-        MAP_H             : 100,
-        NPC_ESCALA        : 0.28,
-        NPC_FRAMES        : 9,
-        NPC_FRAME_DURACAO : 8,
-        NPC_VELOCIDADE    : 0.03,
-        SOMBRA_OBJETO_ALPHA: 0.25,
-        SOMBRA_OBJETO_H   : 5,
-        NEVOA_ALPHA       : 0.18,
-        GRAMAS_QTD        : 5,
+        BASE_URL_BATALHA  : "https://comosercatolico.github.io/jogos/Tap%20Lisieux/tiles/",
+        BASE_URL_LOCAL    : "tiles/",
+        TIMEOUT_MS        : 15_000,
+        MAX_RETRIES       : 2,
+        RETRY_DELAY_MS    : 1_000,
+        CROSS_ORIGIN      : "anonymous",
+        PISO_BRILHO_TRANSPARENTE : 30,
+        PISO_BRILHO_SUAVE        : 60,
     });
 
-    const { TILE, MAP_W, MAP_H } = CFG;
-
-    let _canvas = null;
-    let _ctx    = null;
-
-    // ════════════════════════════════════════════════════
-    // ASSETS
-    // ════════════════════════════════════════════════════
-    let _assetsOk       = false;
-    let _assetsChecados = false;
-
-    function _checarAssets(assets) {
-        if (_assetsChecados && _assetsOk) return;
-
-        const temEstrada = assets?.estrada?.complete && assets.estrada.naturalWidth > 0;
-        const temGrama   = assets?.gramas?.[0]?.complete && assets.gramas[0].naturalWidth > 0;
-
-        _assetsOk       = temEstrada && temGrama;
-        _assetsChecados = true;
-
-        if (_assetsOk) {
-            _log.info("Assets prontos.");
+    const _MANIFESTO = Object.freeze([
+        {
+            chave    : "cenario",
+            url      : "piso-de-batalha/cenario1.png",
+            base     : "batalha",
+            grupo    : "batalha",
+            critico  : false,
+            processar: false
+        },
+        {
+            chave    : "piso",
+            url      : "piso-de-batalha/piso1.png",
+            base     : "batalha",
+            grupo    : "batalha",
+            critico  : false,
+            processar: true
+        },
+        ...Array.from({ length: 8 }, (_, i) => ({
+            chave    : `santa_${i}`,
+            url      : `animation_summon/str-conjurando${i + 1}.png`,
+            base     : "batalha",
+            grupo    : "santa",
+            critico  : false,
+            processar: false
+        })),
+        ...Array.from({ length: 9 }, (_, i) => ({
+            chave    : `npc_anda_${i}`,
+            url      : `trzn/anda${i + 1}.png`,
+            base     : "local",
+            grupo    : "lobby_npc",
+            critico  : false,
+            processar: false
+        })),
+        ...Array.from({ length: 5 }, (_, i) => ({
+            chave    : `grama_${i}`,
+            url      : `chaop1/grama${i + 1}.jpg`,
+            base     : "local",
+            grupo    : "lobby_tiles",
+            critico  : true,
+            processar: false
+        })),
+        {
+            chave    : "estrada",
+            url      : "chaop1/ti.png",
+            base     : "local",
+            grupo    : "lobby_tiles",
+            critico  : true,
+            processar: false
+        },
+        {
+            chave    : "mesa",
+            url      : "estruturas/mesa.png",
+            base     : "local",
+            grupo    : "lobby_objetos",
+            critico  : false,
+            processar: false
+        },
+        {
+            chave    : "cadeira_esq",
+            url      : "estruturas/cadeira_esquerda.png",
+            base     : "local",
+            grupo    : "lobby_objetos",
+            critico  : false,
+            processar: false
+        },
+        {
+            chave    : "cadeira_dir",
+            url      : "estruturas/cadeira_direita.png",
+            base     : "local",
+            grupo    : "lobby_objetos",
+            critico  : false,
+            processar: false
+        },
+        {
+            chave    : "biblioteca",
+            url      : "estruturas/bb.png",
+            base     : "local",
+            grupo    : "lobby_objetos",
+            critico  : false,
+            processar: false
         }
+    ]);
+
+    const _cache   = new Map();
+    const _status  = new Map();
+
+    let _totalAssets   = _MANIFESTO.length;
+    let _assetsCarreg  = 0;
+    let _assetsFalhos  = 0;
+    let _estadoGeral   = "IDLE";
+    let _promiseGlobal = null;
+
+    function _resolverUrl(def) {
+        const base = def.base === "batalha"
+            ? CFG.BASE_URL_BATALHA
+            : CFG.BASE_URL_LOCAL;
+        return base + def.url;
     }
 
-    // ════════════════════════════════════════════════════
-    // MAPA
-    // ════════════════════════════════════════════════════
-    let _mapa = [];
-    const _estradaSet = new Set();
+    function _carregarImagem(def) {
+        return new Promise((resolve, reject) => {
+            const url = _resolverUrl(def);
+            const img = new Image();
 
-    function _eEstrada(x, y) { return _estradaSet.has(`${x},${y}`); }
-
-    function _construirMapa() {
-        const cX  = Math.floor(MAP_W / 2);
-        const cY  = Math.floor(MAP_H / 2);
-        const esY = 12;
-        const lC  = 1;
-
-        _mapa = [];
-        _estradaSet.clear();
-
-        for (let y = 0; y < MAP_H; y++) {
-            _mapa[y] = [];
-            for (let x = 0; x < MAP_W; x++) {
-                let tipo = Math.floor(Math.random() * CFG.GRAMAS_QTD);
-
-                if (y >= cY - lC && y <= cY + lC) tipo = 5;
-                if (x >= cX - lC && x <= cX + lC) tipo = 5;
-                if (y >= esY - lC && y <= esY + lC) tipo = 5;
-                if (x >= cX - lC && x <= cX + lC &&
-                    y >= Math.min(esY, cY) && y <= Math.max(esY, cY)) tipo = 5;
-
-                const sombra = tipo === 5 ? 0 : Math.random() * 0.06;
-
-                _mapa[y][x] = { tipo, sombra };
-                if (tipo === 5) _estradaSet.add(`${x},${y}`);
+            if (def.crossOrigin !== false) {
+                img.crossOrigin = CFG.CROSS_ORIGIN;
             }
-        }
 
-        _log.info(`Mapa: ${MAP_W}×${MAP_H}, estrada: ${_estradaSet.size} tiles`);
-    }
+            let timer = setTimeout(() => {
+                img.onload  = null;
+                img.onerror = null;
+                reject(new Error(`Timeout após ${CFG.TIMEOUT_MS}ms: ${url}`));
+            }, CFG.TIMEOUT_MS);
 
-    // ════════════════════════════════════════════════════
-    // OBJETOS
-    // ════════════════════════════════════════════════════
-    const _objetos = [
-        { tipo: "biblioteca", tileX: 7,         tileY: 10,         escala: 0.9,  layer: 0 },
-        { tipo: "cadeiraEsq", tileX: 50 - 1.77, tileY: 50 - 0.20, escala: 0.22, layer: 0 },
-        { tipo: "cadeiraDir", tileX: 50 + 1.77, tileY: 50 - 0.20, escala: 0.22, layer: 0 },
-        { tipo: "mesa",       tileX: 50,         tileY: 50,         escala: 0.42, layer: 1 },
-    ];
-
-    // ════════════════════════════════════════════════════
-    // NPC
-    // ════════════════════════════════════════════════════
-    const _npc = {
-        tileX : 50, tileY : 50,
-        dirX  : 1,  dirY  : 0,
-        frame : 0,  tick  : 0,
-        escala: CFG.NPC_ESCALA,
-        renderX: 50, renderY: 50,
-    };
-
-    function _escolherDirecao() {
-        const cx  = Math.round(_npc.tileX);
-        const cy  = Math.round(_npc.tileY);
-        const opX = -_npc.dirX;
-        const opY = -_npc.dirY;
-
-        const dirs = [
-            { x: 1, y: 0 }, { x: -1, y: 0 },
-            { x: 0, y: 1 }, { x: 0,  y: -1 },
-        ];
-
-        const validas = dirs.filter(d => {
-            const nx = cx + d.x, ny = cy + d.y;
-            return nx >= 1 && ny >= 1 && nx < MAP_W - 1 && ny < MAP_H - 1 &&
-                   _eEstrada(nx, ny) && !(d.x === opX && d.y === opY);
+            img.onload  = () => { clearTimeout(timer); resolve(img); };
+            img.onerror = () => { clearTimeout(timer); reject(new Error(`Falha: ${url}`)); };
+            img.src = url;
         });
-
-        if (validas.length === 0) {
-            const qualquer = dirs.filter(d => {
-                const nx = cx + d.x, ny = cy + d.y;
-                return nx >= 0 && ny >= 0 && nx < MAP_W && ny < MAP_H && _eEstrada(nx, ny);
-            });
-            if (qualquer.length > 0) {
-                const d = qualquer[Math.floor(Math.random() * qualquer.length)];
-                _npc.dirX = d.x; _npc.dirY = d.y;
-            }
-            return;
-        }
-
-        const emFrente = validas.find(d => d.x === _npc.dirX && d.y === _npc.dirY);
-        if (emFrente && Math.random() < 0.70) {
-            _npc.dirX = emFrente.x; _npc.dirY = emFrente.y;
-        } else {
-            const d = validas[Math.floor(Math.random() * validas.length)];
-            _npc.dirX = d.x; _npc.dirY = d.y;
-        }
     }
 
-    function _atualizarNPC() {
-        _npc.tileX  += _npc.dirX * CFG.NPC_VELOCIDADE;
-        _npc.tileY  += _npc.dirY * CFG.NPC_VELOCIDADE;
-        _npc.renderX += (_npc.tileX - _npc.renderX) * 0.25;
-        _npc.renderY += (_npc.tileY - _npc.renderY) * 0.25;
-
-        const cx = Math.round(_npc.tileX);
-        const cy = Math.round(_npc.tileY);
-
-        if (Math.abs(_npc.tileX - cx) < CFG.NPC_VELOCIDADE &&
-            Math.abs(_npc.tileY - cy) < CFG.NPC_VELOCIDADE) {
-            _npc.tileX = cx; _npc.tileY = cy;
-            _escolherDirecao();
-        }
-
-        _npc.tick++;
-        if (_npc.tick >= CFG.NPC_FRAME_DURACAO) {
-            _npc.tick  = 0;
-            _npc.frame = (_npc.frame + 1) % CFG.NPC_FRAMES;
-        }
-    }
-
-    // ════════════════════════════════════════════════════
-    // CÂMERA
-    // ════════════════════════════════════════════════════
-    const _cam = {
-        x: 0, y: 0, vx: 0, vy: 0,
-        _drag: false, _lastX: 0, _lastY: 0, _atrito: 0.88,
-    };
-
-    function _camLimitar() {
-        const W = _canvas?.width ?? 800, H = _canvas?.height ?? 600;
-        _cam.x = Math.max(0, Math.min(MAP_W * TILE - W, _cam.x));
-        _cam.y = Math.max(0, Math.min(MAP_H * TILE - H, _cam.y));
-    }
-
-    function _camAtualizarInercia() {
-        if (_cam._drag) return;
-        _cam.x += _cam.vx; _cam.y += _cam.vy;
-        _cam.vx *= _cam._atrito; _cam.vy *= _cam._atrito;
-        if (Math.abs(_cam.vx) < 0.1) _cam.vx = 0;
-        if (Math.abs(_cam.vy) < 0.1) _cam.vy = 0;
-        _camLimitar();
-    }
-
-    function centralizar(tileX, tileY) {
-        const W = _canvas?.width ?? 800, H = _canvas?.height ?? 600;
-        _cam.x = tileX * TILE - W / 2;
-        _cam.y = tileY * TILE - H / 2;
-        _cam.vx = 0; _cam.vy = 0;
-        _camLimitar();
-    }
-
-    // ════════════════════════════════════════════════════
-    // DRAW — FALLBACK
-    // ════════════════════════════════════════════════════
-    function _desenharFallback() {
-        const W = _canvas.width, H = _canvas.height;
-
-        _ctx.fillStyle = "#2d5a27";
-        _ctx.fillRect(0, 0, W, H);
-
-        const startX = Math.max(0, Math.floor(_cam.x / TILE));
-        const startY = Math.max(0, Math.floor(_cam.y / TILE));
-        const endX   = Math.min(MAP_W, startX + Math.ceil(W / TILE) + 1);
-        const endY   = Math.min(MAP_H, startY + Math.ceil(H / TILE) + 1);
-
-        for (let y = startY; y < endY; y++) {
-            for (let x = startX; x < endX; x++) {
-                const tile = _mapa[y]?.[x];
-                if (!tile) continue;
-                _ctx.fillStyle = tile.tipo === 5 ? "#7c6a44" : "#3a8c3f";
-                _ctx.fillRect(
-                    Math.floor(x * TILE - _cam.x),
-                    Math.floor(y * TILE - _cam.y),
-                    TILE - 1, TILE - 1
-                );
-            }
-        }
-
-        _desenharNPCFallback();
-    }
-
-    // ════════════════════════════════════════════════════
-    // DRAW — CHÃO
-    // ✅ Luz pulsante removida — era a causa do FPS baixo
-    // (Math.sin por tile = 10.000 cálculos por frame)
-    // ════════════════════════════════════════════════════
-    function _desenharChao(assets) {
-        const W = _canvas.width, H = _canvas.height;
-
-        const startX = Math.max(0, Math.floor(_cam.x / TILE) - 1);
-        const startY = Math.max(0, Math.floor(_cam.y / TILE) - 1);
-        const endX   = Math.min(MAP_W, startX + Math.ceil(W / TILE) + 2);
-        const endY   = Math.min(MAP_H, startY + Math.ceil(H / TILE) + 2);
-
-        for (let y = startY; y < endY; y++) {
-            for (let x = startX; x < endX; x++) {
-                const tile = _mapa[y]?.[x];
-                if (!tile) continue;
-
-                const dx = Math.floor(x * TILE - _cam.x);
-                const dy = Math.floor(y * TILE - _cam.y);
-
-                const img = tile.tipo === 5
-                    ? assets.estrada
-                    : (assets.gramas?.[tile.tipo] ?? assets.gramas?.[0]);
-
-                if (img?.complete && img.naturalWidth > 0) {
-                    _ctx.drawImage(img, dx, dy, TILE, TILE);
+    async function _carregarComRetry(def) {
+        for (let tentativa = 0; tentativa <= CFG.MAX_RETRIES; tentativa++) {
+            try {
+                return await _carregarImagem(def);
+            } catch (e) {
+                if (tentativa < CFG.MAX_RETRIES) {
+                    _log.warn(`Retry ${tentativa + 1} para "${def.chave}"...`);
+                    await _esperar(CFG.RETRY_DELAY_MS);
                 } else {
-                    _ctx.fillStyle = tile.tipo === 5 ? "#7c6a44" : "#3a8c3f";
-                    _ctx.fillRect(dx, dy, TILE, TILE);
-                }
-
-                // Micro-sombra (só grama) — leve, sem fillStyle por tile
-                if (tile.sombra > 0.02) {
-                    _ctx.fillStyle = `rgba(0,0,0,${tile.sombra.toFixed(2)})`;
-                    _ctx.fillRect(dx, dy, TILE, TILE);
+                    throw e;
                 }
             }
         }
-
-        _desenharNevoaBordas(W, H);
     }
 
-    // ════════════════════════════════════════════════════
-    // DRAW — NÉVOA
-    // ════════════════════════════════════════════════════
-    function _desenharNevoaBordas(W, H) {
-        const fade = 80;
-
-        // Topo
-        let g = _ctx.createLinearGradient(0, 0, 0, fade);
-        g.addColorStop(0, `rgba(10,8,20,${CFG.NEVOA_ALPHA})`);
-        g.addColorStop(1, "rgba(10,8,20,0)");
-        _ctx.fillStyle = g;
-        _ctx.fillRect(0, 0, W, fade);
-
-        // Base
-        g = _ctx.createLinearGradient(0, H, 0, H - fade);
-        g.addColorStop(0, `rgba(10,8,20,${CFG.NEVOA_ALPHA})`);
-        g.addColorStop(1, "rgba(10,8,20,0)");
-        _ctx.fillStyle = g;
-        _ctx.fillRect(0, H - fade, W, fade);
-
-        // Esquerda
-        g = _ctx.createLinearGradient(0, 0, fade, 0);
-        g.addColorStop(0, `rgba(10,8,20,${CFG.NEVOA_ALPHA})`);
-        g.addColorStop(1, "rgba(10,8,20,0)");
-        _ctx.fillStyle = g;
-        _ctx.fillRect(0, 0, fade, H);
-
-        // Direita
-        g = _ctx.createLinearGradient(W, 0, W - fade, 0);
-        g.addColorStop(0, `rgba(10,8,20,${CFG.NEVOA_ALPHA})`);
-        g.addColorStop(1, "rgba(10,8,20,0)");
-        _ctx.fillStyle = g;
-        _ctx.fillRect(W - fade, 0, fade, H);
+    function _esperar(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
     }
 
-    // ════════════════════════════════════════════════════
-    // DRAW — OBJETOS
-    // ════════════════════════════════════════════════════
-    function _desenharObjetos(assets, layer) {
-        _objetos
-            .filter(o => o.layer === layer)
-            .sort((a, b) => a.tileY - b.tileY)
-            .forEach(obj => {
-                const img = assets[obj.tipo];
-                if (!img?.complete || img.naturalWidth === 0) return;
+    function _processarFundoPreto(img) {
+        const canvas  = document.createElement("canvas");
+        canvas.width  = img.naturalWidth;
+        canvas.height = img.naturalHeight;
+        const ctx     = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0);
 
-                const larg = img.width  * obj.escala;
-                const alt  = img.height * obj.escala;
-                const bX   = obj.tileX * TILE + TILE / 2 - _cam.x;
-                const bY   = obj.tileY * TILE + TILE - _cam.y;
-
-                if (bX + larg / 2 < 0 || bX - larg / 2 > _canvas.width)  return;
-                if (bY < 0            || bY - alt > _canvas.height)        return;
-
-                const dx = Math.floor(bX - larg / 2);
-                const dy = Math.floor(bY - alt);
-
-                // Sombra elíptica
-                _ctx.save();
-                _ctx.fillStyle = `rgba(0,0,0,${CFG.SOMBRA_OBJETO_ALPHA})`;
-                _ctx.beginPath();
-                _ctx.ellipse(bX, bY - CFG.SOMBRA_OBJETO_H, larg * 0.35, 7, 0, 0, Math.PI * 2);
-                _ctx.fill();
-                _ctx.restore();
-
-                _ctx.drawImage(img, dx, dy, larg, alt);
-            });
-    }
-
-    // ════════════════════════════════════════════════════
-    // DRAW — NPC
-    // ════════════════════════════════════════════════════
-    function _desenharNPC(assets) {
-        const frames = assets.santaAnda;
-        const img    = frames?.[_npc.frame];
-
-        if (!img?.complete || img.naturalWidth === 0) {
-            _desenharNPCFallback();
-            return;
+        let imageData;
+        try {
+            imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        } catch (e) {
+            _log.warn(`getImageData falhou (CORS?): usando original.`);
+            return img;
         }
 
-        const larg = img.width  * _npc.escala;
-        const alt  = img.height * _npc.escala;
-        const bX   = _npc.renderX * TILE + TILE / 2 - _cam.x;
-        const bY   = _npc.renderY * TILE + TILE - _cam.y;
-        const dx   = Math.floor(bX - larg / 2);
-        const dy   = Math.floor(bY - alt);
+        const data = imageData.data;
+        const limT = CFG.PISO_BRILHO_TRANSPARENTE;
+        const limS = CFG.PISO_BRILHO_SUAVE;
 
-        if (bX + larg < 0 || bX - larg > _canvas.width)  return;
-        if (bY < 0        || bY - alt  > _canvas.height)  return;
-
-        // Sombra
-        _ctx.save();
-        _ctx.fillStyle = "rgba(0,0,0,0.22)";
-        _ctx.beginPath();
-        _ctx.ellipse(bX, bY - 3, larg * 0.38, 6, 0, 0, Math.PI * 2);
-        _ctx.fill();
-        _ctx.restore();
-
-        // Halo suave
-        _ctx.save();
-        const halo = _ctx.createRadialGradient(
-            bX, bY - alt * 0.5, 2,
-            bX, bY - alt * 0.5, larg * 0.7
-        );
-        halo.addColorStop(0, "rgba(255,220,255,0.10)");
-        halo.addColorStop(1, "rgba(255,220,255,0.00)");
-        _ctx.fillStyle = halo;
-        _ctx.fillRect(dx - 10, dy - 10, larg + 20, alt + 20);
-        _ctx.restore();
-
-        // Sprite com flip horizontal
-        _ctx.save();
-        if (_npc.dirX < 0) {
-            _ctx.translate(bX, 0);
-            _ctx.scale(-1, 1);
-            _ctx.drawImage(img, -larg / 2, dy, larg, alt);
-        } else {
-            _ctx.drawImage(img, dx, dy, larg, alt);
-        }
-        _ctx.restore();
-    }
-
-    function _desenharNPCFallback() {
-        const bX = _npc.renderX * TILE + TILE / 2 - _cam.x;
-        const bY = _npc.renderY * TILE + TILE - _cam.y;
-        const r  = 10;
-
-        _ctx.save();
-        _ctx.fillStyle   = "#e8c5ff";
-        _ctx.strokeStyle = "#9d4edd";
-        _ctx.lineWidth   = 2;
-        _ctx.beginPath();
-        _ctx.arc(bX, bY - r * 2.5, r, 0, Math.PI * 2);
-        _ctx.fill();
-        _ctx.stroke();
-        _ctx.fillStyle = "#6d28d9";
-        _ctx.fillRect(bX - r * 0.7, bY - r * 1.6, r * 1.4, r * 1.8);
-        _ctx.font         = "14px serif";
-        _ctx.textAlign    = "center";
-        _ctx.textBaseline = "bottom";
-        _ctx.fillStyle    = "#fff";
-        _ctx.fillText("🌹", bX, bY - r * 0.2);
-        _ctx.restore();
-    }
-
-    // ════════════════════════════════════════════════════
-    // RENDER PRINCIPAL
-    // ════════════════════════════════════════════════════
-    function _render(assets) {
-        _ctx.clearRect(0, 0, _canvas.width, _canvas.height);
-
-        if (!_assetsOk) {
-            _desenharFallback();
-            return;
+        for (let i = 0; i < data.length; i += 4) {
+            const brilho = (data[i] + data[i+1] + data[i+2]) / 3;
+            if (brilho < limT) {
+                data[i+3] = 0;
+            } else if (brilho < limS) {
+                data[i+3] = Math.floor(((brilho - limT) / (limS - limT)) * 255);
+            }
         }
 
-        _desenharChao(assets);
-        _desenharObjetos(assets, 0);
-        _desenharNPC(assets);
-        _desenharObjetos(assets, 1);
+        ctx.putImageData(imageData, 0, 0);
+        return canvas;
     }
 
-    // ════════════════════════════════════════════════════
-    // INPUT
-    // ════════════════════════════════════════════════════
-    function _registrarInput() {
-        if (!_canvas) return;
-
-        _canvas.addEventListener("mousedown", e => {
-            _cam._drag = true; _cam._lastX = e.clientX; _cam._lastY = e.clientY;
-            _cam.vx = 0; _cam.vy = 0;
-        });
-
-        window.addEventListener("mouseup", () => { _cam._drag = false; });
-
-        window.addEventListener("mousemove", e => {
-            if (!_cam._drag) return;
-            const dx = e.clientX - _cam._lastX, dy = e.clientY - _cam._lastY;
-            _cam.vx = -dx; _cam.vy = -dy;
-            _cam.x -= dx; _cam.y -= dy;
-            _cam._lastX = e.clientX; _cam._lastY = e.clientY;
-            _camLimitar();
-        });
-
-        _canvas.addEventListener("touchstart", e => {
-            if (e.touches.length !== 1) return;
-            _cam._drag = true;
-            _cam._lastX = e.touches[0].clientX; _cam._lastY = e.touches[0].clientY;
-            _cam.vx = 0; _cam.vy = 0;
-        }, { passive: true });
-
-        window.addEventListener("touchend", () => { _cam._drag = false; });
-
-        window.addEventListener("touchmove", e => {
-            if (!_cam._drag || e.touches.length !== 1) return;
-            const dx = e.touches[0].clientX - _cam._lastX;
-            const dy = e.touches[0].clientY - _cam._lastY;
-            _cam.vx = -dx; _cam.vy = -dy;
-            _cam.x -= dx; _cam.y -= dy;
-            _cam._lastX = e.touches[0].clientX; _cam._lastY = e.touches[0].clientY;
-            _camLimitar();
-        }, { passive: true });
+    async function _processarAsset(def) {
+        _status.set(def.chave, "pendente");
+        try {
+            let resultado = await _carregarComRetry(def);
+            if (def.processar) resultado = _processarFundoPreto(resultado);
+            _cache.set(def.chave, resultado);
+            _status.set(def.chave, "ok");
+            _assetsCarreg++;
+            _log.debug(`✅ "${def.chave}" (${_assetsCarreg}/${_totalAssets})`);
+        } catch (e) {
+            _status.set(def.chave, "erro");
+            _assetsFalhos++;
+            _log.warn(`⚠️ "${def.chave}" falhou: ${e.message}`);
+            if (!def.critico) {
+                _cache.set(def.chave, _criarFallback(def));
+                _status.set(def.chave, "fallback");
+            }
+        }
+        _atualizarProgresso();
     }
 
-    // ════════════════════════════════════════════════════
-    // ATUALIZAR
-    // ════════════════════════════════════════════════════
-    function atualizar(assets) {
-        if (!_canvas || !_ctx) return;
-        _checarAssets(assets);
-        _atualizarNPC();
-        _camAtualizarInercia();
-        _render(assets);
+    function _criarFallback(def) {
+        const canvas  = document.createElement("canvas");
+        canvas.width  = 64;
+        canvas.height = 64;
+        const ctx     = canvas.getContext("2d");
+        const cores   = { "batalha":"#0e0930","santa":"#6d28d9","lobby_npc":"#2d5a27","lobby_tiles":"#2ecc71","lobby_objetos":"#8B4513" };
+        ctx.fillStyle = cores[def.grupo] ?? "#444";
+        ctx.fillRect(0, 0, 64, 64);
+        ctx.strokeStyle = "#ffffff33";
+        ctx.strokeRect(2, 2, 60, 60);
+        const icones  = { "santa":"🌹","lobby_npc":"🕊️","lobby_tiles":"🌿","batalha":"⚔️" };
+        ctx.font         = "28px serif";
+        ctx.textAlign    = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillText(icones[def.grupo] ?? "?", 32, 32);
+        return canvas;
     }
 
-    function aoRedimensionar() {
-        if (_canvas) _camLimitar();
-    }
-
-    // ════════════════════════════════════════════════════
-    // INIT
-    // ════════════════════════════════════════════════════
-    function init(canvas, ctx) {
-        if (!canvas || !ctx) { _log.error("init: canvas ou ctx inválido."); return; }
-
-        _canvas = canvas;
-        _ctx    = ctx;
-        _ctx.imageSmoothingEnabled = false;
-
-        _construirMapa();
-        centralizar(MAP_W / 2, MAP_H / 2);
-        _registrarInput();
+    function _atualizarProgresso() {
+        const pct = progresso();
+        // ✅ Atualiza APENAS o texto secundário da barra — não controla display:none
+        // A tela de loading é gerenciada exclusivamente pelo main.js
+        try {
+            const sub = document.getElementById("loadingSubTexto");
+            if (sub) {
+                const feitos = _assetsCarreg + _assetsFalhos;
+                sub.textContent = `Assets: ${feitos}/${_totalAssets}`;
+            }
+        } catch { /* DOM pode não estar pronto */ }
 
         try {
-            EventBus.on("assets:completo", () => {
-                _assetsOk = false; _assetsChecados = false;
+            EventBus.emit("assets:progresso", {
+                pct,
+                carregados : _assetsCarreg,
+                falhos     : _assetsFalhos,
+                total      : _totalAssets
             });
-        } catch(_) {}
-
-        _log.info("RendererLobby inicializado.");
+        } catch { /* não crítico */ }
     }
 
-    // ════════════════════════════════════════════════════
-    // DIAGNÓSTICO
-    // ════════════════════════════════════════════════════
-    function stats() {
-        return {
-            camera : { x: Math.floor(_cam.x), y: Math.floor(_cam.y) },
-            npc    : { tileX: _npc.tileX.toFixed(2), tileY: _npc.tileY.toFixed(2), frame: _npc.frame },
-            mapa   : { w: MAP_W, h: MAP_H, estrada: _estradaSet.size },
-            assets : { ok: _assetsOk },
-        };
+    // ✅ _esconderLoading() REMOVIDO COMPLETAMENTE
+    // O main.js é o único responsável por esconder a tela de loading
+
+    async function carregar() {
+        // ✅ Se já está carregando, retorna a mesma promise (sem criar nova)
+        if (_estadoGeral === "CARREGANDO" && _promiseGlobal) {
+            _log.warn("carregar(): já em andamento — retornando promise existente.");
+            return _promiseGlobal;
+        }
+
+        // ✅ Se já completou, emite evento e retorna true imediatamente
+        if (_estadoGeral === "COMPLETO") {
+            _log.debug("carregar(): assets já carregados.");
+            try { EventBus.emit("assets:completo", {}); } catch { /* não crítico */ }
+            return true;
+        }
+
+        _estadoGeral  = "CARREGANDO";
+        _assetsCarreg = 0;
+        _assetsFalhos = 0;
+        _totalAssets  = _MANIFESTO.length;
+
+        _log.info(`Carregando ${_totalAssets} assets...`);
+        try { EventBus.emit("assets:iniciando", { total: _totalAssets }); } catch { /* não crítico */ }
+
+        const t0 = performance.now();
+
+        // ✅ Atribui E retorna a promise corretamente
+        _promiseGlobal = Promise.allSettled(
+            _MANIFESTO.map(def => _processarAsset(def))
+        ).then(() => {
+            const ms = Math.round(performance.now() - t0);
+
+            const criticosFalhos = _MANIFESTO
+                .filter(d => d.critico && _status.get(d.chave) === "erro")
+                .map(d => d.chave);
+
+            if (criticosFalhos.length > 0) {
+                _estadoGeral = "ERRO";
+                _log.error(`Assets críticos falharam: [${criticosFalhos.join(", ")}]`);
+                try { EventBus.emit("assets:erro_critico", { assets: criticosFalhos }); } catch { /* não crítico */ }
+                return false;
+            }
+
+            _estadoGeral = "COMPLETO";
+            _log.info(`Assets em ${ms}ms | ✅ ${_assetsCarreg} ok${_assetsFalhos > 0 ? ` | ⚠️ ${_assetsFalhos} fallback` : ""}`);
+
+            // ✅ Emite evento mas NÃO esconde loading — main.js faz isso
+            try {
+                EventBus.emit("assets:completo", {
+                    ok      : _assetsCarreg,
+                    falhos  : _assetsFalhos,
+                    total   : _totalAssets,
+                    tempoMs : ms
+                });
+            } catch { /* não crítico */ }
+
+            return true;
+        });
+
+        return _promiseGlobal;
     }
+
+    function get(chave) {
+        const asset = _cache.get(chave);
+        if (!asset) {
+            // Só loga warn se o carregamento já terminou
+            if (_estadoGeral === "COMPLETO" || _estadoGeral === "ERRO") {
+                _log.warn(`get("${chave}"): não encontrado no cache.`);
+            }
+            return null;
+        }
+        return asset;
+    }
+
+    function pronto(chave) {
+        if (chave === undefined) return _estadoGeral === "COMPLETO" || _estadoGeral === "ERRO";
+        const asset = _cache.get(chave);
+        if (!asset) return false;
+        if (asset instanceof HTMLCanvasElement) return true;
+        return asset.complete && asset.naturalWidth > 0;
+    }
+
+    function getSprite(grupo, idx) {
+        return get(`${grupo}_${idx}`);
+    }
+
+    function getFrames(grupo) {
+        const frames = [];
+        let   idx    = 0;
+        while (true) {
+            const chave = `${grupo}_${idx}`;
+            if (!_MANIFESTO.some(d => d.chave === chave)) break;
+            frames.push(_cache.get(chave) ?? null);
+            idx++;
+        }
+        return frames;
+    }
+
+    async function recarregar(chave) {
+        const def = _MANIFESTO.find(d => d.chave === chave);
+        if (!def) { _log.warn(`recarregar("${chave}"): não encontrado.`); return false; }
+        _cache.delete(chave);
+        _status.delete(chave);
+        _assetsCarreg = Math.max(0, _assetsCarreg - 1);
+        await _processarAsset(def);
+        return _status.get(chave) === "ok";
+    }
+
+    function progresso() {
+        if (_totalAssets === 0) return 1;
+        return Math.min(1, (_assetsCarreg + _assetsFalhos) / _totalAssets);
+    }
+
+    function statsDetalhado() {
+        const porGrupo  = {};
+        const porStatus = { ok: 0, erro: 0, fallback: 0, pendente: 0 };
+        _MANIFESTO.forEach(def => {
+            const st = _status.get(def.chave) ?? "pendente";
+            if (!porGrupo[def.grupo]) porGrupo[def.grupo] = { ok:0, erro:0, fallback:0, total:0 };
+            porGrupo[def.grupo].total++;
+            if (st === "ok")       { porGrupo[def.grupo].ok++;       porStatus.ok++;       }
+            if (st === "erro")     { porGrupo[def.grupo].erro++;     porStatus.erro++;     }
+            if (st === "fallback") { porGrupo[def.grupo].fallback++; porStatus.fallback++; }
+            if (st === "pendente") { porStatus.pendente++;                                 }
+        });
+        return { estado:_estadoGeral, total:_totalAssets, carregados:_assetsCarreg,
+                 falhos:_assetsFalhos, progresso:progresso(), porGrupo, porStatus, cacheSize:_cache.size };
+    }
+
+    try {
+        EventBus.on("state:reset:total", () => {
+            _log.debug("Reset detectado — cache de assets mantido.");
+        });
+    } catch { /* não crítico */ }
 
     return Object.freeze({
-        init, atualizar, aoRedimensionar, centralizar, stats,
-        get camX() { return _cam.x; },
-        get camY() { return _cam.y; },
+        carregar, recarregar, get, getSprite, getFrames, pronto, progresso,
+        statsDetalhado,
+        get MANIFESTO() { return _MANIFESTO; },
+        get CFG()       { return CFG;        },
+        get estado()    { return _estadoGeral; }
     });
 
 })();
 
-window.RendererLobby = RendererLobby;
+// ✅ ESSENCIAL: expõe globalmente para que main.js encontre via _M.get("AssetLoader")
+window.AssetLoader = AssetLoader;
