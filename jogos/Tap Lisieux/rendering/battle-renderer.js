@@ -20,16 +20,16 @@ const BattleRenderer = (() => {
 
     function carregarAssets() {
         const base = CONFIG.ASSET_BASE;
-
-        const c = new Image(); c.crossOrigin = 'anonymous';
-        c.onload  = () => { assets.cenario = c; };
-        c.onerror = () => console.warn('⚠️ Cenário não carregado');
-        c.src = base + 'piso-de-batalha/cenario1.png';
-
+        
         const f = new Image(); f.crossOrigin = 'anonymous';
         f.onload  = () => { assets.chao = f; };
         f.onerror = () => console.warn('⚠️ Chão não carregado');
         f.src = base + 'piso-de-batalha/piso1.png';
+        
+        const c = new Image(); c.crossOrigin = 'anonymous';
+        c.onload  = () => { assets.cenario = c; };
+        c.onerror = () => console.warn('⚠️ Cenário não carregado');
+        c.src = base + 'piso-de-batalha/cenario1.png';
 
         for (let i = 1; i <= 8; i++) {
             const s = new Image(); s.crossOrigin = 'anonymous';
@@ -42,12 +42,12 @@ const BattleRenderer = (() => {
         const mn = new Image(); mn.crossOrigin = 'anonymous';
         mn.onload  = () => { assets.monstroNormal = mn; };
         mn.onerror = () => console.warn('⚠️ Monstro normal não carregado');
-        mn.src = base + 'tiles/monstros/slime-de-gelo/slime-de-gelo.png';
+        mn.src = base + 'monstros/slime-de-gelo/slime-de-gelo.png';
 
         const mh = new Image(); mh.crossOrigin = 'anonymous';
         mh.onload  = () => { assets.monstroHitado = mh; };
         mh.onerror = () => console.warn('⚠️ Monstro hitado não carregado');
-        mh.src = base + 'tiles/monstros/slime-de-gelo/slime-de-gelo-hitado.png';
+        mh.src = base + 'monstros/slime-de-gelo/slime-de-gelo-hitado.png';
     }
 
     function processarChao() {
