@@ -153,7 +153,7 @@ const BattleRenderer = (() => {
         const px = santaX(canvas);
 
         // ↓ Pés da santa — toca o topo do chão
-        const py = chaoY(canvas);
+        const py = chaoY(canvas) + 7;
 
         // ↓ Altura da santa — aumenta para ficar maior
         const ALT  = canvas.height * 0.22;
@@ -221,7 +221,7 @@ const BattleRenderer = (() => {
 
         // ↓ Base do monstro toca o topo do chão
         // my = centro vertical do monstro
-        const my = chaoY(canvas) - tam * -0.3 + oy;
+        const my = chaoY(canvas) - tam * 0.0 + oy;
 
         const imgMonstro = (hit.flash > 0 && imgOk(assets.monstroHitado))
             ? assets.monstroHitado
