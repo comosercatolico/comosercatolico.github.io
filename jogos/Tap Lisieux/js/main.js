@@ -23,17 +23,16 @@
 
 // ════════════════════════════════════════════════════════
 // FASE 1 — VERIFICAÇÃO DE SUPORTE
-// Roda ANTES de qualquer módulo — síncrono e imediato
 // ════════════════════════════════════════════════════════
 (function _verificarSuporte() {
     const requisitos = [
-        { ok: typeof Map                              !== "undefined", nome: "Map"                    },
-        { ok: typeof Set                              !== "undefined", nome: "Set"                    },
-        { ok: typeof Promise                          !== "undefined", nome: "Promise"                },
-        { ok: typeof requestAnimationFrame            !== "undefined", nome: "requestAnimationFrame"  },
-        { ok: typeof localStorage                     !== "undefined", nome: "localStorage"           },
-        { ok: typeof performance?.now                 === "function",  nome: "performance.now"        },
-        { ok: !!document.createElement("canvas").getContext,           nome: "Canvas 2D"              },
+        { ok: typeof Map                              !== "undefined", nome: "Map"                   },
+        { ok: typeof Set                              !== "undefined", nome: "Set"                   },
+        { ok: typeof Promise                          !== "undefined", nome: "Promise"               },
+        { ok: typeof requestAnimationFrame            !== "undefined", nome: "requestAnimationFrame" },
+        { ok: typeof localStorage                     !== "undefined", nome: "localStorage"          },
+        { ok: typeof performance?.now                 === "function",  nome: "performance.now"       },
+        { ok: !!document.createElement("canvas").getContext,           nome: "Canvas 2D"             },
     ];
 
     const falhou = requisitos.filter(r => !r.ok);
@@ -63,7 +62,6 @@
 
 // ════════════════════════════════════════════════════════
 // TELA DE LOADING
-// Controla a barra de progresso exibida na inicialização
 // ════════════════════════════════════════════════════════
 const Loading = (() => {
     const _raiz     = document.getElementById("telaLoading");
@@ -74,9 +72,9 @@ const Loading = (() => {
     let _pct = 0;
 
     function progresso(pct, msg, sub) {
-        _pct = Math.max(_pct, Math.min(100, pct));   // nunca regride
-        if (_barra)               _barra.style.width   = `${_pct}%`;
-        if (_texto    && msg)     _texto.textContent    = msg;
+        _pct = Math.max(_pct, Math.min(100, pct));
+        if (_barra)                         _barra.style.width  = `${_pct}%`;
+        if (_texto    && msg)               _texto.textContent  = msg;
         if (_subTexto && sub !== undefined) _subTexto.textContent = sub;
     }
 
@@ -122,16 +120,13 @@ const Loading = (() => {
 
 // ════════════════════════════════════════════════════════
 // REGISTRO DE MÓDULOS
-// Detecta quais módulos estão presentes (novo vs legado)
 // ════════════════════════════════════════════════════════
 const _M = (() => {
-    /** Retorna o módulo se existir, senão null */
     function get(nome) {
         try { return typeof window[nome] !== "undefined" ? window[nome] : null; }
         catch { return null; }
     }
 
-    /** Chama fn no módulo se existir */
     function chamar(nome, fn, ...args) {
         const m = get(nome);
         if (!m) return false;
@@ -140,7 +135,6 @@ const _M = (() => {
         catch(e) { console.warn(`[Main] ${nome}.${fn}() falhou:`, e); return false; }
     }
 
-    /** Verifica e loga se módulo está ausente */
     function checar(nome, obrigatorio = false) {
         const presente = get(nome) !== null;
         if (!presente) {
@@ -174,46 +168,35 @@ document.addEventListener("DOMContentLoaded", async () => {
 // ════════════════════════════════════════════════════════
 async function _inicializarJogo() {
     const t0 = performance.now();
-
     _log("🌹 Tap Lisieux — iniciando...");
 
-    // ── FASE 2: Módulos base ─────────────────────────────
-    Loading.progresso(5, "Inicializando...", "Módulos base");
+    Loading.progresso(5,  "Inicializando...",        "Módulos base");
     _inicializarBase();
 
-    // ── FASE 3: Assets ───────────────────────────────────
-    Loading.progresso(12, "Carregando imagens...", "Assets");
-    await _carregarAssets();
+    Loading.progresso(12, "Carregando imagens...",   "Assets");
+    await _carregarAssets();                          // ← aguarda assets 100%
 
-    // ── FASE 4: Canvas ───────────────────────────────────
-    Loading.progresso(48, "Preparando canvas...", "Renderização");
+    Loading.progresso(48, "Preparando canvas...",    "Renderização");
     _inicializarCanvas();
 
-    // ── FASE 5: Estado + Save ────────────────────────────
     Loading.progresso(54, "Carregando progresso...", "Save");
     const dadosSave = await _inicializarEstadoESave();
 
-    // ── FASE 6: Sistemas de lógica ───────────────────────
-    Loading.progresso(62, "Inicializando sistemas...", "Lógica");
+    Loading.progresso(62, "Inicializando sistemas...","Lógica");
     _inicializarSistemas();
 
-    // ── FASE 7: UI ───────────────────────────────────────
     Loading.progresso(78, "Construindo interface...", "UI");
     _inicializarUI();
 
-    // ── FASE 8: Input + Áudio ────────────────────────────
     Loading.progresso(88, "Registrando controles...", "Input / Áudio");
     _inicializarInputAudio();
 
-    // ── FASE 9: Renderer (loop) ──────────────────────────
     Loading.progresso(94, "Iniciando renderização...", "Loop");
-    _iniciarLoop();
+    _iniciarLoop();                                   // ← Renderer.start()
 
-    // ── FASE 10: Pós-init ────────────────────────────────
     Loading.progresso(98, "Finalizando...", "");
     _posInit(dadosSave);
 
-    // ── CONCLUÍDO ────────────────────────────────────────
     Loading.progresso(100, "Pronto! 🌹");
     const ms = (performance.now() - t0).toFixed(0);
     _log(`✅ Jogo iniciado em ${ms}ms`);
@@ -228,15 +211,12 @@ async function _inicializarJogo() {
 // FASE 2 — MÓDULOS BASE
 // ════════════════════════════════════════════════════════
 function _inicializarBase() {
-    // Logger
     _M.chamar("Logger", "init");
 
-    // Verifica módulos obrigatórios
     _M.checar("EventBus", true);
     _M.checar("DOM",      true);
     _M.checar("Utils",    true);
 
-    // Expõe formatarNum globalmente para código legado
     if (typeof window.formatarNum === "undefined") {
         window.formatarNum = _M.get("Utils")?.formatarNum
             ?? (n => n >= 1e9 ? (n/1e9).toFixed(1)+"B"
@@ -245,7 +225,6 @@ function _inicializarBase() {
                    : String(Math.floor(n)));
     }
 
-    // Módulos opcionais
     _M.checar("BALANCE");
     _M.checar("Toast");
     _M.checar("Camera");
@@ -255,66 +234,67 @@ function _inicializarBase() {
 
 // ════════════════════════════════════════════════════════
 // FASE 3 — ASSETS
+// ✅ CORRIGIDO: garante que AssetLoader.carregar() é
+//    chamado e aguardado antes de prosseguir
 // ════════════════════════════════════════════════════════
 async function _carregarAssets() {
-    return new Promise(resolve => {
+    const AL = _M.get("AssetLoader");
 
-        const AL = _M.get("AssetLoader");
-
-        if (AL?.carregar) {
-            const EB = _M.get("EventBus");
-
-            // Guarda se já resolveu para não chamar resolve() duas vezes
-            let _resolvido = false;
-            const _resolver = () => {
-                if (_resolvido) return;
-                _resolvido = true;
-                resolve();
-            };
-
-            if (EB) {
-                // ✅ Escuta eventos que o AssetLoader já emite internamente
-                // em vez de tentar atribuir propriedades no objeto congelado
-                EB.on("assets:progresso", ({ pct }) => {
-                    Loading.progresso(
-                        12 + pct * 36,
-                        "Carregando imagens...",
-                        `${Math.round(pct * 100)}%`
-                    );
-                });
-
-                // Resolve quando tudo terminar com sucesso
-                EB.on("assets:completo", () => {
-                    _log("AssetLoader: completo.");
-                    _resolver();
-                });
-
-                // Resolve mesmo se assets críticos falharem
-                // (AssetLoader já cria fallbacks visuais automaticamente)
-                EB.on("assets:erro_critico", ({ assets }) => {
-                    console.warn("[Main] Assets críticos falharam:", assets);
-                    _resolver();
-                });
-            }
-
-            // Inicia o carregamento
-            AL.carregar()
-                .then(() => _resolver())   // garante resolve mesmo sem EventBus
-                .catch(e => {
-                    console.warn("[Main] AssetLoader.carregar() falhou:", e);
-                    _resolver();           // nunca trava o jogo
-                });
-
-            return;
-        }
-
-        // ── Fallback legado ──────────────────────────────
+    // ── Sem AssetLoader → fallback legado ───────────────
+    if (!AL?.carregar) {
         if (typeof window.carregarAssets === "function") {
             window.carregarAssets();
         }
+        await _esperar(800);
+        _log("Fase 3 OK — fallback legado.");
+        return;
+    }
 
-        // Dá 800ms para as imagens começarem a carregar em background
-        setTimeout(resolve, 800);
+    // ── Já carregou numa corrida anterior ───────────────
+    if (AL.estado === "COMPLETO") {
+        _log("Fase 3 OK — assets já estavam em cache.");
+        return;
+    }
+
+    // ── Carregamento real ────────────────────────────────
+    return new Promise(resolve => {
+        let _resolvido = false;
+        const _resolver = () => {
+            if (_resolvido) return;
+            _resolvido = true;
+            _log("Fase 3 OK — assets carregados.");
+            resolve();
+        };
+
+        const EB = _M.get("EventBus");
+        if (EB) {
+            // Progresso visual
+            EB.on("assets:progresso", ({ pct }) => {
+                Loading.progresso(
+                    12 + Math.round(pct * 36),
+                    "Carregando imagens...",
+                    `${Math.round(pct * 100)}%`
+                );
+            });
+
+            // Sucesso
+            EB.on("assets:completo", _resolver);
+
+            // Falha parcial — jogo continua com fallbacks
+            EB.on("assets:erro_critico", ({ assets }) => {
+                console.warn("[Main] Assets críticos falharam:", assets);
+                _resolver();
+            });
+        }
+
+        // Inicia carregamento — .then() garante resolve
+        // mesmo se EventBus não estiver disponível
+        AL.carregar()
+            .then(_resolver)
+            .catch(e => {
+                console.warn("[Main] AssetLoader.carregar() rejeitou:", e);
+                _resolver();
+            });
     });
 }
 
@@ -325,11 +305,9 @@ function _inicializarCanvas() {
     const canvas = document.getElementById("game");
     if (!canvas) throw new Error("[Main] Canvas #game não encontrado no DOM.");
 
-    // Tamanho correto (browsers às vezes defaultam 300×150)
     canvas.width  = window.innerWidth;
     canvas.height = window.innerHeight;
 
-    // Expõe globalmente para código legado
     window.canvas = window.canvas ?? canvas;
     window.ctx    = window.ctx    ?? (() => {
         const c = canvas.getContext("2d");
@@ -337,13 +315,11 @@ function _inicializarCanvas() {
         return c;
     })();
 
-    // Injeta no Renderer e nos módulos que precisam
     _M.chamar("RendererLobby",  "init", canvas, window.ctx);
     _M.chamar("RendererBattle", "init", canvas, window.ctx);
     _M.chamar("Effects",        "init", canvas, window.ctx);
     _M.chamar("Input",          "init", canvas);
 
-    // Resize responsivo com debounce
     const _onResize = _debounce(() => {
         canvas.width  = window.innerWidth;
         canvas.height = window.innerHeight;
@@ -360,29 +336,22 @@ function _inicializarCanvas() {
 
 // ════════════════════════════════════════════════════════
 // FASE 5 — ESTADO + SAVE
-// Retorna os dados do save para uso posterior
 // ════════════════════════════════════════════════════════
 async function _inicializarEstadoESave() {
-    // Inicializa GameState
     _M.chamar("GameState", "init");
-
-    // Garante variáveis globais legadas caso GameState não exista
     _garantirVariaveisLegadas();
 
-    // Carrega o save
     let dadosSave = null;
-
     const SS = _M.get("SaveSystem");
+
     if (SS) {
         if (typeof SS.init === "function") {
             dadosSave = SS.init();
+        } else if (typeof window.inicializarSave === "function") {
+            window.inicializarSave();
         } else {
-            if (typeof window.inicializarSave === "function") {
-                window.inicializarSave();
-            } else {
-                dadosSave = SS.carregar?.();
-                if (dadosSave) _aplicarSaveLegado(dadosSave);
-            }
+            dadosSave = SS.carregar?.();
+            if (dadosSave) _aplicarSaveLegado(dadosSave);
         }
     } else if (typeof window.inicializarSave === "function") {
         window.inicializarSave();
@@ -394,8 +363,8 @@ async function _inicializarEstadoESave() {
 
 function _garantirVariaveisLegadas() {
     const B = _M.get("BALANCE") ?? {};
-    if (typeof window.moeda      === "undefined") window.moeda      = B.MOEDA_INICIAL  ?? 0;
-    if (typeof window.gema       === "undefined") window.gema       = B.GEMA_INICIAL   ?? 50;
+    if (typeof window.moeda      === "undefined") window.moeda      = B.MOEDA_INICIAL ?? 0;
+    if (typeof window.gema       === "undefined") window.gema       = B.GEMA_INICIAL  ?? 50;
     if (typeof window.estagio    === "undefined") window.estagio    = 1;
     if (typeof window.emBatalha  === "undefined") window.emBatalha  = false;
     if (typeof window.personagem === "undefined") window.personagem = { nivel:1, exp:0, expMax:100 };
@@ -419,9 +388,7 @@ function _aplicarSaveLegado(save) {
                 if (window.upgrades[k]) window.upgrades[k].nivel = nivel;
             });
         }
-        if (save.personagem && window.personagem) {
-            Object.assign(window.personagem, save.personagem);
-        }
+        if (save.personagem && window.personagem) Object.assign(window.personagem, save.personagem);
         if (save.herois)      window.heroisObtidos       = save.herois;
         if (save.equips)      window.equipamentosObtidos = save.equips;
         if (save.pity)        _M.get("GachaSystem")?.setPity?.(save.pity);
@@ -454,12 +421,9 @@ function _inicializarSistemas() {
     ];
 
     sistemas.forEach(([nome, fn]) => {
-        if (_M.chamar(nome, fn)) {
-            _log(`  ✓ ${nome}`);
-        }
+        if (_M.chamar(nome, fn)) _log(`  ✓ ${nome}`);
     });
 
-    // Configura o primeiro inimigo
     if (typeof window.configurarInimigo === "function") {
         window.configurarInimigo(window.estagio ?? 1);
     }
@@ -471,34 +435,18 @@ function _inicializarSistemas() {
 // FASE 7 — UI
 // ════════════════════════════════════════════════════════
 function _inicializarUI() {
-    const uiModulos = [
-        "UIModals",
-        "UIHud",
-        "UIBattle",
-        "UIUpgrades",
-        "UIGacha",
-        "UIConfig",
-    ];
+    ["UIModals","UIHud","UIBattle","UIUpgrades","UIGacha","UIConfig"]
+        .forEach(nome => { if (_M.chamar(nome, "init")) _log(`  ✓ ${nome}`); });
 
-    uiModulos.forEach(nome => {
-        if (_M.chamar(nome, "init")) {
-            _log(`  ✓ ${nome}`);
-        }
-    });
-
-    // Fallbacks para funções legadas do game-ui.js
     _chamarLegado("atualizarHUDLobby");
     _chamarLegado("atualizarUIUpgrades");
     _chamarLegado("atualizarListaInvocacao");
     _chamarLegado("atualizarBotaoPrestigiar");
 
-    // Sincroniza nível da Santa
     const nivel = _M.get("GameState")?.get("nivelPersonagem")
                 ?? window.personagem?.nivel
                 ?? 1;
-    document.querySelectorAll(".santaLvUI").forEach(el => {
-        el.textContent = nivel;
-    });
+    document.querySelectorAll(".santaLvUI").forEach(el => { el.textContent = nivel; });
 
     _log("Fase 7 OK — UI.");
 }
@@ -507,22 +455,18 @@ function _inicializarUI() {
 // FASE 8 — INPUT + ÁUDIO
 // ════════════════════════════════════════════════════════
 function _inicializarInputAudio() {
-    // Input.init() já foi chamado com o canvas na fase 4.
-    // Aqui garantimos o fallback se não foi inicializado.
     if (!_M.chamar("Input", "init", window.canvas)) {
         _registrarInputFallback();
     }
-
-    // Áudio — lazy (cria AudioContext só após primeiro gesto)
     _M.chamar("Audio", "init");
-
     _log("Fase 8 OK — Input + Áudio.");
 }
 
 // ════════════════════════════════════════════════════════
 // FASE 9 — LOOP DE RENDERIZAÇÃO
+// ✅ CORRIGIDO: delega ao Renderer centralizado
+//    (renderer-main.js) em vez de loop próprio
 // ════════════════════════════════════════════════════════
-
 const _loopState = {
     rodando  : false,
     rafId    : null,
@@ -535,30 +479,64 @@ const _loopState = {
 
 function _iniciarLoop() {
     if (_loopState.rodando) return;
+
+    const canvas = document.getElementById("game");
+    if (!canvas) {
+        console.error("[Main] Canvas não encontrado — loop não iniciado.");
+        return;
+    }
+
+    // ── Tenta usar o Renderer centralizado ──────────────
+    const R = _M.get("Renderer");
+    if (R?.start) {
+        R.start(canvas);
+        _loopState.rodando = true;
+
+        // Sincroniza stats para TapLisieux.debug
+        setInterval(() => {
+            try {
+                const s = R.stats?.();
+                if (!s) return;
+                _loopState.fps    = s.fps?.media ?? 0;
+                _loopState.frames = s.fps?.total ?? 0;
+            } catch(_) {}
+        }, 500);
+
+        _log("Fase 9 OK — Renderer.start() chamado.");
+        return;
+    }
+
+    // ── Fallback: loop próprio (sem renderer-main.js) ───
+    console.warn("[Main] Renderer centralizado não encontrado — usando loop fallback.");
     _loopState.rodando = true;
     _loopState.ultimo  = performance.now();
-    _loopState.rafId   = requestAnimationFrame(_frame);
-    _log("Loop iniciado.");
+    _loopState.rafId   = requestAnimationFrame(_frameFallback);
+    _log("Fase 9 OK — loop fallback iniciado.");
 }
 
 function _pararLoop() {
     _loopState.rodando = false;
+
+    // Para o Renderer centralizado se existir
+    const R = _M.get("Renderer");
+    if (R?.stop) { R.stop(); return; }
+
+    // Para o fallback
     if (_loopState.rafId) {
         cancelAnimationFrame(_loopState.rafId);
         _loopState.rafId = null;
     }
 }
 
-function _frame(agora) {
-    // Agenda próximo frame ANTES do trabalho
-    _loopState.rafId = requestAnimationFrame(_frame);
+// Loop fallback — só usado se renderer-main.js não existir
+function _frameFallback(agora) {
+    _loopState.rafId = requestAnimationFrame(_frameFallback);
     if (!_loopState.rodando) return;
 
-    const delta = Math.min(agora - _loopState.ultimo, 100);   // cap 100ms
+    const delta = Math.min(agora - _loopState.ultimo, 100);
     _loopState.ultimo = agora;
     _loopState.frames++;
 
-    // FPS
     _loopState.countFPS++;
     _loopState.tempoFPS += delta;
     if (_loopState.tempoFPS >= 1000) {
@@ -568,30 +546,9 @@ function _frame(agora) {
         _emitir("fps:update", _loopState.fps);
     }
 
-    // Câmera
-    const emBatalha = _emBatalha();
-    try { _M.get("Camera")?.atualizar(emBatalha); } catch(_) {}
-
-    // Pre-frame (ripples, partículas, etc.)
+    try { _M.get("Camera")?.atualizar(_emBatalha()); } catch(_) {}
     _emitir("renderer:preframe", { ctx: window.ctx, delta });
 
-    // ── Renderização ──
-    const Renderer = _M.get("Renderer");
-    if (Renderer?.loop) {
-        try { Renderer.loop(agora, delta); } catch(e) {
-            console.error("[Loop] Renderer.loop falhou:", e);
-        }
-    } else {
-        _loopFallback(delta);
-    }
-
-    // Tick de UI e efeitos
-    try { _M.get("UIHud")?.tick?.();        } catch(_) {}
-    try { _M.get("UIBattle")?.tick?.();     } catch(_) {}
-    try { _M.get("Effects")?.atualizar?.(); } catch(_) {}
-}
-
-function _loopFallback() {
     const canvas = window.canvas;
     const ctx    = window.ctx;
     if (!canvas || !ctx) return;
@@ -601,13 +558,16 @@ function _loopFallback() {
     try {
         if (window.emBatalha) {
             window.desenharBatalha?.();
-            if (typeof atualizarUIBatalha === "function") atualizarUIBatalha();
         } else {
             window.desenharLobby?.();
         }
     } catch(e) {
-        console.error("[Loop] Fallback falhou:", e);
+        console.error("[Loop Fallback]", e);
     }
+
+    try { _M.get("Effects")?.atualizar?.(); } catch(_) {}
+    try { _M.get("UIHud")?.tick?.();        } catch(_) {}
+    try { _M.get("UIBattle")?.tick?.();     } catch(_) {}
 }
 
 // ════════════════════════════════════════════════════════
@@ -619,9 +579,7 @@ function _posInit(dadosSave) {
     _registrarVisibilidade();
     _notificarOffline(dadosSave);
 
-    setTimeout(() => {
-        _M.chamar("Achievements", "verificar");
-    }, 600);
+    setTimeout(() => { _M.chamar("Achievements", "verificar"); }, 600);
 
     _log("Fase 10 OK — Pós-init.");
 }
@@ -652,22 +610,13 @@ function _registrarEventosSistema() {
     const EB = _M.get("EventBus");
     if (!EB) return;
 
-    // Contadores globais (suporte ao código legado)
     EB.on("kill:registrado",  () => { window._totalKills      = (window._totalKills      ?? 0) + 1; });
     EB.on("upgrade:comprado", () => { window._totalUpgrades   = (window._totalUpgrades   ?? 0) + 1; });
     EB.on("prestigio:feito",  () => { window._totalPrestígios = (window._totalPrestígios ?? 0) + 1; _salvar(); });
 
-    // Sincroniza HUD ao mudar moeda/gema
-    EB.on("moeda:update", () => {
-        _chamarLegado("atualizarHUDLobby");
-        _M.get("UIHud")?.atualizar?.();
-    });
-    EB.on("gema:update", () => {
-        _chamarLegado("atualizarHUDLobby");
-        _M.get("UIHud")?.atualizar?.();
-    });
+    EB.on("moeda:update", () => { _chamarLegado("atualizarHUDLobby"); _M.get("UIHud")?.atualizar?.(); });
+    EB.on("gema:update",  () => { _chamarLegado("atualizarHUDLobby"); _M.get("UIHud")?.atualizar?.(); });
 
-    // Mudança de modo batalha ↔ lobby
     EB.on("batalha:iniciou", () => {
         window.emBatalha = true;
         _chamarLegado("iniciarBatalha");
@@ -679,18 +628,15 @@ function _registrarEventosSistema() {
         _salvar();
     });
 
-    // Salva em eventos críticos
     EB.on("gacha:pull",             _salvar);
     EB.on("conquista:desbloqueada", _salvar);
     EB.on("quest:coletada",         _salvar);
     EB.on("nivel:up",               _salvar);
 
-    // Debug — atualiza title da aba em dev
     EB.on("fps:update", fps => {
         if (_isDev()) document.title = `[${fps}fps] Tap Lisieux`;
     });
 
-    // Erros capturados de outros módulos
     EB.on("modulo:erro", ({ modulo, erro }) => {
         console.error(`[Sistema] Erro em ${modulo}:`, erro);
     });
@@ -712,7 +658,7 @@ function _registrarVisibilidade() {
     });
 
     window.addEventListener("beforeunload", _salvar);
-    window.addEventListener("pagehide",     _salvar);   // iOS Safari
+    window.addEventListener("pagehide",     _salvar);
 }
 
 // ════════════════════════════════════════════════════════
@@ -727,9 +673,8 @@ function _notificarOffline(dadosSave) {
     const efetivoMs = Math.min(deltaMs, maxMs);
     const segundos  = Math.floor(efetivoMs / 1000);
 
-    if (segundos < 60) return;   // menos de 1 min — ignora
+    if (segundos < 60) return;
 
-    // Calcula DPS offline
     let dps = 0;
     try   { dps = _M.get("Damage")?.calcDps?.() ?? 0; }
     catch { dps = Math.floor(2 * Math.pow(1.60, (dadosSave.nivelDps ?? 1) - 1)); }
@@ -737,7 +682,6 @@ function _notificarOffline(dadosSave) {
     const moedas = Math.floor(dps * segundos * 0.5);
     if (moedas <= 0) return;
 
-    // Aplica moedas
     try {
         _M.get("GameState")?.increment("moeda", moedas);
         _emitir("moeda:update", { valor: _M.get("GameState")?.get("moeda"), delta: moedas });
@@ -745,7 +689,6 @@ function _notificarOffline(dadosSave) {
         window.moeda = (window.moeda ?? 0) + moedas;
     }
 
-    // Toast com delay (garante que Toast está pronto)
     setTimeout(() => {
         const fmt = window.formatarNum ?? (n => String(n));
         const h   = Math.floor(segundos / 3600);
@@ -774,9 +717,9 @@ function _registrarInputFallback() {
     const _click = () => {
         if (!window.emBatalha) return;
         const dano = typeof calcDanoClick === "function" ? calcDanoClick() : 1;
-        if (typeof darDano                    === "function") darDano(dano, "click");
-        if (typeof dispararAtaquePersonagem   === "function") dispararAtaquePersonagem();
-        if (typeof dispararFlor               === "function") dispararFlor();
+        if (typeof darDano                  === "function") darDano(dano, "click");
+        if (typeof dispararAtaquePersonagem === "function") dispararAtaquePersonagem();
+        if (typeof dispararFlor             === "function") dispararFlor();
         _emitir("damage:click", { valor: dano });
     };
 
@@ -784,14 +727,13 @@ function _registrarInputFallback() {
     canvas.addEventListener("touchstart", e => { e.preventDefault(); _click(); }, { passive: false });
     canvas.addEventListener("touchend",   e => e.preventDefault(), { passive: false });
 
-    // ESC fecha modais
     document.addEventListener("keydown", e => {
         if (e.key !== "Escape") return;
-        ["janelaConfig","modalInvocar","modalEquipar",
-         "modalConquistas","modalMissoes"].forEach(id => {
-            const el = document.getElementById(id);
-            if (el) el.style.display = "none";
-        });
+        ["janelaConfig","modalInvocar","modalEquipar","modalConquistas","modalMissoes"]
+            .forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.style.display = "none";
+            });
         _emitir("modal:fechado", { origem: "ESC" });
     });
 
@@ -801,6 +743,9 @@ function _registrarInputFallback() {
 // ════════════════════════════════════════════════════════
 // UTILITÁRIOS INTERNOS
 // ════════════════════════════════════════════════════════
+function _esperar(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
 
 function _emitir(evento, dados) {
     try { _M.get("EventBus")?.emit(evento, dados); } catch(_) {}
@@ -832,15 +777,11 @@ function _log(...args) {
 
 function _debounce(fn, ms) {
     let t;
-    return (...args) => {
-        clearTimeout(t);
-        t = setTimeout(() => fn(...args), ms);
-    };
+    return (...args) => { clearTimeout(t); t = setTimeout(() => fn(...args), ms); };
 }
 
 // ════════════════════════════════════════════════════════
 // API PÚBLICA — window.TapLisieux
-// Para debug no console do navegador
 // ════════════════════════════════════════════════════════
 window.TapLisieux = Object.freeze({
     versao : "2.0.0",
@@ -852,23 +793,31 @@ window.TapLisieux = Object.freeze({
     salvar  : _salvar,
     pausar  : _pararLoop,
     retomar : () => {
+        const R = _M.get("Renderer");
+        if (R?.start && !_loopState.rodando) {
+            const canvas = document.getElementById("game");
+            if (canvas) { R.start(canvas); _loopState.rodando = true; }
+            return;
+        }
         if (!_loopState.rodando) {
             _loopState.rodando = true;
             _loopState.ultimo  = performance.now();
-            _loopState.rafId   = requestAnimationFrame(_frame);
+            _loopState.rafId   = requestAnimationFrame(_frameFallback);
         }
     },
 
     debug: {
         estado() {
             console.table({
-                moeda      : window.moeda,
-                gema       : window.gema,
-                estagio    : window.estagio,
-                emBatalha  : window.emBatalha,
-                nivelSanta : window.personagem?.nivel,
-                fps        : _loopState.fps,
-                frames     : _loopState.frames,
+                moeda        : window.moeda,
+                gema         : window.gema,
+                estagio      : window.estagio,
+                emBatalha    : window.emBatalha,
+                nivelSanta   : window.personagem?.nivel,
+                fps          : _loopState.fps,
+                frames       : _loopState.frames,
+                assetEstado  : _M.get("AssetLoader")?.estado,
+                assetCache   : _M.get("AssetLoader")?.statsDetalhado().cacheSize,
             });
         },
         modulos() {
@@ -887,25 +836,15 @@ window.TapLisieux = Object.freeze({
             console.table(resultado);
             return resultado;
         },
-        save() {
-            console.log(_M.get("SaveSystem")?.info?.() ?? "SaveSystem não disponível");
+        assets() {
+            const AL = _M.get("AssetLoader");
+            if (!AL) { console.warn("AssetLoader não encontrado."); return; }
+            console.table(AL.statsDetalhado());
         },
-        renderer() {
-            console.log({
-                lobby  : _M.get("RendererLobby")?.stats?.(),
-                battle : _M.get("RendererBattle")?.stats?.(),
-                effects: _M.get("Effects")?.stats?.(),
-                loop   : { fps: _loopState.fps, frames: _loopState.frames },
-            });
-        },
-        achievements() {
-            console.table(_M.get("Achievements")?.stats?.());
-        },
-        quests() {
-            console.table(_M.get("Quests")?.stats?.());
-        },
-        audio() {
-            console.table(_M.get("Audio")?.stats?.());
-        },
+        save()        { console.log(_M.get("SaveSystem")?.info?.() ?? "SaveSystem não disponível"); },
+        renderer()    { console.log({ lobby: _M.get("RendererLobby")?.stats?.(), battle: _M.get("RendererBattle")?.stats?.(), effects: _M.get("Effects")?.stats?.(), loop: { fps: _loopState.fps, frames: _loopState.frames } }); },
+        achievements(){ console.table(_M.get("Achievements")?.stats?.()); },
+        quests()      { console.table(_M.get("Quests")?.stats?.());       },
+        audio()       { console.table(_M.get("Audio")?.stats?.());        },
     },
 });
