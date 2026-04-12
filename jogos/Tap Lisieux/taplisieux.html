@@ -51,10 +51,8 @@
 
     <div id="lobbyMoedas" aria-live="polite">
 
-        <!-- Energia com barra -->
         <div class="moedaHUD" title="Energia">
             ⚡ <span id="hudEnergiaVal">100/100</span>
-            <!-- ✅ Barra de energia — procurada por ui-hud.js -->
             <div style="width:60px; background:rgba(255,255,255,0.1); border-radius:2px; height:3px; margin-top:2px;">
                 <div id="hudEnergiaBar"
                      style="height:100%; width:100%; background:linear-gradient(90deg,#56ccf2,#2f80ed); border-radius:2px; transition:width 0.6s linear;">
@@ -67,7 +65,6 @@
 
     </div>
 
-    <!-- ✅ Barra de XP — procurada por ui-hud.js -->
     <div id="hudXpContainer"
          style="position:absolute; bottom:0; left:0; right:0; height:3px;
                 background:rgba(255,255,255,0.08); overflow:hidden;">
@@ -197,16 +194,13 @@
             🎯 Pity: 0/90 · Lendário garantido em 90 pulls
         </div>
 
-        <!-- ✅ Barra de pity — procurada por ui-gacha.js -->
         <div id="pityBarWrap" style="margin:6px 0 10px;"></div>
 
         <div id="invocarResultado" class="resultadoInvocar" role="status" aria-live="polite"></div>
 
-        <!-- ✅ Stats do pull x10 -->
         <div id="pullStats"></div>
 
         <div class="invocarBotoes">
-            <!-- ✅ IDs adicionados — procurados por ui-gacha.js -->
             <button id="btnInvocar1" class="btnInvocar" aria-label="Invocar 1 vez por 100 gemas">
                 <span>Invocar x1</span>
                 <span class="custo">💎 100</span>
@@ -364,10 +358,8 @@
 ══════════════════════════════════════════════════════ -->
 <div id="uiBatalha" style="display:none;" role="main" aria-label="Interface de batalha">
 
-    <!-- Topo: Estágio + Navegação -->
     <div id="batalhaNavTopo" role="navigation" aria-label="Navegação de estágio">
 
-        <!-- ✅ IDs adicionados — procurados por ui-battle.js -->
         <button id="btnEstagioAntes"
                 class="navBtn"
                 onclick="Battle.irEstagioAnterior()"
@@ -390,7 +382,6 @@
         </button>
     </div>
 
-    <!-- Barra de HP -->
     <div id="hpAreaBatalha" role="region" aria-label="HP do inimigo">
         <div id="hpNomeRow">
             <span id="nomeInimigo" aria-live="polite">Demônio</span>
@@ -407,18 +398,15 @@
         </div>
     </div>
 
-    <!-- Moedas centro -->
     <div id="moedaCentro" aria-live="polite">
         <span id="moedaCentroIcon">🪙</span>
         <span id="moedaCentroVal">0</span>
     </div>
 
-    <!-- Fala do monstro -->
     <div id="falaInimigo" role="status" aria-live="polite">
         <div id="falaTexto"></div>
     </div>
 
-    <!-- ✅ Combo display — procurado por ui-battle.js -->
     <div id="comboDisplay"
          class="oculto"
          style="position:absolute; top:18%; left:50%; transform:translateX(-50%);
@@ -427,17 +415,14 @@
                 pointer-events:none; z-index:10;">
     </div>
 
-    <!-- Painel inferior -->
     <div id="painelInferior">
 
-        <!-- Stats rápidos -->
         <div id="statsRapidos" aria-label="Estatísticas de batalha">
             <span id="danoTaqueUI">👆 0 Dano de Toque</span>
             <span id="gemaUIBatalha">💎 50</span>
             <span id="moedaUIBatalha">🪙 0</span>
         </div>
 
-        <!-- Abas -->
         <div id="abaRodape" role="tablist" aria-label="Abas do painel">
 
             <button class="abaRodapeBtn ativa"
@@ -488,10 +473,8 @@
 
         </div>
 
-        <!-- Conteúdo das abas -->
         <div id="abaConteudo">
 
-            <!-- ABA: UPGRADES -->
             <div id="abaUpgrades" class="abaPanel" role="tabpanel" aria-label="Habilidades">
                 <div class="upgradeScroll">
 
@@ -547,7 +530,6 @@
                         </button>
                     </div>
 
-                    <!-- Prestígio -->
                     <div class="prestigiarBox">
                         <div class="prestigiarInfo">
                             <b>🌟 Prestigiar</b>
@@ -568,7 +550,6 @@
                 </div>
             </div>
 
-            <!-- ABA: HERÓIS -->
             <div id="abaHerois" class="abaPanel" role="tabpanel" aria-label="Heróis" style="display:none;">
                 <div class="upgradeScroll" id="listaHeroisBatalha">
                     <div class="personagemCard ativo" role="article">
@@ -583,14 +564,12 @@
                 </div>
             </div>
 
-            <!-- ABA: ARMAS -->
             <div id="abaArmas" class="abaPanel" role="tabpanel" aria-label="Armas" style="display:none;">
                 <div class="upgradeScroll" id="listaArmasBatalha">
                     <p class="dica">Nenhuma arma extra ainda. Invoque para obter!</p>
                 </div>
             </div>
 
-            <!-- ABA: INVOCAR (dentro da batalha) -->
             <div id="abaInvocacao" class="abaPanel" role="tabpanel" aria-label="Invocar" style="display:none;">
 
                 <div id="invocarResultado2" class="resultadoInvocar small" role="status" aria-live="polite"></div>
@@ -611,7 +590,6 @@
                 <div id="listaHeroisBatalha2" class="gridItens small" aria-live="polite"></div>
             </div>
 
-            <!-- ABA: MISSÕES (dentro da batalha) -->
             <div id="abaMissoesBatalha" class="abaPanel" role="tabpanel" aria-label="Missões" style="display:none;">
 
                 <div id="questResetTimerBatalha" class="timerReset small" aria-live="polite">
@@ -651,64 +629,67 @@
 
 <!-- ══════════════════════════════════════════════════════
      SCRIPTS
+     ✅ Todos com defer — garante que o DOM está pronto
+        e que os scripts executam na ordem correta
+        sem bloquear o parse do HTML
 ══════════════════════════════════════════════════════ -->
 
 <!-- FASE 1 — Base absoluta (sem dependências) -->
-<script src="js/utils/utils.js"></script>
-<script src="js/utils/object-pool.js"></script>
-<script src="js/core/constants.js"></script>
-<script src="js/core/logger.js"></script>
-<script src="js/ui/dom-cache.js"></script>
-<script src="js/ui/toast.js"></script>
+<script defer src="js/utils/utils.js"></script>
+<script defer src="js/utils/object-pool.js"></script>
+<script defer src="js/core/constants.js"></script>
+<script defer src="js/core/logger.js"></script>
+<script defer src="js/ui/dom-cache.js"></script>
+<script defer src="js/ui/toast.js"></script>
 
 <!-- FASE 2 — Comunicação e estado -->
-<script src="js/core/event-bus.js"></script>
-<script src="js/core/state.js"></script>
-<script src="js/renderer/camera.js"></script>
+<script defer src="js/core/event-bus.js"></script>
+<script defer src="js/core/state.js"></script>
+<script defer src="js/renderer/camera.js"></script>
 
 <!-- FASE 3 — Sistemas de dados puros -->
-<script src="js/economy/economy.js"></script>
-<script src="js/economy/upgrades.js"></script>
-<script src="js/battle/experience.js"></script>
-<script src="js/battle/combo.js"></script>
-<script src="js/gacha/pool.js"></script>
-<script src="js/gacha/inventory.js"></script>
+<script defer src="js/economy/economy.js"></script>
+<script defer src="js/economy/upgrades.js"></script>
+<script defer src="js/battle/experience.js"></script>
+<script defer src="js/battle/combo.js"></script>
+<script defer src="js/gacha/pool.js"></script>
+<script defer src="js/gacha/inventory.js"></script>
 
 <!-- FASE 4 — Lógica principal -->
-<script src="js/battle/enemy.js"></script>
-<script src="js/battle/damage.js"></script>
-<script src="js/battle/battle.js"></script>
-<script src="js/gacha/gacha.js"></script>
-<script src="js/economy/prestige.js"></script>
+<script defer src="js/battle/enemy.js"></script>
+<script defer src="js/battle/damage.js"></script>
+<script defer src="js/battle/battle.js"></script>
+<script defer src="js/gacha/gacha.js"></script>
+<script defer src="js/economy/prestige.js"></script>
 
 <!-- FASE 5 — Assets e efeitos visuais -->
-<script src="js/renderer/asset-loader.js"></script>
-<script src="js/renderer/effects.js"></script>
+<script defer src="js/renderer/asset-loader.js"></script>
+<script defer src="js/renderer/effects.js"></script>
 
 <!-- FASE 6 — Renderização -->
-<script src="js/renderer/renderer-lobby.js"></script>
-<script src="js/renderer/renderer-battle.js"></script>
-<script src="js/renderer/renderer-main.js"></script>
+<script defer src="js/renderer/renderer-lobby.js"></script>
+<script defer src="js/renderer/renderer-battle.js"></script>
+<script defer src="js/renderer/renderer-main.js"></script>
 
 <!-- FASE 7 — Interface do usuário -->
-<script src="js/ui/ui-modals.js"></script>
-<script src="js/ui/ui-hud.js"></script>
-<script src="js/ui/ui-battle.js"></script>
-<script src="js/ui/ui-upgrades.js"></script>
-<script src="js/ui/ui-gacha.js"></script>
-<script src="js/ui/ui-config.js"></script>
+<script defer src="js/ui/ui-modals.js"></script>
+<script defer src="js/ui/ui-hud.js"></script>
+<script defer src="js/ui/ui-battle.js"></script>
+<script defer src="js/ui/ui-upgrades.js"></script>
+<script defer src="js/ui/ui-gacha.js"></script>
+<script defer src="js/ui/ui-config.js"></script>
 
 <!-- FASE 8 — Conquistas e missões -->
-<script src="js/achievements/achievements.js"></script>
-<script src="js/achievements/quests.js"></script>
+<script defer src="js/achievements/achievements.js"></script>
+<script defer src="js/achievements/quests.js"></script>
 
 <!-- FASE 9 — Input e áudio -->
-<script src="js/input/input.js"></script>
-<script src="js/audio/audio.js"></script>
+<script defer src="js/input/input.js"></script>
+<script defer src="js/audio/audio.js"></script>
 
 <!-- FASE 10 — Save e entry point (SEMPRE por último) -->
-<script src="js/core/save.js"></script>
-<script src="js/main.js"></script>
+<script defer src="js/core/save.js"></script>
+<script defer src="js/main.js"></script>
 
 </body>
 </html>
