@@ -5,9 +5,6 @@
 
 const BattleRenderer = (() => {
 
-    // ════════════════════════════════════════
-    //  ASSETS DE BATALHA
-    // ════════════════════════════════════════
     const assets = {
         cenario:       null,
         chao:          null,
@@ -58,29 +55,27 @@ const BattleRenderer = (() => {
     //  HIT STATE
     // ════════════════════════════════════════
     const hit = { tremendo: 0, flash: 0 };
-
     EventBus.on('inimigo:dano', () => { hit.tremendo = 14; hit.flash = 8; });
 
     // ════════════════════════════════════════
-    //  HELPERS
+    //  HELPERS DE POSIÇÃO
     // ════════════════════════════════════════
 
-    // ↓ Linha do chão — sobe/desce o chão e tudo que pousa nele
+    // ↓ Linha do topo do chão — sobe/desce tudo (0.74 = 74% da altura)
     function chaoY(canvas)    { return canvas.height * 0.74; }
 
-    function santaX(canvas)   { return canvas.width  * 0.46; }
-    function monstroX(canvas) { return canvas.width  * 0.50; }
+    // ↓ Posição X da santa — aumenta para ir mais para o centro (era 0.46)
+    function santaX(canvas)   { return canvas.width  * 0.50; }
 
-    // ↓ Altura do monstro na tela — diminui o número para subir, aumenta para descer
-    function monstroY(canvas) { return canvas.height * 0.38; }
+    // ↓ Posição X do monstro
+    function monstroX(canvas) { return canvas.width  * 0.62; }
 
     // ════════════════════════════════════════
-    //  FUNDO
+    //  FUNDO (cenário)
     // ════════════════════════════════════════
     function _fundo(ctx, canvas) {
         const W = canvas.width, H = canvas.height, cy = chaoY(canvas);
 
-        // Cenário de fundo
         if (imgOk(assets.cenario)) {
             const i   = assets.cenario;
             const esc = Math.max(W / i.naturalWidth, H / i.naturalHeight);
@@ -91,21 +86,17 @@ const BattleRenderer = (() => {
         }
     }
 
+    // ════════════════════════════════════════
+    //  CHÃO
+    // ════════════════════════════════════════
     function _desenharChao(ctx, canvas) {
         const W  = canvas.width;
         const H  = canvas.height;
         const cy = chaoY(canvas);
 
         if (imgOk(assets.chao)) {
-            const src = assets.chao;
-
-            // ↓ Altura do chão — aumenta para o chão ser mais alto na tela
-            const ph = H - cy;
-
-            // ↓ py = onde o topo do chão começa — cy o alinha com a linha do chão
-            const py = cy;
-
-            ctx.drawImage(src, 0, py, W, ph);
+            // Chão ocupa do cy até o fim da tela
+            ctx.drawImage(assets.chao, 0, cy, W, H - cy);
         } else {
             _chaoFallback(ctx, W, H, cy);
         }
@@ -150,8 +141,7 @@ const BattleRenderer = (() => {
     //  PERSONAGEM (Santa Teresinha)
     // ════════════════════════════════════════
     const pb = { atacando: 0, durAtaque: 28, frame: 0, tempo: 0 };
-
-    EventBus.on('inimigo:dano', (d) => { pb.atacando = pb.durAtaque; });
+    EventBus.on('inimigo:dano', () => { pb.atacando = pb.durAtaque; });
 
     function _atualizarPB() {
         pb.tempo++;
@@ -161,13 +151,21 @@ const BattleRenderer = (() => {
 
     function _desenharPB(ctx, canvas) {
         const px  = santaX(canvas);
-        const py  = chaoY(canvas);
-        const ALT = canvas.height * 0.20;
+        const cy  = chaoY(canvas);
+
+        // ↓ Altura da santa — aumenta para ficar maior (0.22 = 22% da tela)
+        const ALT = canvas.height * 0.22;
+
+        // Pés da santa tocam exatamente o topo do chão
+        const py  = cy;
+
         const offX = pb.atacando > 0 ? Math.sin((pb.atacando / pb.durAtaque) * Math.PI) * 14 : 0;
         const img  = assets.santa[pb.frame];
 
         if (imgOk(img)) {
             const lar = ALT * (img.naturalWidth / img.naturalHeight);
+
+            // Sombra no chão
             ctx.save();
             ctx.fillStyle = 'rgba(0,0,0,0.28)';
             ctx.beginPath();
@@ -175,6 +173,7 @@ const BattleRenderer = (() => {
             ctx.fill();
             ctx.restore();
 
+            // Sprite espelhado, pés em py
             ctx.save();
             ctx.translate(px + offX, py);
             ctx.scale(-1, 1);
@@ -215,15 +214,15 @@ const BattleRenderer = (() => {
         const ini = BattleState.inimigo;
         const pct = Math.max(0.05, ini.maxHp > 0 ? ini.hp / ini.maxHp : 1);
 
-        // ↓ Tamanho do monstro — aumenta o 0.42 para ficar maior
-        const tam = canvas.height * (0.42 + pct * 0.06);
+        // ↓ Tamanho do monstro — aumenta o 0.38 para ficar maior
+        const tam = canvas.height * (0.38 + pct * 0.05);
 
-        const ox  = hit.tremendo > 0 ? (Math.random() - 0.5) * 18 : 0;
-        const oy  = hit.tremendo > 0 ? (Math.random() - 0.5) * 10 : 0;
-        const mx  = monstroX(canvas) + ox;
+        const ox = hit.tremendo > 0 ? (Math.random() - 0.5) * 18 : 0;
+        const oy = hit.tremendo > 0 ? (Math.random() - 0.5) * 10 : 0;
+        const mx = monstroX(canvas) + ox;
 
-        // ↓ Quanto o monstro afunda no chão — 0.08 = 8% da altura afundado
-        const afunda  = canvas.height * 0.08;
+        // ↓ Quanto o monstro afunda no chão — 0.12 = 12% da altura fica abaixo
+        const afunda = canvas.height * 0.12;
         const my = chaoY(canvas) - tam * 0.5 + afunda + oy;
 
         const imgMonstro = (hit.flash > 0 && imgOk(assets.monstroHitado))
@@ -264,11 +263,11 @@ const BattleRenderer = (() => {
         const H  = canvas.height;
         const cy = chaoY(canvas);
         const mx = monstroX(canvas);
-        const my = monstroY(canvas);
+        const my = canvas.height * 0.45;
 
         const BOSS_R   = 180;
         const TETO_Y   = H * 0.04;
-        const CHAO_Y   = cy * 0.68;
+        const CHAO_Y   = cy * 0.80;
         const MIN_DIST = 52;
 
         const posicoes = [];
@@ -321,9 +320,7 @@ const BattleRenderer = (() => {
         if (vivas <= FLORES_REABAST) {
             _posFixas.forEach((pos, idx) => {
                 const jaExiste = flores.some(f => f.idx === idx && f.viva);
-                if (!jaExiste) {
-                    flores.push(_criarFlor(pos, idx, false));
-                }
+                if (!jaExiste) flores.push(_criarFlor(pos, idx, false));
             });
         }
     }
@@ -350,7 +347,6 @@ const BattleRenderer = (() => {
 
         flores.forEach(f => {
             if (!f.viva) return;
-
             const glowPulse = 0.6 + Math.sin(t * 0.002 + f.glowFase) * 0.4;
             const glowRaio  = f.size * 0.7 * glowPulse;
 
@@ -379,7 +375,7 @@ const BattleRenderer = (() => {
     // ════════════════════════════════════════
     function dispararFlor(canvas) {
         const mx = monstroX(canvas);
-        const my = monstroY(canvas);
+        const my = chaoY(canvas) - canvas.height * 0.15;
 
         let melhor = null, melhorDist = Infinity;
         flores.forEach(f => {
@@ -413,12 +409,9 @@ const BattleRenderer = (() => {
 
     function _atualizarFloresAtt() {
         floresAtt.forEach(f => {
-            f.x += f.vx;
-            f.y += f.vy;
-            f.vida--;
+            f.x += f.vx; f.y += f.vy; f.vida--;
             if (!f.acertou && Math.hypot(f.x - f.tx, f.y - f.ty) < 30) {
-                f.acertou = true;
-                f.vida    = 0;
+                f.acertou = true; f.vida = 0;
                 for (let p = 0; p < 10; p++) _criarParticula(f.x, f.y);
             }
         });
@@ -427,7 +420,6 @@ const BattleRenderer = (() => {
 
     function _desenharFloresAtt(ctx) {
         if (!imgOk(assets.flor)) return;
-
         floresAtt.forEach(f => {
             ctx.save();
             ctx.globalAlpha = Math.min(1, f.vida / 12);
@@ -469,7 +461,7 @@ const BattleRenderer = (() => {
 
     function criarMoeda(canvas) {
         const mx = monstroX(canvas);
-        const my = monstroY(canvas);
+        const my = chaoY(canvas) - canvas.height * 0.15;
         moedas.push({
             x: mx + (Math.random() - 0.5) * 110,
             y: my,
@@ -486,10 +478,10 @@ const BattleRenderer = (() => {
 
     function criarTexto(valor, tipo, canvas) {
         const mx = monstroX(canvas);
-        const my = monstroY(canvas);
+        const my = chaoY(canvas) - canvas.height * 0.25;
         textos.push({
             x: mx + (Math.random() - 0.5) * 100,
-            y: my - 70,
+            y: my,
             valor, tipo, vida: 80, max: 80,
         });
     }
