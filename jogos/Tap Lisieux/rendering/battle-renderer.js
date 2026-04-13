@@ -1,118 +1,208 @@
-// ═══════════════════════════════════════════════════════════
-//  BATTLE-RENDERER.JS — Todo sistema visual da batalha
-// ═══════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════════════════════════
+//  BATTLE-RENDERER.JS  —  Sistema visual de batalha  [versão comercial 2.0]
+//  Suporta múltiplos monstros com animações idle, hit-flash e conjuração.
+// ═══════════════════════════════════════════════════════════════════════════
 "use strict";
 
 const BattleRenderer = (() => {
 
-    const assets = {
-        cenario:       null,
-        chao:          null,
-        santa:         new Array(8).fill(null),
-        monstroNormal: null,
-        monstroHitado: null,
-        flor:          null,
+    // ═══════════════════════════════════════════════════════
+    //  CONSTANTES GLOBAIS DE LAYOUT
+    //  Ajuste aqui para mover elementos sem tocar no resto.
+    // ═══════════════════════════════════════════════════════
+    const LAYOUT = {
+        CHAO_Y:          0.74,   // linha do chão (0=topo, 1=base)
+        SANTA_X:         0.28,   // posição horizontal da santa  (esquerda)
+        MONSTRO_X:       0.65,   // posição horizontal do monstro (direita)
+        SANTA_ALTURA:    0.30,   // altura da santa (% da tela)
+        SANTA_PY_OFFSET: 10,     // empurra os pés da santa para baixo do chão
+        MONSTRO_TAM:     0.88,   // tamanho base do monstro
+        MONSTRO_EMERG:   0.20,   // quanto o monstro afunda no chão (0=topo, 1=enterrado)
     };
+
+    // ════════════════════════════════════════
+    //  HELPERS DE LAYOUT
+    // ════════════════════════════════════════
+    const chaoY    = c => c.height * LAYOUT.CHAO_Y;
+    const santaX   = c => c.width  * LAYOUT.SANTA_X;
+    const monstroX = c => c.width  * LAYOUT.MONSTRO_X;
+
+    // ═══════════════════════════════════════════════════════
+    //  CATÁLOGO DE MONSTROS
+    //  Para adicionar um novo monstro: inclua uma entrada
+    //  com id, caminhos de assets e configurações de animação.
+    // ═══════════════════════════════════════════════════════
+    const MONSTER_CATALOG = {
+
+        // ── Slime de Gelo (monstro original, sem animação idle) ──────────
+        'slime-de-gelo': {
+            basePath:     'monstros/slime-de-gelo/',
+            normal:       'slime-de-gelo.png',
+            hit:          'slime-de-gelo-hitado.png',
+            hitAlt:       null,
+            idle: {
+                enabled:  false,
+            },
+        },
+
+        // ── Sapo-Gato (novo monstro com idle ping-pong 13 frames) ────────
+        'sapo-gato': {
+            basePath:  'monstros/slime-de-gelo/sapo-gato/',
+            normal:    null,          // usa idle frame 1 como pose base
+            hit:       'saga-hit.png',
+            hitAlt:    null,          // saga-hit2 reservado para uso futuro
+            idle: {
+                enabled:   true,
+                prefix:    'saga',    // arquivos: saga1.png … saga13.png
+                frames:    13,        // total de frames
+                tickNorm:  4,         // ticks por frame normal
+                tickApex:  10,        // ticks no frame do ápice (frame 13)
+                hitDelay:  6,         // ticks que o sprite de hit fica visível
+            },
+        },
+    };
+
+    // ═══════════════════════════════════════════════════════
+    //  ASSETS — armazenados por monstro
+    // ═══════════════════════════════════════════════════════
+    const assets = {
+        cenario: null,
+        chao:    null,
+        flor:    null,
+        santa:   new Array(8).fill(null),
+        monsters: {},   // { [monstroId]: { normal, hit, idle: [] } }
+    };
+
+    // ═══════════════════════════════════════════════════════
+    //  CARREGAMENTO DE ASSETS
+    // ═══════════════════════════════════════════════════════
+    function _loadImg(src, onLoad, label) {
+        const img = new Image();
+        img.crossOrigin = 'anonymous';
+        img.onload  = () => onLoad(img);
+        img.onerror = () => console.warn(`⚠️ Asset não carregado: ${label}`);
+        img.src = src;
+        return img;
+    }
 
     function carregarAssets() {
         const base = CONFIG.ASSET_BASE;
 
-        const c = new Image(); c.crossOrigin = 'anonymous';
-        c.onload  = () => { assets.cenario = c; };
-        c.onerror = () => console.warn('⚠️ Cenário não carregado');
-        c.src = base + 'piso-de-batalha/cenario1.png';
-
-        const f = new Image(); f.crossOrigin = 'anonymous';
-        f.onload  = () => { assets.chao = f; };
-        f.onerror = () => console.warn('⚠️ Chão não carregado');
-        f.src = base + 'piso-de-batalha/piso1.png';
+        _loadImg(base + 'piso-de-batalha/cenario1.png', img => assets.cenario = img, 'cenario');
+        _loadImg(base + 'piso-de-batalha/piso1.png',   img => assets.chao    = img, 'chao');
+        _loadImg(base + 'armas/flor-basica.png',        img => assets.flor    = img, 'flor');
 
         for (let i = 1; i <= 8; i++) {
-            const s = new Image(); s.crossOrigin = 'anonymous';
             const idx = i - 1;
-            s.onload  = () => { assets.santa[idx] = s; };
-            s.onerror = () => console.warn(`⚠️ Santa frame ${i} não carregada`);
-            s.src = base + `animation_summon/str-conjurando${i}.png`;
+            _loadImg(
+                base + `animation_summon/str-conjurando${i}.png`,
+                img => { assets.santa[idx] = img; },
+                `santa-frame-${i}`
+            );
         }
 
-        const mn = new Image(); mn.crossOrigin = 'anonymous';
-        mn.onload  = () => { assets.monstroNormal = mn; };
-        mn.onerror = () => console.warn('⚠️ Monstro normal não carregado');
-        mn.src = base + 'monstros/slime-de-gelo/slime-de-gelo.png';
+        // Carrega todos os monstros do catálogo
+        for (const [id, def] of Object.entries(MONSTER_CATALOG)) {
+            const entry = { normal: null, hit: null, idle: [] };
+            const bp = base + def.basePath;
 
-        const mh = new Image(); mh.crossOrigin = 'anonymous';
-        mh.onload  = () => { assets.monstroHitado = mh; };
-        mh.onerror = () => console.warn('⚠️ Monstro hitado não carregado');
-        mh.src = base + 'monstros/slime-de-gelo/slime-de-gelo-hitado.png';
+            if (def.normal) {
+                _loadImg(bp + def.normal, img => entry.normal = img, `${id}-normal`);
+            }
+            if (def.hit) {
+                _loadImg(bp + def.hit, img => entry.hit = img, `${id}-hit`);
+            }
 
-        const fl = new Image(); fl.crossOrigin = 'anonymous';
-        fl.onload  = () => { assets.flor = fl; };
-        fl.onerror = () => console.warn('⚠️ Flor não carregada');
-        fl.src = base + 'armas/flor-basica.png';
+            if (def.idle.enabled) {
+                for (let i = 1; i <= def.idle.frames; i++) {
+                    const fi = i - 1;
+                    entry.idle.push(null);
+                    _loadImg(
+                        bp + `${def.idle.prefix}${i}.png`,
+                        img => { entry.idle[fi] = img; },
+                        `${id}-idle-${i}`
+                    );
+                }
+            }
+
+            assets.monsters[id] = entry;
+        }
     }
 
-    // ════════════════════════════════════════
-    //  HIT STATE
-    // ════════════════════════════════════════
+    // ═══════════════════════════════════════════════════════
+    //  ESTADO DE HIT
+    // ═══════════════════════════════════════════════════════
     const hit = { tremendo: 0, flash: 0 };
-    EventBus.on('inimigo:dano', () => { hit.tremendo = 14; hit.flash = 8; });
+    EventBus.on('inimigo:dano', () => {
+        hit.tremendo = 14;
+        hit.flash    = 8;
+    });
 
-    // ════════════════════════════════════════
-    //  HELPERS DE POSIÇÃO
-    // ════════════════════════════════════════
+    // ═══════════════════════════════════════════════════════
+    //  ESTADO DE ANIMAÇÃO IDLE DO MONSTRO (ping-pong)
+    // ═══════════════════════════════════════════════════════
+    const idle = {
+        frame:    0,    // frame atual (0-based)
+        dir:      1,    // +1 avança / -1 recua
+        tick:     0,    // contador de ticks
+        hitTimer: 0,    // contador de exibição do sprite de hit
+    };
 
-    // ─────────────────────────────────────────────────────────
-    // POSICIONAMENTO VERTICAL DO CHÃO:
-    //   Aumente o valor (ex: 0.80) para descer a linha do chão.
-    //   Diminua (ex: 0.65) para subir a linha do chão.
-    // ─────────────────────────────────────────────────────────
-    function chaoY(canvas) { return canvas.height * 0.74; }
+    function _atualizarIdle(def) {
+        if (idle.hitTimer > 0) {
+            idle.hitTimer--;
+            return;
+        }
 
-    // ─────────────────────────────────────────────────────────
-    // POSICIONAMENTO HORIZONTAL DOS PERSONAGENS:
-    //   0.50 = centro exato da tela.
-    //   Diminua (ex: 0.30) para mover tudo para a ESQUERDA.
-    //   Aumente (ex: 0.70) para mover tudo para a DIREITA.
-    //
-    //   Se quiser Santa e Monstro em lados opostos, separe
-    //   as funções santaX e monstroX com valores diferentes,
-    //   por exemplo:
-    //     santaX  → canvas.width * 0.25   (esquerda)
-    //     monstroX → canvas.width * 0.70  (direita)
-    // ─────────────────────────────────────────────────────────
-    function centroX(canvas)  { return canvas.width  * 0.50; }
-    function santaX(canvas)   { return centroX(canvas); }
-    function monstroX(canvas) { return centroX(canvas); }
+        const isApex   = idle.frame === def.idle.frames - 1;
+        const duracao  = isApex ? def.idle.tickApex : def.idle.tickNorm;
 
-    // ════════════════════════════════════════
-    //  FUNDO (cenário)
-    // ════════════════════════════════════════
+        idle.tick++;
+        if (idle.tick < duracao) return;
+        idle.tick = 0;
+
+        idle.frame += idle.dir;
+
+        if (idle.frame >= def.idle.frames) {
+            idle.frame = def.idle.frames - 1;
+            idle.dir   = -1;
+        }
+        if (idle.frame < 0) {
+            idle.frame = 0;
+            idle.dir   = 1;
+        }
+    }
+
+    // Quando leva hit, trava no sprite de hit por alguns ticks
+    EventBus.on('inimigo:dano', () => {
+        const id  = BattleState?.inimigo?.tipo ?? '';
+        const def = MONSTER_CATALOG[id];
+        if (def?.idle?.enabled) {
+            idle.hitTimer = def.idle.hitDelay ?? 6;
+        }
+    });
+
+    // Reseta idle ao trocar de monstro
+    EventBus.on('inimigo:novo', () => {
+        idle.frame    = 0;
+        idle.dir      = 1;
+        idle.tick     = 0;
+        idle.hitTimer = 0;
+    });
+
+    // ═══════════════════════════════════════════════════════
+    //  FUNDO
+    // ═══════════════════════════════════════════════════════
     function _fundo(ctx, canvas) {
-        const W = canvas.width, H = canvas.height, cy = chaoY(canvas);
-
-        if (imgOk(assets.cenario)) {
+        const W = canvas.width, H = canvas.height;
+        if (_imgOk(assets.cenario)) {
             const i   = assets.cenario;
             const esc = Math.max(W / i.naturalWidth, H / i.naturalHeight);
             const dw  = i.naturalWidth  * esc;
             const dh  = i.naturalHeight * esc;
             ctx.drawImage(i, (W - dw) / 2, (H - dh) / 2, dw, dh);
         } else {
-            _fundoFallback(ctx, W, H, cy);
-        }
-    }
-
-    // ════════════════════════════════════════
-    //  CHÃO
-    // ════════════════════════════════════════
-    function _desenharChao(ctx, canvas) {
-        const W  = canvas.width;
-        const H  = canvas.height;
-        const cy = chaoY(canvas);
-
-        if (imgOk(assets.chao)) {
-            ctx.drawImage(assets.chao, 0, cy, W, H - cy);
-        } else {
-            _chaoFallback(ctx, W, H, cy);
+            _fundoFallback(ctx, W, H, chaoY(canvas));
         }
     }
 
@@ -121,7 +211,8 @@ const BattleRenderer = (() => {
         g.addColorStop(0,    '#030110');
         g.addColorStop(0.45, '#0a0728');
         g.addColorStop(1,    '#1c0f5e');
-        ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+        ctx.fillStyle = g;
+        ctx.fillRect(0, 0, W, H);
 
         const t = Date.now();
         for (let i = 0; i < 120; i++) {
@@ -141,32 +232,140 @@ const BattleRenderer = (() => {
         gl.addColorStop(0.5, 'rgba(255,220,130,0.40)');
         gl.addColorStop(1,   'rgba(255,200,80,0)');
         ctx.fillStyle = gl;
-        ctx.beginPath(); ctx.arc(lx, ly, 62, 0, Math.PI * 2); ctx.fill();
+        ctx.beginPath();
+        ctx.arc(lx, ly, 62, 0, Math.PI * 2);
+        ctx.fill();
     }
 
-    function _chaoFallback(ctx, W, H, cy) {
-        const g = ctx.createLinearGradient(0, cy, 0, H);
-        g.addColorStop(0,   '#22095a');
-        g.addColorStop(0.3, '#160636');
-        g.addColorStop(1,   '#060318');
-        ctx.fillStyle = g; ctx.fillRect(0, cy, W, H - cy);
+    // ═══════════════════════════════════════════════════════
+    //  CHÃO
+    // ═══════════════════════════════════════════════════════
+    function _desenharChao(ctx, canvas) {
+        const W  = canvas.width;
+        const H  = canvas.height;
+        const cy = chaoY(canvas);
+        if (_imgOk(assets.chao)) {
+            ctx.drawImage(assets.chao, 0, cy, W, H - cy);
+        } else {
+            const g = ctx.createLinearGradient(0, cy, 0, H);
+            g.addColorStop(0,   '#22095a');
+            g.addColorStop(0.3, '#160636');
+            g.addColorStop(1,   '#060318');
+            ctx.fillStyle = g;
+            ctx.fillRect(0, cy, W, H - cy);
+        }
     }
 
-    // ════════════════════════════════════════
+    // ═══════════════════════════════════════════════════════
+    //  MONSTRO — despacha para o renderizador correto
+    // ═══════════════════════════════════════════════════════
+    function _desenharMonstro(ctx, canvas) {
+        if (hit.flash    > 0) hit.flash--;
+        if (hit.tremendo > 0) hit.tremendo--;
+
+        const ini  = BattleState.inimigo;
+        const id   = ini.tipo ?? 'slime-de-gelo';
+        const def  = MONSTER_CATALOG[id] ?? MONSTER_CATALOG['slime-de-gelo'];
+        const mAssets = assets.monsters[id] ?? assets.monsters['slime-de-gelo'];
+
+        const pct = Math.max(0.05, ini.maxHp > 0 ? ini.hp / ini.maxHp : 1);
+        const tam = canvas.height * (LAYOUT.MONSTRO_TAM + pct * 0.05);
+
+        const ox = hit.tremendo > 0 ? (Math.random() - 0.5) * 18 : 0;
+        const oy = hit.tremendo > 0 ? (Math.random() - 0.5) * 10 : 0;
+
+        const mx = monstroX(canvas) + ox;
+        const my = chaoY(canvas) - tam * LAYOUT.MONSTRO_EMERG + oy;
+
+        ctx.save();
+        ctx.shadowBlur  = 42 + Math.sin(Date.now() * 0.004) * 14;
+        ctx.shadowColor = pct < 0.25 ? 'rgba(255,220,0,1)' : 'rgba(255,50,50,0.9)';
+
+        if (def.idle.enabled) {
+            _desenharMonstroAnimado(ctx, canvas, def, mAssets, mx, my, tam, pct);
+        } else {
+            _desenharMonstroEstatico(ctx, ini, def, mAssets, mx, my, tam);
+        }
+
+        ctx.restore();
+    }
+
+    // ─── Monstro com sprite sheet de hit simples (slime original) ───────
+    function _desenharMonstroEstatico(ctx, ini, def, mAssets, mx, my, tam) {
+        const useHit   = hit.flash > 0 && _imgOk(mAssets.hit);
+        const imgM     = useHit ? mAssets.hit : mAssets.normal;
+
+        if (_imgOk(imgM)) {
+            const lar = tam * (imgM.naturalWidth / imgM.naturalHeight);
+            ctx.drawImage(imgM, mx - lar / 2, my - tam / 2, lar, tam);
+        } else {
+            _monstroEmojisFallback(ctx, ini, mx, my, tam);
+        }
+    }
+
+    // ─── Monstro com animação idle ping-pong (sapo-gato) ────────────────
+    function _desenharMonstroAnimado(ctx, canvas, def, mAssets, mx, my, tam, pct) {
+        _atualizarIdle(def);
+
+        let imgM;
+        const emHit = idle.hitTimer > 0 && _imgOk(mAssets.hit);
+
+        if (emHit) {
+            imgM = mAssets.hit;
+        } else {
+            imgM = mAssets.idle[idle.frame] ?? null;
+            // fallback: frame 0 ou normal
+            if (!_imgOk(imgM)) imgM = mAssets.idle[0] ?? mAssets.normal;
+        }
+
+        if (_imgOk(imgM)) {
+            // Escala vertical sutil: no ápice o monstro fica ligeiramente maior
+            const apexScale = def.idle.enabled
+                ? 1 + (idle.frame / (def.idle.frames - 1)) * 0.08
+                : 1;
+            const tamEsc = tam * apexScale;
+            const lar    = tamEsc * (imgM.naturalWidth / imgM.naturalHeight);
+
+            // Brilho verde/mágico pulsando conforme o frame de esticamento
+            if (!emHit) {
+                const t        = Date.now();
+                const progress = idle.frame / (def.idle.frames - 1);
+                ctx.shadowBlur  = 20 + progress * 40;
+                ctx.shadowColor = `rgba(80, 255, 180, ${0.3 + progress * 0.5})`;
+            }
+
+            ctx.drawImage(imgM, mx - lar / 2, my - tamEsc / 2, lar, tamEsc);
+        } else {
+            // Fallback texto enquanto assets carregam
+            ctx.font = `${tam * 0.5}px serif`;
+            ctx.textAlign    = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('🐸', mx, my);
+        }
+    }
+
+    function _monstroEmojisFallback(ctx, ini, mx, my, tam) {
+        const tipo = tiposMonstros?.[ini.tipo] ?? tiposMonstros?.[0];
+        ctx.font = `${tam}px serif`;
+        ctx.textAlign    = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(tipo?.emojis?.normal ?? '👾', mx, my);
+    }
+
+    // ═══════════════════════════════════════════════════════
     //  PERSONAGEM (Santa Teresinha) — Conjuração Ping-Pong
-    // ════════════════════════════════════════
+    // ═══════════════════════════════════════════════════════
     const pb = {
-        frame:       0,     // frame atual (0–7)
-        direcao:     1,     // +1 avança  /  -1 recua
-        tempo:       0,     // contador de ticks
-        conjurando:  false, // está animando agora?
-        TICK_NORMAL: 6,     // ticks por frame normal
-        TICK_ULTIMO: 38,    // ticks no frame do ápice (último frame)
-        FRAME_MAX:   7,     // índice do último frame (0-based, total 8 frames)
-        offX:        0,     // vibração horizontal no ápice
+        frame:       0,
+        direcao:     1,
+        tempo:       0,
+        conjurando:  false,
+        TICK_NORMAL: 6,
+        TICK_ULTIMO: 38,
+        FRAME_MAX:   7,
+        offX:        0,
     };
 
-    // Flores pediram conjuração → Santa inicia animação do zero
     EventBus.on('flores:conjurar', () => {
         if (!pb.conjurando) {
             pb.conjurando = true;
@@ -177,31 +376,21 @@ const BattleRenderer = (() => {
     });
 
     function _atualizarPB() {
-        // Parada: trava no frame 0, sem vibração
-        if (!pb.conjurando) {
-            pb.frame = 0;
-            pb.offX  = 0;
-            return;
-        }
+        if (!pb.conjurando) { pb.frame = 0; pb.offX = 0; return; }
 
-        const duracao = pb.frame === pb.FRAME_MAX
-            ? pb.TICK_ULTIMO   // ápice demora mais
-            : pb.TICK_NORMAL;  // frames normais
-
+        const duracao = pb.frame === pb.FRAME_MAX ? pb.TICK_ULTIMO : pb.TICK_NORMAL;
         pb.tempo++;
 
         if (pb.tempo >= duracao) {
             pb.tempo = 0;
             pb.frame += pb.direcao;
 
-            // Chegou no ápice → inverte direção e dispara reset das flores
             if (pb.frame >= pb.FRAME_MAX) {
                 pb.frame   = pb.FRAME_MAX;
                 pb.direcao = -1;
                 EventBus.emit('flores:resetar');
             }
 
-            // Voltou ao frame 0 vindo de trás → encerra animação
             if (pb.frame <= 0 && pb.direcao === -1) {
                 pb.frame      = 0;
                 pb.conjurando = false;
@@ -209,100 +398,37 @@ const BattleRenderer = (() => {
             }
         }
 
-        // Vibração sutil só no ápice
         pb.offX = pb.frame === pb.FRAME_MAX
             ? Math.sin(Date.now() * 0.018) * 3.5
             : 0;
     }
 
     function _desenharPB(ctx, canvas) {
-        // ─────────────────────────────────────────────────────
-        // POSIÇÃO HORIZONTAL DA SANTA:
-        //   Troque santaX(canvas) por um número fixo ou por
-        //   canvas.width * 0.XX para mover para esquerda/direita.
-        //   Ex: const px = canvas.width * 0.25;  → esquerda
-        // ─────────────────────────────────────────────────────
-        const px = santaX(canvas);
+        const px  = santaX(canvas);
+        const py  = chaoY(canvas) + LAYOUT.SANTA_PY_OFFSET;
+        const ALT = canvas.height * LAYOUT.SANTA_ALTURA;
+        const off = pb.offX;
+        const img = assets.santa[pb.frame];
 
-        // ─────────────────────────────────────────────────────
-        // POSIÇÃO VERTICAL (PÉS DA SANTA):
-        //   chaoY(canvas) é a linha do chão.
-        //   O +40 empurra os pés um pouco para baixo do chão
-        //   (evita flutuar). Aumente para afundar mais,
-        //   diminua ou zere para ela ficar mais em cima.
-        // ─────────────────────────────────────────────────────
-        const py = chaoY(canvas) + 10;
-
-        // ─────────────────────────────────────────────────────
-        // TAMANHO DA SANTA:
-        //   Aumente o 0.30 para deixá-la maior.
-        //   Diminua para deixá-la menor.
-        //   Ex: canvas.height * 0.40 → 40% da altura da tela
-        // ─────────────────────────────────────────────────────
-        const ALT  = canvas.height * 0.30;
-        const offX = pb.offX;
-        const img  = assets.santa[pb.frame];
-
-        if (imgOk(img)) {
+        if (_imgOk(img)) {
             const lar = ALT * (img.naturalWidth / img.naturalHeight);
 
-            // Sombra elíptica no chão REMOVIDA conforme solicitado.
-            // Para reativar, descomente o bloco abaixo:
-            /*
-            ctx.save();
-            ctx.fillStyle = 'rgba(0,0,0,0.28)';
-            ctx.beginPath();
-            ctx.ellipse(px + offX, py + 5, lar * 0.38, 7, 0, 0, Math.PI * 2);
-            ctx.fill();
-            ctx.restore();
-            */
-
-            // Efeito de aura no ápice REMOVIDO conforme solicitado.
-            // Para reativar, descomente o bloco abaixo:
-            /*
-            if (pb.conjurando && pb.frame === pb.FRAME_MAX) {
-                ctx.save();
-                const pulso     = 0.5 + Math.sin(Date.now() * 0.012) * 0.5;
-                ctx.shadowBlur  = 40 + pulso * 30;
-                ctx.shadowColor = `rgba(180,80,255,${0.6 + pulso * 0.4})`;
-                ctx.globalAlpha = 0.18 + pulso * 0.12;
-                ctx.fillStyle   = 'rgba(200,100,255,1)';
-                ctx.beginPath();
-                ctx.ellipse(
-                    px + offX, py - ALT * 0.5,
-                    lar * 0.45, ALT * 0.55,
-                    0, 0, Math.PI * 2
-                );
-                ctx.fill();
-                ctx.restore();
-            }
-            */
-
-            // Partículas mágicas subindo durante a conjuração
             if (pb.conjurando && Math.random() < 0.35) {
                 const t = pb.frame / pb.FRAME_MAX;
                 _criarParticulaMagica(
-                    px + offX + (Math.random() - 0.5) * lar * 0.6,
+                    px + off + (Math.random() - 0.5) * lar * 0.6,
                     py - ALT * (0.2 + Math.random() * 0.7),
                     t
                 );
             }
 
-            // ─────────────────────────────────────────────────
-            // ESPELHAMENTO HORIZONTAL:
-            //   ctx.scale(-1, 1) espelha a Santa para ela
-            //   olhar para a direita (padrão atual).
-            //   Remova o scale(-1,1) e troque por scale(1,1)
-            //   (ou apague a linha) para ela olhar para a esquerda.
-            // ─────────────────────────────────────────────────
             ctx.save();
-            ctx.translate(px + offX, py);
-            ctx.scale(-1, 1);
+            ctx.translate(px + off, py);
+            ctx.scale(-1, 1);   // espelhada para olhar para a direita
             ctx.drawImage(img, -lar / 2, -ALT, lar, ALT);
             ctx.restore();
-
         } else {
-            _santaFallback(ctx, px, py, ALT, offX);
+            _santaFallback(ctx, px, py, ALT, off);
         }
     }
 
@@ -326,68 +452,9 @@ const BattleRenderer = (() => {
         ctx.restore();
     }
 
-    // ════════════════════════════════════════
-    //  MONSTRO
-    // ════════════════════════════════════════
-    function _desenharMonstro(ctx, canvas) {
-        if (hit.flash > 0)    hit.flash--;
-        if (hit.tremendo > 0) hit.tremendo--;
-
-        const ini = BattleState.inimigo;
-        const pct = Math.max(0.05, ini.maxHp > 0 ? ini.hp / ini.maxHp : 1);
-
-        // ─────────────────────────────────────────────────────
-        // TAMANHO DO MONSTRO:
-        //   O valor base é 0.88 (88% da altura da tela).
-        //   Diminua para deixar menor, aumente para maior.
-        //   Ex: canvas.height * 0.55  → monstro bem menor
-        // ─────────────────────────────────────────────────────
-        const tam = canvas.height * (0.88 + pct * 0.05);
-
-        const ox = hit.tremendo > 0 ? (Math.random() - 0.5) * 18 : 0;
-        const oy = hit.tremendo > 0 ? (Math.random() - 0.5) * 10 : 0;
-
-        // ─────────────────────────────────────────────────────
-        // POSIÇÃO HORIZONTAL DO MONSTRO:
-        //   Troque monstroX(canvas) por canvas.width * 0.XX
-        //   Ex: canvas.width * 0.70  → monstro na direita
-        // ─────────────────────────────────────────────────────
-        const mx = monstroX(canvas) + ox;
-
-        // ─────────────────────────────────────────────────────
-        // POSIÇÃO VERTICAL DO MONSTRO:
-        //   chaoY(canvas) é a linha do chão.
-        //   O - tam * 0.10 faz o monstro ficar semi-enterrado.
-        //   Aumente o 0.10 para subi-lo mais,
-        //   diminua para afundá-lo mais no chão.
-        // ─────────────────────────────────────────────────────
-        const my = chaoY(canvas) - tam * 0.20 + oy;
-
-        const imgMonstro = (hit.flash > 0 && imgOk(assets.monstroHitado))
-            ? assets.monstroHitado
-            : assets.monstroNormal;
-
-        ctx.save();
-        ctx.shadowBlur  = 42 + Math.sin(Date.now() * 0.004) * 14;
-        ctx.shadowColor = pct < 0.25 ? 'rgba(255,220,0,1)' : 'rgba(255,50,50,0.9)';
-
-        if (imgOk(imgMonstro)) {
-            const lar = tam * (imgMonstro.naturalWidth / imgMonstro.naturalHeight);
-            ctx.drawImage(imgMonstro, mx - lar / 2, my - tam / 2, lar, tam);
-        } else {
-            const tipo = tiposMonstros[ini.tipo] ?? tiposMonstros[0];
-            ctx.font = `${tam}px serif`;
-            ctx.textAlign    = 'center';
-            ctx.textBaseline = 'middle';
-            ctx.fillText(tipo.emojis.normal, mx, my);
-        }
-
-        ctx.restore();
-    }
-
-    // ════════════════════════════════════════
+    // ═══════════════════════════════════════════════════════
     //  FLORES — Sistema completo
-    // ════════════════════════════════════════
+    // ═══════════════════════════════════════════════════════
     const FLORES_MAX     = 30;
     const FLORES_REABAST = 5;
     const FLOR_TAM_MIN   = 28;
@@ -408,7 +475,6 @@ const BattleRenderer = (() => {
         const TETO_Y   = H * 0.04;
         const CHAO_Y   = cy * 0.80;
         const MIN_DIST = 52;
-
         const posicoes = [];
         let tentativas = 0;
 
@@ -419,13 +485,10 @@ const BattleRenderer = (() => {
             const size = FLOR_TAM_MIN + Math.random() * (FLOR_TAM_MAX - FLOR_TAM_MIN);
 
             if (Math.hypot(x - mx, y - my) < BOSS_R) continue;
-
-            const sobrep = posicoes.some(p => Math.hypot(p.x - x, p.y - y) < MIN_DIST);
-            if (sobrep) continue;
+            if (posicoes.some(p => Math.hypot(p.x - x, p.y - y) < MIN_DIST)) continue;
 
             posicoes.push({ x, y, size, glowFase: Math.random() * Math.PI * 2 });
         }
-
         return posicoes;
     }
 
@@ -438,10 +501,7 @@ const BattleRenderer = (() => {
     function _criarFlor(pos, idx, spawnImediato = false) {
         return {
             idx,
-            x:          pos.x,
-            y:          pos.y,
-            size:       pos.size,
-            glowFase:   pos.glowFase,
+            x: pos.x, y: pos.y, size: pos.size, glowFase: pos.glowFase,
             alpha:      spawnImediato ? 1 : 0,
             glow:       spawnImediato ? 1 : 0,
             conjurando: !spawnImediato,
@@ -451,19 +511,15 @@ const BattleRenderer = (() => {
         };
     }
 
-    // Verifica se flores estão acabando → pede conjuração à Santa
     function _checarReabastecimento() {
-        const vivas = flores.filter(f => f.viva).length;
-        if (vivas <= FLORES_REABAST) {
+        if (flores.filter(f => f.viva).length <= FLORES_REABAST) {
             EventBus.emit('flores:conjurar');
         }
     }
 
-    // Santa atingiu o ápice → flores reaparecem com animação de surgimento
     EventBus.on('flores:resetar', () => {
         _posFixas.forEach((pos, idx) => {
-            const jaExiste = flores.some(f => f.idx === idx && f.viva);
-            if (!jaExiste) {
+            if (!flores.some(f => f.idx === idx && f.viva)) {
                 flores.push(_criarFlor(pos, idx, false));
             }
         });
@@ -477,18 +533,15 @@ const BattleRenderer = (() => {
             f.alpha = Math.min(1, t * 1.4);
             f.glow  = Math.sin(t * Math.PI);
             if (f.conjFrames >= f.conjDur) {
-                f.conjurando = false;
-                f.alpha = 1;
-                f.glow  = 1;
+                f.conjurando = false; f.alpha = 1; f.glow = 1;
             }
         });
         flores = flores.filter(f => f.viva);
     }
 
     function _desenharFlores(ctx, canvas) {
-        if (!imgOk(assets.flor)) return;
+        if (!_imgOk(assets.flor)) return;
         const t = Date.now();
-
         flores.forEach(f => {
             if (!f.viva) return;
             const glowPulse = 0.6 + Math.sin(t * 0.002 + f.glowFase) * 0.4;
@@ -504,9 +557,7 @@ const BattleRenderer = (() => {
                 grd.addColorStop(0.5, `rgba(255,20,20,${0.25 * f.glow})`);
                 grd.addColorStop(1,   'rgba(255,0,0,0)');
                 ctx.fillStyle = grd;
-                ctx.beginPath();
-                ctx.arc(0, 0, glowRaio, 0, Math.PI * 2);
-                ctx.fill();
+                ctx.beginPath(); ctx.arc(0, 0, glowRaio, 0, Math.PI * 2); ctx.fill();
             }
 
             ctx.drawImage(assets.flor, -f.size / 2, -f.size / 2, f.size, f.size);
@@ -514,9 +565,9 @@ const BattleRenderer = (() => {
         });
     }
 
-    // ════════════════════════════════════════
+    // ═══════════════════════════════════════════════════════
     //  FLORES PROJÉTEIS
-    // ════════════════════════════════════════
+    // ═══════════════════════════════════════════════════════
     function dispararFlor(canvas) {
         const mx = monstroX(canvas);
         const my = chaoY(canvas) - canvas.height * 0.30;
@@ -536,14 +587,10 @@ const BattleRenderer = (() => {
         const sp = 10 + Math.random() * 5;
 
         floresAtt.push({
-            x:       melhor.x,
-            y:       melhor.y,
-            vx:      Math.cos(angulo) * sp,
-            vy:      Math.sin(angulo) * sp,
-            tx, ty,
-            size:    melhor.size,
-            angulo,
-            vida:    Math.ceil(melhorDist / sp) + 10,
+            x:  melhor.x, y: melhor.y,
+            vx: Math.cos(angulo) * sp, vy: Math.sin(angulo) * sp,
+            tx, ty, size: melhor.size, angulo,
+            vida: Math.ceil(melhorDist / sp) + 10,
             acertou: false,
         });
 
@@ -563,7 +610,7 @@ const BattleRenderer = (() => {
     }
 
     function _desenharFloresAtt(ctx) {
-        if (!imgOk(assets.flor)) return;
+        if (!_imgOk(assets.flor)) return;
         floresAtt.forEach(f => {
             ctx.save();
             ctx.globalAlpha = Math.min(1, f.vida / 12);
@@ -574,9 +621,9 @@ const BattleRenderer = (() => {
         });
     }
 
-    // ════════════════════════════════════════
+    // ═══════════════════════════════════════════════════════
     //  PARTÍCULAS
-    // ════════════════════════════════════════
+    // ═══════════════════════════════════════════════════════
     let particulas = [];
 
     function _criarParticula(x, y) {
@@ -595,7 +642,6 @@ const BattleRenderer = (() => {
         });
     }
 
-    // Partículas mágicas leves que sobem durante a conjuração
     function _criarParticulaMagica(x, y, intensidade) {
         const cores = [
             `hsl(${270 + Math.random() * 60},100%,75%)`,
@@ -614,13 +660,13 @@ const BattleRenderer = (() => {
         });
     }
 
-    EventBus.on('inimigo:morto', (d) => {
-        for (let i = 0; i < 20; i++) _criarParticula(d.x ?? 0, d.y ?? 0);
+    EventBus.on('inimigo:morto', d => {
+        for (let i = 0; i < 20; i++) _criarParticula(d?.x ?? 0, d?.y ?? 0);
     });
 
-    // ════════════════════════════════════════
+    // ═══════════════════════════════════════════════════════
     //  MOEDAS CAINDO
-    // ════════════════════════════════════════
+    // ═══════════════════════════════════════════════════════
     let moedas = [];
 
     function criarMoeda(canvas) {
@@ -635,9 +681,9 @@ const BattleRenderer = (() => {
         });
     }
 
-    // ════════════════════════════════════════
+    // ═══════════════════════════════════════════════════════
     //  TEXTOS FLUTUANTES
-    // ════════════════════════════════════════
+    // ═══════════════════════════════════════════════════════
     let textos = [];
 
     function criarTexto(valor, tipo, canvas) {
@@ -645,14 +691,20 @@ const BattleRenderer = (() => {
         const my = chaoY(canvas) - canvas.height * 0.45;
         textos.push({
             x: mx + (Math.random() - 0.5) * 100,
-            y: my,
-            valor, tipo, vida: 80, max: 80,
+            y: my, valor, tipo, vida: 80, max: 80,
         });
     }
 
-    // ════════════════════════════════════════
-    //  RENDER COMPLETO
-    // ════════════════════════════════════════
+    // ═══════════════════════════════════════════════════════
+    //  UTILITÁRIOS INTERNOS
+    // ═══════════════════════════════════════════════════════
+    function _imgOk(img) {
+        return img instanceof HTMLImageElement && img.complete && img.naturalWidth > 0;
+    }
+
+    // ═══════════════════════════════════════════════════════
+    //  RENDER PRINCIPAL
+    // ═══════════════════════════════════════════════════════
     function render(ctx, canvas) {
 
         // 1. Cenário de fundo
@@ -673,15 +725,14 @@ const BattleRenderer = (() => {
         _desenharChao(ctx, canvas);
 
         // 6. Partículas
+        ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
         particulas.forEach(p => {
             p.x += p.vx;
             p.y += p.vy;
-            // Mágicas sobem levemente; normais caem com gravidade
             p.vy += p.magica ? 0.03 : 0.14;
             p.vida--;
         });
         particulas = particulas.filter(p => p.vida > 0);
-        ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
         particulas.forEach(p => {
             ctx.save();
             ctx.globalAlpha = Math.min(1, p.vida / 12);
@@ -690,17 +741,15 @@ const BattleRenderer = (() => {
                 ctx.fillText(p.emoji, p.x, p.y);
             } else {
                 ctx.fillStyle = p.cor;
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, p.size * 0.5, 0, Math.PI * 2);
-                ctx.fill();
+                ctx.beginPath(); ctx.arc(p.x, p.y, p.size * 0.5, 0, Math.PI * 2); ctx.fill();
             }
             ctx.restore();
         });
 
         // 7. Moedas
+        ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
         moedas.forEach(m => { m.x += m.vx; m.y += m.vy; m.vy += 0.22; m.vida--; });
         moedas = moedas.filter(m => m.vida > 0);
-        ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
         moedas.forEach(m => {
             ctx.save();
             ctx.globalAlpha = Math.min(1, m.vida / 20);
@@ -718,10 +767,11 @@ const BattleRenderer = (() => {
         textos.forEach(t => {
             ctx.save();
             ctx.globalAlpha = Math.min(1, t.vida / 22);
-            const [cor, tam] = t.tipo === 'levelup' ? ['#ffd700', 26]
-                             : t.tipo === 'dps'     ? ['#aaffaa', 13]
-                             : t.tipo === 'critico' ? ['#ff4400', 26]
-                             : ['#ff9de2', 22];
+            const [cor, tam] =
+                t.tipo === 'levelup' ? ['#ffd700', 26] :
+                t.tipo === 'dps'     ? ['#aaffaa', 13] :
+                t.tipo === 'critico' ? ['#ff4400', 26] :
+                                       ['#ff9de2', 22];
             ctx.font = `bold ${tam}px 'Nunito', sans-serif`;
             ctx.strokeStyle = 'rgba(0,0,0,0.95)'; ctx.lineWidth = 4;
             ctx.strokeText(t.valor, t.x, t.y);
@@ -734,6 +784,9 @@ const BattleRenderer = (() => {
         textos = textos.filter(t => t.vida > 0);
     }
 
+    // ═══════════════════════════════════════════════════════
+    //  API PÚBLICA
+    // ═══════════════════════════════════════════════════════
     return {
         init(canvas) {
             carregarAssets();
@@ -747,5 +800,11 @@ const BattleRenderer = (() => {
         criarMoeda,
         criarTexto,
         criarParticula: _criarParticula,
+
+        // Permite registrar monstros extras em runtime sem editar este arquivo
+        registrarMonstro(id, definicao) {
+            MONSTER_CATALOG[id] = definicao;
+        },
     };
+
 })();
