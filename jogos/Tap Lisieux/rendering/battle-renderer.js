@@ -12,12 +12,23 @@ const BattleRenderer = (() => {
     // ═══════════════════════════════════════════════════════
     const LAYOUT = {
         CHAO_Y:          0.74,   // linha do chão (0=topo, 1=base)
-        SANTA_X:         0.28,   // posição horizontal da santa  (esquerda)
-        MONSTRO_X:       0.65,   // posição horizontal do monstro (direita)
+        //
+        // ── POSICIONAMENTO FRENTE-A-FRENTE (estilo Tap Titans 2) ──────────
+        // Santa na esquerda, monstro na direita, ambos olhando um para o outro.
+        // Para voltar ao centro: use 0.50 nos dois.
+        SANTA_X:         0.25,   // santa na esquerda
+        MONSTRO_X:       0.68,   // monstro na direita
+        //
         SANTA_ALTURA:    0.30,   // altura da santa (% da tela)
         SANTA_PY_OFFSET: 10,     // empurra os pés da santa para baixo do chão
         MONSTRO_TAM:     0.88,   // tamanho base do monstro
-        MONSTRO_EMERG:   0.20,   // quanto o monstro afunda no chão (0=topo, 1=enterrado)
+        MONSTRO_EMERG:   0.20,   // quanto o monstro afunda no chão
+        //
+        // ── ESPELHAMENTO ──────────────────────────────────────────────────
+        // true  = imagem espelhada (olha para a direita)
+        // false = imagem normal    (olha para a esquerda)
+        SANTA_ESPELHA:   false,  // santa olha para a DIREITA (em direção ao monstro)
+        MONSTRO_ESPELHA: true,   // monstro olha para a ESQUERDA (em direção à santa)
     };
 
     // ════════════════════════════════════════
@@ -48,16 +59,16 @@ const BattleRenderer = (() => {
         // ── Sapo-Gato (novo monstro com idle ping-pong 13 frames) ────────
         'sapo-gato': {
             basePath:  'monstros/slime-de-gelo/sapo-gato/',
-            normal:    null,          // usa idle frame 1 como pose base
+            normal:    null,          // usa frame idle[0] como pose base
             hit:       'saga-hit.png',
             hitAlt:    null,          // saga-hit2 reservado para uso futuro
             idle: {
                 enabled:   true,
                 prefix:    'saga',    // arquivos: saga1.png … saga13.png
-                frames:    13,        // total de frames
+                frames:    13,        // total de frames (ping-pong: 1→13→1)
                 tickNorm:  4,         // ticks por frame normal
                 tickApex:  10,        // ticks no frame do ápice (frame 13)
-                hitDelay:  6,         // ticks que o sprite de hit fica visível
+                hitDelay:  8,         // ticks que o sprite de hit fica visível
             },
         },
     };
@@ -292,12 +303,20 @@ const BattleRenderer = (() => {
 
     // ─── Monstro com sprite sheet de hit simples (slime original) ───────
     function _desenharMonstroEstatico(ctx, ini, def, mAssets, mx, my, tam) {
-        const useHit   = hit.flash > 0 && _imgOk(mAssets.hit);
-        const imgM     = useHit ? mAssets.hit : mAssets.normal;
+        const useHit = hit.flash > 0 && _imgOk(mAssets.hit);
+        const imgM   = useHit ? mAssets.hit : mAssets.normal;
 
         if (_imgOk(imgM)) {
             const lar = tam * (imgM.naturalWidth / imgM.naturalHeight);
-            ctx.drawImage(imgM, mx - lar / 2, my - tam / 2, lar, tam);
+            if (LAYOUT.MONSTRO_ESPELHA) {
+                ctx.save();
+                ctx.translate(mx, my);
+                ctx.scale(-1, 1);
+                ctx.drawImage(imgM, -lar / 2, -tam / 2, lar, tam);
+                ctx.restore();
+            } else {
+                ctx.drawImage(imgM, mx - lar / 2, my - tam / 2, lar, tam);
+            }
         } else {
             _monstroEmojisFallback(ctx, ini, mx, my, tam);
         }
@@ -319,22 +338,27 @@ const BattleRenderer = (() => {
         }
 
         if (_imgOk(imgM)) {
-            // Escala vertical sutil: no ápice o monstro fica ligeiramente maior
             const apexScale = def.idle.enabled
                 ? 1 + (idle.frame / (def.idle.frames - 1)) * 0.08
                 : 1;
             const tamEsc = tam * apexScale;
             const lar    = tamEsc * (imgM.naturalWidth / imgM.naturalHeight);
 
-            // Brilho verde/mágico pulsando conforme o frame de esticamento
             if (!emHit) {
-                const t        = Date.now();
-                const progress = idle.frame / (def.idle.frames - 1);
+                const progress  = idle.frame / (def.idle.frames - 1);
                 ctx.shadowBlur  = 20 + progress * 40;
                 ctx.shadowColor = `rgba(80, 255, 180, ${0.3 + progress * 0.5})`;
             }
 
-            ctx.drawImage(imgM, mx - lar / 2, my - tamEsc / 2, lar, tamEsc);
+            if (LAYOUT.MONSTRO_ESPELHA) {
+                ctx.save();
+                ctx.translate(mx, my);
+                ctx.scale(-1, 1);
+                ctx.drawImage(imgM, -lar / 2, -tamEsc / 2, lar, tamEsc);
+                ctx.restore();
+            } else {
+                ctx.drawImage(imgM, mx - lar / 2, my - tamEsc / 2, lar, tamEsc);
+            }
         } else {
             // Fallback texto enquanto assets carregam
             ctx.font = `${tam * 0.5}px serif`;
@@ -424,7 +448,7 @@ const BattleRenderer = (() => {
 
             ctx.save();
             ctx.translate(px + off, py);
-            ctx.scale(-1, 1);   // espelhada para olhar para a direita
+            if (LAYOUT.SANTA_ESPELHA) ctx.scale(-1, 1);
             ctx.drawImage(img, -lar / 2, -ALT, lar, ALT);
             ctx.restore();
         } else {
