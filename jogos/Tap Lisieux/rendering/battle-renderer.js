@@ -361,7 +361,7 @@ const BattleRenderer = (() => {
         //   Aumente o 0.10 para subi-lo mais,
         //   diminua para afundá-lo mais no chão.
         // ─────────────────────────────────────────────────────
-        const my = chaoY(canvas) - tam * 0.10 + oy;
+        const my = chaoY(canvas) - tam * 0.20 + oy;
 
         const imgMonstro = (hit.flash > 0 && imgOk(assets.monstroHitado))
             ? assets.monstroHitado
