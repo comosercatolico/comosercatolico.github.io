@@ -12,6 +12,11 @@ const BattleRenderer = (() => {
         monstroNormal: null,
         monstroHitado: null,
         flor:          null,
+
+        // ── Sapo-Gato ──────────────────────────────────────
+        sagaFrames:   new Array(13).fill(null), // saga1…saga13
+        sagaHit:      null,                      // hit normal
+        sagaHit2:     null,                      // hit exagerado (raro)
     };
 
     function carregarAssets() {
@@ -35,6 +40,7 @@ const BattleRenderer = (() => {
             s.src = base + `animation_summon/str-conjurando${i}.png`;
         }
 
+        // ── Slime de Gelo ───────────────────────────────────
         const mn = new Image(); mn.crossOrigin = 'anonymous';
         mn.onload  = () => { assets.monstroNormal = mn; };
         mn.onerror = () => console.warn('⚠️ Monstro normal não carregado');
@@ -45,6 +51,27 @@ const BattleRenderer = (() => {
         mh.onerror = () => console.warn('⚠️ Monstro hitado não carregado');
         mh.src = base + 'monstros/slime-de-gelo/slime-de-gelo-hitado.png';
 
+        // ── Sapo-Gato: frames idle ──────────────────────────
+        for (let i = 1; i <= 13; i++) {
+            const sg = new Image(); sg.crossOrigin = 'anonymous';
+            const idx = i - 1;
+            sg.onload  = () => { assets.sagaFrames[idx] = sg; };
+            sg.onerror = () => console.warn(`⚠️ Saga frame ${i} não carregada`);
+            sg.src = base + 'monstros/sapo-gato/saga' + i + '.png';
+        }
+
+        // ── Sapo-Gato: hit normal ───────────────────────────
+        const sh = new Image(); sh.crossOrigin = 'anonymous';
+        sh.onload  = () => { assets.sagaHit = sh; };
+        sh.onerror = () => console.warn('⚠️ saga-hit não carregada');
+        sh.src = base + 'monstros/sapo-gato/saga-hit.png';
+
+        // ── Sapo-Gato: hit exagerado ────────────────────────
+        const sh2 = new Image(); sh2.crossOrigin = 'anonymous';
+        sh2.onload  = () => { assets.sagaHit2 = sh2; };
+        sh2.onerror = () => console.warn('⚠️ saga-hit2 não carregada');
+        sh2.src = base + 'monstros/sapo-gato/saga-hit2.png';
+
         const fl = new Image(); fl.crossOrigin = 'anonymous';
         fl.onload  = () => { assets.flor = fl; };
         fl.onerror = () => console.warn('⚠️ Flor não carregada');
@@ -54,32 +81,44 @@ const BattleRenderer = (() => {
     // ════════════════════════════════════════
     //  HIT STATE
     // ════════════════════════════════════════
-    const hit = { tremendo: 0, flash: 0 };
-    EventBus.on('inimigo:dano', () => { hit.tremendo = 14; hit.flash = 8; });
+    const hit = {
+        tremendo:  0,
+        flash:     0,
+        exagerado: false,   // true → usa saga-hit2
+    };
+
+    EventBus.on('inimigo:dano', () => {
+        hit.tremendo  = 14;
+        hit.flash     = 8;
+        // saga-hit2 aparece ~15% das vezes
+        hit.exagerado = Math.random() < 0.15;
+    });
+
+    // ════════════════════════════════════════
+    //  ANIMAÇÃO IDLE DO SAPO-GATO
+    // ════════════════════════════════════════
+    const saga = {
+        frame:    0,        // frame atual (0–12)
+        tempo:    0,        // contador de ticks
+        TICK_DUR: 5,        // ticks por frame (ajuste a velocidade aqui)
+        FRAME_MAX: 12,      // último índice (13 frames → 0..12)
+    };
+
+    function _atualizarSaga() {
+        // Só anima se não estiver em flash de hit
+        if (hit.flash > 0) return;
+
+        saga.tempo++;
+        if (saga.tempo >= saga.TICK_DUR) {
+            saga.tempo = 0;
+            saga.frame = (saga.frame + 1) % (saga.FRAME_MAX + 1);
+        }
+    }
 
     // ════════════════════════════════════════
     //  HELPERS DE POSIÇÃO
     // ════════════════════════════════════════
-
-    // ─────────────────────────────────────────────────────────
-    // POSICIONAMENTO VERTICAL DO CHÃO:
-    //   Aumente o valor (ex: 0.80) para descer a linha do chão.
-    //   Diminua (ex: 0.65) para subir a linha do chão.
-    // ─────────────────────────────────────────────────────────
-    function chaoY(canvas) { return canvas.height * 0.74; }
-
-    // ─────────────────────────────────────────────────────────
-    // POSICIONAMENTO HORIZONTAL DOS PERSONAGENS:
-    //   0.50 = centro exato da tela.
-    //   Diminua (ex: 0.30) para mover tudo para a ESQUERDA.
-    //   Aumente (ex: 0.70) para mover tudo para a DIREITA.
-    //
-    //   Se quiser Santa e Monstro em lados opostos, separe
-    //   as funções santaX e monstroX com valores diferentes,
-    //   por exemplo:
-    //     santaX  → canvas.width * 0.25   (esquerda)
-    //     monstroX → canvas.width * 0.70  (direita)
-    // ─────────────────────────────────────────────────────────
+    function chaoY(canvas)    { return canvas.height * 0.74; }
     function centroX(canvas)  { return canvas.width  * 0.50; }
     function santaX(canvas)   { return centroX(canvas); }
     function monstroX(canvas) { return centroX(canvas); }
@@ -153,20 +192,19 @@ const BattleRenderer = (() => {
     }
 
     // ════════════════════════════════════════
-    //  PERSONAGEM (Santa Teresinha) — Conjuração Ping-Pong
+    //  PERSONAGEM (Santa Teresinha)
     // ════════════════════════════════════════
     const pb = {
-        frame:       0,     // frame atual (0–7)
-        direcao:     1,     // +1 avança  /  -1 recua
-        tempo:       0,     // contador de ticks
-        conjurando:  false, // está animando agora?
-        TICK_NORMAL: 6,     // ticks por frame normal
-        TICK_ULTIMO: 38,    // ticks no frame do ápice (último frame)
-        FRAME_MAX:   7,     // índice do último frame (0-based, total 8 frames)
-        offX:        0,     // vibração horizontal no ápice
+        frame:       0,
+        direcao:     1,
+        tempo:       0,
+        conjurando:  false,
+        TICK_NORMAL: 6,
+        TICK_ULTIMO: 38,
+        FRAME_MAX:   7,
+        offX:        0,
     };
 
-    // Flores pediram conjuração → Santa inicia animação do zero
     EventBus.on('flores:conjurar', () => {
         if (!pb.conjurando) {
             pb.conjurando = true;
@@ -177,7 +215,6 @@ const BattleRenderer = (() => {
     });
 
     function _atualizarPB() {
-        // Parada: trava no frame 0, sem vibração
         if (!pb.conjurando) {
             pb.frame = 0;
             pb.offX  = 0;
@@ -185,8 +222,8 @@ const BattleRenderer = (() => {
         }
 
         const duracao = pb.frame === pb.FRAME_MAX
-            ? pb.TICK_ULTIMO   // ápice demora mais
-            : pb.TICK_NORMAL;  // frames normais
+            ? pb.TICK_ULTIMO
+            : pb.TICK_NORMAL;
 
         pb.tempo++;
 
@@ -194,14 +231,12 @@ const BattleRenderer = (() => {
             pb.tempo = 0;
             pb.frame += pb.direcao;
 
-            // Chegou no ápice → inverte direção e dispara reset das flores
             if (pb.frame >= pb.FRAME_MAX) {
                 pb.frame   = pb.FRAME_MAX;
                 pb.direcao = -1;
                 EventBus.emit('flores:resetar');
             }
 
-            // Voltou ao frame 0 vindo de trás → encerra animação
             if (pb.frame <= 0 && pb.direcao === -1) {
                 pb.frame      = 0;
                 pb.conjurando = false;
@@ -209,36 +244,14 @@ const BattleRenderer = (() => {
             }
         }
 
-        // Vibração sutil só no ápice
         pb.offX = pb.frame === pb.FRAME_MAX
             ? Math.sin(Date.now() * 0.018) * 3.5
             : 0;
     }
 
     function _desenharPB(ctx, canvas) {
-        // ─────────────────────────────────────────────────────
-        // POSIÇÃO HORIZONTAL DA SANTA:
-        //   Troque santaX(canvas) por um número fixo ou por
-        //   canvas.width * 0.XX para mover para esquerda/direita.
-        //   Ex: const px = canvas.width * 0.25;  → esquerda
-        // ─────────────────────────────────────────────────────
-        const px = santaX(canvas);
-
-        // ─────────────────────────────────────────────────────
-        // POSIÇÃO VERTICAL (PÉS DA SANTA):
-        //   chaoY(canvas) é a linha do chão.
-        //   O +40 empurra os pés um pouco para baixo do chão
-        //   (evita flutuar). Aumente para afundar mais,
-        //   diminua ou zere para ela ficar mais em cima.
-        // ─────────────────────────────────────────────────────
-        const py = chaoY(canvas) + 10;
-
-        // ─────────────────────────────────────────────────────
-        // TAMANHO DA SANTA:
-        //   Aumente o 0.30 para deixá-la maior.
-        //   Diminua para deixá-la menor.
-        //   Ex: canvas.height * 0.40 → 40% da altura da tela
-        // ─────────────────────────────────────────────────────
+        const px   = santaX(canvas);
+        const py   = chaoY(canvas) + 10;
         const ALT  = canvas.height * 0.30;
         const offX = pb.offX;
         const img  = assets.santa[pb.frame];
@@ -246,39 +259,6 @@ const BattleRenderer = (() => {
         if (imgOk(img)) {
             const lar = ALT * (img.naturalWidth / img.naturalHeight);
 
-            // Sombra elíptica no chão REMOVIDA conforme solicitado.
-            // Para reativar, descomente o bloco abaixo:
-            /*
-            ctx.save();
-            ctx.fillStyle = 'rgba(0,0,0,0.28)';
-            ctx.beginPath();
-            ctx.ellipse(px + offX, py + 5, lar * 0.38, 7, 0, 0, Math.PI * 2);
-            ctx.fill();
-            ctx.restore();
-            */
-
-            // Efeito de aura no ápice REMOVIDO conforme solicitado.
-            // Para reativar, descomente o bloco abaixo:
-            /*
-            if (pb.conjurando && pb.frame === pb.FRAME_MAX) {
-                ctx.save();
-                const pulso     = 0.5 + Math.sin(Date.now() * 0.012) * 0.5;
-                ctx.shadowBlur  = 40 + pulso * 30;
-                ctx.shadowColor = `rgba(180,80,255,${0.6 + pulso * 0.4})`;
-                ctx.globalAlpha = 0.18 + pulso * 0.12;
-                ctx.fillStyle   = 'rgba(200,100,255,1)';
-                ctx.beginPath();
-                ctx.ellipse(
-                    px + offX, py - ALT * 0.5,
-                    lar * 0.45, ALT * 0.55,
-                    0, 0, Math.PI * 2
-                );
-                ctx.fill();
-                ctx.restore();
-            }
-            */
-
-            // Partículas mágicas subindo durante a conjuração
             if (pb.conjurando && Math.random() < 0.35) {
                 const t = pb.frame / pb.FRAME_MAX;
                 _criarParticulaMagica(
@@ -288,13 +268,6 @@ const BattleRenderer = (() => {
                 );
             }
 
-            // ─────────────────────────────────────────────────
-            // ESPELHAMENTO HORIZONTAL:
-            //   ctx.scale(-1, 1) espelha a Santa para ela
-            //   olhar para a direita (padrão atual).
-            //   Remova o scale(-1,1) e troque por scale(1,1)
-            //   (ou apague a linha) para ela olhar para a esquerda.
-            // ─────────────────────────────────────────────────
             ctx.save();
             ctx.translate(px + offX, py);
             ctx.scale(-1, 1);
@@ -327,40 +300,31 @@ const BattleRenderer = (() => {
     }
 
     // ════════════════════════════════════════
-    //  MONSTRO
+    //  MONSTRO — despacha por tipo
     // ════════════════════════════════════════
     function _desenharMonstro(ctx, canvas) {
         if (hit.flash > 0)    hit.flash--;
         if (hit.tremendo > 0) hit.tremendo--;
 
         const ini = BattleState.inimigo;
-        const pct = Math.max(0.05, ini.maxHp > 0 ? ini.hp / ini.maxHp : 1);
 
-        // ─────────────────────────────────────────────────────
-        // TAMANHO DO MONSTRO:
-        //   O valor base é 0.88 (88% da altura da tela).
-        //   Diminua para deixar menor, aumente para maior.
-        //   Ex: canvas.height * 0.55  → monstro bem menor
-        // ─────────────────────────────────────────────────────
+        // ── Escolhe o renderizador pelo tipo ───────────────
+        if (ini.tipo === 'sapo-gato') {
+            _desenharSapoGato(ctx, canvas);
+        } else {
+            _desenharSlimeGelo(ctx, canvas);
+        }
+    }
+
+    // ── Slime de Gelo (comportamento original) ─────────────
+    function _desenharSlimeGelo(ctx, canvas) {
+        const ini = BattleState.inimigo;
+        const pct = Math.max(0.05, ini.maxHp > 0 ? ini.hp / ini.maxHp : 1);
         const tam = canvas.height * (0.88 + pct * 0.05);
 
         const ox = hit.tremendo > 0 ? (Math.random() - 0.5) * 18 : 0;
         const oy = hit.tremendo > 0 ? (Math.random() - 0.5) * 10 : 0;
-
-        // ─────────────────────────────────────────────────────
-        // POSIÇÃO HORIZONTAL DO MONSTRO:
-        //   Troque monstroX(canvas) por canvas.width * 0.XX
-        //   Ex: canvas.width * 0.70  → monstro na direita
-        // ─────────────────────────────────────────────────────
         const mx = monstroX(canvas) + ox;
-
-        // ─────────────────────────────────────────────────────
-        // POSIÇÃO VERTICAL DO MONSTRO:
-        //   chaoY(canvas) é a linha do chão.
-        //   O - tam * 0.10 faz o monstro ficar semi-enterrado.
-        //   Aumente o 0.10 para subi-lo mais,
-        //   diminua para afundá-lo mais no chão.
-        // ─────────────────────────────────────────────────────
         const my = chaoY(canvas) - tam * 0.20 + oy;
 
         const imgMonstro = (hit.flash > 0 && imgOk(assets.monstroHitado))
@@ -369,7 +333,9 @@ const BattleRenderer = (() => {
 
         ctx.save();
         ctx.shadowBlur  = 42 + Math.sin(Date.now() * 0.004) * 14;
-        ctx.shadowColor = pct < 0.25 ? 'rgba(255,220,0,1)' : 'rgba(255,50,50,0.9)';
+        ctx.shadowColor = pct < 0.25
+            ? 'rgba(255,220,0,1)'
+            : 'rgba(255,50,50,0.9)';
 
         if (imgOk(imgMonstro)) {
             const lar = tam * (imgMonstro.naturalWidth / imgMonstro.naturalHeight);
@@ -381,7 +347,61 @@ const BattleRenderer = (() => {
             ctx.textBaseline = 'middle';
             ctx.fillText(tipo.emojis.normal, mx, my);
         }
+        ctx.restore();
+    }
 
+    // ── Sapo-Gato ──────────────────────────────────────────
+    function _desenharSapoGato(ctx, canvas) {
+        const ini = BattleState.inimigo;
+        const pct = Math.max(0.05, ini.maxHp > 0 ? ini.hp / ini.maxHp : 1);
+
+        // ─────────────────────────────────────────────────────
+        // TAMANHO DO SAPO-GATO:
+        //   Ajuste o 0.75 para aumentar / diminuir.
+        // ─────────────────────────────────────────────────────
+        const tam = canvas.height * (0.75 + pct * 0.04);
+
+        const ox = hit.tremendo > 0 ? (Math.random() - 0.5) * 18 : 0;
+        const oy = hit.tremendo > 0 ? (Math.random() - 0.5) * 10 : 0;
+        const mx = monstroX(canvas) + ox;
+        const my = chaoY(canvas) - tam * 0.20 + oy;
+
+        // Escolhe imagem:
+        //   hit.flash > 0  → frame de hit
+        //     hit.exagerado → saga-hit2 (raro, 15%)
+        //     caso contrário → saga-hit  (normal)
+        //   caso contrário → frame idle da animação
+        let imgSaga = null;
+
+        if (hit.flash > 0) {
+            if (hit.exagerado && imgOk(assets.sagaHit2)) {
+                imgSaga = assets.sagaHit2;
+            } else if (imgOk(assets.sagaHit)) {
+                imgSaga = assets.sagaHit;
+            }
+        } else {
+            // Idle: usa o frame atual da animação ping-pong
+            _atualizarSaga();
+            imgSaga = assets.sagaFrames[saga.frame];
+        }
+
+        // Cor do glow: amarelo quando quase morto, verde para sapo
+        ctx.save();
+        ctx.shadowBlur  = 42 + Math.sin(Date.now() * 0.004) * 14;
+        ctx.shadowColor = pct < 0.25
+            ? 'rgba(255,220,0,1)'
+            : 'rgba(80,200,80,0.85)';
+
+        if (imgOk(imgSaga)) {
+            const lar = tam * (imgSaga.naturalWidth / imgSaga.naturalHeight);
+            ctx.drawImage(imgSaga, mx - lar / 2, my - tam / 2, lar, tam);
+        } else {
+            // Fallback emoji
+            ctx.font = `${tam * 0.5}px serif`;
+            ctx.textAlign    = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('🐸', mx, my);
+        }
         ctx.restore();
     }
 
@@ -451,7 +471,6 @@ const BattleRenderer = (() => {
         };
     }
 
-    // Verifica se flores estão acabando → pede conjuração à Santa
     function _checarReabastecimento() {
         const vivas = flores.filter(f => f.viva).length;
         if (vivas <= FLORES_REABAST) {
@@ -459,7 +478,6 @@ const BattleRenderer = (() => {
         }
     }
 
-    // Santa atingiu o ápice → flores reaparecem com animação de surgimento
     EventBus.on('flores:resetar', () => {
         _posFixas.forEach((pos, idx) => {
             const jaExiste = flores.some(f => f.idx === idx && f.viva);
@@ -595,7 +613,6 @@ const BattleRenderer = (() => {
         });
     }
 
-    // Partículas mágicas leves que sobem durante a conjuração
     function _criarParticulaMagica(x, y, intensidade) {
         const cores = [
             `hsl(${270 + Math.random() * 60},100%,75%)`,
@@ -676,7 +693,6 @@ const BattleRenderer = (() => {
         particulas.forEach(p => {
             p.x += p.vx;
             p.y += p.vy;
-            // Mágicas sobem levemente; normais caem com gravidade
             p.vy += p.magica ? 0.03 : 0.14;
             p.vida--;
         });
