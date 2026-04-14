@@ -373,13 +373,13 @@ function _desenharSaga(ctx, canvas) {
 
     const ini = BattleState.inimigo;
     const pct = Math.max(0.05, ini.maxHp > 0 ? ini.hp / ini.maxHp : 1);
-    const tam = canvas.height * (0.88 + pct * 0.05);
+    const tam = canvas.height * (0.66 + pct * 0.05);
 
     const ox = hit.sagaTremendo > 0 ? (Math.random() - 0.5) * 18 : 0;
     const oy = hit.sagaTremendo > 0 ? (Math.random() - 0.5) * 10 : 0;
 
     const mx = monstroX(canvas) + ox;
-    const my = chaoY(canvas) - tam * 0.25 + oy;
+    const my = chaoY(canvas) - tam * 0.35 + oy;
 
     // Escolhe imagem: hit exagerado > hit normal > frame animado
     let imgSaga = null;
