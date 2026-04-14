@@ -379,7 +379,7 @@ function _desenharSaga(ctx, canvas) {
     const oy = hit.sagaTremendo > 0 ? (Math.random() - 0.5) * 10 : 0;
 
     const mx = monstroX(canvas) + ox;
-    const my = chaoY(canvas) - tam * 0.20 + oy;
+    const my = chaoY(canvas) - tam * 0.25 + oy;
 
     // Escolhe imagem: hit exagerado > hit normal > frame animado
     let imgSaga = null;
