@@ -54,7 +54,7 @@ function carregarAssets() {
     fl.onerror = () => console.warn('⚠️ Flor não carregada');
     fl.src = base + 'armas/flor-basica.png';
 
-      // ── SAPO-GATO: 13 frames de animação ──
+    // ── SAPO-GATO: 13 frames de animação ──
     for (let i = 1; i <= 13; i++) {
         const sg = new Image(); sg.crossOrigin = 'anonymous';
         const idx = i - 1;
@@ -72,7 +72,7 @@ function carregarAssets() {
     sh2.onload  = () => { assets.sagaHit2 = sh2; };
     sh2.onerror = () => console.warn('⚠️ Sapo-gato hit2 não carregado');
     sh2.src = base + 'monstros/sapo-gato/saga-hit2.png';
-    
+}
 
 // ════════════════════════════════════════
 //  ALTERNÂNCIA DE MONSTROS
