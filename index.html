@@ -2,163 +2,521 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>Como ser um bom católico</title>
+  <title>Lux Fidei – Luz da Fé Católica</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3007736407396874"
-    crossorigin="anonymous"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3007736407396874" crossorigin="anonymous"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
-</head>
 
+  <style>
+    /* ===== ÍCONE FIXO DE INFO ===== */
+    .info-btn {
+      position: fixed;
+      top: 14px;
+      right: 16px;
+      z-index: 9999;
+      width: 32px;
+      height: 32px;
+      background: rgba(255,255,255,0.15);
+      border: 1.5px solid rgba(255,255,255,0.4);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      backdrop-filter: blur(6px);
+      transition: background 0.2s, transform 0.2s;
+    }
+    .info-btn:hover {
+      background: rgba(255,255,255,0.28);
+      transform: scale(1.08);
+    }
+    .info-btn svg {
+      width: 16px;
+      height: 16px;
+      fill: rgba(255,255,255,0.92);
+    }
+
+    /* ===== MODAL PRINCIPAL ===== */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(10,8,5,0.72);
+      z-index: 10000;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(3px);
+      animation: fadeIn 0.2s ease;
+    }
+    .modal-overlay.aberto { display: flex; }
+
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+    .modal-box {
+      background: #faf8f3;
+      border-radius: 12px;
+      width: 90%;
+      max-width: 480px;
+      max-height: 80vh;
+      overflow: hidden;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.45);
+      animation: slideUp 0.25s ease;
+      display: flex;
+      flex-direction: column;
+    }
+    @keyframes slideUp { from { transform: translateY(24px); opacity:0; } to { transform: translateY(0); opacity:1; } }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 22px 14px;
+      border-bottom: 1px solid #e8e2d6;
+    }
+    .modal-header h3 {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 1rem;
+      color: #3a2e1e;
+      margin: 0;
+      letter-spacing: 0.02em;
+    }
+    .modal-close {
+      background: none;
+      border: none;
+      font-size: 1.3rem;
+      cursor: pointer;
+      color: #888;
+      line-height: 1;
+      padding: 2px 6px;
+      border-radius: 4px;
+      transition: color 0.15s, background 0.15s;
+    }
+    .modal-close:hover { color: #3a2e1e; background: #f0ece3; }
+
+    /* Nav interna do modal (menu: sobre, privacidade, contato) */
+    .modal-nav {
+      display: flex;
+      gap: 4px;
+      padding: 12px 16px 8px;
+      border-bottom: 1px solid #e8e2d6;
+      background: #faf8f3;
+    }
+    .modal-nav-btn {
+      flex: 1;
+      background: none;
+      border: 1.5px solid transparent;
+      border-radius: 8px;
+      padding: 8px 6px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: #7a6a50;
+      cursor: pointer;
+      transition: all 0.18s;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .modal-nav-btn:hover { border-color: #c8b89a; color: #3a2e1e; background: #f0ece3; }
+    .modal-nav-btn.ativo {
+      background: #3a2e1e;
+      color: #f5f0e6;
+      border-color: #3a2e1e;
+    }
+
+    .modal-content {
+      overflow-y: auto;
+      padding: 22px 24px 28px;
+      flex: 1;
+    }
+    .modal-content h2 {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 1.15rem;
+      color: #3a2e1e;
+      margin: 0 0 14px;
+    }
+    .modal-content p {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.88rem;
+      line-height: 1.7;
+      color: #5a4e3a;
+      margin-bottom: 12px;
+    }
+    .modal-content a {
+      color: #8b6e3a;
+      text-decoration: underline;
+    }
+
+    /* ===== TELA INICIAL MELHORADA ===== */
+    .hero-lux {
+      text-align: center;
+      padding: 56px 20px 32px;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+    .hero-lux .cruz {
+      font-size: 2rem;
+      opacity: 0.55;
+      margin-bottom: 16px;
+      display: block;
+    }
+    .hero-lux h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 300;
+      color: #2c2218;
+      line-height: 1.2;
+      margin: 0 0 8px;
+      letter-spacing: -0.01em;
+    }
+    .hero-lux h2 em {
+      font-style: italic;
+      font-weight: 400;
+    }
+    .hero-lux .subtitulo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      color: #8b6e3a;
+      font-style: italic;
+      margin-bottom: 32px;
+    }
+    .hero-lux .intro {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.97rem;
+      line-height: 1.8;
+      color: #4a3e2c;
+      max-width: 600px;
+      margin: 0 auto 40px;
+    }
+
+    /* Cards de convite */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      max-width: 760px;
+      margin: 0 auto 48px;
+      padding: 0 16px;
+    }
+    .card-convite {
+      background: linear-gradient(135deg, #faf7f0, #f3ede0);
+      border: 1px solid #e0d5be;
+      border-radius: 12px;
+      padding: 22px 18px;
+      text-align: left;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .card-convite:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 28px rgba(80,55,20,0.12);
+    }
+    .card-convite .emoji { font-size: 1.4rem; margin-bottom: 10px; display: block; }
+    .card-convite h4 {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 0.88rem;
+      color: #2c2218;
+      margin: 0 0 6px;
+    }
+    .card-convite p {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.8rem;
+      color: #7a6a50;
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    /* Frase de destaque */
+    .frase-destaque {
+      background: #2c2218;
+      color: #f5f0e6;
+      padding: 40px 28px;
+      text-align: center;
+      max-width: 680px;
+      margin: 0 auto 48px;
+      border-radius: 14px;
+    }
+    .frase-destaque blockquote {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.2rem, 3vw, 1.7rem);
+      font-style: italic;
+      font-weight: 300;
+      line-height: 1.5;
+      margin: 0 0 12px;
+      color: #f5f0e6;
+    }
+    .frase-destaque cite {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #c8a870;
+    }
+
+    /* Seção "para quem é este site" */
+    .para-quem {
+      max-width: 720px;
+      margin: 0 auto 56px;
+      padding: 0 20px;
+      text-align: center;
+    }
+    .para-quem h3 {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 1rem;
+      color: #8b6e3a;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+    .publicos {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+    }
+    .publico-tag {
+      background: #f0ece3;
+      border: 1px solid #ddd4be;
+      border-radius: 20px;
+      padding: 7px 16px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.82rem;
+      color: #5a4e3a;
+    }
+
+    /* Linha separadora decorativa */
+    .sep-ornamento {
+      text-align: center;
+      color: #c8a870;
+      font-size: 1.2rem;
+      letter-spacing: 0.5em;
+      margin: 32px 0;
+      opacity: 0.6;
+    }
+  </style>
+</head>
 <body>
 
-  <!-- OVERLAY -->
-  <div class="overlay" id="overlay" onclick="fecharMenu()"></div>
+<!-- ÍCONE FIXO DE INFO -->
+<button class="info-btn" onclick="abrirModal()" title="Sobre, Contato e Privacidade">
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+  </svg>
+</button>
 
-  <!-- MENU LATERAL -->
-  <div class="sidebar" id="sidebar">
-    <a href="#" onclick="fecharMenu()">✖ Fechar</a>
-    <a href="index.html">🏠 Início</a>
-    <a href="liturgia_diaria/liturgiadiaria.html">📖 Liturgia Diária</a>
-    <a href="santos/santos.html">✝ Santos</a>
-    <a href="biblioteca/biblioteca.html">📚 Biblioteca</a>
-    <a href="estudos/estudos.html">🎓 Estudos</a>
-    <a href="jogos/jogos.html">🎮 Jogos</a>
-    <hr>
-    <a href="sobre.html">Sobre</a>
-    <a href="privacy.html">Privacidade</a>
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="fecharModalFora(event)">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h3>Lux Fidei</h3>
+      <button class="modal-close" onclick="fecharModal()">✕</button>
+    </div>
+    <div class="modal-nav">
+      <button class="modal-nav-btn ativo" onclick="mudarAba('sobre')">Sobre</button>
+      <button class="modal-nav-btn" onclick="mudarAba('contato')">Contato</button>
+      <button class="modal-nav-btn" onclick="mudarAba('privacidade')">Privacidade</button>
+    </div>
+    <div class="modal-content" id="modalConteudo">
+      <!-- preenchido por JS -->
+    </div>
+  </div>
+</div>
+
+<!-- OVERLAY SIDEBAR -->
+<div class="overlay" id="overlay" onclick="fecharMenu()"></div>
+
+<!-- MENU LATERAL -->
+<div class="sidebar" id="sidebar">
+  <a href="#" onclick="fecharMenu()">✖ Fechar</a>
+  <a href="index.html">🏠 Início</a>
+  <a href="liturgia_diaria/liturgiadiaria.html">📖 Liturgia Diária</a>
+  <a href="santos/santos.html">✝ Santos</a>
+  <a href="biblioteca/biblioteca.html">📚 Biblioteca</a>
+  <a href="estudos/estudos.html">🎓 Estudos</a>
+  <a href="jogos/jogos.html">🎮 Jogos</a>
+</div>
+
+<!-- HEADER -->
+<header>
+  <span class="menu-btn" onclick="abrirMenu()">☰</span>
+  <h1>Lux Fidei</h1>
+  <p style="opacity:0.8">Luz da Fé Católica</p>
+</header>
+
+<!-- MENU HORIZONTAL -->
+<nav class="menu">
+  <a href="index.html" class="menu-item active">Início</a>
+  <a href="liturgia_diaria/liturgiadiaria.html" class="menu-item">Liturgia Diária</a>
+  <a href="santos/santos.html" class="menu-item">Santos</a>
+  <a href="biblioteca/biblioteca.html" class="menu-item">Biblioteca</a>
+  <a href="estudos/estudos.html" class="menu-item">Estudos</a>
+  <a href="jogos/jogos.html" class="menu-item">Jogos</a>
+  <span class="menu-indicator"></span>
+</nav>
+
+<!-- CONTEÚDO PRINCIPAL -->
+<main id="inicio">
+
+  <div class="hero-lux">
+    <span class="cruz">✠</span>
+    <h2>A fé que o mundo<br><em>ainda precisa conhecer</em></h2>
+    <p class="subtitulo">Dois mil anos de sabedoria. Um clique de distância.</p>
+
+    <p class="intro">
+      O Lux Fidei nasceu para ser um ponto de encontro — entre quem já crê e quer aprofundar,
+      entre quem duvida e quer entender, entre quem estuda e quer fontes sólidas.
+      Aqui a fé católica é apresentada com clareza, respeito e seriedade:
+      sem simplificações vazias e sem complicações desnecessárias.
+    </p>
   </div>
 
-  <!-- HEADER -->
-  <header>
-    <span class="menu-btn" onclick="abrirMenu()">☰</span>
-    <h1>Lux Fidei</h1>
-    <p style="opacity:0.8">Luz da Fé Católica</p>
-  </header>
+  <!-- Cards de convite -->
+  <div class="cards-grid">
+    <div class="card-convite">
+      <span class="emoji">📖</span>
+      <h4>Liturgia Diária</h4>
+      <p>Acompanhe as leituras e orações de cada dia da Igreja. A Palavra que alimenta.</p>
+    </div>
+    <div class="card-convite">
+      <span class="emoji">✝</span>
+      <h4>Santos</h4>
+      <p>Homens e mulheres reais que viveram a fé de modo extraordinário. Conheça suas histórias.</p>
+    </div>
+    <div class="card-convite">
+      <span class="emoji">📚</span>
+      <h4>Biblioteca</h4>
+      <p>Textos clássicos, documentos e obras que formaram a tradição cristã ao longo dos séculos.</p>
+    </div>
+    <div class="card-convite">
+      <span class="emoji">🎓</span>
+      <h4>Estudos</h4>
+      <p>Teologia, filosofia e apologética explicadas de forma acessível — mas sem perder profundidade.</p>
+    </div>
+  </div>
 
-  <!-- MENU HORIZONTAL -->
-  <nav class="menu">
-    <a href="index.html" class="menu-item active">Início</a>
-    <a href="liturgia_diaria/liturgiadiaria.html" class="menu-item">Liturgia Diária</a>
-    <a href="santos/santos.html" class="menu-item">Santos</a>
-    <a href="biblioteca/biblioteca.html" class="menu-item">Biblioteca</a>
-    <a href="estudos/estudos.html" class="menu-item">Estudos</a>
-    <a href="jogos/jogos.html" class="menu-item">Jogos</a>
-    <span class="menu-indicator"></span>
-  </nav>
+  <!-- Frase de destaque -->
+  <div class="frase-destaque">
+    <blockquote>
+      "Conhecereis a verdade,<br>e a verdade vos libertará."
+    </blockquote>
+    <cite>— João 8, 32</cite>
+  </div>
 
-  <!-- CONTEÚDO PRINCIPAL -->
-  <main id="inicio">
+  <!-- Para quem é este site -->
+  <div class="para-quem">
+    <h3>Para quem é este espaço?</h3>
+    <div class="publicos">
+      <span class="publico-tag">🕊️ Fiéis que querem crescer</span>
+      <span class="publico-tag">🔍 Curiosos sobre o catolicismo</span>
+      <span class="publico-tag">📜 Amantes da tradição</span>
+      <span class="publico-tag">🤔 Quem tem perguntas difíceis</span>
+      <span class="publico-tag">🎓 Estudantes de teologia</span>
+      <span class="publico-tag">⚗️ Filósofos e pensadores</span>
+      <span class="publico-tag">🌱 Recém-convertidos</span>
+      <span class="publico-tag">🧭 Quem busca sentido</span>
+    </div>
+  </div>
 
-    <h2>Bem-vindo</h2>
+  <div class="sep-ornamento">· · ✠ · ·</div>
 
-    <p>
-      Este site foi criado com o propósito de servir à verdade da fé cristã professada e guardada
-      pela Igreja fundada por Nosso Senhor Jesus Cristo.
-    </p>
+</main>
 
-    <p>
-      Ao longo de quase dois mil anos, essa fé foi transmitida fielmente através da Sagrada Escritura,
-      da Tradição Apostólica e do ensinamento constante da Igreja.
-    </p>
+<footer>© 2026 – Lux Fidei</footer>
 
-    <p>
-      Em todos os tempos existiu a necessidade de conhecer, estudar e defender a fé. Muitos erros,
-      confusões e interpretações equivocadas surgem quando os ensinamentos cristãos são pouco
-      conhecidos ou apresentados de forma incompleta.
-    </p>
+<script src="js/liturgia.js" onerror="void 0"></script>
+<script>
+/* ===== CONTEÚDO DAS ABAS DO MODAL ===== */
+const conteudoAbas = {
+  sobre: `
+    <h2>Sobre o Lux Fidei</h2>
+    <p>O <strong>Lux Fidei</strong> — Luz da Fé — é um projeto dedicado ao estudo, à explicação e à defesa da fé católica.</p>
+    <p>Nasceu da convicção de que a fé precisa ser conhecida para ser vivida. Muitos erros e confusões surgem não de má vontade, mas de pouco conhecimento dos ensinamentos cristãos.</p>
+    <p>Este espaço busca reunir recursos — textos, liturgia, hagiografia, apologética — para servir tanto ao fiel de longa data quanto àquele que acaba de se deparar com as primeiras perguntas sobre Deus e a Igreja.</p>
+    <p>O conteúdo é apresentado com fidelidade à Tradição Apostólica e ao Magistério da Igreja, sem agendas políticas ou modismos.</p>
+    <p style="color:#8b6e3a;font-style:italic;font-family:'Cormorant Garamond',serif;font-size:1rem;">"A Igreja não tem medo da verdade." — São João Paulo II</p>
+  `,
+  contato: `
+    <h2>Contato</h2>
+    <p>Tem uma sugestão, encontrou algum erro ou deseja colaborar com o projeto? Entre em contato.</p>
+    <p>📧 E-mail: <a href="mailto:contato@luxfidei.com">contato@luxfidei.com</a></p>
+    <p>Respondemos a todas as mensagens com atenção. Dúvidas de fé, sugestões de conteúdo e correções são sempre bem-vindas.</p>
+    <p>Este é um projeto voluntário, movido pela fé e pelo desejo de servir. Qualquer contribuição — de conteúdo, de oração ou de incentivo — é muito bem-vinda.</p>
+    <p style="color:#8b6e3a;font-style:italic;font-family:'Cormorant Garamond',serif;font-size:1rem;">"Ajudai-vos uns aos outros a carregar os fardos." — Gálatas 6, 2</p>
+  `,
+  privacidade: `
+    <h2>Política de Privacidade</h2>
+    <p>O Lux Fidei respeita sua privacidade. Esta página explica como tratamos os dados dos visitantes.</p>
+    <p><strong>Dados coletados:</strong> Este site pode utilizar cookies técnicos para funcionamento básico e ferramentas de análise de tráfego anônimo (como o Google Analytics), sem identificar individualmente os visitantes.</p>
+    <p><strong>Publicidade:</strong> Utilizamos o Google AdSense, que pode exibir anúncios personalizados com base em seus interesses. Você pode gerenciar suas preferências de anúncios nas configurações do Google.</p>
+    <p><strong>Dados pessoais:</strong> Não coletamos, vendemos ou compartilhamos dados pessoais identificáveis. Formulários de contato, quando presentes, usam os dados apenas para responder à mensagem.</p>
+    <p><strong>Links externos:</strong> Este site pode conter links para páginas de terceiros. Não nos responsabilizamos pelas políticas de privacidade desses sites.</p>
+    <p>Para dúvidas: <a href="mailto:contato@luxfidei.com">contato@luxfidei.com</a></p>
+  `
+};
 
-    <p>
-      Por isso, torna-se necessário voltar às fontes da fé e buscar compreendê-la com seriedade,
-      reverência e fidelidade.
-    </p>
+let abaAtual = 'sobre';
 
-    <p>
-      Este site nasce com o desejo de oferecer um espaço dedicado ao estudo, à explicação e à
-      defesa da fé católica.
-    </p>
+function abrirModal(aba) {
+  abaAtual = aba || 'sobre';
+  renderizarAba(abaAtual);
+  document.getElementById('modalOverlay').classList.add('aberto');
+  document.body.style.overflow = 'hidden';
+}
 
-    <p>
-      Seu objetivo é ajudar os fiéis a conhecer melhor aquilo que a Igreja sempre ensinou, bem como
-      oferecer a todos aqueles que procuram a verdade um lugar onde possam compreender com clareza
-      a doutrina cristã.
-    </p>
+function fecharModal() {
+  document.getElementById('modalOverlay').classList.remove('aberto');
+  document.body.style.overflow = '';
+}
 
-    <p>
-      A fé católica não é apenas um conjunto de ideias ou opiniões religiosas. Ela é a resposta do
-      homem à revelação de Deus e foi confiada por Cristo à sua Igreja para ser guardada, ensinada
-      e transmitida ao longo das gerações.
-    </p>
+function fecharModalFora(e) {
+  if (e.target === document.getElementById('modalOverlay')) fecharModal();
+}
 
-    <p>
-      Este projeto deseja contribuir, ainda que modestamente, para essa missão da Igreja: ensinar
-      a verdade, esclarecer dúvidas e fortalecer os fiéis.
-    </p>
+function mudarAba(aba) {
+  abaAtual = aba;
+  renderizarAba(aba);
+  document.querySelectorAll('.modal-nav-btn').forEach(btn => btn.classList.remove('ativo'));
+  event.target.classList.add('ativo');
+}
 
-    <p>
-      Que este espaço possa servir como um instrumento de estudo, reflexão e formação para todos
-      aqueles que desejam conhecer mais profundamente a fé católica.
-    </p>
+function renderizarAba(aba) {
+  document.getElementById('modalConteudo').innerHTML = conteudoAbas[aba] || '';
+}
 
-    <p class="citacao">
-      "Conhecereis a verdade, e a verdade vos libertará."
-      <br>— Evangelho de João 8,32
-    </p>
+/* ===== SIDEBAR ===== */
+function abrirMenu() {
+  document.getElementById("sidebar").style.left = "0";
+  document.getElementById("overlay").classList.add("ativo");
+}
+function fecharMenu() {
+  document.getElementById("sidebar").style.left = "-260px";
+  document.getElementById("overlay").classList.remove("ativo");
+}
 
-  </main>
+/* ===== INDICADOR DO MENU ===== */
+const indicator = document.querySelector(".menu-indicator");
+const items = document.querySelectorAll(".menu-item");
 
-  <footer>
-    © 2026 – Lux Fidei
-  </footer>
+function updateIndicator(el) {
+  indicator.style.width = el.offsetWidth + "px";
+  indicator.style.left = el.offsetLeft + "px";
+}
+items.forEach(item => {
+  item.addEventListener("click", function () {
+    items.forEach(i => i.classList.remove("active"));
+    this.classList.add("active");
+    updateIndicator(this);
+  });
+});
+window.addEventListener("load", () => {
+  const active = document.querySelector(".menu-item.active");
+  if (active) updateIndicator(active);
+});
+window.addEventListener("resize", () => {
+  if (window.innerWidth > 768) fecharMenu();
+});
 
-  <script src="js/liturgia.js"></script>
-
-  <script>
-
-    /* ===== SIDEBAR ===== */
-    function abrirMenu() {
-      document.getElementById("sidebar").style.left = "0";
-      document.getElementById("overlay").classList.add("ativo");
-    }
-
-    function fecharMenu() {
-      document.getElementById("sidebar").style.left = "-260px";
-      document.getElementById("overlay").classList.remove("ativo");
-    }
-
-    /* ===== ANIMAÇÃO DO INDICADOR DO MENU ===== */
-    const indicator = document.querySelector(".menu-indicator");
-    const items = document.querySelectorAll(".menu-item");
-
-    function updateIndicator(el) {
-      indicator.style.width = el.offsetWidth + "px";
-      indicator.style.left = el.offsetLeft + "px";
-    }
-
-    items.forEach(item => {
-      item.addEventListener("click", function () {
-        items.forEach(i => i.classList.remove("active"));
-        this.classList.add("active");
-        updateIndicator(this);
-      });
-    });
-
-    /* ===== AO CARREGAR A PÁGINA ===== */
-    window.addEventListener("load", () => {
-      const active = document.querySelector(".menu-item.active");
-      if (active) {
-        updateIndicator(active);
-      }
-    });
-
-    /* ===== FECHA SIDEBAR SE REDIMENSIONAR PARA DESKTOP ===== */
-    window.addEventListener("resize", () => {
-      if (window.innerWidth > 768) {
-        fecharMenu();
-      }
-    });
-
-  </script>
-
+/* ESC fecha modal */
+document.addEventListener('keydown', e => { if (e.key === 'Escape') fecharModal(); });
+</script>
 </body>
 </html>
