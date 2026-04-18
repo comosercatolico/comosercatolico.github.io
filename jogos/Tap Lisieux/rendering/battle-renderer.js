@@ -87,8 +87,10 @@ function carregarAssets() {
 // ════════════════════════════════════════
 //  ALTERNÂNCIA DE MONSTROS
 // ════════════════════════════════════════
+// Qual monstro está ativo: 'slime' ou 'saga'
 let monstroAtivo = 'slime';
 
+// Alterna o monstro a cada vez que um inimigo morre
 EventBus.on('inimigo:morto', () => {
     monstroAtivo = (monstroAtivo === 'slime') ? 'saga' : 'slime';
 });
@@ -97,10 +99,11 @@ EventBus.on('inimigo:morto', () => {
 //  HIT STATE — suporta dois monstros
 // ════════════════════════════════════════
 const hit = {
-    tremendo:     0,
-    flash:        0,
-    sagaHitTipo:  0,
-    sagaFlash:    0,
+    tremendo:  0,
+    flash:     0,
+    // Para o sapo-gato: 1 = hit normal, 2 = hit exagerado
+    sagaHitTipo: 0,
+    sagaFlash:   0,
     sagaTremendo: 0,
 };
 
@@ -109,6 +112,7 @@ EventBus.on('inimigo:dano', () => {
         hit.tremendo = 14;
         hit.flash    = 8;
     } else {
+        // Alterna entre hit normal e hit exagerado para o sapo-gato
         hit.sagaHitTipo  = (hit.sagaHitTipo === 1) ? 2 : 1;
         hit.sagaFlash    = 10;
         hit.sagaTremendo = 14;
@@ -119,11 +123,11 @@ EventBus.on('inimigo:dano', () => {
 //  ANIMAÇÃO PING-PONG DO SAPO-GATO
 // ════════════════════════════════════════
 const sagaAnim = {
-    frame:     0,
-    direcao:   1,
-    tempo:     0,
-    TICK:      6,
-    FRAME_MAX: 12,
+    frame:     0,      // frame atual (0–12)
+    direcao:   1,      // +1 avança / -1 recua
+    tempo:     0,      // contador de ticks
+    TICK:      6,      // ticks por frame
+    FRAME_MAX: 12,     // índice do último frame (0-based, total 13)
 };
 
 function _atualizarSaga() {
@@ -131,24 +135,32 @@ function _atualizarSaga() {
     if (sagaAnim.tempo >= sagaAnim.TICK) {
         sagaAnim.tempo = 0;
         sagaAnim.frame += sagaAnim.direcao;
-        if (sagaAnim.frame >= sagaAnim.FRAME_MAX) { sagaAnim.frame = sagaAnim.FRAME_MAX; sagaAnim.direcao = -1; }
-        if (sagaAnim.frame <= 0)                  { sagaAnim.frame = 0;                  sagaAnim.direcao =  1; }
+
+        if (sagaAnim.frame >= sagaAnim.FRAME_MAX) {
+            sagaAnim.frame    = sagaAnim.FRAME_MAX;
+            sagaAnim.direcao  = -1;
+        }
+        if (sagaAnim.frame <= 0) {
+            sagaAnim.frame   = 0;
+            sagaAnim.direcao = 1;
+        }
     }
 }
 
 // ════════════════════════════════════════
 //  HELPERS DE POSIÇÃO
 // ════════════════════════════════════════
-function chaoY(canvas)    { return canvas.height * 0.74; }
-function centroX(canvas)  { return canvas.width  * 0.50; }
-function santaX(canvas)   { return centroX(canvas); }
-function monstroX(canvas) { return centroX(canvas); }
+function chaoY(canvas)   { return canvas.height * 0.74; }
+function centroX(canvas) { return canvas.width  * 0.50; }
+function santaX(canvas)  { return centroX(canvas); }
+function monstroX(canvas){ return centroX(canvas); }
 
 // ════════════════════════════════════════
 //  FUNDO (cenário)
 // ════════════════════════════════════════
 function _fundo(ctx, canvas) {
     const W = canvas.width, H = canvas.height, cy = chaoY(canvas);
+
     if (imgOk(assets.cenario)) {
         const i   = assets.cenario;
         const esc = Math.max(W / i.naturalWidth, H / i.naturalHeight);
@@ -164,7 +176,10 @@ function _fundo(ctx, canvas) {
 //  CHÃO
 // ════════════════════════════════════════
 function _desenharChao(ctx, canvas) {
-    const W = canvas.width, H = canvas.height, cy = chaoY(canvas);
+    const W  = canvas.width;
+    const H  = canvas.height;
+    const cy = chaoY(canvas);
+
     if (imgOk(assets.chao)) {
         ctx.drawImage(assets.chao, 0, cy, W, H - cy);
     } else {
@@ -178,15 +193,19 @@ function _fundoFallback(ctx, W, H, cy) {
     g.addColorStop(0.45, '#0a0728');
     g.addColorStop(1,    '#1c0f5e');
     ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+
     const t = Date.now();
     for (let i = 0; i < 120; i++) {
         const sx = (i * 193 + 7)  % W;
         const sy = (i * 99  + 11) % (cy * 0.72);
         ctx.globalAlpha = (Math.abs(Math.sin(t * 0.0007 + i)) * 0.55 + 0.25) * 0.5;
         ctx.fillStyle   = i % 5 === 0 ? '#ffddaa' : '#fff';
-        ctx.beginPath(); ctx.arc(sx, sy, i % 4 === 0 ? 1.8 : 1.0, 0, Math.PI * 2); ctx.fill();
+        ctx.beginPath();
+        ctx.arc(sx, sy, i % 4 === 0 ? 1.8 : 1.0, 0, Math.PI * 2);
+        ctx.fill();
     }
     ctx.globalAlpha = 1;
+
     const lx = W * 0.76, ly = H * 0.14;
     const gl = ctx.createRadialGradient(lx, ly, 0, lx, ly, 62);
     gl.addColorStop(0,   'rgba(255,248,200,1)');
@@ -223,8 +242,8 @@ const pbIdle = {
     frame:     0,
     direcao:   1,
     tempo:     0,
-    TICK:      5,
-    FRAME_MAX: 20,
+    TICK:      5,   // ticks por frame
+    FRAME_MAX: 20,  // 0-based → 21 frames
 };
 
 EventBus.on('flores:conjurar', () => {
@@ -241,311 +260,124 @@ function _atualizarIdleSanta() {
     if (pbIdle.tempo >= pbIdle.TICK) {
         pbIdle.tempo = 0;
         pbIdle.frame += pbIdle.direcao;
-        if (pbIdle.frame >= pbIdle.FRAME_MAX) { pbIdle.frame = pbIdle.FRAME_MAX; pbIdle.direcao = -1; }
-        if (pbIdle.frame <= 0)                { pbIdle.frame = 0;                pbIdle.direcao =  1; }
+
+        if (pbIdle.frame >= pbIdle.FRAME_MAX) {
+            pbIdle.frame   = pbIdle.FRAME_MAX;
+            pbIdle.direcao = -1;
+        }
+        if (pbIdle.frame <= 0) {
+            pbIdle.frame   = 0;
+            pbIdle.direcao = 1;
+        }
     }
+}
+
+// Partículas sutis saindo da cruz durante o idle
+function _emitirParticulasCruz(px, py, ALT) {
+    if (Math.random() >= 0.18) return;
+
+    const cruzX = px + (Math.random() - 0.5) * 18;
+    const cruzY = py - ALT * 0.60 + (Math.random() - 0.5) * 14;
+
+    const cores  = ['#ffb3c6', '#ff6b6b', '#ff9de2', '#fff0f3', '#ffd6e0'];
+    const useEmoji = Math.random() < 0.12;
+
+    particulas.push({
+        x:      cruzX,
+        y:      cruzY,
+        vx:     (Math.random() - 0.5) * 0.9,
+        vy:     -(0.4 + Math.random() * 1.1),
+        vida:   30 + Math.random() * 20,
+        size:   useEmoji ? 9 : 2.5 + Math.random() * 3,
+        cor:    cores[Math.floor(Math.random() * cores.length)],
+        emoji:  useEmoji ? '🌸' : null,
+        magica: true,
+    });
 }
 
 function _atualizarPB() {
     if (!pb.conjurando) {
+        // Idle ativo
         _atualizarIdleSanta();
         pb.frame = 0;
         pb.offX  = 0;
         return;
     }
-    const duracao = pb.frame === pb.FRAME_MAX ? pb.TICK_ULTIMO : pb.TICK_NORMAL;
+
+    const duracao = pb.frame === pb.FRAME_MAX
+        ? pb.TICK_ULTIMO
+        : pb.TICK_NORMAL;
+
     pb.tempo++;
+
     if (pb.tempo >= duracao) {
         pb.tempo = 0;
         pb.frame += pb.direcao;
+
         if (pb.frame >= pb.FRAME_MAX) {
             pb.frame   = pb.FRAME_MAX;
             pb.direcao = -1;
             EventBus.emit('flores:resetar');
         }
+
         if (pb.frame <= 0 && pb.direcao === -1) {
             pb.frame      = 0;
             pb.conjurando = false;
             pb.direcao    = 1;
         }
     }
-    pb.offX = pb.frame === pb.FRAME_MAX ? Math.sin(Date.now() * 0.018) * 3.5 : 0;
+
+    pb.offX = pb.frame === pb.FRAME_MAX
+        ? Math.sin(Date.now() * 0.018) * 3.5
+        : 0;
 }
 
-// ════════════════════════════════════════
-//  EFEITOS IDLE — canvas offscreen para bloom
-// ════════════════════════════════════════
-let _bloomCanvas = null;
-let _bloomCtx    = null;
-
-function _garantirBloom(w, h) {
-    // Bloom usa 1/4 da resolução — barato e já cria o blur por escalonamento
-    const bw = Math.ceil(w / 4);
-    const bh = Math.ceil(h / 4);
-    if (!_bloomCanvas || _bloomCanvas.width !== bw || _bloomCanvas.height !== bh) {
-        _bloomCanvas = document.createElement('canvas');
-        _bloomCanvas.width  = bw;
-        _bloomCanvas.height = bh;
-        _bloomCtx = _bloomCanvas.getContext('2d');
-    }
-}
-
-// ── Halo radial atrás da santa (luz sagrada dourada-rosada) ──
-function _desenharHalo(ctx, cx, cy, raio, t) {
-    const pulse = 0.85 + Math.sin(t * 0.0013) * 0.09 + Math.sin(t * 0.0031) * 0.05;
-    const r     = raio * pulse;
-
-    // Halo externo
-    const g1 = ctx.createRadialGradient(cx, cy, r * 0.05, cx, cy, r);
-    g1.addColorStop(0.00, 'rgba(255, 235, 170, 0.28)');
-    g1.addColorStop(0.35, 'rgba(255, 185, 215, 0.18)');
-    g1.addColorStop(0.65, 'rgba(210, 140, 255, 0.09)');
-    g1.addColorStop(1.00, 'rgba(130,  90, 255, 0.00)');
-    ctx.save();
-    ctx.fillStyle = g1;
-    ctx.beginPath();
-    ctx.arc(cx, cy, r, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.restore();
-
-    // Núcleo interno brilhante
-    const r2 = r * 0.32;
-    const g2  = ctx.createRadialGradient(cx, cy, 0, cx, cy, r2);
-    g2.addColorStop(0.00, 'rgba(255, 255, 255, 0.18)');
-    g2.addColorStop(0.50, 'rgba(255, 230, 160, 0.10)');
-    g2.addColorStop(1.00, 'rgba(255, 210, 100, 0.00)');
-    ctx.save();
-    ctx.fillStyle = g2;
-    ctx.beginPath();
-    ctx.arc(cx, cy, r2, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.restore();
-}
-
-// ── God rays: raios de luz girando lentamente ──
-function _desenharGodRays(ctx, cx, cy, raio, t) {
-    const numRaios = 8;
-    const rotBase  = t * 0.00015;
-
-    ctx.save();
-    ctx.translate(cx, cy);
-
-    for (let i = 0; i < numRaios; i++) {
-        const ang    = rotBase + (i / numRaios) * Math.PI * 2;
-        const fase   = i * 1.37;
-        const alpha  = (0.038 + Math.sin(t * 0.0009 + fase) * 0.022)
-                     * (0.6   + Math.sin(t * 0.0023 + fase * 2) * 0.4);
-        const comp   = raio * (0.52 + Math.sin(t * 0.0011 + fase * 0.7) * 0.10);
-        const larg   = raio * (0.055 + Math.sin(t * 0.0015 + fase) * 0.018);
-
-        const cosA = Math.cos(ang), sinA = Math.sin(ang);
-        const grd  = ctx.createLinearGradient(0, 0, cosA * comp, sinA * comp);
-        grd.addColorStop(0.00, `rgba(255,245,195,${alpha})`);
-        grd.addColorStop(0.55, `rgba(255,215,155,${alpha * 0.45})`);
-        grd.addColorStop(1.00, 'rgba(255,200,110,0)');
-
-        ctx.save();
-        ctx.rotate(ang);
-        ctx.beginPath();
-        ctx.moveTo(-larg * 0.5, 0);
-        ctx.lineTo(0, comp);
-        ctx.lineTo(larg * 0.5, 0);
-        ctx.closePath();
-        ctx.fillStyle = grd;
-        ctx.fill();
-        ctx.restore();
-    }
-
-    ctx.restore();
-}
-
-// ── Bloom suave: sprite em canvas pequeno, escalado de volta (blur natural) ──
-function _desenharBloom(ctx, img, dx, dy, dw, dh, t) {
-    if (!imgOk(img)) return;
-    _garantirBloom(dw, dh);
-
-    const bw = _bloomCanvas.width;
-    const bh = _bloomCanvas.height;
-
-    // Render do sprite na resolução pequena
-    _bloomCtx.clearRect(0, 0, bw, bh);
-    _bloomCtx.drawImage(img, 0, 0, bw, bh);
-
-    // Intensidade pulsa suavemente
-    const alpha = 0.11 + Math.sin(t * 0.0017) * 0.045 + Math.sin(t * 0.0041) * 0.025;
-
-    ctx.save();
-    ctx.globalCompositeOperation = 'lighter';
-
-    // 3 passes com expansão crescente = profundidade de bloom
-    ctx.globalAlpha = alpha * 0.5;
-    ctx.drawImage(_bloomCanvas, dx - dw * 0.045, dy - dh * 0.045, dw * 1.09, dh * 1.09);
-
-    ctx.globalAlpha = alpha * 0.7;
-    ctx.drawImage(_bloomCanvas, dx - dw * 0.022, dy - dh * 0.022, dw * 1.044, dh * 1.044);
-
-    ctx.globalAlpha = alpha;
-    ctx.drawImage(_bloomCanvas, dx, dy, dw, dh);
-
-    ctx.restore();
-}
-
-// ── Rim light lateral (contorno de luz sagrada) ──
-function _aplicarRimLight(ctx, dx, dy, dw, dh, t) {
-    const inten = 0.065 + Math.sin(t * 0.0019) * 0.025;
-    const g = ctx.createLinearGradient(dx, dy, dx + dw, dy);
-    g.addColorStop(0.00, `rgba(255,215,140,${inten * 1.5})`);
-    g.addColorStop(0.15, `rgba(255,225,175,${inten})`);
-    g.addColorStop(0.50, 'rgba(255,235,200,0)');
-    g.addColorStop(0.85, `rgba(210,165,255,${inten * 0.65})`);
-    g.addColorStop(1.00, `rgba(185,125,255,${inten * 1.2})`);
-
-    ctx.save();
-    ctx.globalCompositeOperation = 'screen';
-    ctx.fillStyle = g;
-    ctx.fillRect(dx, dy, dw, dh);
-    ctx.restore();
-}
-
-// ── Sombra no chão (shadow blob) ──
-function _desenharSombra(ctx, cx, cy, largura, t) {
-    const pulse = 0.92 + Math.sin(t * 0.0013) * 0.07;
-    const w     = largura * 0.52 * pulse;
-    const h     = w * 0.20;
-
-    const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, w);
-    g.addColorStop(0.00, 'rgba(0, 0, 0, 0.25)');
-    g.addColorStop(0.55, 'rgba(0, 0, 0, 0.09)');
-    g.addColorStop(1.00, 'rgba(0, 0, 0, 0.00)');
-
-    ctx.save();
-    ctx.scale(1, h / w);
-    ctx.fillStyle = g;
-    ctx.beginPath();
-    ctx.arc(cx, cy * (w / h), w, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.restore();
-}
-
-// ── Partículas da cruz (florinhas sutis) ──
-function _emitirParticulasCruz(px, py, ALT, t) {
-    const fase = Math.sin(t * 0.0014);
-    const taxa = 0.09 + fase * 0.06;
-    if (Math.random() >= taxa) return;
-
-    const cruzX = px + (Math.random() - 0.5) * 22;
-    const cruzY = py - ALT * 0.62 + (Math.random() - 0.5) * 14;
-
-    const useEmoji = Math.random() < 0.10;
-    const cores    = [
-        'rgba(255,200,220,0.95)',
-        'rgba(255,165,205,0.90)',
-        'rgba(255,242,180,0.88)',
-        'rgba(225,165,255,0.85)',
-        'rgba(255,255,255,0.92)',
-    ];
-
-    particulas.push({
-        x:       cruzX,
-        y:       cruzY,
-        vx:      (Math.random() - 0.5) * 0.65,
-        vy:      -(0.28 + Math.random() * 0.85),
-        vida:    45 + Math.random() * 30,
-        vidaMax: 75,
-        size:    useEmoji ? 8 : 1.6 + Math.random() * 2.6,
-        cor:     cores[Math.floor(Math.random() * cores.length)],
-        emoji:   useEmoji ? '🌸' : null,
-        magica:  true,
-        fase:    Math.random() * Math.PI * 2,
-    });
-}
-
-// ════════════════════════════════════════
-//  RENDER DO IDLE (todos os efeitos juntos)
-// ════════════════════════════════════════
-function _desenharPBIdle(ctx, canvas) {
+function _desenharPB(ctx, canvas) {
     const px  = santaX(canvas);
     const py  = chaoY(canvas) + 10;
     const ALT = canvas.height * 0.30;
-    const t   = Date.now();
 
-    const idleImg   = assets.santaIdle[pbIdle.frame];
-    const imgOkIdle = imgOk(idleImg);
-
-    const LAR = imgOkIdle
-        ? ALT * (idleImg.naturalWidth / idleImg.naturalHeight)
-        : ALT * 0.55;
-
-    const cx = px;
-    const cy = py - ALT * 0.50; // centro aproximado do sprite
-
-    // 1. Sombra no chão
-    _desenharSombra(ctx, cx, py + 2, LAR, t);
-
-    // 2. God rays atrás
-    _desenharGodRays(ctx, cx, cy, ALT * 0.70, t);
-
-    // 3. Halo radial
-    _desenharHalo(ctx, cx, cy, ALT * 0.62, t);
-
-    // 4. Bloom (camada atrás do sprite)
-    if (imgOkIdle) {
-        _desenharBloom(ctx, idleImg, cx - LAR / 2, py - ALT, LAR, ALT, t);
-    }
-
-    // 5. Sprite com breathing (escala suave)
-    if (imgOkIdle) {
-        const breathe = 1.0
-            + Math.sin(t * 0.0013) * 0.006
-            + Math.sin(t * 0.0031) * 0.002;
-
-        ctx.save();
-        ctx.translate(cx, py);
-        ctx.scale(-breathe, breathe);
-        ctx.drawImage(idleImg, -LAR / 2, -ALT, LAR, ALT);
-        ctx.restore();
-
-        // 6. Rim light sobre o sprite
-        _aplicarRimLight(ctx, cx - LAR / 2, py - ALT, LAR, ALT, t);
-    } else {
-        _santaFallback(ctx, px, py, ALT, 0);
-    }
-
-    // 7. Partículas da cruz
-    _emitirParticulasCruz(px, py, ALT, t);
-}
-
-// ════════════════════════════════════════
-//  _desenharPB — despacha idle ou conjurando
-// ════════════════════════════════════════
-function _desenharPB(ctx, canvas) {
+    // ── IDLE ────────────────────────────────────────────────
     if (!pb.conjurando) {
-        _desenharPBIdle(ctx, canvas);
+        _emitirParticulasCruz(px, py, ALT);
+
+        const idleImg = assets.santaIdle[pbIdle.frame];
+
+        if (imgOk(idleImg)) {
+            const lar = ALT * (idleImg.naturalWidth / idleImg.naturalHeight);
+            ctx.save();
+            ctx.translate(px, py);
+            ctx.scale(-1, 1);
+            ctx.drawImage(idleImg, -lar / 2, -ALT, lar, ALT);
+            ctx.restore();
+        } else {
+            _santaFallback(ctx, px, py, ALT, 0);
+        }
         return;
     }
 
-    // ── CONJURANDO (comportamento original inalterado) ──
-    const px  = santaX(canvas);
-    const py  = chaoY(canvas) + 10;
-    const ALT = canvas.height * 0.30;
+    // ── CONJURANDO ──────────────────────────────────────────
     const offX = pb.offX;
     const img  = assets.santa[pb.frame];
 
     if (imgOk(img)) {
         const lar = ALT * (img.naturalWidth / img.naturalHeight);
+
         if (Math.random() < 0.35) {
-            const t2 = pb.frame / pb.FRAME_MAX;
+            const t = pb.frame / pb.FRAME_MAX;
             _criarParticulaMagica(
                 px + offX + (Math.random() - 0.5) * lar * 0.6,
                 py - ALT * (0.2 + Math.random() * 0.7),
-                t2
+                t
             );
         }
+
         ctx.save();
         ctx.translate(px + offX, py);
         ctx.scale(-1, 1);
         ctx.drawImage(img, -lar / 2, -ALT, lar, ALT);
         ctx.restore();
+
     } else {
         _santaFallback(ctx, px, py, ALT, offX);
     }
@@ -606,6 +438,7 @@ function _desenharSlime(ctx, canvas) {
         ctx.textBaseline = 'middle';
         ctx.fillText(tipo.emojis.normal, mx, my);
     }
+
     ctx.restore();
 }
 
@@ -613,9 +446,11 @@ function _desenharSlime(ctx, canvas) {
 //  MONSTRO — SAPO-GATO (animado ping-pong)
 // ════════════════════════════════════════
 function _desenharSaga(ctx, canvas) {
+    // Atualiza contadores de hit
     if (hit.sagaFlash    > 0) hit.sagaFlash--;
     if (hit.sagaTremendo > 0) hit.sagaTremendo--;
 
+    // Atualiza animação ping-pong
     _atualizarSaga();
 
     const ini = BattleState.inimigo;
@@ -628,12 +463,19 @@ function _desenharSaga(ctx, canvas) {
     const mx = monstroX(canvas) + ox;
     const my = chaoY(canvas) - tam * 0.35 + oy;
 
+    // Escolhe imagem: hit exagerado > hit normal > frame animado
     let imgSaga = null;
     if (hit.sagaFlash > 0) {
-        if (hit.sagaHitTipo === 2 && imgOk(assets.sagaHit2)) imgSaga = assets.sagaHit2;
-        else if (imgOk(assets.sagaHit))                      imgSaga = assets.sagaHit;
+        if (hit.sagaHitTipo === 2 && imgOk(assets.sagaHit2)) {
+            imgSaga = assets.sagaHit2;
+        } else if (imgOk(assets.sagaHit)) {
+            imgSaga = assets.sagaHit;
+        }
     }
-    if (!imgSaga) imgSaga = assets.sagaFrames[sagaAnim.frame];
+    // Se não está em flash de hit, usa o frame da animação
+    if (!imgSaga) {
+        imgSaga = assets.sagaFrames[sagaAnim.frame];
+    }
 
     ctx.save();
     ctx.shadowBlur  = 42 + Math.sin(Date.now() * 0.004) * 14;
@@ -643,11 +485,13 @@ function _desenharSaga(ctx, canvas) {
         const lar = tam * (imgSaga.naturalWidth / imgSaga.naturalHeight);
         ctx.drawImage(imgSaga, mx - lar / 2, my - tam / 2, lar, tam);
     } else {
+        // Fallback emoji
         ctx.font = `${tam * 0.5}px serif`;
         ctx.textAlign    = 'center';
         ctx.textBaseline = 'middle';
         ctx.fillText('🐸', mx, my);
     }
+
     ctx.restore();
 }
 
@@ -655,8 +499,11 @@ function _desenharSaga(ctx, canvas) {
 //  DISPATCHER — desenha o monstro ativo
 // ════════════════════════════════════════
 function _desenharMonstro(ctx, canvas) {
-    if (monstroAtivo === 'saga') _desenharSaga(ctx, canvas);
-    else                         _desenharSlime(ctx, canvas);
+    if (monstroAtivo === 'saga') {
+        _desenharSaga(ctx, canvas);
+    } else {
+        _desenharSlime(ctx, canvas);
+    }
 }
 
 // ════════════════════════════════════════
@@ -727,13 +574,17 @@ function _criarFlor(pos, idx, spawnImediato = false) {
 
 function _checarReabastecimento() {
     const vivas = flores.filter(f => f.viva).length;
-    if (vivas <= FLORES_REABAST) EventBus.emit('flores:conjurar');
+    if (vivas <= FLORES_REABAST) {
+        EventBus.emit('flores:conjurar');
+    }
 }
 
 EventBus.on('flores:resetar', () => {
     _posFixas.forEach((pos, idx) => {
         const jaExiste = flores.some(f => f.idx === idx && f.viva);
-        if (!jaExiste) flores.push(_criarFlor(pos, idx, false));
+        if (!jaExiste) {
+            flores.push(_criarFlor(pos, idx, false));
+        }
     });
 });
 
@@ -744,7 +595,11 @@ function _atualizarFlores() {
         const t = f.conjFrames / f.conjDur;
         f.alpha = Math.min(1, t * 1.4);
         f.glow  = Math.sin(t * Math.PI);
-        if (f.conjFrames >= f.conjDur) { f.conjurando = false; f.alpha = 1; f.glow = 1; }
+        if (f.conjFrames >= f.conjDur) {
+            f.conjurando = false;
+            f.alpha = 1;
+            f.glow  = 1;
+        }
     });
     flores = flores.filter(f => f.viva);
 }
@@ -768,7 +623,9 @@ function _desenharFlores(ctx, canvas) {
             grd.addColorStop(0.5, `rgba(255,20,20,${0.25 * f.glow})`);
             grd.addColorStop(1,   'rgba(255,0,0,0)');
             ctx.fillStyle = grd;
-            ctx.beginPath(); ctx.arc(0, 0, glowRaio, 0, Math.PI * 2); ctx.fill();
+            ctx.beginPath();
+            ctx.arc(0, 0, glowRaio, 0, Math.PI * 2);
+            ctx.fill();
         }
 
         ctx.drawImage(assets.flor, -f.size / 2, -f.size / 2, f.size, f.size);
@@ -798,9 +655,10 @@ function dispararFlor(canvas) {
     const sp = 10 + Math.random() * 5;
 
     floresAtt.push({
-        x: melhor.x, y: melhor.y,
-        vx: Math.cos(angulo) * sp,
-        vy: Math.sin(angulo) * sp,
+        x:       melhor.x,
+        y:       melhor.y,
+        vx:      Math.cos(angulo) * sp,
+        vy:      Math.sin(angulo) * sp,
         tx, ty,
         size:    melhor.size,
         angulo,
@@ -943,9 +801,7 @@ function render(ctx, canvas) {
     ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
     particulas.forEach(p => {
         ctx.save();
-        // Fade quadrático = mais elegante que linear
-        const ratio = p.vidaMax ? p.vida / p.vidaMax : Math.min(1, p.vida / 12);
-        ctx.globalAlpha = ratio * ratio;
+        ctx.globalAlpha = Math.min(1, p.vida / 12);
         if (p.emoji) {
             ctx.font = `${p.size}px serif`;
             ctx.fillText(p.emoji, p.x, p.y);
@@ -1002,7 +858,6 @@ return {
     },
     onResize(canvas) {
         initFlores(canvas);
-        _bloomCanvas = null; // força recriação no novo tamanho
     },
     render,
     dispararFlor,
