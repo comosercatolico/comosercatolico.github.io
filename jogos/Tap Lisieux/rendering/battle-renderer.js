@@ -46,7 +46,7 @@ function carregarAssets() {
         const idx = i - 1;
         si.onload  = () => { assets.santaIdle[idx] = si; };
         si.onerror = () => console.warn(`⚠️ Santa idle frame ${i} não carregada`);
-        si.src = base + `animation_idle/santatereza${i}.png`;
+        si.src = base + `trzn/santatereza${i}.png`;
     }
 
     const mn = new Image(); mn.crossOrigin = 'anonymous';
