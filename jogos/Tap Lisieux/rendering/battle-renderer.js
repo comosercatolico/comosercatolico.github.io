@@ -81,7 +81,7 @@ function carregarAssets() {
     const sh2 = new Image(); sh2.crossOrigin = 'anonymous';
     sh2.onload  = () => { assets.sagaHit2 = sh2; };
     sh2.onerror = () => console.warn('⚠️ Sapo-gato hit2 não carregado');
-    sh2.src = base + 'monstros/sapo-gato/saga-hit2.png';
+    sh2.src = base + 'monstros/sapo-gato/sapa-hit2.png';
 }
 
 // ════════════════════════════════════════
