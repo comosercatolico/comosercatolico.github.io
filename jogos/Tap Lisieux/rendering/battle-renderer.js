@@ -9,6 +9,7 @@ const assets = {
     cenario:       null,
     chao:          null,
     santa:         new Array(8).fill(null),
+    santaIdle:     new Array(21).fill(null),
     monstroNormal: null,
     monstroHitado: null,
     flor:          null,
@@ -37,6 +38,15 @@ function carregarAssets() {
         s.onload  = () => { assets.santa[idx] = s; };
         s.onerror = () => console.warn(`⚠️ Santa frame ${i} não carregada`);
         s.src = base + `animation_summon/str-conjurando${i}.png`;
+    }
+
+    // ── SANTA IDLE: 21 frames ──
+    for (let i = 1; i <= 21; i++) {
+        const si = new Image(); si.crossOrigin = 'anonymous';
+        const idx = i - 1;
+        si.onload  = () => { assets.santaIdle[idx] = si; };
+        si.onerror = () => console.warn(`⚠️ Santa idle frame ${i} não carregada`);
+        si.src = base + `trzn/santatereza${i}.png`;
     }
 
     const mn = new Image(); mn.crossOrigin = 'anonymous';
@@ -227,6 +237,15 @@ const pb = {
     offX:        0,
 };
 
+// ── IDLE ping-pong (santatereza1–21) ──
+const pbIdle = {
+    frame:     0,
+    direcao:   1,
+    tempo:     0,
+    TICK:      5,   // ticks por frame
+    FRAME_MAX: 20,  // 0-based → 21 frames
+};
+
 EventBus.on('flores:conjurar', () => {
     if (!pb.conjurando) {
         pb.conjurando = true;
@@ -236,8 +255,50 @@ EventBus.on('flores:conjurar', () => {
     }
 });
 
+function _atualizarIdleSanta() {
+    pbIdle.tempo++;
+    if (pbIdle.tempo >= pbIdle.TICK) {
+        pbIdle.tempo = 0;
+        pbIdle.frame += pbIdle.direcao;
+
+        if (pbIdle.frame >= pbIdle.FRAME_MAX) {
+            pbIdle.frame   = pbIdle.FRAME_MAX;
+            pbIdle.direcao = -1;
+        }
+        if (pbIdle.frame <= 0) {
+            pbIdle.frame   = 0;
+            pbIdle.direcao = 1;
+        }
+    }
+}
+
+// Partículas sutis saindo da cruz durante o idle
+function _emitirParticulasCruz(px, py, ALT) {
+    if (Math.random() >= 0.18) return;
+
+    const cruzX = px + (Math.random() - 0.5) * 18;
+    const cruzY = py - ALT * 0.60 + (Math.random() - 0.5) * 14;
+
+    const cores  = ['#ffb3c6', '#ff6b6b', '#ff9de2', '#fff0f3', '#ffd6e0'];
+    const useEmoji = Math.random() < 0.12;
+
+    particulas.push({
+        x:      cruzX,
+        y:      cruzY,
+        vx:     (Math.random() - 0.5) * 0.9,
+        vy:     -(0.4 + Math.random() * 1.1),
+        vida:   30 + Math.random() * 20,
+        size:   useEmoji ? 9 : 2.5 + Math.random() * 3,
+        cor:    cores[Math.floor(Math.random() * cores.length)],
+        emoji:  useEmoji ? '🌸' : null,
+        magica: true,
+    });
+}
+
 function _atualizarPB() {
     if (!pb.conjurando) {
+        // Idle ativo
+        _atualizarIdleSanta();
         pb.frame = 0;
         pb.offX  = 0;
         return;
@@ -272,16 +333,37 @@ function _atualizarPB() {
 }
 
 function _desenharPB(ctx, canvas) {
-    const px   = santaX(canvas);
-    const py   = chaoY(canvas) + 10;
-    const ALT  = canvas.height * 0.30;
+    const px  = santaX(canvas);
+    const py  = chaoY(canvas) + 10;
+    const ALT = canvas.height * 0.30;
+
+    // ── IDLE ────────────────────────────────────────────────
+    if (!pb.conjurando) {
+        _emitirParticulasCruz(px, py, ALT);
+
+        const idleImg = assets.santaIdle[pbIdle.frame];
+
+        if (imgOk(idleImg)) {
+            const lar = ALT * (idleImg.naturalWidth / idleImg.naturalHeight);
+            ctx.save();
+            ctx.translate(px, py);
+            ctx.scale(-1, 1);
+            ctx.drawImage(idleImg, -lar / 2, -ALT, lar, ALT);
+            ctx.restore();
+        } else {
+            _santaFallback(ctx, px, py, ALT, 0);
+        }
+        return;
+    }
+
+    // ── CONJURANDO ──────────────────────────────────────────
     const offX = pb.offX;
     const img  = assets.santa[pb.frame];
 
     if (imgOk(img)) {
         const lar = ALT * (img.naturalWidth / img.naturalHeight);
 
-        if (pb.conjurando && Math.random() < 0.35) {
+        if (Math.random() < 0.35) {
             const t = pb.frame / pb.FRAME_MAX;
             _criarParticulaMagica(
                 px + offX + (Math.random() - 0.5) * lar * 0.6,
