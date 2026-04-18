@@ -5,186 +5,973 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Concílio de Niceia II (787) | Concílios Ecumênicos</title>
 <style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Georgia', serif;
+    background: #f5f0e8;
+    color: #2c1f17;
+    line-height: 1.8;
+  }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-        font-family: 'Georgia', serif;
-        background: #f5f0e8;
-        color: #2c1f17;
-        line-height: 1.8;
-    }
-    .pagina {
-        max-width: 820px;
-        margin: 0 auto;
-        padding: 40px 24px 60px;
-    }
-    header {
-        border-bottom: 3px solid #d4af37;
-        padding-bottom: 24px;
-        margin-bottom: 36px;
-        text-align: center;
-    }
-    header h1 {
-        font-size: 2.2rem;
-        color: #1a0f00;
-        margin-bottom: 8px;
-    }
-    header .ano {
-        font-size: 1rem;
-        color: #8b6914;
-        font-style: italic;
-        letter-spacing: 1px;
-    }
-    header .local {
-        font-size: 0.95rem;
-        color: #666;
-        margin-top: 4px;
-    }
-    .secao {
-        margin-bottom: 36px;
-    }
-    .secao h2 {
-        font-size: 1.25rem;
-        color: #5b2c83;
-        border-left: 4px solid #d4af37;
-        padding-left: 12px;
-        margin-bottom: 14px;
-    }
-    .secao p {
-        margin-bottom: 12px;
-        text-align: justify;
-    }
-    .secao ul {
-        margin: 10px 0 10px 24px;
-    }
-    .secao ul li {
-        margin-bottom: 7px;
-    }
-    .sem-heresias {
-        color: #888;
-        font-style: italic;
-    }
-    footer {
-        border-top: 1px solid #d4af37;
-        padding-top: 18px;
-        margin-top: 50px;
-        text-align: center;
-        font-size: 0.85rem;
-        color: #888;
-    }
-    footer a {
-        color: #5b2c83;
-        text-decoration: none;
-    }
-    footer a:hover { text-decoration: underline; }
-    /* Index */
-    .lista-concilios {
-        list-style: none;
-        padding: 0;
-    }
-    .lista-concilios li {
-        border-bottom: 1px solid #e0d4c0;
-    }
-    .lista-concilios li a {
-        display: flex;
-        align-items: baseline;
-        gap: 12px;
-        padding: 13px 8px;
-        text-decoration: none;
-        color: #2c1f17;
-        transition: background 0.15s;
-    }
-    .lista-concilios li a:hover {
-        background: #faf5eb;
-        border-radius: 6px;
-    }
-    .lista-concilios .num {
-        font-size: 0.75rem;
-        font-weight: 700;
-        color: #d4af37;
-        min-width: 28px;
-        text-align: right;
-    }
-    .lista-concilios .nome {
-        font-size: 1.05rem;
-        font-weight: 700;
-        flex: 1;
-    }
-    .lista-concilios .data {
-        font-size: 0.85rem;
-        color: #888;
-        white-space: nowrap;
-    }
+  /* ── BARRA DE PROGRESSO ── */
+  #progress-bar {
+    position: fixed;
+    top: 0; left: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #c0392b, #d4af37);
+    width: 0%;
+    z-index: 9999;
+    transition: width 0.1s;
+  }
 
+  /* ── NAV LATERAL ── */
+  .nav-lateral {
+    position: fixed;
+    left: 0; top: 50%;
+    transform: translateY(-50%);
+    width: 14px;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 8px 4px;
+    background: rgba(245,240,232,0.85);
+    border-radius: 0 8px 8px 0;
+    backdrop-filter: blur(4px);
+    box-shadow: 2px 0 8px rgba(0,0,0,0.08);
+  }
+  .nav-lateral a {
+    display: block;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: #d4c49a;
+    transition: all 0.2s;
+    position: relative;
+  }
+  .nav-lateral a:hover,
+  .nav-lateral a.ativa {
+    background: #c0392b;
+    width: 10px; height: 10px;
+    margin-left: -2px;
+  }
+  .nav-lateral a::after {
+    content: attr(data-label);
+    position: absolute;
+    left: 18px; top: 50%;
+    transform: translateY(-50%);
+    background: #2c1f17;
+    color: #f5f0e8;
+    font-size: 0.7rem;
+    padding: 3px 8px;
+    border-radius: 4px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s;
+    font-family: Georgia, serif;
+  }
+  .nav-lateral a:hover::after { opacity: 1; }
+
+  /* ── LAYOUT ── */
+  .pagina {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 40px 24px 80px 40px;
+  }
+
+  /* ── HEADER ── */
+  header {
+    border-bottom: 3px solid #d4af37;
+    padding-bottom: 28px;
+    margin-bottom: 40px;
+    text-align: center;
+  }
+  header h1 { font-size: 2.4rem; color: #1a0f00; margin-bottom: 8px; letter-spacing: 0.5px; }
+  header .ano { font-size: 1rem; color: #8b6914; font-style: italic; letter-spacing: 1px; }
+  header .local { font-size: 0.95rem; color: #666; margin-top: 4px; }
+  header .subtitulo { margin-top: 14px; font-size: 0.95rem; color: #c0392b; font-style: italic; }
+
+  /* ── BADGES ── */
+  .badges-rapidos {
+    display: flex; flex-wrap: wrap; gap: 8px;
+    justify-content: center; margin: 20px 0 0;
+  }
+  .badge-info {
+    background: #fff; border: 1px solid #e0d4c0;
+    border-radius: 20px; padding: 4px 14px;
+    font-size: 0.8rem; color: #c0392b; font-style: normal;
+  }
+  .badge-info span { color: #8b6914; font-weight: 700; }
+
+  /* ── SUMÁRIO TABBED ── */
+  .sumario-tabbed {
+    background: #fdf8ef; border: 1px solid #e0d4c0;
+    border-left: 4px solid #d4af37; border-radius: 6px;
+    margin-bottom: 40px; overflow: hidden;
+  }
+  .sumario-header {
+    display: flex; align-items: center; gap: 12px;
+    padding: 14px 20px; cursor: pointer; user-select: none;
+    border-bottom: 1px solid #e0d4c0;
+  }
+  .sumario-header h3 {
+    font-size: 0.9rem; color: #8b6914;
+    text-transform: uppercase; letter-spacing: 1px; flex: 1;
+  }
+  .sumario-toggle { font-size: 1rem; color: #c0392b; transition: transform 0.3s; }
+  .sumario-toggle.aberto { transform: rotate(180deg); }
+  .sumario-grupos { display: none; }
+  .sumario-grupos.visivel { display: block; }
+  .sumario-tabs {
+    display: flex; border-bottom: 1px solid #e0d4c0; overflow-x: auto;
+  }
+  .sumario-tab {
+    padding: 8px 16px; font-size: 0.8rem; color: #888;
+    cursor: pointer; border: none; background: none;
+    font-family: Georgia, serif; white-space: nowrap;
+    border-bottom: 2px solid transparent; transition: all 0.2s;
+  }
+  .sumario-tab.ativa { color: #c0392b; border-bottom-color: #c0392b; font-weight: 700; }
+  .sumario-painel { display: none; padding: 16px 20px; }
+  .sumario-painel.visivel { display: block; }
+  .sumario-painel ol { margin-left: 18px; }
+  .sumario-painel ol li { margin-bottom: 5px; }
+  .sumario-painel ol li a {
+    color: #c0392b; text-decoration: none; font-size: 0.9rem;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .sumario-painel ol li a:hover { text-decoration: underline; }
+  .sumario-painel ol li a .ic { font-size: 0.75rem; opacity: 0.7; }
+  .tempo-leitura { font-size: 0.75rem; color: #aaa; margin-left: auto; }
+
+  /* ── SEÇÕES ── */
+  .secao { margin-bottom: 56px; scroll-margin-top: 24px; }
+  .secao-header { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; }
+  .secao h2 {
+    font-size: 1.3rem; color: #c0392b;
+    border-left: 4px solid #d4af37; padding-left: 14px;
+  }
+  .secao-num {
+    font-size: 0.72rem; font-weight: 700; color: #d4af37;
+    letter-spacing: 1px; text-transform: uppercase; margin-left: auto;
+  }
+  .secao h3 {
+    font-size: 1.05rem; color: #1a0f00; margin: 22px 0 10px;
+    border-bottom: 1px dashed #d4af37; padding-bottom: 4px;
+  }
+  .secao p { margin-bottom: 13px; text-align: justify; }
+  .secao ul, .secao ol { margin: 10px 0 14px 26px; }
+  .secao ul li, .secao ol li { margin-bottom: 8px; }
+
+  /* ── ACCORDION ── */
+  .accordion { border: 1px solid #e0d4c0; border-radius: 8px; margin: 14px 0; overflow: hidden; }
+  .accordion-btn {
+    width: 100%; background: #faf5eb; border: none; padding: 13px 18px;
+    text-align: left; font-family: Georgia, serif; font-size: 0.95rem;
+    color: #2c1f17; cursor: pointer; display: flex; align-items: center;
+    gap: 10px; transition: background 0.2s;
+  }
+  .accordion-btn:hover { background: #f5edd8; }
+  .accordion-btn .acc-icon {
+    font-size: 0.85rem; color: #c0392b;
+    transition: transform 0.3s; margin-left: auto;
+  }
+  .accordion-btn.aberto .acc-icon { transform: rotate(180deg); }
+  .accordion-btn strong { color: #c0392b; }
+  .accordion-corpo {
+    display: none; padding: 16px 18px; background: #fff;
+    border-top: 1px solid #e0d4c0;
+  }
+  .accordion-corpo.visivel { display: block; }
+  .accordion-corpo p { margin-bottom: 10px; text-align: justify; font-size: 0.95rem; }
+  .accordion-corpo ul { margin: 8px 0 10px 22px; }
+  .accordion-corpo ul li { margin-bottom: 6px; font-size: 0.95rem; }
+
+  /* ── TABS INTERNAS ── */
+  .tabs-internas { margin: 18px 0; border: 1px solid #e0d4c0; border-radius: 8px; overflow: hidden; }
+  .tabs-internas-nav {
+    display: flex; background: #faf5eb;
+    border-bottom: 1px solid #e0d4c0; overflow-x: auto;
+  }
+  .tab-interna-btn {
+    padding: 10px 18px; border: none; background: none;
+    font-family: Georgia, serif; font-size: 0.88rem; color: #888;
+    cursor: pointer; border-bottom: 2px solid transparent;
+    transition: all 0.2s; white-space: nowrap;
+  }
+  .tab-interna-btn.ativa { color: #c0392b; border-bottom-color: #c0392b; font-weight: 700; }
+  .tab-interna-painel { display: none; padding: 18px; background: #fff; }
+  .tab-interna-painel.visivel { display: block; }
+  .tab-interna-painel p { font-size: 0.94rem; margin-bottom: 10px; text-align: justify; }
+  .tab-interna-painel ul { margin: 8px 0 10px 22px; }
+  .tab-interna-painel ul li { font-size: 0.94rem; margin-bottom: 7px; }
+
+  /* ── CAIXAS ESPECIAIS ── */
+  .caixa-citacao {
+    background: #fdf8ef; border-left: 4px solid #c0392b;
+    padding: 16px 20px; margin: 18px 0; font-style: italic;
+    color: #3a1f1f; border-radius: 0 6px 6px 0;
+  }
+  .caixa-citacao cite {
+    display: block; margin-top: 8px; font-style: normal;
+    font-size: 0.85rem; color: #888;
+  }
+  .caixa-destaque {
+    background: #faf0d7; border: 1px solid #d4af37;
+    border-radius: 8px; padding: 18px 22px; margin: 18px 0;
+  }
+  .caixa-destaque strong { color: #c0392b; }
+  .caixa-destaque p { margin-bottom: 6px; }
+  .caixa-alerta {
+    background: #fff8f0; border-left: 4px solid #e07b39;
+    border-radius: 0 8px 8px 0; padding: 14px 18px;
+    margin: 16px 0; font-size: 0.93rem;
+  }
+  .caixa-alerta strong { color: #b85c1a; }
+  .caixa-para-voce {
+    background: #f0f8ff; border: 1px solid #a0c4e8;
+    border-radius: 8px; padding: 18px 22px; margin: 18px 0;
+  }
+  .caixa-para-voce h4 {
+    font-size: 0.85rem; color: #1a4a7a; text-transform: uppercase;
+    letter-spacing: 1px; margin-bottom: 10px;
+  }
+  .caixa-para-voce p { font-size: 0.93rem; margin-bottom: 8px; color: #1a3a5c; }
+
+  /* ── CÂNONES GRID ── */
+  .canones-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 12px; margin: 18px 0;
+  }
+  .caixa-canon {
+    background: #fff5f5; border: 1px solid #e8b4b4;
+    border-radius: 6px; padding: 14px 16px;
+    cursor: pointer; transition: box-shadow 0.2s, transform 0.2s;
+  }
+  .caixa-canon:hover { box-shadow: 0 4px 12px rgba(192,57,43,0.12); transform: translateY(-2px); }
+  .caixa-canon.expandido { background: #ffeaea; border-color: #c0392b; }
+  .canon-num { font-size: 0.72rem; font-weight: 700; color: #c0392b; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
+  .canon-titulo { font-size: 0.9rem; font-weight: 700; color: #1a0f00; margin-bottom: 4px; }
+  .canon-resumo { font-size: 0.82rem; color: #666; }
+  .canon-detalhe {
+    display: none; margin-top: 12px; padding-top: 12px;
+    border-top: 1px dashed #e8b4b4; font-size: 0.88rem;
+    color: #2c1f17; line-height: 1.7;
+  }
+  .caixa-canon.expandido .canon-detalhe { display: block; }
+  .canon-expandir { font-size: 0.72rem; color: #c0392b; margin-top: 8px; display: block; }
+  .caixa-canon.expandido .canon-expandir::before { content: "▲ Recolher"; }
+  .caixa-canon:not(.expandido) .canon-expandir::before { content: "▼ Ver detalhes"; }
+
+  /* ── TABELAS ── */
+  .tabela-figuras { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.93rem; }
+  .tabela-figuras th {
+    background: #c0392b; color: #fff;
+    padding: 10px 14px; text-align: left; font-weight: 600;
+  }
+  .tabela-figuras td { padding: 10px 14px; border-bottom: 1px solid #e0d4c0; vertical-align: top; }
+  .tabela-figuras tr:nth-child(even) td { background: #faf5eb; }
+  .tabela-figuras tr:hover td { background: #fff0ee; transition: background 0.15s; }
+
+  /* ── LINHA DO TEMPO ── */
+  .linha-tempo { border-left: 3px solid #d4af37; margin: 16px 0; padding-left: 0; list-style: none; }
+  .linha-tempo li { position: relative; padding: 8px 0 8px 28px; margin-bottom: 2px; }
+  .linha-tempo li::before {
+    content: ''; position: absolute; left: -7px; top: 15px;
+    width: 11px; height: 11px; border-radius: 50%;
+    background: #d4af37; border: 2px solid #f5f0e8;
+  }
+  .linha-tempo li .lt-data { font-weight: 700; color: #8b6914; font-size: 0.88rem; margin-right: 8px; }
+  .linha-tempo li:hover { background: rgba(212,175,55,0.06); border-radius: 0 6px 6px 0; }
+
+  /* ── COMPARAÇÃO ── */
+  .comp-cols {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 12px; margin: 16px 0;
+  }
+  .comp-col { border: 1px solid #e0d4c0; border-radius: 8px; overflow: hidden; }
+  .comp-col-header { padding: 10px 14px; font-size: 0.85rem; font-weight: 700; }
+  .comp-col-header.icono { background: #c0392b; color: #fff; }
+  .comp-col-header.ortod { background: #d4af37; color: #1a0f00; }
+  .comp-col-corpo { padding: 14px; font-size: 0.88rem; line-height: 1.7; background: #fff; }
+  .comp-col-corpo li { margin-bottom: 6px; }
+
+  /* ── MAPA DE PARTIDOS ── */
+  .mapa-partidos { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; margin: 16px 0; }
+  .partido-card { border-radius: 8px; padding: 14px; border: 1px solid; }
+  .partido-card h4 { font-size: 0.88rem; margin-bottom: 6px; }
+  .partido-card p { font-size: 0.82rem; line-height: 1.6; margin: 0; }
+  .partido-card.icono { background: #fff4f0; border-color: #e8b4a0; }
+  .partido-card.icono h4 { color: #b84c2c; }
+  .partido-card.ortod { background: #f0fff4; border-color: #a0d4b0; }
+  .partido-card.ortod h4 { color: #2c7a4a; }
+  .partido-card.centro { background: #f8f0ff; border-color: #c9b8e8; }
+  .partido-card.centro h4 { color: #5b2c83; }
+  .partido-card.mod { background: #fffbf0; border-color: #e8d4a0; }
+  .partido-card.mod h4 { color: #7a5c2c; }
+
+  /* ── GLOSSÁRIO INLINE ── */
+  .glossario-termo {
+    border-bottom: 1px dashed #c0392b; cursor: help;
+    color: #c0392b; position: relative;
+  }
+  .glossario-termo::after {
+    content: attr(data-def); position: absolute;
+    bottom: 120%; left: 50%; transform: translateX(-50%);
+    background: #2c1f17; color: #f5f0e8; font-size: 0.78rem;
+    padding: 6px 10px; border-radius: 6px; white-space: normal;
+    width: 220px; text-align: center; opacity: 0;
+    pointer-events: none; transition: opacity 0.2s; z-index: 50;
+    font-style: normal; line-height: 1.5; font-family: Georgia, serif;
+  }
+  .glossario-termo:hover::after { opacity: 1; }
+
+  /* ── TAGS ── */
+  .tag {
+    display: inline-block; background: #c0392b; color: #fff;
+    font-size: 0.72rem; padding: 2px 8px; border-radius: 20px;
+    margin-left: 6px; vertical-align: middle; font-style: normal; letter-spacing: 0.5px;
+  }
+  .tag.verde { background: #2c7a4a; }
+  .tag.dourado { background: #8b6914; }
+  .tag.roxo { background: #5b2c83; }
+
+  /* ── PÚBLICO TABS ── */
+  .publico-tabs { margin: 18px 0; }
+  .publico-tabs-nav {
+    display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 0;
+  }
+  .publico-btn {
+    padding: 8px 14px; border: 1px solid #e0d4c0;
+    border-radius: 20px; background: #fff; font-family: Georgia, serif;
+    font-size: 0.82rem; color: #888; cursor: pointer; transition: all 0.2s;
+    border-bottom: none; border-radius: 8px 8px 0 0;
+  }
+  .publico-btn.ativa { background: #c0392b; color: #fff; border-color: #c0392b; }
+  .publico-painel {
+    display: none; padding: 20px; background: #fff;
+    border: 1px solid #e0d4c0; border-radius: 0 8px 8px 8px;
+  }
+  .publico-painel.visivel { display: block; }
+  .publico-painel p { font-size: 0.94rem; margin-bottom: 10px; text-align: justify; }
+  .publico-painel ul { margin: 8px 0 10px 22px; }
+  .publico-painel ul li { font-size: 0.94rem; margin-bottom: 7px; }
+
+  /* ── BOTÃO TOPO ── */
+  .btn-topo {
+    position: fixed; bottom: 28px; right: 24px;
+    background: #c0392b; color: #fff; border: none;
+    width: 40px; height: 40px; border-radius: 50%;
+    font-size: 1.1rem; cursor: pointer;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.2);
+    opacity: 0; transition: opacity 0.3s; z-index: 200;
+  }
+  .btn-topo.visivel { opacity: 1; }
+  .btn-topo:hover { background: #a93226; }
+
+  /* ── DIVISOR ── */
+  .divisor { border: none; border-top: 1px dashed #d4af37; margin: 36px 0; }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid #d4af37; padding-top: 20px; margin-top: 60px;
+    text-align: center; font-size: 0.85rem; color: #888;
+  }
+  footer a { color: #c0392b; text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+
+  /* ── RESPONSIVO ── */
+  @media (max-width: 700px) {
+    header h1 { font-size: 1.7rem; }
+    .nav-lateral { display: none; }
+    .pagina { padding-left: 24px; }
+    .comp-cols { grid-template-columns: 1fr; }
+    .tabela-figuras { font-size: 0.82rem; }
+    .tabela-figuras th, .tabela-figuras td { padding: 8px 8px; }
+  }
 </style>
 </head>
 <body>
+
+<div id="progress-bar"></div>
+
+<!-- NAV LATERAL -->
+<nav class="nav-lateral" id="navLateral">
+  <a href="#ficha" data-label="Ficha Técnica"></a>
+  <a href="#antecedentes" data-label="Antecedentes"></a>
+  <a href="#contexto" data-label="Contexto Histórico"></a>
+  <a href="#iconoclasmo" data-label="O Iconoclasmo"></a>
+  <a href="#argumentos" data-label="Argumentos em Conflito"></a>
+  <a href="#joao-damasceno" data-label="João Damasceno"></a>
+  <a href="#convocacao" data-label="Convocação"></a>
+  <a href="#participantes" data-label="Participantes"></a>
+  <a href="#sessoes" data-label="As Sessões"></a>
+  <a href="#decisoes" data-label="Decisões Doutrinárias"></a>
+  <a href="#canones" data-label="Os 22 Cânones"></a>
+  <a href="#heresias" data-label="Heresias Combatidas"></a>
+  <a href="#autoridades" data-label="Autoridades"></a>
+  <a href="#recepcao-franca" data-label="Rejeição Franca"></a>
+  <a href="#segundo-icono" data-label="2.º Iconoclasmo"></a>
+  <a href="#triunfo" data-label="Triunfo da Ortodoxia"></a>
+  <a href="#recepcao-ecumenica" data-label="Recepção Ecumênica"></a>
+  <a href="#arte-sacra" data-label="Arte Sacra"></a>
+  <a href="#para-cada-publico" data-label="Para Cada Público"></a>
+  <a href="#impacto" data-label="Impacto"></a>
+  <a href="#fontes" data-label="Fontes"></a>
+</nav>
+
+<button class="btn-topo" id="btnTopo" title="Voltar ao topo">↑</button>
+
 <div class="pagina">
 
-  <header>
-    <h1>Concílio de Niceia II</h1>
-    <p class="ano">787</p>
-    <p class="local">📍 Niceia, Bitínia (atual İznik, Turquia)</p>
-  </header>
+<!-- ══════════════ HEADER ══════════════ -->
+<header id="topo">
+  <h1>Concílio de Niceia II</h1>
+  <p class="ano">787 d.C.</p>
+  <p class="local">📍 Niceia, Bitínia (atual İznik, Turquia) — mesma cidade do Concílio de 325</p>
+  <p class="subtitulo">"A vitória das imagens" — último dos sete concílios ecumênicos universais</p>
+  <div class="badges-rapidos">
+    <span class="badge-info">🏛️ <span>7.º</span> Concílio Ecumênico</span>
+    <span class="badge-info">👤 <span>c. 350</span> bispos</span>
+    <span class="badge-info">⚔️ Heresia: <span>Iconoclasmo</span></span>
+    <span class="badge-info">📜 Distinção: <span>Latria vs. Proskynesis</span></span>
+    <span class="badge-info">👑 <span>Imperatriz Irene</span> convocadora</span>
+    <span class="badge-info">📅 <span>24 set – 23 out 787</span></span>
+    <span class="badge-info">🕯️ Último concílio aceito pelos <span>Ortodoxos</span></span>
+  </div>
+</header>
 
-  <div class="secao">
-    <h2>📜 Contexto Histórico</h2>
-    <p>O último concílio reconhecido como ecumênico pelas Igrejas Ortodoxas Orientais, Niceia II
-foi convocado pela imperatriz Irene (regente por seu filho Constantino VI) para pôr fim à
-crise iconoclasta iniciada pelo imperador Leão III em 726. O iconoclasmo imperial havia
-determinado a destruição das imagens sagradas, a perseguição dos que as veneravam (monges
-e leigos) e a deposição de patriarcas favoráveis às imagens.</p>
-<p>O papa Adriano I enviou legados e uma carta dogmática defendendo a veneração legítima das
-imagens. O patriarca Tarásio de Constantinopla, recém-eleito, presidiu o concílio.</p>
+<!-- ══════════════ SUMÁRIO TABBED ══════════════ -->
+<nav class="sumario-tabbed">
+  <div class="sumario-header" id="sumarioHeader">
+    <h3>📋 Sumário Interativo</h3>
+    <span style="font-size:0.78rem;color:#aaa;">Clique para expandir</span>
+    <span class="sumario-toggle" id="sumarioToggle">▼</span>
+  </div>
+  <div class="sumario-grupos" id="sumarioGrupos">
+    <div class="sumario-tabs">
+      <button class="sumario-tab ativa" data-painel="p-hist">📜 Histórico</button>
+      <button class="sumario-tab" data-painel="p-dout">✝️ Doutrina</button>
+      <button class="sumario-tab" data-painel="p-disc">⚖️ Disciplina</button>
+      <button class="sumario-tab" data-painel="p-legado">🌍 Legado</button>
+    </div>
+    <div class="sumario-painel visivel" id="p-hist">
+      <ol>
+        <li><a href="#ficha"><span class="ic">📌</span>Ficha Técnica<span class="tempo-leitura">1 min</span></a></li>
+        <li><a href="#antecedentes"><span class="ic">📜</span>Antecedentes: 60 anos de iconoclasmo<span class="tempo-leitura">4 min</span></a></li>
+        <li><a href="#contexto"><span class="ic">🏛️</span>Contexto: Bizâncio no séc. VIII<span class="tempo-leitura">3 min</span></a></li>
+        <li><a href="#convocacao"><span class="ic">📣</span>Convocação e Tentativa Frustrada<span class="tempo-leitura">3 min</span></a></li>
+        <li><a href="#participantes"><span class="ic">👥</span>Participantes e Figuras-Chave<span class="tempo-leitura">4 min</span></a></li>
+        <li><a href="#sessoes"><span class="ic">🗓️</span>As Oito Sessões do Concílio<span class="tempo-leitura">5 min</span></a></li>
+        <li><a href="#autoridades"><span class="ic">👑</span>Irene, Adriano I e Tarásio<span class="tempo-leitura">4 min</span></a></li>
+        <li><a href="#recepcao-franca"><span class="ic">⚜️</span>A Rejeição Franca e os Libri Carolini<span class="tempo-leitura">4 min</span></a></li>
+        <li><a href="#segundo-icono"><span class="ic">🔄</span>O Segundo Iconoclasmo (813–843)<span class="tempo-leitura">4 min</span></a></li>
+        <li><a href="#triunfo"><span class="ic">🌟</span>O Triunfo da Ortodoxia (843)<span class="tempo-leitura">3 min</span></a></li>
+      </ol>
+    </div>
+    <div class="sumario-painel" id="p-dout">
+      <ol>
+        <li><a href="#iconoclasmo"><span class="ic">⛔</span>O Iconoclasmo: o que era e por que surgiu<span class="tempo-leitura">5 min</span></a></li>
+        <li><a href="#argumentos"><span class="ic">⚔️</span>Os Argumentos em Conflito<span class="tempo-leitura">5 min</span></a></li>
+        <li><a href="#joao-damasceno"><span class="ic">📖</span>João Damasceno: o teólogo das imagens<span class="tempo-leitura">4 min</span></a></li>
+        <li><a href="#decisoes"><span class="ic">✝️</span>As Decisões Doutrinárias do Concílio<span class="tempo-leitura">5 min</span></a></li>
+        <li><a href="#heresias"><span class="ic">⚠️</span>Heresias e Erros Combatidos<span class="tempo-leitura">3 min</span></a></li>
+      </ol>
+    </div>
+    <div class="sumario-painel" id="p-disc">
+      <ol>
+        <li><a href="#canones"><span class="ic">⚖️</span>Os 22 Cânones Disciplinares<span class="tempo-leitura">8 min</span></a></li>
+      </ol>
+    </div>
+    <div class="sumario-painel" id="p-legado">
+      <ol>
+        <li><a href="#recepcao-ecumenica"><span class="ic">🌐</span>Recepção Ecumênica<span class="tempo-leitura">4 min</span></a></li>
+        <li><a href="#arte-sacra"><span class="ic">🎨</span>Arte Sacra: o que Niceia II fundou<span class="tempo-leitura">4 min</span></a></li>
+        <li><a href="#para-cada-publico"><span class="ic">👥</span>Para Cada Tipo de Leitor<span class="tempo-leitura">5 min</span></a></li>
+        <li><a href="#impacto"><span class="ic">🌍</span>Impacto Duradouro<span class="tempo-leitura">4 min</span></a></li>
+        <li><a href="#fontes"><span class="ic">📚</span>Fontes e Historiografia<span class="tempo-leitura">3 min</span></a></li>
+      </ol>
+    </div>
+  </div>
+</nav>
+
+<!-- ══════════════ 1. FICHA TÉCNICA ══════════════ -->
+<div class="secao" id="ficha">
+  <div class="secao-header">
+    <h2>📌 Ficha Técnica</h2>
+    <span class="secao-num">07 / 21</span>
+  </div>
+  <div class="caixa-destaque">
+    <p><strong>Número:</strong> 7.º Concílio Ecumênico</p>
+    <p><strong>Data:</strong> 24 de setembro a 23 de outubro de 787 d.C.</p>
+    <p><strong>Local:</strong> Igreja de Santa Sofia de Niceia (a mesma cidade do Concílio de 325)</p>
+    <p><strong>Convocadora:</strong> Imperatriz Irene de Atenas, regente por seu filho Constantino VI</p>
+    <p><strong>Presidente das sessões:</strong> Patriarca Tarásio de Constantinopla</p>
+    <p><strong>Legados papais:</strong> Pedro, arquipresbítero de Roma, e Pedro, abade de São Sabas</p>
+    <p><strong>Papa reinante:</strong> Adriano I (772–795)</p>
+    <p><strong>Número de bispos:</strong> c. 350 (algumas fontes citam 367)</p>
+    <p><strong>Principal heresia combatida:</strong> Iconoclasmo</p>
+    <p><strong>Distinção-chave:</strong> <em>Latria</em> (adoração a Deus) vs. <em>Proskynesis/Veneratio</em> (veneração às imagens)</p>
+    <p><strong>Documentos centrais:</strong> Horos (definição dogmática) + 22 cânones disciplinares</p>
+    <p><strong>Reconhecido por:</strong> Igreja Católica e todas as Igrejas Ortodoxas (último concílio ecumênico aceito pelos ortodoxos)</p>
+    <p><strong>Não reconhecido como ecumênico por:</strong> A maioria das tradições protestantes; parcialmente rejeitado pelo Império Franco no séc. VIII</p>
+  </div>
+  <div class="caixa-alerta">
+    <strong>⚠️ Curiosidade única:</strong> Niceia II é o único concílio ecumênico realizado na mesma cidade que outro — Niceia I (325). Ambos ocorreram na mesma Niceia, na Bitínia. Esta escolha não foi acidental: os convocadores queriam afirmar que o sétimo concílio continuava e completava o legado dos seis anteriores. O primeiro tratara da natureza de Cristo; o sétimo, de como representá-Lo.
+  </div>
+</div>
+
+<!-- ══════════════ 2. ANTECEDENTES ══════════════ -->
+<div class="secao" id="antecedentes">
+  <div class="secao-header"><h2>📜 Antecedentes: Sessenta Anos de Crise Iconoclasta</h2></div>
+
+  <p>Para entender Niceia II, é preciso compreender a tempestade que o precedeu — uma das mais violentas crises internas da história da Igreja cristã, que durou quase um século e deixou cicatrizes profundas no Oriente cristão.</p>
+
+  <h3>Linha do Tempo da Crise</h3>
+  <ul class="linha-tempo">
+    <li><span class="lt-data">726</span> Imperador <strong>Leão III</strong> ordena a remoção do ícone de Cristo da Porta de Cálce — entrada do palácio imperial em Constantinopla. É o gesto inaugural do iconoclasmo imperial.</li>
+    <li><span class="lt-data">727</span> Papa Gregório II protesta vigorosamente por carta. Começa a ruptura entre Roma e Constantinopla sobre a questão das imagens.</li>
+    <li><span class="lt-data">730</span> Leão III emite decreto oficial proibindo as imagens em toda a Igreja. Patriarca Germano I se recusa a obedecer e é deposto. Substituído pelo iconoclasta Anastácio.</li>
+    <li><span class="lt-data">730–733</span> João Damasceno, monge fora do alcance do imperador (no Califado Abássida), escreve seus três <em>Discursos contra os que rejeitam as imagens</em> — a defesa teológica mais importante das imagens na história cristã.</li>
+    <li><span class="lt-data">733</span> Leão III confisca territórios papais na Calábria e Ilíria como retaliação pela oposição de Roma ao iconoclasmo.</li>
+    <li><span class="lt-data">741</span> Morte de Leão III. Seu filho <strong>Constantino V</strong> ("Coprônimo") assume — ainda mais feroz no iconoclasmo.</li>
+    <li><span class="lt-data">754</span> Concílio de Hieria — convocado por Constantino V, com 338 bispos, condena as imagens. Declara-se "sétimo concílio ecumênico" (o que Niceia II invalidaria 33 anos depois). Os iconoclastas têm agora seu próprio "concílio".</li>
+    <li><span class="lt-data">754–775</span> Fase mais violenta: monastérios destruídos, monges perseguidos, forçados a casar, exilados ou martirizados. Relíquias profanadas. Patrimônio artístico destruído em escala incalculável.</li>
+    <li><span class="lt-data">775</span> Morte de Constantino V. Seu filho <strong>Leão IV</strong> assume — iconoclasta mais moderado, influenciado pela esposa Irene, favorável às imagens.</li>
+    <li><span class="lt-data">780</span> Morte de Leão IV. <strong>Irene</strong> torna-se regente por seu filho menor Constantino VI. Começa a restauração discreta das imagens.</li>
+    <li><span class="lt-data">786</span> Primeira tentativa de concílio em Constantinopla fracassa: tropas iconoclastas invadem a sessão inaugural e a dissolvem à força.</li>
+    <li><span class="lt-data">787</span> Segundo concílio, transferido para Niceia. Oito sessões entre setembro e outubro. Restauração oficial das imagens.</li>
+  </ul>
+
+  <div class="accordion">
+    <button class="accordion-btn" data-acc="ant1">
+      <strong>Por que o iconoclasmo começou? — As causas profundas</strong>
+      <span class="acc-icon">▼</span>
+    </button>
+    <div class="accordion-corpo" id="ant1">
+      <p>O iconoclasmo não surgiu do nada. Leão III não era um louco destruidor de arte — era um imperador pragmático respondendo a uma confluência de pressões reais:</p>
+      <ul>
+        <li><strong>Pressão teológica interna:</strong> Desde sempre existia uma tensão no Cristianismo entre a proibição veterotestamentária das imagens (Ex 20,4–5) e a prática crescente de veneração de ícones. Bispos e teólogos sérios questionavam se essa prática não era uma concessão ao paganismo.</li>
+        <li><strong>Influência islâmica:</strong> O Islã, que havia conquistado vastos territórios cristãos, proibia categoricamente qualquer representação de Deus e seres sagrados. A crítica muçulmana às imagens cristãs era eficaz propagandisticamente e deixava os cristãos na defensiva.</li>
+        <li><strong>Influência judaica:</strong> As comunidades judaicas também criticavam a veneração de imagens como idolatria — e os debates entre cristãos e judeus eram frequentes nas fronteiras do Império.</li>
+        <li><strong>Razões políticas e militares:</strong> O Império Bizantino sofria derrotas militares pesadas contra árabes e búlgaros. Leão III — ele próprio general antes de imperador — pode ter associado as derrotas com a ira de Deus pelo "ídolo-uso" das imagens. Uma leitura teológica da geopolítica.</li>
+        <li><strong>Centralização do poder imperial:</strong> O iconoclasmo também serviu para subjugar os monastérios — centros de poder econômico, cultural e espiritual que frequentemente resistiam ao controle imperial. Atacar as imagens era uma forma de atacar os monges que as produziam e defendiam.</li>
+      </ul>
+    </div>
   </div>
 
-  <div class="secao">
-    <h2>⚖️ Principais Decisões e Cânones</h2>
-    <ul>
-<li>Distinção entre <strong>latria</strong> (adoração devida somente a Deus) e
-    <strong>proskynesis/veneratio</strong> (veneração devida às imagens, relíquias e santos).</li>
-<li>Declaração de que venerar as imagens é legítimo e piedoso; destruí-las é heresia.</li>
-<li>Restauração dos bispos iconoclastas arrependidos às suas sés.</li>
-<li>Reafirmação de todos os seis concílios ecumênicos anteriores.</li>
-<li>22 cânones disciplinares sobre costumes eclesiásticos.</li>
-</ul>
+  <div class="accordion">
+    <button class="accordion-btn" data-acc="ant2">
+      <strong>O Concílio de Hieria (754) — O "Falso Concílio"</strong>
+      <span class="acc-icon">▼</span>
+    </button>
+    <div class="accordion-corpo" id="ant2">
+      <p>O Concílio de Hieria foi a grande tentativa do imperador Constantino V de dar uma base teológica sólida ao iconoclasmo. Reuniu 338 bispos — mais do que Niceia I — e seus argumentos eram sofisticados e sérios, não mero decreto imperial.</p>
+      <p>Os principais argumentos do Concílio de Hieria foram:</p>
+      <ul>
+        <li>Fazer uma imagem de Cristo é ou <strong>nestorianismo</strong> (separar a natureza humana da divina, representando apenas a humana) ou <strong>eutiquianismo/monofisismo</strong> (misturar as duas naturezas, implicando que a natureza divina também é circunscritível e representável). Em ambos os casos, heresia cristológica.</li>
+        <li>A única imagem legítima de Cristo é a <strong>Eucaristia</strong> — que Ele mesmo instituiu. Qualquer outra imagem é usurpação humana não autorizada.</li>
+        <li>Os ícones não foram usados pelos apóstolos nem pelos primeiros cristãos — portanto não são tradição apostólica.</li>
+      </ul>
+      <p>Niceia II teria que responder a esses argumentos ponto por ponto — e o fez com rigor. O que tornava Hieria inválido para os nicenos não eram as intenções dos bispos, mas dois fatos concretos: <strong>não havia representantes de Roma nem dos patriarcados orientais</strong> (sob domínio árabe) — tornando-o impossível de ser "ecumênico" por definição.</p>
+      <div class="caixa-citacao">
+        "Reuniu-se um concílio falso e ilegítimo, que não tinha a marca de concílio ecumênico, pois estava privado do sacerdote romano e de seus legados."
+        <cite>— Horos de Niceia II (787)</cite>
+      </div>
+    </div>
   </div>
 
-  <div class="secao">
-    <h2>⚠️ Heresias Combatidas</h2>
-    <p><strong>Iconoclasmo</strong> — Movimento que, alegando fidelidade ao Antigo Testamento
-("Não farás imagens esculpidas") e influenciado possivelmente pelo Islã e pelo Judaísmo,
-condenava a confecção e veneração de ícones e imagens religiosas como idolatria. Os
-iconoclastas destruíram incalculável patrimônio artístico e perseguiram monges.</p>
+  <div class="accordion">
+    <button class="accordion-btn" data-acc="ant3">
+      <strong>A Tentativa Frustrada de 786 — Soldados no Concílio</strong>
+      <span class="acc-icon">▼</span>
+    </button>
+    <div class="accordion-corpo" id="ant3">
+      <p>Irene convocou um primeiro concílio para agosto de 786 na Igreja dos Santos Apóstolos em Constantinopla. Os legados papais chegaram, os bispos se reuniram — e então tropas da guarda imperial, majoritariamente iconoclastas e leais à memória de Constantino V, invadiram a assembleia com espadas desembainhadas.</p>
+      <p>Os soldados dissolverem o concílio à força. Bispos e legados fugiram. A cena foi simultaneamente humilhante e reveladora: o iconoclasmo não era apenas uma posição teológica — era uma identidade militar e política profundamente enraizada em partes do exército.</p>
+      <p>Irene respondeu com inteligência política: dispersou os regimentos iconoclastas para a fronteira asiática sob pretexto de operações militares, substituiu-os por tropas leais à política imperial e transferiu o concílio para Niceia — fora de Constantinopla, longe das guarnições problemáticas. Um ano depois, o concílio pôde funcionar livremente.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ 3. CONTEXTO ══════════════ -->
+<div class="secao" id="contexto">
+  <div class="secao-header"><h2>🏛️ Contexto: O Império Bizantino no Século VIII</h2></div>
+
+  <div class="tabs-internas">
+    <div class="tabs-internas-nav">
+      <button class="tab-interna-btn ativa" data-tab="ctx1">O Império em 787</button>
+      <button class="tab-interna-btn" data-tab="ctx2">Roma e Bizâncio</button>
+      <button class="tab-interna-btn" data-tab="ctx3">O Mundo dos Monastérios</button>
+      <button class="tab-interna-btn" data-tab="ctx4">Islam e Ícones</button>
+    </div>
+    <div class="tab-interna-painel visivel" id="ctx1">
+      <p>Em 787, o Império Bizantino era uma sombra de sua extensão antiga. Os árabes haviam conquistado o Egito, a Síria, a Palestina e o Norte da África — terras com antigas e ricas tradições cristãs — no século VII. Os búlgaros pressionavam ao norte. O Ocidente havia se reorganizado sob os francos de Carlos Magno, que receberia o título imperial em 800.</p>
+      <p>Bizâncio era um império sitiado, em permanente estado de crise militar e identitária. Nesse contexto, as disputas religiosas internas eram também disputas sobre o que significava ser romano, cristão e bizantino. O iconoclasmo era, em parte, uma resposta identitária a esse ambiente de pressão — uma tentativa de purificar a fé para merecer a proteção divina.</p>
+      <p>A imperatriz Irene governava em nome de seu filho Constantino VI — então com 16 anos. Era uma regência de facto numa sociedade que nunca havia sido governada por uma mulher no pleno exercício do poder. Sua habilidade política foi extraordinária, mas sua autoridade era sempre contestada por facções que preferiam um governante masculino.</p>
+    </div>
+    <div class="tab-interna-painel" id="ctx2">
+      <p>A relação entre Roma e Constantinopla havia se deteriorado drasticamente ao longo do século VIII. As causas acumuladas incluíam:</p>
+      <ul>
+        <li>O iconoclasmo de Leão III e a resistência papal — Roma nunca aceitou a proibição das imagens.</li>
+        <li>O confisco imperial dos territórios papais (733) como punição pela oposição ao iconoclasmo.</li>
+        <li>A transferência da diocese da Ilíria do patriarcado romano para o constantinopolitano (730s).</li>
+        <li>A coroação de Carlos Magno pelo Papa Leão III em 800 — que Bizâncio interpretou como usurpação do título imperial.</li>
+      </ul>
+      <p>Niceia II foi, entre outras coisas, uma tentativa de restaurar a comunhão entre Roma e Constantinopla. A participação dos legados papais e a aceitação da carta dogmática de Adriano I foram gestos de reconciliação que, no entanto, não impediram o cisma definitivo de 1054.</p>
+    </div>
+    <div class="tab-interna-painel" id="ctx3">
+      <p>Os monastérios foram os grandes mártires e os grandes defensores das imagens durante o iconoclasmo. Compreender seu papel é compreender por que a crise foi tão intensa.</p>
+      <p>No século VIII, os monastérios bizantinos eram muito mais do que casas de oração. Eram centros de produção artística (ícones, manuscritos iluminados), de ensino e preservação cultural, de assistência social, e de resistência ao controle imperial excessivo. Os monges eram frequentemente os bispos mais populares, os confessores mais procurados, os porta-vozes do povo junto ao poder.</p>
+      <p>Constantino V entendeu isso e atacou diretamente: forçou monges a casar publicamente, a comer carne em público durante o jejum, a pisotear ícones. Monastérios foram transformados em quartéis. Estácio, monge de Pelecete, foi flagelado e exilado. Estêvão o Novo foi assassinado por uma multidão incitada pelo imperador. Essas perseguições criaram mártires — e mártires criam santos venerados, que são representados em ícones.</p>
+    </div>
+    <div class="tab-interna-painel" id="ctx4">
+      <p>A influência islâmica no iconoclasmo é debatida pelos historiadores, mas os indícios são sólidos. O califa Yazid II emitiu em 721 um decreto ordenando a destruição de imagens nos territórios sob domínio árabe — incluindo igrejas cristãs. Leão III, que cresceu em regiões fronteiriças com o mundo islâmico, conhecia bem esta posição.</p>
+      <p>Os críticos cristãos das imagens frequentemente citavam a força do Islã como prova de que Deus favorecia aqueles que não usavam imagens. A apologética iconoclasta era, em parte, uma resposta ao desafio islâmico: "Vocês nos chamam de idólatras. Vamos provar que não somos."</p>
+      <p>Niceia II respondeu a isso indiretamente: a distinção entre <em>latria</em> (adoração exclusiva de Deus) e <em>proskynesis</em> (veneração relativa) tornava clara a diferença entre o culto cristão às imagens e a idolatria pagã que tanto o Islã quanto o Judaísmo condenavam corretamente.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ 4. ICONOCLASMO ══════════════ -->
+<div class="secao" id="iconoclasmo">
+  <div class="secao-header"><h2>⛔ O Iconoclasmo: O Que Era e Por Que Surgiu</h2></div>
+
+  <p>O iconoclasmo — do grego <em>eikon</em> (imagem) + <em>klaein</em> (quebrar) — foi muito mais do que vandalismo religioso. Foi um movimento teológico coerente, com argumentos bíblicos e filosóficos sérios, que mereceu uma resposta igualmente séria. Para entender Niceia II, é preciso entender primeiro os iconoclastas.</p>
+
+  <div class="tabs-internas">
+    <div class="tabs-internas-nav">
+      <button class="tab-interna-btn ativa" data-tab="ico1">O Que os Iconoclastas Criam</button>
+      <button class="tab-interna-btn" data-tab="ico2">Argumentos Bíblicos</button>
+      <button class="tab-interna-btn" data-tab="ico3">Argumentos Teológicos</button>
+      <button class="tab-interna-btn" data-tab="ico4">O Que Destruíram</button>
+    </div>
+    <div class="tab-interna-painel visivel" id="ico1">
+      <p>Os iconoclastas não eram bárbaros ignorantes. Muitos eram bispos cultos, teólogos treinados, imperadores que leram patrística. Suas posições centrais eram:</p>
+      <ul>
+        <li><strong>Toda imagem de Cristo é herética:</strong> Ou representa apenas Sua humanidade (nestorianismo — separação das naturezas) ou pretende circunscrever também Sua divindade (eutiquianismo — confusão das naturezas). Não há saída cristológica que permita a imagem.</li>
+        <li><strong>A Eucaristia é a única imagem legítima:</strong> O próprio Cristo instituiu o pão e o vinho como Sua "memória" — qualquer outro memorial imagético é invenção humana.</li>
+        <li><strong>A tradição apostólica não conheceu ícones:</strong> Os primeiros cristãos não veneravam imagens. A prática cresceu gradualmente por influência pagã e deve ser revertida.</li>
+        <li><strong>Venerar imagens é idolatria:</strong> Por mais que se afirme que a veneração passa "através" da imagem para o original, na prática o povo simples adora o objeto material — tornando a prática pagã de fato.</li>
+      </ul>
+    </div>
+    <div class="tab-interna-painel" id="ico2">
+      <p>Os iconoclastas eram exímios leitores da Bíblia. Seus textos-chave:</p>
+      <ul>
+        <li><strong>Êxodo 20,4–5:</strong> <em>"Não farás para ti imagem esculpida nem representação alguma do que existe no alto dos céus, no baixo da terra ou nas águas debaixo da terra. Não te prostrarás diante delas nem as servirás."</em> — O mandamento mais direto contra imagens.</li>
+        <li><strong>Deuteronômio 4,15–16:</strong> <em>"Visto que não vistes nenhuma forma no dia em que o Senhor vos falou no Horeb, do meio do fogo, guardai-vos com cuidado de não vos corromperdes, fazendo para vós uma imagem esculpida."</em></li>
+        <li><strong>João 4,24:</strong> <em>"Deus é espírito, e os que O adoram devem adorá-Lo em espírito e verdade."</em> — Deus é incorpóreo e, portanto, irrepresentável.</li>
+        <li><strong>Romanos 1,23:</strong> Paulo condena os que "trocaram a glória de Deus incorruptível por imagens semelhantes ao homem."</li>
+      </ul>
+      <p>Niceia II teria que responder a cada um desses textos — e o fez com distinções hermenêuticas precisas.</p>
+    </div>
+    <div class="tab-interna-painel" id="ico3">
+      <p>Além dos argumentos bíblicos, os iconoclastas usavam argumentos filosófico-teológicos:</p>
+      <ul>
+        <li><strong>A transcendência divina:</strong> Deus é absolutamente simples, incorpóreo, incompreensível. Qualquer imagem O "diminui" ao torná-Lo objeto de percepção sensível.</li>
+        <li><strong>O argumento cristológico de Hieria:</strong> Uma imagem de Cristo ou separa as naturezas (nestorianismo) ou confunde-as (monofisismo). Tertium non datur.</li>
+        <li><strong>O perigo pastoral:</strong> Mesmo que a teologia da distinção <em>latria/proskynesis</em> seja correta em princípio, na prática os fiéis simples adoram a imagem material como se fosse Deus. A prática real degenera em idolatria.</li>
+        <li><strong>O argumento da pureza:</strong> A Igreja "pura" não precisa de mediações materiais. A oração direta, o jejum, a leitura das Escrituras — estes são os meios legítimos de chegar a Deus, não objetos materiais.</li>
+      </ul>
+    </div>
+    <div class="tab-interna-painel" id="ico4">
+      <p>As consequências práticas do iconoclasmo foram devastadoras para o patrimônio artístico cristão:</p>
+      <ul>
+        <li>Ícones foram queimados, raspados, caiados. A magnitude da destruição é hoje impossível de calcular com precisão — mas sabe-se que muito do que existia do séc. I ao séc. VIII na arte cristã oriental desapareceu.</li>
+        <li>Mosaicos foram destruídos ou alterados — rostos de santos e de Cristo substituídos por flores, animais, padrões geométricos.</li>
+        <li>Manuscritos iluminados foram mutilados — páginas arrancadas, faces raspadas.</li>
+        <li>Relíquias de santos foram profanadas, pois os iconoclastas também questionavam a veneração dos santos.</li>
+        <li>A grande Igreja de Santa Sofia em Constantinopla teve seus mosaicos caiados — alguns foram redescobertos apenas no séc. XX.</li>
+      </ul>
+      <div class="caixa-alerta">
+        <strong>Perspectiva histórica:</strong> A destruição iconoclasta foi tão abrangente que hoje é muito difícil estudar a arte cristã dos primeiros séculos — grande parte foi destruída. O que sobreviveu frequentemente o fez porque estava em locais inacessíveis aos agentes imperiais ou porque estava no Ocidente (fora do alcance do iconoclasmo imperial oriental).
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ 5. ARGUMENTOS ══════════════ -->
+<div class="secao" id="argumentos">
+  <div class="secao-header"><h2>⚔️ Os Argumentos em Conflito</h2></div>
+
+  <p>Niceia II não foi um concílio de fanáticos contra fanáticos. Foi um debate teológico real, com argumentos de ambos os lados dignos de consideração séria. Vejamos o confronto:</p>
+
+  <div class="mapa-partidos">
+    <div class="partido-card icono">
+      <h4>⛔ Iconoclastas</h4>
+      <p>Imagens de Cristo são cristologicamente impossíveis. A proibição do AT é válida. A tradição apostólica não conheceu ícones. O perigo de idolatria é real e pastoral.</p>
+    </div>
+    <div class="partido-card ortod">
+      <h4>✅ Iconófilos</h4>
+      <p>A Encarnação mudou tudo. O Invisível tornou-Se visível. Representar Cristo é afirmar Sua real humanidade. Distinção latria/proskynesis é teologicamente sólida.</p>
+    </div>
+    <div class="partido-card centro">
+      <h4>⚖️ Moderados</h4>
+      <p>Aceitam as imagens mas não querem confronto com o poder imperial. Preferem compromissos. Bispos arrependidos que haviam assinado documentos iconoclastas buscam reintegração.</p>
+    </div>
+    <div class="partido-card mod">
+      <h4>📖 Monges Rigoristas</h4>
+      <p>Defendem as imagens mas desconfiam de Tarásio (nomeado patriarca como leigo). Prefeririam um concílio mais firme na punição dos bispos iconoclastas arrependidos.</p>
+    </div>
   </div>
 
-  <div class="secao">
-    <h2>👑 Papas e Autoridades Envolvidos</h2>
-    <p><strong>Imperatriz:</strong> Irene de Atenas (780–790 e 797–802), regente por Constantino VI,
-favorável à restauração das imagens.</p>
-<p><strong>Papa:</strong> Adriano I (772–795), cujos legados e carta tiveram grande peso.</p>
-<p><strong>Patriarca:</strong> Tarásio de Constantinopla, que presidiu as sessões.</p>
+  <div class="accordion">
+    <button class="accordion-btn" data-acc="arg1">
+      <strong>O Argumento Central dos Iconófilos: A Encarnação como fundamento</strong>
+      <span class="acc-icon">▼</span>
+    </button>
+    <div class="accordion-corpo" id="arg1">
+      <p>O argumento mais poderoso dos defensores das imagens não era arqueológico (provar que os primeiros cristãos usavam imagens) nem apenas bíblico — era cristológico e se fundava no coração da fé cristã: a Encarnação do Filho de Deus.</p>
+      <p>O raciocínio, desenvolvido por João Damasceno e depois articulado por Niceia II, segue esta lógica:</p>
+      <ul>
+        <li>No Antigo Testamento, a proibição de imagens fazia sentido: Deus nunca havia assumido forma humana visível. Representá-Lo seria presumir algo que não acontecera.</li>
+        <li>Na Encarnação, <strong>o Filho de Deus tornou-Se verdadeiramente homem</strong> — com um corpo real, um rosto real, uma história real. O Invisível tornou-Se visível.</li>
+        <li>Portanto, representar Cristo em imagens é <strong>afirmar a realidade da Encarnação</strong>. Negar que Cristo pode ser representado é negar que Ele realmente se encarnou — é uma forma de docetismo.</li>
+        <li>Quem rejeita as imagens de Cristo, na prática, rejeita a real corporeidade do Verbo Encarnado.</li>
+      </ul>
+      <div class="caixa-citacao">
+        "Outrora, Deus incorpóreo e sem forma nunca foi representado em imagem. Mas agora que Deus apareceu na carne e conviveu com os homens, represento o aspecto visível de Deus."
+        <cite>— João Damasceno, <em>Discurso I contra os que rejeitam as imagens</em></cite>
+      </div>
+    </div>
   </div>
 
-  <div class="secao">
-    <h2>🌍 Impacto para a Igreja</h2>
-    <p>Niceia II fundamentou teologicamente a arte sacra cristã e a tradição iconográfica que
-floresce até hoje no Oriente e no Ocidente. A veneração de imagens, ícones e relíquias
-tornou-se prática confirmada pelo Magistério, com a distinção clara entre veneração (lícita)
-e adoração (exclusiva de Deus).</p>
-<p>O iconoclasmo retornou no século IX (segunda fase: 813–843), mas foi definitivamente
-superado. O "Triunfo da Ortodoxia" em 843 é celebrado até hoje pelas Igrejas Ortodoxas
-no primeiro domingo da Quaresma.</p>
+  <div class="accordion">
+    <button class="accordion-btn" data-acc="arg2">
+      <strong>A Distinção <em>Latria</em> vs. <em>Proskynesis</em> — o coração da solução</strong>
+      <span class="acc-icon">▼</span>
+    </button>
+    <div class="accordion-corpo" id="arg2">
+      <p>A distinção entre dois tipos de reverência foi a chave filosófica e teológica que Niceia II canonizou. É uma distinção que responde diretamente à acusação de idolatria:</p>
+      <table class="tabela-figuras" style="margin-top:12px;">
+        <thead>
+          <tr>
+            <th>Conceito</th>
+            <th>Termo grego</th>
+            <th>Termo latino</th>
+            <th>Destinatário</th>
+            <th>Natureza</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Adoração</strong></td>
+            <td><em>Latreia</em></td>
+            <td><em>Latria</em></td>
+            <td>Somente Deus</td>
+            <td>Absoluta, devida por direito de criatura ao Criador</td>
+          </tr>
+          <tr>
+            <td><strong>Veneração</strong></td>
+            <td><em>Proskynesis / Timitikê</em></td>
+            <td><em>Veneratio / Dulia</em></td>
+            <td>Santos, ícones, relíquias</td>
+            <td>Relativa, honra que passa do objeto para o original representado</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>A lógica é clara: quando alguém se inclina diante de um ícone de Cristo, não está adorando a tábua pintada — está honrando Cristo, cuja imagem a tábua representa. Do mesmo modo que ninguém acusa o soldado de idolatria por saudar a bandeira (ele não adora o pano — honra a pátria que representa), o fiel que venera um ícone não adora a madeira — honra o sagrado representado.</p>
+      <p>Esta distinção não foi inventada em 787. João Damasceno já a havia articulado, e o próprio Aristóteles havia distinguido tipos de honra. O que Niceia II fez foi sancioná-la dogmaticamente como doutrina da Igreja universal.</p>
+    </div>
   </div>
 
-  <footer>
-    <p>
-      Concílio 7 de 21 reconhecidos pela Igreja Católica &nbsp;·&nbsp;
-      <a href="../index.html">← Voltar ao índice</a>
-    </p>
-    <p style="margin-top:8px;">Lux Fidei © 2026 — "A verdade é o bem do intelecto."</p>
-  </footer>
+  <div class="accordion">
+    <button class="accordion-btn" data-acc="arg3">
+      <strong>Respondendo ao Argumento de Hieria: O Problema Cristológico das Imagens</strong>
+      <span class="acc-icon">▼</span>
+    </button>
+    <div class="accordion-corpo" id="arg3">
+      <p>O argumento mais sofisticado dos iconoclastas era o cristológico, desenvolvido em Hieria (754): qualquer imagem de Cristo é necessariamente herética. Niceia II respondeu com precisão:</p>
+      <p><strong>Ao argumento "imagem de Cristo = nestorianismo" (separa as naturezas):</strong><br>
+      Os iconófilos responderam que a imagem não pretende representar a natureza divina — que é, de fato, irrepresentável. Representa a <em>pessoa</em> (hypóstase) de Cristo, que se tornou visível na Encarnação. Uma imagem de Cristo é uma imagem da Pessoa do Filho de Deus na Sua manifestação histórica — não uma imagem da divindade abstrata. Nenhuma separação de naturezas está implícita.</p>
+      <p><strong>Ao argumento "imagem de Cristo = monofisismo" (confunde as naturezas):</strong><br>
+      A imagem representa Cristo como apareceu historicamente — em Sua humanidade. Isso não implica que Sua divindade seja circunscritível; implica que Sua humanidade real (afirmada por Calcedônia contra o monofisismo) é representável, como qualquer humanidade real. Representar a humanidade de Cristo é, de fato, <em>anti</em>-monofisita — afirma que Ele era realmente, visivelmente humano.</p>
+      <div class="caixa-citacao">
+        "Se a carne assumida pelo Filho de Deus é verdadeiramente carne, se Ele verdadeiramente nasceu, viveu, sofreu e ressuscitou — então pode ser representada, porque é real. Negar a imagem é negar a carne."
+        <cite>— Síntese do argumento iconófilo em Niceia II (Horos)</cite>
+      </div>
+    </div>
+  </div>
 
+  <div class="accordion">
+    <button class="accordion-btn" data-acc="arg4">
+      <strong>O Argumento da Tradição — "Os Pais usavam imagens"</strong>
+      <span class="acc-icon">▼</span>
+    </button>
+    <div class="accordion-corpo" id="arg4">
+      <p>Uma parte significativa das sessões de Niceia II foi dedicada à leitura de testemunhos patrísticos — citações de Padres da Igreja que mencionavam, defendiam ou usavam imagens religiosas. Era uma disputa sobre a tradição: quem estava mais fiel aos Pais?</p>
+      <p>Os iconófilos citaram Basílio de Cesareia (sua famosa frase: "A honra da imagem passa para o protótipo"), Gregório de Nissa descrevendo ícones com veneração, textos atribuídos ao pseudo-Dionísio, cartas de Gregório Magno defendendo imagens como "Bíblia dos iletrados".</p>
+      <p>Os iconoclastas, por sua vez, citavam Eusébio de Cesareia recusando enviar uma imagem de Cristo à irmã do imperador, dizendo que não era possível representar a glória do ressuscitado, e passagens de Epifânio de Salamina condenando o uso de imagens.</p>
+      <p>Niceia II debateu a autenticidade de alguns desses textos (especialmente os de Epifânio, que muitos consideravam interpolações tardias) — um dos primeiros exemplos de crítica textual aplicada a questões dogmáticas. O resultado foi que o concílio considerou a tradição iconófila mais sólida e contínua do que a iconoclasta.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ 6. JOÃO DAMASCENO ══════════════ -->
+<div class="secao" id="joao-damasceno">
+  <div class="secao-header"><h2>📖 João Damasceno: O Teólogo das Imagens</h2></div>
+
+  <p>Se Atanásio foi o grande herói de Niceia I — defendendo o <em>homoousios</em> contra o mundo — João Damasceno foi o herói intelectual de Niceia II. A diferença: João nunca esteve no concílio. Morreu antes de 787 (c. 749). Mas sua obra foi o arsenal teológico que os iconófilos usaram durante as oito sessões.</p>
+
+  <div class="accordion">
+    <button class="accordion-btn" data-acc="jd1">
+      <strong>Quem foi João Damasceno (c. 675–749)</strong>
+      <span class="acc-icon">▼</span>
+    </button>
+    <div class="accordion-corpo" id="jd1">
+      <p>João Damasceno foi, provavelmente, o último grande Pai da Igreja grega. Nasceu em Damasco, numa família cristã que havia servido aos governadores árabes. Seu pai e depois ele próprio ocuparam posições administrativas no Califado Omíada — o que lhe dava uma posição única: estava geograficamente fora do alcance do imperador iconoclasta de Constantinopla.</p>
+      <p>Quando Leão III começou a perseguir os defensores das imagens no interior do Império, João podia escrever livremente de Damasco e do Mosteiro de São Sabas (Palestina), onde se retirou em monge por volta de 706. Nenhum agente imperial podia silenciá-lo.</p>
+      <p>Suas obras foram a <strong>Fonte do Conhecimento</strong> (a primeira summa teológica sistemática da tradição grega) e, especialmente para Niceia II, os três <strong>Discursos em Defesa das Imagens Sagradas</strong> — escritos entre 726 e 730, respondendo ponto a ponto ao iconoclasmo de Leão III.</p>
+      <p>Foi declarado Doutor da Igreja pelo Papa Leão XIII em 1890. Sua festa é celebrada em 4 de dezembro (católicos) e no segundo sábado antes do Natal (ortodoxos).</p>
+    </div>
+  </div>
+
+  <div class="accordion">
+    <button class="accordion-btn" data-acc="jd2">
+      <strong>Os Três Discursos — Síntese dos Argumentos</strong>
+      <span class="acc-icon">▼</span>
+    </button>
+    <div class="accordion-corpo" id="jd2">
+      <p>Os <em>Discursos contra os que rejeitam as imagens sagradas</em> de João Damasceno são os documentos teológicos mais importantes da controvérsia iconoclasta. Seus argumentos centrais, que Niceia II faria seus:</p>
+      <ul>
+        <li><strong>A Encarnação como princípio hermenêutico:</strong> A proibição do AT precede a Encarnação. Com a Encarnação, o Invisível tornou-Se visível — a situação mudou qualitativamente. Aplicar a proibição do AT à era do NT é anacronismo teológico.</li>
+        <li><strong>A distinção de tipos de imagens:</strong> João lista vários "tipos" de imagens legítimas — o Filho é "imagem" do Pai (Col 1,15); o ser humano é "imagem e semelhança" de Deus (Gn 1,26); ícones são imagens de imagens. Cada tipo tem sua dignidade própria.</li>
+        <li><strong>A defesa da matéria:</strong> Contra uma espiritualidade que desprezava o material (herdeira do neoplatonismo), João insiste: "Não desprezarei a matéria, pela qual minha salvação foi operada." A Encarnação santificou a matéria — a madeira, as cores, os metais podem ser veículos da graça.</li>
+        <li><strong>A honra relativa:</strong> Retomando Basílio: "A honra prestada à imagem passa para o seu modelo/protótipo." Não é a tábua que se honra — é Cristo, a Virgem, o santo representado.</li>
+        <li><strong>O argumento da tradição:</strong> A Igreja sempre usou imagens. A interrupção é a novidade, não a tradição.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="caixa-citacao">
+    "Não adoro a matéria, mas adoro o Criador da matéria, que por minha causa se fez matéria, que se dignou habitar na matéria, que operou minha salvação pela matéria. Não cessarei de honrar a matéria pela qual operou minha salvação."
+    <cite>— João Damasceno, <em>Discurso I em Defesa das Imagens Sagradas</em></cite>
+  </div>
+</div>
+
+<!-- ══════════════ 7. CONVOCAÇÃO ══════════════ -->
+<div class="secao" id="convocacao">
+  <div class="secao-header"><h2>📣 Convocação, Preparação e Transferência para Niceia</h2></div>
+
+  <div class="accordion">
+    <button class="accordion-btn" data-acc="con1">
+      <strong>A Diplomacia de Irene — Como Preparar um Concílio</strong>
+      <span class="acc-icon">▼</span>
+    </button>
+    <div class="accordion-corpo" id="con1">
+      <p>Irene não convocou o concílio impulsivamente. Trabalhou sistematicamente para criar as condições necessárias — um processo que durou vários anos:</p>
+      <ul>
+        <li><strong>O patriarca:</strong> O patriarca Paulo IV havia renunciado (784) num gesto penitencial, atormentado por ter cooperado com o iconoclasmo. Irene precisava de um substituto que fosse competente, conciliador e aceitável para Roma. Escolheu Tarásio — um laico culto, secretário imperial — e acelerou sua ordenação do leigo ao episcopado em tempo recorde. Esta escolha seria controversa, mas pragmática.</li>
+        <li><strong>A comunicação com Roma:</strong> Irene e Tarásio escreveram ao Papa Adriano I comunicando a intenção de restaurar as imagens e convocar um concílio. Adriano respondeu positivamente, enviando legados e uma carta dogmática — a <em>Epistula ad Tarasium et Constantinum</em> — que articulava a posição romana sobre as imagens. Esta carta foi lida e aprovada no concílio.</li>
+        <li><strong>Os patriarcas orientais:</strong> Os patriarcados de Alexandria, Antioquia e Jerusalém estavam sob domínio árabe e não podiam enviar bispos livremente. Enviaram monges representantes — João e Tomás — com procurações dos patriarcas ausentes.</li>
+        <li><strong>O exército:</strong> Após o fiasco de 786, Irene trabalhou para garantir que as tropas próximas ao local do concílio fossem favoráveis ou ao menos neutras em relação às imagens.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="accordion">
+    <button class="accordion-btn" data-acc="con2">
+      <strong>Por Que Niceia? — A Escolha da Cidade</strong>
+      <span class="acc-icon">▼</span>
+    </button>
+    <div class="accordion-corpo" id="con2">
+      <p>A escolha de Niceia foi estratégica em múltiplos sentidos. A cidade era suficientemente próxima de Constantinopla para ser logisticamente conveniente, mas suficientemente distante para estar fora do alcance imediato das guarnições iconoclastas da capital.</p>
+      <p>Mas havia um motivo ainda mais profundo: a cidade de Niceia era carregada de significado simbólico. Era ali que, em 325, o primeiro concílio ecumênico havia definido a divindade de Cristo contra Ário. Reunir o sétimo concílio na mesma cidade era um gesto eloquente: este concílio continua e coroa a obra dos seis anteriores; quem defende as imagens está na linha dos Padres nicenos; quem as rejeita é o inovador, o herege.</p>
+    </div>
+  </div>
+</div>
+
+<!-- FIM DA PARTE 1 -->
+<!-- As seções seguintes (sessões, decisões, cânones, autoridades etc.) virão na Parte 2 -->
+
+<footer>
+  <p>
+    Concílio 7 de 21 reconhecidos pela Igreja Católica &nbsp;·&nbsp;
+    <a href="../index.html">← Voltar ao índice</a>
+    &nbsp;·&nbsp;
+    <a href="constantinopla-iv.html">Próximo: Constantinopla IV (869) →</a>
+  </p>
+  <p style="margin-top: 10px;">Lux Fidei © 2026 — <em>"A verdade é o bem do intelecto."</em></p>
+  <p style="margin-top: 6px; font-size: 0.78rem;">
+    ⚠️ Página em construção — continuação em breve
+  </p>
+</footer>
+
+<script>
+/* ── PROGRESSO ── */
+window.addEventListener('scroll', () => {
+  const doc = document.documentElement;
+  const prog = (doc.scrollTop / (doc.scrollHeight - doc.clientHeight)) * 100;
+  document.getElementById('progress-bar').style.width = prog + '%';
+  document.getElementById('btnTopo').classList.toggle('visivel', doc.scrollTop > 400);
+  atualizarNavLateral();
+});
+
+document.getElementById('btnTopo').addEventListener('click', () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+/* ── SUMÁRIO ── */
+document.getElementById('sumarioHeader').addEventListener('click', () => {
+  const g = document.getElementById('sumarioGrupos');
+  const t = document.getElementById('sumarioToggle');
+  g.classList.toggle('visivel');
+  t.classList.toggle('aberto');
+});
+
+document.querySelectorAll('.sumario-tab').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.sumario-tab').forEach(b => b.classList.remove('ativa'));
+    document.querySelectorAll('.sumario-painel').forEach(p => p.classList.remove('visivel'));
+    btn.classList.add('ativa');
+    document.getElementById(btn.dataset.painel).classList.add('visivel');
+  });
+});
+
+/* ── ACCORDION ── */
+document.querySelectorAll('.accordion-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const corpo = document.getElementById(btn.dataset.acc);
+    const aberto = corpo.classList.contains('visivel');
+    document.querySelectorAll('.accordion-corpo').forEach(c => c.classList.remove('visivel'));
+    document.querySelectorAll('.accordion-btn').forEach(b => b.classList.remove('aberto'));
+    if (!aberto) {
+      corpo.classList.add('visivel');
+      btn.classList.add('aberto');
+    }
+  });
+});
+
+/* ── TABS INTERNAS ── */
+document.querySelectorAll('.tab-interna-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const nav = btn.closest('.tabs-internas-nav');
+    const container = btn.closest('.tabs-internas');
+    nav.querySelectorAll('.tab-interna-btn').forEach(b => b.classList.remove('ativa'));
+    container.querySelectorAll('.tab-interna-painel').forEach(p => p.classList.remove('visivel'));
+    btn.classList.add('ativa');
+    document.getElementById(btn.dataset.tab).classList.add('visivel');
+  });
+});
+
+/* ── CÂNONES ── */
+function toggleCanon(el) {
+  el.classList.toggle('expandido');
+}
+
+/* ── NAV LATERAL ── */
+function atualizarNavLateral() {
+  const secoes = document.querySelectorAll('.secao');
+  const links = document.querySelectorAll('.nav-lateral a');
+  let atual = '';
+  secoes.forEach(s => {
+    if (s.getBoundingClientRect().top <= 80) atual = s.id;
+  });
+  links.forEach(l => {
+    l.classList.toggle('ativa', l.getAttribute('href') === '#' + atual);
+  });
+}
+</script>
 </div>
 </body>
 </html>
