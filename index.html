@@ -7,706 +7,158 @@
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3007736407396874" crossorigin="anonymous"></script>
   <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Cinzel:wght@400;600;700&family=Cinzel+Decorative:wght@400&family=Crimson+Pro:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
-
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --ink:      #1a140d;
-      --ink-soft: #3d3023;
-      --ink-mid:  #6b5840;
-      --gold:     #9a7a3a;
-      --gold-lt:  #c8a870;
-      --gold-pale:#f0e6cc;
-      --parchment:#f7f2e8;
-      --parch-dk: #ede5d0;
-      --white:    #fdfaf4;
-      --rule:     rgba(154,122,58,0.25);
-    }
-
-    body {
-      background: var(--parchment);
-      color: var(--ink);
-      font-family: 'EB Garamond', Georgia, serif;
-      font-size: 18px;
-      line-height: 1.75;
-    }
-
-    /* ── HEADER ── */
-    header {
-      background: var(--ink);
-      color: var(--gold-pale);
-      text-align: center;
-      padding: 36px 20px 28px;
-      position: relative;
-    }
-    header::after {
-      content: '';
-      display: block;
-      width: 180px;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--gold), transparent);
-      margin: 18px auto 0;
-    }
-    .header-pretitle {
-      font-family: 'Cinzel', serif;
-      font-size: 0.68rem;
-      letter-spacing: 0.32em;
-      text-transform: uppercase;
-      color: var(--gold-lt);
-      margin-bottom: 10px;
-      opacity: 0.8;
-    }
-    header h1 {
-      font-family: 'Cinzel Decorative', serif;
-      font-size: clamp(1.8rem, 5vw, 2.8rem);
-      font-weight: 400;
-      letter-spacing: 0.06em;
-      color: var(--gold-pale);
-      line-height: 1.15;
-    }
-    header .header-sub {
-      font-family: 'Cinzel', serif;
-      font-size: 0.72rem;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-top: 8px;
-    }
-
-    /* ── NAV ── */
-    nav.menu {
-      background: var(--ink-soft);
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 0;
-      border-bottom: 1px solid rgba(154,122,58,0.3);
-    }
-    nav.menu a {
-      font-family: 'Cinzel', serif;
-      font-size: 0.68rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--gold-lt);
-      text-decoration: none;
-      padding: 14px 20px;
-      transition: color 0.2s, background 0.2s;
-      border-bottom: 2px solid transparent;
-    }
-    nav.menu a:hover,
-    nav.menu a.active {
-      color: var(--gold-pale);
-      border-bottom-color: var(--gold);
-      background: rgba(154,122,58,0.08);
-    }
-
-    /* ── INFO BTN ── */
-    .info-btn {
-      position: fixed;
-      top: 14px;
-      right: 16px;
-      z-index: 9999;
-      width: 32px;
-      height: 32px;
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(200,168,112,0.45);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-    .info-btn:hover { background: rgba(200,168,112,0.18); }
-    .info-btn svg { width: 15px; height: 15px; fill: var(--gold-lt); }
-
-    /* ── SIDEBAR ── */
-    .sidebar {
-      position: fixed;
-      top: 0; left: -280px;
-      width: 280px; height: 100%;
-      background: var(--ink);
-      z-index: 8000;
-      padding: 32px 0;
-      transition: left 0.3s ease;
-      border-right: 1px solid rgba(154,122,58,0.2);
-    }
-    .sidebar a {
-      display: block;
-      padding: 13px 28px;
-      font-family: 'Cinzel', serif;
-      font-size: 0.72rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--gold-lt);
-      text-decoration: none;
-      border-bottom: 1px solid rgba(154,122,58,0.1);
-      transition: color 0.2s, padding-left 0.2s;
-    }
-    .sidebar a:hover { color: var(--gold-pale); padding-left: 36px; }
-    .overlay {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.55);
-      z-index: 7999;
-    }
-    .overlay.ativo { display: block; }
-    .menu-btn {
-      position: fixed;
-      top: 14px;
-      left: 16px;
-      z-index: 9999;
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(200,168,112,0.35);
-      color: var(--gold-lt);
-      padding: 6px 10px;
-      font-size: 1rem;
-      cursor: pointer;
-      border-radius: 4px;
-    }
-
-    /* ── MAIN ── */
-    main {
-      max-width: 860px;
-      margin: 0 auto;
-      padding: 0 20px 80px;
-    }
-
-    /* ── ABERTURA SOLENE ── */
-    .abertura {
-      text-align: center;
-      padding: 64px 20px 48px;
-      border-bottom: 1px solid var(--rule);
-    }
-    .ornamento-cruz {
-      font-size: 1.5rem;
-      color: var(--gold);
-      display: block;
-      margin-bottom: 28px;
-      letter-spacing: 0.6em;
-      opacity: 0.7;
-    }
-    .abertura h2 {
-      font-family: 'Cinzel', serif;
-      font-size: clamp(1.1rem, 2.5vw, 1.45rem);
-      font-weight: 400;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--ink);
-      line-height: 1.6;
-      margin-bottom: 28px;
-    }
-    .abertura .epigraph {
-      font-family: 'EB Garamond', serif;
-      font-size: 1.2rem;
-      font-style: italic;
-      color: var(--ink-mid);
-      max-width: 560px;
-      margin: 0 auto 8px;
-      line-height: 1.7;
-    }
-    .abertura .epigraph-ref {
-      font-family: 'Cinzel', serif;
-      font-size: 0.65rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--gold);
-    }
-
-    /* ── APRESENTAÇÃO EDITORIAL ── */
-    .apresentacao {
-      padding: 52px 0 44px;
-      border-bottom: 1px solid var(--rule);
-    }
-    .sec-label {
-      font-family: 'Cinzel', serif;
-      font-size: 0.62rem;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 22px;
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-    .sec-label::before, .sec-label::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--rule));
-    }
-    .sec-label::before { background: linear-gradient(90deg, var(--rule), transparent); }
-
-    .apresentacao-texto {
-      columns: 1;
-      font-size: 1.05rem;
-      line-height: 1.9;
-      color: var(--ink-soft);
-      text-align: justify;
-    }
-    .apresentacao-texto p { margin-bottom: 1.2em; text-indent: 1.8em; }
-    .apresentacao-texto p:first-child { text-indent: 0; }
-    .apresentacao-texto p:first-child::first-letter {
-      font-family: 'Cinzel Decorative', serif;
-      font-size: 3.2em;
-      float: left;
-      line-height: 0.8;
-      margin: 0.08em 0.1em 0 0;
-      color: var(--gold);
-    }
-
-    /* ── SEÇÕES DO SITE ── */
-    .secoes {
-      padding: 52px 0 44px;
-      border-bottom: 1px solid var(--rule);
-    }
-    .secoes-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 2px;
-      margin-top: 32px;
-      border: 1px solid var(--rule);
-    }
-    .secao-item {
-      padding: 28px 24px;
-      background: var(--white);
-      border-right: 1px solid var(--rule);
-      border-bottom: 1px solid var(--rule);
-      transition: background 0.2s;
-    }
-    .secao-item:hover { background: var(--gold-pale); }
-    .secao-item a { text-decoration: none; color: inherit; display: block; }
-    .secao-num {
-      font-family: 'Cinzel', serif;
-      font-size: 0.58rem;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      color: var(--gold);
-      display: block;
-      margin-bottom: 10px;
-    }
-    .secao-item h3 {
-      font-family: 'Cinzel', serif;
-      font-size: 0.88rem;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--ink);
-      margin-bottom: 10px;
-    }
-    .secao-item p {
-      font-family: 'EB Garamond', serif;
-      font-size: 0.98rem;
-      font-style: italic;
-      color: var(--ink-mid);
-      line-height: 1.65;
-    }
-
-    /* ── CITAÇÃO DOURADA ── */
-    .citacao-magna {
-      padding: 56px 32px;
-      text-align: center;
-      border-bottom: 1px solid var(--rule);
-      position: relative;
-    }
-    .citacao-magna::before {
-      content: '\201C';
-      font-family: 'EB Garamond', serif;
-      font-size: 8rem;
-      color: var(--gold);
-      opacity: 0.15;
-      position: absolute;
-      top: 10px;
-      left: 50%;
-      transform: translateX(-50%);
-      line-height: 1;
-    }
-    .citacao-magna blockquote {
-      font-family: 'EB Garamond', serif;
-      font-size: clamp(1.3rem, 3vw, 1.9rem);
-      font-style: italic;
-      font-weight: 400;
-      color: var(--ink-soft);
-      line-height: 1.6;
-      max-width: 640px;
-      margin: 0 auto 16px;
-      position: relative;
-      z-index: 1;
-    }
-    .citacao-magna cite {
-      font-family: 'Cinzel', serif;
-      font-size: 0.65rem;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--gold);
-    }
-
-    /* ── PARA QUEM ── */
-    .para-quem {
-      padding: 52px 0 44px;
-      border-bottom: 1px solid var(--rule);
-    }
-    .para-quem-texto {
-      font-family: 'EB Garamond', serif;
-      font-size: 1.05rem;
-      color: var(--ink-soft);
-      line-height: 1.85;
-      text-align: justify;
-      margin-bottom: 28px;
-      text-indent: 1.8em;
-    }
-    .para-quem-texto:first-of-type { text-indent: 0; }
-
-    .perfis-lista {
-      list-style: none;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 0;
-      border: 1px solid var(--rule);
-      margin-top: 24px;
-    }
-    .perfis-lista li {
-      padding: 16px 20px;
-      border-right: 1px solid var(--rule);
-      border-bottom: 1px solid var(--rule);
-      font-family: 'EB Garamond', serif;
-      font-size: 0.98rem;
-      font-style: italic;
-      color: var(--ink-mid);
-    }
-    .perfis-lista li::before {
-      content: '✦';
-      font-style: normal;
-      font-size: 0.5rem;
-      color: var(--gold);
-      margin-right: 8px;
-      vertical-align: middle;
-    }
-
-    /* ── FECHAMENTO ── */
-    .fechamento {
-      padding: 56px 0 24px;
-      text-align: center;
-    }
-    .fechamento p {
-      font-family: 'EB Garamond', serif;
-      font-size: 1rem;
-      font-style: italic;
-      color: var(--ink-mid);
-      max-width: 520px;
-      margin: 0 auto;
-      line-height: 1.8;
-    }
-    .ornamento-final {
-      margin: 32px 0 0;
-      font-family: 'Cinzel', serif;
-      font-size: 0.7rem;
-      letter-spacing: 0.5em;
-      color: var(--gold);
-      opacity: 0.5;
-    }
-
-    /* ── FOOTER ── */
-    footer {
-      background: var(--ink);
-      color: var(--ink-mid);
-      text-align: center;
-      padding: 24px;
-      font-family: 'Cinzel', serif;
-      font-size: 0.62rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      border-top: 1px solid rgba(154,122,58,0.2);
-    }
-
-    /* ── MODAL ── */
-    .modal-overlay {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(10,8,5,0.75);
-      z-index: 10000;
-      align-items: center;
-      justify-content: center;
-      backdrop-filter: blur(4px);
-    }
-    .modal-overlay.aberto { display: flex; }
-    .modal-box {
-      background: var(--white);
-      border: 1px solid var(--rule);
-      border-top: 3px solid var(--gold);
-      width: 90%;
-      max-width: 520px;
-      max-height: 82vh;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      box-shadow: 0 32px 80px rgba(0,0,0,0.5);
-    }
-    .modal-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 20px 24px 16px;
-      border-bottom: 1px solid var(--rule);
-    }
-    .modal-header h3 {
-      font-family: 'Cinzel', serif;
-      font-size: 0.72rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--gold);
-    }
-    .modal-close {
-      background: none; border: none;
-      font-size: 1.1rem; cursor: pointer;
-      color: var(--ink-mid); padding: 2px 6px;
-      transition: color 0.15s;
-    }
-    .modal-close:hover { color: var(--ink); }
-    .modal-nav {
-      display: flex;
-      border-bottom: 1px solid var(--rule);
-    }
-    .modal-nav-btn {
-      flex: 1; background: none; border: none;
-      padding: 12px 8px;
-      font-family: 'Cinzel', serif;
-      font-size: 0.62rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--ink-mid);
-      cursor: pointer;
-      border-bottom: 2px solid transparent;
-      transition: all 0.18s;
-    }
-    .modal-nav-btn:hover { color: var(--ink); }
-    .modal-nav-btn.ativo {
-      color: var(--gold);
-      border-bottom-color: var(--gold);
-    }
-    .modal-content {
-      overflow-y: auto;
-      padding: 26px 28px 32px;
-      flex: 1;
-    }
-    .modal-content h2 {
-      font-family: 'Cinzel', serif;
-      font-size: 0.85rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--ink);
-      margin-bottom: 18px;
-    }
-    .modal-content p {
-      font-family: 'EB Garamond', serif;
-      font-size: 1rem;
-      line-height: 1.8;
-      color: var(--ink-soft);
-      margin-bottom: 14px;
-    }
-    .modal-content a { color: var(--gold); }
-    .modal-content .epigraph-modal {
-      font-style: italic;
-      color: var(--ink-mid);
-      border-left: 2px solid var(--gold);
-      padding-left: 16px;
-      margin-top: 20px;
-    }
-
-    @media (max-width: 600px) {
-      .apresentacao-texto { text-align: left; }
-      .secoes-grid { grid-template-columns: 1fr; }
-      nav.menu { display: none; }
-    }
-  </style>
 </head>
 <body>
 
-<!-- BOTÃO INFO -->
 <button class="info-btn" onclick="abrirModal()" title="Sobre, Contato e Privacidade">
   <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
 </button>
 
-<!-- MODAL -->
 <div class="modal-overlay" id="modalOverlay" onclick="fecharModalFora(event)">
   <div class="modal-box">
     <div class="modal-header">
       <h3>Lux Fidei</h3>
-      <button class="modal-close" onclick="fecharModal()">✕</button>
+      <button class="modal-close" onclick="fecharModal()">&#x2715;</button>
     </div>
     <div class="modal-nav">
-      <button class="modal-nav-btn ativo" onclick="mudarAba('sobre',event)">Sobre</button>
-      <button class="modal-nav-btn" onclick="mudarAba('contato',event)">Contato</button>
-      <button class="modal-nav-btn" onclick="mudarAba('privacidade',event)">Privacidade</button>
+      <button class="modal-nav-btn ativo" onclick="mudarAba('sobre', event)">Sobre</button>
+      <button class="modal-nav-btn" onclick="mudarAba('contato', event)">Contato</button>
+      <button class="modal-nav-btn" onclick="mudarAba('privacidade', event)">Privacidade</button>
     </div>
     <div class="modal-content" id="modalConteudo"></div>
   </div>
 </div>
 
-<!-- OVERLAY + SIDEBAR -->
 <div class="overlay" id="overlay" onclick="fecharMenu()"></div>
 <div class="sidebar" id="sidebar">
-  <a href="#" onclick="fecharMenu()">✕ &nbsp;Fechar</a>
-  <a href="index.html">Início</a>
-  <a href="liturgia_diaria/liturgiadiaria.html">Liturgia Diária</a>
+  <a href="#" onclick="fecharMenu()">&#x2715; &nbsp;Fechar</a>
+  <a href="index.html">Inicio</a>
+  <a href="liturgia_diaria/liturgiadiaria.html">Liturgia Diaria</a>
   <a href="santos/santos.html">Santos</a>
   <a href="biblioteca/biblioteca.html">Biblioteca</a>
   <a href="estudos/estudos.html">Estudos</a>
   <a href="jogos/jogos.html">Jogos</a>
 </div>
 
-<!-- HEADER -->
 <header>
-  <span class="menu-btn" onclick="abrirMenu()">☰</span>
-  <p class="header-pretitle">✠ &nbsp; In Nomine Domini &nbsp; ✠</p>
+  <span class="menu-btn" onclick="abrirMenu()">&#9776;</span>
+  <p class="header-pretitle">&#10011; &nbsp; In Nomine Domini &nbsp; &#10011;</p>
   <h1>Lux Fidei</h1>
-  <p class="header-sub">Luz da Fé Católica</p>
+  <p class="header-sub">Luz da Fe Catolica</p>
 </header>
 
-<!-- NAV -->
 <nav class="menu">
-  <a href="index.html" class="active">Início</a>
-  <a href="liturgia_diaria/liturgiadiaria.html">Liturgia Diária</a>
-  <a href="santos/santos.html">Santos</a>
-  <a href="biblioteca/biblioteca.html">Biblioteca</a>
-  <a href="estudos/estudos.html">Estudos</a>
-  <a href="jogos/jogos.html">Jogos</a>
+  <a href="index.html" class="menu-item active">Inicio</a>
+  <a href="liturgia_diaria/liturgiadiaria.html" class="menu-item">Liturgia Diaria</a>
+  <a href="santos/santos.html" class="menu-item">Santos</a>
+  <a href="biblioteca/biblioteca.html" class="menu-item">Biblioteca</a>
+  <a href="estudos/estudos.html" class="menu-item">Estudos</a>
+  <a href="jogos/jogos.html" class="menu-item">Jogos</a>
+  <span class="menu-indicator"></span>
 </nav>
 
-<!-- MAIN -->
-<main>
+<main id="inicio">
 
-  <!-- ABERTURA -->
   <section class="abertura">
-    <span class="ornamento-cruz">· · · ✠ · · ·</span>
+    <span class="ornamento-cruz">. . . &#10011; . . .</span>
     <h2>A sabedoria de dois mil anos<br>ao alcance de quem busca</h2>
-    <p class="epigraph" style="margin-top:28px;">
-      "Conhecereis a verdade, e a verdade vos libertará."
-    </p>
-    <p class="epigraph-ref" style="margin-top:8px;">— João 8, 32</p>
+    <p class="epigraph">"Conhecereis a verdade, e a verdade vos libertara."</p>
+    <p class="epigraph-ref">-- Joao 8, 32</p>
   </section>
 
-  <!-- APRESENTAÇÃO -->
   <section class="apresentacao">
-    <div class="sec-label">Apresentação</div>
+    <div class="sec-label">Apresentacao</div>
     <div class="apresentacao-texto">
-      <p>
-        A fé católica não é uma tradição que se preserva no silêncio dos museus, mas uma realidade viva que interpela cada geração com a mesma urgência dos primeiros séculos. O <em>Lux Fidei</em> nasce da convicção de que essa fé precisa ser apresentada com toda a sua profundidade — sem as distorções do sensacionalismo nem a tibieza de quem teme o rigor.
-      </p>
-      <p>
-        Aqui o visitante encontrará a liturgia diária da Igreja, as vidas dos santos que a encarnam, os textos que lhe deram forma ao longo dos séculos e o estudo sistemático da teologia e da filosofia cristã. Cada seção foi concebida para servir tanto ao fiel que deseja aprofundar quanto ao curioso que ainda não sabe o que procura.
-      </p>
-      <p>
-        Fidelidade ao Magistério e à Tradição Apostólica não é limitação: é o solo firme sobre o qual a inteligência pode avançar com liberdade. Neste espaço, não há agendas políticas nem concessões ao espírito do mundo. Há, isso sim, o desejo de que cada visitante se aproxime um pouco mais daquele que disse ser o Caminho, a Verdade e a Vida.
-      </p>
+      <p>A fe catolica nao e uma tradicao que se preserva no silencio dos museus, mas uma realidade viva que interpela cada geracao com a mesma urgencia dos primeiros seculos. O <em>Lux Fidei</em> nasce da conviccao de que essa fe precisa ser apresentada com toda a sua profundidade, sem as distorcoes do sensacionalismo nem a tibieza de quem teme o rigor.</p>
+      <p>Aqui o visitante encontrara a liturgia diaria da Igreja, as vidas dos santos que a encarnam, os textos que lhe deram forma ao longo dos seculos e o estudo sistematico da teologia e da filosofia crista. Cada secao foi concebida para servir tanto ao fiel que deseja aprofundar quanto ao curioso que ainda nao sabe o que procura.</p>
+      <p>Fidelidade ao Magisterio e a Tradicao Apostolica nao e limitacao: e o solo firme sobre o qual a inteligencia pode avancar com liberdade. Neste espaco, nao ha agendas politicas nem concessoes ao espirito do mundo. Ha, isso sim, o desejo de que cada visitante se aproxime um pouco mais daquele que disse ser o Caminho, a Verdade e a Vida.</p>
     </div>
   </section>
 
-  <!-- SEÇÕES -->
   <section class="secoes">
-    <div class="sec-label">O que encontrará aqui</div>
+    <div class="sec-label">O que encontrara aqui</div>
     <div class="secoes-grid">
       <div class="secao-item">
         <a href="liturgia_diaria/liturgiadiaria.html">
           <span class="secao-num">I</span>
-          <h3>Liturgia Diária</h3>
-          <p>As leituras, salmos e orações de cada dia, conforme o calendário litúrgico da Igreja Universal. A Palavra que alimenta e orienta.</p>
+          <h3>Liturgia Diaria</h3>
+          <p>As leituras, salmos e oracoes de cada dia, conforme o calendario liturgico da Igreja Universal. A Palavra que alimenta e orienta.</p>
         </a>
       </div>
       <div class="secao-item">
         <a href="santos/santos.html">
           <span class="secao-num">II</span>
           <h3>Santos</h3>
-          <p>Hagiografia — as vidas daqueles que viveram o Evangelho de modo radical e deixaram testemunho para toda a Igreja.</p>
+          <p>Hagiografia: as vidas daqueles que viveram o Evangelho de modo radical e deixaram testemunho para toda a Igreja.</p>
         </a>
       </div>
       <div class="secao-item">
         <a href="biblioteca/biblioteca.html">
           <span class="secao-num">III</span>
           <h3>Biblioteca</h3>
-          <p>Documentos conciliares, encíclicas, Padres da Igreja, Doutores e as obras que formaram o pensamento cristão por dois milênios.</p>
+          <p>Documentos conciliares, enciclicas, Padres da Igreja, Doutores e as obras que formaram o pensamento cristao por dois milenios.</p>
         </a>
       </div>
       <div class="secao-item">
         <a href="estudos/estudos.html">
           <span class="secao-num">IV</span>
           <h3>Estudos</h3>
-          <p>Teologia dogmática, moral e fundamental. Filosofia escolástica e moderna. Apologética. Introdução às Sagradas Escrituras.</p>
+          <p>Teologia dogmatica, moral e fundamental. Filosofia escolastica e moderna. Apologetica. Introducao as Sagradas Escrituras.</p>
         </a>
       </div>
     </div>
   </section>
 
-  <!-- CITAÇÃO MAGNA -->
   <section class="citacao-magna">
-    <blockquote>
-      "A fé sem a razão fenece no mito e na superstição; a razão sem a fé perde-se na desolação do nada."
-    </blockquote>
-    <cite>— São João Paulo II, Fides et Ratio</cite>
+    <blockquote>"A fe sem a razao fenece no mito e na supersticao; a razao sem a fe perde-se na desolacao do nada."</blockquote>
+    <cite>-- Sao Joao Paulo II, Fides et Ratio</cite>
   </section>
 
-  <!-- PARA QUEM -->
   <section class="para-quem">
-    <div class="sec-label">Para quem é este espaço</div>
-    <p class="para-quem-texto">
-      O <em>Lux Fidei</em> não foi pensado para um perfil único de visitante. A fé católica é, por natureza, universal — e universal há de ser também o convite que aqui se faz.
-    </p>
-    <p class="para-quem-texto">
-      Para o fiel que frequenta a missa dominical e deseja compreender mais do que recita: há aqui leituras, comentários e aprofundamento doutrinal. Para o estudante de teologia ou filosofia em busca de fontes primárias e sínteses confiáveis: a Biblioteca e os Estudos foram pensados para isso. Para o cético que ainda não crê mas tem a honestidade de perguntar: não haverá aqui respostas fáceis, mas haverá respostas sérias.
-    </p>
+    <div class="sec-label">Para quem e este espaco</div>
+    <p class="para-quem-texto">O <em>Lux Fidei</em> nao foi pensado para um perfil unico de visitante. A fe catolica e, por natureza, universal, e universal ha de ser tambem o convite que aqui se faz.</p>
+    <p class="para-quem-texto">Para o fiel que frequenta a missa dominical e deseja compreender mais do que recita: ha aqui leituras, comentarios e aprofundamento doutrinal. Para o estudante de teologia ou filosofia em busca de fontes primarias e sinteses confiaveis: a Biblioteca e os Estudos foram pensados para isso. Para o cetico que ainda nao cre mas tem a honestidade de perguntar: nao havera aqui respostas faceis, mas havera respostas serias.</p>
     <ul class="perfis-lista">
-      <li>Fiéis que desejam aprofundar a fé</li>
+      <li>Fieis que desejam aprofundar a fe</li>
       <li>Curiosos sobre o catolicismo</li>
-      <li>Recém-convertidos em formação</li>
+      <li>Recem-convertidos em formacao</li>
       <li>Estudantes de teologia e filosofia</li>
-      <li>Amantes da tradição e do rito</li>
-      <li>Quem busca respostas para perguntas difíceis</li>
-      <li>Pensadores que levam a religião a sério</li>
-      <li>Quem procura sentido e não encontrou ainda</li>
+      <li>Amantes da tradicao e do rito</li>
+      <li>Quem busca respostas para perguntas dificeis</li>
+      <li>Pensadores que levam a religiao a serio</li>
+      <li>Quem procura sentido e nao encontrou ainda</li>
     </ul>
   </section>
 
-  <!-- FECHAMENTO -->
   <div class="fechamento">
-    <p>
-      "A Igreja não teme a inteligência: ela foi sua mãe e nutrida por ela durante séculos. O que a Igreja oferece não é um fardo, mas uma luz." 
-    </p>
-    <p class="ornamento-final">✠ &nbsp; Lux Fidei &nbsp; ✠</p>
+    <p>"A Igreja nao teme a inteligencia: ela foi sua mae e nutrida por ela durante seculos. O que a Igreja oferece nao e um fardo, mas uma luz."</p>
+    <p class="ornamento-final">&#10011; &nbsp; Lux Fidei &nbsp; &#10011;</p>
   </div>
 
 </main>
 
-<footer>© 2026 – Lux Fidei &nbsp;·&nbsp; Omnia ad maiorem Dei gloriam</footer>
+<footer>&copy; 2026 &ndash; Lux Fidei &nbsp;&middot;&nbsp; Omnia ad maiorem Dei gloriam</footer>
 
 <script>
 const conteudoAbas = {
-  sobre: `
-    <h2>Sobre o Lux Fidei</h2>
-    <p>O <em>Lux Fidei</em> — Luz da Fé — é um projeto dedicado ao estudo, à apresentação e à defesa da fé católica. Nasceu da convicção de que a tradição cristã precisa ser conhecida em sua profundidade para ser vivida com integridade.</p>
-    <p>Muitos equívocos em torno do catolicismo derivam não de má vontade, mas de ignorância — às vezes até entre os próprios fiéis. Este espaço busca reunir recursos sólidos: liturgia, hagiografia, textos doutrinais e apologética, apresentados com fidelidade ao Magistério e à Tradição Apostólica.</p>
-    <p>Não há aqui agendas políticas, modismos ou concessões ao espírito do tempo. Há, isso sim, o desejo sincero de que cada visitante se aproxime um pouco mais da verdade.</p>
-    <p class="epigraph-modal">"A fé é mais certa do que qualquer outra espécie de conhecimento, porque está fundada na Palavra de Deus." — Santo Tomás de Aquino</p>
-  `,
-  contato: `
-    <h2>Contato</h2>
-    <p>Para sugestões de conteúdo, correções, colaborações ou dúvidas de fé, entre em contato pelo endereço abaixo. Toda mensagem é lida com atenção.</p>
-    <p>✉ E-mail: <a href="mailto:comosercatolico@gmail.com">comosercatolico@gmail.com</a></p>
+  sobre: `<h2>Sobre o Lux Fidei</h2>
+    <p>O <em>Lux Fidei</em> &mdash; Luz da F&eacute; &mdash; &eacute; um projeto dedicado ao estudo, &agrave; apresenta&ccedil;&atilde;o e &agrave; defesa da f&eacute; cat&oacute;lica. Nasceu da convic&ccedil;&atilde;o de que a tradi&ccedil;&atilde;o crist&atilde; precisa ser conhecida em sua profundidade para ser vivida com integridade.</p>
+    <p>Muitos equ&iacute;vocos em torno do catolicismo derivam n&atilde;o de m&aacute; vontade, mas de ignor&acirc;ncia &mdash; &agrave;s vezes at&eacute; entre os pr&oacute;prios fi&eacute;is. Este espa&ccedil;o busca reunir recursos s&oacute;lidos: liturgia, hagiografia, textos doutrinais e apolog&eacute;tica, apresentados com fidelidade ao Magist&eacute;rio e &agrave; Tradi&ccedil;&atilde;o Apost&oacute;lica.</p>
+    <p>N&atilde;o h&aacute; aqui agendas pol&iacute;ticas, modismos ou concess&otilde;es ao esp&iacute;rito do tempo. H&aacute;, isso sim, o desejo sincero de que cada visitante se aproxime um pouco mais da verdade.</p>
+    <p class="epigraph-modal">&ldquo;A f&eacute; &eacute; mais certa do que qualquer outra esp&eacute;cie de conhecimento, porque est&aacute; fundada na Palavra de Deus.&rdquo; &mdash; Santo Tom&aacute;s de Aquino</p>`,
+  contato: `<h2>Contato</h2>
+    <p>Para sugest&otilde;es de conte&uacute;do, corre&ccedil;&otilde;es, colabora&ccedil;&otilde;es ou d&uacute;vidas de f&eacute;, entre em contato pelo endere&ccedil;o abaixo. Toda mensagem &eacute; lida com aten&ccedil;&atilde;o.</p>
+    <p>&#x2709; E-mail: <a href="mailto:comosercatolico@gmail.com">comosercatolico@gmail.com</a></p>
     <p>Nas redes sociais, o projeto pode ser acompanhado como <strong>lux_.fidei</strong>.</p>
-    <p>Este é um projeto voluntário, movido exclusivamente pela fé e pelo desejo de servir. Sugestões de conteúdo, correções e contribuições intelectuais são sempre bem-vindas.</p>
-    <p class="epigraph-modal">"Ajudai-vos uns aos outros a carregar os fardos: assim cumprireis a lei de Cristo." — Gálatas 6, 2</p>
-  `,
-  privacidade: `
-    <h2>Política de Privacidade</h2>
-    <p>O <em>Lux Fidei</em> respeita a privacidade de seus visitantes. Esta página descreve o tratamento de dados neste site.</p>
-    <p><strong>Análise de tráfego:</strong> Podem ser utilizadas ferramentas de análise anônima (como o Google Analytics), sem identificação individual dos visitantes.</p>
-    <p><strong>Publicidade:</strong> Este site utiliza o Google AdSense, que pode exibir anúncios com base em interesses do visitante. As preferências podem ser gerenciadas nas configurações do Google.</p>
-    <p><strong>Dados pessoais:</strong> Nenhum dado pessoal identificável é coletado, vendido ou compartilhado. Mensagens enviadas por e-mail são usadas exclusivamente para responder ao remetente.</p>
-    <p><strong>Links externos:</strong> Este site pode conter links para terceiros. Não nos responsabilizamos pelas políticas de privacidade dessas páginas.</p>
-    <p>Dúvidas: <a href="mailto:comosercatolico@gmail.com">comosercatolico@gmail.com</a></p>
-  `
+    <p>Este &eacute; um projeto volunt&aacute;rio, movido exclusivamente pela f&eacute; e pelo desejo de servir. Sugest&otilde;es de conte&uacute;do, corre&ccedil;&otilde;es e contribui&ccedil;&otilde;es intelectuais s&atilde;o sempre bem-vindas.</p>
+    <p class="epigraph-modal">&ldquo;Ajudai-vos uns aos outros a carregar os fardos: assim cumprireis a lei de Cristo.&rdquo; &mdash; G&aacute;latas 6, 2</p>`,
+  privacidade: `<h2>Pol&iacute;tica de Privacidade</h2>
+    <p>O <em>Lux Fidei</em> respeita a privacidade de seus visitantes. Esta p&aacute;gina descreve o tratamento de dados neste site.</p>
+    <p><strong>An&aacute;lise de tr&aacute;fego:</strong> Podem ser utilizadas ferramentas de an&aacute;lise an&ocirc;nima (como o Google Analytics), sem identifica&ccedil;&atilde;o individual dos visitantes.</p>
+    <p><strong>Publicidade:</strong> Este site utiliza o Google AdSense, que pode exibir an&uacute;ncios com base em interesses do visitante. As prefer&ecirc;ncias podem ser gerenciadas nas configura&ccedil;&otilde;es do Google.</p>
+    <p><strong>Dados pessoais:</strong> Nenhum dado pessoal identific&aacute;vel &eacute; coletado, vendido ou compartilhado. Mensagens enviadas por e-mail s&atilde;o usadas exclusivamente para responder ao remetente.</p>
+    <p><strong>Links externos:</strong> Este site pode conter links para terceiros. N&atilde;o nos responsabilizamos pelas pol&iacute;ticas de privacidade dessas p&aacute;ginas.</p>
+    <p>D&uacute;vidas: <a href="mailto:comosercatolico@gmail.com">comosercatolico@gmail.com</a></p>`
 };
 
 let abaAtual = 'sobre';
@@ -733,20 +185,43 @@ function mudarAba(aba, e) {
 function renderizarAba(aba) {
   document.getElementById('modalConteudo').innerHTML = conteudoAbas[aba] || '';
 }
-
-// Renderizar aba inicial
 renderizarAba('sobre');
 
 function abrirMenu() {
-  document.getElementById("sidebar").style.left = "0";
-  document.getElementById("overlay").classList.add("ativo");
+  document.getElementById('sidebar').style.left = '0';
+  document.getElementById('overlay').classList.add('ativo');
 }
 function fecharMenu() {
-  document.getElementById("sidebar").style.left = "-280px";
-  document.getElementById("overlay").classList.remove("ativo");
+  document.getElementById('sidebar').style.left = '-290px';
+  document.getElementById('overlay').classList.remove('ativo');
 }
+
+const indicator = document.querySelector('.menu-indicator');
+const items = document.querySelectorAll('.menu-item');
+
+function updateIndicator(el) {
+  if (!indicator || !el) return;
+  indicator.style.width = el.offsetWidth + 'px';
+  indicator.style.left  = el.offsetLeft + 'px';
+}
+items.forEach(item => {
+  item.addEventListener('click', function () {
+    items.forEach(i => i.classList.remove('active'));
+    this.classList.add('active');
+    updateIndicator(this);
+  });
+});
+window.addEventListener('load', () => {
+  const active = document.querySelector('.menu-item.active');
+  if (active) updateIndicator(active);
+});
+window.addEventListener('resize', () => {
+  if (window.innerWidth > 768) fecharMenu();
+  const active = document.querySelector('.menu-item.active');
+  if (active) updateIndicator(active);
+});
+
 document.addEventListener('keydown', e => { if (e.key === 'Escape') fecharModal(); });
-window.addEventListener("resize", () => { if (window.innerWidth > 768) fecharMenu(); });
 </script>
 </body>
 </html>
