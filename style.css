@@ -1,388 +1,811 @@
-:root{
-  --cor-liturgica:#5b2c83;
+/* ============================================================
+   LUX FIDEI — Folha de Estilos Principal
+   Omnia ad maiorem Dei gloriam
+   ============================================================ */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-body{
-  margin:0;
-  font-family:"Inter",sans-serif;
-  background:
-    radial-gradient(circle at top, #ffffff, #f5f5f5 60%, #ececec);
+/* ── VARIÁVEIS ── */
+:root {
+  --ink:         #1a140d;
+  --ink-soft:    #3d3023;
+  --ink-mid:     #6b5840;
+  --gold:        #9a7a3a;
+  --gold-lt:     #c8a870;
+  --gold-pale:   #f0e6cc;
+  --parchment:   #f7f2e8;
+  --parch-dk:    #ede5d0;
+  --white:       #fdfaf4;
+  --rule:        rgba(154, 122, 58, 0.25);
+  --cor-liturgica: #5b2c83;
 }
 
-body::before{
-  content:"";
-  position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  background-image:
-    repeating-linear-gradient(
-      45deg,
-      rgba(0,0,0,0.02) 0px,
-      rgba(0,0,0,0.02) 2px,
-      transparent 2px,
-      transparent 4px
-    );
-  pointer-events:none;
-  z-index:0;
+/* ── BASE ── */
+body {
+  background: var(--parchment);
+  color: var(--ink);
+  font-family: 'EB Garamond', Georgia, serif;
+  font-size: 18px;
+  line-height: 1.75;
 }
 
-/* ===========================
+/* Textura de fundo sutil */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    45deg,
+    rgba(0, 0, 0, 0.012) 0px,
+    rgba(0, 0, 0, 0.012) 1px,
+    transparent 1px,
+    transparent 5px
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+main, footer, nav, header {
+  position: relative;
+  z-index: 1;
+}
+
+/* ============================================================
    HEADER
-=========================== */
-header{
-  position:relative;
-  background:
-    linear-gradient(rgba(0,0,0,0.65),rgba(0,0,0,0.65)),
-    url("santos.png") center/cover no-repeat;
-  padding:80px 30px 70px 30px;
-  text-align:center;
+   ============================================================ */
+header {
+  background: var(--ink);
+  color: var(--gold-pale);
+  text-align: center;
+  padding: 44px 20px 32px;
+  position: relative;
 }
 
-header h1{
-  font-family:"Libre Baskerville",serif;
-  font-size:48px;
-  letter-spacing:4px;
-  margin:0;
-  color:white;
-  text-shadow:0 4px 12px rgba(0,0,0,0.8);
+/* Borda dourada inferior */
+header::after {
+  content: '';
+  display: block;
+  width: 220px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  margin: 20px auto 0;
 }
 
-header p{
-  margin:8px 0 0 0;
-  color:rgba(255,255,255,0.75);
-  font-size:1rem;
-  letter-spacing:1px;
+.header-pretitle {
+  font-family: 'Cinzel', serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--gold-lt);
+  margin-bottom: 12px;
+  opacity: 0.75;
 }
 
-/* ===========================
-   BOTÃO HAMBURGUER
-=========================== */
-.menu-btn{
-  display:none;
-  position:absolute;
-  left:15px;
-  top:18px;
-  font-size:24px;
-  cursor:pointer;
-  background:rgba(0,0,0,0.6);
-  padding:6px 12px;
-  border-radius:6px;
-  color:white;
-  z-index:500;
-  line-height:1;
-  border:1px solid rgba(255,255,255,0.1);
-  transition:background 0.2s;
+header h1 {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: clamp(1.9rem, 5.5vw, 3rem);
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  color: var(--gold-pale);
+  line-height: 1.1;
 }
 
-.menu-btn:hover{
-  background:rgba(0,0,0,0.85);
+header .header-sub {
+  font-family: 'Cinzel', serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-top: 10px;
 }
 
-/* ===========================
-   OVERLAY
-=========================== */
-.overlay{
-  display:none;
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,0.55);
-  z-index:998;
-  backdrop-filter:blur(2px);
-  -webkit-backdrop-filter:blur(2px);
+/* ── Botão hambúrguer ── */
+.menu-btn {
+  position: fixed;
+  top: 14px;
+  left: 16px;
+  z-index: 9999;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(200, 168, 112, 0.35);
+  color: var(--gold-lt);
+  padding: 7px 11px;
+  font-size: 1rem;
+  cursor: pointer;
+  border-radius: 4px;
+  line-height: 1;
+  transition: background 0.2s;
+  display: none;
+}
+.menu-btn:hover {
+  background: rgba(200, 168, 112, 0.15);
 }
 
-.overlay.ativo{
-  display:block;
+/* ── Botão info (ⓘ) ── */
+.info-btn {
+  position: fixed;
+  top: 14px;
+  right: 16px;
+  z-index: 9999;
+  width: 32px;
+  height: 32px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(200, 168, 112, 0.4);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.info-btn:hover {
+  background: rgba(200, 168, 112, 0.18);
+}
+.info-btn svg {
+  width: 15px;
+  height: 15px;
+  fill: var(--gold-lt);
 }
 
-/* ===========================
-   SIDEBAR
-=========================== */
-.sidebar{
-  position:fixed;
-  left:-270px;
-  top:0;
-  width:260px;
-  height:100%;
-  background:#111;
-  padding-top:10px;
-  transition:left 0.3s ease;
-  z-index:999;
-  overflow-y:auto;
-  box-shadow:4px 0 20px rgba(0,0,0,0.5);
+/* ============================================================
+   NAVEGAÇÃO HORIZONTAL
+   ============================================================ */
+nav.menu {
+  position: relative;
+  background: var(--ink-soft);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  border-bottom: 1px solid rgba(154, 122, 58, 0.3);
+  overflow: hidden;
 }
 
-.sidebar a{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  color:rgba(255,255,255,0.85);
-  padding:15px 20px;
-  text-decoration:none;
-  font-size:16px;
-  border-bottom:1px solid rgba(255,255,255,0.05);
-  transition:background 0.2s, color 0.2s;
+nav.menu a,
+.menu-item {
+  font-family: 'Cinzel', serif;
+  font-size: 0.66rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold-lt);
+  text-decoration: none;
+  padding: 16px 22px;
+  transition: color 0.2s, background 0.2s;
+  border-bottom: 2px solid transparent;
+  white-space: nowrap;
+  display: inline-block;
 }
 
-.sidebar a:first-child{
-  font-size:14px;
-  color:rgba(255,255,255,0.4);
-  padding:12px 20px;
+nav.menu a:visited,
+.menu-item:visited {
+  color: var(--gold-lt);
 }
 
-.sidebar a:hover{
-  background:#1e1e1e;
-  color:#d4b06a;
+nav.menu a:hover,
+.menu-item:hover {
+  color: var(--gold-pale);
+  background: rgba(154, 122, 58, 0.08);
 }
 
-.sidebar hr{
-  border:none;
-  border-top:1px solid rgba(255,255,255,0.08);
-  margin:8px 0;
+nav.menu a.active,
+.menu-item.active {
+  color: var(--gold-pale);
+  border-bottom-color: var(--gold);
+  font-weight: 600;
 }
 
-/* ===========================
-   MENU HORIZONTAL
-=========================== */
-.menu{
-  position:relative;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  gap:10px;
-  background:#0b0b0b;
-  padding:0 20px;
-  font-family:'Inter',sans-serif;
-  overflow:hidden;
+/* Indicador animado */
+.menu-indicator {
+  position: absolute;
+  bottom: 0;
+  height: 2px;
+  background: var(--gold);
+  border-radius: 1px 1px 0 0;
+  transition: left 0.35s cubic-bezier(.4, 0, .2, 1),
+              width 0.35s cubic-bezier(.4, 0, .2, 1);
+  will-change: left, width;
 }
 
-.menu-item{
-  position:relative;
-  color:rgba(255,255,255,0.8);
-  text-decoration:none;
-  font-size:15px;
-  font-weight:500;
-  padding:18px 14px;
-  transition:color 0.25s, transform 0.25s;
-  white-space:nowrap;
-  letter-spacing:0.3px;
+/* ============================================================
+   OVERLAY + SIDEBAR
+   ============================================================ */
+.overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 7999;
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+}
+.overlay.ativo { display: block; }
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: -290px;
+  width: 280px;
+  height: 100%;
+  background: var(--ink);
+  z-index: 8000;
+  padding: 28px 0;
+  transition: left 0.3s ease;
+  border-right: 1px solid rgba(154, 122, 58, 0.2);
+  overflow-y: auto;
+  box-shadow: 4px 0 24px rgba(0, 0, 0, 0.5);
 }
 
-.menu-item:visited{
-  color:rgba(255,255,255,0.8);
+.sidebar a {
+  display: block;
+  padding: 14px 28px;
+  font-family: 'Cinzel', serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.17em;
+  text-transform: uppercase;
+  color: var(--gold-lt);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(154, 122, 58, 0.1);
+  transition: color 0.2s, padding-left 0.25s, background 0.2s;
+}
+.sidebar a:first-child {
+  font-size: 0.65rem;
+  color: rgba(255, 255, 255, 0.35);
+  padding: 12px 20px;
+}
+.sidebar a:hover {
+  color: var(--gold-pale);
+  padding-left: 38px;
+  background: rgba(154, 122, 58, 0.06);
 }
 
-.menu-item:hover{
-  color:#d4b06a;
-  transform:translateY(-1px);
+/* ============================================================
+   MAIN — ESTRUTURA GERAL
+   ============================================================ */
+main {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 0 24px 88px;
 }
 
-.menu-item.active{
-  color:#ffffff;
-  font-weight:600;
+/* ── Rótulo de seção ── */
+.sec-label {
+  font-family: 'Cinzel', serif;
+  font-size: 0.6rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.sec-label::before {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, var(--rule), transparent);
+}
+.sec-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--rule));
 }
 
-.menu-indicator{
-  position:absolute;
-  bottom:0;
-  height:3px;
-  background:#d4b06a;
-  border-radius:2px 2px 0 0;
-  transition:all 0.35s cubic-bezier(.4,0,.2,1);
-  will-change:left,width;
+/* ============================================================
+   ABERTURA SOLENE
+   ============================================================ */
+.abertura {
+  text-align: center;
+  padding: 68px 20px 52px;
+  border-bottom: 1px solid var(--rule);
 }
 
-/* ===========================
-   CONTEÚDO PRINCIPAL
-=========================== */
-#inicio{
-  max-width:860px;
-  margin:60px auto;
-  padding:20px 30px;
-  position:relative;
-  z-index:1;
+.ornamento-cruz {
+  font-size: 1.4rem;
+  color: var(--gold);
+  display: block;
+  margin-bottom: 30px;
+  letter-spacing: 0.65em;
+  opacity: 0.65;
 }
 
-main h2{
-  font-family:"Libre Baskerville",serif;
-  font-size:38px;
-  margin-bottom:25px;
-  color:#2c2c2c;
-  letter-spacing:1px;
+.abertura h2 {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(1.05rem, 2.4vw, 1.4rem);
+  font-weight: 400;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--ink);
+  line-height: 1.65;
+  margin-bottom: 30px;
 }
 
-main p{
-  font-size:17px;
-  line-height:1.85;
-  margin-bottom:20px;
-  color:#3a3a3a;
+.abertura .epigraph {
+  font-family: 'EB Garamond', serif;
+  font-size: 1.22rem;
+  font-style: italic;
+  color: var(--ink-mid);
+  max-width: 560px;
+  margin: 0 auto 10px;
+  line-height: 1.7;
 }
 
-.citacao{
-  margin-top:35px;
-  padding:16px 20px;
-  border-left:4px solid #8b6f3d;
-  background:rgba(139,111,61,0.06);
-  border-radius:0 6px 6px 0;
-  font-style:italic;
-  color:#555;
-  line-height:1.7;
+.abertura .epigraph-ref {
+  font-family: 'Cinzel', serif;
+  font-size: 0.63rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold);
 }
 
-/* ===========================
+/* ============================================================
+   APRESENTAÇÃO EDITORIAL
+   ============================================================ */
+.apresentacao {
+  padding: 56px 0 48px;
+  border-bottom: 1px solid var(--rule);
+}
+
+.apresentacao-texto {
+  font-size: 1.05rem;
+  line-height: 1.95;
+  color: var(--ink-soft);
+  text-align: justify;
+}
+
+.apresentacao-texto p {
+  margin-bottom: 1.25em;
+  text-indent: 1.8em;
+}
+
+.apresentacao-texto p:first-child {
+  text-indent: 0;
+}
+
+/* Capitular iluminada */
+.apresentacao-texto p:first-child::first-letter {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 3.4em;
+  float: left;
+  line-height: 0.78;
+  margin: 0.1em 0.1em 0 0;
+  color: var(--gold);
+}
+
+/* ============================================================
+   SEÇÕES DO SITE
+   ============================================================ */
+.secoes {
+  padding: 56px 0 48px;
+  border-bottom: 1px solid var(--rule);
+}
+
+.secoes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 0;
+  margin-top: 32px;
+  border: 1px solid var(--rule);
+}
+
+.secao-item {
+  padding: 30px 26px;
+  background: var(--white);
+  border-right: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  transition: background 0.22s;
+}
+.secao-item:hover {
+  background: var(--gold-pale);
+}
+.secao-item a {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.secao-num {
+  font-family: 'Cinzel', serif;
+  font-size: 0.56rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--gold);
+  display: block;
+  margin-bottom: 12px;
+}
+
+.secao-item h3 {
+  font-family: 'Cinzel', serif;
+  font-size: 0.86rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink);
+  margin-bottom: 12px;
+}
+
+.secao-item p {
+  font-family: 'EB Garamond', serif;
+  font-size: 0.98rem;
+  font-style: italic;
+  color: var(--ink-mid);
+  line-height: 1.68;
+}
+
+/* ============================================================
+   CITAÇÃO MAGNA
+   ============================================================ */
+.citacao-magna {
+  padding: 60px 36px;
+  text-align: center;
+  border-bottom: 1px solid var(--rule);
+  position: relative;
+}
+
+.citacao-magna::before {
+  content: '\201C';
+  font-family: 'EB Garamond', serif;
+  font-size: 9rem;
+  color: var(--gold);
+  opacity: 0.12;
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  line-height: 1;
+  pointer-events: none;
+}
+
+.citacao-magna blockquote {
+  font-family: 'EB Garamond', serif;
+  font-size: clamp(1.3rem, 3vw, 1.95rem);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--ink-soft);
+  line-height: 1.62;
+  max-width: 640px;
+  margin: 0 auto 18px;
+  position: relative;
+  z-index: 1;
+}
+
+.citacao-magna cite {
+  font-family: 'Cinzel', serif;
+  font-size: 0.63rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+/* Citação simples (páginas internas) */
+.citacao {
+  margin: 32px 0;
+  padding: 16px 22px;
+  border-left: 3px solid var(--gold);
+  background: rgba(154, 122, 58, 0.05);
+  font-style: italic;
+  color: var(--ink-mid);
+  line-height: 1.75;
+  font-family: 'EB Garamond', serif;
+  font-size: 1.05rem;
+}
+
+/* ============================================================
+   PARA QUEM
+   ============================================================ */
+.para-quem {
+  padding: 56px 0 48px;
+  border-bottom: 1px solid var(--rule);
+}
+
+.para-quem-texto {
+  font-family: 'EB Garamond', serif;
+  font-size: 1.05rem;
+  color: var(--ink-soft);
+  line-height: 1.9;
+  text-align: justify;
+  margin-bottom: 28px;
+  text-indent: 1.8em;
+}
+.para-quem-texto:first-of-type { text-indent: 0; }
+
+.perfis-lista {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  border: 1px solid var(--rule);
+  margin-top: 24px;
+}
+
+.perfis-lista li {
+  padding: 17px 22px;
+  border-right: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  font-family: 'EB Garamond', serif;
+  font-size: 0.98rem;
+  font-style: italic;
+  color: var(--ink-mid);
+  transition: background 0.18s;
+}
+.perfis-lista li:hover {
+  background: var(--gold-pale);
+}
+.perfis-lista li::before {
+  content: '✦';
+  font-style: normal;
+  font-size: 0.45rem;
+  color: var(--gold);
+  margin-right: 9px;
+  vertical-align: middle;
+}
+
+/* ============================================================
+   FECHAMENTO
+   ============================================================ */
+.fechamento {
+  padding: 60px 0 28px;
+  text-align: center;
+}
+
+.fechamento p {
+  font-family: 'EB Garamond', serif;
+  font-size: 1.02rem;
+  font-style: italic;
+  color: var(--ink-mid);
+  max-width: 520px;
+  margin: 0 auto;
+  line-height: 1.85;
+}
+
+.ornamento-final {
+  margin: 34px 0 0;
+  font-family: 'Cinzel', serif;
+  font-size: 0.68rem;
+  letter-spacing: 0.55em;
+  color: var(--gold);
+  opacity: 0.45;
+}
+
+/* ============================================================
+   CONTEÚDO DE PÁGINAS INTERNAS (h2, p genéricos)
+   ============================================================ */
+main h2 {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(1.2rem, 3vw, 1.75rem);
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  color: var(--ink);
+  margin-bottom: 24px;
+  text-transform: uppercase;
+}
+
+main p {
+  font-family: 'EB Garamond', serif;
+  font-size: 1.05rem;
+  line-height: 1.9;
+  color: var(--ink-soft);
+  margin-bottom: 20px;
+}
+
+/* ============================================================
+   FAIXA LITÚRGICA (decorativa)
+   ============================================================ */
+.faixa-liturgica {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ============================================================
    FOOTER
-=========================== */
-footer{
-  background:rgba(0,0,0,0.78);
-  color:rgba(255,255,255,0.7);
-  text-align:center;
-  padding:16px;
-  margin-top:60px;
-  font-size:0.9rem;
-  letter-spacing:0.5px;
-  position:relative;
-  z-index:1;
+   ============================================================ */
+footer {
+  background: var(--ink);
+  color: var(--ink-mid);
+  text-align: center;
+  padding: 22px;
+  font-family: 'Cinzel', serif;
+  font-size: 0.6rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  border-top: 1px solid rgba(154, 122, 58, 0.2);
+  position: relative;
+  z-index: 1;
 }
 
-/* ===========================
-   FAIXA LITÚRGICA
-=========================== */
-.faixa-liturgica{
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-  z-index:0;
+/* ============================================================
+   MODAL
+   ============================================================ */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 8, 5, 0.76);
+  z-index: 10000;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+.modal-overlay.aberto { display: flex; }
+
+.modal-box {
+  background: var(--white);
+  border: 1px solid var(--rule);
+  border-top: 3px solid var(--gold);
+  width: 90%;
+  max-width: 520px;
+  max-height: 84vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 32px 80px rgba(0, 0, 0, 0.55);
 }
 
-/* ===========================
-   DESKTOP (acima de 768px)
-=========================== */
-@media(min-width:769px){
-
-  .menu-btn{
-    display:none;
-  }
-
-  .menu{
-    display:flex;
-  }
-
-  .sidebar{
-    left:-270px !important;
-  }
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 26px 16px;
+  border-bottom: 1px solid var(--rule);
 }
 
-/* ===========================
-   MOBILE (até 768px)
-=========================== */
-@media(max-width:768px){
-
-  /* HEADER */
-  header{
-    padding:35px 15px 28px 15px;
-    text-align:center;
-  }
-
-  header h1{
-    font-size:1.9rem;
-    letter-spacing:2px;
-  }
-
-  header p{
-    font-size:0.85rem;
-  }
-
-  /* BOTÃO ☰ */
-  .menu-btn{
-    display:block;
-  }
-
-  /* MENU HORIZONTAL VIRA BARRA ROLÁVEL */
-  .menu{
-    display:flex;
-    justify-content:flex-start;
-    gap:0;
-    padding:0;
-    overflow-x:auto;
-    overflow-y:hidden;
-    -webkit-overflow-scrolling:touch;
-    scrollbar-width:none;
-    scroll-behavior:smooth;
-  }
-
-  .menu::-webkit-scrollbar{
-    display:none;
-  }
-
-  .menu-item{
-    font-size:13px;
-    padding:14px 15px;
-    flex-shrink:0;
-    color:rgba(255,255,255,0.8);
-    border-bottom:3px solid transparent;
-  }
-
-  .menu-item.active{
-    border-bottom:3px solid #d4b06a;
-    color:#ffffff;
-  }
-
-  /* indicador animado some no mobile */
-  .menu-indicator{
-    display:none;
-  }
-
-  /* CONTEÚDO */
-  #inicio{
-    margin:25px auto;
-    padding:15px 18px;
-  }
-
-  main h2{
-    font-size:1.6rem;
-    margin-bottom:18px;
-  }
-
-  main p{
-    font-size:0.97rem;
-    line-height:1.75;
-    margin-bottom:16px;
-  }
-
-  .citacao{
-    font-size:0.92rem;
-    padding:12px 15px;
-  }
-
-  /* FOOTER */
-  footer{
-    font-size:0.82rem;
-    padding:14px;
-    margin-top:40px;
-  }
+.modal-header h3 {
+  font-family: 'Cinzel', serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold);
 }
 
-/* ===========================
-   TELAS MUITO PEQUENAS (até 380px)
-=========================== */
-@media(max-width:380px){
+.modal-close {
+  background: none;
+  border: none;
+  font-size: 1.1rem;
+  cursor: pointer;
+  color: var(--ink-mid);
+  padding: 2px 6px;
+  border-radius: 3px;
+  transition: color 0.15s, background 0.15s;
+}
+.modal-close:hover {
+  color: var(--ink);
+  background: var(--parch-dk);
+}
 
-  header h1{
-    font-size:1.5rem;
+.modal-nav {
+  display: flex;
+  border-bottom: 1px solid var(--rule);
+}
+
+.modal-nav-btn {
+  flex: 1;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  padding: 13px 8px;
+  font-family: 'Cinzel', serif;
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-mid);
+  cursor: pointer;
+  transition: color 0.18s, border-color 0.18s;
+}
+.modal-nav-btn:hover { color: var(--ink); }
+.modal-nav-btn.ativo {
+  color: var(--gold);
+  border-bottom-color: var(--gold);
+}
+
+.modal-content {
+  overflow-y: auto;
+  padding: 26px 28px 34px;
+  flex: 1;
+}
+
+.modal-content h2 {
+  font-family: 'Cinzel', serif;
+  font-size: 0.82rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink);
+  margin-bottom: 18px;
+}
+
+.modal-content p {
+  font-family: 'EB Garamond', serif;
+  font-size: 1rem;
+  line-height: 1.82;
+  color: var(--ink-soft);
+  margin-bottom: 14px;
+}
+
+.modal-content a {
+  color: var(--gold);
+  text-decoration: underline;
+}
+
+.modal-content .epigraph-modal {
+  font-style: italic;
+  color: var(--ink-mid);
+  border-left: 2px solid var(--gold);
+  padding-left: 16px;
+  margin-top: 22px;
+}
+
+/* ============================================================
+   RESPONSIVO — DESKTOP (> 768px)
+   ============================================================ */
+@media (min-width: 769px) {
+  .menu-btn { display: none; }
+  .sidebar { left: -290px !important; }
+}
+
+/* ============================================================
+   RESPONSIVO — MOBILE (≤ 768px)
+   ============================================================ */
+@media (max-width: 768px) {
+
+  .menu-btn { display: block; }
+
+  header { padding: 38px 16px 28px; }
+  header h1 { font-size: 2rem; }
+  header .header-sub { font-size: 0.62rem; }
+
+  nav.menu {
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    scroll-behavior: smooth;
+  }
+  nav.menu::-webkit-scrollbar { display: none; }
+
+  nav.menu a,
+  .menu-item {
+    font-size: 0.6rem;
+    padding: 14px 16px;
+    flex-shrink: 0;
   }
 
-  .menu-item{
-    font-size:12px;
-    padding:13px 12px;
-  }
+  .menu-indicator { display: none; }
 
-  main h2{
-    font-size:1.4rem;
-  }
+  main { padding: 0 16px 64px; }
+  main h2 { font-size: 1.35rem; }
+  main p { font-size: 0.97rem; }
 
-  main p{
-    font-size:0.93rem;
-  }
+  .abertura { padding: 44px 12px 36px; }
+  .abertura h2 { font-size: 1rem; letter-spacing: 0.1em; }
+
+  .apresentacao-texto { text-align: left; }
+  .secoes-grid { grid-template-columns: 1fr; }
+  .perfis-lista { grid-template-columns: 1fr; }
+
+  .citacao-magna { padding: 44px 20px; }
+  .citacao-magna blockquote { font-size: 1.3rem; }
+
+  .fechamento { padding: 44px 0 20px; }
+
+  footer { font-size: 0.58rem; padding: 18px; }
+}
+
+/* ============================================================
+   RESPONSIVO — MUITO PEQUENO (≤ 380px)
+   ============================================================ */
+@media (max-width: 380px) {
+  header h1 { font-size: 1.6rem; }
+
+  nav.menu a,
+  .menu-item { font-size: 0.58rem; padding: 13px 13px; }
+
+  main h2 { font-size: 1.2rem; }
+  main p { font-size: 0.93rem; }
 }
