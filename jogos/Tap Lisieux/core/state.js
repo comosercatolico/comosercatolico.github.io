@@ -91,22 +91,22 @@ const Upgrades = (() => {
 
     const _def = {
         forca: {
-            nivel: 1, base: 6,    mult: 1.55,
+            nivel: 1, base: 6,   mult: 1.55,
             cBase: 10, cCres: 1.42,
             icone: '⚔️', label: 'Força'
         },
         rosa: {
-            nivel: 1, base: 4,    mult: 1.45,
+            nivel: 1, base: 4,   mult: 1.45,
             cBase: 14, cCres: 1.44,
             icone: '🌹', label: 'Rosa Mística'
         },
         velocidade: {
-            nivel: 1, base: 1.0,  mult: 1.08,
+            nivel: 1, base: 1.0, mult: 1.08,
             cBase: 22, cCres: 1.48,
             icone: '💨', label: 'Velocidade'
         },
         dps: {
-            nivel: 1, base: 3,    mult: 1.55,
+            nivel: 1, base: 3,   mult: 1.55,
             cBase: 18, cCres: 1.46,
             icone: '✨', label: 'Graça Divina'
         },
@@ -136,8 +136,8 @@ const Upgrades = (() => {
     function bonus(tipo) { return parseFloat(_raw(tipo).toFixed(4)); }
 
     function custo(tipo) {
-        const u    = _def[tipo];
-        const raw  = Math.floor(u.cBase * Math.pow(u.cCres, u.nivel));
+        const u   = _def[tipo];
+        const raw = Math.floor(u.cBase * Math.pow(u.cCres, u.nivel));
         const desc = _def.ouro.nivel > 0
             ? Math.max(0, Math.min(0.60, bonus('ouro')))
             : 0;
@@ -173,20 +173,16 @@ const Upgrades = (() => {
 
     function preview(tipo) {
         const u = _def[tipo];
-        const proxNivel = u.nivel + 1;
-        return Math.floor(u.base * Math.pow(u.mult, Math.max(0, proxNivel - 1)));
+        return Math.floor(u.base * Math.pow(u.mult, Math.max(0, u.nivel)));
     }
 
     function comprar(tipo) {
         const u = _def[tipo];
         if (!u) return false;
-
         const c = custo(tipo);
         if (!Economy.spendMoeda(c)) return false;
-
         u.nivel++;
         window._totalUpgrades = (window._totalUpgrades ?? 0) + 1;
-
         EventBus.emit('upgrade:comprado', {
             tipo, nivel: u.nivel, label: u.label, icone: u.icone,
         });
@@ -198,7 +194,7 @@ const Upgrades = (() => {
     function load(data) {
         if (!data) return;
         Object.entries(data).forEach(([k, v]) => {
-            if (_def[k]) _def[k].nivel = v;
+            if (_def[k]) _def[k].nivel = typeof v === 'object' ? (v.nivel ?? 0) : v;
         });
     }
     function save() {
@@ -225,14 +221,12 @@ const Personagem = (() => {
     function ganharExp(qtd) {
         _exp += qtd;
         let levelUp = false;
-
         while (_exp >= _expMax) {
             _exp    -= _expMax;
             _nivel++;
             _expMax  = _calcExpMax(_nivel);
             levelUp  = true;
         }
-
         if (levelUp) EventBus.emit('personagem:levelup', _nivel);
         EventBus.emit('personagem:exp', { exp: _exp, expMax: _expMax, nivel: _nivel });
     }
@@ -269,7 +263,6 @@ const BattleState = (() => {
         rMoeda: 0, rGema: 0, tipo: 0, chefe: false
     };
 
-    // ── Curva de HP híbrida ───────────────────────────────
     function _calcHp(e, chefe) {
         const hp = e <= 20
             ? Math.floor(55 * (1 + e * 0.85))
@@ -285,25 +278,29 @@ const BattleState = (() => {
     }
 
     function _calcGema(e, chefe) {
-        if (chefe) {
-            return Math.floor(CONFIG.GEMA_CHEFE_BASE + e * CONFIG.GEMA_CHEFE_ESCALA);
-        }
+        if (chefe) return Math.floor(CONFIG.GEMA_CHEFE_BASE + e * CONFIG.GEMA_CHEFE_ESCALA);
         return Math.random() < CONFIG.GEMA_CHANCE_NORMAL ? 1 : 0;
     }
 
     function configurarInimigo(e) {
+        // Garante número inteiro válido
+        e = Math.max(1, Math.floor(Number(e) || 1));
+
         const chefe = e % 10 === 0;
         const idx   = chefe
             ? tiposMonstros.length - 1
             : Math.floor((e - 1) / 3) % (tiposMonstros.length - 1);
-        const tipo  = tiposMonstros[idx];
+        const tipo  = tiposMonstros[idx] ?? tiposMonstros[0];
 
+        const maxHp = _calcHp(e, chefe);
+
+        // Atribui tudo junto — hp nunca fica em estado inconsistente
         _inimigo.nome   = tipo.nome + (chefe ? ' 👑' : '') + ' Lv.' + e;
         _inimigo.nivel  = e;
         _inimigo.tipo   = idx;
         _inimigo.chefe  = chefe;
-        _inimigo.maxHp  = _calcHp(e, chefe);
-        _inimigo.hp     = _inimigo.maxHp;   // ← HP RESETADO AQUI
+        _inimigo.maxHp  = maxHp;
+        _inimigo.hp     = maxHp;   // sempre número válido
         _inimigo.rMoeda = _calcMoeda(e, chefe);
         _inimigo.rGema  = _calcGema(e, chefe);
 
@@ -311,7 +308,6 @@ const BattleState = (() => {
         setTimeout(() => EventBus.emit('inimigo:fala', tipo.nome), 800);
     }
 
-    // ── Morte do inimigo ─────────────────────────────────
     function _matarInimigo() {
         Economy.addMoeda(_inimigo.rMoeda);
         if (_inimigo.rGema > 0) Economy.addGema(_inimigo.rGema);
@@ -329,7 +325,6 @@ const BattleState = (() => {
             expGanha,
         });
 
-        // Avança estágio DEPOIS de emitir morto
         _estagio++;
         if (_estagio > _maxEstagio) _maxEstagio = _estagio;
 
@@ -337,19 +332,11 @@ const BattleState = (() => {
         EventBus.emit('estagio:update', _estagio);
     }
 
-    // ── Dano ─────────────────────────────────────────────
-    // CORREÇÃO PRINCIPAL: permite dano mesmo fora de batalha
-    // para que o jogo responda ao clique durante a transição inicial.
-    // Só bloqueia se o inimigo não estiver configurado (maxHp === 0).
     function darDano(valor) {
-        if (valor <= 0)           return;
-        if (_inimigo.maxHp <= 0) return;   // inimigo ainda não configurado
-
-        // Se não estava em batalha, inicia automaticamente
-        if (!_emBatalha) {
-            _emBatalha = true;
-            EventBus.emit('batalha:inicio', _estagio);
-        }
+        if (!valor || valor <= 0) return;
+        if (_inimigo.maxHp <= 0) return;
+        // Blindagem: se hp for null/NaN por qualquer razão, restaura maxHp
+        if (!(_inimigo.hp >= 0)) _inimigo.hp = _inimigo.maxHp;
 
         _inimigo.hp = Math.max(0, _inimigo.hp - valor);
 
@@ -363,7 +350,6 @@ const BattleState = (() => {
         if (_inimigo.hp <= 0) _matarInimigo();
     }
 
-    // ── Prestígio ─────────────────────────────────────────
     function prestigiar() {
         if (_estagio < CONFIG.ESTAGIO_PRESTIGIO) return false;
 
@@ -382,7 +368,7 @@ const BattleState = (() => {
         window._totalPrestígios = total;
 
         _estagio   = 1;
-        _emBatalha = false;
+        _emBatalha = true;
         configurarInimigo(1);
 
         EventBus.emit('prestigio:feito', { bonus, total });
@@ -397,9 +383,7 @@ const BattleState = (() => {
 
         iniciar() {
             _emBatalha = true;
-            if (_inimigo.maxHp <= 0) {
-                configurarInimigo(_estagio);
-            }
+            configurarInimigo(_estagio);   // sempre reconfigura hp ao iniciar
             EventBus.emit('batalha:inicio', _estagio);
         },
         sair() {
@@ -434,11 +418,19 @@ const BattleState = (() => {
             EventBus.emit('estagio:update', _estagio);
         },
 
+        // CORREÇÃO PRINCIPAL:
+        // Aceita tanto { estagio, maxEstagio } (formato novo)
+        // quanto undefined/null (save antigo sem campo batalha)
+        // quanto o save inteiro por engano (tem s.estagio na raiz)
         load(d) {
-            _estagio    = d?.estagio    ?? 1;
-            _maxEstagio = d?.maxEstagio ?? _estagio;
+            const e = Math.max(1, Math.floor(Number(d?.estagio) || 1));
+            const m = Math.max(e,  Math.floor(Number(d?.maxEstagio) || e));
+
+            _estagio    = e;
+            _maxEstagio = m;
             _emBatalha  = false;
-            // Reconfigura inimigo no estágio salvo para hp não ficar zerado
+
+            // Configura imediatamente — hp nunca fica null após load
             configurarInimigo(_estagio);
         },
         save() {
