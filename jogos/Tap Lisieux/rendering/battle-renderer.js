@@ -5,6 +5,13 @@
 
 const BattleRenderer = (() => {
 
+// ════════════════════════════════════════
+//  HELPER: verifica se imagem está pronta
+// ════════════════════════════════════════
+function imgOk(img) {
+    return img && img.complete && img.naturalWidth > 0;
+}
+
 const assets = {
     cenario:       null,
     chao:          null,
@@ -22,88 +29,75 @@ const assets = {
 function carregarAssets() {
     const base = CONFIG.ASSET_BASE;
 
-    const c = new Image(); c.crossOrigin = 'anonymous';
-    c.onload  = () => { assets.cenario = c; };
-    c.onerror = () => console.warn('⚠️ Cenário não carregado');
-    c.src = base + 'piso-de-batalha/cenario1.png';
+    function _img(src, onload, warn) {
+        const i = new Image();
+        i.crossOrigin = 'anonymous';
+        i.onload  = () => onload(i);
+        i.onerror = () => console.warn('⚠️ ' + warn);
+        i.src = base + src;
+        return i;
+    }
 
-    const f = new Image(); f.crossOrigin = 'anonymous';
-    f.onload  = () => { assets.chao = f; };
-    f.onerror = () => console.warn('⚠️ Chão não carregado');
-    f.src = base + 'piso-de-batalha/piso1.png';
+    _img('piso-de-batalha/cenario1.png', i => assets.cenario = i, 'Cenário não carregado');
+    _img('piso-de-batalha/piso1.png',    i => assets.chao    = i, 'Chão não carregado');
 
     for (let i = 1; i <= 8; i++) {
-        const s = new Image(); s.crossOrigin = 'anonymous';
         const idx = i - 1;
-        s.onload  = () => { assets.santa[idx] = s; };
-        s.onerror = () => console.warn(`⚠️ Santa frame ${i} não carregada`);
-        s.src = base + `animation_summon/str-conjurando${i}.png`;
+        _img(`animation_summon/str-conjurando${i}.png`,
+            img => assets.santa[idx] = img,
+            `Santa frame ${i} não carregada`);
     }
 
-    // ── SANTA IDLE: 21 frames ──
     for (let i = 1; i <= 21; i++) {
-        const si = new Image(); si.crossOrigin = 'anonymous';
         const idx = i - 1;
-        si.onload  = () => { assets.santaIdle[idx] = si; };
-        si.onerror = () => console.warn(`⚠️ Santa idle frame ${i} não carregada`);
-        si.src = base + `trzn/santatereza${i}.png`;
+        _img(`trzn/santatereza${i}.png`,
+            img => assets.santaIdle[idx] = img,
+            `Santa idle frame ${i} não carregada`);
     }
 
-    const mn = new Image(); mn.crossOrigin = 'anonymous';
-    mn.onload  = () => { assets.monstroNormal = mn; };
-    mn.onerror = () => console.warn('⚠️ Monstro normal não carregado');
-    mn.src = base + 'monstros/slime-de-gelo/slime-de-gelo.png';
+    _img('monstros/slime-de-gelo/slime-de-gelo.png',
+        i => assets.monstroNormal = i, 'Monstro normal não carregado');
+    _img('monstros/slime-de-gelo/slime-de-gelo-hitado.png',
+        i => assets.monstroHitado = i, 'Monstro hitado não carregado');
+    _img('armas/flor-basica.png',
+        i => assets.flor = i, 'Flor não carregada');
 
-    const mh = new Image(); mh.crossOrigin = 'anonymous';
-    mh.onload  = () => { assets.monstroHitado = mh; };
-    mh.onerror = () => console.warn('⚠️ Monstro hitado não carregado');
-    mh.src = base + 'monstros/slime-de-gelo/slime-de-gelo-hitado.png';
-
-    const fl = new Image(); fl.crossOrigin = 'anonymous';
-    fl.onload  = () => { assets.flor = fl; };
-    fl.onerror = () => console.warn('⚠️ Flor não carregada');
-    fl.src = base + 'armas/flor-basica.png';
-
-    // ── SAPO-GATO: 13 frames de animação ──
     for (let i = 1; i <= 13; i++) {
-        const sg = new Image(); sg.crossOrigin = 'anonymous';
         const idx = i - 1;
-        sg.onload  = () => { assets.sagaFrames[idx] = sg; };
-        sg.onerror = () => console.warn(`⚠️ Sapo-gato frame ${i} não carregado`);
-        sg.src = base + `monstros/sapo-gato/saga${i}.png`;
+        _img(`monstros/sapo-gato/saga${i}.png`,
+            img => assets.sagaFrames[idx] = img,
+            `Sapo-gato frame ${i} não carregado`);
     }
 
-    const sh = new Image(); sh.crossOrigin = 'anonymous';
-    sh.onload  = () => { assets.sagaHit = sh; };
-    sh.onerror = () => console.warn('⚠️ Sapo-gato hit não carregado');
-    sh.src = base + 'monstros/sapo-gato/saga-hit.png';
-
-    const sh2 = new Image(); sh2.crossOrigin = 'anonymous';
-    sh2.onload  = () => { assets.sagaHit2 = sh2; };
-    sh2.onerror = () => console.warn('⚠️ Sapo-gato hit2 não carregado');
-    sh2.src = base + 'monstros/sapo-gato/sapa-hit2.png';
+    _img('monstros/sapo-gato/saga-hit.png',  i => assets.sagaHit  = i, 'Sapo-gato hit não carregado');
+    _img('monstros/sapo-gato/sapa-hit2.png', i => assets.sagaHit2 = i, 'Sapo-gato hit2 não carregado');
 }
 
 // ════════════════════════════════════════
 //  ALTERNÂNCIA DE MONSTROS
 // ════════════════════════════════════════
-// Qual monstro está ativo: 'slime' ou 'saga'
+// 'slime' ou 'saga'
 let monstroAtivo = 'slime';
 
-// Alterna o monstro a cada vez que um inimigo morre
 EventBus.on('inimigo:morto', () => {
     monstroAtivo = (monstroAtivo === 'slime') ? 'saga' : 'slime';
+    // Reseta estados de hit ao trocar de monstro
+    hit.tremendo     = 0;
+    hit.flash        = 0;
+    hit.sagaHitTipo  = 0;
+    hit.sagaFlash    = 0;
+    hit.sagaTremendo = 0;
 });
 
 // ════════════════════════════════════════
-//  HIT STATE — suporta dois monstros
+//  HIT STATE
 // ════════════════════════════════════════
 const hit = {
-    tremendo:  0,
-    flash:     0,
-    // Para o sapo-gato: 1 = hit normal, 2 = hit exagerado
-    sagaHitTipo: 0,
-    sagaFlash:   0,
+    tremendo:    0,
+    flash:       0,
+    // sapo-gato: 0 = nenhum, 1 = hit normal, 2 = hit exagerado
+    sagaHitTipo:  0,
+    sagaFlash:    0,
     sagaTremendo: 0,
 };
 
@@ -112,7 +106,7 @@ EventBus.on('inimigo:dano', () => {
         hit.tremendo = 14;
         hit.flash    = 8;
     } else {
-        // Alterna entre hit normal e hit exagerado para o sapo-gato
+        // Alterna entre 1 e 2 a cada hit
         hit.sagaHitTipo  = (hit.sagaHitTipo === 1) ? 2 : 1;
         hit.sagaFlash    = 10;
         hit.sagaTremendo = 14;
@@ -123,37 +117,36 @@ EventBus.on('inimigo:dano', () => {
 //  ANIMAÇÃO PING-PONG DO SAPO-GATO
 // ════════════════════════════════════════
 const sagaAnim = {
-    frame:     0,      // frame atual (0–12)
-    direcao:   1,      // +1 avança / -1 recua
-    tempo:     0,      // contador de ticks
-    TICK:      6,      // ticks por frame
-    FRAME_MAX: 12,     // índice do último frame (0-based, total 13)
+    frame:     0,
+    direcao:   1,
+    tempo:     0,
+    TICK:      6,
+    FRAME_MAX: 12,  // 0-based, 13 frames total
 };
 
+// Chamado UMA vez por frame de render (separado do desenho)
 function _atualizarSaga() {
     sagaAnim.tempo++;
-    if (sagaAnim.tempo >= sagaAnim.TICK) {
-        sagaAnim.tempo = 0;
-        sagaAnim.frame += sagaAnim.direcao;
+    if (sagaAnim.tempo < sagaAnim.TICK) return;
+    sagaAnim.tempo = 0;
+    sagaAnim.frame += sagaAnim.direcao;
 
-        if (sagaAnim.frame >= sagaAnim.FRAME_MAX) {
-            sagaAnim.frame    = sagaAnim.FRAME_MAX;
-            sagaAnim.direcao  = -1;
-        }
-        if (sagaAnim.frame <= 0) {
-            sagaAnim.frame   = 0;
-            sagaAnim.direcao = 1;
-        }
+    if (sagaAnim.frame >= sagaAnim.FRAME_MAX) {
+        sagaAnim.frame   = sagaAnim.FRAME_MAX;
+        sagaAnim.direcao = -1;
+    } else if (sagaAnim.frame <= 0) {
+        sagaAnim.frame   = 0;
+        sagaAnim.direcao = 1;
     }
 }
 
 // ════════════════════════════════════════
 //  HELPERS DE POSIÇÃO
 // ════════════════════════════════════════
-function chaoY(canvas)   { return canvas.height * 0.74; }
-function centroX(canvas) { return canvas.width  * 0.50; }
-function santaX(canvas)  { return centroX(canvas); }
-function monstroX(canvas){ return centroX(canvas); }
+function chaoY(canvas)    { return canvas.height * 0.74; }
+function centroX(canvas)  { return canvas.width  * 0.50; }
+function santaX(canvas)   { return centroX(canvas); }
+function monstroX(canvas) { return centroX(canvas); }
 
 // ════════════════════════════════════════
 //  FUNDO (cenário)
@@ -237,12 +230,11 @@ const pb = {
     offX:        0,
 };
 
-// ── IDLE ping-pong (santatereza1–21) ──
 const pbIdle = {
     frame:     0,
     direcao:   1,
     tempo:     0,
-    TICK:      5,   // ticks por frame
+    TICK:      5,
     FRAME_MAX: 20,  // 0-based → 21 frames
 };
 
@@ -257,29 +249,26 @@ EventBus.on('flores:conjurar', () => {
 
 function _atualizarIdleSanta() {
     pbIdle.tempo++;
-    if (pbIdle.tempo >= pbIdle.TICK) {
-        pbIdle.tempo = 0;
-        pbIdle.frame += pbIdle.direcao;
+    if (pbIdle.tempo < pbIdle.TICK) return;
+    pbIdle.tempo = 0;
+    pbIdle.frame += pbIdle.direcao;
 
-        if (pbIdle.frame >= pbIdle.FRAME_MAX) {
-            pbIdle.frame   = pbIdle.FRAME_MAX;
-            pbIdle.direcao = -1;
-        }
-        if (pbIdle.frame <= 0) {
-            pbIdle.frame   = 0;
-            pbIdle.direcao = 1;
-        }
+    if (pbIdle.frame >= pbIdle.FRAME_MAX) {
+        pbIdle.frame   = pbIdle.FRAME_MAX;
+        pbIdle.direcao = -1;
+    } else if (pbIdle.frame <= 0) {
+        pbIdle.frame   = 0;
+        pbIdle.direcao = 1;
     }
 }
 
-// Partículas sutis saindo da cruz durante o idle
 function _emitirParticulasCruz(px, py, ALT) {
     if (Math.random() >= 0.18) return;
 
     const cruzX = px + (Math.random() - 0.5) * 18;
     const cruzY = py - ALT * 0.60 + (Math.random() - 0.5) * 14;
 
-    const cores  = ['#ffb3c6', '#ff6b6b', '#ff9de2', '#fff0f3', '#ffd6e0'];
+    const cores    = ['#ffb3c6', '#ff6b6b', '#ff9de2', '#fff0f3', '#ffd6e0'];
     const useEmoji = Math.random() < 0.12;
 
     particulas.push({
@@ -297,7 +286,6 @@ function _emitirParticulasCruz(px, py, ALT) {
 
 function _atualizarPB() {
     if (!pb.conjurando) {
-        // Idle ativo
         _atualizarIdleSanta();
         pb.frame = 0;
         pb.offX  = 0;
@@ -337,10 +325,9 @@ function _desenharPB(ctx, canvas) {
     const py  = chaoY(canvas) + 10;
     const ALT = canvas.height * 0.30;
 
-    // ── IDLE ────────────────────────────────────────────────
+    // ── IDLE ──
     if (!pb.conjurando) {
         _emitirParticulasCruz(px, py, ALT);
-
         const idleImg = assets.santaIdle[pbIdle.frame];
 
         if (imgOk(idleImg)) {
@@ -356,7 +343,7 @@ function _desenharPB(ctx, canvas) {
         return;
     }
 
-    // ── CONJURANDO ──────────────────────────────────────────
+    // ── CONJURANDO ──
     const offX = pb.offX;
     const img  = assets.santa[pb.frame];
 
@@ -377,7 +364,6 @@ function _desenharPB(ctx, canvas) {
         ctx.scale(-1, 1);
         ctx.drawImage(img, -lar / 2, -ALT, lar, ALT);
         ctx.restore();
-
     } else {
         _santaFallback(ctx, px, py, ALT, offX);
     }
@@ -407,11 +393,14 @@ function _santaFallback(ctx, px, py, ALT, offX) {
 //  MONSTRO — SLIME DE GELO
 // ════════════════════════════════════════
 function _desenharSlime(ctx, canvas) {
-    if (hit.flash > 0)    hit.flash--;
+    // Decrementa contadores de hit (feito aqui, uma vez por render)
+    if (hit.flash    > 0) hit.flash--;
     if (hit.tremendo > 0) hit.tremendo--;
 
     const ini = BattleState.inimigo;
-    const pct = Math.max(0.05, ini.maxHp > 0 ? ini.hp / ini.maxHp : 1);
+    if (!ini || ini.maxHp <= 0) return;   // ← guarda: inimigo ainda não configurado
+
+    const pct = Math.max(0.05, ini.hp / ini.maxHp);
     const tam = canvas.height * (0.88 + pct * 0.05);
 
     const ox = hit.tremendo > 0 ? (Math.random() - 0.5) * 18 : 0;
@@ -422,39 +411,61 @@ function _desenharSlime(ctx, canvas) {
 
     const imgMonstro = (hit.flash > 0 && imgOk(assets.monstroHitado))
         ? assets.monstroHitado
-        : assets.monstroNormal;
+        : imgOk(assets.monstroNormal)
+            ? assets.monstroNormal
+            : null;
 
     ctx.save();
     ctx.shadowBlur  = 42 + Math.sin(Date.now() * 0.004) * 14;
     ctx.shadowColor = pct < 0.25 ? 'rgba(255,220,0,1)' : 'rgba(255,50,50,0.9)';
 
-    if (imgOk(imgMonstro)) {
+    if (imgMonstro) {
         const lar = tam * (imgMonstro.naturalWidth / imgMonstro.naturalHeight);
         ctx.drawImage(imgMonstro, mx - lar / 2, my - tam / 2, lar, tam);
     } else {
-        const tipo = tiposMonstros[ini.tipo] ?? tiposMonstros[0];
-        ctx.font = `${tam}px serif`;
-        ctx.textAlign    = 'center';
-        ctx.textBaseline = 'middle';
-        ctx.fillText(tipo.emojis.normal, mx, my);
+        // Fallback: slime desenhado com formas geométricas
+        _slimeFallback(ctx, mx, my, tam, pct);
     }
 
     ctx.restore();
 }
 
+function _slimeFallback(ctx, mx, my, tam, pct) {
+    const r  = tam * 0.28;
+    const r2 = tam * 0.20;
+    // Corpo
+    const corBase = pct < 0.25 ? '#ffe066' : '#66ccff';
+    const corBord = pct < 0.25 ? '#ffa500' : '#0088cc';
+    ctx.fillStyle   = corBase;
+    ctx.strokeStyle = corBord;
+    ctx.lineWidth   = 3;
+    ctx.beginPath();
+    ctx.ellipse(mx, my + r * 0.3, r, r * 0.75, 0, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.stroke();
+    // Olhos
+    ctx.fillStyle = '#fff';
+    ctx.beginPath(); ctx.arc(mx - r * 0.3, my - r * 0.05, r * 0.18, 0, Math.PI * 2); ctx.fill();
+    ctx.beginPath(); ctx.arc(mx + r * 0.3, my - r * 0.05, r * 0.18, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#222';
+    ctx.beginPath(); ctx.arc(mx - r * 0.28, my - r * 0.04, r * 0.08, 0, Math.PI * 2); ctx.fill();
+    ctx.beginPath(); ctx.arc(mx + r * 0.28, my - r * 0.04, r * 0.08, 0, Math.PI * 2); ctx.fill();
+}
+
 // ════════════════════════════════════════
-//  MONSTRO — SAPO-GATO (animado ping-pong)
+//  MONSTRO — SAPO-GATO
 // ════════════════════════════════════════
 function _desenharSaga(ctx, canvas) {
-    // Atualiza contadores de hit
     if (hit.sagaFlash    > 0) hit.sagaFlash--;
     if (hit.sagaTremendo > 0) hit.sagaTremendo--;
 
-    // Atualiza animação ping-pong
+    // Atualiza animação ping-pong (uma vez por frame)
     _atualizarSaga();
 
     const ini = BattleState.inimigo;
-    const pct = Math.max(0.05, ini.maxHp > 0 ? ini.hp / ini.maxHp : 1);
+    if (!ini || ini.maxHp <= 0) return;   // ← guarda
+
+    const pct = Math.max(0.05, ini.hp / ini.maxHp);
     const tam = canvas.height * (0.66 + pct * 0.05);
 
     const ox = hit.sagaTremendo > 0 ? (Math.random() - 0.5) * 18 : 0;
@@ -463,7 +474,7 @@ function _desenharSaga(ctx, canvas) {
     const mx = monstroX(canvas) + ox;
     const my = chaoY(canvas) - tam * 0.35 + oy;
 
-    // Escolhe imagem: hit exagerado > hit normal > frame animado
+    // Escolhe imagem: flash hit → animado
     let imgSaga = null;
     if (hit.sagaFlash > 0) {
         if (hit.sagaHitTipo === 2 && imgOk(assets.sagaHit2)) {
@@ -472,7 +483,6 @@ function _desenharSaga(ctx, canvas) {
             imgSaga = assets.sagaHit;
         }
     }
-    // Se não está em flash de hit, usa o frame da animação
     if (!imgSaga) {
         imgSaga = assets.sagaFrames[sagaAnim.frame];
     }
@@ -485,14 +495,41 @@ function _desenharSaga(ctx, canvas) {
         const lar = tam * (imgSaga.naturalWidth / imgSaga.naturalHeight);
         ctx.drawImage(imgSaga, mx - lar / 2, my - tam / 2, lar, tam);
     } else {
-        // Fallback emoji
-        ctx.font = `${tam * 0.5}px serif`;
-        ctx.textAlign    = 'center';
-        ctx.textBaseline = 'middle';
-        ctx.fillText('🐸', mx, my);
+        // Fallback: sapo-gato desenhado com formas
+        _sagaFallback(ctx, mx, my, tam, pct);
     }
 
     ctx.restore();
+}
+
+function _sagaFallback(ctx, mx, my, tam, pct) {
+    const r = tam * 0.22;
+    // Corpo verde
+    ctx.fillStyle   = pct < 0.25 ? '#aaff44' : '#44cc44';
+    ctx.strokeStyle = '#226622';
+    ctx.lineWidth   = 2.5;
+    ctx.beginPath();
+    ctx.ellipse(mx, my, r, r * 0.85, 0, 0, Math.PI * 2);
+    ctx.fill(); ctx.stroke();
+    // Orelhas de gato
+    ctx.fillStyle = '#33aa33';
+    ctx.beginPath();
+    ctx.moveTo(mx - r * 0.55, my - r * 0.7);
+    ctx.lineTo(mx - r * 0.8,  my - r * 1.3);
+    ctx.lineTo(mx - r * 0.15, my - r * 0.85);
+    ctx.closePath(); ctx.fill();
+    ctx.beginPath();
+    ctx.moveTo(mx + r * 0.55, my - r * 0.7);
+    ctx.lineTo(mx + r * 0.8,  my - r * 1.3);
+    ctx.lineTo(mx + r * 0.15, my - r * 0.85);
+    ctx.closePath(); ctx.fill();
+    // Olhos
+    ctx.fillStyle = '#ffff44';
+    ctx.beginPath(); ctx.arc(mx - r * 0.32, my - r * 0.1, r * 0.2, 0, Math.PI * 2); ctx.fill();
+    ctx.beginPath(); ctx.arc(mx + r * 0.32, my - r * 0.1, r * 0.2, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#111';
+    ctx.beginPath(); ctx.arc(mx - r * 0.32, my - r * 0.1, r * 0.08, 0, Math.PI * 2); ctx.fill();
+    ctx.beginPath(); ctx.arc(mx + r * 0.32, my - r * 0.1, r * 0.08, 0, Math.PI * 2); ctx.fill();
 }
 
 // ════════════════════════════════════════
@@ -521,6 +558,10 @@ let floresAtt = [];
 function _gerarPosFixas(canvas) {
     const W  = canvas.width;
     const H  = canvas.height;
+
+    // Guarda: canvas ainda não tem dimensões válidas
+    if (W < 10 || H < 10) return [];
+
     const cy = chaoY(canvas);
     const mx = monstroX(canvas);
     const my = cy - canvas.height * 0.30;
@@ -540,9 +581,7 @@ function _gerarPosFixas(canvas) {
         const size = FLOR_TAM_MIN + Math.random() * (FLOR_TAM_MAX - FLOR_TAM_MIN);
 
         if (Math.hypot(x - mx, y - my) < BOSS_R) continue;
-
-        const sobrep = posicoes.some(p => Math.hypot(p.x - x, p.y - y) < MIN_DIST);
-        if (sobrep) continue;
+        if (posicoes.some(p => Math.hypot(p.x - x, p.y - y) < MIN_DIST)) continue;
 
         posicoes.push({ x, y, size, glowFase: Math.random() * Math.PI * 2 });
     }
@@ -551,6 +590,7 @@ function _gerarPosFixas(canvas) {
 }
 
 function initFlores(canvas) {
+    if (!canvas || canvas.width < 10) return;
     _posFixas = _gerarPosFixas(canvas);
     flores    = _posFixas.map((p, i) => _criarFlor(p, i, true));
     floresAtt = [];
@@ -733,7 +773,8 @@ function _criarParticulaMagica(x, y, intensidade) {
 }
 
 EventBus.on('inimigo:morto', (d) => {
-    for (let i = 0; i < 20; i++) _criarParticula(d.x ?? 0, d.y ?? 0);
+    const n = d && typeof d.x === 'number' ? 20 : 8;
+    for (let i = 0; i < n; i++) _criarParticula(d?.x ?? 0, d?.y ?? 0);
 });
 
 // ════════════════════════════════════════
@@ -798,6 +839,7 @@ function render(ctx, canvas) {
         p.vida--;
     });
     particulas = particulas.filter(p => p.vida > 0);
+
     ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
     particulas.forEach(p => {
         ctx.save();
@@ -854,7 +896,12 @@ function render(ctx, canvas) {
 return {
     init(canvas) {
         carregarAssets();
-        initFlores(canvas);
+        // Aguarda próximo frame para garantir que o canvas tem dimensões
+        if (canvas && canvas.width > 10) {
+            initFlores(canvas);
+        } else {
+            requestAnimationFrame(() => initFlores(canvas));
+        }
     },
     onResize(canvas) {
         initFlores(canvas);
