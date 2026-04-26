@@ -48,9 +48,9 @@ const Economy = (() => {
 //  ENERGIA
 // ════════════════════════════════════════
 const Energia = (() => {
-    let _atual        = CONFIG.ENERGIA_MAX;
-    const MAX         = CONFIG.ENERGIA_MAX;
-    let _intervalId   = null;
+    let _atual      = CONFIG.ENERGIA_MAX;
+    const MAX       = CONFIG.ENERGIA_MAX;
+    let _intervalId = null;
 
     function _startRecarga() {
         if (_intervalId) return;
@@ -89,133 +89,94 @@ const Energia = (() => {
 // ════════════════════════════════════════
 const Upgrades = (() => {
 
-    // ── Definições ───────────────────────────────────────────
-    // Filosofia: custo(N) ≈ 20 kills no estágio equivalente
-    // mult  = quanto o VALOR cresce por nível
-    // cCres = quanto o CUSTO cresce por nível
     const _def = {
-
-        // ── Dano de clique ──────────────────────────────────
         forca: {
-            nivel: 1,
-            base: 6,    mult: 1.55,
-            cBase: 10,  cCres: 1.42,
+            nivel: 1, base: 6,    mult: 1.55,
+            cBase: 10, cCres: 1.42,
             icone: '⚔️', label: 'Força'
         },
         rosa: {
-            nivel: 1,
-            base: 4,    mult: 1.45,
-            cBase: 14,  cCres: 1.44,
+            nivel: 1, base: 4,    mult: 1.45,
+            cBase: 14, cCres: 1.44,
             icone: '🌹', label: 'Rosa Mística'
         },
-
-        // ── Velocidade / multiplicador ───────────────────────
         velocidade: {
-            nivel: 1,
-            base: 1.0,  mult: 1.08,
-            cBase: 22,  cCres: 1.48,
+            nivel: 1, base: 1.0,  mult: 1.08,
+            cBase: 22, cCres: 1.48,
             icone: '💨', label: 'Velocidade'
         },
-
-        // ── DPS passivo ──────────────────────────────────────
         dps: {
-            nivel: 1,
-            base: 3,    mult: 1.55,
-            cBase: 18,  cCres: 1.46,
+            nivel: 1, base: 3,    mult: 1.55,
+            cBase: 18, cCres: 1.46,
             icone: '✨', label: 'Graça Divina'
         },
-
-        // ── Crítico (desbloqueia no nível 1) ─────────────────
         critico: {
-            nivel: 0,
-            base: 0.04, mult: 1.18,
-            cBase: 45,  cCres: 1.55,
+            nivel: 0, base: 0.04, mult: 1.18,
+            cBase: 45, cCres: 1.55,
             icone: '🔥', label: 'Crítico'
         },
-
-        // ── Multi-hit (desbloqueia no nível 1) ───────────────
         multi: {
-            nivel: 0,
-            base: 0.0,  mult: 1.25,
-            cBase: 75,  cCres: 1.58,
+            nivel: 0, base: 0.0,  mult: 1.25,
+            cBase: 75, cCres: 1.58,
             icone: '💫', label: 'Multi-Golpe'
         },
-
-        // ── Bênção do Ouro: reduz custo de todos os upgrades ─
         ouro: {
-            nivel: 0,
-            base: 0.0,  mult: 1.12,
-            cBase: 60,  cCres: 1.52,
+            nivel: 0, base: 0.0,  mult: 1.12,
+            cBase: 60, cCres: 1.52,
             icone: '🪙', label: 'Bênção do Ouro'
         },
     };
 
-    // ── Helpers internos ─────────────────────────────────────
     function _raw(tipo) {
         const u = _def[tipo];
         return u.base * Math.pow(u.mult, Math.max(0, u.nivel - 1));
     }
 
-    function dano(tipo) {
-        return Math.floor(_raw(tipo));
-    }
+    function dano(tipo)  { return Math.floor(_raw(tipo)); }
+    function bonus(tipo) { return parseFloat(_raw(tipo).toFixed(4)); }
 
-    function bonus(tipo) {
-        return parseFloat(_raw(tipo).toFixed(4));
-    }
-
-    // Custo com desconto do upgrade "ouro"
     function custo(tipo) {
         const u    = _def[tipo];
         const raw  = Math.floor(u.cBase * Math.pow(u.cCres, u.nivel));
         const desc = _def.ouro.nivel > 0
-            ? Math.max(0, Math.min(0.60, bonus('ouro'))) // cap 60% desconto
+            ? Math.max(0, Math.min(0.60, bonus('ouro')))
             : 0;
         return Math.max(1, Math.floor(raw * (1 - desc)));
     }
 
-    // ── Dano do clique (todas as camadas) ────────────────────
     function calcDanoClick() {
         const base = dano('forca') + dano('rosa');
         const vel  = bonus('velocidade');
 
-        // Crítico: chance cresce com nível, multiplicador também
         const taxaCrit = _def.critico.nivel > 0 ? bonus('critico') : 0;
         const multCrit = _def.critico.nivel > 0
-            ? 1.5 + _def.critico.nivel * 0.3   // 1.8x → até ~10x no late
+            ? 1.5 + _def.critico.nivel * 0.3
             : 1;
         const isCrit = Math.random() < taxaCrit;
 
-        // Multi-hit: +1 hit por limiar de bonus
         const hits = _def.multi.nivel > 0
             ? Math.max(1, Math.floor(1 + bonus('multi')))
             : 1;
 
-        // Bônus do item equipado (% adicional)
         const itemMult = 1 + (Inventario.bonusDano / 100);
+        const total    = Math.floor(base * vel * (isCrit ? multCrit : 1) * hits * itemMult);
 
-        const total = Math.floor(base * vel * (isCrit ? multCrit : 1) * hits * itemMult);
-
-        // Emite se foi crítico (para efeito visual)
         if (isCrit) EventBus.emit('click:critico', total);
 
         return total;
     }
 
-    // ── DPS passivo ──────────────────────────────────────────
     function calcDps() {
         const itemMult = 1 + (Inventario.bonusDano / 100);
         return Math.floor(dano('dps') * itemMult);
     }
 
-    // ── Próximo valor (preview na UI) ────────────────────────
     function preview(tipo) {
         const u = _def[tipo];
         const proxNivel = u.nivel + 1;
         return Math.floor(u.base * Math.pow(u.mult, Math.max(0, proxNivel - 1)));
     }
 
-    // ── Compra ───────────────────────────────────────────────
     function comprar(tipo) {
         const u = _def[tipo];
         if (!u) return false;
@@ -227,10 +188,7 @@ const Upgrades = (() => {
         window._totalUpgrades = (window._totalUpgrades ?? 0) + 1;
 
         EventBus.emit('upgrade:comprado', {
-            tipo,
-            nivel:  u.nivel,
-            label:  u.label,
-            icone:  u.icone,
+            tipo, nivel: u.nivel, label: u.label, icone: u.icone,
         });
         return true;
     }
@@ -249,19 +207,7 @@ const Upgrades = (() => {
         );
     }
 
-    return {
-        get,
-        dano,
-        bonus,
-        custo,
-        preview,
-        comprar,
-        calcDanoClick,
-        calcDps,
-        load,
-        save,
-        all: _def,
-    };
+    return { get, dano, bonus, custo, preview, comprar, calcDanoClick, calcDps, load, save, all: _def };
 })();
 
 // ════════════════════════════════════════
@@ -272,7 +218,6 @@ const Personagem = (() => {
     let _exp    = 0;
     let _expMax = 100;
 
-    // Curva de exp estilo RPG suave
     function _calcExpMax(nivel) {
         return Math.floor(100 * Math.pow(1.32, nivel - 1));
     }
@@ -315,24 +260,23 @@ const Personagem = (() => {
 //  BATTLE STATE
 // ════════════════════════════════════════
 const BattleState = (() => {
-    let _estagio   = 1;
-    let _emBatalha = false;
-    let _maxEstagio = 1;          // maior estágio já alcançado (para save)
+    let _estagio    = 1;
+    let _emBatalha  = false;
+    let _maxEstagio = 1;
 
     const _inimigo = {
         nome: '', hp: 0, maxHp: 0, nivel: 1,
         rMoeda: 0, rGema: 0, tipo: 0, chefe: false
     };
 
-    // ── Curva de HP híbrida (linear early / expo late) ───────
+    // ── Curva de HP híbrida ───────────────────────────────
     function _calcHp(e, chefe) {
         const hp = e <= 20
-            ? Math.floor(55 * (1 + e * 0.85))          // linear suave (1-20)
-            : Math.floor(55 * Math.pow(1.22, e - 10)); // expo moderado (20+)
+            ? Math.floor(55 * (1 + e * 0.85))
+            : Math.floor(55 * Math.pow(1.22, e - 10));
         return chefe ? Math.floor(hp * 2.5) : hp;
     }
 
-    // ── Recompensas ──────────────────────────────────────────
     function _calcMoeda(e, chefe) {
         const base = Math.floor(
             CONFIG.MOEDA_BASE_KILL * Math.pow(CONFIG.MOEDA_ESCALA, e)
@@ -347,7 +291,6 @@ const BattleState = (() => {
         return Math.random() < CONFIG.GEMA_CHANCE_NORMAL ? 1 : 0;
     }
 
-    // ── Configurar inimigo ───────────────────────────────────
     function configurarInimigo(e) {
         const chefe = e % 10 === 0;
         const idx   = chefe
@@ -360,7 +303,7 @@ const BattleState = (() => {
         _inimigo.tipo   = idx;
         _inimigo.chefe  = chefe;
         _inimigo.maxHp  = _calcHp(e, chefe);
-        _inimigo.hp     = _inimigo.maxHp;
+        _inimigo.hp     = _inimigo.maxHp;   // ← HP RESETADO AQUI
         _inimigo.rMoeda = _calcMoeda(e, chefe);
         _inimigo.rGema  = _calcGema(e, chefe);
 
@@ -368,13 +311,11 @@ const BattleState = (() => {
         setTimeout(() => EventBus.emit('inimigo:fala', tipo.nome), 800);
     }
 
-    // ── Morte do inimigo ─────────────────────────────────────
+    // ── Morte do inimigo ─────────────────────────────────
     function _matarInimigo() {
-        // Recompensas
         Economy.addMoeda(_inimigo.rMoeda);
         if (_inimigo.rGema > 0) Economy.addGema(_inimigo.rGema);
 
-        // Exp escalonada por estágio
         const expGanha = Math.floor(
             CONFIG.EXP_BASE_KILL + _estagio * CONFIG.EXP_ESCALA_ESTAGIO
         );
@@ -388,7 +329,7 @@ const BattleState = (() => {
             expGanha,
         });
 
-        // Avança estágio
+        // Avança estágio DEPOIS de emitir morto
         _estagio++;
         if (_estagio > _maxEstagio) _maxEstagio = _estagio;
 
@@ -396,33 +337,43 @@ const BattleState = (() => {
         EventBus.emit('estagio:update', _estagio);
     }
 
-    // ── Dano ─────────────────────────────────────────────────
+    // ── Dano ─────────────────────────────────────────────
+    // CORREÇÃO PRINCIPAL: permite dano mesmo fora de batalha
+    // para que o jogo responda ao clique durante a transição inicial.
+    // Só bloqueia se o inimigo não estiver configurado (maxHp === 0).
     function darDano(valor) {
-        if (!_emBatalha || valor <= 0) return;
+        if (valor <= 0)           return;
+        if (_inimigo.maxHp <= 0) return;   // inimigo ainda não configurado
+
+        // Se não estava em batalha, inicia automaticamente
+        if (!_emBatalha) {
+            _emBatalha = true;
+            EventBus.emit('batalha:inicio', _estagio);
+        }
+
         _inimigo.hp = Math.max(0, _inimigo.hp - valor);
+
         EventBus.emit('inimigo:dano', {
             valor,
             hp:    _inimigo.hp,
             maxHp: _inimigo.maxHp,
             pct:   _inimigo.hp / _inimigo.maxHp,
         });
+
         if (_inimigo.hp <= 0) _matarInimigo();
     }
 
-    // ── Prestígio ────────────────────────────────────────────
+    // ── Prestígio ─────────────────────────────────────────
     function prestigiar() {
         if (_estagio < CONFIG.ESTAGIO_PRESTIGIO) return false;
 
-        // Bônus de gemas escalonado: quanto mais longe foi, mais ganha
         const bonus = Math.floor(
             CONFIG.PRESTIGIO_GEMA_BONUS +
             (_estagio - CONFIG.ESTAGIO_PRESTIGIO) * 0.5
         );
 
-        // Reset de moeda e upgrades
         Economy.load({ moeda: 0, gema: Economy.gema + bonus });
 
-        // Mantém nível 1 (não volta a 0) — TT2 style
         Object.values(Upgrades.all).forEach(u => {
             u.nivel = u.nivel > 0 ? 1 : 0;
         });
@@ -430,7 +381,8 @@ const BattleState = (() => {
         const total = (window._totalPrestígios ?? 0) + 1;
         window._totalPrestígios = total;
 
-        _estagio = 1;
+        _estagio   = 1;
+        _emBatalha = false;
         configurarInimigo(1);
 
         EventBus.emit('prestigio:feito', { bonus, total });
@@ -445,7 +397,9 @@ const BattleState = (() => {
 
         iniciar() {
             _emBatalha = true;
-            configurarInimigo(_estagio);
+            if (_inimigo.maxHp <= 0) {
+                configurarInimigo(_estagio);
+            }
             EventBus.emit('batalha:inicio', _estagio);
         },
         sair() {
@@ -456,7 +410,6 @@ const BattleState = (() => {
         darDano,
         prestigiar,
 
-        // Navegação de estágio
         irEstagio(e) {
             _estagio = Math.max(1, Math.min(e, _maxEstagio));
             configurarInimigo(_estagio);
@@ -485,6 +438,8 @@ const BattleState = (() => {
             _estagio    = d?.estagio    ?? 1;
             _maxEstagio = d?.maxEstagio ?? _estagio;
             _emBatalha  = false;
+            // Reconfigura inimigo no estágio salvo para hp não ficar zerado
+            configurarInimigo(_estagio);
         },
         save() {
             return { estagio: _estagio, maxEstagio: _maxEstagio };
@@ -500,7 +455,6 @@ const Inventario = (() => {
     let _armas    = [];
     let _equipado = null;
 
-    // Bônus de dano do item equipado (em %)
     function _calcBonusDano(item) {
         if (!item) return 0;
         const mult = { 'Comum': 2, 'Raro': 5, 'Épico': 12, 'Lendário': 25 };
@@ -514,7 +468,6 @@ const Inventario = (() => {
         get bonusDano() { return _calcBonusDano(_equipado); },
 
         addItem(item) {
-            // Separa heróis de armas pela propriedade `tipo`
             if (item.tipo === 'heroi') _herois.push(item);
             else                       _armas.push(item);
             EventBus.emit('inventario:update', { herois: _herois.length, armas: _armas.length });
@@ -531,7 +484,6 @@ const Inventario = (() => {
             return true;
         },
 
-        // Duplicatas viram fragmentos (feature futura)
         temItem(nome) {
             return _herois.some(h => h.nome === nome) ||
                    _armas.some(a => a.nome === nome);
