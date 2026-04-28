@@ -1,87 +1,168 @@
-// ═══════════════════════════════════════
-//  GAME-BATALHA.JS
-//  Lógica + renderização da batalha (estilo Tap Titans 2)
-// ═══════════════════════════════════════
+// ═══════════════════════════════════════════════════════════
+//  GAME-BATALHA.JS  — Estilo Tap Titans 2
+//  ATENÇÃO: canvas e ctx são declarados no arquivo principal
+// ═══════════════════════════════════════════════════════════
 
-// ── Economia ──
-let moeda = 0, gema = 50;
+"use strict";
 
-// ── Upgrades ──
+// ════════════════════════════════════════
+//  CONSTANTES
+// ════════════════════════════════════════
+const ASSET_BASE        = "https://comosercatolico.github.io/jogos/Tap%20Lisieux/tiles/";
+const QTD_FLORES_CEU    = 14;
+const DPS_INTERVALO_MS  = 1000;
+const FALA_INTERVALO_MS = 9000;
+const FALA_DURACAO_MS   = 3500;
+const FALA_CHANCE       = 0.3;
+
+// ════════════════════════════════════════
+//  ECONOMIA
+// ════════════════════════════════════════
+let moeda = 0;
+let gema  = 50;
+
+// ════════════════════════════════════════
+//  UPGRADES
+// ════════════════════════════════════════
 const upgrades = {
-    forca:     { nivel:1, base:5,  mult:1.50, cBase:15, cCres:1.60,
-                 get dano(){ return Math.floor(this.base * Math.pow(this.mult, this.nivel-1)); },
-                 get custo(){ return Math.floor(this.cBase * Math.pow(this.cCres, this.nivel-1)); } },
-    rosa:      { nivel:1, base:3,  mult:1.40, cBase:20, cCres:1.65,
-                 get dano(){ return Math.floor(this.base * Math.pow(this.mult, this.nivel-1)); },
-                 get custo(){ return Math.floor(this.cBase * Math.pow(this.cCres, this.nivel-1)); } },
-    velocidade:{ nivel:1, base:1.0,mult:1.10, cBase:30, cCres:1.70,
-                 get bonus(){ return parseFloat((this.base * Math.pow(this.mult, this.nivel-1)).toFixed(2)); },
-                 get custo(){ return Math.floor(this.cBase * Math.pow(this.cCres, this.nivel-1)); } },
-    dps:       { nivel:1, base:2,  mult:1.60, cBase:25, cCres:1.70,
-                 get valor(){ return Math.floor(this.base * Math.pow(this.mult, this.nivel-1)); },
-                 get custo(){ return Math.floor(this.cBase * Math.pow(this.cCres, this.nivel-1)); } }
+    forca: {
+        nivel: 1, base: 5, mult: 1.50, cBase: 15, cCres: 1.60,
+        get dano()  { return Math.floor(this.base  * Math.pow(this.mult,  this.nivel - 1)); },
+        get custo() { return Math.floor(this.cBase * Math.pow(this.cCres, this.nivel - 1)); }
+    },
+    rosa: {
+        nivel: 1, base: 3, mult: 1.40, cBase: 20, cCres: 1.65,
+        get dano()  { return Math.floor(this.base  * Math.pow(this.mult,  this.nivel - 1)); },
+        get custo() { return Math.floor(this.cBase * Math.pow(this.cCres, this.nivel - 1)); }
+    },
+    velocidade: {
+        nivel: 1, base: 1.0, mult: 1.10, cBase: 30, cCres: 1.70,
+        get bonus() { return parseFloat((this.base * Math.pow(this.mult, this.nivel - 1)).toFixed(2)); },
+        get custo() { return Math.floor(this.cBase * Math.pow(this.cCres, this.nivel - 1)); }
+    },
+    dps: {
+        nivel: 1, base: 2, mult: 1.60, cBase: 25, cCres: 1.70,
+        get valor() { return Math.floor(this.base  * Math.pow(this.mult,  this.nivel - 1)); },
+        get custo() { return Math.floor(this.cBase * Math.pow(this.cCres, this.nivel - 1)); }
+    }
 };
 
-function calcDanoClick() { return Math.floor((upgrades.forca.dano + upgrades.rosa.dano) * upgrades.velocidade.bonus); }
-function calcDps()        { return upgrades.dps.valor; }
+function calcDanoClick() {
+    return Math.floor((upgrades.forca.dano + upgrades.rosa.dano) * upgrades.velocidade.bonus);
+}
+function calcDps() { return upgrades.dps.valor; }
 
 function comprarUpgrade(tipo) {
     const up = upgrades[tipo];
-    if (moeda < up.custo) return;
+    if (!up || moeda < up.custo) return;
     moeda -= up.custo;
     up.nivel++;
     atualizarUIUpgrades();
     atualizarUIBatalha();
 }
 
-// ── Personagem ──
-let personagem = { nivel: 1, exp: 0, expMax: 100 };
+// ════════════════════════════════════════
+//  PERSONAGEM
+// ════════════════════════════════════════
+const personagem = { nivel: 1, exp: 0, expMax: 100 };
 
-// ── Estado de batalha ──
+// ════════════════════════════════════════
+//  ESTADO DE BATALHA
+// ════════════════════════════════════════
 let emBatalha = false;
 let estagio   = 1;
-let textos    = [];
 
-// ── Inimigo ──
-let inimigo = { nome: "", hp: 0, maxHp: 0, nivel: 1, rMoeda: 0, rGema: 0 };
+// ════════════════════════════════════════
+//  INIMIGO
+// ════════════════════════════════════════
+const inimigo = { nome: "", hp: 0, maxHp: 0, nivel: 1, rMoeda: 0, rGema: 0 };
 
-// ── Hit state ──
+// ════════════════════════════════════════
+//  HIT STATE
+// ════════════════════════════════════════
 const hitState = { tremendo: 0, flash: 0 };
 
-// ── Nomes de estágio (tema católico vs trevas) ──
+// ════════════════════════════════════════
+//  ASSETS
+// ════════════════════════════════════════
+const assets = {
+    cenario: null,
+    chao:    null,
+    santa:   new Array(8).fill(null)
+};
+
+function carregarAssets() {
+    const imgCenario       = new Image();
+    imgCenario.crossOrigin = "anonymous";
+    imgCenario.onload      = () => {
+        assets.cenario = imgCenario;
+        console.log("✅ Cenário:", imgCenario.naturalWidth, "x", imgCenario.naturalHeight);
+    };
+    imgCenario.onerror = () => console.warn("⚠️ Cenário não carregado.");
+    imgCenario.src     = ASSET_BASE + "piso-de-batalha/cenario1.png";
+
+    const imgChao       = new Image();
+    imgChao.crossOrigin = "anonymous";
+    imgChao.onload      = () => {
+        assets.chao = imgChao;
+        console.log("✅ Chão:", imgChao.naturalWidth, "x", imgChao.naturalHeight);
+    };
+    imgChao.onerror = () => console.warn("⚠️ Chão não carregado.");
+    imgChao.src     = ASSET_BASE + "piso-de-batalha/piso1.png";
+
+    for (let i = 1; i <= 8; i++) {
+        const img       = new Image();
+        img.crossOrigin = "anonymous";
+        const idx       = i - 1;
+        img.onload  = () => { assets.santa[idx] = img; };
+        img.onerror = () => console.warn(`⚠️ Santa frame ${i} não carregado.`);
+        img.src     = ASSET_BASE + "animation_summon/str-conjurando" + i + ".png";
+    }
+}
+carregarAssets();
+
+// ════════════════════════════════════════
+//  DADOS — MONSTROS
+// ════════════════════════════════════════
 const nomesEstagio = [
-    "Jardim das Sombras","Cripta Maldita","Floresta Corrompida",
-    "Vale das Trevas","Torre do Mal","Abismo Profundo",
-    "Santuário Profanado","Catedral Sombria","Portal Infernal","Domínio do Caos"
+    "Jardim das Sombras",  "Cripta Maldita",       "Floresta Corrompida",
+    "Vale das Trevas",     "Torre do Mal",          "Abismo Profundo",
+    "Santuário Profanado", "Catedral Sombria",      "Portal Infernal",
+    "Domínio do Caos"
 ];
 
 const tiposMonstros = [
-    { nome:"Demônio",         emojis:{ normal:"😈", dor:"😖", medo:"😱", raiva:"👿" } },
-    { nome:"Espírito Maligno",emojis:{ normal:"👻", dor:"😵", medo:"😨", raiva:"💢" } },
-    { nome:"Sombra Corrompida",emojis:{ normal:"🕷", dor:"💀", medo:"😰", raiva:"🕷" } },
-    { nome:"Chefe das Trevas",emojis:{ normal:"💀", dor:"😣", medo:"😱", raiva:"😡" } },
-    { nome:"Anjo Caído",      emojis:{ normal:"😤", dor:"🥴", medo:"😰", raiva:"🔥" } }
+    { nome: "Demônio",           emojis: { normal:"😈", dor:"😖", medo:"😱", raiva:"👿" } },
+    { nome: "Espírito Maligno",  emojis: { normal:"👻", dor:"😵", medo:"😨", raiva:"💢" } },
+    { nome: "Sombra Corrompida", emojis: { normal:"🕷", dor:"💀", medo:"😰", raiva:"🕷" } },
+    { nome: "Chefe das Trevas",  emojis: { normal:"💀", dor:"😣", medo:"😱", raiva:"😡" } },
+    { nome: "Anjo Caído",        emojis: { normal:"😤", dor:"🥴", medo:"😰", raiva:"🔥" } }
 ];
 
 const falasMonstros = {
-    "Demônio":         ["Você é uma inútil mesmo!","Nem suas orações te salvam!","Que fraquinha!","Vai chorar pro seu Deus?","Isso é tudo que você tem?"],
-    "Espírito Maligno":["Florzinhas? Ridículo!","Desista, santinha!","Sua fé não vale nada!","Nunca vai me derrotar!"],
-    "Sombra Corrompida":["A escuridão vence a luz!","Suas rosas não têm poder aqui!","Corre enquanto pode!"],
-    "Chefe das Trevas":["Eu sou eterno!","A santa mais fraca que já enfrentei!","Sua luz está se apagando...","Patética!"],
-    "Anjo Caído":      ["Caí por escolha!","O Paraíso me abandonou!","Agora sirvo a mim mesmo!","Você não pode me redimir!"]
+    "Demônio":           ["Você é uma inútil mesmo!", "Nem suas orações te salvam!", "Que fraquinha!", "Vai chorar pro seu Deus?"],
+    "Espírito Maligno":  ["Florzinhas? Ridículo!", "Desista, santinha!", "Sua fé não vale nada!"],
+    "Sombra Corrompida": ["A escuridão vence a luz!", "Suas rosas não têm poder aqui!"],
+    "Chefe das Trevas":  ["Eu sou eterno!", "A santa mais fraca que já enfrentei!"],
+    "Anjo Caído":        ["Caí por escolha!", "Agora sirvo a mim mesmo!"]
 };
 
 function tipoMonstroIdx(e) {
-    if (e % 10 === 0) return 3; // Chefe das Trevas
+    if (e % 10 === 0) return 3;
     return Math.floor((e - 1) / 3) % (tiposMonstros.length - 1);
 }
+function nomeStageName(e) {
+    return nomesEstagio[(e - 1) % nomesEstagio.length];
+}
 
-function nomeStageName(e) { return nomesEstagio[(e - 1) % nomesEstagio.length]; }
+// ════════════════════════════════════════
+//  FALAS
+// ════════════════════════════════════════
+let timerFala = null;
+let falaAtiva = false;
 
-// ── Fala do monstro ──
-let timerFala = null, falaAtiva = false;
 function exibirFala(nomeBase) {
-    const falas = falasMonstros[nomeBase] || falasMonstros["Demônio"];
+    const falas = falasMonstros[nomeBase] ?? falasMonstros["Demônio"];
     const txt   = falas[Math.floor(Math.random() * falas.length)];
     const el    = document.getElementById("falaInimigo");
     const tel   = document.getElementById("falaTexto");
@@ -90,29 +171,93 @@ function exibirFala(nomeBase) {
     el.classList.add("visivel");
     falaAtiva = true;
     if (timerFala) clearTimeout(timerFala);
-    timerFala = setTimeout(() => { el.classList.remove("visivel"); falaAtiva = false; }, 3500);
+    timerFala = setTimeout(() => {
+        el.classList.remove("visivel");
+        falaAtiva = false;
+    }, FALA_DURACAO_MS);
 }
 
-// ── Configurar inimigo ──
+// ════════════════════════════════════════
+//  INIMIGO
+// ════════════════════════════════════════
 function configurarInimigo(e) {
-    const idx    = tipoMonstroIdx(e);
-    const tipo   = tiposMonstros[idx];
-    const chefe  = e % 10 === 0;
-    inimigo.nome  = tipo.nome + (chefe ? " [CHEFE]" : "") + " Lv." + e;
-    inimigo.nivel = e;
-    inimigo.maxHp = Math.floor(80 * Math.pow(1.22, e));
-    inimigo.hp    = inimigo.maxHp;
-    inimigo.rMoeda= Math.floor(10 * Math.pow(1.15, e));
-    inimigo.rGema = chefe ? Math.floor(5 + e / 5) : (Math.random() < 0.05 ? 1 : 0);
+    const idx   = tipoMonstroIdx(e);
+    const tipo  = tiposMonstros[idx];
+    const chefe = e % 10 === 0;
+    inimigo.nome   = tipo.nome + (chefe ? " [CHEFE]" : "") + " Lv." + e;
+    inimigo.nivel  = e;
+    inimigo.maxHp  = Math.floor(80 * Math.pow(1.22, e));
+    inimigo.hp     = inimigo.maxHp;
+    inimigo.rMoeda = Math.floor(10 * Math.pow(1.15, e));
+    inimigo.rGema  = chefe ? Math.floor(5 + e / 5) : (Math.random() < 0.05 ? 1 : 0);
     setTimeout(() => exibirFala(tipo.nome), 900);
 }
 
-// ── Iniciar batalha ──
+function darDano(valor, tipo) {
+    if (!emBatalha || valor <= 0) return;
+    inimigo.hp        -= valor;
+    hitState.tremendo  = 14;
+    hitState.flash     = 10;
+    criarTexto("-" + formatarNum(valor), tipo);
+    if (inimigo.hp <= 0) matarInimigo();
+}
+
+function matarInimigo() {
+    moeda += inimigo.rMoeda;
+    if (inimigo.rGema > 0) gema += inimigo.rGema;
+    const qtd = Math.min(5, 1 + Math.floor(inimigo.rMoeda / 10));
+    for (let i = 0; i < qtd; i++) criarMoedaCaindo();
+    ganharExp(5 + estagio * 2);
+    estagio++;
+    floresAtaque = [];
+    configurarInimigo(estagio);
+    atualizarUIBatalha();
+    atualizarBotaoPrestigiar();
+}
+
+function atualizarBotaoPrestigiar() {
+    const btnP = document.getElementById("btnPrestigiar");
+    if (!btnP) return;
+    btnP.disabled  = estagio < 60;
+    btnP.innerText = estagio >= 60 ? "🌟 Prestigiar!" : "Alcance o Est. 60";
+}
+
+function ganharExp(qtd) {
+    personagem.exp += qtd;
+    while (personagem.exp >= personagem.expMax) {
+        personagem.exp   -= personagem.expMax;
+        personagem.nivel++;
+        personagem.expMax = Math.floor(100 * Math.pow(1.3, personagem.nivel - 1));
+        criarTexto("LEVEL UP! Lv." + personagem.nivel, "levelup");
+    }
+    document.querySelectorAll(".santaLvUI").forEach(el => {
+        el.innerText = personagem.nivel;
+    });
+}
+
+function prestigiar() {
+    if (estagio < 60) return;
+    estagio = 1;
+    moeda   = 0;
+    Object.values(upgrades).forEach(u => { u.nivel = 1; });
+    configurarInimigo(1);
+    atualizarUIBatalha();
+    atualizarUIUpgrades();
+    atualizarBotaoPrestigiar();
+    criarTexto("✨ PRESTIGIADO!", "levelup");
+}
+
+// ════════════════════════════════════════
+//  CONTROLE DE BATALHA
+// ════════════════════════════════════════
 function iniciarBatalha() {
     emBatalha = true;
-    document.getElementById("uiBatalha").style.display = "flex";
-    document.getElementById("lobbyHUD").style.display  = "none";
-    document.getElementById("lobbybotoes").style.display = "none";
+    const uiBatalha   = document.getElementById("uiBatalha");
+    const lobbyHUD    = document.getElementById("lobbyHUD");
+    const lobbyBotoes = document.getElementById("lobbybotoes");
+    if (uiBatalha)   uiBatalha.style.display  = "flex";
+    if (lobbyHUD)    lobbyHUD.style.display    = "none";
+    if (lobbyBotoes) lobbyBotoes.style.display = "none";
     inicializarFlores();
     configurarInimigo(estagio);
     atualizarUIBatalha();
@@ -121,296 +266,467 @@ function iniciarBatalha() {
 
 function sairBatalha() {
     emBatalha = false;
-    document.getElementById("uiBatalha").style.display   = "none";
-    document.getElementById("lobbyHUD").style.display    = "flex";
-    document.getElementById("lobbybotoes").style.display = "flex";
+    const uiBatalha   = document.getElementById("uiBatalha");
+    const lobbyHUD    = document.getElementById("lobbyHUD");
+    const lobbyBotoes = document.getElementById("lobbybotoes");
+    if (uiBatalha)   uiBatalha.style.display  = "none";
+    if (lobbyHUD)    lobbyHUD.style.display    = "flex";
+    if (lobbyBotoes) lobbyBotoes.style.display = "flex";
     floresAtaque = [];
 }
 
-// ── Navegação de estágio ──
-function irEstagioAnterior() { if (estagio > 1) { estagio--; configurarInimigo(estagio); atualizarUIBatalha(); } }
-function irProximoEstagio()  { estagio++; configurarInimigo(estagio); atualizarUIBatalha(); }
-function irParaChefe()       { estagio = Math.ceil(estagio / 10) * 10; configurarInimigo(estagio); atualizarUIBatalha(); }
-
-// ── Dar dano ──
-function darDano(valor, tipo) {
-    if (!emBatalha) return;
-    inimigo.hp -= valor;
-    hitState.tremendo = 14;
-    hitState.flash    = 10;
-    criarTexto("-" + formatarNum(valor), tipo);
-    if (inimigo.hp <= 0) matarInimigo();
-}
-
-function matarInimigo() {
-    moeda += inimigo.rMoeda;
-    if (inimigo.rGema > 0) gema += inimigo.rGema;
-    // moedas animadas caindo
-    for (let i = 0; i < Math.min(5, 1 + Math.floor(inimigo.rMoeda / 10)); i++) {
-        criarMoedaCaindo();
-    }
-    ganharExp(5 + estagio * 2);
-    estagio++;
-    floresAtaque = [];
+function irEstagioAnterior() {
+    if (estagio <= 1) return;
+    estagio--;
     configurarInimigo(estagio);
     atualizarUIBatalha();
-    // desbloquear prestigiar
-    const btnP = document.getElementById("btnPrestigiar");
-    if (btnP) {
-        if (estagio >= 60) { btnP.disabled = false; btnP.innerText = "🌟 Prestigiar!"; }
-        else { btnP.disabled = true; btnP.innerText = `Alcance o Est. 60`; }
-    }
 }
-
-function ganharExp(qtd) {
-    personagem.exp += qtd;
-    while (personagem.exp >= personagem.expMax) {
-        personagem.exp    -= personagem.expMax;
-        personagem.nivel++;
-        personagem.expMax  = Math.floor(100 * Math.pow(1.3, personagem.nivel - 1));
-        criarTexto("LEVEL UP! Lv." + personagem.nivel, "levelup");
-    }
-    ["santaLvUI","santaLvUI2"].forEach(id => { const e = document.getElementById(id); if(e) e.innerText = personagem.nivel; });
-}
-
-function prestigiar() {
-    if (estagio < 60) return;
-    // reset com bônus (placeholder)
-    estagio = 1;
-    moeda   = 0;
-    Object.values(upgrades).forEach(u => { u.nivel = 1; });
-    configurarInimigo(1);
+function irProximoEstagio() {
+    estagio++;
+    configurarInimigo(estagio);
     atualizarUIBatalha();
-    atualizarUIUpgrades();
-    criarTexto("✨ PRESTIGIADO!", "levelup");
+}
+function irParaChefe() {
+    estagio = Math.ceil(estagio / 10) * 10;
+    configurarInimigo(estagio);
+    atualizarUIBatalha();
 }
 
-// DPS passivo
-setInterval(() => { if (emBatalha) darDano(calcDps(), "dps"); }, 1000);
+// ════════════════════════════════════════
+//  FORMATAÇÃO
+// ════════════════════════════════════════
+function formatarNum(n) {
+    if (n >= 1_000_000_000) return (n / 1_000_000_000).toFixed(1) + "B";
+    if (n >= 1_000_000)     return (n / 1_000_000).toFixed(1)     + "M";
+    if (n >= 1_000)         return (n / 1_000).toFixed(1)         + "K";
+    return String(n);
+}
 
-// Fala periódica
-setInterval(() => {
-    if (!emBatalha || falaAtiva) return;
-    if (Math.random() < 0.3) exibirFala(tiposMonstros[tipoMonstroIdx(estagio)].nome);
-}, 9000);
+// ════════════════════════════════════════
+//  HELPERS DE POSIÇÃO — estilo Tap Titans
+// ════════════════════════════════════════
+function getChaoY()    { return canvas.height * 0.78; }
+function getSantaX()   { return canvas.width  * 0.46; }
+function getMonstroX() { return canvas.width  * 0.50; }
+function getMonstroY() { return canvas.height * 0.38; }
 
-// ── Click no canvas ──
-canvas.addEventListener("click", () => {
-    if (!emBatalha) return;
-    darDano(calcDanoClick(), "click");
-    dispararAtaquePersonagem();
-    dispararFlor();
-});
+function imagemPronta(img) {
+    return img && img.complete && img.naturalWidth > 0;
+}
 
-// ═══════════════════════════════════════
-//  PERSONAGEM NA BATALHA
-// ═══════════════════════════════════════
+// ════════════════════════════════════════
+//  DESENHAR FUNDO
+//
+//  SOLUÇÃO DO CHÃO:
+//  O piso1.png é 1024x1024 com fundo PRETO.
+//  Em vez de blend modes, usamos um canvas
+//  auxiliar offline para recortar apenas a
+//  plataforma (removendo o preto) antes de
+//  desenhar no canvas principal.
+// ════════════════════════════════════════
+
+// Canvas auxiliar — criado uma vez, reutilizado
+let _chaoCanvas  = null;
+let _chaoCtx     = null;
+let _chaoProcessado = false;
+
+function processarChao() {
+    // Só processa uma vez
+    if (_chaoProcessado) return;
+    if (!imagemPronta(assets.chao)) return;
+
+    const img = assets.chao;
+    _chaoCanvas        = document.createElement("canvas");
+    _chaoCanvas.width  = img.naturalWidth;
+    _chaoCanvas.height = img.naturalHeight;
+    _chaoCtx           = _chaoCanvas.getContext("2d");
+
+    // Desenha a imagem original
+    _chaoCtx.drawImage(img, 0, 0);
+
+    // Pega pixels e torna o preto transparente
+    const imageData = _chaoCtx.getImageData(0, 0, _chaoCanvas.width, _chaoCanvas.height);
+    const data      = imageData.data;
+
+    for (let i = 0; i < data.length; i += 4) {
+        const r = data[i];
+        const g = data[i + 1];
+        const b = data[i + 2];
+        // Se o pixel for muito escuro (fundo preto) → torna transparente
+        const brilho = (r + g + b) / 3;
+        if (brilho < 30) {
+            data[i + 3] = 0; // alpha = 0 (transparente)
+        } else if (brilho < 60) {
+            // Borda suave — semi-transparente
+            data[i + 3] = Math.floor(((brilho - 30) / 30) * 255);
+        }
+    }
+
+    _chaoCtx.putImageData(imageData, 0, 0);
+    _chaoProcessado = true;
+    console.log("✅ Chão processado — fundo preto removido.");
+}
+
+function desenharFundoBatalha() {
+    const W  = canvas.width;
+    const H  = canvas.height;
+    const cy = getChaoY();
+
+    // ── 1. CENÁRIO (fundo — source-over padrão) ──
+    if (imagemPronta(assets.cenario)) {
+        const img = assets.cenario;
+        const esc = Math.max(W / img.naturalWidth, H / img.naturalHeight);
+        const dw  = img.naturalWidth  * esc;
+        const dh  = img.naturalHeight * esc;
+        ctx.drawImage(img, (W - dw) / 2, (H - dh) / 2, dw, dh);
+    } else {
+        desenharFundoFallback(W, H, cy);
+    }
+
+    // ── 2. CHÃO (piso1.png — na frente do cenário) ──
+    if (imagemPronta(assets.chao)) {
+        // Processa o chão na primeira vez (remove fundo preto)
+        processarChao();
+
+        const srcCanvas = _chaoProcessado ? _chaoCanvas : assets.chao;
+        const pisoW     = W;
+        const pisoH     = assets.chao.naturalHeight * (W / assets.chao.naturalWidth);
+
+        // A superfície da plataforma está nos primeiros 30% da altura
+        // Ajustamos Y para alinhar a superfície com getChaoY()
+        const pisoY = cy - pisoH * 0.30;
+
+        ctx.drawImage(srcCanvas, 0, pisoY, pisoW, pisoH);
+
+    } else {
+        desenharChaoFallback(W, H, cy);
+    }
+
+    // ── 3. Sombra de transição suave ──
+    const gs = ctx.createLinearGradient(0, cy - 20, 0, cy + 30);
+    gs.addColorStop(0, "rgba(0,0,0,0)");
+    gs.addColorStop(1, "rgba(0,0,0,0.28)");
+    ctx.fillStyle = gs;
+    ctx.fillRect(0, cy - 20, W, 50);
+}
+
+// ════════════════════════════════════════
+//  FALLBACKS
+// ════════════════════════════════════════
+function desenharFundoFallback(W, H, cy) {
+    const g = ctx.createLinearGradient(0, 0, 0, cy);
+    g.addColorStop(0,    "#050210");
+    g.addColorStop(0.45, "#0e0930");
+    g.addColorStop(1,    "#221470");
+    ctx.fillStyle = g;
+    ctx.fillRect(0, 0, W, H);
+
+    const t = Date.now();
+    for (let i = 0; i < 90; i++) {
+        const sx = (i * 191 + 7)  % W;
+        const sy = (i * 97  + 13) % (cy * 0.75);
+        ctx.globalAlpha = (Math.abs(Math.sin(t * 0.0008 + i)) * 0.6 + 0.3) * 0.55;
+        ctx.fillStyle   = "#fff";
+        ctx.beginPath();
+        ctx.arc(sx, sy, i % 3 === 0 ? 2 : 1.2, 0, Math.PI * 2);
+        ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+
+    const luaX = W * 0.78, luaY = H * 0.15;
+    const gl   = ctx.createRadialGradient(luaX, luaY, 0, luaX, luaY, 58);
+    gl.addColorStop(0,   "rgba(255,245,190,1)");
+    gl.addColorStop(0.5, "rgba(255,220,120,0.45)");
+    gl.addColorStop(1,   "rgba(255,200,80,0)");
+    ctx.fillStyle = gl;
+    ctx.beginPath();
+    ctx.arc(luaX, luaY, 58, 0, Math.PI * 2);
+    ctx.fill();
+
+    const pontos = [
+        [0,0],[0.10,0.22],[0.22,0.09],[0.36,0.28],[0.50,0.07],
+        [0.63,0.25],[0.76,0.11],[0.89,0.23],[1,0]
+    ];
+    ctx.fillStyle = "rgba(12,6,32,0.85)";
+    ctx.beginPath();
+    ctx.moveTo(0, cy);
+    pontos.forEach(([px, py]) => ctx.lineTo(W * px, cy - H * 0.3 * py));
+    ctx.lineTo(W, cy);
+    ctx.closePath();
+    ctx.fill();
+}
+
+function desenharChaoFallback(W, H, cy) {
+    const g = ctx.createLinearGradient(0, cy, 0, H);
+    g.addColorStop(0,   "#2a1060");
+    g.addColorStop(0.3, "#1a0840");
+    g.addColorStop(1,   "#080420");
+    ctx.fillStyle = g;
+    ctx.fillRect(0, cy, W, H - cy);
+
+    const gl = ctx.createLinearGradient(0, 0, W, 0);
+    gl.addColorStop(0,   "rgba(100,50,220,0)");
+    gl.addColorStop(0.3, "rgba(160,80,255,0.55)");
+    gl.addColorStop(0.7, "rgba(160,80,255,0.55)");
+    gl.addColorStop(1,   "rgba(100,50,220,0)");
+    ctx.strokeStyle = gl;
+    ctx.lineWidth   = 2.5;
+    ctx.beginPath();
+    ctx.moveTo(0, cy);
+    ctx.lineTo(W, cy);
+    ctx.stroke();
+}
+
+// ════════════════════════════════════════
+//  PERSONAGEM — Santa Teresinha
+//
+//  • Pequena (20% altura) — escala TT2
+//  • Pés em getChaoY()
+//  • Virada para DIREITA (flip horizontal)
+//    sprite original olha para esquerda →
+//    scale(-1,1) corrige isso
+// ════════════════════════════════════════
 const pb = {
-    get x() { return canvas.width  * 0.18; },
-    get y() { return canvas.height * 0.72; },   // na linha do chão
-    atacando: 0, durAtaque: 20,
-    offX: 0, frame: 0, tempo: 0
+    atacando:  0,
+    durAtaque: 28,
+    frame:     0,
+    tempo:     0
 };
 
 function dispararAtaquePersonagem() { pb.atacando = pb.durAtaque; }
 
 function atualizarPB() {
     pb.tempo++;
-    if (pb.tempo > 7) { pb.tempo = 0; pb.frame = (pb.frame + 1) % (imagens.santaAnda.length || 9); }
-    if (pb.atacando > 0) {
-        pb.atacando--;
-        pb.offX = Math.sin((pb.atacando / pb.durAtaque) * Math.PI) * 60;
-    } else {
-        pb.offX = 0;
-    }
+    if (pb.tempo >= 5) { pb.tempo = 0; pb.frame = (pb.frame + 1) % 8; }
+    if (pb.atacando > 0) pb.atacando--;
 }
 
 function desenharPB() {
-    const img    = imagens.santaAnda[pb.frame];
-    const escala = 1.6;
-    const px     = pb.x + pb.offX;
-    const py     = pb.y;
+    const px   = getSantaX();
+    const py   = getChaoY();
+    const ALTO = canvas.height * 0.20;
 
-    // sombra elíptica no chão
-    ctx.save();
-    ctx.fillStyle = "rgba(0,0,0,0.25)";
-    ctx.beginPath();
-    const sw = img && img.naturalWidth ? img.width * escala * 0.4 : 32;
-    ctx.ellipse(px, py + 4, sw, 8, 0, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.restore();
+    const offX = pb.atacando > 0
+        ? Math.sin((pb.atacando / pb.durAtaque) * Math.PI) * 14
+        : 0;
 
-    if (img && img.complete && img.naturalWidth !== 0) {
-        const larg = img.width  * escala;
-        const alt  = img.height * escala;
-        ctx.drawImage(img, px - larg / 2, py - alt, larg, alt);
-    } else {
-        // fallback: círculo com inicial
+    const img = assets.santa[pb.frame];
+
+    if (imagemPronta(img)) {
+        const lar = ALTO * (img.naturalWidth / img.naturalHeight);
+
+        // Sombra no chão
         ctx.save();
-        ctx.fillStyle = "#d4a8ff";
-        ctx.beginPath(); ctx.arc(px, py - 30, 28, 0, Math.PI * 2); ctx.fill();
-        ctx.fillStyle = "#fff"; ctx.font = "bold 24px sans-serif";
-        ctx.textAlign = "center"; ctx.textBaseline = "middle";
-        ctx.fillText("🌸", px, py - 30);
+        ctx.fillStyle = "rgba(0,0,0,0.30)";
+        ctx.beginPath();
+        ctx.ellipse(px + offX, py + 5, lar * 0.40, 7, 0, 0, Math.PI * 2);
+        ctx.fill();
         ctx.restore();
+
+        // ── FLIP HORIZONTAL ──
+        // O sprite olha para a ESQUERDA.
+        // Espelhamos com scale(-1,1) para olhar para a DIREITA
+        // (onde está o monstro no centro da tela).
+        //
+        // Referência: translate para (px+offX, py) = ponto dos pés
+        // Depois desenha de Y=-ALTO até Y=0 (crescendo para cima)
+        ctx.save();
+        ctx.translate(px + offX, py);
+        ctx.scale(-1, 1);
+        ctx.drawImage(img, -lar / 2, -ALTO, lar, ALTO);
+        ctx.restore();
+
+    } else {
+        desenharSantaFallback(px, py, ALTO, offX);
     }
 }
 
-// ═══════════════════════════════════════
-//  MONSTRO
-// ═══════════════════════════════════════
-const mb = {
-    get x() { return canvas.width  * 0.65; },
-    get y() { return canvas.height * 0.60; }
-};
+function desenharSantaFallback(px, py, ALTO, offX) {
+    const r = ALTO * 0.13;
+    ctx.save();
+    ctx.shadowBlur  = 18;
+    ctx.shadowColor = "rgba(200,150,255,0.8)";
 
+    ctx.fillStyle = "#e8c5ff";
+    ctx.beginPath();
+    ctx.arc(px + offX, py - ALTO * 0.82, r, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.strokeStyle = "#ffd700";
+    ctx.lineWidth   = 2.5;
+    ctx.beginPath();
+    ctx.ellipse(px + offX, py - ALTO * 0.82 - r * 1.05, r * 1.15, r * 0.32, 0, 0, Math.PI * 2);
+    ctx.stroke();
+
+    ctx.fillStyle = "#6d28d9";
+    ctx.beginPath();
+    ctx.moveTo(px + offX - r * 0.5,  py - ALTO * 0.66);
+    ctx.lineTo(px + offX - r * 0.85, py);
+    ctx.lineTo(px + offX + r * 0.85, py);
+    ctx.lineTo(px + offX + r * 0.5,  py - ALTO * 0.66);
+    ctx.closePath();
+    ctx.fill();
+
+    ctx.strokeStyle = "#c4b5fd";
+    ctx.lineWidth   = 3;
+    ctx.beginPath();
+    ctx.moveTo(px + offX + r * 0.35, py - ALTO * 0.58);
+    ctx.lineTo(px + offX + r * 1.40, py - ALTO * 0.74);
+    ctx.stroke();
+
+    ctx.font         = `${r * 1.4}px serif`;
+    ctx.textAlign    = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillText("🌹", px + offX + r * 1.65, py - ALTO * 0.78);
+    ctx.restore();
+}
+
+// ════════════════════════════════════════
+//  MONSTRO — grande, centro da tela
+// ════════════════════════════════════════
 function emojiMonstroAtual() {
-    const idx  = tipoMonstroIdx(estagio);
-    const tipo = tiposMonstros[idx];
-    const pct  = inimigo.hp / inimigo.maxHp;
-    if (hitState.flash   > 0) return tipo.emojis.dor;
-    if (pct < 0.2)            return tipo.emojis.medo;
-    if (pct < 0.5)            return tipo.emojis.raiva;
+    const tipo = tiposMonstros[tipoMonstroIdx(estagio)];
+    const pct  = inimigo.maxHp > 0 ? inimigo.hp / inimigo.maxHp : 1;
+    if (hitState.flash > 0) return tipo.emojis.dor;
+    if (pct < 0.20)         return tipo.emojis.medo;
+    if (pct < 0.50)         return tipo.emojis.raiva;
     return tipo.emojis.normal;
 }
 
 function desenharMonstro() {
     if (hitState.flash    > 0) hitState.flash--;
-    let ox = 0, oy = 0;
-    if (hitState.tremendo > 0) { hitState.tremendo--; ox = (Math.random() - 0.5) * 16; oy = (Math.random() - 0.5) * 10; }
+    if (hitState.tremendo > 0) hitState.tremendo--;
 
-    const pct    = Math.max(0.05, inimigo.hp / inimigo.maxHp);
-    const tam    = (canvas.height * 0.22) * (0.75 + pct * 0.25);
-    const mx     = mb.x + ox, my = mb.y + oy;
+    const ox  = hitState.tremendo > 0 ? (Math.random() - 0.5) * 16 : 0;
+    const oy  = hitState.tremendo > 0 ? (Math.random() - 0.5) * 9  : 0;
+    const pct = Math.max(0.05, inimigo.maxHp > 0 ? inimigo.hp / inimigo.maxHp : 1);
+    const tam = canvas.height * (0.36 + pct * 0.06);
+    const mx  = getMonstroX() + ox;
+    const my  = getMonstroY() + oy;
 
     ctx.save();
-
-    // flash de dano
     if (hitState.flash > 0) {
-        ctx.filter = "sepia(1) saturate(15) hue-rotate(300deg)";
-        ctx.globalAlpha = 0.85 + hitState.flash * 0.015;
+        ctx.filter      = "sepia(1) saturate(20) hue-rotate(300deg)";
+        ctx.globalAlpha = 0.90;
     }
-
-    // glow pulsante
-    ctx.shadowBlur  = 28 + Math.sin(Date.now() * 0.004) * 12;
-    ctx.shadowColor = pct < 0.2 ? "rgba(255,220,0,0.9)" : "rgba(255,60,60,0.75)";
-
-    ctx.font = `${tam}px serif`;
+    ctx.shadowBlur  = 40 + Math.sin(Date.now() * 0.004) * 15;
+    ctx.shadowColor = pct < 0.25 ? "rgba(255,220,0,0.95)" : "rgba(255,50,50,0.80)";
+    ctx.font         = `${tam}px serif`;
     ctx.textAlign    = "center";
     ctx.textBaseline = "middle";
     ctx.fillText(emojiMonstroAtual(), mx, my);
-
-    // sombra no chão
     ctx.restore();
+
+    // Sombra no chão
     ctx.save();
-    ctx.fillStyle = "rgba(0,0,0,0.2)";
+    ctx.fillStyle = "rgba(0,0,0,0.20)";
     ctx.beginPath();
-    ctx.ellipse(mb.x, canvas.height * 0.73, tam * 0.38, 10, 0, 0, Math.PI * 2);
+    ctx.ellipse(getMonstroX(), getChaoY() + 6, tam * 0.28, 11, 0, 0, Math.PI * 2);
     ctx.fill();
     ctx.restore();
 }
 
-// ═══════════════════════════════════════
-//  FLORES CONJURADAS DO CÉU (estilo magia)
-// ═══════════════════════════════════════
-let flores = [], floresAtaque = [];
-const QTD_FLORES_CEU = 10;
+// ════════════════════════════════════════
+//  ROSAS DO CÉU
+// ════════════════════════════════════════
+let flores       = [];
+let floresAtaque = [];
 
-function inicializarFlores() {
-    flores = [];
-    for (let i = 0; i < QTD_FLORES_CEU; i++) flores.push(criarFlorCeu(true));
-    floresAtaque = [];
-}
-
-function criarFlorCeu(randY = false) {
+function criarFlorCeu(randPos = false) {
+    const baseX = canvas.width  * (0.04 + Math.random() * 0.90);
+    const baseY = canvas.height * (0.03 + Math.random() * (randPos ? 0.55 : 0.48));
     return {
-        x:   Math.random() * canvas.width * 0.9,
-        y:   randY ? Math.random() * canvas.height * 0.5 : -40,
-        vy:  0.25 + Math.random() * 0.4,
-        vx:  (Math.random() - 0.5) * 0.4,
-        size:20 + Math.random() * 16,
-        rot: Math.random() * Math.PI * 2,
-        vRot:(Math.random() - 0.5) * 0.02,
-        fase:Math.random() * Math.PI * 2
+        baseX, baseY, x: baseX, y: baseY,
+        size:  18 + Math.random() * 14,
+        fase:  Math.random() * Math.PI * 2,
+        fasev: Math.random() * Math.PI * 2,
+        ampH:  5  + Math.random() * 8,
+        ampV:  2  + Math.random() * 3,
+        spd:   0.0007 + Math.random() * 0.0006,
+        alpha: 0.60 + Math.random() * 0.35
     };
 }
 
+function inicializarFlores() {
+    flores       = Array.from({ length: QTD_FLORES_CEU }, () => criarFlorCeu(true));
+    floresAtaque = [];
+}
+
 function atualizarFloresCeu() {
+    const t = Date.now();
     flores.forEach(f => {
-        f.y   += f.vy;
-        f.x   += Math.sin(Date.now() * 0.001 + f.fase) * 0.35;
-        f.rot += f.vRot;
-        if (f.y > canvas.height * 0.5) { f.y = -40; f.x = Math.random() * canvas.width * 0.9; }
+        f.x = f.baseX + Math.sin(t * f.spd        + f.fase)  * f.ampH;
+        f.y = f.baseY + Math.sin(t * f.spd * 0.65 + f.fasev) * f.ampV;
     });
 }
 
 function desenharFloresCeu() {
+    ctx.textAlign    = "center";
+    ctx.textBaseline = "middle";
     flores.forEach(f => {
         ctx.save();
-        ctx.globalAlpha = 0.7;
-        ctx.translate(f.x, f.y);
-        ctx.rotate(f.rot);
-        ctx.font = `${f.size}px serif`;
-        ctx.textAlign = "center"; ctx.textBaseline = "middle";
-        ctx.fillText("🌹", 0, 0);
+        ctx.globalAlpha = f.alpha;
+        ctx.font        = `${f.size}px serif`;
+        ctx.fillText("🌹", f.x, f.y);
         ctx.restore();
     });
 }
 
 function dispararFlor() {
-    const idx = Math.floor(Math.random() * flores.length);
-    const fo  = flores[idx];
-    flores[idx] = criarFlorCeu(false);  // repõe no topo
+    if (flores.length === 0) return;
 
-    const qtd = Math.min(1 + Math.floor(upgrades.rosa.nivel / 3), 6);
-    for (let i = 0; i < qtd; i++) {
-        const ox = fo.x + (Math.random() - 0.5) * 60;
-        const oy = fo.y + (Math.random() - 0.5) * 30;
-        const tx = mb.x  + (Math.random() - 0.5) * 50;
-        const ty = mb.y  + (Math.random() - 0.5) * 40;
-        const dist = Math.hypot(tx - ox, ty - oy);
-        const spd  = 7 + Math.random() * 4;
-        const ang  = Math.atan2(ty - oy, tx - ox);
-        floresAtaque.push({
-            x: ox, y: oy,
-            vx: Math.cos(ang) * spd, vy: Math.sin(ang) * spd,
-            tx, ty,
-            size: 18 + Math.random() * 10,
-            rot:  Math.random() * Math.PI * 2,
-            vRot: (Math.random() - 0.5) * 0.28,
-            vida: Math.ceil(dist / spd) + 6,
-            acertou: false
-        });
-    }
+    let idx = 0, dist = Infinity;
+    flores.forEach((f, i) => {
+        const d = Math.hypot(f.x - getMonstroX(), f.y - getMonstroY());
+        if (d < dist) { dist = d; idx = i; }
+    });
+
+    const fo = flores[idx];
+    const tx = getMonstroX() + (Math.random() - 0.5) * 60;
+    const ty = getMonstroY() + (Math.random() - 0.5) * 60;
+    const d  = Math.hypot(tx - fo.x, ty - fo.y);
+    const sp = 10 + Math.random() * 4;
+    const ag = Math.atan2(ty - fo.y, tx - fo.x);
+
+    floresAtaque.push({
+        x: fo.x, y: fo.y,
+        vx: Math.cos(ag) * sp,
+        vy: Math.sin(ag) * sp,
+        tx, ty,
+        size: fo.size, vida: Math.ceil(d / sp) + 8, acertou: false
+    });
+
+    flores[idx] = criarFlorCeu(true);
 }
 
 function atualizarFloresAtaque() {
     floresAtaque.forEach(f => {
-        f.x += f.vx; f.y += f.vy; f.rot += f.vRot; f.vida--;
-        if (!f.acertou && Math.hypot(f.x - f.tx, f.y - f.ty) < 30) {
+        f.x += f.vx; f.y += f.vy; f.vida--;
+        if (!f.acertou && Math.hypot(f.x - f.tx, f.y - f.ty) < 28) {
             f.acertou = true; f.vida = 0;
-            for (let p = 0; p < 6; p++) criarParticula(f.x, f.y);
+            for (let p = 0; p < 8; p++) criarParticula(f.x, f.y);
         }
     });
     floresAtaque = floresAtaque.filter(f => f.vida > 0);
 }
 
 function desenharFloresAtaque() {
+    ctx.textAlign    = "center";
+    ctx.textBaseline = "middle";
     floresAtaque.forEach(f => {
         ctx.save();
-        ctx.globalAlpha = Math.min(1, f.vida / 12);
-        ctx.translate(f.x, f.y); ctx.rotate(f.rot);
-        ctx.font = `${f.size}px serif`;
-        ctx.textAlign = "center"; ctx.textBaseline = "middle";
-        ctx.fillText("🌹", 0, 0);
+        ctx.globalAlpha = Math.min(1, f.vida / 10);
+        ctx.font        = `${f.size}px serif`;
+        ctx.fillText("🌹", f.x, f.y);
         ctx.restore();
     });
 }
 
-// ═══════════════════════════════════════
+// ════════════════════════════════════════
 //  PARTÍCULAS
-// ═══════════════════════════════════════
+// ════════════════════════════════════════
 let particulas = [];
+
 function criarParticula(x, y) {
     const ang = Math.random() * Math.PI * 2;
     const spd = 1.5 + Math.random() * 3.5;
@@ -418,13 +734,13 @@ function criarParticula(x, y) {
         x, y,
         vx: Math.cos(ang) * spd, vy: Math.sin(ang) * spd,
         vida: 22 + Math.random() * 14,
-        size: 5 + Math.random() * 8,
-        cor: `hsl(${330 + Math.random() * 40},90%,65%)`
+        size: 5  + Math.random() * 8,
+        cor:  `hsl(${325 + Math.random() * 50},90%,65%)`
     });
 }
 
 function atualizarParticulas() {
-    particulas.forEach(p => { p.x += p.vx; p.y += p.vy; p.vy += 0.12; p.vida--; });
+    particulas.forEach(p => { p.x += p.vx; p.y += p.vy; p.vy += 0.13; p.vida--; });
     particulas = particulas.filter(p => p.vida > 0);
 }
 
@@ -432,161 +748,153 @@ function desenharParticulas() {
     particulas.forEach(p => {
         ctx.save();
         ctx.globalAlpha = Math.min(1, p.vida / 12);
-        ctx.fillStyle = p.cor;
-        ctx.beginPath(); ctx.arc(p.x, p.y, p.size * 0.5, 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle   = p.cor;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size * 0.5, 0, Math.PI * 2);
+        ctx.fill();
         ctx.restore();
     });
 }
 
-// ═══════════════════════════════════════
-//  MOEDAS CAINDO (animação estilo TT2)
-// ═══════════════════════════════════════
+// ════════════════════════════════════════
+//  MOEDAS CAINDO
+// ════════════════════════════════════════
 let moedasAnim = [];
+
 function criarMoedaCaindo() {
     moedasAnim.push({
-        x: mb.x + (Math.random() - 0.5) * 80,
-        y: mb.y,
-        vy: -(3 + Math.random() * 2),
-        vx: (Math.random() - 0.5) * 2,
-        vida: 60,
-        size: 18 + Math.random() * 8
+        x:    getMonstroX() + (Math.random() - 0.5) * 100,
+        y:    getMonstroY(),
+        vy:   -(3.5 + Math.random() * 2.5),
+        vx:   (Math.random() - 0.5) * 2.5,
+        vida: 65,
+        size: 20 + Math.random() * 10
     });
 }
 
 function atualizarMoedas() {
-    moedasAnim.forEach(m => { m.x += m.vx; m.y += m.vy; m.vy += 0.2; m.vida--; });
+    moedasAnim.forEach(m => { m.x += m.vx; m.y += m.vy; m.vy += 0.22; m.vida--; });
     moedasAnim = moedasAnim.filter(m => m.vida > 0);
 }
 
 function desenharMoedas() {
+    ctx.textAlign    = "center";
+    ctx.textBaseline = "middle";
     moedasAnim.forEach(m => {
         ctx.save();
-        ctx.globalAlpha = Math.min(1, m.vida / 15);
-        ctx.font = `${m.size}px serif`;
-        ctx.textAlign = "center"; ctx.textBaseline = "middle";
+        ctx.globalAlpha = Math.min(1, m.vida / 18);
+        ctx.font        = `${m.size}px serif`;
         ctx.fillText("🪙", m.x, m.y);
         ctx.restore();
     });
 }
 
-// ═══════════════════════════════════════
+// ════════════════════════════════════════
 //  TEXTOS FLUTUANTES
-// ═══════════════════════════════════════
+// ════════════════════════════════════════
+let textos = [];
+
 function criarTexto(valor, tipo) {
     textos.push({
-        x: mb.x + (Math.random() - 0.5) * 80,
-        y: mb.y - 40,
+        x: getMonstroX() + (Math.random() - 0.5) * 90,
+        y: getMonstroY() - 70,
         valor, tipo, vida: 75
     });
 }
 
 function desenharTextos() {
     textos.forEach(t => {
-        const alpha = Math.min(1, t.vida / 20);
         ctx.save();
-        ctx.globalAlpha = alpha;
-        let cor = "#fff", tam = 18;
-        if (t.tipo === "levelup") { cor = "#ffd700"; tam = 22; }
-        else if (t.tipo === "dps") { cor = "#aaffaa"; tam = 13; }
-        ctx.font = `bold ${tam}px 'Nunito', sans-serif`;
-        ctx.textAlign = "center";
-        ctx.strokeStyle = "rgba(0,0,0,0.8)"; ctx.lineWidth = 4;
+        ctx.globalAlpha = Math.min(1, t.vida / 20);
+
+        let cor = "#ffffff", tam = 20;
+        if      (t.tipo === "levelup") { cor = "#ffd700"; tam = 26; }
+        else if (t.tipo === "dps")     { cor = "#aaffaa"; tam = 14; }
+        else if (t.tipo === "click")   { cor = "#ff9de2"; tam = 22; }
+
+        ctx.font        = `bold ${tam}px 'Nunito', sans-serif`;
+        ctx.textAlign   = "center";
+        ctx.strokeStyle = "rgba(0,0,0,0.90)";
+        ctx.lineWidth   = 4;
         ctx.strokeText(t.valor, t.x, t.y);
-        ctx.fillStyle = cor;
+        ctx.fillStyle   = cor;
         ctx.fillText(t.valor, t.x, t.y);
         ctx.restore();
-        t.y -= 1.6; t.vida--;
+
+        t.y -= 1.8;
+        t.vida--;
     });
     textos = textos.filter(t => t.vida > 0);
 }
 
-// ═══════════════════════════════════════
-//  FUNDO DA BATALHA (estilo TT2)
-//  Fundo horizontal: céu + chão + montanhas
-// ═══════════════════════════════════════
-function desenharFundoBatalha() {
-    const W = canvas.width, H = canvas.height;
-    const chaoY = H * 0.73;
+// ════════════════════════════════════════
+//  EVENTOS
+// ════════════════════════════════════════
+canvas.addEventListener("click", () => {
+    if (!emBatalha) return;
+    darDano(calcDanoClick(), "click");
+    dispararAtaquePersonagem();
+    dispararFlor();
+});
 
-    // ── Céu (degradê dia/noite dramático) ──
-    const gradCeu = ctx.createLinearGradient(0, 0, 0, chaoY);
-    gradCeu.addColorStop(0,   "#0a0618");
-    gradCeu.addColorStop(0.35,"#130d3a");
-    gradCeu.addColorStop(0.7, "#1e1060");
-    gradCeu.addColorStop(1,   "#2a1878");
-    ctx.fillStyle = gradCeu;
-    ctx.fillRect(0, 0, W, chaoY);
+canvas.addEventListener("touchstart", (e) => {
+    e.preventDefault();
+    if (!emBatalha) return;
+    darDano(calcDanoClick(), "click");
+    dispararAtaquePersonagem();
+    dispararFlor();
+}, { passive: false });
 
-    // ── Estrelas ──
-    ctx.fillStyle = "rgba(255,255,255,0.9)";
-    for (let i = 0; i < 80; i++) {
-        const sx = (i * 191 + 7)  % W;
-        const sy = (i * 97  + 13) % (chaoY * 0.7);
-        const br = Math.abs(Math.sin(Date.now() * 0.0007 + i)) * 0.8 + 0.2;
-        ctx.globalAlpha = br * 0.55;
-        ctx.beginPath();
-        ctx.arc(sx, sy, i % 3 === 0 ? 2 : 1.2, 0, Math.PI * 2);
-        ctx.fill();
+// ════════════════════════════════════════
+//  TIMERS
+// ════════════════════════════════════════
+setInterval(() => {
+    if (emBatalha) darDano(calcDps(), "dps");
+}, DPS_INTERVALO_MS);
+
+setInterval(() => {
+    if (!emBatalha || falaAtiva) return;
+    if (Math.random() < FALA_CHANCE) {
+        exibirFala(tiposMonstros[tipoMonstroIdx(estagio)].nome);
     }
-    ctx.globalAlpha = 1;
+}, FALA_INTERVALO_MS);
 
-    // ── Lua / auréola ──
-    const luaX = W * 0.82, luaY = H * 0.15;
-    const gradLua = ctx.createRadialGradient(luaX, luaY, 0, luaX, luaY, 55);
-    gradLua.addColorStop(0,   "rgba(255,240,200,0.95)");
-    gradLua.addColorStop(0.6, "rgba(255,220,120,0.4)");
-    gradLua.addColorStop(1,   "rgba(255,200,80,0)");
-    ctx.fillStyle = gradLua;
-    ctx.beginPath(); ctx.arc(luaX, luaY, 55, 0, Math.PI * 2); ctx.fill();
-
-    // ── Montanhas ao fundo ──
-    ctx.fillStyle = "rgba(20,12,50,0.9)";
-    ctx.beginPath();
-    ctx.moveTo(0, chaoY);
-    const montanhas = [0,0.12,0.2,0.1,0.28,0.05,0.38,0.18,0.5,0.04,0.6,0.22,0.72,0.08,0.82,0.20,0.92,0.06,1,0];
-    for (let i = 0; i < montanhas.length; i += 2) {
-        ctx.lineTo(W * montanhas[i], chaoY - H * 0.28 * montanhas[i+1] - H * 0.05);
-    }
-    ctx.lineTo(W, chaoY); ctx.closePath(); ctx.fill();
-
-    // ── Chão (gramado/pedras) ──
-    const gradChao = ctx.createLinearGradient(0, chaoY, 0, H);
-    gradChao.addColorStop(0, "#1a0a3a");
-    gradChao.addColorStop(0.3,"#150830");
-    gradChao.addColorStop(1, "#0a0520");
-    ctx.fillStyle = gradChao;
-    ctx.fillRect(0, chaoY, W, H - chaoY);
-
-    // linha de glow no chão
-    const gradLinha = ctx.createLinearGradient(0, 0, W, 0);
-    gradLinha.addColorStop(0,   "rgba(100,60,200,0)");
-    gradLinha.addColorStop(0.3, "rgba(160,80,255,0.5)");
-    gradLinha.addColorStop(0.7, "rgba(160,80,255,0.5)");
-    gradLinha.addColorStop(1,   "rgba(100,60,200,0)");
-    ctx.strokeStyle = gradLinha;
-    ctx.lineWidth = 2;
-    ctx.beginPath(); ctx.moveTo(0, chaoY); ctx.lineTo(W, chaoY); ctx.stroke();
-
-    // ── Pedras decorativas no chão ──
-    ctx.fillStyle = "rgba(255,255,255,0.05)";
-    for (let i = 0; i < 6; i++) {
-        const px = (i * 193 + 50) % W;
-        const pw = 30 + (i * 37) % 60;
-        const ph = 8  + (i * 19) % 14;
-        ctx.beginPath();
-        ctx.ellipse(px, chaoY + ph, pw * 0.5, ph * 0.5, 0, 0, Math.PI * 2);
-        ctx.fill();
-    }
-}
-
-// ── Função principal de desenho da batalha ──
+// ════════════════════════════════════════
+//  LOOP PRINCIPAL
+//
+//  Ordem de renderização:
+//  1  Cenário (fundo)
+//  2  Chão / piso1.png (fundo preto removido)
+//  3  Sombra de transição
+//  4  Rosas decorativas no céu
+//  5  Rosas projéteis voando
+//  6  Partículas de impacto
+//  7  Moedas caindo
+//  8  Monstro (grande, centro)
+//  9  Santa (pequena, chão, frente do monstro)
+//  10 Textos de dano flutuantes
+// ════════════════════════════════════════
 window.desenharBatalha = function () {
-    desenharFundoBatalha();
-    atualizarFloresCeu();    desenharFloresCeu();
-    atualizarFloresAtaque(); desenharFloresAtaque();
-    atualizarParticulas();   desenharParticulas();
-    atualizarMoedas();       desenharMoedas();
-    atualizarPB();           desenharPB();
-    desenharMonstro();
-    desenharTextos();
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    desenharFundoBatalha();        // 1-3
+
+    atualizarFloresCeu();          // 4
+    desenharFloresCeu();
+
+    atualizarFloresAtaque();       // 5
+    desenharFloresAtaque();
+
+    atualizarParticulas();         // 6
+    desenharParticulas();
+
+    atualizarMoedas();             // 7
+    desenharMoedas();
+
+    desenharMonstro();             // 8
+
+    atualizarPB();                 // 9
+    desenharPB();
+
+    desenharTextos();              // 10
 };
