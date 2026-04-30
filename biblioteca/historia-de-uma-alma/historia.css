@@ -1,0 +1,294 @@
+/* ═══════════════════════════════════════════════════════════════════════════ */
+/* ESTILOS PARA HISTÓRIA DE UMA ALMA                                          */
+/* Baseado no padrão da Suma Teológica                                        */
+/* ═══════════════════════════════════════════════════════════════════════════ */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Georgia', 'Garamond', serif;
+  line-height: 1.8;
+  color: #333;
+  background-color: #f5f5f5;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────── */
+/* CABEÇALHO                                                                   */
+/* ─────────────────────────────────────────────────────────────────────────── */
+
+.historia-header {
+  background: linear-gradient(135deg, #8b4513 0%, #a0522d 100%);
+  color: white;
+  padding: 2rem;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+}
+
+.historia-header h1 {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+  font-weight: normal;
+  letter-spacing: 1px;
+}
+
+.historia-header .subtitulo {
+  font-size: 1.2rem;
+  font-style: italic;
+  opacity: 0.9;
+  margin-bottom: 1rem;
+}
+
+.historia-header .info-pagina {
+  display: block;
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+.voltar-index {
+  display: inline-block;
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  text-decoration: none;
+  margin-bottom: 1rem;
+  transition: background-color 0.3s;
+}
+
+.voltar-index:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────── */
+/* NAVEGAÇÃO SUPERIOR                                                          */
+/* ─────────────────────────────────────────────────────────────────────────── */
+
+.navegacao-topo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background-color: #e8e8e8;
+  margin-bottom: 2rem;
+  border-radius: 4px;
+  gap: 1rem;
+}
+
+.navegacao-topo .btn-nav {
+  flex: 1;
+  padding: 0.75rem 1.5rem;
+  background-color: #8b4513;
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+  text-align: center;
+  transition: background-color 0.3s;
+  font-weight: bold;
+}
+
+.navegacao-topo .btn-nav:hover:not(.desabilitado) {
+  background-color: #a0522d;
+}
+
+.navegacao-topo .btn-nav.desabilitado {
+  background-color: #ccc;
+  color: #999;
+  cursor: not-allowed;
+}
+
+.navegacao-topo .info-centena {
+  flex: 1;
+  text-align: center;
+  font-weight: bold;
+  color: #333;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────── */
+/* CONTEÚDO PRINCIPAL                                                          */
+/* ─────────────────────────────────────────────────────────────────────────── */
+
+main.pagina-conteudo {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  background-color: white;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+}
+
+.bloco-texto {
+  margin-bottom: 2rem;
+}
+
+.bloco-titulo {
+  background-color: #f0e6d2;
+  padding: 1rem;
+  border-left: 4px solid #8b4513;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.bloco-titulo span {
+  margin-right: 0.5rem;
+}
+
+.pagina-corpo {
+  line-height: 1.9;
+  color: #444;
+  text-align: justify;
+}
+
+.pagina-corpo p {
+  margin-bottom: 1rem;
+  text-indent: 2rem;
+}
+
+.pagina-corpo p:first-child {
+  text-indent: 0;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────── */
+/* BLOCO DE EXPLICAÇÃO                                                         */
+/* ─────────────────────────────────────────────────────────────────────────── */
+
+.bloco-explicacao {
+  background-color: #f9f6f0;
+  border: 1px solid #e0d5c7;
+  border-radius: 4px;
+  padding: 1.5rem;
+  margin-top: 2rem;
+}
+
+.explicacao-label {
+  font-weight: bold;
+  color: #8b4513;
+  margin-bottom: 1rem;
+  font-size: 1.05rem;
+}
+
+.explicacao-corpo {
+  color: #555;
+  line-height: 1.8;
+}
+
+.explicacao-corpo em {
+  font-style: italic;
+  color: #999;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────── */
+/* NAVEGAÇÃO INFERIOR                                                          */
+/* ─────────────────────────────────────────────────────────────────────────── */
+
+.navegacao-inferior {
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 2px solid #e0d5c7;
+}
+
+.nav-buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.btn-primary {
+  flex: 1;
+  padding: 0.75rem 1.5rem;
+  background-color: #8b4513;
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+  text-align: center;
+  transition: background-color 0.3s;
+  font-weight: bold;
+  display: block;
+}
+
+.btn-primary:hover:not(.desabilitado) {
+  background-color: #a0522d;
+}
+
+.btn-primary.desabilitado {
+  background-color: #ccc;
+  color: #999;
+  cursor: not-allowed;
+}
+
+.pagina-atual {
+  flex: 1;
+  text-align: center;
+  font-weight: bold;
+  color: #333;
+  font-size: 1.1rem;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────── */
+/* RODAPÉ                                                                      */
+/* ─────────────────────────────────────────────────────────────────────────── */
+
+.historia-footer {
+  background-color: #333;
+  color: white;
+  text-align: center;
+  padding: 1.5rem;
+  margin-top: 3rem;
+  font-size: 0.9rem;
+}
+
+.historia-footer p {
+  margin: 0;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────── */
+/* RESPONSIVIDADE                                                              */
+/* ─────────────────────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+  .historia-header h1 {
+    font-size: 1.8rem;
+  }
+
+  .navegacao-topo {
+    flex-direction: column;
+  }
+
+  .navegacao-topo .btn-nav,
+  .navegacao-topo .info-centena {
+    width: 100%;
+  }
+
+  main.pagina-conteudo {
+    padding: 1rem;
+  }
+
+  .nav-buttons {
+    flex-direction: column;
+  }
+
+  .btn-primary,
+  .pagina-atual {
+    width: 100%;
+  }
+
+  .pagina-corpo {
+    text-align: left;
+  }
+
+  .pagina-corpo p {
+    text-indent: 1.5rem;
+  }
+}

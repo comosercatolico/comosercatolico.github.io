@@ -1,180 +1,227 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<title>Como ser um bom católico</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3007736407396874"
-     crossorigin="anonymous"></script>
-     <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <title>Lux Fidei – Luz da Fé Católica</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3007736407396874" crossorigin="anonymous"></script>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Cinzel:wght@400;600;700&family=Cinzel+Decorative:wght@400&family=Crimson+Pro:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-<!-- MENU LATERAL -->
+<button class="info-btn" onclick="abrirModal()" title="Sobre, Contato e Privacidade">
+  <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+</button>
+
+<div class="modal-overlay" id="modalOverlay" onclick="fecharModalFora(event)">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h3>Lux Fidei</h3>
+      <button class="modal-close" onclick="fecharModal()">&#x2715;</button>
+    </div>
+    <div class="modal-nav">
+      <button class="modal-nav-btn ativo" onclick="mudarAba('sobre', event)">Sobre</button>
+      <button class="modal-nav-btn" onclick="mudarAba('contato', event)">Contato</button>
+      <button class="modal-nav-btn" onclick="mudarAba('privacidade', event)">Privacidade</button>
+    </div>
+    <div class="modal-content" id="modalConteudo"></div>
+  </div>
+</div>
+
+<div class="overlay" id="overlay" onclick="fecharMenu()"></div>
 <div class="sidebar" id="sidebar">
-
-<a href="#" onclick="fecharMenu()">✖ Fechar</a>
-
-<a href="#" onclick="mostrarInicio(); fecharMenu()">Início</a>
-
-<a href="liturgia_diaria/liturgiadiaria.html">Liturgia diária</a>
-
-<a href="jogos/jogos.html">Jogos</a>
-
-<hr>
-
-<a href="sobre.html">Sobre</a>
-
-<a href="privacy.html">Privacidade</a>
-
+  <a href="#" onclick="fecharMenu()">&#x2715; &nbsp;Fechar</a>
+  <a href="index.html">Inicio</a>
+  <a href="liturgia_diaria/liturgiadiaria.html">Liturgia Diaria</a>
+  <a href="santos/santos.html">Santos</a>
+  <a href="biblioteca/biblioteca.html">Biblioteca</a>
+  <a href="estudos/estudos.html">Estudos</a>
+  <a href="jogos/jogos.html">Jogos</a>
 </div>
 
 <header>
-
-<span class="menu-btn" onclick="abrirMenu()">☰</span>
-
-<h1>Lux Fidei</h1>
-<p style="opacity:0.8">Luz da Fé Católica</p>
+  <span class="menu-btn" onclick="abrirMenu()">&#9776;</span>
+  <p class="header-pretitle">&#10011; &nbsp; In Nomine Domini &nbsp; &#10011;</p>
+  <h1>Lux Fidei</h1>
+  <p class="header-sub">Luz da Fe Catolica</p>
 </header>
 
 <nav class="menu">
-
-<a href="index.html" class="menu-item active">Início</a>
-
-<a href="liturgia_diaria/liturgiadiaria.html" class="menu-item">Liturgia Diária</a>
-
-<a href="santos/santos.html" class="menu-item">Santos</a>
-
-<a href="biblioteca/biblioteca.html" class="menu-item">Biblioteca</a>
-
-<a href="estudos/estudos.html" class="menu-item">Estudos</a>
-
-<a href="jogos/jogos.html" class="menu-item">Jogos</a>
-     
-<span class="menu-indicator"></span>
-
+  <a href="index.html" class="menu-item active">Inicio</a>
+  <a href="liturgia_diaria/liturgiadiaria.html" class="menu-item">Liturgia Diaria</a>
+  <a href="santos/santos.html" class="menu-item">Santos</a>
+  <a href="biblioteca/biblioteca.html" class="menu-item">Biblioteca</a>
+  <a href="estudos/estudos.html" class="menu-item">Estudos</a>
+  <a href="jogos/jogos.html" class="menu-item">Jogos</a>
+  <span class="menu-indicator"></span>
 </nav>
 
-<!-- INICIO -->
 <main id="inicio">
 
-<h2>Bem-vindo</h2>
+  <section class="abertura">
+    <span class="ornamento-cruz">. . . &#10011; . . .</span>
+    <h2>A sabedoria de dois mil anos<br>ao alcance de quem busca</h2>
+    <p class="epigraph">"Conhecereis a verdade, e a verdade vos libertara."</p>
+    <p class="epigraph-ref">-- Joao 8, 32</p>
+  </section>
 
-<p>
-Este site foi criado com o propósito de servir à verdade da fé cristã professada e guardada pela Igreja fundada por Nosso Senhor Jesus Cristo.
-</p>
+  <section class="apresentacao">
+    <div class="sec-label">Apresentacao</div>
+    <div class="apresentacao-texto">
+      <p>A fe catolica nao e uma tradicao que se preserva no silencio dos museus, mas uma realidade viva que interpela cada geracao com a mesma urgencia dos primeiros seculos. O <em>Lux Fidei</em> nasce da conviccao de que essa fe precisa ser apresentada com toda a sua profundidade, sem as distorcoes do sensacionalismo nem a tibieza de quem teme o rigor.</p>
+      <p>Aqui o visitante encontrara a liturgia diaria da Igreja, as vidas dos santos que a encarnam, os textos que lhe deram forma ao longo dos seculos e o estudo sistematico da teologia e da filosofia crista. Cada secao foi concebida para servir tanto ao fiel que deseja aprofundar quanto ao curioso que ainda nao sabe o que procura.</p>
+      <p>Fidelidade ao Magisterio e a Tradicao Apostolica nao e limitacao: e o solo firme sobre o qual a inteligencia pode avancar com liberdade. Neste espaco, nao ha agendas politicas nem concessoes ao espirito do mundo. Ha, isso sim, o desejo de que cada visitante se aproxime um pouco mais daquele que disse ser o Caminho, a Verdade e a Vida.</p>
+    </div>
+  </section>
 
-<p>
-Ao longo de quase dois mil anos, essa fé foi transmitida fielmente através da Sagrada Escritura, da Tradição Apostólica e do ensinamento constante da Igreja.
-</p>
+  <section class="secoes">
+    <div class="sec-label">O que encontrara aqui</div>
+    <div class="secoes-grid">
+      <div class="secao-item">
+        <a href="liturgia_diaria/liturgiadiaria.html">
+          <span class="secao-num">I</span>
+          <h3>Liturgia Diaria</h3>
+          <p>As leituras, salmos e oracoes de cada dia, conforme o calendario liturgico da Igreja Universal. A Palavra que alimenta e orienta.</p>
+        </a>
+      </div>
+      <div class="secao-item">
+        <a href="santos/santos.html">
+          <span class="secao-num">II</span>
+          <h3>Santos</h3>
+          <p>Hagiografia: as vidas daqueles que viveram o Evangelho de modo radical e deixaram testemunho para toda a Igreja.</p>
+        </a>
+      </div>
+      <div class="secao-item">
+        <a href="biblioteca/biblioteca.html">
+          <span class="secao-num">III</span>
+          <h3>Biblioteca</h3>
+          <p>Documentos conciliares, enciclicas, Padres da Igreja, Doutores e as obras que formaram o pensamento cristao por dois milenios.</p>
+        </a>
+      </div>
+      <div class="secao-item">
+        <a href="estudos/estudos.html">
+          <span class="secao-num">IV</span>
+          <h3>Estudos</h3>
+          <p>Teologia dogmatica, moral e fundamental. Filosofia escolastica e moderna. Apologetica. Introducao as Sagradas Escrituras.</p>
+        </a>
+      </div>
+    </div>
+  </section>
 
-<p>
-Em todos os tempos existiu a necessidade de conhecer, estudar e defender a fé. Muitos erros, confusões e interpretações equivocadas surgem quando os ensinamentos cristãos são pouco conhecidos ou apresentados de forma incompleta.
-</p>
+  <section class="citacao-magna">
+    <blockquote>"A fe sem a razao fenece no mito e na supersticao; a razao sem a fe perde-se na desolacao do nada."</blockquote>
+    <cite>-- Sao Joao Paulo II, Fides et Ratio</cite>
+  </section>
 
-<p>
-Por isso, torna-se necessário voltar às fontes da fé e buscar compreendê-la com seriedade, reverência e fidelidade.
-</p>
+  <section class="para-quem">
+    <div class="sec-label">Para quem e este espaco</div>
+    <p class="para-quem-texto">O <em>Lux Fidei</em> nao foi pensado para um perfil unico de visitante. A fe catolica e, por natureza, universal, e universal ha de ser tambem o convite que aqui se faz.</p>
+    <p class="para-quem-texto">Para o fiel que frequenta a missa dominical e deseja compreender mais do que recita: ha aqui leituras, comentarios e aprofundamento doutrinal. Para o estudante de teologia ou filosofia em busca de fontes primarias e sinteses confiaveis: a Biblioteca e os Estudos foram pensados para isso. Para o cetico que ainda nao cre mas tem a honestidade de perguntar: nao havera aqui respostas faceis, mas havera respostas serias.</p>
+    <ul class="perfis-lista">
+      <li>Fieis que desejam aprofundar a fe</li>
+      <li>Curiosos sobre o catolicismo</li>
+      <li>Recem-convertidos em formacao</li>
+      <li>Estudantes de teologia e filosofia</li>
+      <li>Amantes da tradicao e do rito</li>
+      <li>Quem busca respostas para perguntas dificeis</li>
+      <li>Pensadores que levam a religiao a serio</li>
+      <li>Quem procura sentido e nao encontrou ainda</li>
+    </ul>
+  </section>
 
-<p>
-Este site nasce com o desejo de oferecer um espaço dedicado ao estudo, à explicação e à defesa da fé católica.
-</p>
+  <div class="fechamento">
+    <p>"A Igreja nao teme a inteligencia: ela foi sua mae e nutrida por ela durante seculos. O que a Igreja oferece nao e um fardo, mas uma luz."</p>
+    <p class="ornamento-final">&#10011; &nbsp; Lux Fidei &nbsp; &#10011;</p>
+  </div>
 
-<p>
-Seu objetivo é ajudar os fiéis a conhecer melhor aquilo que a Igreja sempre ensinou, bem como oferecer a todos aqueles que procuram a verdade um lugar onde possam compreender com clareza a doutrina cristã.
-</p>
-
-<p>
-A fé católica não é apenas um conjunto de ideias ou opiniões religiosas. Ela é a resposta do homem à revelação de Deus e foi confiada por Cristo à sua Igreja para ser guardada, ensinada e transmitida ao longo das gerações.
-</p>
-
-<p>
-Este projeto deseja contribuir, ainda que modestamente, para essa missão da Igreja: ensinar a verdade, esclarecer dúvidas e fortalecer os fiéis.
-</p>
-
-<p>
-Que este espaço possa servir como um instrumento de estudo, reflexão e formação para todos aqueles que desejam conhecer mais profundamente a fé católica.
-</p>
-
-<p style="margin-top:30px; font-style:italic;">
-“Conhecereis a verdade, e a verdade vos libertará.”  
-<br>
-— Evangelho de João 8,32
-</p>
-<p class="citacao">
-“Conhecereis a verdade, e a verdade vos libertará.”  
-<br>
-— Evangelho de João 8,32
-</p>
 </main>
 
-<footer>
-
-© 2026 – Meu site
-
-</footer>
-
-<script src="js/liturgia.js"></script>
+<footer>&copy; 2026 &ndash; Lux Fidei &nbsp;&middot;&nbsp; Omnia ad maiorem Dei gloriam</footer>
 
 <script>
-
-/* MENU */
-function abrirMenu() {
-  document.getElementById("sidebar").style.left = "0";
-}
-
-function fecharMenu() {
-  document.getElementById("sidebar").style.left = "-250px";
-}
-
-/* PAGINAS */
-
-function mostrarInicio() {
-
-document.getElementById("inicio").style.display = "block";
-
-document.getElementById("liturgia").style.display = "none";
-
-}
-
-///ANIMAÇÃO MENUUUUUUUUUUUUU///
-
-const indicator = document.querySelector(".menu-indicator");
-const items = document.querySelectorAll(".menu-item");
-
-function updateIndicator(el){
-
-indicator.style.width = el.offsetWidth + "px";
-indicator.style.left = el.offsetLeft + "px";
-
-}
-
-items.forEach(item => {
-
-item.addEventListener("click", function(){
-
-items.forEach(i => i.classList.remove("active"));
-
-this.classList.add("active");
-
-updateIndicator(this);
-
-});
-
-});
-
-window.onload = () => {
-
-const active = document.querySelector(".menu-item.active");
-
-if(active){
-updateIndicator(active);
-}
-
+const conteudoAbas = {
+  sobre: `<h2>Sobre o Lux Fidei</h2>
+    <p>O <em>Lux Fidei</em> &mdash; Luz da F&eacute; &mdash; &eacute; um projeto dedicado ao estudo, &agrave; apresenta&ccedil;&atilde;o e &agrave; defesa da f&eacute; cat&oacute;lica. Nasceu da convic&ccedil;&atilde;o de que a tradi&ccedil;&atilde;o crist&atilde; precisa ser conhecida em sua profundidade para ser vivida com integridade.</p>
+    <p>Muitos equ&iacute;vocos em torno do catolicismo derivam n&atilde;o de m&aacute; vontade, mas de ignor&acirc;ncia &mdash; &agrave;s vezes at&eacute; entre os pr&oacute;prios fi&eacute;is. Este espa&ccedil;o busca reunir recursos s&oacute;lidos: liturgia, hagiografia, textos doutrinais e apolog&eacute;tica, apresentados com fidelidade ao Magist&eacute;rio e &agrave; Tradi&ccedil;&atilde;o Apost&oacute;lica.</p>
+    <p>N&atilde;o h&aacute; aqui agendas pol&iacute;ticas, modismos ou concess&otilde;es ao esp&iacute;rito do tempo. H&aacute;, isso sim, o desejo sincero de que cada visitante se aproxime um pouco mais da verdade.</p>
+    <p class="epigraph-modal">&ldquo;A f&eacute; &eacute; mais certa do que qualquer outra esp&eacute;cie de conhecimento, porque est&aacute; fundada na Palavra de Deus.&rdquo; &mdash; Santo Tom&aacute;s de Aquino</p>`,
+  contato: `<h2>Contato</h2>
+    <p>Para sugest&otilde;es de conte&uacute;do, corre&ccedil;&otilde;es, colabora&ccedil;&otilde;es ou d&uacute;vidas de f&eacute;, entre em contato pelo endere&ccedil;o abaixo. Toda mensagem &eacute; lida com aten&ccedil;&atilde;o.</p>
+    <p>&#x2709; E-mail: <a href="mailto:comosercatolico@gmail.com">comosercatolico@gmail.com</a></p>
+    <p>Nas redes sociais, o projeto pode ser acompanhado como <strong>lux_.fidei</strong>.</p>
+    <p>Este &eacute; um projeto volunt&aacute;rio, movido exclusivamente pela f&eacute; e pelo desejo de servir. Sugest&otilde;es de conte&uacute;do, corre&ccedil;&otilde;es e contribui&ccedil;&otilde;es intelectuais s&atilde;o sempre bem-vindas.</p>
+    <p class="epigraph-modal">&ldquo;Ajudai-vos uns aos outros a carregar os fardos: assim cumprireis a lei de Cristo.&rdquo; &mdash; G&aacute;latas 6, 2</p>`,
+  privacidade: `<h2>Pol&iacute;tica de Privacidade</h2>
+    <p>O <em>Lux Fidei</em> respeita a privacidade de seus visitantes. Esta p&aacute;gina descreve o tratamento de dados neste site.</p>
+    <p><strong>An&aacute;lise de tr&aacute;fego:</strong> Podem ser utilizadas ferramentas de an&aacute;lise an&ocirc;nima (como o Google Analytics), sem identifica&ccedil;&atilde;o individual dos visitantes.</p>
+    <p><strong>Publicidade:</strong> Este site utiliza o Google AdSense, que pode exibir an&uacute;ncios com base em interesses do visitante. As prefer&ecirc;ncias podem ser gerenciadas nas configura&ccedil;&otilde;es do Google.</p>
+    <p><strong>Dados pessoais:</strong> Nenhum dado pessoal identific&aacute;vel &eacute; coletado, vendido ou compartilhado. Mensagens enviadas por e-mail s&atilde;o usadas exclusivamente para responder ao remetente.</p>
+    <p><strong>Links externos:</strong> Este site pode conter links para terceiros. N&atilde;o nos responsabilizamos pelas pol&iacute;ticas de privacidade dessas p&aacute;ginas.</p>
+    <p>D&uacute;vidas: <a href="mailto:comosercatolico@gmail.com">comosercatolico@gmail.com</a></p>`
 };
-</script>
 
+let abaAtual = 'sobre';
+
+function abrirModal(aba) {
+  abaAtual = aba || 'sobre';
+  renderizarAba(abaAtual);
+  document.getElementById('modalOverlay').classList.add('aberto');
+  document.body.style.overflow = 'hidden';
+}
+function fecharModal() {
+  document.getElementById('modalOverlay').classList.remove('aberto');
+  document.body.style.overflow = '';
+}
+function fecharModalFora(e) {
+  if (e.target === document.getElementById('modalOverlay')) fecharModal();
+}
+function mudarAba(aba, e) {
+  abaAtual = aba;
+  renderizarAba(aba);
+  document.querySelectorAll('.modal-nav-btn').forEach(b => b.classList.remove('ativo'));
+  if (e && e.target) e.target.classList.add('ativo');
+}
+function renderizarAba(aba) {
+  document.getElementById('modalConteudo').innerHTML = conteudoAbas[aba] || '';
+}
+renderizarAba('sobre');
+
+function abrirMenu() {
+  document.getElementById('sidebar').style.left = '0';
+  document.getElementById('overlay').classList.add('ativo');
+}
+function fecharMenu() {
+  document.getElementById('sidebar').style.left = '-290px';
+  document.getElementById('overlay').classList.remove('ativo');
+}
+
+const indicator = document.querySelector('.menu-indicator');
+const items = document.querySelectorAll('.menu-item');
+
+function updateIndicator(el) {
+  if (!indicator || !el) return;
+  indicator.style.width = el.offsetWidth + 'px';
+  indicator.style.left  = el.offsetLeft + 'px';
+}
+items.forEach(item => {
+  item.addEventListener('click', function () {
+    items.forEach(i => i.classList.remove('active'));
+    this.classList.add('active');
+    updateIndicator(this);
+  });
+});
+window.addEventListener('load', () => {
+  const active = document.querySelector('.menu-item.active');
+  if (active) updateIndicator(active);
+});
+window.addEventListener('resize', () => {
+  if (window.innerWidth > 768) fecharMenu();
+  const active = document.querySelector('.menu-item.active');
+  if (active) updateIndicator(active);
+});
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') fecharModal(); });
+</script>
 </body>
 </html>

@@ -3,52 +3,97 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Suma Teológica - São Tomás de Aquino | Lux Fidei</title>
+    <title>Suma Teológica - São Tomás de Aquino</title>
     <link rel="stylesheet" href="suma.css">
-    <script src="leitor.js" defer></script>
 </head>
-<body class="pagina-index">
-
-<div class="index-container">
-    <a href="../biblioteca.html" class="voltar-btn">← Voltar à Biblioteca</a>
-    
-    <div class="hero-card">
-        <h1>Suma Teológica</h1>
-        <span class="autor">São Tomás de Aquino</span>
-        
-        <p class="descricao">
-            A obra-prima da teologia católica. Uma síntese monumental da fé e da razão, 
-            onde o Doutor Angélico sistematiza todo o conhecimento teológico e filosófico 
-            de sua época para a glória de Deus.
-        </p>
-
-        <!-- Banner de continuar leitura será inserido aqui pelo JS -->
-        <div id="banner-continuar"></div>
-
-        <a href="sumateologia1-100/suma-pagina1.html" class="btn-start">
-            📖 Iniciar Leitura
-        </a>
-
-        <div class="info-estrutura">
-            <div class="info-item">
-                <strong>Partes</strong>
-                <span>I, I-II, II-II, III</span>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <h1>📖 Suma Teológica</h1>
+                    <p class="subtitle">Santo Tomás de Aquino</p>
+                </div>
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="Buscar página..." class="search-input">
+                    <button id="searchBtn" class="search-btn">🔍</button>
+                </div>
             </div>
-            <div class="info-item">
-                <strong>Artigos</strong>
-                <span>~3.000 Artigos</span>
-            </div>
-            <div class="info-item">
-                <strong>Status</strong>
-                <span>Em Tradução</span>
-            </div>
-        </div>
+        </header>
+
+        <main class="main-content">
+            <!-- Sidebar de Navegação -->
+            <aside class="sidebar">
+                <div class="sidebar-header">
+                    <h2>Navegação</h2>
+                    <button id="toggleSidebar" class="toggle-btn">☰</button>
+                </div>
+                
+                <nav class="nav-menu">
+                    <div class="nav-section">
+                        <h3>Estrutura da Obra</h3>
+                        <ul id="structureList" class="nav-list">
+                            <li><a href="#" data-part="prima" class="nav-link">Prima Pars (Parte I)</a></li>
+                            <li><a href="#" data-part="prima-secundae" class="nav-link">Prima Secundae (Parte II-1)</a></li>
+                            <li><a href="#" data-part="secunda-secundae" class="nav-link">Secunda Secundae (Parte II-2)</a></li>
+                            <li><a href="#" data-part="tertia" class="nav-link">Tertia Pars (Parte III)</a></li>
+                            <li><a href="#" data-part="suplemento" class="nav-link">Suplemento</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="nav-section">
+                        <h3>Acesso Rápido</h3>
+                        <ul class="nav-list">
+                            <li><a href="#" id="firstPage" class="nav-link">⏮ Primeira Página</a></li>
+                            <li><a href="#" id="lastPage" class="nav-link">⏭ Última Página</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="nav-section">
+                        <h3>Ir para Página</h3>
+                        <div class="page-jump">
+                            <input type="number" id="pageJump" min="1" max="4278" placeholder="Número da página" class="page-input">
+                            <button id="jumpBtn" class="jump-btn">Ir</button>
+                        </div>
+                    </div>
+                </nav>
+            </aside>
+
+            <!-- Área Principal de Conteúdo -->
+            <section class="content-area">
+                <div class="content-header">
+                    <div class="breadcrumb">
+                        <span id="breadcrumb">Página 1 de 4278</span>
+                    </div>
+                    <div class="view-options">
+                        <button id="darkModeToggle" class="icon-btn" title="Modo escuro">🌙</button>
+                        <button id="fontSizeIncrease" class="icon-btn" title="Aumentar fonte">A+</button>
+                        <button id="fontSizeDecrease" class="icon-btn" title="Diminuir fonte">A-</button>
+                    </div>
+                </div>
+
+                <div id="contentFrame" class="content-frame">
+                    <div class="loading">Carregando página...</div>
+                </div>
+
+                <!-- Controles de Navegação -->
+                <div class="navigation-controls">
+                    <button id="prevBtn" class="nav-btn prev-btn">← Anterior</button>
+                    <div class="page-info">
+                        <span id="currentPage">1</span> / <span id="totalPages">4278</span>
+                    </div>
+                    <button id="nextBtn" class="nav-btn next-btn">Próxima →</button>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>&copy; 2026 Suma Teológica - Tradução de Alexandre Correia | <a href="https://comosercatolico.github.io">Como Ser Católico</a></p>
+        </footer>
     </div>
-</div>
 
-<footer class="suma-footer">
-    <p>Lux Fidei © 2026 • "A verdade é o bem do intelecto."</p>
-</footer>
-
+    <script src="suma.js"></script>
 </body>
 </html>

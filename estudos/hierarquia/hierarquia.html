@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Hierarquia da Igreja – Lux Fidei</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="../../style.css">
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=EB+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+/* ══════════════════════════════════════════
+   VARIÁVEIS
+══════════════════════════════════════════ */
+:root {
+  --gold:        #c9a84c;
+  --gold-light:  #e8c97a;
+  --gold-pale:   #fdf8ee;
+  --gold-dark:   #8b6f3d;
+  --cream:       #faf8f3;
+  --dark:        #1a1410;
+  --dark-mid:    #2d2418;
+  --text:        #2c2416;
+  --text-muted:  #7a6a50;
+  --white:       #ffffff;
+  --radius:      14px;
+  --shadow:      0 4px 24px rgba(0,0,0,0.10);
+  --shadow-lg:   0 16px 48px rgba(0,0,0,0.18);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--cream);
+  font-family: 'EB Garamond', Georgia, serif;
+  color: var(--text);
+  min-height: 100vh;
+}
+
+/* ══════════════════════════════════════════
+   PAGE HEADER
+══════════════════════════════════════════ */
+.hier-header {
+  text-align: center;
+  padding: 52px 20px 16px;
+  max-width: 780px;
+  margin: 0 auto;
+}
+.hier-header h2 {
+  font-family: 'Libre Baskerville', serif;
+  font-size: clamp(1.7rem, 4vw, 2.6rem);
+  color: var(--dark);
+  letter-spacing: 1px;
+  margin-bottom: 12px;
+}
+.hier-header p {
+  color: var(--text-muted);
+  font-size: 1.05rem;
+  line-height: 1.7;
+  font-style: italic;
+}
+.hier-divider {
+  width: 60px;
+  height: 2px;
+  background: var(--gold);
+  margin: 18px auto 0;
+  border-radius: 2px;
+}
+
+/* ══════════════════════════════════════════
+   PIRÂMIDE
+══════════════════════════════════════════ */
+.piramide-wrap {
+  max-width: 820px;
+  margin: 44px auto 0;
+  padding: 0 16px;
+  position: relative;
+}
+
+.nivel {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 0;
+  position: relative;
+}
+
+/* Linha conectora vertical entre níveis */
+.nivel:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2px;
+  height: 10px;
+  background: linear-gradient(to bottom, var(--gold), transparent);
+  z-index: 0;
+}
+
+/* BLOCO DE CADA NÍVEL */
+.nivel-bloco {
+  width: 100%;
+  max-width: var(--nivel-max, 780px);
+  background: var(--white);
+  border-radius: var(--radius);
+  border: 1.5px solid rgba(201,168,76,0.22);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.28s cubic-bezier(0.4,0,0.2,1),
+              box-shadow 0.28s cubic-bezier(0.4,0,0.2,1),
+              border-color 0.2s;
+  position: relative;
+  margin: 5px auto;
+}
+.nivel-bloco:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--gold);
+}
+.nivel-bloco.aberto {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(201,168,76,0.15), var(--shadow-lg);
+}
+
+/* Barra lateral colorida por camada */
+.nivel-bloco::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 5px;
+  background: var(--nivel-cor, var(--gold));
+  border-radius: var(--radius) 0 0 var(--radius);
+}
+
+/* CABEÇALHO DO BLOCO */
+.nivel-head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px 22px 18px 26px;
+  user-select: none;
+}
+.nivel-icone {
+  font-size: 1.5rem;
+  line-height: 1;
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--gold-pale);
+  border: 1.5px solid rgba(201,168,76,0.3);
+}
+.nivel-titulo {
+  flex: 1;
+}
+.nivel-titulo h3 {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 1.08rem;
+  color: var(--dark);
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  line-height: 1.2;
+}
+.nivel-titulo .nivel-subtitulo {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-top: 3px;
+  font-style: italic;
+  letter-spacing: 0.2px;
+}
+.nivel-seta {
+  color: var(--gold);
+  font-size: 1rem;
+  transition: transform 0.3s ease;
+  flex-shrink: 0;
+}
+.nivel-bloco.aberto .nivel-seta {
+  transform: rotate(180deg);
+}
+
+/* CONTEÚDO EXPANDIDO */
+.nivel-conteudo {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.45s cubic-bezier(0.4,0,0.2,1);
+}
+.nivel-conteudo.visivel {
+  max-height: 2000px;
+}
+.nivel-inner {
+  padding: 0 26px 26px 26px;
+  border-top: 1px solid rgba(201,168,76,0.15);
+}
+
+/* SUB-NÍVEIS (cargos dentro da camada) */
+.subnivel-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 12px;
+  margin-top: 18px;
+}
+.subnivel-card {
+  background: var(--gold-pale);
+  border: 1px solid rgba(201,168,76,0.25);
+  border-radius: 10px;
+  padding: 14px 16px;
+  cursor: pointer;
+  transition: all 0.22s ease;
+}
+.subnivel-card:hover {
+  background: #fef3d0;
+  border-color: var(--gold);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(201,168,76,0.2);
+}
+.subnivel-card.ativo {
+  background: var(--dark);
+  border-color: var(--dark);
+}
+.subnivel-card.ativo .sc-nome,
+.subnivel-card.ativo .sc-desc {
+  color: var(--gold-light);
+}
+.subnivel-card.ativo .sc-desc {
+  color: rgba(232,201,122,0.7);
+}
+.sc-nome {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--dark);
+  margin-bottom: 4px;
+}
+.sc-desc {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+  font-style: italic;
+}
+
+/* PAINEL DE DETALHES DO CARGO */
+.detalhe-painel {
+  margin-top: 18px;
+  background: var(--dark);
+  border-radius: 12px;
+  padding: 26px 28px;
+  display: none;
+  animation: fadeInUp 0.3s ease both;
+}
+.detalhe-painel.visivel { display: block; }
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.dp-titulo {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 1.2rem;
+  color: var(--gold-light);
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.dp-subtitulo {
+  font-size: 0.78rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(201,168,76,0.6);
+  margin-bottom: 18px;
+  font-family: 'Libre Baskerville', serif;
+}
+.dp-corpo {
+  color: #e8dfd0;
+  font-size: 0.95rem;
+  line-height: 1.85;
+}
+.dp-corpo p { margin-bottom: 10px; }
+.dp-corpo p:last-child { margin-bottom: 0; }
+.dp-corpo strong { color: var(--gold-light); font-weight: 600; }
+
+.dp-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 16px;
+}
+.dp-tag {
+  font-size: 0.68rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--gold);
+  border: 1px solid rgba(201,168,76,0.35);
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-family: 'Libre Baskerville', serif;
+}
+
+/* ══════════════════════════════════════════
+   LEGENDA / NOTA
+══════════════════════════════════════════ */
+.legenda {
+  max-width: 820px;
+  margin: 32px auto 60px;
+  padding: 0 16px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+.legenda-item {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  background: white;
+  padding: 5px 12px;
+  border-radius: 20px;
+  border: 1px solid rgba(0,0,0,0.07);
+}
+.legenda-dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* ══════════════════════════════════════════
+   BOTÃO VOLTAR
+══════════════════════════════════════════ */
+.btn-voltar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 auto 0 20px;
+  padding: 10px 20px;
+  background: white;
+  border: 1.5px solid rgba(201,168,76,0.35);
+  border-radius: 30px;
+  color: var(--gold-dark);
+  font-family: 'Libre Baskerville', serif;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  width: fit-content;
+  text-decoration: none;
+}
+.btn-voltar:hover {
+  background: var(--gold-pale);
+  border-color: var(--gold);
+}
+.btn-voltar-wrap {
+  padding: 24px 20px 0;
+  max-width: 820px;
+  margin: 0 auto;
+}
+
+/* ══════════════════════════════════════════
+   RESPONSIVO
+══════════════════════════════════════════ */
+@media (max-width: 600px) {
+  .nivel-head { padding: 14px 16px 14px 20px; gap: 10px; }
+  .nivel-inner { padding: 0 16px 20px; }
+  .subnivel-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .detalhe-painel { padding: 18px 16px; }
+  .dp-corpo { font-size: 0.88rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- MENU LATERAL -->
+<div class="sidebar" id="sidebar">
+  <a href="#" onclick="fecharMenu()">✖ Fechar</a>
+  <a href="../../index.html">Início</a>
+  <a href="../../liturgia_diaria/liturgiadiaria.html">Liturgia diária</a>
+  <a href="../../santos/santos.html">Santos</a>
+  <a href="../../biblioteca/biblioteca.html">Biblioteca</a>
+  <a href="../estudos.html">Estudos</a>
+  <a href="../../jogos/jogos.html">Jogos</a>
+  <hr>
+  <a href="../../sobre.html">Sobre</a>
+  <a href="../../privacy.html">Privacidade</a>
+</div>
+
+<!-- HEADER GLOBAL -->
+<header>
+  <span class="menu-btn" onclick="abrirMenu()">☰</span>
+  <h1>Lux Fidei</h1>
+  <p style="opacity:0.8">Luz da Fé Católica</p>
+</header>
+
+<!-- NAV -->
+<nav class="menu">
+  <a href="../../index.html" class="menu-item">Início</a>
+  <a href="../../liturgia_diaria/liturgiadiaria.html" class="menu-item">Liturgia Diária</a>
+  <a href="../../santos/santos.html" class="menu-item">Santos</a>
+  <a href="../../biblioteca/biblioteca.html" class="menu-item">Biblioteca</a>
+  <a href="../estudos.html" class="menu-item active">Estudos</a>
+  <a href="../../jogos/jogos.html" class="menu-item">Jogos</a>
+  <span class="menu-indicator"></span>
+</nav>
+
+<!-- BOTÃO VOLTAR -->
+<div class="btn-voltar-wrap">
+  <a href="../estudos.html" class="btn-voltar">← Voltar aos Estudos</a>
+</div>
+
+<!-- CABEÇALHO DA PÁGINA -->
+<div class="hier-header">
+  <h2>Hierarquia da Igreja Católica</h2>
+  <p>Da Cátedra de Pedro aos fiéis leigos — conheça cada vocação, cargo e ministério que compõe o Corpo de Cristo.</p>
+  <div class="hier-divider"></div>
+</div>
+
+<!-- PIRÂMIDE -->
+<div class="piramide-wrap" id="piramide"></div>
+
+<!-- LEGENDA -->
+<div class="legenda" id="legenda"></div>
+
+<footer>© 2026 – Lux Fidei</footer>
+
+<script>
+/* ══════════════════════════════════════════
+   DADOS DA HIERARQUIA
+══════════════════════════════════════════ */
+const hierarquia = [
+  {
+    id: 'papado',
+    titulo: 'Papado',
+    subtitulo: 'Cabeça visível da Igreja Universal',
+    icone: '✝️',
+    cor: '#8b1a1a',
+    maxWidth: '460px',
+    cargos: [
+      {
+        nome: 'Papa',
+        subtitulo: 'Bispo de Roma · Vigário de Cristo',
+        tags: ['Magistério Ordinário', 'Infalibilidade', 'Primado de Pedro'],
+        corpo: `<p>O Papa é o <strong>Bispo de Roma</strong> e successor do apóstolo Pedro, a quem Jesus conferiu o primado ao dizer "Tu és Pedro, e sobre esta pedra edificarei a minha Igreja" (Mt 16:18). É a cabeça visível de toda a Igreja Católica no mundo.</p>
+        <p>Ele possui <strong>autoridade suprema, plena e universal</strong> sobre toda a Igreja — em matéria de fé, moral e governo. Quando fala ex cathedra (da cátedra) sobre fé e moral, goza do carisma da <strong>infalibilidade</strong>, definido dogmaticamente no Concílio Vaticano I (1870).</p>
+        <p>É eleito pelo <strong>Colégio dos Cardeais</strong> reunidos em conclave, após a morte ou renúncia do antecessor. O atual é o Papa Francisco (Jorge Mario Bergoglio), eleito em 2013 — primeiro pontífice jesuíta e sul-americano da história.</p>
+        <p>Seus títulos incluem: Bispo de Roma, Vigário de Jesus Cristo, Sucessor do Príncipe dos Apóstolos, Sumo Pontífice da Igreja Universal, Patriarca do Ocidente, Primaz da Itália, Arcebispo e Metropolita da Província Romana, Soberano do Estado da Cidade do Vaticano e Servo dos Servos de Deus.</p>`
+      },
+      {
+        nome: 'Papa Emérito',
+        subtitulo: 'Papa renunciante · Título honorífico',
+        tags: ['Renúncia', 'Cânon 332 §2', 'Bento XVI'],
+        corpo: `<p>O título de <strong>Papa Emérito</strong> não existia na prática até 2013, quando Bento XVI (Joseph Ratzinger) renunciou ao pontificado — o primeiro papa a fazê-lo em quase 600 anos.</p>
+        <p>O direito canônico (c. 332 §2) prevê a renúncia, mas não havia protocolo estabelecido para a situação. Bento XVI manteve o nome papal, o hábito branco e o título de "Papa Emérito", vivendo em clausura no Vaticano até sua morte em 2022.</p>
+        <p>Sua existência criou uma situação <strong>teologicamente nova</strong>: pela primeira vez na história moderna, dois papas viveram simultaneamente — embora apenas Francisco exercesse a função.</p>`
+      }
+    ]
+  },
+  {
+    id: 'episcopado_supremo',
+    titulo: 'Episcopado Supremo',
+    subtitulo: 'Governança universal da Igreja',
+    icone: '👑',
+    cor: '#7a1f1f',
+    maxWidth: '560px',
+    cargos: [
+      {
+        nome: 'Cardeal',
+        subtitulo: 'Príncipe da Igreja · Eleitor do Papa',
+        tags: ['Colégio dos Cardeais', 'Conclave', 'Púrpura'],
+        corpo: `<p>Os cardeais formam o <strong>Colégio dos Cardeais</strong>, o mais alto órgão consultivo do Papa. São chamados de "Príncipes da Igreja" e usam vestes <strong>vermelhas (púrpura)</strong>, simbolizando sua disposição ao martírio.</p>
+        <p>A principal função dos cardeais com menos de 80 anos é <strong>eleger o novo Papa</strong> no conclave. Além disso, muitos governam dioceses ao redor do mundo, lideram dicastérios (ministérios) da Cúria Romana ou servem como legados papais.</p>
+        <p>São nomeados pelo Papa, que frequentemente eleva bispos, arcebispos e patriarcas à dignidade cardinalícia. Existem três ordens: cardeais bispos, cardeais presbíteros e cardeais diáconos.</p>`
+      },
+      {
+        nome: 'Patriarca',
+        subtitulo: 'Cabeça de Igreja Particular ou Rito',
+        tags: ['Igrejas Orientais', 'Rito Próprio', 'Jurisdição Histórica'],
+        corpo: `<p>Os patriarcas são bispos que presidem <strong>Igrejas Patriarcais</strong> — comunidades cristãs de origem apostólica com rito, liturgia e direito canônico próprios, mas em plena comunhão com Roma.</p>
+        <p>Os grandes patriarcados históricos são Roma, Constantinopla, Alexandria, Antioquia e Jerusalém. Na Igreja Católica, patriarcas governam igrejas como a Copta, a Melquita, a Maronita e outras igrejas orientais católicas.</p>
+        <p>O título também é honorífico em alguns casos — como o Patriarca de Lisboa ou o Patriarca das Índias Orientais, que não têm jurisdição patriarcal real mas honram tradições históricas.</p>`
+      },
+      {
+        nome: 'Arcebispo Primaz',
+        subtitulo: 'Primeiro entre os arcebispos de uma nação',
+        tags: ['Primazia de Honra', 'Tradição Nacional', 'Sé Metropolitana'],
+        corpo: `<p>O título de <strong>Primaz</strong> designa o arcebispo que detém primazia de honra sobre todos os outros bispos de um país ou região. É um título histórico que reconhece a primeira sé evangelizada ou fundada num território.</p>
+        <p>No Brasil, o Cardeal-Arcebispo de Salvador é o Primaz do Brasil, pois Salvador foi a primeira diocese do país. Em Portugal, o Arcebispo de Braga é o Primaz das Espanhas.</p>
+        <p>A primazia é <strong>de honra, não de jurisdição</strong> — o Primaz não tem autoridade sobre os outros arcebispos do país, ao contrário do que o título pode sugerir.</p>`
+      }
+    ]
+  },
+  {
+    id: 'episcopado',
+    titulo: 'Episcopado',
+    subtitulo: 'Plenitude do sacramento da Ordem',
+    icone: '⛪',
+    cor: '#6b3a2a',
+    maxWidth: '640px',
+    cargos: [
+      {
+        nome: 'Arcebispo Metropolitano',
+        subtitulo: 'Cabeça de Província Eclesiástica',
+        tags: ['Pálio', 'Província Eclesiástica', 'Sé Metropolitana'],
+        corpo: `<p>O arcebispo metropolitano governa uma <strong>arquidiocese</strong> e preside uma <strong>província eclesiástica</strong> — um grupo de dioceses vizinhas. Recebe do Papa o <strong>pálio</strong>, uma faixa de lã branca com cruzes negras, símbolo de sua autoridade metropolitana.</p>
+        <p>Ele não tem jurisdição direta sobre as dioceses sufragâneas (subordinadas), mas pode inspecioná-las em caso de negligência e recorre diretamente à Santa Sé. Geralmente governa as maiores e mais importantes dioceses do país.</p>`
+      },
+      {
+        nome: 'Arcebispo Titular',
+        subtitulo: 'Bispo sem diocese residencial',
+        tags: ['Sé Titular', 'Cúria Romana', 'Nunciatura'],
+        corpo: `<p>Um arcebispo titular é aquele que recebeu a <strong>consagração episcopal</strong> mas não governa uma diocese real. É nomeado para uma "sé titular" — uma diocese histórica que existe apenas no papel (muitas vezes extintas em terras hoje não cristãs).</p>
+        <p>São arcebispos titulares: os nuncios apostólicos (embaixadores do Vaticano), os secretários dos dicastérios romanos, os bispos auxiliares de grandes arquidioceses, e altos funcionários da Cúria Romana.</p>`
+      },
+      {
+        nome: 'Bispo Diocesano',
+        subtitulo: 'Pastor de uma Diocese',
+        tags: ['Esposo da Diocese', 'Sucessão Apostólica', 'Magistério Local'],
+        corpo: `<p>O bispo diocesano é o <strong>pastor ordinário</strong> de uma diocese — uma porção do povo de Deus confiada a seus cuidados. Governa com autoridade própria, ordinária e imediata — não como delegado do Papa, mas por direito próprio.</p>
+        <p>Ele é o <strong>principal celebrante</strong> dos sacramentos em sua diocese, o guardião da fé ortodoxa local, o ordenador dos padres, o responsável pela missão e caridade. A liturgia diocesana é presidida por ele — todas as missas da diocese são celebradas em seu nome.</p>
+        <p>É ordenado pelos <strong>três bispos</strong> (pelo menos), garantindo a continuidade ininterrupta da sucessão apostólica desde os apóstolos. Usa o anel episcopal, a mitra, o báculo e o peitoral (cruz peitoral).</p>`
+      },
+      {
+        nome: 'Bispo Auxiliar',
+        subtitulo: 'Auxiliar do bispo diocesano',
+        tags: ['Sem Direito de Sucessão', 'Sé Titular', 'Apoio Pastoral'],
+        corpo: `<p>O bispo auxiliar é ordenado bispo para <strong>assistir</strong> o bispo diocesano em dioceses grandes ou com necessidades especiais. Não tem direito automático de sucessão — quando o bispo diocesano muda, o auxiliar pode ou não permanecer.</p>
+        <p>Recebe uma sé titular simbólica. Muitos bispos auxiliares são futuros bispos diocesanos — o cargo serve frequentemente de formação e preparação para o episcopado pleno.</p>`
+      },
+      {
+        nome: 'Bispo Emérito',
+        subtitulo: 'Bispo que renunciou ao governo pastoral',
+        tags: ['Renúncia aos 75 anos', 'Título Honorífico', 'Conserva Episcopado'],
+        corpo: `<p>Todo bispo deve apresentar sua renúncia ao Papa ao completar <strong>75 anos</strong>, embora ela possa ser aceita ou adiada. Quando aceita, torna-se bispo emérito — conserva a dignidade e os poderes de sua ordem, mas não o governo da diocese.</p>
+        <p>O bispo emérito pode continuar celebrando, confirmando, ordenando (com licença) e exercendo funções pastorais, mas sem autoridade jurisdicional. É comum que bispos eméritos sirvam em dioceses com escassez de clero.</p>`
+      },
+      {
+        nome: 'Bispo Coadjutor',
+        subtitulo: 'Sucessor designado do bispo diocesano',
+        tags: ['Direito de Sucessão', 'Transição Planejada', 'Nomeado pelo Papa'],
+        corpo: `<p>O bispo coadjutor é nomeado pelo Papa com <strong>direito de sucessão</strong> — quando o bispo diocesano renunciar ou morrer, o coadjutor assume automaticamente sem nova nomeação. É uma figura de transição planejada.</p>
+        <p>Costuma ser designado quando a diocese atravessa dificuldades específicas — saúde debilitada do bispo titular, necessidade de reforma ou preparação para mudanças significativas na comunidade diocesana.</p>`
+      }
+    ]
+  },
+  {
+    id: 'presbiteros',
+    titulo: 'Presbiterado',
+    subtitulo: 'Colaboradores dos bispos no múnus sacerdotal',
+    icone: '🕯️',
+    cor: '#4a5a3a',
+    maxWidth: '700px',
+    cargos: [
+      {
+        nome: 'Cardeal Presbítero',
+        subtitulo: 'Padre elevado à dignidade cardinalícia',
+        tags: ['Sem Ordenação Episcopal', 'Colégio dos Cardeais', 'Histórico'],
+        corpo: `<p>Historicamente, nem todos os cardeais eram bispos. Alguns padres especialmente eminentes eram elevados à dignidade cardinalícia sem receberem a consagração episcopal. Desde 1917, o Código de Direito Canônico determina que os cardeais devem ser ordenados bispos, mas há exceções concedidas pelo Papa para teólogos de avançada idade.</p>`
+      },
+      {
+        nome: 'Vigário Geral',
+        subtitulo: 'Alter ego do bispo na diocese',
+        tags: ['Autoridade Ordinária', 'Governo Diocesano', 'Direito Canônico'],
+        corpo: `<p>O Vigário Geral é o principal colaborador do bispo no governo da diocese. Possui <strong>poder ordinário vicário</strong> — age em nome do bispo em toda a extensão da diocese, com a mesma autoridade, exceto em atos reservados ao bispo pessoalmente.</p>
+        <p>É o "segundo comando" da diocese. Pode assinar documentos diocesanos, conceder licenças, resolver questões administrativas. O bispo pode ter apenas um Vigário Geral (diferente do Vigário Episcopal, que tem funções mais limitadas).</p>`
+      },
+      {
+        nome: 'Cônego',
+        subtitulo: 'Membro do Cabido Catedralício',
+        tags: ['Capítulo Catedralício', 'Liturgia Coral', 'Tradição Medieval'],
+        corpo: `<p>Os cônegos formam o <strong>Cabido Catedralício</strong> — a comunidade de padres que assiste o bispo no governo da diocese e celebra o Ofício Divino (Liturgia das Horas) coletivamente na catedral.</p>
+        <p>Historicamente viviam em comunidade (por isso "canônicos regulares"). Hoje muitos são seculares. O título é frequentemente honorífico, concedido pelo bispo a padres meritorios de sua diocese. O Deão ou Decano preside o Cabido.</p>`
+      },
+      {
+        nome: 'Monsenhor',
+        subtitulo: 'Título honorífico pontifício para padres',
+        tags: ['Honra Pontifícia', 'Três Graus', 'Não é uma Ordem'],
+        corpo: `<p>Monsenhor (do italiano <em>Monsignore</em>, "Meu Senhor") é um <strong>título honorífico</strong> concedido pelo Papa a padres que se distinguiram no serviço à Igreja. Não é uma ordenação ou cargo — é uma honra pessoal.</p>
+        <p>Há três graus: Capelão de Sua Santidade (o mais comum), Prelado de Honra de Sua Santidade e Protonotário Apostólico (o mais alto). Cada grau tem vestes litúrgicas distintas (roxo ou preto com vermelho).</p>
+        <p>Em 2013, o Papa Francisco restringiu significativamente a concessão do título, reservando o grau mais simples apenas a padres com mais de 65 anos, como medida contra o clericalismo.</p>`
+      },
+      {
+        nome: 'Pároco',
+        subtitulo: 'Pastor de uma Paróquia',
+        tags: ['Cura de Almas', 'Paróquia', 'Registro Paroquial'],
+        corpo: `<p>O pároco é o pastor responsável por uma <strong>paróquia</strong> — a menor unidade territorial da Igreja. Sua missão é a "<strong>cura de almas</strong>" (cura animarum): a salvação eterna dos fiéis confiados a ele.</p>
+        <p>Administra os sacramentos, prega, catequiza, visita os doentes, assiste os moribundos, registra batismos, casamentos e funerais. É a face mais próxima da Igreja para a maioria dos católicos.</p>
+        <p>É nomeado pelo bispo e tem estabilidade no cargo — não pode ser transferido sem causa justa. A paróquia é juridicamente uma pessoa moral com patrimônio próprio sob sua administração.</p>`
+      },
+      {
+        nome: 'Vigário Paroquial',
+        subtitulo: 'Padre assistente do pároco',
+        tags: ['Colaborador do Pároco', 'Sem Autonomia', 'Formação Pastoral'],
+        corpo: `<p>Antigamente chamado de "padre coadjutor" ou "padre capelão", o Vigário Paroquial é o padre que <strong>auxilia o pároco</strong> na pastoral da paróquia. Não tem autonomia plena — age sob direção do pároco.</p>
+        <p>É frequentemente um padre jovem em formação pastoral, ou um padre mais experiente enviado para apoiar paróquias com grande número de fiéis. Em paróquias muito grandes pode haver vários vigários paroquiais.</p>`
+      },
+      {
+        nome: 'Capelão',
+        subtitulo: 'Padre de serviço especializado',
+        tags: ['Hospital', 'Escola', 'Forças Armadas', 'Prisão'],
+        corpo: `<p>Capelão é o padre designado para o <strong>serviço espiritual em uma instituição</strong> específica: hospital, escola, universidade, presídio, quartel militar, navio, aeroporto. Não governa uma paróquia, mas serve uma comunidade específica.</p>
+        <p>Os capelães militares formam o <strong>Ordinariato Militar</strong>, uma diocese especial que acompanha as forças armadas. O capelão hospitalar é frequentemente o único representante da Igreja presente no momento da morte.</p>`
+      },
+      {
+        nome: 'Prior / Abade',
+        subtitulo: 'Superior de uma comunidade monástica',
+        tags: ['Vida Monástica', 'Regra de São Bento', 'Eleito pela Comunidade'],
+        corpo: `<p>O <strong>Abade</strong> (do aramaico <em>Abba</em>, "pai") governa uma Abadia — um mosteiro autônomo. É eleito pelos monges e confirmado pelo bispo ou pelo Papa. Pode ser ordenado bispo, mas não necessariamente.</p>
+        <p>O <strong>Prior</strong> governa um Priorado (monastério menor ou dependente de uma Abadia). O Prior Claustral é o segundo em comando de uma Abadia.</p>
+        <p>O Abade usa mitra, báculo e anel — insígnias episcopais — mesmo sem ser bispo, pois sua autoridade sobre os monges é análoga à do bispo sobre sua diocese. O Abade Primaz é o superior honorífico de toda a Confederação Beneditina.</p>`
+      },
+      {
+        nome: 'Superior de Instituto Religioso',
+        subtitulo: 'Chefe de uma congregação religiosa',
+        tags: ['Padre Provincial', 'Superior Geral', 'Direito Próprio'],
+        corpo: `<p>Os institutos religiosos (franciscanos, dominicanos, jesuítas, salesianos etc.) têm uma hierarquia interna própria. O <strong>Superior Geral</strong> governa todo o instituto; o <strong>Provincial</strong> governa uma Província (região geográfica); o <strong>Guardião</strong> (franciscanos) ou <strong>Prior Local</strong> governa uma casa individual.</p>
+        <p>O Padre Geral dos Jesuítas é coloquialmente chamado de "Papa Negro" por sua influência histórica — o cargo é vitalício e tem autoridade sobre milhares de padres ao redor do mundo.</p>`
+      },
+      {
+        nome: 'Padre Eremita / Anacoreta',
+        subtitulo: 'Sacerdote em vida solitária consagrada',
+        tags: ['Vida Eremítica', 'Cânon 603', 'Solidão com Deus'],
+        corpo: `<p>O cânon 603 do Código de Direito Canônico reconhece a <strong>vida eremítica</strong> como forma de vida consagrada, mesmo fora de um instituto religioso. O eremita faz profissão das três virtudes (pobreza, castidade e obediência) nas mãos do bispo e vive em solidão estrita.</p>
+        <p>Há padres que, após anos de ministério paroquial, recebem licença para viver como eremitas — continuando a celebrar a missa, mas em retiro do mundo. É uma das vocações mais antigas e mais raras da Igreja.</p>`
+      }
+    ]
+  },
+  {
+    id: 'diacones',
+    titulo: 'Diaconado',
+    subtitulo: 'Ordem do serviço e da caridade',
+    icone: '📖',
+    cor: '#3a4a6a',
+    maxWidth: '720px',
+    cargos: [
+      {
+        nome: 'Diácono Permanente',
+        subtitulo: 'Homem casado ou celibatário ordenado diácono',
+        tags: ['Restaurado pelo Vaticano II', 'Pode Ser Casado', 'Serviço'],
+        corpo: `<p>O diaconado permanente foi restaurado pelo <strong>Concílio Vaticano II</strong> (1965) após séculos de desuso. É o único grau do sacramento da Ordem que pode ser conferido a <strong>homens casados</strong> — desde que o casamento preceda a ordenação.</p>
+        <p>O diácono permanente pode batizar, assistir casamentos, presidir funerais, pregar homilias, distribuir a Eucaristia e liderar celebrações da Palavra. Não pode presidir a Missa, ouvir confissões ou administrar a Unção dos Enfermos.</p>
+        <p>Simboliza Cristo-Servo. Usa estola transversal e dalmática. Muitos são profissionais seculares que exercem o ministério nas horas livres — médicos, professores, advogados diáconos.</p>`
+      },
+      {
+        nome: 'Diácono Transitório',
+        subtitulo: 'Seminarista em último ano antes do sacerdócio',
+        tags: ['Etapa de Ordenação', 'Celibato', 'Pré-Sacerdócio'],
+        corpo: `<p>O diaconado transitório é a etapa imediatamente anterior ao sacerdócio. O seminarista é ordenado diácono (assumindo publicamente o celibato) e geralmente serve por seis meses a um ano nessa condição antes de ser ordenado padre.</p>
+        <p>É um período de teste e crescimento — o futuro padre experimenta o ministério sacramental (celebrações da Palavra, batismos, funerais) antes de assumir plenamente o presbitério.</p>`
+      },
+      {
+        nome: 'Arquidiácono',
+        subtitulo: 'Chefe dos diáconos — cargo histórico',
+        tags: ['Medievo', 'Extinção Gradual', 'Influência Histórica'],
+        corpo: `<p>O arquidiácono era, na Igreja medieval, uma figura de enorme poder — responsável por supervisionar os diáconos de uma diocese e muitas vezes administrar territórios inteiros em nome do bispo. Em algumas épocas rivalizou em poder com os próprios bispos.</p>
+        <p>O cargo foi gradualmente extinto com o crescimento do poder episcopal e a criação dos vigários gerais. Hoje existe apenas como título honorífico em algumas igrejas anglicanas e ortodoxas.</p>`
+      }
+    ]
+  },
+  {
+    id: 'ministerios',
+    titulo: 'Ministérios Instituídos',
+    subtitulo: 'Leigos e seminaristas com serviços litúrgicos oficiais',
+    icone: '📜',
+    cor: '#4a5a3a',
+    maxWidth: '740px',
+    cargos: [
+      {
+        nome: 'Leitor (Lector)',
+        subtitulo: 'Ministro instituído da Palavra',
+        tags: ['Ministério Instituído', 'Proclamação da Palavra', 'Homens e Mulheres'],
+        corpo: `<p>O Leitor é instituído pelo bispo ou pelo superior de um instituto religioso para <strong>proclamar a Palavra de Deus</strong> nas celebrações litúrgicas. Desde 2021, o Papa Francisco abriu este ministério instituído também às mulheres.</p>
+        <p>Diferente do leitor ocasional (qualquer fiel que lê numa missa), o Leitor instituído recebe um rito especial de instituição e é reconhecido como ministro estável da Palavra. É um passo importante na formação dos seminaristas para o sacerdócio.</p>`
+      },
+      {
+        nome: 'Acólito',
+        subtitulo: 'Ministro instituído do altar',
+        tags: ['Ministério Instituído', 'Eucaristia', 'Altar'],
+        corpo: `<p>O Acólito instituído é um <strong>ministro estável do altar</strong> — ajuda o sacerdote e o diácono, distribui a Comunhão, expõe o Santíssimo para adoração e pode preparar os elementos eucarísticos. Desde 2021, também aberto às mulheres.</p>
+        <p>É diferente do "coroinha" ou ministro extraordinário da Eucaristia — o Acólito instituído recebe um rito formal e é parte da hierarquia ministerial da Igreja.</p>`
+      },
+      {
+        nome: 'Catequista Instituído',
+        subtitulo: 'Ministério criado por Francisco em 2021',
+        tags: ['Ministério Novo', 'Evangelização', 'Missão'],
+        corpo: `<p>Em 2021, o Papa Francisco criou o ministério instituído de <strong>Catequista</strong> — especialmente voltado para comunidades missionárias onde há escassez de sacerdotes. O catequista instituído não é apenas um voluntário: recebe um rito formal de instituição e assume um compromisso estável.</p>
+        <p>Pode liderar celebrações dominicais na ausência de sacerdote, presidir funerais, dirigir a catequese paroquial e ser o responsável pelo anúncio do Evangelho em comunidades isoladas.</p>`
+      }
+    ]
+  },
+  {
+    id: 'seminaristas',
+    titulo: 'Seminaristas',
+    subtitulo: 'Em formação para o sacerdócio ou diaconado',
+    icone: '🎓',
+    cor: '#5a4a2a',
+    maxWidth: '720px',
+    cargos: [
+      {
+        nome: 'Seminarista Filosófico',
+        subtitulo: 'Nos primeiros anos do Seminário Maior',
+        tags: ['Filosofia', 'Discernimento', 'Formação Humana'],
+        corpo: `<p>Os primeiros anos do <strong>Seminário Maior</strong> são dedicados à formação filosófica — lógica, metafísica, ética, filosofia da natureza, epistemologia e história da filosofia. É o período de aprofundamento intelectual e discernimento da vocação.</p>
+        <p>O seminarista ainda não recebeu nenhuma ordenação. Vive em comunidade, segue um horário rigoroso de oração, estudo e trabalho pastoral, sob orientação espiritual de um padre formador.</p>`
+      },
+      {
+        nome: 'Seminarista Teológico',
+        subtitulo: 'Nos anos de Teologia do Seminário Maior',
+        tags: ['Teologia', 'Pastoral', 'Estágio Paroquial'],
+        corpo: `<p>Após a filosofia, o seminarista passa para os anos de <strong>Teologia</strong> — dogmática, moral, litúrgica, bíblica, patrística, direito canônico, ecumenismo. É nesse período que normalmente recebe a instituição como Leitor e Acólito.</p>
+        <p>Geralmente faz estágios paroquiais nos fins de semana e férias, acompanhando padres experientes. No último ano de teologia é ordenado diácono transitório.</p>`
+      },
+      {
+        nome: 'Candidato ao Diaconado Permanente',
+        subtitulo: 'Em formação específica para o diaconado',
+        tags: ['Formação Diaconal', 'Homem Casado', 'Serviço'],
+        corpo: `<p>Os candidatos ao diaconado permanente seguem um programa de formação próprio — geralmente de 3 a 5 anos, feito em regime não residencial (continuam trabalhando e vivendo com suas famílias).</p>
+        <p>Estudam teologia, liturgia e pastoral específica do diácono. O candidato casado participa da formação junto com a esposa, cuja aceitação é condição para a ordenação.</p>`
+      }
+    ]
+  },
+  {
+    id: 'vida_consagrada',
+    titulo: 'Vida Consagrada',
+    subtitulo: 'Religiosos, monges, freiras e eremitas',
+    icone: '✨',
+    cor: '#5a3a6a',
+    maxWidth: '740px',
+    cargos: [
+      {
+        nome: 'Monge / Monja',
+        subtitulo: 'Vida contemplativa em mosteiro',
+        tags: ['Clausura', 'Liturgia das Horas', 'Ora et Labora'],
+        corpo: `<p>Monges e monjas vivem em <strong>comunidade estável e fechada</strong> (mosteiro), dedicados à oração litúrgica coletiva (o "Ofício Divino" ou "Liturgia das Horas"), ao trabalho manual e ao estudo sagrado. Fazem votos de pobreza, castidade e obediência — e, na tradição beneditina, também de <strong>estabilidade</strong> (permanência no mesmo mosteiro).</p>
+        <p>A clausura papal (a mais rigorosa) impede saídas do mosteiro e limita as visitas. Os mosteiros são autossuficientes econômica e espiritualmente — ilhas de contemplação no mundo.</p>`
+      },
+      {
+        nome: 'Freira / Irmã Religiosa',
+        subtitulo: 'Vida consagrada em instituto ativo ou contemplativo',
+        tags: ['Votos Perpétuos', 'Apostolado', 'Hábito Religioso'],
+        corpo: `<p>Diferença sutil mas importante: <strong>Freira</strong> (tecnicamente) é a religiosa de vida contemplativa com votos solenes, em clausura. <strong>Irmã</strong> é a religiosa de vida ativa (educação, saúde, missão) com votos simples.</p>
+        <p>Na linguagem popular, "freira" abrange ambas. Fazem votos de pobreza, castidade e obediência. Vivem em comunidade sob a autoridade de uma Superiora. Há dezenas de congregações femininas com espiritualidades e missões distintas.</p>`
+      },
+      {
+        nome: 'Irmão Leigo',
+        subtitulo: 'Religioso não ordenado em instituto masculino',
+        tags: ['Sem Ordenação', 'Votos', 'Apostolado'],
+        corpo: `<p>O Irmão leigo é o membro de um instituto religioso masculino que fez os votos de pobreza, castidade e obediência, mas <strong>não recebeu as ordens sacras</strong>. Não é padre nem diácono — é um consagrado que serve pelo testemunho de vida e pelo apostolado.</p>
+        <p>Em ordens como os franciscanos, dominicanos ou jesuítas, há numerosos irmãos leigos que exercem funções de ensino, saúde, administração ou serviço às missões — plenamente consagrados, mas sem o sacerdócio.</p>`
+      },
+      {
+        nome: 'Virgem Consagrada',
+        subtitulo: 'Leiga consagrada pelo bispo',
+        tags: ['Cânon 604', 'No Século', 'Votos ao Bispo'],
+        corpo: `<p>A virgem consagrada faz uma <strong>profissão pública de virgindade</strong> nas mãos do bispo diocesano, consagrando-se a Cristo. Não entra num mosteiro, não usa hábito, não vive em comunidade — permanece no mundo como leiga, em sua vida cotidiana, mas totalmente dedicada a Deus.</p>
+        <p>É uma forma de vida consagrada prevista no Código de Direito Canônico (c. 604), de origem muito antiga. A virgem consagrada é, em certo sentido, "esposa da Igreja local" — vinculada ao bispo diocesano e à sua diocese.</p>`
+      },
+      {
+        nome: 'Eremita / Anacoreta',
+        subtitulo: 'Consagrado em vida solitária',
+        tags: ['Cânon 603', 'Solidão', 'Oração Contínua'],
+        corpo: `<p>O eremita é aquele que vive a consagração fora de qualquer comunidade — em <strong>solidão radical</strong>, dedicado à oração contínua. Pode ser padre ou leigo. Faz profissão nas mãos do bispo diocesano.</p>
+        <p>É a forma mais antiga de vida consagrada na história cristã — São Paulo de Tebas e Santo Antão do Deserto são os pais desta tradição. Hoje há um pequeno número de eremitas reconhecidos canonicamente pela Igreja.</p>`
+      },
+      {
+        nome: 'Oblato / Terceiro Secular',
+        subtitulo: 'Leigo associado a uma ordem religiosa',
+        tags: ['Espiritualidade Partilhada', 'Sem Votos Plenos', 'Terceira Ordem'],
+        corpo: `<p>Os Oblatos (beneditinos), Terciários (franciscanos, dominicanos, carmelitas) ou Cooperadores (salesianos) são <strong>leigos que participam da espiritualidade de uma ordem religiosa</strong> sem fazer votos plenos nem viver em comunidade.</p>
+        <p>Fazem uma promessa de seguir a espiritualidade da ordem em sua vida cotidiana — rezando partes da Liturgia das Horas, seguindo uma regra de vida simplificada. São associados espirituais, não membros plenos do instituto.</p>`
+      }
+    ]
+  },
+  {
+    id: 'ministerios_laicais',
+    titulo: 'Ministérios e Serviços Laicais',
+    subtitulo: 'Fiéis com funções litúrgicas não instituídas',
+    icone: '🙏',
+    cor: '#3a5a4a',
+    maxWidth: '760px',
+    cargos: [
+      {
+        nome: 'Ministro Extraordinário da Eucaristia',
+        subtitulo: 'Laico autorizado a distribuir a Comunhão',
+        tags: ['Missão Extraordinária', 'Não é Ministro Ordenado', 'Necessidade Pastoral'],
+        corpo: `<p>O Ministro Extraordinário da Eucaristia (MEE) é um fiel leigo autorizado pelo bispo a distribuir a Sagrada Comunhão — em missa quando há grande número de fiéis, ou em visita a doentes e idosos impossibilitados de ir à Igreja.</p>
+        <p>É um ministério <strong>extraordinário</strong> — não substitui o sacerdote ou diácono, mas os completa quando necessário. Requer aprovação diocesana e formação específica. Não distribui a Eucaristia na sua própria casa de forma autônoma.</p>`
+      },
+      {
+        nome: 'Coroinha (Ministro do Altar)',
+        subtitulo: 'Criança ou jovem que serve à missa',
+        tags: ['Vocação', 'Formação Litúrgica', 'Tradição Milenar'],
+        corpo: `<p>O coroinha (ou "acólito não instituído") serve ao altar auxiliando o sacerdote durante a missa: carrega a cruz processional, o turíbulo (incensário), os círios, toca o sino da consagração, lava as mãos do padre, prepara as âmbulas.</p>
+        <p>É frequentemente o primeiro contato de uma criança com o serviço litúrgico — e historicamente foi o caminho de entrada para o seminário. Muitos sacerdotes, bispos e papas foram coroinhas. São João Paulo II serviu como coroinha na Polônia.</p>`
+      },
+      {
+        nome: 'Cantor / Salmista',
+        subtitulo: 'Ministro da música litúrgica',
+        tags: ['Canto Gregoriano', 'Coro Paroquial', 'Salmo Responsorial'],
+        corpo: `<p>O cantor ou salmista proclama o <strong>Salmo Responsorial</strong> entre as leituras da missa — uma função litúrgica com raízes bíblicas (os levitas cantores do Templo de Jerusalém). O coro paroquial e os cantores individuais exercem um ministério genuíno, não apenas um aformoseamento.</p>
+        <p>A <strong>Sacrosanctum Concilium</strong> (Vaticano II) e as instruções litúrgicas posteriores afirmam que a música sagrada é parte integral da liturgia — não decoração. O cantor não "anima" a missa; ele a celebra musicalmente.</p>`
+      },
+      {
+        nome: 'Leitor Ocasional',
+        subtitulo: 'Fiel que proclama as leituras na missa',
+        tags: ['Qualquer Batizado', 'Formação Recomendada', 'Palavra de Deus'],
+        corpo: `<p>Qualquer fiel batizado e preparado pode proclamar a Primeira e Segunda Leitura na missa. É diferente do Leitor Instituído — não recebe um rito formal, mas exerce uma função litúrgica real e importante.</p>
+        <p>A formação para leitores é incentivada pelas paróquias — dicção, compreensão do texto, postura, preparação espiritual. Proclamar a Palavra de Deus é um serviço à assembleia que requer seriedade e preparo.</p>`
+      },
+      {
+        nome: 'Recepcionista / Acolhedor',
+        subtitulo: 'Ministério de hospitalidade na porta da Igreja',
+        tags: ['Primeira Impressão', 'Hospitalidade', 'Comunidade'],
+        corpo: `<p>O ministério de hospitalidade — receber os fiéis na entrada da Igreja, distribuir folhetos, orientar visitantes, acolher recém-chegados — é um ministério laical de enorme importância pastoral frequentemente subestimado.</p>
+        <p>Em muitas comunidades é o primeiro contato de alguém com a Igreja. Um acolhedor bem formado pode fazer a diferença entre alguém que volta ou nunca mais aparece.</p>`
+      }
+    ]
+  },
+  {
+    id: 'leigos',
+    titulo: 'Fiéis Leigos',
+    subtitulo: 'A base e o coração da Igreja no mundo',
+    icone: '✟',
+    cor: '#2a4a5a',
+    maxWidth: '780px',
+    cargos: [
+      {
+        nome: 'Fiel Batizado',
+        subtitulo: 'Todo membro da Igreja pelo Batismo',
+        tags: ['Sacerdócio Comum', 'Tria Munera', 'Dignidade Batismal'],
+        corpo: `<p>O Batismo não é a "porta de entrada" para o que realmente importa — ele é, em si mesmo, uma ordenação. O batizado participa do <strong>sacerdócio comum dos fiéis</strong> (diferente do sacerdócio ministerial dos padres), profetiza pela fé que professa, e governa servindo ao mundo.</p>
+        <p>O Concílio Vaticano II reafirmou: o leigo não é um "padre frustrado" nem um cristão de segunda categoria. Sua vocação específica é <strong>santificar o mundo de dentro</strong> — família, trabalho, política, cultura, ciência.</p>`
+      },
+      {
+        nome: 'Pai e Mãe de Família',
+        subtitulo: '"Igreja doméstica" — a primeira escola da fé',
+        tags: ['Igreja Doméstica', 'Matrimônio Sacramento', 'Educação da Fé'],
+        corpo: `<p>A família é chamada pelo Vaticano II de <strong>"Igreja doméstica"</strong> (<em>ecclesia domestica</em>). O lar cristão é o primeiro lugar onde a fé é transmitida, vivida e testemunhada. Os pais são os primeiros catequistas dos filhos.</p>
+        <p>O sacramento do Matrimônio confere a cada cônjuge a missão de ser sinal do amor de Cristo pela Igreja. A santificação mútua dos esposos e a educação cristã dos filhos são uma vocação específica, não inferior à do padre ou do religioso — é outra forma de resposta ao chamado de Deus.</p>`
+      },
+      {
+        nome: 'Membro de Movimento Laical',
+        subtitulo: 'Leigo associado a um movimento eclesial',
+        tags: ['Opus Dei', 'Comunhão e Libertação', 'Focolare', 'Renovação Carismática'],
+        corpo: `<p>Movimentos e novas comunidades eclesiais são fenômenos do século XX que renovaram a vida dos leigos na Igreja. Opus Dei, Comunhão e Libertação, Focolare, Neocatecumenato, Renovação Carismática, Schönstatt, Legião de Maria, entre dezenas de outros.</p>
+        <p>Cada movimento tem uma espiritualidade própria, um carisma específico e uma missão no mundo. Alguns formam comunidades de vida; outros são simplesmente associações de fiéis. O Papa Francisco tem insistido na necessidade de <strong>sinodalidade</strong> entre todos eles e com as paróquias.</p>`
+      },
+      {
+        nome: 'Catequista Voluntário',
+        subtitulo: 'Leigo que transmite a fé às novas gerações',
+        tags: ['Iniciação Cristã', 'Voluntariado', 'Testemunho'],
+        corpo: `<p>O catequista voluntário é um dos pilares invisíveis da Igreja — o leigo que doa tempo, energia e fé para ensinar crianças, jovens e adultos. A catequese não é apenas instrução religiosa; é <strong>mistagogia</strong> — introdução ao mistério de Deus.</p>
+        <p>A Diretório para a Catequese (2020) afirma que o catequista é antes de tudo uma <strong>testemunha</strong> — sua vida deve ser coerente com o que ensina. Nenhum manual substitui o testemunho pessoal.</p>`
+      },
+      {
+        nome: 'Jovem em Discernimento',
+        subtitulo: 'Fiel buscando sua vocação específica',
+        tags: ['Vocação', 'Discernimento', 'Espírito Santo'],
+        corpo: `<p>O discernimento vocacional é um processo — não um momento. Todo jovem cristão é chamado a perguntar: <strong>Para quê Deus me criou? Qual é a minha resposta pessoal ao Evangelho?</strong></p>
+        <p>Sacerdócio, vida religiosa, matrimônio, vida consagrada no século — todas são vocações igualmente dignas, cada uma com sua beleza e exigência. A Igreja oferece grupos de jovens, retiros, acompanhamento espiritual e comunidades para apoiar esse processo.</p>`
+      }
+    ]
+  }
+];
+
+/* ══════════════════════════════════════════
+   RENDER
+══════════════════════════════════════════ */
+const piramide = document.getElementById('piramide');
+const legenda  = document.getElementById('legenda');
+
+// Cores para legenda
+const coresLegenda = [
+  { cor: '#8b1a1a', label: 'Papado' },
+  { cor: '#7a1f1f', label: 'Episcopado Supremo' },
+  { cor: '#6b3a2a', label: 'Episcopado' },
+  { cor: '#4a5a3a', label: 'Presbiterado' },
+  { cor: '#3a4a6a', label: 'Diaconado' },
+  { cor: '#5a4a2a', label: 'Seminaristas' },
+  { cor: '#5a3a6a', label: 'Vida Consagrada' },
+  { cor: '#3a5a4a', label: 'Ministérios Laicais' },
+  { cor: '#2a4a5a', label: 'Fiéis Leigos' },
+];
+
+hierarquia.forEach((nivel, ni) => {
+  const div = document.createElement('div');
+  div.className = 'nivel';
+
+  const bloco = document.createElement('div');
+  bloco.className = 'nivel-bloco';
+  bloco.style.cssText = `--nivel-max: ${nivel.maxWidth}; --nivel-cor: ${nivel.cor};`;
+  bloco.id = `nivel-${nivel.id}`;
+
+  bloco.innerHTML = `
+    <div class="nivel-head" onclick="toggleNivel('${nivel.id}')">
+      <div class="nivel-icone">${nivel.icone}</div>
+      <div class="nivel-titulo">
+        <h3>${nivel.titulo}</h3>
+        <div class="nivel-subtitulo">${nivel.subtitulo}</div>
+      </div>
+      <span class="nivel-seta">▾</span>
+    </div>
+    <div class="nivel-conteudo" id="conteudo-${nivel.id}">
+      <div class="nivel-inner">
+        <div class="subnivel-grid" id="grid-${nivel.id}">
+          ${nivel.cargos.map((cargo, ci) => `
+            <div class="subnivel-card" id="card-${nivel.id}-${ci}"
+                 onclick="abrirCargo('${nivel.id}', ${ci})">
+              <div class="sc-nome">${cargo.nome}</div>
+              <div class="sc-desc">${cargo.subtitulo}</div>
+            </div>
+          `).join('')}
+        </div>
+        <div class="detalhe-painel" id="detalhe-${nivel.id}"></div>
+      </div>
+    </div>
+  `;
+
+  div.appendChild(bloco);
+  piramide.appendChild(div);
+});
+
+// Legenda
+coresLegenda.forEach(item => {
+  const el = document.createElement('div');
+  el.className = 'legenda-item';
+  el.innerHTML = `<div class="legenda-dot" style="background:${item.cor}"></div>${item.label}`;
+  legenda.appendChild(el);
+});
+
+/* ══════════════════════════════════════════
+   INTERATIVIDADE
+══════════════════════════════════════════ */
+let abertos = {};
+let cargoAtivo = {};
+
+function toggleNivel(id) {
+  const bloco    = document.getElementById(`nivel-${id}`);
+  const conteudo = document.getElementById(`conteudo-${id}`);
+  const jaAberto = abertos[id];
+
+  // Fecha todos
+  Object.keys(abertos).forEach(k => {
+    if (abertos[k]) {
+      document.getElementById(`nivel-${k}`).classList.remove('aberto');
+      document.getElementById(`conteudo-${k}`).classList.remove('visivel');
+      abertos[k] = false;
+    }
+  });
+
+  if (!jaAberto) {
+    bloco.classList.add('aberto');
+    conteudo.classList.add('visivel');
+    abertos[id] = true;
+    // Scroll suave até o bloco
+    setTimeout(() => {
+      bloco.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 80);
+  }
+}
+
+function abrirCargo(nivelId, cargoIdx) {
+  const nivel   = hierarquia.find(n => n.id === nivelId);
+  const cargo   = nivel.cargos[cargoIdx];
+  const painel  = document.getElementById(`detalhe-${nivelId}`);
+
+  // Toggle: fecha se já está ativo
+  if (cargoAtivo[nivelId] === cargoIdx) {
+    painel.classList.remove('visivel');
+    document.getElementById(`card-${nivelId}-${cargoIdx}`).classList.remove('ativo');
+    cargoAtivo[nivelId] = null;
+    return;
+  }
+
+  // Remove ativo anterior
+  if (cargoAtivo[nivelId] !== null && cargoAtivo[nivelId] !== undefined) {
+    document.getElementById(`card-${nivelId}-${cargoAtivo[nivelId]}`)?.classList.remove('ativo');
+  }
+
+  cargoAtivo[nivelId] = cargoIdx;
+  document.getElementById(`card-${nivelId}-${cargoIdx}`).classList.add('ativo');
+
+  const tagsHTML = cargo.tags.map(t => `<span class="dp-tag">${t}</span>`).join('');
+
+  painel.innerHTML = `
+    <div class="dp-titulo">${cargo.nome}</div>
+    <div class="dp-subtitulo">${cargo.subtitulo}</div>
+    <div class="dp-corpo">${cargo.corpo}</div>
+    <div class="dp-tags">${tagsHTML}</div>
+  `;
+
+  painel.classList.remove('visivel');
+  // Força reflow para animação
+  void painel.offsetWidth;
+  painel.classList.add('visivel');
+
+  setTimeout(() => {
+    painel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }, 60);
+}
+
+/* ══════════════════════════════════════════
+   MENU / ANIMAÇÃO DO NAV
+══════════════════════════════════════════ */
+function abrirMenu() { document.getElementById("sidebar").style.left = "0"; }
+function fecharMenu() { document.getElementById("sidebar").style.left = "-260px"; }
+
+const indicator = document.querySelector(".menu-indicator");
+const items = document.querySelectorAll(".menu-item");
+function updateIndicator(el) {
+  if (!el || !indicator) return;
+  indicator.style.width = el.offsetWidth + "px";
+  indicator.style.left  = el.offsetLeft + "px";
+}
+items.forEach(item => {
+  item.addEventListener("click", function () {
+    items.forEach(i => i.classList.remove("active"));
+    this.classList.add("active");
+    updateIndicator(this);
+  });
+});
+window.addEventListener('load', () => {
+  const active = document.querySelector(".menu-item.active");
+  if (active) updateIndicator(active);
+});
+</script>
+</body>
+</html>
