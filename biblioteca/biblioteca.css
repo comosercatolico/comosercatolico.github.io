@@ -1,283 +1,610 @@
-/* =============================
-   BIBLIOTECA - ESTILOS ATUALIZADOS
-============================= */
+/* ================================================
+   BIBLIOTECA.CSS — Lux Fidei
+   Estilo solene, clássico e elegante
+================================================ */
 
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&display=swap');
+
+/* ── VARIÁVEIS ── */
+:root {
+  --ouro:        #c9a84c;
+  --ouro-claro:  #e8c96d;
+  --ouro-escuro: #8b6914;
+  --roxo:        #5b2c83;
+  --roxo-claro:  #7a3eb5;
+  --rosa-mistico:#7a3468;
+  --creme:       #faf7f2;
+  --creme-medio: #f0e9d8;
+  --marrom:      #2c1f17;
+  --texto:       #3a2e26;
+  --texto-leve:  #6b5e52;
+  --borda:       #e0d4bc;
+}
+
+/* ── PÁGINA PRINCIPAL ── */
 #inicio {
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: 30px 20px;
+  max-width: 1020px;
+  margin: 0 auto;
+  padding: 40px 24px 60px;
 }
 
-#inicio > h2 {
-    font-family: 'Libre Baskerville', serif;
-    color: #2c1f17;
-    margin-bottom: 10px;
+/* ── CABEÇALHO DA PÁGINA ── */
+.pagina-cabecalho {
+  text-align: center;
+  margin-bottom: 55px;
+  padding: 10px 0 30px;
 }
 
-#inicio > p {
-    color: #666;
-    margin-bottom: 40px;
+.ornamento-topo {
+  color: var(--ouro);
+  font-size: 0.95rem;
+  letter-spacing: 0.15em;
+  opacity: 0.7;
+  margin: 14px 0;
+  display: block;
 }
 
-/* DESTAQUE PRINCIPAL - SUMA TEOLÓGICA */
+.pagina-cabecalho h2 {
+  font-family: 'Cormorant Garamond', 'Libre Baskerville', serif;
+  font-size: 3rem;
+  font-weight: 600;
+  color: var(--marrom);
+  margin: 0 0 14px;
+  letter-spacing: 0.04em;
+}
+
+.subtitulo-pagina {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.05rem;
+  color: var(--texto-leve);
+  max-width: 560px;
+  margin: 0 auto 14px;
+  line-height: 1.8;
+  font-style: italic;
+}
+
+/* ── DESTAQUE PRINCIPAL ── */
 .destaque-principal {
-    background: linear-gradient(135deg, #fff 0%, #f9f5eb 100%);
-    border: 2px solid #d4af37;
-    border-radius: 20px;
-    padding: 30px;
-    margin-bottom: 50px;
-    position: relative;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+  background: linear-gradient(150deg, #ffffff 0%, #faf6ee 60%, #f5edd8 100%);
+  border: 1px solid var(--borda);
+  border-top: 3px solid var(--ouro);
+  border-radius: 16px;
+  padding: 40px 36px;
+  margin-bottom: 50px;
+  position: relative;
+  box-shadow:
+    0 4px 6px rgba(0,0,0,0.04),
+    0 12px 40px rgba(0,0,0,0.07);
+  transition: box-shadow 0.4s ease;
 }
 
+.destaque-principal:hover {
+  box-shadow:
+    0 8px 16px rgba(0,0,0,0.07),
+    0 20px 50px rgba(0,0,0,0.10);
+}
+
+/* Variante rosa — Teresa */
+.destaque-rosa {
+  background: linear-gradient(150deg, #ffffff 0%, #fdf6fb 60%, #f7eef5 100%);
+  border-top-color: var(--rosa-mistico);
+}
+
+/* ── BADGE ── */
 .destaque-badge {
-    position: absolute;
-    top: -12px;
-    right: 25px;
-    background: #d4af37;
-    color: white;
-    padding: 5px 20px;
-    border-radius: 20px;
-    font-size: 0.85rem;
-    font-weight: 600;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+  position: absolute;
+  top: -14px;
+  right: 30px;
+  background: linear-gradient(135deg, var(--ouro-escuro), var(--ouro));
+  color: #fff;
+  padding: 5px 22px;
+  border-radius: 20px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  box-shadow: 0 4px 12px rgba(139,105,20,0.35);
+  font-family: 'Inter', sans-serif;
 }
 
+.badge-disponivel {
+  background: linear-gradient(135deg, var(--rosa-mistico), #a05090);
+}
+
+/* ── CONTEÚDO INTERNO ── */
 .destaque-conteudo {
-    display: flex;
-    gap: 30px;
-    align-items: flex-start;
-    flex-wrap: wrap;
+  display: flex;
+  gap: 36px;
+  align-items: flex-start;
+  flex-wrap: wrap;
 }
 
+/* ── CAPA ── */
 .destaque-capas {
-    flex: 0 0 200px;
+  flex: 0 0 190px;
+  position: relative;
 }
 
 .capa-livro {
-    background: linear-gradient(135deg, #e8dfd0, #d4c4b0);
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-    aspect-ratio: 2/3;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  border-radius: 8px 12px 12px 8px;
+  overflow: hidden;
+  box-shadow:
+    -4px 0 0 #c8b89a,
+    0 10px 30px rgba(0,0,0,0.22),
+    4px 4px 12px rgba(0,0,0,0.12);
+  aspect-ratio: 2/3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #e8dfd0, #d4c4b0);
+  position: relative;
+  z-index: 1;
 }
 
 .capa-livro img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
+.capa-reflexo {
+  position: absolute;
+  bottom: -18px;
+  left: 10%;
+  width: 80%;
+  height: 18px;
+  background: radial-gradient(ellipse at center, rgba(0,0,0,0.18) 0%, transparent 70%);
+  border-radius: 50%;
+  filter: blur(4px);
+  z-index: 0;
+}
+
+/* ── INFO ── */
 .destaque-info {
-    flex: 1;
-    min-width: 250px;
+  flex: 1;
+  min-width: 260px;
+}
+
+.etiqueta-categoria {
+  display: inline-block;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ouro-escuro);
+  background: #f5ead0;
+  border: 1px solid #e2cc90;
+  padding: 3px 14px;
+  border-radius: 20px;
+  margin-bottom: 14px;
+}
+
+.etiqueta-mistica {
+  color: var(--rosa-mistico);
+  background: #f8eef6;
+  border-color: #d9a8cc;
 }
 
 .destaque-info h3 {
-    font-family: 'Libre Baskerville', serif;
-    font-size: 1.8rem;
-    color: #2c1f17;
-    margin: 0 0 8px 0;
+  font-family: 'Cormorant Garamond', 'Libre Baskerville', serif;
+  font-size: 2.1rem;
+  font-weight: 600;
+  color: var(--marrom);
+  margin: 0 0 10px;
+  letter-spacing: 0.02em;
+  line-height: 1.2;
 }
 
-.destaque-info .autor {
-    color: #5b2c83;
-    font-weight: 600;
-    margin-bottom: 15px;
-    font-style: italic;
+.autor {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 1.05rem;
+  color: var(--roxo);
+  margin-bottom: 18px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
-.destaque-info .descricao {
-    color: #555;
-    line-height: 1.7;
-    margin-bottom: 20px;
+.destaque-rosa .autor {
+  color: var(--rosa-mistico);
 }
 
+.ornamento-autor {
+  font-size: 0.6rem;
+  color: var(--ouro);
+  opacity: 0.8;
+}
+
+/* ── DIVISOR ── */
+.divisor-elegante {
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--ouro), transparent);
+  margin: 18px 0;
+  opacity: 0.5;
+}
+
+.divisor-rosa {
+  background: linear-gradient(to right, transparent, var(--rosa-mistico), transparent);
+}
+
+/* ── DESCRIÇÃO ── */
+.descricao {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.97rem;
+  color: var(--texto-leve);
+  line-height: 1.8;
+  margin-bottom: 22px;
+}
+
+/* ── META INFO ── */
 .meta-info {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
-    margin-bottom: 25px;
-    font-size: 0.9rem;
-    color: #666;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 24px;
 }
 
 .meta-info span {
-    background: #f0e6d2;
-    padding: 5px 12px;
-    border-radius: 15px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.83rem;
+  background: var(--creme-medio);
+  border: 1px solid var(--borda);
+  color: var(--texto);
+  padding: 5px 14px;
+  border-radius: 20px;
+  letter-spacing: 0.02em;
 }
 
+/* ── PROGRESSO ── */
 .progresso-traducao {
-    margin-bottom: 25px;
+  margin-bottom: 28px;
 }
 
-.progresso-traducao span {
-    display: block;
-    font-weight: 600;
-    color: #2c1f17;
-    margin-bottom: 8px;
+.progresso-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.progresso-header span {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--marrom);
+  letter-spacing: 0.03em;
+}
+
+.progresso-pct {
+  font-size: 0.8rem !important;
+  color: var(--ouro-escuro) !important;
+  background: #f5ead0;
+  padding: 2px 8px;
+  border-radius: 10px;
+  border: 1px solid #e2cc90;
 }
 
 .progress-bar {
-    height: 10px;
-    background: #e0e0e0;
-    border-radius: 5px;
-    overflow: hidden;
-    margin-bottom: 5px;
+  height: 8px;
+  background: #e8e0d0;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 6px;
 }
 
 .progress-fill {
-    height: 100%;
-    background: linear-gradient(90deg, #5b2c83, #d4af37);
-    border-radius: 5px;
-    transition: width 0.5s ease;
+  height: 100%;
+  background: linear-gradient(90deg, var(--roxo), var(--ouro));
+  border-radius: 10px;
+  transition: width 0.8s ease;
 }
 
 .progresso-traducao small {
-    color: #888;
-    font-size: 0.85rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.8rem;
+  color: #999;
 }
 
+/* ══════════════════════════════════════
+   BOTÃO DESTAQUE — SOLENE E ELEGANTE
+══════════════════════════════════════ */
 .btn-destaque {
-    display: inline-block;
-    background: linear-gradient(135deg, #5b2c83, #7a3eb5);
-    color: white;
-    padding: 14px 30px;
-    border-radius: 10px;
-    text-decoration: none;
-    font-weight: 600;
-    transition: all 0.3s;
-    box-shadow: 0 4px 15px rgba(91, 44, 131, 0.3);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 6px;
+  padding: 13px 28px;
+
+  /* Gradiente dourado */
+  background: linear-gradient(
+    135deg,
+    #8b6914 0%,
+    #c9a84c 35%,
+    #e8c96d 55%,
+    #c9a84c 75%,
+    #8b6914 100%
+  );
+  background-size: 200% auto;
+
+  color: #1a0e00;
+  font-family: 'Cormorant Garamond', 'Libre Baskerville', serif;
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+
+  border: none;
+  border-radius: 3px;
+  outline: 2px solid rgba(139,105,20,0.4);
+  outline-offset: 3px;
+
+  box-shadow:
+    0 2px 0 #6b5010,
+    0 4px 14px rgba(139,105,20,0.35),
+    inset 0 1px 0 rgba(255,255,255,0.3);
+
+  position: relative;
+  transition:
+    background-position 0.5s ease,
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    letter-spacing 0.3s ease;
+}
+
+.btn-destaque::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 3px;
+  background: linear-gradient(
+    to bottom,
+    rgba(255,255,255,0.18) 0%,
+    transparent 50%,
+    rgba(0,0,0,0.08) 100%
+  );
+  pointer-events: none;
+}
+
+.btn-ornamento {
+  font-size: 0.6rem;
+  opacity: 0.7;
+  transition: opacity 0.3s, transform 0.3s;
 }
 
 .btn-destaque:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 20px rgba(91, 44, 131, 0.4);
+  background-position: right center;
+  transform: translateY(-3px);
+  letter-spacing: 0.13em;
+  box-shadow:
+    0 2px 0 #6b5010,
+    0 8px 24px rgba(139,105,20,0.45),
+    inset 0 1px 0 rgba(255,255,255,0.35);
+  outline-color: rgba(201,168,76,0.7);
 }
 
-/* SEÇÃO EM BREVE */
+.btn-destaque:hover .btn-ornamento {
+  opacity: 1;
+  transform: scale(1.3);
+}
+
+.btn-destaque:active {
+  transform: translateY(0);
+  box-shadow:
+    0 1px 0 #6b5010,
+    0 2px 6px rgba(0,0,0,0.2),
+    inset 0 2px 4px rgba(0,0,0,0.15);
+}
+
+/* Botão variante — rosa/místico */
+.btn-rosa {
+  background: linear-gradient(
+    135deg,
+    #5a2050 0%,
+    #8b3d7a 35%,
+    #b05898 55%,
+    #8b3d7a 75%,
+    #5a2050 100%
+  );
+  background-size: 200% auto;
+  color: #fff;
+  box-shadow:
+    0 2px 0 #3d1438,
+    0 4px 14px rgba(90,32,80,0.35),
+    inset 0 1px 0 rgba(255,255,255,0.2);
+  outline-color: rgba(139,61,122,0.4);
+}
+
+.btn-rosa:hover {
+  box-shadow:
+    0 2px 0 #3d1438,
+    0 8px 24px rgba(90,32,80,0.45),
+    inset 0 1px 0 rgba(255,255,255,0.25);
+  outline-color: rgba(176,88,152,0.6);
+}
+
+.btn-rosa:active {
+  box-shadow:
+    0 1px 0 #3d1438,
+    0 2px 6px rgba(0,0,0,0.2),
+    inset 0 2px 4px rgba(0,0,0,0.2);
+}
+
+/* ── EM BREVE ── */
 .em-breve {
-    margin: 50px 0;
+  margin: 60px 0 40px;
 }
 
-.em-breve h3 {
-    font-family: 'Libre Baskerville', serif;
-    color: #2c1f17;
-    margin-bottom: 25px;
-    padding-bottom: 10px;
-    border-bottom: 2px solid #e8dfd0;
+.em-breve-cabecalho {
+  text-align: center;
+  margin-bottom: 35px;
+}
+
+.em-breve-cabecalho h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--marrom);
+  margin-bottom: 6px;
+}
+
+.em-breve-cabecalho p {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.92rem;
+  color: var(--texto-leve);
+  font-style: italic;
 }
 
 .grid-em-breve {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 22px;
 }
 
 .card-em-breve {
-    background: white;
-    padding: 20px;
-    border-radius: 12px;
-    text-align: center;
-    border: 1px solid #eee;
-    transition: transform 0.3s, box-shadow 0.3s;
+  background: #fff;
+  padding: 22px 18px;
+  border-radius: 12px;
+  text-align: center;
+  border: 1px solid var(--borda);
+  transition: transform 0.3s, box-shadow 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+
+.card-em-breve::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--ouro-escuro), var(--ouro-claro));
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.card-em-breve:hover::before {
+  opacity: 1;
 }
 
 .card-em-breve:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  transform: translateY(-6px);
+  box-shadow: 0 14px 35px rgba(0,0,0,0.10);
 }
 
 .placeholder-capas {
-    width: 100%;
-    aspect-ratio: 2/3;
-    background: linear-gradient(135deg, #f5f0e8, #e8dfd0);
-    border-radius: 8px;
-    margin-bottom: 15px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #888;
-    font-size: 0.8rem;
+  width: 100%;
+  aspect-ratio: 2/3;
+  background: linear-gradient(150deg, #f5f0e8, #e8dfd0);
+  border-radius: 6px 10px 10px 6px;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: -3px 0 0 #d4c8b0, 0 4px 12px rgba(0,0,0,0.10);
+}
+
+.placeholder-icone {
+  font-size: 1.8rem;
+  color: var(--ouro);
+  opacity: 0.5;
 }
 
 .card-em-breve h4 {
-    font-size: 1rem;
-    color: #2c1f17;
-    margin: 0 0 8px 0;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--marrom);
+  margin: 0 0 6px;
 }
 
 .card-em-breve p {
-    font-size: 0.85rem;
-    color: #666;
-    margin: 0;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.82rem;
+  color: var(--texto-leve);
+  margin: 0 0 12px;
+  font-style: italic;
 }
 
-/* SEÇÃO CONTRIBUIR */
-.contribuir-info {
-    background: linear-gradient(135deg, #fff9f0, #fff5e6);
-    border-left: 4px solid #d4af37;
-    padding: 25px;
-    border-radius: 0 12px 12px 0;
-    margin: 50px 0;
+.tag-breve {
+  display: inline-block;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ouro-escuro);
+  background: #f5ead0;
+  border: 1px solid #e2cc90;
+  padding: 3px 12px;
+  border-radius: 10px;
 }
 
-.contribuir-info h3 {
-    color: #8b6914;
-    margin-bottom: 12px;
+/* ── CITAÇÃO FINAL ── */
+.citacao-final {
+  text-align: center;
+  margin: 60px auto 20px;
+  max-width: 480px;
+  padding: 30px;
+  border-top: 1px solid var(--borda);
+  border-bottom: 1px solid var(--borda);
 }
 
-.contribuir-info p {
-    color: #555;
-    line-height: 1.6;
-    margin-bottom: 20px;
+.citacao-final blockquote {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.5rem;
+  font-style: italic;
+  font-weight: 400;
+  color: var(--marrom);
+  margin: 0 0 10px;
+  line-height: 1.5;
 }
 
-.btn-secundario {
-    display: inline-block;
-    color: #5b2c83;
-    text-decoration: none;
-    font-weight: 600;
-    padding: 10px 20px;
-    border: 2px solid #5b2c83;
-    border-radius: 8px;
-    transition: all 0.3s;
+.citacao-final cite {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.85rem;
+  color: var(--texto-leve);
+  letter-spacing: 0.05em;
 }
 
-.btn-secundario:hover {
-    background: #5b2c83;
-    color: white;
-}
-
-/* RESPONSIVIDADE */
+/* ── RESPONSIVO ── */
 @media (max-width: 768px) {
-    .destaque-conteudo {
-        flex-direction: column;
-        text-align: center;
-    }
-    
-    .destaque-capas {
-        flex: none;
-        width: 100%;
-        max-width: 200px;
-        margin: 0 auto 25px;
-    }
-    
-    .meta-info {
-        justify-content: center;
-    }
-    
-    .grid-em-breve {
-        grid-template-columns: repeat(2, 1fr);
-    }
+  .pagina-cabecalho h2 { font-size: 2.2rem; }
+
+  .destaque-principal { padding: 28px 20px; }
+
+  .destaque-conteudo {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .destaque-capas {
+    flex: none;
+    width: 150px;
+    margin-bottom: 10px;
+  }
+
+  .autor {
+    justify-content: center;
+  }
+
+  .meta-info { justify-content: center; }
+
+  .btn-destaque { width: 100%; justify-content: center; }
+
+  .grid-em-breve {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 @media (max-width: 480px) {
-    .grid-em-breve {
-        grid-template-columns: 1fr;
-    }
+  .pagina-cabecalho h2 { font-size: 1.8rem; }
+
+  .destaque-principal { padding: 24px 16px; }
+
+  .grid-em-breve {
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
 }
