@@ -5,7 +5,7 @@ export const listaSantos = [
   { nome: "São João Evangelista", categorias: ["Apóstolo", "Evangelista"] },
   { nome: "São Mateus", categorias: ["Apóstolo", "Evangelista", "Mártir"] },
   { nome: "São Marcos", categorias: ["Evangelista", "Mártir"] },
-  { nome: "São Lucas", categorias: ["Evangelista", "Mártir"], pasta: "apostolos/sao-lucas" },
+  { nome: "São Lucas", categorias: ["Evangelista", "Mártir"], pasta: "apostolos" },
   { nome: "São Tiago Maior", categorias: ["Apóstolo", "Mártir"] },
   { nome: "São Tiago Menor", categorias: ["Apóstolo", "Mártir"] },
   { nome: "São Judas Tadeu", categorias: ["Apóstolo", "Mártir"] },
@@ -18,7 +18,7 @@ export const listaSantos = [
   { nome: "São Barnabé", categorias: ["Apóstolo", "Mártir"] },
 
   // --- DOUTORES DA IGREJA ---
-  { nome: "São Tomás de Aquino", categorias: ["Doutor da Igreja", "Presbítero"], pasta: "doutores/sao-tomas-de-aquino" },
+  { nome: "São Tomás de Aquino", categorias: ["Doutor da Igreja", "Presbítero"], pasta: "doutores" },
   { nome: "São Agostinho de Hipona", categorias: ["Doutor da Igreja", "Bispo"], pasta: "doutores" },
   { nome: "São Jerônimo", categorias: ["Doutor da Igreja", "Presbítero"], pasta: "doutores/sao-jeronimo" },
   { nome: "São Gregório Magno", categorias: ["Doutor da Igreja", "Papa"], pasta: "doutores" },
@@ -261,7 +261,7 @@ export const listaSantos = [
   { nome: "São Genádio", categorias: ["Bispo"] },
   { nome: "São Romualdo", categorias: ["Abade"] },
   { nome: "São Columbano", categorias: ["Abade"] },
-  { nome: "São João Maria Vianney", categorias: ["Presbítero", "Pastor"], pasta: "presbiteros/sao-joao-maria-vianney" },
+  { nome: "São João Maria Vianney", categorias: ["Presbítero", "Pastor"], pasta: "presbiteros" },
   { nome: "São Lucas da Crimeia", categorias: ["Bispo"] },
   { nome: "São João de Kronstadt", categorias: ["Presbítero"], pasta: "presbiteros/sao-joao-de-kronstadt" },
   { nome: "São Serafim de Sarov", categorias: ["Monge"] },
