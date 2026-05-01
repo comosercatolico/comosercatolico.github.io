@@ -16,18 +16,18 @@ function initParticles() {
     const p = document.createElement('div');
     p.className = 'particle';
 
-    const size   = Math.random() * 3 + 1;
-    const x      = Math.random() * 100;
-    const y      = Math.random() * 100;
-    const dur    = Math.random() * 10 + 6;
-    const delay  = Math.random() * 10;
-    const op     = (Math.random() * 0.05 + 0.02).toFixed(3);
+    const size  = Math.random() * 3 + 1;
+    const x     = Math.random() * 100;
+    const y     = Math.random() * 100;
+    const dur   = Math.random() * 10 + 6;
+    const delay = Math.random() * 10;
+    const op    = (Math.random() * 0.05 + 0.02).toFixed(3);
 
     p.style.cssText = `
-      width:  ${size}px;
-      height: ${size}px;
-      left:   ${x}%;
-      top:    ${y}%;
+      width:   ${size}px;
+      height:  ${size}px;
+      left:    ${x}%;
+      top:     ${y}%;
       --dur:   ${dur}s;
       --delay: ${delay}s;
       --op:    ${op};
@@ -41,7 +41,6 @@ function initParticles() {
    2. FADE-IN AO SCROLL (Intersection Observer)
    ───────────────────────────────────────── */
 function initFadeIn() {
-  /* Adiciona a classe fade-in nos elementos que devem animar */
   const targets = [
     '.frase-central-inner',
     '.sobre-texto',
@@ -55,13 +54,10 @@ function initFadeIn() {
     '.cta-inner',
   ];
 
-  targets.forEach((sel, si) => {
+  targets.forEach((sel) => {
     document.querySelectorAll(sel).forEach((el, i) => {
       el.classList.add('fade-in');
-
-      /* delay escalonado por grupo */
-      const delayClass = `fade-in-delay-${(i % 6) + 1}`;
-      el.classList.add(delayClass);
+      el.classList.add(`fade-in-delay-${(i % 6) + 1}`);
     });
   });
 
@@ -106,20 +102,20 @@ function initCardParallax() {
 
   cards.forEach((card) => {
     card.addEventListener('mousemove', (e) => {
-      const rect   = card.getBoundingClientRect();
-      const cx     = rect.left + rect.width  / 2;
-      const cy     = rect.top  + rect.height / 2;
-      const dx     = (e.clientX - cx) / (rect.width  / 2);
-      const dy     = (e.clientY - cy) / (rect.height / 2);
-      const rotX   = (-dy * 4).toFixed(2);
-      const rotY   = ( dx * 4).toFixed(2);
+      const rect = card.getBoundingClientRect();
+      const cx   = rect.left + rect.width  / 2;
+      const cy   = rect.top  + rect.height / 2;
+      const dx   = (e.clientX - cx) / (rect.width  / 2);
+      const dy   = (e.clientY - cy) / (rect.height / 2);
+      const rotX = (-dy * 4).toFixed(2);
+      const rotY = ( dx * 4).toFixed(2);
 
       card.style.transform =
         `translateY(-4px) rotateX(${rotX}deg) rotateY(${rotY}deg)`;
     });
 
     card.addEventListener('mouseleave', () => {
-      card.style.transform = '';
+      card.style.transform  = '';
       card.style.transition = 'transform 0.5s ease';
       setTimeout(() => { card.style.transition = ''; }, 500);
     });
@@ -137,7 +133,7 @@ function initTimeline() {
     (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          entry.target.style.opacity = '1';
+          entry.target.style.opacity   = '1';
           entry.target.style.transform = 'translateX(0)';
         }
       });
@@ -146,7 +142,7 @@ function initTimeline() {
   );
 
   items.forEach((item, i) => {
-    item.style.opacity = '0';
+    item.style.opacity   = '0';
     item.style.transform = 'translateX(-16px)';
     item.style.transition = `opacity 0.5s ease ${i * 0.06}s,
                              transform 0.5s ease ${i * 0.06}s`;
@@ -216,7 +212,6 @@ function initCursor() {
     visible = false;
   });
 
-  /* suavização do anel */
   function animateCursor() {
     cx += (mx - cx) * 0.12;
     cy += (my - cy) * 0.12;
@@ -226,7 +221,6 @@ function initCursor() {
   }
   animateCursor();
 
-  /* expansão nos links e cards */
   const hoverable = document.querySelectorAll(
     'a, button, .parte-card, .frase-item, .tag-info'
   );
@@ -252,10 +246,9 @@ function initCounters() {
   const vitals = document.querySelectorAll('.vital-num');
   if (!vitals.length) return;
 
-  /* mapeia o texto original para valor numérico + sufixo */
   const parse = (raw) => {
     raw = raw.trim();
-    const suffix = raw.replace(/[\d.]/g, '');   /* "+1M", "~6h", "k" etc. */
+    const suffix = raw.replace(/[\d.]/g, '');
     const num    = parseFloat(raw.replace(/[^0-9.]/g, ''));
     return { num, suffix, raw };
   };
@@ -267,30 +260,25 @@ function initCounters() {
         observer.unobserve(entry.target);
 
         const el = entry.target;
-        const { num, suffix, raw } = parse(el.textContent);
+        const { num, raw } = parse(el.textContent);
 
-        /* se não for numérico, não anima */
         if (isNaN(num)) return;
 
         const duration = 1400;
         const start    = performance.now();
 
         const tick = (now) => {
-          const elapsed = now - start;
+          const elapsed  = now - start;
           const progress = Math.min(elapsed / duration, 1);
-
-          /* easing out-expo */
-          const eased = progress === 1
+          const eased    = progress === 1
             ? 1
             : 1 - Math.pow(2, -10 * progress);
 
           const current = Math.round(eased * num);
-
-          /* reconstrói o texto mantendo o sufixo original */
           el.textContent = raw.replace(/[\d.]+/, current);
 
           if (progress < 1) requestAnimationFrame(tick);
-          else el.textContent = raw; /* garante o valor final exato */
+          else el.textContent = raw;
         };
 
         requestAnimationFrame(tick);
@@ -303,10 +291,9 @@ function initCounters() {
 }
 
 /* ─────────────────────────────────────────
-   8. BARRA DE PROGRESSO DE SCROLL (index)
+   8. BARRA DE PROGRESSO DE SCROLL
    ───────────────────────────────────────── */
 function initScrollProgress() {
-  /* só cria se não existir (as partes têm a própria) */
   if (document.getElementById('progress-bar')) return;
 
   const bar = document.createElement('div');
@@ -334,7 +321,6 @@ function initScrollProgress() {
    9. BOTÃO "VOLTAR AO TOPO"
    ───────────────────────────────────────── */
 function initBackTop() {
-  /* só cria se não existir (as partes têm o próprio) */
   if (document.getElementById('back-top') ||
       document.getElementById('p2-back-top')) return;
 
@@ -375,17 +361,17 @@ function initBackTop() {
   });
 
   btn.addEventListener('mouseenter', () => {
-    btn.style.background  = 'rgba(201,168,76,0.15)';
-    btn.style.transform   = 'scale(1.1)';
+    btn.style.background = 'rgba(201,168,76,0.15)';
+    btn.style.transform  = 'scale(1.1)';
   });
   btn.addEventListener('mouseleave', () => {
-    btn.style.background  = 'rgba(10,10,15,0.85)';
-    btn.style.transform   = 'scale(1)';
+    btn.style.background = 'rgba(10,10,15,0.85)';
+    btn.style.transform  = 'scale(1)';
   });
 }
 
 /* ─────────────────────────────────────────
-   10. HEADER HERO — efeito parallax leve
+   10. HERO — efeito parallax leve
    ───────────────────────────────────────── */
 function initHeroParallax() {
   const hero = document.querySelector('.hero');
@@ -396,7 +382,6 @@ function initHeroParallax() {
     const rate     = scrolled * 0.25;
     hero.style.backgroundPositionY = `-${rate}px`;
 
-    /* fade out suave do conteúdo hero */
     const opacity = Math.max(1 - scrolled / 600, 0);
     const title   = hero.querySelector('.hero-title');
     const desc    = hero.querySelector('.hero-desc');
@@ -412,32 +397,30 @@ function initHeroParallax() {
    ───────────────────────────────────────── */
 function initTooltips() {
   const map = {
-    'Origens'      : 'A família Vianney e a França revolucionária',
-    'Formação'     : 'Os anos de seminário e reprovações',
-    'Ars'          : 'A chegada e a transformação da aldeia',
+    'Origens'       : 'A família Vianney e a França revolucionária',
+    'Formação'      : 'Os anos de seminário e reprovações',
+    'Ars'           : 'A chegada e a transformação da aldeia',
     'Confessionário': 'Décadas de serviço e o dom de ler almas',
-    'Morte'        : 'Os últimos dias e o velório de 30.000 pessoas',
-    'Canonização'  : 'De camponês a Patrono Universal dos Párocos',
-    'Oração'       : 'Oração como estado permanente, não prática',
-    'Penitência'   : 'Mortificação e teologia da penitência vicária',
-    'Humildade'    : 'A virtude que definia tudo o que ele era',
-    'Mística'      : 'Êxtases, levitações e a noite escura da alma',
-    'Maria'        : 'O rosário como companheiro constante',
-    'Purgatório'   : 'As almas que dependem dos nossos sufrágios',
+    'Morte'         : 'Os últimos dias e o velório de 30.000 pessoas',
+    'Canonização'   : 'De camponês a Patrono Universal dos Párocos',
+    'Oração'        : 'Oração como estado permanente, não prática',
+    'Penitência'    : 'Mortificação e teologia da penitência vicária',
+    'Humildade'     : 'A virtude que definia tudo o que ele era',
+    'Mística'       : 'Êxtases, levitações e a noite escura da alma',
+    'Maria'         : 'O rosário como companheiro constante',
+    'Purgatório'    : 'As almas que dependem dos nossos sufrágios',
   };
 
   document.querySelectorAll('.parte-temas span').forEach((span) => {
     const desc = map[span.textContent.trim()];
     if (!desc) return;
-
     span.style.cursor = 'help';
     span.title = desc;
   });
 }
 
 /* ─────────────────────────────────────────
-   12. PRELOAD DAS PÁGINAS DE PARTE
-       (prefetch ao hover nos cards)
+   12. PREFETCH das páginas de parte
    ───────────────────────────────────────── */
 function initPrefetch() {
   const prefetched = new Set();
@@ -458,13 +441,13 @@ function initPrefetch() {
 
 /* ─────────────────────────────────────────
    13. FRASES — rotação automática
-       (destaca uma frase diferente a cada 5s)
    ───────────────────────────────────────── */
 function initFrasesRotation() {
   const frases = document.querySelectorAll('.frase-item');
   if (frases.length < 2) return;
 
   let current = 0;
+  let interval;
 
   const highlight = (index) => {
     frases.forEach((f, i) => {
@@ -478,19 +461,20 @@ function initFrasesRotation() {
     });
   };
 
-  /* só inicia se a seção estiver visível */
-  let started = false;
-  let interval;
+  const startInterval = () => {
+    interval = setInterval(() => {
+      current = (current + 1) % frases.length;
+      highlight(current);
+    }, 5000);
+  };
 
+  let started = false;
   const observer = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting && !started) {
-          started  = true;
-          interval = setInterval(() => {
-            current = (current + 1) % frases.length;
-            highlight(current);
-          }, 5000);
+          started = true;
+          startInterval();
         }
       });
     },
@@ -500,15 +484,9 @@ function initFrasesRotation() {
   const section = document.querySelector('.frases-section');
   if (section) observer.observe(section);
 
-  /* pausa ao hover */
   frases.forEach((f) => {
     f.addEventListener('mouseenter', () => clearInterval(interval));
-    f.addEventListener('mouseleave', () => {
-      interval = setInterval(() => {
-        current = (current + 1) % frases.length;
-        highlight(current);
-      }, 5000);
-    });
+    f.addEventListener('mouseleave', () => startInterval());
   });
 }
 
@@ -516,11 +494,8 @@ function initFrasesRotation() {
    14. ACESSIBILIDADE — foco visível
    ───────────────────────────────────────── */
 function initA11y() {
-  /* mostra outline apenas ao navegar pelo teclado */
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Tab') {
-      document.body.classList.add('keyboard-nav');
-    }
+    if (e.key === 'Tab') document.body.classList.add('keyboard-nav');
   });
 
   document.addEventListener('mousedown', () => {
@@ -546,15 +521,12 @@ function checkReducedMotion() {
   const pref = window.matchMedia('(prefers-reduced-motion: reduce)');
   if (!pref.matches) return;
 
-  /* desativa partículas */
   const particles = document.getElementById('particles');
   if (particles) particles.style.display = 'none';
 
-  /* desativa parallax do hero */
   const hero = document.querySelector('.hero');
   if (hero) hero.style.backgroundAttachment = 'scroll';
 
-  /* remove transições de timeline */
   document.querySelectorAll('.tl-item').forEach((el) => {
     el.style.transition = 'none';
     el.style.opacity    = '1';
@@ -567,7 +539,7 @@ function checkReducedMotion() {
    ───────────────────────────────────────── */
 document.addEventListener('DOMContentLoaded', () => {
 
-  checkReducedMotion();   /* primeiro — pode desativar outros */
+  checkReducedMotion();
 
   initParticles();
   initFadeIn();
@@ -584,7 +556,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initFrasesRotation();
   initA11y();
 
-  /* log de confirmação (remova em produção) */
   console.log(
     '%c✦ São João Maria Vianney — JS carregado',
     'color:#c9a84c; font-size:13px; font-style:italic;'
