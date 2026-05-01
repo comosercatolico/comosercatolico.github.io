@@ -4,488 +4,1411 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>São João Maria Vianney — O Cura d'Ars</title>
-<meta name="description" content="Guia completo sobre São João Maria Vianney — história, espiritualidade, ministério, ensinamentos e legado do Cura d'Ars.">
-<link rel="stylesheet" href="./sao-joao-maria-vianney/sao-joao-maria-vianney.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cor-fundo: #faf7f2;
+    --cor-fundo-sec: #f2ede3;
+    --cor-fundo-ter: #e8e0d0;
+    --cor-texto: #1a1410;
+    --cor-texto-sec: #4a3f30;
+    --cor-texto-ter: #7a6a55;
+    --cor-ouro: #8b6914;
+    --cor-ouro-claro: #c4952a;
+    --cor-ouro-pale: #f0e6c8;
+    --cor-vinho: #5c1f2e;
+    --cor-vinho-claro: #8b3048;
+    --cor-borda: #d4c8aa;
+    --cor-borda-sec: #c0b08a;
+    --fonte-titulo: 'EB Garamond', Georgia, serif;
+    --fonte-corpo: 'Crimson Pro', Georgia, serif;
+    --fonte-display: 'Cormorant Garamond', Georgia, serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: var(--fonte-corpo);
+    background: var(--cor-fundo);
+    color: var(--cor-texto);
+    font-size: 18px;
+    line-height: 1.8;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: var(--cor-vinho);
+    color: #f5ecd8;
+    padding: 5rem 2rem 4rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 39px,
+      rgba(255,255,255,0.03) 39px,
+      rgba(255,255,255,0.03) 40px
+    );
+    pointer-events: none;
+  }
+  .hero-pretitulo {
+    font-family: var(--fonte-corpo);
+    font-size: 0.85rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(240,230,200,0.6);
+    margin-bottom: 1.2rem;
+  }
+  .hero-titulo {
+    font-family: var(--fonte-display);
+    font-weight: 300;
+    font-size: clamp(2.8rem, 6vw, 5rem);
+    line-height: 1.1;
+    color: #f5ecd8;
+    margin-bottom: 0.5rem;
+  }
+  .hero-subtitulo {
+    font-family: var(--fonte-display);
+    font-style: italic;
+    font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+    color: rgba(240,220,170,0.85);
+    margin-bottom: 2rem;
+  }
+  .hero-intro {
+    font-size: 1.05rem;
+    color: rgba(240,230,200,0.75);
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.7;
+  }
+  .hero-datas {
+    display: inline-flex;
+    gap: 2rem;
+    margin-top: 2.5rem;
+    padding: 1rem 2rem;
+    border: 0.5px solid rgba(255,255,255,0.2);
+    border-radius: 2px;
+  }
+  .hero-data-item { text-align: center; }
+  .hero-data-label {
+    display: block;
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(240,220,170,0.55);
+    margin-bottom: 0.2rem;
+  }
+  .hero-data-val {
+    display: block;
+    font-family: var(--fonte-titulo);
+    font-size: 1rem;
+    color: rgba(240,220,170,0.9);
+  }
+
+  /* ── NAV ── */
+  .nav-wrap {
+    background: var(--cor-vinho);
+    border-top: 0.5px solid rgba(255,255,255,0.1);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .nav-inner {
+    max-width: 1000px;
+    margin: 0 auto;
+    display: flex;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .nav-inner::-webkit-scrollbar { display: none; }
+  .nav-btn {
+    flex-shrink: 0;
+    padding: 0.9rem 1.6rem;
+    background: none;
+    border: none;
+    color: rgba(240,220,170,0.55);
+    font-family: var(--fonte-corpo);
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: color 0.2s, border-color 0.2s;
+    white-space: nowrap;
+  }
+  .nav-btn:hover { color: rgba(240,220,170,0.85); }
+  .nav-btn.ativo {
+    color: #f0e6c8;
+    border-bottom-color: var(--cor-ouro-claro);
+  }
+
+  /* ── LAYOUT ── */
+  .painel { display: none; }
+  .painel.ativo { display: block; }
+
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 3rem 2rem 6rem;
+  }
+
+  /* ── SECOES ── */
+  .secao { margin-bottom: 4rem; }
+
+  .secao-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+  }
+  .secao-num {
+    font-family: var(--fonte-display);
+    font-size: 2.2rem;
+    font-weight: 300;
+    color: var(--cor-ouro);
+    line-height: 1;
+    flex-shrink: 0;
+    min-width: 2.5rem;
+  }
+  .secao-linha {
+    flex: 1;
+    height: 0.5px;
+    background: var(--cor-borda);
+  }
+  .secao-titulo {
+    font-family: var(--fonte-titulo);
+    font-size: 1rem;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--cor-texto-sec);
+    flex-shrink: 0;
+  }
+
+  /* ── BLOCO TEXTO ── */
+  .bloco { margin-bottom: 2.2rem; }
+  .bloco h3 {
+    font-family: var(--fonte-titulo);
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: var(--cor-vinho);
+    margin-bottom: 0.8rem;
+    line-height: 1.4;
+  }
+  .bloco p { margin-bottom: 0.9rem; color: var(--cor-texto); }
+  .bloco p:last-child { margin-bottom: 0; }
+
+  .capitular {
+    float: left;
+    font-family: var(--fonte-display);
+    font-size: 4.5rem;
+    font-weight: 600;
+    line-height: 0.8;
+    margin-right: 0.08em;
+    margin-top: 0.1em;
+    color: var(--cor-vinho);
+  }
+
+  .nota {
+    font-style: italic;
+    font-size: 0.92rem;
+    color: var(--cor-texto-ter);
+    padding-left: 1rem;
+    border-left: 2px solid var(--cor-borda);
+    margin-top: 0.8rem;
+  }
+
+  /* ── CITAÇÃO ── */
+  .citacao {
+    margin: 2.5rem 0;
+    padding: 2rem 2.5rem;
+    background: var(--cor-ouro-pale);
+    border-left: 3px solid var(--cor-ouro);
+    position: relative;
+  }
+  .citacao p {
+    font-family: var(--fonte-display);
+    font-style: italic;
+    font-size: 1.35rem;
+    font-weight: 400;
+    line-height: 1.6;
+    color: var(--cor-vinho);
+  }
+  .citacao .fonte {
+    display: block;
+    margin-top: 0.8rem;
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--cor-ouro);
+  }
+
+  /* ── DESTAQUE ── */
+  .destaque {
+    background: var(--cor-fundo-sec);
+    border: 0.5px solid var(--cor-borda);
+    padding: 1.5rem 2rem;
+    margin: 2rem 0;
+    font-style: italic;
+    color: var(--cor-texto-sec);
+    font-size: 1.05rem;
+    line-height: 1.7;
+  }
+
+  /* ── SEPARADOR ── */
+  .sep {
+    text-align: center;
+    color: var(--cor-borda-sec);
+    letter-spacing: 0.5em;
+    margin: 3rem 0;
+    font-size: 0.85rem;
+  }
+
+  /* ── GRID INFO ── */
+  .info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1px;
+    background: var(--cor-borda);
+    border: 0.5px solid var(--cor-borda);
+    margin: 1.5rem 0;
+  }
+  .info-item {
+    background: var(--cor-fundo);
+    padding: 1rem 1.2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+  .info-label {
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--cor-texto-ter);
+  }
+  .info-valor {
+    font-family: var(--fonte-titulo);
+    font-size: 0.95rem;
+    color: var(--cor-texto);
+  }
+
+  /* ── BOX LISTA ── */
+  .box {
+    border: 0.5px solid var(--cor-borda);
+    padding: 1.5rem 2rem;
+    margin: 1.5rem 0;
+    background: var(--cor-fundo);
+  }
+  .box h3 {
+    font-family: var(--fonte-titulo);
+    font-size: 1rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--cor-ouro);
+    margin-bottom: 1rem;
+    padding-bottom: 0.6rem;
+    border-bottom: 0.5px solid var(--cor-borda);
+  }
+  .lista { list-style: none; padding: 0; }
+  .lista li {
+    padding: 0.6rem 0;
+    border-bottom: 0.5px solid var(--cor-fundo-ter);
+    font-size: 0.97rem;
+    color: var(--cor-texto-sec);
+    line-height: 1.6;
+  }
+  .lista li:last-child { border-bottom: none; }
+  .lista li strong { color: var(--cor-texto); font-weight: 500; }
+
+  /* ── TIMELINE ── */
+  .timeline { padding-left: 0; list-style: none; }
+  .tl-item {
+    position: relative;
+    padding: 0 0 2rem 2.5rem;
+    border-left: 1px solid var(--cor-borda);
+  }
+  .tl-item:last-child { border-left-color: transparent; padding-bottom: 0; }
+  .tl-item::before {
+    content: '';
+    position: absolute;
+    left: -4px;
+    top: 6px;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--cor-ouro);
+  }
+  .tl-ano {
+    font-family: var(--fonte-titulo);
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    color: var(--cor-ouro);
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 0.3rem;
+  }
+  .tl-texto {
+    font-size: 0.95rem;
+    color: var(--cor-texto-sec);
+    line-height: 1.65;
+  }
+
+  /* ── CARD MILAGRE ── */
+  .milagre-card {
+    border: 0.5px solid var(--cor-borda);
+    background: var(--cor-fundo);
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+  }
+  .milagre-header {
+    background: var(--cor-vinho);
+    color: rgba(240,220,170,0.7);
+    font-size: 0.72rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 0.5rem 1.2rem;
+  }
+  .milagre-corpo {
+    padding: 1.2rem 1.5rem;
+  }
+  .milagre-corpo h3 {
+    font-family: var(--fonte-titulo);
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--cor-vinho);
+    margin-bottom: 0.7rem;
+  }
+  .milagre-corpo p {
+    font-size: 0.97rem;
+    color: var(--cor-texto-sec);
+    line-height: 1.7;
+  }
+
+  /* ── SECAO ESCURA ── */
+  .secao-escura {
+    background: var(--cor-vinho);
+    color: rgba(240,230,200,0.85);
+    padding: 2.5rem 2rem;
+    margin: 2rem 0;
+  }
+  .secao-escura h3 { color: #f0e6c8; font-family: var(--fonte-titulo); font-size: 1rem; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 1.2rem; border-bottom: 0.5px solid rgba(255,255,255,0.15); padding-bottom: 0.6rem; }
+  .secao-escura p { font-size: 0.97rem; margin-bottom: 1rem; line-height: 1.75; }
+  .secao-escura strong { color: #f0e6c8; font-weight: 500; }
+
+  /* ── ORAÇÃO ── */
+  .oracao {
+    border: 0.5px solid var(--cor-ouro);
+    padding: 2.5rem;
+    margin: 2.5rem 0;
+    text-align: center;
+    font-family: var(--fonte-display);
+    font-style: italic;
+    font-size: 1.1rem;
+    line-height: 2;
+    color: var(--cor-vinho);
+    background: var(--cor-ouro-pale);
+  }
+  .oracao-titulo {
+    display: block;
+    font-style: normal;
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--cor-ouro);
+    margin-bottom: 1.5rem;
+    font-family: var(--fonte-corpo);
+  }
+
+  /* ── RESPONSIVIDADE ── */
+  @media (max-width: 600px) {
+    .hero { padding: 3.5rem 1.2rem 3rem; }
+    .hero-datas { flex-direction: column; gap: 1rem; }
+    .container { padding: 2rem 1.2rem 4rem; }
+    .citacao { padding: 1.5rem 1.2rem; }
+    .secao-header { flex-wrap: wrap; }
+    .bloco h3 { font-size: 1.1rem; }
+  }
+</style>
 </head>
 <body>
 
-<!-- ══════════════════════════════════════
-     PARTÍCULAS DE FUNDO
-     ══════════════════════════════════════ -->
-<div class="particles" id="particles"></div>
-
-<!-- ══════════════════════════════════════
-     HERO SECTION
-     ══════════════════════════════════════ -->
-<header class="hero">
-
-  <div class="hero-cross">✦</div>
-  <div class="hero-dates">1786 — 1859</div>
-
-  <h1 class="hero-title">
-    São João Maria<br>
-    <strong>Vianney</strong>
-  </h1>
-
-  <p class="hero-epiteto">O Cura d'Ars</p>
-
-  <p class="hero-desc">
-    Pastor de almas perdidas · Terror dos demônios<br>
-    Espelho da misericórdia divina
-  </p>
-
-  <div class="hero-vitals">
-    <div class="vital">
-      <span class="vital-num">41</span>
-      <span class="vital-label">anos em Ars</span>
+<!-- ═══════════ HERO ═══════════ -->
+<div class="hero">
+  <p class="hero-pretitulo">Patrono dos Párocos do Mundo Inteiro</p>
+  <h1 class="hero-titulo">São João Maria Vianney</h1>
+  <p class="hero-subtitulo">O Cura d'Ars</p>
+  <p class="hero-intro">Padre, confessor, místico e apóstolo da penitência — o homem que transformou uma aldeia esquecida no centro espiritual da França do século XIX.</p>
+  <div class="hero-datas">
+    <div class="hero-data-item">
+      <span class="hero-data-label">Nascimento</span>
+      <span class="hero-data-val">8 maio 1786 · Dardilly</span>
     </div>
-    <div class="vital-div"></div>
-    <div class="vital">
-      <span class="vital-num">+1M</span>
-      <span class="vital-label">confissões</span>
+    <div class="hero-data-item">
+      <span class="hero-data-label">Morte</span>
+      <span class="hero-data-val">4 ago 1859 · Ars-sur-Formans</span>
     </div>
-    <div class="vital-div"></div>
-    <div class="vital">
-      <span class="vital-num">500k</span>
-      <span class="vital-label">peregrinos/ano</span>
+    <div class="hero-data-item">
+      <span class="hero-data-label">Festa</span>
+      <span class="hero-data-val">4 de agosto</span>
     </div>
-    <div class="vital-div"></div>
-    <div class="vital">
-      <span class="vital-num">7</span>
-      <span class="vital-label">partes neste guia</span>
+    <div class="hero-data-item">
+      <span class="hero-data-label">Canonizado</span>
+      <span class="hero-data-val">1925 · Pio XI</span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ NAV ═══════════ -->
+<nav class="nav-wrap">
+  <div class="nav-inner">
+    <button class="nav-btn ativo" data-painel="historia">História</button>
+    <button class="nav-btn" data-painel="confessionario">O Confessionário</button>
+    <button class="nav-btn" data-painel="milagres">Milagres</button>
+    <button class="nav-btn" data-painel="espiritualidade">Espiritualidade</button>
+    <button class="nav-btn" data-painel="geral">Visão Geral</button>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════
+     PAINEL 1 — HISTÓRIA
+═══════════════════════════════════ -->
+<div class="painel ativo" data-nome="historia">
+<div class="container">
+
+  <!-- 01 -->
+  <div class="secao">
+    <div class="secao-header">
+      <span class="secao-num">01</span>
+      <div class="secao-linha"></div>
+      <span class="secao-titulo">Origens e Infância</span>
+    </div>
+
+    <div class="bloco">
+      <h3>Uma família simples numa França em convulsão</h3>
+      <p><span class="capitular">J</span>oão Maria Baptista Vianney nasceu em 8 de maio de 1786, numa pequena aldeia chamada Dardilly, nos arredores de Lyon, na França. Era o terceiro de seis filhos de Mathieu Vianney e Marie Béluse — agricultores de fé robusta e recursos modestos, que pertenciam àquele mundo rural francês onde as gerações se sucediam pela mesma terra, pelo mesmo calendário litúrgico, pelos mesmos ritmos de semeadura e colheita.</p>
+      <p>Era 1786 — três anos antes da Revolução Francesa. O mundo em que João Vianney nasceu seria destruído enquanto ele crescia. A Revolução, que estourou quando ele tinha três anos, transformaria a França num campo de batalha ideológico no qual a Igreja seria perseguida, padres seriam exilados ou guilhotinados, e qualquer exercício público de fé tornava-se ato de resistência.</p>
+    </div>
+
+    <div class="bloco">
+      <h3>Uma infância marcada pela fé clandestina</h3>
+      <p>Durante os anos mais violentos da Revolução — o chamado Terror, entre 1793 e 1794 — o culto católico foi proibido. Padres que recusavam jurar lealdade ao Estado revolucionário eram perseguidos. Muitos celebravam a Missa em celeiros, em florestas, às escuras, em segredo absoluto.</p>
+      <p>O menino João Vianney cresceu nesse ambiente. Sua mãe o levava, de madrugada, por caminhos escondidos, para encontrar os padres refrattaires — os padres que haviam se recusado a abjurar — e assistir à Missa ilegal. Mais tarde, ele diria que essas Missas clandestinas da infância moldaram para sempre sua compreensão do que é o sacerdócio: algo tão precioso que vale arriscar a vida para preserve-lo.</p>
+      <p class="nota">Essa experiência da fé clandestina marcou fundo o jovem João. Quem passa pela infância vendo adultos arriscar a vida por uma Missa não esquece nunca o que está em jogo numa missa.</p>
+    </div>
+
+    <div class="bloco">
+      <h3>Primeira Comunhão às escondidas</h3>
+      <p>Aos treze anos, João Vianney fez sua Primeira Comunhão numa casa particular, às escondidas, com outras crianças, perante uma das sacerdotisas da fé clandestina — Marie Humbert. Não havia paramentos solenes, não havia coro, não havia flores. Havia apenas o pão consagrado e o silêncio de quem sabe que a autoridade poderia chegar a qualquer momento.</p>
+      <p>Esse momento — receber Cristo pela primeira vez numa situação de risco, de pobreza e de clandestinidade — é inseparável de quem João Vianney se tornaria. O confessionário que encheu de penitentes décadas depois era a continuação direta dessas Missas noturnas em celeiros da Dardilly de sua infância.</p>
+    </div>
+
+    <div class="bloco">
+      <h3>A vocação que não conseguia sair</h3>
+      <p>Desde criança, João sabia que queria ser padre. Mas a vida não facilitou esse desejo. Ele era filho de agricultores — e agricultura não espera vocação. Seu pai precisava dele nos campos. Os anos passavam, e João trabalhava, ajudava, obedecia — enquanto carregava dentro de si algo que não sabia como realizar.</p>
+      <p>Com dezessete anos, soube que um padre chamado Charles Balley, em Ecully, havia aberto uma escola para jovens que desejavam seguir o sacerdócio. João implorou permissão ao pai. Mathieu Vianney resistiu por meses — precisava do filho. Mas por fim cedeu. Era 1803, e João tinha dezessete anos. Tarde demais, segundo o mundo. Na hora certa, segundo Deus.</p>
     </div>
   </div>
 
-  <a href="#guia" class="hero-cta">
-    Explorar o guia completo
-    <span class="hero-cta-arrow">↓</span>
-  </a>
+  <div class="sep">· · ·</div>
 
-</header>
-
-<!-- ══════════════════════════════════════
-     FRASE CENTRAL
-     ══════════════════════════════════════ -->
-<section class="frase-central">
-  <div class="frase-central-inner">
-    <div class="frase-aspas">❝</div>
-    <p>O sacerdócio é o amor do Coração de Jesus.<br>Quando se ama a Deus, pode-se tudo.</p>
-    <span class="frase-autor">— São João Maria Vianney</span>
-  </div>
-</section>
-
-<!-- ══════════════════════════════════════
-     SOBRE O GUIA
-     ══════════════════════════════════════ -->
-<section class="sobre" id="guia">
-  <div class="sobre-inner">
-
-    <div class="sobre-texto">
-      <div class="sobre-label">Sobre este guia</div>
-      <h2>A obra mais completa sobre o Cura d'Ars em língua portuguesa</h2>
-      <p>Este guia foi construído em 7 partes independentes que juntas formam um retrato total de João Maria Vianney — sua vida, sua alma, seu ministério, seus ensinamentos, suas relações, seu legado e as fontes que documentam tudo isso.</p>
-      <p>Cada parte pode ser lida sozinha. Cada seção tem estimativa de tempo, tags de profundidade e blocos colapsáveis para quem quer ir além. Aproximadamente 6 horas de leitura no total.</p>
-      <div class="sobre-stats">
-        <div class="sobre-stat">
-          <span class="ss-num">7</span>
-          <span class="ss-label">Partes</span>
-        </div>
-        <div class="sobre-stat">
-          <span class="ss-num">76</span>
-          <span class="ss-label">Seções</span>
-        </div>
-        <div class="sobre-stat">
-          <span class="ss-num">~6h</span>
-          <span class="ss-label">de leitura</span>
-        </div>
-      </div>
+  <!-- 02 -->
+  <div class="secao">
+    <div class="secao-header">
+      <span class="secao-num">02</span>
+      <div class="secao-linha"></div>
+      <span class="secao-titulo">O Seminarista que Quase Não Chegou</span>
     </div>
 
-    <div class="sobre-tags">
-      <div class="tag-info">
-        <span class="tag-demo tag-ess">Essencial</span>
-        <p>O núcleo de cada tema — o que você precisa saber para compreender.</p>
-      </div>
-      <div class="tag-info">
-        <span class="tag-demo tag-apr">Aprofundamento</span>
-        <p>Detalhes teológicos, históricos e documentais para quem quer ir mais fundo.</p>
-      </div>
-      <div class="tag-info">
-        <span class="tag-demo tag-cur">Curiosidade</span>
-        <p>Episódios surpreendentes, paradoxos e fatos que poucos conhecem.</p>
-      </div>
+    <div class="bloco">
+      <h3>A inteligência que a escola não enxergou</h3>
+      <p>João Vianney chegou à escola do padre Balley com um problema sério: ele quase não sabia ler, mal conhecia o latim, e tinha pouca formação escolar sistemática. Seus colegas mais jovens estavam à sua frente em cada disciplina. O latim — indispensável para o seminário e para a liturgia — era para ele um obstáculo aparentemente intransponível.</p>
+      <p>O que ninguém percebeu imediatamente é que o problema não era inteligência. Era formação tardia. João Vianney tinha uma memória prodigiosa, uma intuição espiritual extraordinária e uma vontade de aço. Ele simplesmente não havia tido a oportunidade de aprender o que os outros aprenderam desde crianças.</p>
+      <p>O padre Balley foi o primeiro a enxergar o que havia por baixo das dificuldades acadêmicas. Ele se tornou mentor, professor particular, pai espiritual e advogado. Trabalhou com João anos a fio — com paciência que muitos considerariam desperdício de tempo. Não era.</p>
     </div>
 
-  </div>
-</section>
-
-<!-- ══════════════════════════════════════
-     GRADE DAS 7 PARTES
-     ══════════════════════════════════════ -->
-<section class="partes" id="partes">
-  <div class="partes-inner">
-
-    <div class="partes-titulo">
-      <span class="partes-titulo-label">O Guia Completo</span>
-      <h2>As 7 Partes</h2>
+    <div class="bloco">
+      <h3>O exame que reprovou — e o que aconteceu depois</h3>
+      <p>Em 1809, João Vianney foi ao Seminário Maior de Lyon para os exames de admissão. Reprovado. Seu latim era insuficiente, sua teologia escolar, elementar. Ele retornou para Ecully e continuou estudando com o padre Balley.</p>
+      <p>Houve também o episódio do recrutamento militar — Napoleão estava no auge das guerras, e João foi convocado. Ele partiu, adoeceu durante a marcha, foi hospitalizado, e quando se recuperou o grupo já havia avançado sem ele. Tentando alcançá-los, acabou num vilarejo nos Alpes onde se escondeu durante meses com outros refratários ao serviço militar. Voltou apenas depois da anistia de 1810.</p>
+      <p>Em 1812, João foi novamente ao Seminário de Verrières — e reprovou nos exames de teologia oral. Os examinadores acharam que ele era incapaz. Um deles disse que era melhor desistir. O padre Balley foi pessoalmente a Lyon falar com o Vicário Geral e argumentou que João Vianney era um homem de rara virtude, e que virtude valia mais do que latim. O Vicário ordenou um novo exame — desta vez em francês, na casa do próprio padre Balley.</p>
+      <p>João passou. Com dificuldade. Mas passou.</p>
     </div>
 
-    <div class="partes-grid">
+    <div class="bloco">
+      <h3>A ordenação — 13 de agosto de 1815</h3>
+      <p>João Maria Vianney foi ordenado sacerdote em 13 de agosto de 1815, aos 29 anos. Tarde demais para os padrões normais. Na hora certa para o que Deus planejava.</p>
+      <p>Dizem que, no dia da ordenação, quando o bispo impôs as mãos sobre sua cabeça, o jovem padre chorou tanto que os presentes ficaram constrangidos. Ele próprio explicaria depois: chorava de gratidão. Sabia melhor do que ninguém o quanto custara chegar até ali — e o quanto não merecia.</p>
+    </div>
 
-      <!-- PARTE 1 -->
-      <a href="./sao-joao-maria-vianney/sao-joao-maria-vianney01.html" class="parte-card parte-destaque">
-        <div class="parte-num">01</div>
-        <div class="parte-icon">📖</div>
-        <div class="parte-badge">Disponível</div>
-        <h3>História &amp; Vida</h3>
-        <p>A biografia completa — das origens na França revolucionária à morte e canonização. 13 seções, do nascimento em Dardilly ao coração em Roma.</p>
-        <div class="parte-meta">
-          <span>13 seções</span>
-          <span>·</span>
-          <span>~65 min</span>
-        </div>
-        <div class="parte-temas">
-          <span>Origens</span>
-          <span>Formação</span>
-          <span>Ars</span>
-          <span>Confessionário</span>
-          <span>Morte</span>
-          <span>Canonização</span>
-        </div>
-        <div class="parte-cta">Ler agora →</div>
-      </a>
-
-      <!-- PARTE 2 -->
-      <a href="./sao-joao-maria-vianney/sao-joao-maria-vianney02.html" class="parte-card parte-destaque">
-        <div class="parte-num">02</div>
-        <div class="parte-icon">🕯️</div>
-        <div class="parte-badge">Disponível</div>
-        <h3>Espiritualidade</h3>
-        <p>O que movia o Cura d'Ars por dentro. Oração, penitência, humildade, vida mística, devoção mariana e o silêncio que nunca pôde ter.</p>
-        <div class="parte-meta">
-          <span>10 seções</span>
-          <span>·</span>
-          <span>~50 min</span>
-        </div>
-        <div class="parte-temas">
-          <span>Oração</span>
-          <span>Penitência</span>
-          <span>Humildade</span>
-          <span>Mística</span>
-          <span>Maria</span>
-          <span>Purgatório</span>
-        </div>
-        <div class="parte-cta">Ler agora →</div>
-      </a>
-
-      <!-- PARTE 3 -->
-      <a href="./sao-joao-maria-vianney/sao-joao-maria-vianney03.html" class="parte-card parte-breve">
-        <div class="parte-num">03</div>
-        <div class="parte-icon">✝️</div>
-        <div class="parte-badge parte-badge-breve">Em breve</div>
-        <h3>Ministério Sacerdotal</h3>
-        <p>O confessionário aprofundado, a Missa, a pregação, o catecismo, a direção espiritual e a pastoral dos pobres.</p>
-        <div class="parte-meta">
-          <span>9 seções</span>
-          <span>·</span>
-          <span>~55 min</span>
-        </div>
-        <div class="parte-temas">
-          <span>Confissão</span>
-          <span>Missa</span>
-          <span>Pregação</span>
-          <span>Catecismo</span>
-          <span>Direção</span>
-        </div>
-      </a>
-
-      <!-- PARTE 4 -->
-      <a href="./sao-joao-maria-vianney/sao-joao-maria-vianney04.html" class="parte-card parte-breve">
-        <div class="parte-num">04</div>
-        <div class="parte-icon">📜</div>
-        <div class="parte-badge parte-badge-breve">Em breve</div>
-        <h3>Ensinamentos &amp; Doutrina</h3>
-        <p>Teologia do sacerdócio, Eucaristia, confissão, os sete pecados capitais, escatologia e mais de 80 frases célebres com contexto.</p>
-        <div class="parte-meta">
-          <span>9 seções</span>
-          <span>·</span>
-          <span>~60 min</span>
-        </div>
-        <div class="parte-temas">
-          <span>Sacerdócio</span>
-          <span>Eucaristia</span>
-          <span>Pecado</span>
-          <span>Frases</span>
-          <span>Doutrina</span>
-        </div>
-      </a>
-
-      <!-- PARTE 5 -->
-      <a href="./sao-joao-maria-vianney/sao-joao-maria-vianney05.html" class="parte-card parte-breve">
-        <div class="parte-num">05</div>
-        <div class="parte-icon">⚔️</div>
-        <div class="parte-badge parte-badge-breve">Em breve</div>
-        <h3>Relações, Contexto e Combate Espiritual</h3>
-        <p>O padre Balley, Dom Bosco, Pauline Jaricot, os bispos, os inimigos, os peregrinos e a França do século XIX.</p>
-        <div class="parte-meta">
-          <span>11 seções</span>
-          <span>·</span>
-          <span>~60 min</span>
-        </div>
-        <div class="parte-temas">
-          <span>Balley</span>
-          <span>Dom Bosco</span>
-          <span>Demônio</span>
-          <span>Contexto</span>
-          <span>Calúnias</span>
-        </div>
-      </a>
-
-      <!-- PARTE 6 -->
-      <a href="./sao-joao-maria-vianney/sao-joao-maria-vianney06.html" class="parte-card parte-breve">
-        <div class="parte-num">06</div>
-        <div class="parte-icon">🌍</div>
-        <div class="parte-badge parte-badge-breve">Em breve</div>
-        <h3>Legado, Controvérsias e Aplicações</h3>
-        <p>Documentos pontifícios, influência em santos posteriores, controvérsias históricas e aplicações para sacerdotes, leigos, famílias e jovens.</p>
-        <div class="parte-meta">
-          <span>12 seções</span>
-          <span>·</span>
-          <span>~65 min</span>
-        </div>
-        <div class="parte-temas">
-          <span>Papas</span>
-          <span>Padre Pio</span>
-          <span>Aplicações</span>
-          <span>Controvérsias</span>
-        </div>
-      </a>
-
-      <!-- PARTE 7 -->
-      <a href="./sao-joao-maria-vianney/sao-joao-maria-vianney07.html" class="parte-card parte-breve">
-        <div class="parte-num">07</div>
-        <div class="parte-icon">📚</div>
-        <div class="parte-badge parte-badge-breve">Em breve</div>
-        <h3>Fontes, Arte, Devoções e Conclusão</h3>
-        <p>Biografias, filmes, iconografia, Ars como destino, relíquias, orações completas e o índice geral do projeto.</p>
-        <div class="parte-meta">
-          <span>12 seções</span>
-          <span>·</span>
-          <span>~50 min</span>
-        </div>
-        <div class="parte-temas">
-          <span>Fontes</span>
-          <span>Ars hoje</span>
-          <span>Relíquias</span>
-          <span>Orações</span>
-          <span>Índice</span>
-        </div>
-      </a>
-
+    <div class="citacao">
+      <p>"Ó meu Deus, que o sacerdote é grande! Somente no Céu o compreenderemos bem."</p>
+      <span class="fonte">João Maria Vianney — catequese em Ars</span>
     </div>
   </div>
-</section>
 
-<!-- ══════════════════════════════════════
-     LINHA DO TEMPO RESUMIDA
-     ══════════════════════════════════════ -->
-<section class="timeline-section">
-  <div class="timeline-inner">
+  <div class="sep">· · ·</div>
 
-    <div class="tl-titulo">
-      <span class="tl-titulo-label">A vida em datas</span>
-      <h2>Linha do Tempo</h2>
+  <!-- 03 -->
+  <div class="secao">
+    <div class="secao-header">
+      <span class="secao-num">03</span>
+      <div class="secao-linha"></div>
+      <span class="secao-titulo">A Chegada a Ars — 1818</span>
     </div>
 
-    <div class="tl-linha">
-
-      <div class="tl-item tl-major">
-        <div class="tl-ponto"></div>
-        <div class="tl-conteudo">
-          <div class="tl-data">8 mai 1786</div>
-          <div class="tl-texto">Nasce em Dardilly, França. Três anos depois, a Revolução Francesa devasta a Igreja do país.</div>
-        </div>
-      </div>
-
-      <div class="tl-item">
-        <div class="tl-ponto"></div>
-        <div class="tl-conteudo">
-          <div class="tl-data">c. 1799</div>
-          <div class="tl-texto">Primeira Comunhão clandestina aos 13 anos, numa casa de camponeses, com sacerdote disfarçado.</div>
-        </div>
-      </div>
-
-      <div class="tl-item">
-        <div class="tl-ponto"></div>
-        <div class="tl-conteudo">
-          <div class="tl-data">1809–1810</div>
-          <div class="tl-texto">Convocado por Napoleão. Adoece, perde o pelotão, vive como desertor em Les Noes sob nome falso.</div>
-        </div>
-      </div>
-
-      <div class="tl-item tl-major">
-        <div class="tl-ponto"></div>
-        <div class="tl-conteudo">
-          <div class="tl-data">13 ago 1815</div>
-          <div class="tl-texto">Ordenado sacerdote aos 29 anos após ser reprovado nos exames e aprovado pessoalmente pelo vigário-geral por "virtude excepcional".</div>
-        </div>
-      </div>
-
-      <div class="tl-item tl-major">
-        <div class="tl-ponto"></div>
-        <div class="tl-conteudo">
-          <div class="tl-data">Fev 1818</div>
-          <div class="tl-texto">Chega a pé a Ars-sur-Formans. Aldeia de 230 habitantes, igreja em ruínas, fé devastada. Passará 41 anos ali.</div>
-        </div>
-      </div>
-
-      <div class="tl-item">
-        <div class="tl-ponto"></div>
-        <div class="tl-conteudo">
-          <div class="tl-data">c. 1824</div>
-          <div class="tl-texto">Começam os ataques do "grappin" — manifestações diabólicas que durarão mais de 30 anos.</div>
-        </div>
-      </div>
-
-      <div class="tl-item tl-major">
-        <div class="tl-ponto"></div>
-        <div class="tl-conteudo">
-          <div class="tl-data">1827–1859</div>
-          <div class="tl-texto">A fama do confissionário se espalha pela França e Europa. Até 500 peregrinos por dia chegam a Ars. Vianney passa 11–16h diárias confessando.</div>
-        </div>
-      </div>
-
-      <div class="tl-item">
-        <div class="tl-ponto"></div>
-        <div class="tl-conteudo">
-          <div class="tl-data">1843–1853</div>
-          <div class="tl-texto">Quatro tentativas de fuga para um mosteiro. A última, em 1853, é a mais famosa: alcançado na estrada, diz "não tenho coragem" e volta.</div>
-        </div>
-      </div>
-
-      <div class="tl-item tl-major">
-        <div class="tl-ponto"></div>
-        <div class="tl-conteudo">
-          <div class="tl-data">4 ago 1859</div>
-          <div class="tl-texto">Morre às 2h da madrugada — a hora em que costumava acordar para orar. 30.000 pessoas visitam o corpo em dois dias.</div>
-        </div>
-      </div>
-
-      <div class="tl-item">
-        <div class="tl-ponto"></div>
-        <div class="tl-conteudo">
-          <div class="tl-data">1904</div>
-          <div class="tl-texto">Exumação: corpo encontrado incorrupto após 45 anos. Laudos médicos confirmam inexplicabilidade natural.</div>
-        </div>
-      </div>
-
-      <div class="tl-item tl-major">
-        <div class="tl-ponto"></div>
-        <div class="tl-conteudo">
-          <div class="tl-data">1925</div>
-          <div class="tl-texto">Canonizado por Pio XI. Em 1929, declarado Patrono Universal dos Párocos do mundo inteiro.</div>
-        </div>
-      </div>
-
-      <div class="tl-item tl-major">
-        <div class="tl-ponto"></div>
-        <div class="tl-conteudo">
-          <div class="tl-data">2009</div>
-          <div class="tl-texto">Ano Sacerdotal de Bento XVI sob seu patrocínio — 150 anos após sua morte. Mais de 100.000 sacerdotes peregrinam a Ars.</div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- ══════════════════════════════════════
-     FRASES EM DESTAQUE
-     ══════════════════════════════════════ -->
-<section class="frases-section">
-  <div class="frases-inner">
-
-    <div class="frases-titulo">
-      <span class="frases-label">As palavras que ficaram</span>
-      <h2>Frases do Cura d'Ars</h2>
+    <div class="bloco">
+      <h3>A paróquia mais insignificante da diocese</h3>
+      <p>Em fevereiro de 1818, o padre João Vianney chegou a Ars-sur-Formans — uma aldeia de menos de 250 almas, nos campos da Ain, ao norte de Lyon. Era a paróquia mais pobre e mais negligenciada da diocese. O bispo a havia escolhido para o jovem padre que mal havia passado nos exames — uma correspondência, segundo a lógica administrativa, entre a mediocridade do padre e a mediocridade da paróquia.</p>
+      <p>A história julgaria diferentemente essa decisão.</p>
     </div>
 
-    <div class="frases-grid">
+    <div class="bloco">
+      <h3>O que ele encontrou — uma comunidade sem fé prática</h3>
+      <p>Ars era uma aldeia que havia sobrevivido à Revolução — mas com cicatrizes profundas. A prática religiosa havia colapsado. Os domingos eram dias de trabalho, de bebida, de bailes nas tavernas. A catequese era inexistente. A maior parte dos adultos havia passado décadas sem se confessar. A igreja estava em ruínas parciais.</p>
+      <p>João Vianney chegou a Ars com um guia que lhe indicava o caminho — havia perdido a direção na neblina. Uma criança chamada Antoine Givre o acompanhou até a aldeia. O padre disse ao menino: "Você me mostrou o caminho para Ars; eu lhe mostrarei o caminho para o Céu."</p>
+      <p>Essa frase — dita com simplicidade absoluta, sem pose nem drama — resume o programa de quarenta e um anos que se seguiu.</p>
+    </div>
 
-      <div class="frase-item frase-grande">
-        <div class="fi-aspas">❝</div>
-        <p>"Deus não precisa de nós. E mesmo assim, nos ama. Não é isso suficiente para tudo?"</p>
-        <span>São João Maria Vianney</span>
-      </div>
+    <div class="bloco">
+      <h3>Como ele transformou Ars</h3>
+      <p>A transformação de Ars não foi rápida nem espetacular. Foi lenta, paciente, construída dia após dia com pequenas fidelidades. João Vianney passou os primeiros anos visitando cada família, conhecendo cada pessoa pelo nome, rezando por cada um. Fechou as tavernas — não pela autoridade, mas pela persuasão e pelo exemplo. Proibiu os bailes públicos aos domingos — e foi impopular por isso durante anos.</p>
+      <p>Ele pregava. Pregava todos os dias. Catequizava as crianças pessoalmente. Ficava no confessionário horas que foram se tornando dias. E ia, imperceptivelmente, mudando o tom moral e espiritual de uma comunidade inteira.</p>
+      <p>Em dez anos, Ars era irreconhecível. Em vinte anos, era destino de peregrinação. Em quarenta anos, até 80.000 pessoas por ano chegavam àquela aldeia minúscula para se confessar com o Cura — o padre — de Ars.</p>
+    </div>
 
-      <div class="frase-item">
-        <div class="fi-aspas">❝</div>
-        <p>"Dai-me uma paróquia onde o pároco seja santo, e em poucos anos ela estará transformada."</p>
-        <span>São João Maria Vianney</span>
-      </div>
-
-      <div class="frase-item">
-        <div class="fi-aspas">❝</div>
-        <p>"A oração é ao homem o que a chuva é à terra. Sem ela, nada cresce."</p>
-        <span>São João Maria Vianney</span>
-      </div>
-
-      <div class="frase-item">
-        <div class="fi-aspas">❝</div>
-        <p>"O sacerdote não é sacerdote para si mesmo. É sacerdote para vós."</p>
-        <span>São João Maria Vianney</span>
-      </div>
-
-      <div class="frase-item">
-        <div class="fi-aspas">❝</div>
-        <p>"Se soubéssemos o que é a Missa, morreríamos — não de medo, mas de amor."</p>
-        <span>São João Maria Vianney</span>
-      </div>
-
-      <div class="frase-item frase-grande">
-        <div class="fi-aspas">❝</div>
-        <p>"O Céu! O Céu! Lá nos veremos!"</p>
-        <span>São João Maria Vianney</span>
-      </div>
-
+    <div class="destaque">
+      Em 1827, o próprio bispo de Belley declarou: "Não sei se Jean-Baptiste Vianney é sábio, mas sei que é santo." Essa frase chegou até Roma — e plantou a semente do que viria décadas depois.
     </div>
   </div>
-</section>
 
-<!-- ══════════════════════════════════════
-     CTA FINAL
-     ══════════════════════════════════════ -->
-<section class="cta-final">
-  <div class="cta-inner">
-    <div class="cta-cross">✦</div>
-    <h2>Comece pela história</h2>
-    <p>A Parte 1 cobre toda a biografia do Cura d'Ars em 13 seções — do nascimento em Dardilly ao coração que viajou o mundo. 65 minutos de leitura que mudam a forma de entender o sacerdócio.</p>
-    <a href="./sao-joao-maria-vianney/sao-joao-maria-vianney01.html" class="cta-btn">
-      Ler Parte 1 — História &amp; Vida →
-    </a>
-    <p class="cta-sub">Ou explore as <a href="#partes">7 partes do guia</a> e comece por onde preferir.</p>
+  <div class="sep">· · ·</div>
+
+  <!-- 04 -->
+  <div class="secao">
+    <div class="secao-header">
+      <span class="secao-num">04</span>
+      <div class="secao-linha"></div>
+      <span class="secao-titulo">Vida Pessoal e Ascese</span>
+    </div>
+
+    <div class="bloco">
+      <h3>O que ele comia — e o que não comia</h3>
+      <p>O regime alimentar de João Vianney era uma das primeiras coisas que espantavam quem o conhecia de perto. Em certos períodos de sua vida, ele se alimentava de batatas cozidas uma vez por semana — e vivia disso. Seus biógrafos documentaram que ele podia passar semanas com alimentos mínimos sem que sua saúde — por mais paradoxal que pareça — colapsasse de modo proporcional.</p>
+      <p>Dormia entre duas e quatro horas por noite. O resto do tempo era gasto no confessionário, na oração, na preparação dos sermões, nas visitas pastorais. Por décadas, essa foi a estrutura de seus dias — e não há relato de que ele reclamasse.</p>
+    </div>
+
+    <div class="bloco">
+      <h3>A vida material — a pobreza radical</h3>
+      <p>O Cura d'Ars dava tudo que recebia. Havia construído e mantinha a Providência — uma espécie de orfanato para meninas pobres em Ars — com as doações que recebia. Quando as doações chegavam, ele as repassava imediatamente, muitas vezes antes que tivesse a chance de contabilizá-las.</p>
+      <p>Sua casa — o presbitério — era de uma nudez que chocava os visitantes. Uma cama de madeira dura. Poucos móveis. Uma pequena fogão que raramente acendia. Ele chegou a vender os objetos de valor da casa paroquial para alimentar os pobres durante um período de escassez.</p>
+    </div>
+
+    <div class="bloco">
+      <h3>As tentativas de fuga — e o que as impedia</h3>
+      <p>João Vianney tentou fugir de Ars pelo menos quatro vezes ao longo de sua vida — geralmente nos momentos de maior exaustão espiritual e física. Desejava retornar à vida contemplativa, ser apenas um monge em silêncio, deixar de ser o padre do mundo inteiro.</p>
+      <p>A primeira tentativa mais séria foi em 1843. Ele deixou a paróquia à noite, a pé, com a intenção de nunca voltar. Os fiéis da aldeia, acordados pelo ruído, foram atrás dele. Ele foi encontrado a poucos quilômetros de distância, rodeado por penitentes que choravam e o suplicavam para retornar. Ele voltou.</p>
+      <p>Cada tentativa de fuga terminou da mesma forma. Ele nunca conseguiu partir. Mais tarde, quando lhe perguntavam por que tinha ficado, respondia apenas: "Não me deixaram ir."</p>
+    </div>
+
+    <div class="bloco">
+      <h3>A luta com o demônio — o Grappin</h3>
+      <p>João Vianney chamava o demônio de "le Grappin" — o gancho. E falava dessa relação com uma naturalidade que deixava os ouvintes desconcertados — como quem menciona um vizinho incômodo, não um ser sobrenatural.</p>
+      <p>Durante muitos anos, ele sofreu perturbações físicas noturnas atribuídas à ação demoníaca: barulhos na casa, pancadas na porta, o catre incendiando. Testemunhas confirmaram alguns desses episódios. Um de seus biógrafos, o Abbé Monnin, documenta vários casos de acompanhantes que ouviram e viram as perturbações.</p>
+      <p>Com o tempo, o Cura tornou-se quase indiferente. "O Grappin fez muito barulho esta noite," dizia pela manhã, e passava ao próximo assunto. Quando as perturbações aumentavam antes de uma semana de grandes confissões, ele tomava isso como bom sinal: "O Grappin sabe que amanhã chegam almas. Está furioso."</p>
+    </div>
   </div>
-</section>
 
-<!-- ══════════════════════════════════════
-     FOOTER
-     ══════════════════════════════════════ -->
-<footer class="footer">
-  <div class="footer-inner">
-    <div class="footer-cross">✦</div>
-    <p class="footer-nome">São João Maria Vianney</p>
-    <p class="footer-datas">1786 — 1859</p>
-    <p class="footer-festa">Festa litúrgica: 4 de agosto</p>
-    <p class="footer-patrono">Patrono Universal dos Párocos · desde 1929</p>
-    <div class="footer-sep"></div>
-    <p class="footer-oracao">
-      <em>"Tu me mostraste o caminho para Ars;<br>
-      eu te mostrarei o caminho para o Céu."</em>
-    </p>
+  <div class="sep">· · ·</div>
+
+  <!-- 05 -->
+  <div class="secao">
+    <div class="secao-header">
+      <span class="secao-num">05</span>
+      <div class="secao-linha"></div>
+      <span class="secao-titulo">Os Últimos Anos e a Morte</span>
+    </div>
+
+    <div class="bloco">
+      <h3>O homem mais visitado da França</h3>
+      <p>Na década de 1850, João Vianney era o homem mais visitado da França. A ferrovia havia chegado à região, e isso facilitou a peregrinação — a ponto de a Companhia da Estrada de Ferro Lyon-Paris criar um bilhete especial de trem chamado "bilhete para Ars". Em 1858 — ano anterior à sua morte — mais de 80.000 pessoas fizeram a viagem até aquela aldeia de 250 habitantes para se confessar com um padre de 72 anos que dormia menos de quatro horas por noite.</p>
+      <p>Os visitantes vinham de todas as categorias sociais: camponeses analfabetos e acadêmicos de Paris, bispos e ateus, membros da família imperial e religiosas de clausura. A fama havia cruzado as fronteiras — vinham da Itália, da Espanha, da Inglaterra, da América. A aldeia que o bispo havia considerado adequada para um padre medíocre tornara-se um dos centros espirituais de toda a cristandade do século XIX.</p>
+    </div>
+
+    <div class="bloco">
+      <h3>A morte — 4 de agosto de 1859</h3>
+      <p>Em julho de 1859, João Vianney adoeceu gravemente. Pela primeira vez em décadas, teve de abandonar o confissionário. O bispo de Belley veio pessoalmente visitá-lo. Multidões se reuniam nas ruas de Ars para rezar.</p>
+      <p>Ele morreu na madrugada de 4 de agosto de 1859, às duas horas da manhã, com 73 anos. Seu corpo foi velado durante três dias — e tanta gente chegou que as autoridades civis tiveram de organizar o acesso em fila. Estimativas históricas falam em seis mil pessoas presentes no funeral.</p>
+      <p>O bispo de Belley presidiu as exéquias. Em seu sermão, disse algo que todos os presentes sentiram ser verdadeiro: "Perdemos um homem que não era como os outros."</p>
+    </div>
+
+    <div class="info-grid">
+      <div class="info-item">
+        <span class="info-label">Beatificado</span>
+        <span class="info-valor">3 out 1905 · Pio X</span>
+      </div>
+      <div class="info-item">
+        <span class="info-label">Canonizado</span>
+        <span class="info-valor">31 mai 1925 · Pio XI</span>
+      </div>
+      <div class="info-item">
+        <span class="info-label">Padroeiro dos párocos</span>
+        <span class="info-valor">Proclamado por Pio XI em 1929</span>
+      </div>
+      <div class="info-item">
+        <span class="info-label">Corpo incorrupto</span>
+        <span class="info-valor">Basílica de Ars · venerado até hoje</span>
+      </div>
+    </div>
   </div>
-</footer>
 
-<script src="./sao-joao-maria-vianney/sao-joao-maria-vianney.js"></script>
+</div>
+</div><!-- /historia -->
 
+
+<!-- ═══════════════════════════════════
+     PAINEL 2 — O CONFESSIONÁRIO
+═══════════════════════════════════ -->
+<div class="painel" data-nome="confessionario">
+<div class="container">
+
+  <div class="secao">
+    <div class="secao-header">
+      <span class="secao-num">01</span>
+      <div class="secao-linha"></div>
+      <span class="secao-titulo">O Confessionário de Ars</span>
+    </div>
+
+    <div class="bloco">
+      <h3>O fenômeno sem precedentes</h3>
+      <p><span class="capitular">N</span>ão existe, na história da Igreja, um fenômeno comparável ao que aconteceu no confessionário de Ars entre 1830 e 1859. Um padre numa aldeia de 250 pessoas passava entre onze e dezesseis horas por dia no confessionário — e mesmo assim havia filas que começavam de madrugada, com peregrinos que haviam viajado dias para esperar sua vez.</p>
+      <p>Nos últimos anos de sua vida, João Vianney chegava ao confessionário às três ou quatro da manhã. Ficava até às onze ou ao meio-dia. Saía para celebrar a Missa e para as refeições mínimas. Voltava ao confessionário logo depois. Repetia isso dia após dia, semana após semana, por décadas.</p>
+      <p>As estimativas históricas falam que, nos anos de maior movimento, ele confessava entre 80 e 100 pessoas por dia. Ao longo de seus 41 anos em Ars, teria confessado centenas de milhares de almas.</p>
+    </div>
+
+    <div class="citacao">
+      <p>"O confessionário é a oficina da ressurreição."</p>
+      <span class="fonte">João Maria Vianney</span>
+    </div>
+
+    <div class="bloco">
+      <h3>Como ele confessava — o método que espantava</h3>
+      <p>O que tornava a confissão com o Cura d'Ars diferente de qualquer outra não era apenas a sua santidade percebida — era a sua habilidade sobrenatural de conhecer o interior das almas. Penitentes relatavam, consistentemente, que o padre lhes revelava pecados que não haviam confessado, circunstâncias que não haviam mencionado, estados interiores que julgavam invisíveis.</p>
+      <p>Não havia interrogatório. Não havia indiscrição. Havia uma percepção que os próprios penitentes descreviam como algo além do humano — e que os confundiu, consolou e converteu durante quatro décadas.</p>
+      <p>Havia também o que os contemporâneos chamavam de seu "dom das lágrimas": ele chorava enquanto confessava. Não por fraqueza ou sentimentalismo — mas porque, segundo seu próprio testemunho, via com clareza o peso do pecado e a grandeza da misericórdia, e esse contraste o comovia fisicamente.</p>
+    </div>
+
+    <div class="bloco">
+      <h3>O que ele dizia aos penitentes — a teologia da misericórdia</h3>
+      <p>João Vianney nunca foi um confessor severo no sentido de recusar absolvição ou acumular penitências pesadas. Seu método era outro: ele fazia o penitente sentir o peso do que havia feito — e depois abria uma porta que parecia não ter limite.</p>
+      <p>Quando alguém chegava cheio de vergonha, ele dizia: "Deus está mais ansioso por perdoar você do que você está por ser perdoado." Quando alguém duvidava de sua salvação, ele respondia: "Deus ama os pecadores com uma ternura de que nós não somos capazes." Quando alguém chorava demais, ele quietamente absorvia as lágrimas sem lhes dar mais peso do que tinham.</p>
+      <p>Havia uma frase que ele repetia e que os penitentes levavam para a vida inteira: "O bem Deus não me pede nada que Ele mesmo não me ajude a fazer."</p>
+    </div>
+  </div>
+
+  <div class="sep">· · ·</div>
+
+  <div class="secao">
+    <div class="secao-header">
+      <span class="secao-num">02</span>
+      <div class="secao-linha"></div>
+      <span class="secao-titulo">O Dom da Leitura dos Corações</span>
+    </div>
+
+    <div class="bloco">
+      <h3>O fenômeno da cardiognosis</h3>
+      <p>Os teólogos chamam de <em>cardiognosis</em> — leitura dos corações — o dom sobrenatural de perceber o estado interior de uma alma sem meios naturais. Os processos de beatificação e canonização de João Vianney documentaram dezenas de casos atestados sob juramento em que ele revelou a penitentes coisas que era humanamente impossível que soubesse.</p>
+      <p>Um dos casos mais documentados é o de uma mulher que chegou ao confessionário para confessar o suicídio de seu marido — e que temia que ele estivesse perdido. Antes que ela abrisse a boca, João Vianney lhe disse: "Não chore por ele. Ele está salvo." E acrescentou uma circunstância específica: "Entre a ponte e a água, ele teve tempo de se arrepender." A mulher jamais havia mencionado uma ponte. Nenhum dos presentes sabia que havia uma ponte envolvida. O detalhe correspondia exatamente à situação.</p>
+    </div>
+
+    <div class="bloco">
+      <h3>Casos documentados nos processos canônicos</h3>
+      <p>Os depoimentos reunidos nos processos de beatificação e canonização — agora arquivados no Vaticano — constituem uma das coleções mais extensas de testemunhos sobre fenômenos místicos verificados do século XIX. Centenas de pessoas testemunharam, sob juramento, casos em que João Vianney demonstrou conhecimento sobrenatural.</p>
+    </div>
+
+    <div class="milagre-card">
+      <div class="milagre-header">Testemunho documentado · processo canônico</div>
+      <div class="milagre-corpo">
+        <h3>O padre que chegou como incrédulo</h3>
+        <p>Um padre parisiense, cético quanto aos relatos sobre Ars, foi até lá deliberadamente para verificar. Não havia comunicado a ninguém o propósito de sua visita. Quando se ajoelhou no confessionário, João Vianney — sem que ele houvesse dito nada — começou a falar sobre um pecado específico que o padre havia cometido anos antes e nunca confessado. O padre saiu do confessionário em lágrimas. Tornou-se um dos mais fervorosos divulgadores do Cura d'Ars.</p>
+      </div>
+    </div>
+
+    <div class="milagre-card">
+      <div class="milagre-header">Testemunho documentado · múltiplas fontes</div>
+      <div class="milagre-corpo">
+        <h3>A mulher e o casamento que ela escondia</h3>
+        <p>Uma mulher chegou ao confessionário de Ars com uma intenção clara: ela queria se confessar de tudo — exceto de um caso matrimonial irregular que havia decidido guardar para si. Quando se ajoelhou, o Cura d'Ars falou diretamente sobre o assunto que ela havia decidido ocultar, com detalhes que ela não havia mencionado. Ela perguntou, pasma, como ele sabia. Ele não respondeu à pergunta — mas resolveu o problema espiritual que o estava causando.</p>
+      </div>
+    </div>
+
+    <div class="milagre-card">
+      <div class="milagre-header">Testemunho de Irmã Margarida Vianney</div>
+      <div class="milagre-corpo">
+        <h3>A irmã que não se reconheceu no retrato</h3>
+        <p>Uma religiosa chegou ao confessionário e, antes que pudesse falar, o Cura descreveu seu estado de alma com precisão tal que ela ficou paralisada. Depois acrescentou detalhes da história pessoal dela que ela nunca havia compartilhado com ninguém. Ela perguntou de onde ele sabia. Ele respondeu apenas: "Fui informado." Não disse por quem.</p>
+      </div>
+    </div>
+
+    <div class="bloco">
+      <h3>A explicação do próprio Vianney</h3>
+      <p>Quando confrontado com esses episódios, João Vianney raramente os confirmava ou negava diretamente. Quando pressionado, costumava dizer que era "o bom Deus" quem lhe dava a ver — e que ele próprio não entendia o mecanismo. Em uma ocasião, disse ao seu biógrafo Abbé Monnin: "Quando Deus quer salvar uma alma, Ele coloca na frente do confessor o que é necessário. O confessor não precisa procurar — precisa ouvir."</p>
+      <p>Era uma resposta que desviava o crédito e o colocava exatamente onde ele queria que ficasse: em Deus, não no padre.</p>
+    </div>
+  </div>
+
+  <div class="sep">· · ·</div>
+
+  <div class="secao">
+    <div class="secao-header">
+      <span class="secao-num">03</span>
+      <div class="secao-linha"></div>
+      <span class="secao-titulo">As Conversões Extraordinárias</span>
+    </div>
+
+    <div class="bloco">
+      <h3>O tipo de conversão que acontecia em Ars</h3>
+      <p>As conversões documentadas em Ars não eram as do tipo gradual, resultado de longos processos interiores. Eram as do tipo que os teólogos chamam de "instantâneas" — transformações radicais de vida produzidas num único momento de confissão ou de contato com o Cura.</p>
+      <p>Ateus confessos que chegavam por curiosidade e saíam crentes. Anticlericais que vinham para debater e saíam de joelhos. Pessoas que haviam abandonado a prática religiosa por décadas e que numa tarde em Ars resgatavam tudo que havia sido perdido. Esses relatos se repetem, com diferentes rostos e histórias, ao longo de quatro décadas de documentação.</p>
+    </div>
+
+    <div class="milagre-card">
+      <div class="milagre-header">Caso histórico documentado</div>
+      <div class="milagre-corpo">
+        <h3>Alfred Monnin — o biógrafo cético</h3>
+        <p>O Abbé Alfred Monnin foi enviado pela diocese para observar e documentar o que acontecia em Ars — com o propósito explícito de avaliar se havia exagero nas histórias que circulavam. Era um homem metódico, formado em história eclesiástica, naturalmente desconfiado de hagiografias. Passou meses observando, entrevistando, documentando. O resultado foi a primeira e mais extensa biografia do Cura d'Ars — publicada ainda em vida do santo — e uma conversão pessoal profunda que ele registrou sem eufemismos: "Eu fui para observar e fui observado. Fui para julgar e fui julgado."</p>
+      </div>
+    </div>
+
+    <div class="milagre-card">
+      <div class="milagre-header">Caso documentado nos processos canônicos</div>
+      <div class="milagre-corpo">
+        <h3>O maçom que veio para expor</h3>
+        <p>Um membro ativo da maçonaria, intelectual de Lyon, chegou a Ars com a intenção declarada de expor o "charlatanismo" do Cura. Sentou-se na fila do confessionário. Quando chegou sua vez, entrou com a intenção de fazer perguntas comprometedoras. João Vianney não o deixou falar — começou a descrever, com precisão, a vida interior do homem de maneira que tornava as perguntas preparadas completamente irrelevantes. O homem saiu do confessionário em estado de comoção que os presentes descreveram como físico. Voltou duas vezes no mesmo dia. Retornou a Lyon como outro homem.</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+</div><!-- /confessionario -->
+
+
+<!-- ═══════════════════════════════════
+     PAINEL 3 — MILAGRES
+═══════════════════════════════════ -->
+<div class="painel" data-nome="milagres">
+<div class="container">
+
+  <div class="secao">
+    <div class="secao-header">
+      <span class="secao-num">01</span>
+      <div class="secao-linha"></div>
+      <span class="secao-titulo">Prodígios e Fenômenos Sobrenaturais</span>
+    </div>
+
+    <div class="bloco">
+      <h3>Um século XIX que testemunhou o sobrenatural</h3>
+      <p><span class="capitular">O</span>s fenômenos sobrenaturais associados a João Maria Vianney são incomuns mesmo no contexto de hagiografia católica — não pela sua variedade, mas pela abundância de testemunhos contemporâneos, documentados em vida do santo, por pessoas de crédito verificável e frequentemente por não-crentes ou céticos.</p>
+      <p>Os processos canônicos de beatificação e canonização — que exigem o padrão mais rigoroso de documentação que a Igreja conhece — reuniram centenas de depoimentos sob juramento. O resultado foi o reconhecimento formal de fenômenos que incluem curas físicas, bilocação, profecia, cardiognosis e multiplicação de alimentos.</p>
+    </div>
+
+    <div class="destaque">
+      O processo de canonização de João Vianney, concluído em 1925, é considerado um dos mais rigorosamente documentados do século XX. Pio XI, ao canonizá-lo, declarou que os milagres verificados eram "abundantes e indubitáveis."
+    </div>
+  </div>
+
+  <div class="sep">· · ·</div>
+
+  <div class="secao">
+    <div class="secao-header">
+      <span class="secao-num">02</span>
+      <div class="secao-linha"></div>
+      <span class="secao-titulo">A Multiplicação do Trigo — A Providência de Ars</span>
+    </div>
+
+    <div class="bloco">
+      <h3>O milagre mais documentado — e mais repetido</h3>
+      <p>João Vianney havia fundado em Ars uma casa de acolhimento para meninas pobres e órfãs — chamada simplesmente "La Providence" (A Providência). Era sustentada inteiramente por doações — e havia momentos em que as doações simplesmente não chegavam.</p>
+      <p>O episódio mais famoso ocorreu por volta de 1830. O celeiro da Providência estava quase completamente vazio — apenas um punhado de trigo no fundo de um depósito. As meninas precisavam comer. Dinheiro não havia.</p>
+      <p>João Vianney colocou no fundo do celeiro uma relíquia de São Francisco Régis — um missionário do século XVII que havia morrido em odor de santidade. Rezou. E deixou o celeiro.</p>
+      <p>No dia seguinte, o celeiro estava cheio de trigo. Não havia nenhuma explicação natural. Os relatos documentam que o trigo transbordava pelas frestas da porta. As testemunhas incluem as responsáveis pela casa, as meninas maiores e moradores da aldeia que viram o estado vazio do celeiro na véspera e o estado cheio na manhã seguinte.</p>
+    </div>
+
+    <div class="milagre-card">
+      <div class="milagre-header">Multiplicação de alimentos · documentado por múltiplas testemunhas</div>
+      <div class="milagre-corpo">
+        <h3>O celeiro vazio — e cheio na manhã seguinte</h3>
+        <p>A irmã Marie Filliard, que dirigia a Providência à época, testemunhou e documentou o episódio. Ela afirmou que havia verificado pessoalmente o estado do celeiro na tarde anterior — virtualmente vazio — e que na manhã seguinte estava cheio a ponto de transbordar, com uma qualidade de trigo superior ao que normalmente chegava de doações. Nenhuma entrega havia sido registrada durante a noite.</p>
+      </div>
+    </div>
+
+    <div class="milagre-card">
+      <div class="milagre-header">Segundo episódio de multiplicação · documentado</div>
+      <div class="milagre-corpo">
+        <h3>A farinha que não acabava</h3>
+        <p>Um segundo episódio foi documentado nos processos canônicos: durante um período de escassez aguda, a farinha disponível para as meninas da Providência era insuficiente para o dia seguinte. As irmãs relataram que, após a oração do Cura, a farinha que havia pareceu não diminuir enquanto era usada — como se houvesse mais do que o recipiente deveria comportar. O episódio foi relatado por três irmãs de forma independente e consistente.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="sep">· · ·</div>
+
+  <div class="secao">
+    <div class="secao-header">
+      <span class="secao-num">03</span>
+      <div class="secao-linha"></div>
+      <span class="secao-titulo">Curas Físicas</span>
+    </div>
+
+    <div class="bloco">
+      <h3>O padrão das curas em Ars</h3>
+      <p>As curas físicas associadas a João Vianney têm uma característica que os seus biógrafos notaram: ele raramente as reivindicava para si mesmo. Quando alguém o atribuía uma cura, ele o redirecionava — para Santa Filomena, para Nossa Senhora, para o Sacramento da Penitência. "Não fui eu. Foi o bom Deus."</p>
+      <p>Essa modéstia consistente tornou a documentação ao mesmo tempo mais difícil e mais credível: o próprio Cura não tinha interesse em inflar os relatos. Os testemunhos chegaram apesar de sua resistência, não por causa de seu encorajamento.</p>
+    </div>
+
+    <div class="milagre-card">
+      <div class="milagre-header">Cura documentada nos processos · caso de Louis Chaffangeon</div>
+      <div class="milagre-corpo">
+        <h3>A criança que não andava — e andou</h3>
+        <p>Louis Chaffangeon, de Fareins, havia nascido com uma deformidade nos pés que o impedia de andar normalmente. Aos dois anos, foi levado a Ars. João Vianney o abraçou, rezou sobre ele e o devolveu à mãe. No dia seguinte, a criança começou a andar. O caso foi examinado por médicos durante o processo canônico — que não encontraram explicação natural para a recuperação funcional dos pés. Este episódio foi aceito como milagre formal no processo de beatificação.</p>
+      </div>
+    </div>
+
+    <div class="milagre-card">
+      <div class="milagre-header">Cura documentada · múltiplas testemunhas</div>
+      <div class="milagre-corpo">
+        <h3>A mulher cega de um olho</h3>
+        <p>Uma mulher de Lyon, cega de um olho há anos por decorrência de uma infecção, foi a Ars e pediu a oração do Cura. Ele rezou sobre ela em silêncio. Ela não relatou nada imediato. Dois dias depois, ao acordar, estava enxergando pelo olho afetado. Procurou o médico que a havia acompanhado — que certificou a recuperação. O caso foi incluído nos depoimentos do processo canônico por dois médicos.</p>
+      </div>
+    </div>
+
+    <div class="milagre-card">
+      <div class="milagre-header">Milagre de canonização · verificado por comissão médica</div>
+      <div class="milagre-corpo">
+        <h3>A criança ressuscitada de Ars</h3>
+        <p>O milagre aceito para a canonização envolveu a recuperação de um menino que havia sido dado como morto por afogamento. Sua mãe, desesperada, levou o corpo à igreja onde o Cura estava — naquele momento, ele havia acabado de morrer também, em 1859. A mulher orou diante de seu túmulo e, segundo os depoimentos, a criança recobrou vida. O episódio foi examinado em detalhe pela comissão médica do processo de canonização e aceito como inexplicável pelos meios naturais conhecidos.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="sep">· · ·</div>
+
+  <div class="secao">
+    <div class="secao-header">
+      <span class="secao-num">04</span>
+      <div class="secao-linha"></div>
+      <span class="secao-titulo">Profecia e Bilocação</span>
+    </div>
+
+    <div class="bloco">
+      <h3>Profecias verificadas historicamente</h3>
+      <p>Os contemporâneos de João Vianney documentaram várias instâncias em que ele previu eventos com precisão que não encontrava explicação natural. Alguns exemplos foram verificados durante os processos canônicos com documentação escrita contemporânea aos fatos.</p>
+    </div>
+
+    <div class="milagre-card">
+      <div class="milagre-header">Profecia documentada · décadas antes do cumprimento</div>
+      <div class="milagre-corpo">
+        <h3>A basílica que ainda não existia</h3>
+        <p>No início de seu ministério em Ars — quando a aldeia era insignificante e a igrejinha local estava em estado de abandono parcial — João Vianney disse a um dos primeiros membros de sua pequena comunidade que um dia seria necessário construir uma grande basílica em Ars para acolher os peregrinos. Isso foi dito quando não havia nenhum peregrino, quando ele era um padre desconhecido em uma aldeia esquecida. A Basílica de Ars foi inaugurada em 1862 — três anos após sua morte. Vários dos que ouviram a profecia original ainda viviam para confirmar o que havia sido dito.</p>
+      </div>
+    </div>
+
+    <div class="milagre-card">
+      <div class="milagre-header">Profecia verificada · testemunha Monnin</div>
+      <div class="milagre-corpo">
+        <h3>A morte antes da hora</h3>
+        <p>O Abbé Monnin documentou um episódio em que o Cura, conversando com um grupo de sacerdotes, mencionou com calma a data aproximada de sua morte — com mais de um ano de antecedência. Quem ouviu não levou a sério imediatamente. Quando a data chegou e o Cura adoeceu na janela de tempo que havia indicado, os presentes que se lembravam da conversa ficaram perturbados. A morte ocorreu dentro do período indicado.</p>
+      </div>
+    </div>
+
+    <div class="bloco">
+      <h3>Relatos de bilocação</h3>
+      <p>Alguns depoimentos documentam a percepção de que João Vianney estava em dois lugares ao mesmo tempo — pessoas que o viram em Ars quando ele declaradamente estava em outro lugar, ou que receberam sua visita pastoral em momentos em que ele era confirmadamente incapaz de sair da paróquia.</p>
+      <p>Esses relatos são os mais difíceis de documentar com rigor e os mais difíceis de verificar. A Igreja não os incluiu nos milagres formais dos processos canônicos — mas os biógrafos os registraram como parte do testemunho consistente de pessoas consideradas de boa-fé.</p>
+    </div>
+  </div>
+
+  <div class="sep">· · ·</div>
+
+  <div class="secao">
+    <div class="secao-header">
+      <span class="secao-num">05</span>
+      <div class="secao-linha"></div>
+      <span class="secao-titulo">O Corpo Incorrupto</span>
+    </div>
+
+    <div class="bloco">
+      <h3>O fenômeno da incorruptibilidade</h3>
+      <p>João Maria Vianney morreu em 4 de agosto de 1859. Seu corpo foi velado durante três dias num agosto quente da França — e os presentes notaram que não havia os sinais de decomposição que seriam esperados nas condições climáticas. Isso não foi considerado sobrenatural imediatamente — foi apenas anotado.</p>
+      <p>Durante os processos canônicos, o corpo foi examinado. O que foi encontrado levou ao reconhecimento formal do fenômeno de incorruptibilidade — a preservação de restos mortais além do que a ciência explicaria pelas condições normais de conservação.</p>
+      <p>Hoje, o corpo de São João Maria Vianney repousa na Basílica de Ars, em exposição permanente, num relicário de vidro e ouro. O rosto e as mãos — partes visíveis — são uma reconstituição em cera, pois a pele original havia ressecado ao longo do tempo. Mas o esqueleto e os tecidos internos foram preservados de maneira que os peritos do processo canônico declararam notável.</p>
+    </div>
+
+    <div class="info-grid">
+      <div class="info-item">
+        <span class="info-label">Data da morte</span>
+        <span class="info-valor">4 agosto 1859</span>
+      </div>
+      <div class="info-item">
+        <span class="info-label">Primeira exumação</span>
+        <span class="info-valor">1904 — processo de beatificação</span>
+      </div>
+      <div class="info-item">
+        <span class="info-label">Reconhecimento canônico</span>
+        <span class="info-valor">Incorruptibilidade confirmada</span>
+      </div>
+      <div class="info-item">
+        <span class="info-label">Local atual</span>
+        <span class="info-valor">Basílica de Ars · relicário dourado</span>
+      </div>
+      <div class="info-item">
+        <span class="info-label">Coração</span>
+        <span class="info-valor">Relicário separado na basílica</span>
+      </div>
+      <div class="info-item">
+        <span class="info-label">Visitantes anuais</span>
+        <span class="info-valor">~500.000 por ano (dados recentes)</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+</div><!-- /milagres -->
+
+
+<!-- ═══════════════════════════════════
+     PAINEL 4 — ESPIRITUALIDADE
+═══════════════════════════════════ -->
+<div class="painel" data-nome="espiritualidade">
+<div class="container">
+
+  <div class="secao">
+    <div class="secao-header">
+      <span class="secao-num">01</span>
+      <div class="secao-linha"></div>
+      <span class="secao-titulo">A Teologia Vivida de Vianney</span>
+    </div>
+
+    <div class="bloco">
+      <h3>Um teólogo sem academia</h3>
+      <p><span class="capitular">J</span>oão Maria Vianney não publicou tratados teológicos. Não tinha o título acadêmico que lhe teria permitido lecionar no seminário. Mas ele foi — e continua sendo — um dos mestres espirituais mais citados, estudados e praticados da Igreja do século XIX e XX.</p>
+      <p>Sua teologia não estava em livros — estava em sermões, em catequeses, em respostas dadas no confessionário, em frases captadas por penitentes que as escreveram depois de sair. É uma teologia encarnada: nascida da experiência pastoral concreta, da oração longa, do contato diário com o pecado humano e a misericórdia divina.</p>
+      <p>Os seus biógrafos e o Abbé Monnin coletaram sistematicamente seus ditos e sermões. Essas compilações — editadas em vários volumes — revelam um pensamento teológico coerente, profundo e surpreendentemente original para um homem que havia mal passado nos exames do seminário.</p>
+    </div>
+
+    <div class="citacao">
+      <p>"A oração é a fonte de todo bem e o remédio de todo mal."</p>
+      <span class="fonte">João Maria Vianney · Catequese em Ars</span>
+    </div>
+  </div>
+
+  <div class="sep">· · ·</div>
+
+  <div class="secao">
+    <div class="secao-header">
+      <span class="secao-num">02</span>
+      <div class="secao-linha"></div>
+      <span class="secao-titulo">Os Grandes Temas da Espiritualidade de Vianney</span>
+    </div>
+
+    <div class="bloco">
+      <h3>O sacerdócio — a grandeza e o peso</h3>
+      <p>Nenhum tema aparece com mais frequência nos ditos de João Vianney do que o sacerdócio. Ele falava sobre a dignidade do padre com um fervor que os que o ouviam descreviam como assustador — não porque fosse exagerado, mas porque o contraste com a mediocridade ordinária era devastador.</p>
+      <p>"Se compreendêssemos o sacerdócio, morreríamos — não de medo, mas de amor," disse ele numa catequese. E em outra ocasião: "O padre não é padre para si mesmo. É padre para os outros."</p>
+      <p>Essa teologia do sacerdócio — entendido como serviço total, como oblação de si mesmo, como continuação da presença de Cristo — estava no coração de tudo que ele fazia. Era o que o mantinha no confissionário às três da manhã. Era o que o impedia de partir quando tentava fugir.</p>
+    </div>
+
+    <div class="bloco">
+      <h3>O pecado e a misericórdia — sem falsa simetria</h3>
+      <p>João Vianney era extremamente claro sobre a realidade do pecado — mais do que a maioria dos pregadores de sua época, que já tendiam ao eufemismo pastoral. Ele nomeava pecados com precisão, explicava suas consequências, não amenizava o que não devia ser amenizado.</p>
+      <p>Mas havia na sua visão do pecado uma assimetria intencional: a misericórdia de Deus é sempre maior. Essa não era para ele uma frase de consolação barata — era uma certeza teológica que ele havia verificado empiricamente no confissionário, ao longo de décadas. "A maior tristeza de Deus não é o pecado que cometemos — é a desconfiança que temos de Seu perdão depois."</p>
+    </div>
+
+    <div class="bloco">
+      <h3>A Eucaristia — o centro de tudo</h3>
+      <p>Para João Vianney, a Eucaristia não era um tema teológico entre outros — era o eixo em torno do qual toda a existência cristã girava. Ele celebrava a Missa com uma intensidade que os presentes descreviam como impossível de fingir. Havia momentos em que ele parava durante a celebração — em estado que os presentes identificavam como êxtase — por tempo suficientemente longo para tornar a congregação inquieta.</p>
+      <p>Fora da Missa, ele passava longos períodos diante do Santíssimo exposto. Havia na sua relação com a Eucaristia uma familiaridade íntima que transparecia nas frases que ele usava: não falava sobre a Eucaristia como um dogma — falava como quem descreve alguém que conhece pessoalmente.</p>
+      <p>"Quando vocês estão diante do Santíssimo, é como se Deus baixasse para olhá-los," dizia. E acrescentava: "E quando olham para Ele, Ele olha para vocês. Isso já chega."</p>
+    </div>
+
+    <div class="citacao">
+      <p>"Ele está lá. Adorai-O. Agradecei-Lhe. Pedi-Lhe. Esse é o tempo que bem aproveitado."</p>
+      <span class="fonte">João Maria Vianney — sobre a oração diante do Santíssimo</span>
+    </div>
+
+    <div class="bloco">
+      <h3>A oração — como o pescador na água</h3>
+      <p>A doutrina de oração de João Vianney é uma das mais práticas e menos complicadas da espiritualidade cristã — o que pode enganar sobre sua profundidade. Ele dizia que a oração não precisava de palavras elaboradas. Quando um camponês de Ars foi visto sentado na igreja por horas, sem fazer nada visivelmente, e João Vianney lhe perguntou o que fazia, o homem respondeu: "Olho para Ele e Ele olha para mim."</p>
+      <p>João Vianney repetiu essa frase por anos como a melhor definição de oração que já havia escutado. Ela resumia tudo o que ele havia aprendido em décadas de vida contemplativa: a oração, em sua forma mais alta, é menos falar e mais estar presente.</p>
+    </div>
+
+    <div class="bloco">
+      <h3>O purgatório e a intercessão pelos mortos</h3>
+      <p>João Vianney falava do purgatório com a mesma naturalidade com que falava do confisionário — como uma realidade que conhecia de perto, não como um conceito abstrato. Havia casos documentados em que ele pedia orações por almas específicas em purgatório — identificando-as às vezes pelo nome — sem nenhum meio natural de conhecer sua condição.</p>
+      <p>Sua devoção pelos mortos era intensa e prática. Ele rezava por eles durante a Missa, insistia que os paroquianos fizessem o mesmo, e via essa intercessão como parte fundamental da comunhão dos santos — não como tradição devocional opcional, mas como responsabilidade de todo cristão.</p>
+    </div>
+
+    <div class="bloco">
+      <h3>O sofrimento — compreendido de dentro</h3>
+      <p>João Vianney sofreu — de formas que ele mesmo nem sempre compreendia. A luta com o demônio. A solidão pastoral. As tentações contra a fé que ele descreveu a seus confessores com grande angústia. O cansaço físico acumulado de décadas de privação. A tentação de abandonar tudo.</p>
+      <p>Mas havia na sua compreensão do sofrimento algo que impedia o desespero: ele o entendia como participação no sofrimento de Cristo. Não de forma masoquista — ele não buscava o sofrimento pelo sofrimento. Mas quando este chegava, ele tinha uma linguagem para lhe dar sentido. "O bom Deus nos envia exatamente o que precisamos," dizia — e a frase soava diferente na boca de quem havia vivido o que havia vivido.</p>
+    </div>
+  </div>
+
+  <div class="sep">· · ·</div>
+
+  <div class="secao">
+    <div class="secao-header">
+      <span class="secao-num">03</span>
+      <div class="secao-linha"></div>
+      <span class="secao-titulo">Os Ditos que Definiram uma Época</span>
+    </div>
+
+    <div class="secao-escura">
+      <h3>Frases de São João Maria Vianney</h3>
+      <p><strong>"O Paraíso é cheio de almas que choraram a sua conversão. O Inferno é cheio de almas que riram da sua perdição."</strong></p>
+      <p><strong>"Se as pessoas soubessem o que é a Missa, morreriam de amor antes de ela terminar."</strong></p>
+      <p><strong>"O sacerdote continua a obra da Redenção na terra. Se compreendêssemos o que é o padre, morreríamos de amor — não de terror, mas de amor."</strong></p>
+      <p><strong>"Deus comanda o impossível a ninguém. Ele torna possível o que parece impossível."</strong></p>
+      <p><strong>"O amor de Deus por nós não é uma questão de sentimento. É uma questão de vontade. Ele quer o nosso bem — sempre, mesmo quando dói."</strong></p>
+      <p><strong>"Há muitas almas que se perdem porque não têm quem reze por elas."</strong></p>
+      <p><strong>"Quando não sabeis o que dizer a Deus, dizei-Lhe isso mesmo: 'Meu Deus, não sei o que te dizer — mas estou aqui.'"</strong></p>
+    </div>
+
+    <div class="oracao">
+      <span class="oracao-titulo">Oração a São João Maria Vianney</span>
+      Santo Cura d'Ars,<br>
+      que passaste quarenta anos<br>
+      debruçado sobre o abismo<br>
+      do pecado humano<br>
+      sem perder a esperança —<br><br>
+      intercede por nós.<br>
+      Pelos que se afastaram da fé.<br>
+      Pelos padres que carregam sozinhos.<br>
+      Pelos que chegam ao confisionário<br>
+      sem saber se são capazes de perdão.<br><br>
+      Lembra-nos que não há pecado<br>
+      maior do que a misericórdia de Deus.<br><br>
+      Amém.
+    </div>
+  </div>
+
+</div>
+</div><!-- /espiritualidade -->
+
+
+<!-- ═══════════════════════════════════
+     PAINEL 5 — VISÃO GERAL
+═══════════════════════════════════ -->
+<div class="painel" data-nome="geral">
+<div class="container">
+
+  <div class="secao">
+    <div class="secao-header">
+      <span class="secao-num">01</span>
+      <div class="secao-linha"></div>
+      <span class="secao-titulo">Dados Biográficos Completos</span>
+    </div>
+
+    <div class="info-grid">
+      <div class="info-item">
+        <span class="info-label">Nome completo</span>
+        <span class="info-valor">Jean-Baptiste Marie Vianney</span>
+      </div>
+      <div class="info-item">
+        <span class="info-label">Nascimento</span>
+        <span class="info-valor">8 maio 1786 · Dardilly, França</span>
+      </div>
+      <div class="info-item">
+        <span class="info-label">Morte</span>
+        <span class="info-valor">4 agosto 1859 · Ars-sur-Formans</span>
+      </div>
+      <div class="info-item">
+        <span class="info-label">Ordenado padre</span>
+        <span class="info-valor">13 agosto 1815 · com 29 anos</span>
+      </div>
+      <div class="info-item">
+        <span class="info-label">Chegou a Ars</span>
+        <span class="info-valor">Fevereiro 1818</span>
+      </div>
+      <div class="info-item">
+        <span class="info-label">Anos em Ars</span>
+        <span class="info-valor">41 anos ininterruptos</span>
+      </div>
+      <div class="info-item">
+        <span class="info-label">Beatificado</span>
+        <span class="info-valor">3 out 1905 · Pio X</span>
+      </div>
+      <div class="info-item">
+        <span class="info-label">Canonizado</span>
+        <span class="info-valor">31 mai 1925 · Pio XI</span>
+      </div>
+      <div class="info-item">
+        <span class="info-label">Padroeiro universal</span>
+        <span class="info-valor">Párocos do mundo inteiro · 1929</span>
+      </div>
+      <div class="info-item">
+        <span class="info-label">Festa litúrgica</span>
+        <span class="info-valor">4 de agosto</span>
+      </div>
+      <div class="info-item">
+        <span class="info-label">Símbolo</span>
+        <span class="info-valor">Estola sacerdotal · confessionário</span>
+      </div>
+      <div class="info-item">
+        <span class="info-label">Relíquias</span>
+        <span class="info-valor">Basílica de Ars · corpo incorrupto</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="sep">· · ·</div>
+
+  <div class="secao">
+    <div class="secao-header">
+      <span class="secao-num">02</span>
+      <div class="secao-linha"></div>
+      <span class="secao-titulo">Cronologia Completa</span>
+    </div>
+
+    <ul class="timeline">
+      <li class="tl-item">
+        <span class="tl-ano">8 maio 1786</span>
+        <span class="tl-texto">Nasce em Dardilly, perto de Lyon, terceiro filho de Mathieu Vianney e Marie Béluse. A Revolução Francesa eclodirá três anos depois.</span>
+      </li>
+      <li class="tl-item">
+        <span class="tl-ano">1793–1800</span>
+        <span class="tl-texto">Anos do Terror e das perseguições à Igreja. A família Vianney participa de Missas clandestinas com padres refratários. João cresce numa fé vivida em risco.</span>
+      </li>
+      <li class="tl-item">
+        <span class="tl-ano">1799</span>
+        <span class="tl-texto">Primeira Comunhão, aos 13 anos, realizada clandestinamente numa casa particular perante a catequista Marie Humbert.</span>
+      </li>
+      <li class="tl-item">
+        <span class="tl-ano">1803</span>
+        <span class="tl-texto">Com 17 anos, obtém permissão do pai para estudar com o padre Balley em Ecully. Início tardio dos estudos para o sacerdócio.</span>
+      </li>
+      <li class="tl-item">
+        <span class="tl-ano">1809</span>
+        <span class="tl-texto">Reprovado nos exames de admissão ao Seminário Maior de Lyon. Convocado para o serviço militar de Napoleão — adoece durante a marcha e perde o pelotão.</span>
+      </li>
+      <li class="tl-item">
+        <span class="tl-ano">1810–1812</span>
+        <span class="tl-texto">Permanece escondido nos Alpes com outros refratários militares. Retorna após anistia imperial. Continua estudando com padre Balley.</span>
+      </li>
+      <li class="tl-item">
+        <span class="tl-ano">1812</span>
+        <span class="tl-texto">Reprovado nos exames de teologia oral. O padre Balley intervém pessoalmente junto ao Vicário Geral. Segundo exame, em francês, em Ecully — aprovado.</span>
+      </li>
+      <li class="tl-item">
+        <span class="tl-ano">13 agosto 1815</span>
+        <span class="tl-texto">Ordenado sacerdote pelo bispo de Grenoble, em Grenoble. Tem 29 anos. É designado coadjutor do padre Balley em Ecully.</span>
+      </li>
+      <li class="tl-item">
+        <span class="tl-ano">Dezembro 1817</span>
+        <span class="tl-texto">Morre o padre Balley — seu mentor, protetor e pai espiritual. João perde a pessoa que mais havia acreditado nele.</span>
+      </li>
+      <li class="tl-item">
+        <span class="tl-ano">Fevereiro 1818</span>
+        <span class="tl-texto">Designado pároco de Ars-sur-Formans. Chega à aldeia de 250 habitantes perdido na neblina, guiado por uma criança chamada Antoine Givre.</span>
+      </li>
+      <li class="tl-item">
+        <span class="tl-ano">1820–1826</span>
+        <span class="tl-texto">Funda a "Providência" — casa de acolhimento para meninas pobres e órfãs. O confessionário começa a atrair penitentes de fora da aldeia. Primeiros episódios de multiplicação do trigo documentados.</span>
+      </li>
+      <li class="tl-item">
+        <span class="tl-ano">1827</span>
+        <span class="tl-texto">O bispo de Belley, após visita pastoral, declara: "Não sei se é sábio, mas sei que é santo." A fama de Ars começa a se espalhar pela diocese.</span>
+      </li>
+      <li class="tl-item">
+        <span class="tl-ano">1830–1845</span>
+        <span class="tl-texto">Período de maior intensidade das perturbações demoníacas noturnas. Múltiplas testemunhas documentam episódios de barulhos, pancadas e o catre incendiado.</span>
+      </li>
+      <li class="tl-item">
+        <span class="tl-ano">1843</span>
+        <span class="tl-texto">Primeira tentativa séria de fuga de Ars. É interceptado pelos paroquianos e retorna. Outras tentativas seguirão nos anos seguintes.</span>
+      </li>
+      <li class="tl-item">
+        <span class="tl-ano">Década de 1850</span>
+        <span class="tl-texto">Até 80.000 peregrinos por ano chegam a Ars. A Companhia de Estrada de Ferro Lyon-Paris cria bilhete especial "para Ars". Ele confessa entre 11 e 16 horas por dia.</span>
+      </li>
+      <li class="tl-item">
+        <span class="tl-ano">Julho 1859</span>
+        <span class="tl-texto">Adoece gravemente. Abandona o confessionário pela primeira vez em décadas. O bispo vem visitá-lo. Multidões rezam nas ruas.</span>
+      </li>
+      <li class="tl-item">
+        <span class="tl-ano">4 agosto 1859</span>
+        <span class="tl-texto">Morre às duas da manhã, com 73 anos. Seis mil pessoas comparecem ao funeral. O bispo declara: "Perdemos um homem que não era como os outros."</span>
+      </li>
+      <li class="tl-item">
+        <span class="tl-ano">3 outubro 1905</span>
+        <span class="tl-texto">Beatificado pelo Papa Pio X — ele próprio será canonizado décadas depois.</span>
+      </li>
+      <li class="tl-item">
+        <span class="tl-ano">31 maio 1925</span>
+        <span class="tl-texto">Canonizado pelo Papa Pio XI. Proclamado santo da Igreja universal.</span>
+      </li>
+      <li class="tl-item">
+        <span class="tl-ano">23 abril 1929</span>
+        <span class="tl-texto">Proclamado padroeiro universal de todos os párocos do mundo inteiro — por Pio XI, que via nele o modelo de todo pastor de almas.</span>
+      </li>
+      <li class="tl-item">
+        <span class="tl-ano">2009–2010</span>
+        <span class="tl-texto">Ano sacerdotal convocado pelo Papa Bento XVI sob o patrocínio de São João Maria Vianney, por ocasião dos 150 anos de sua morte.</span>
+      </li>
+    </ul>
+  </div>
+
+  <div class="sep">· · ·</div>
+
+  <div class="secao">
+    <div class="secao-header">
+      <span class="secao-num">03</span>
+      <div class="secao-linha"></div>
+      <span class="secao-titulo">Ars Hoje — O Santuário</span>
+    </div>
+
+    <div class="bloco">
+      <h3>O que existe em Ars hoje</h3>
+      <p>A aldeia de Ars-sur-Formans tornou-se um dos santuários mais importantes da França e um dos destinos de peregrinação mais significativos da Europa para os católicos. O que era uma aldeia de 250 habitantes recebe hoje mais de meio milhão de visitantes por ano.</p>
+    </div>
+
+    <div class="box">
+      <h3>O que visitar em Ars</h3>
+      <ul class="lista">
+        <li><strong>A Basílica de Ars</strong> — construída após a morte do Cura, inaugurada em 1862; guarda o relicário com o corpo do santo e o coração separado em urna própria</li>
+        <li><strong>A Igreja paroquial primitiva</strong> — a mesma onde o Cura celebrava a Missa; preservada com o confessionário original</li>
+        <li><strong>O confessionário de São João Vianney</strong> — o original, de madeira escurecida pelo tempo; ainda no lugar onde ficou durante 41 anos</li>
+        <li><strong>O presbitério-museu</strong> — a casa onde o Cura viveu; preservada com os móveis originais, na austeridade que ele a deixou</li>
+        <li><strong>A Providência</strong> — a casa de acolhimento que ele fundou; parte do complexo do santuário</li>
+        <li><strong>A sala das catequeses</strong> — onde o Cura ensinava as crianças; preservada</li>
+        <li><strong>O centro de espiritualidade</strong> — moderno, com retiros, confissões e acolhimento de peregrinos</li>
+      </ul>
+    </div>
+
+    <div class="bloco">
+      <h3>O confessionário hoje</h3>
+      <p>O confessionário original de João Maria Vianney permanece na sua posição original na igreja paroquial de Ars. É uma estrutura simples de madeira escurecida — sem ornamentos, sem inscrição especial. O que o torna único é o que aconteceu dentro dele ao longo de quatro décadas.</p>
+      <p>Peregrinos tocam a madeira com uma reverência que não é dirigida ao objeto — é dirigida ao que ele representa: o lugar onde um homem sem diploma universitário transformou vidas que nenhuma academia poderia ter transformado.</p>
+    </div>
+
+    <div class="info-grid">
+      <div class="info-item">
+        <span class="info-label">Visitantes anuais</span>
+        <span class="info-valor">~500.000 por ano</span>
+      </div>
+      <div class="info-item">
+        <span class="info-label">Confissões disponíveis</span>
+        <span class="info-valor">Diariamente, em vários idiomas</span>
+      </div>
+      <div class="info-item">
+        <span class="info-label">Retiros oferecidos</span>
+        <span class="info-valor">Todo o ano, grupos e individuais</span>
+      </div>
+      <div class="info-item">
+        <span class="info-label">Localização</span>
+        <span class="info-valor">Ars-sur-Formans, Ain, França</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="sep">· · ·</div>
+
+  <div class="secao">
+    <div class="secao-header">
+      <span class="secao-num">04</span>
+      <div class="secao-linha"></div>
+      <span class="secao-titulo">Obras Sobre São João Maria Vianney</span>
+    </div>
+
+    <div class="bloco">
+      <h3>As biografias fundamentais</h3>
+      <p>A literatura sobre o Cura d'Ars é extensa — e começa ainda em sua vida, com a obra do Abbé Monnin, que o conheceu pessoalmente. A lista a seguir percorre as obras mais importantes, da mais próxima historicamente à mais recente.</p>
+    </div>
+
+    <div class="box">
+      <h3>Obras biográficas e espirituais essenciais</h3>
+      <ul class="lista">
+        <li><strong>Vie du Curé d'Ars</strong> — Abbé Alfred Monnin (1861) — a primeira e mais próxima biografia, por alguém que o conheceu; base de toda a literatura posterior</li>
+        <li><strong>The Curé d'Ars: His Life, His Teachings, His Miracles</strong> — Abbé Francis Trochu (1927) — a grande biografia do século XX; extensa, documentada, traduzida em mais de dez línguas</li>
+        <li><strong>Monsieur Vianney</strong> — Lancelot Sheppard — biografia em inglês acessível, com atenção ao contexto histórico</li>
+        <li><strong>The Secret of the Curé d'Ars</strong> — Henri Ghéon — análise espiritual por um escritor convertido; influenciou Fulton Sheen</li>
+        <li><strong>The Curé d'Ars</strong> — Henri Brémond — perspectiva do grande historiador da espiritualidade francesa</li>
+        <li><strong>Soul of the Apostolate</strong> — Dom Jean-Baptiste Chautard — inspirado pelo modelo do Cura; clássico de espiritualidade sacerdotal</li>
+        <li><strong>The Sermons of the Curé d'Ars</strong> — traduzido por Una Morrissy; os sermões originais em tradução inglesa</li>
+        <li><strong>João Maria Vianney — O Cura d'Ars</strong> — várias edições brasileiras de compilações de seus ditos e catequeses</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="sep">· · ·</div>
+
+  <div class="secao">
+    <div class="secao-header">
+      <span class="secao-num">05</span>
+      <div class="secao-linha"></div>
+      <span class="secao-titulo">Curiosidades e Fatos Notáveis</span>
+    </div>
+
+    <div class="bloco">
+      <h3>O padre que quase não virou padre — cinco vezes</h3>
+      <p>João Vianney enfrentou ao menos cinco obstáculos sérios que poderiam tê-lo impedido de ser padre: a formação tardia, a primeira reprovação no seminário, o recrutamento militar, a segunda reprovação nos exames de teologia, e a intervenção providencial do padre Balley que o salvou de ser descartado pelo sistema. Qualquer um desses obstáculos, sozinho, bastaria para dissuadir a maioria das vocações. Todos cinco, juntos, apenas provaram o que havia dentro dele.</p>
+    </div>
+
+    <div class="bloco">
+      <h3>O bilhete de trem "para Ars"</h3>
+      <p>Quando a linha ferroviária Lyon-Paris foi inaugurada e passou a servir a região, a Companhia de Estrada de Ferro criou um bilhete especial chamado "billet pour Ars" — porque o número de pessoas que viajavam especificamente para a aldeia era suficientemente grande para justificar a criação de uma tarifa específica. Um padre numa aldeia de 250 pessoas havia se tornado grande o suficiente para influenciar a política comercial de uma ferrovia nacional.</p>
+    </div>
+
+    <div class="bloco">
+      <h3>O homem que dormia menos que qualquer monge</h3>
+      <p>Os registros dos que conviviam com João Vianney em Ars documentam que, nos anos de maior atividade pastoral, ele dormia entre duas e quatro horas por noite — e chegava ao confisionário às três ou quatro da manhã. Isso durante décadas. Os médicos que o examinaram ficavam perplexos: seu organismo não deveria ser capaz de sustentar aquele ritmo. Ele sustentou.</p>
+    </div>
+
+    <div class="bloco">
+      <h3>Pio X e o Cura — um papa beatificado pelo outro</h3>
+      <p>Uma curiosidade histórica singular: o Papa Pio X, que beatificou João Vianney em 1905, foi ele próprio canonizado em 1954. Dois santos: um beatificado pelo outro. Pio X tinha uma devoção pessoal intensa ao Cura d'Ars — e via no modelo pastoral do simples pároco de aldeia o antídoto para os clericalimos academicistas que preocupavam a Igreja de seu tempo.</p>
+    </div>
+
+    <div class="bloco">
+      <h3>O Ano Sacerdotal de 2009–2010</h3>
+      <p>Em 2009, por ocasião dos 150 anos da morte de São João Maria Vianney, o Papa Bento XVI convocou um Ano Sacerdotal para toda a Igreja, colocado sob o patrocínio do Cura d'Ars. Durante esse ano, a figura do santo simples de Ars foi proposta explicitamente como modelo para todos os padres do mundo — não apesar de suas limitações acadêmicas, mas em parte por causa delas: como prova de que o que Deus pede de um pastor de almas não é erudição, mas amor.</p>
+    </div>
+
+    <div class="bloco">
+      <h3>Uma frase de Pio XI que define tudo</h3>
+      <p>Quando o Papa Pio XI proclamou João Vianney padroeiro universal dos párocos em 1929, justificou a escolha com uma frase que resume quatro décadas de Ars melhor do que qualquer biografia: "Que todos os pastores de almas olhem para ele como para o seu espelho e o seu modelo."</p>
+      <p>Um espelho. Não uma exceção admirável e inimitável. Um espelho — no qual cada padre deveria poder reconhecer, ao menos como aspiração, o que é chamado a ser. Essa é a canonização mais desafiadora que a Igreja pode conferir a um homem: não declará-lo exceção, mas propô-lo como norma.</p>
+    </div>
+
+    <div class="destaque">
+      Em Ars, o confessionário original ainda existe, no mesmo lugar onde ficou durante 41 anos. Todos os dias, peregrinos tocam aquela madeira escurecida pelo tempo com uma reverência que não é superstição — é gratidão. É o gesto de quem sabe que ali, naquelas tábuas simples, aconteceu algo que nenhuma ciência explica completamente: almas que chegavam quebradas e saíam inteiras.
+    </div>
+  </div>
+
+</div>
+</div><!-- /geral -->
+
+
+<script>
+  const btns = document.querySelectorAll('.nav-btn');
+  const paineis = document.querySelectorAll('.painel');
+
+  btns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const alvo = btn.dataset.painel;
+      btns.forEach(b => b.classList.remove('ativo'));
+      paineis.forEach(p => p.classList.remove('ativo'));
+      btn.classList.add('ativo');
+      document.querySelector(`.painel[data-nome="${alvo}"]`).classList.add('ativo');
+      window.scrollTo({ top: document.querySelector('.nav-wrap').offsetTop, behavior: 'smooth' });
+    });
+  });
+</script>
 </body>
 </html>
