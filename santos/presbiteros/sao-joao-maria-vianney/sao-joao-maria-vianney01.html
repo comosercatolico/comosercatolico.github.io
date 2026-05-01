@@ -1,0 +1,1637 @@
+```html
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>São João Maria Vianney — Parte 1: História & Vida</title>
+<link rel="stylesheet" href="sao-joao-maria-vianney.css">
+<style>
+/* ═══════════════════════════════════════
+   ESTILOS ESPECÍFICOS DA PARTE 1
+   ═══════════════════════════════════════ */
+
+/* PROGRESS BAR */
+#progress-bar{
+  position:fixed;top:0;left:0;
+  width:0%;height:3px;
+  background:linear-gradient(90deg,#c9a84c,#f5d680,#c9a84c);
+  z-index:9999;
+  transition:width .15s linear;
+}
+
+/* BACK TO TOP */
+#back-top{
+  position:fixed;bottom:30px;right:30px;
+  width:48px;height:48px;
+  border-radius:50%;
+  border:1.5px solid rgba(201,168,76,.4);
+  background:rgba(10,10,15,.85);
+  backdrop-filter:blur(10px);
+  color:#c9a84c;font-size:1.3rem;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;opacity:0;pointer-events:none;
+  transition:all .35s ease;z-index:9998;
+}
+#back-top.show{opacity:1;pointer-events:all}
+#back-top:hover{background:rgba(201,168,76,.15);transform:scale(1.1)}
+
+/* SIDEBAR */
+.sidebar{
+  position:fixed;top:0;left:0;
+  width:280px;height:100vh;
+  background:rgba(8,8,14,.97);
+  border-right:1px solid rgba(201,168,76,.12);
+  padding:0 0 28px 0;
+  overflow-y:auto;z-index:9990;
+  transform:translateX(-100%);
+  transition:transform .35s cubic-bezier(.4,0,.2,1);
+}
+.sidebar.open{transform:translateX(0)}
+.sidebar-overlay{
+  position:fixed;inset:0;
+  background:rgba(0,0,0,.55);
+  z-index:9989;opacity:0;pointer-events:none;
+  transition:opacity .3s ease;
+}
+.sidebar-overlay.show{opacity:1;pointer-events:all}
+
+/* sidebar brand */
+.sidebar-brand{
+  padding:22px 22px 16px;
+  border-bottom:1px solid rgba(201,168,76,.08);
+  margin-bottom:8px;
+  position:sticky;top:0;
+  background:rgba(8,8,14,.97);
+  z-index:1;
+}
+.sidebar-brand-parte{
+  font-size:.55rem;letter-spacing:.2em;
+  text-transform:uppercase;
+  color:rgba(201,168,76,.4);
+  display:block;margin-bottom:3px;
+}
+.sidebar-brand-titulo{
+  font-size:.82rem;color:#c9a84c;font-weight:600;
+}
+.sidebar-brand-home{
+  display:inline-flex;align-items:center;gap:5px;
+  margin-top:10px;font-size:.68rem;
+  color:rgba(212,208,200,.35);
+  text-decoration:none;
+  transition:color .2s ease;
+}
+.sidebar-brand-home:hover{color:rgba(201,168,76,.6)}
+
+.sidebar a{
+  display:flex;align-items:baseline;gap:10px;
+  padding:9px 22px;font-size:.8rem;
+  color:rgba(212,208,200,.5);
+  text-decoration:none;transition:all .2s ease;
+  border-left:2px solid transparent;
+}
+.sidebar a:hover{
+  color:#c9a84c;background:rgba(201,168,76,.04);
+  border-left-color:rgba(201,168,76,.3);
+}
+.sidebar a.active{
+  color:#f5d680;background:rgba(201,168,76,.08);
+  border-left-color:#c9a84c;
+}
+.sidebar a .sn{
+  font-size:.68rem;font-weight:700;
+  color:rgba(201,168,76,.35);min-width:22px;
+}
+.sidebar a .st{flex:1}
+.sidebar a .stag{
+  font-size:.55rem;padding:1px 6px;border-radius:8px;
+  letter-spacing:.04em;font-weight:600;white-space:nowrap;
+}
+.stag-essencial{background:rgba(201,168,76,.15);color:#c9a84c}
+.stag-aprofundamento{background:rgba(100,140,200,.12);color:#7aa8d4}
+.stag-curiosidade{background:rgba(160,120,200,.12);color:#b89cd8}
+.sidebar .time-est{
+  display:block;font-size:.6rem;
+  color:rgba(212,208,200,.25);
+  padding:1px 22px 0 54px;
+  margin-top:-4px;margin-bottom:2px;
+}
+
+/* HAMBURGER */
+.hamburger{
+  position:fixed;top:16px;left:16px;z-index:9995;
+  width:44px;height:44px;border-radius:12px;
+  border:1px solid rgba(201,168,76,.2);
+  background:rgba(10,10,15,.85);
+  backdrop-filter:blur(10px);
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:5px;
+  cursor:pointer;transition:all .3s ease;
+}
+.hamburger span{
+  display:block;width:20px;height:1.5px;
+  background:#c9a84c;border-radius:2px;
+  transition:all .3s ease;
+}
+.hamburger.active span:nth-child(1){transform:rotate(45deg) translate(4.5px,4.5px)}
+.hamburger.active span:nth-child(2){opacity:0}
+.hamburger.active span:nth-child(3){transform:rotate(-45deg) translate(4.5px,-4.5px)}
+
+@media(min-width:1100px){
+  .sidebar{transform:translateX(0)}
+  .sidebar-overlay{display:none!important}
+  .hamburger{display:none}
+  .main-content{margin-left:280px}
+}
+
+/* MAIN */
+.main-content{
+  max-width:780px;
+  margin:0 auto;
+  padding:48px 22px 100px;
+}
+
+/* HERO */
+.p1-hero{
+  text-align:center;
+  padding:60px 20px 50px;
+  border-bottom:1px solid rgba(201,168,76,.1);
+  margin-bottom:50px;
+}
+.p1-hero-cross{
+  font-size:2.2rem;color:rgba(201,168,76,.25);
+  margin-bottom:14px;
+  animation:p1Pulso 4s ease-in-out infinite;
+}
+@keyframes p1Pulso{
+  0%,100%{opacity:.25;transform:scale(1)}
+  50%{opacity:.45;transform:scale(1.07)}
+}
+.p1-hero h1{
+  font-size:clamp(1.6rem,4.5vw,2.4rem);
+  font-weight:300;color:#f5f0e8;
+  letter-spacing:.02em;line-height:1.25;
+  margin-bottom:8px;
+}
+.p1-hero h1 strong{font-weight:700;color:#c9a84c}
+.p1-hero-sub{
+  font-size:.92rem;color:rgba(212,208,200,.5);
+  font-style:italic;margin-bottom:28px;
+}
+.p1-hero-meta{
+  display:flex;flex-wrap:wrap;justify-content:center;
+  gap:12px 26px;font-size:.73rem;
+  color:rgba(212,208,200,.38);
+}
+.p1-hero-meta span{display:flex;align-items:center;gap:5px}
+.p1-hero-meta .ico{font-size:.85rem;color:rgba(201,168,76,.38)}
+
+/* VITALS */
+.vitals{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(195px,1fr));
+  gap:11px;margin:32px 0 10px;
+}
+.vital-card{
+  background:rgba(201,168,76,.04);
+  border:1px solid rgba(201,168,76,.08);
+  border-radius:10px;padding:13px 15px;
+  transition:border-color .3s ease;
+}
+.vital-card:hover{border-color:rgba(201,168,76,.2)}
+.vital-label{
+  font-size:.58rem;text-transform:uppercase;
+  letter-spacing:.14em;color:rgba(201,168,76,.4);
+  margin-bottom:3px;
+}
+.vital-value{font-size:.86rem;color:#f5f0e8;font-weight:500}
+
+/* HOW-TO */
+.how-to{
+  background:rgba(201,168,76,.03);
+  border:1px solid rgba(201,168,76,.08);
+  border-radius:12px;padding:20px 24px;
+  margin:28px 0 0;
+}
+.how-to h3{
+  font-size:.83rem;color:#c9a84c;
+  margin-bottom:8px;font-weight:600;
+}
+.how-to p{
+  font-size:.78rem;color:rgba(212,208,200,.52);
+  line-height:1.72;
+}
+.tag-legend{
+  display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;
+}
+.tag-legend span{
+  font-size:.62rem;padding:2px 9px;
+  border-radius:10px;font-weight:600;
+}
+
+/* SECTION */
+.secao{
+  margin-bottom:72px;
+  scroll-margin-top:30px;
+}
+.secao-header{
+  display:flex;align-items:center;gap:16px;
+  margin-bottom:8px;
+}
+.secao-num{
+  font-size:2.2rem;font-weight:200;
+  color:rgba(201,168,76,.18);
+  font-family:'Georgia',serif;
+  min-width:48px;text-align:right;
+}
+.secao-linha{
+  flex:1;height:1px;
+  background:linear-gradient(90deg,rgba(201,168,76,.17),transparent);
+}
+.secao-titulo{
+  font-size:1.08rem;font-weight:600;
+  color:#f5f0e8;letter-spacing:.01em;
+}
+.secao-meta{
+  display:flex;align-items:center;gap:10px;
+  margin:0 0 26px 64px;
+}
+.secao-time{font-size:.6rem;color:rgba(212,208,200,.28)}
+
+/* BLOCKS */
+.bloco{margin-bottom:26px}
+.bloco h3{
+  font-size:.98rem;font-weight:600;
+  color:#e8e2d6;margin-bottom:10px;line-height:1.4;
+}
+.bloco p{
+  font-size:.92rem;color:rgba(212,208,200,.76);
+  margin-bottom:13px;line-height:1.83;
+}
+.bloco p:last-child{margin-bottom:0}
+
+.capitular{
+  float:left;font-size:3.4rem;line-height:.82;
+  margin:4px 12px 0 0;
+  font-family:'Georgia',serif;
+  color:#c9a84c;
+}
+
+/* QUOTE */
+.citacao{
+  border-left:3px solid rgba(201,168,76,.32);
+  padding:17px 22px;margin:26px 0;
+  background:rgba(201,168,76,.03);
+  border-radius:0 10px 10px 0;
+}
+.citacao p{
+  font-size:1.01rem;font-style:italic;
+  color:#f5f0e8;line-height:1.7;
+  margin-bottom:5px;
+}
+.citacao .fonte{
+  font-size:.7rem;
+  color:rgba(201,168,76,.45);
+  font-style:normal;
+}
+
+/* DESTAQUE */
+.destaque{
+  background:linear-gradient(135deg,rgba(201,168,76,.06),rgba(201,168,76,.02));
+  border:1px solid rgba(201,168,76,.11);
+  border-radius:12px;padding:24px 28px;
+  margin:28px 0;
+  font-size:.91rem;font-style:italic;
+  color:rgba(245,240,232,.83);
+  line-height:1.77;position:relative;
+}
+.destaque::before{
+  content:'❝';position:absolute;top:-10px;left:16px;
+  font-size:2.4rem;color:rgba(201,168,76,.13);
+  font-family:'Georgia',serif;
+}
+
+/* EVENT CARD */
+.evento-card{
+  background:rgba(10,10,20,.65);
+  border:1px solid rgba(201,168,76,.11);
+  border-radius:14px;padding:24px 26px;
+  margin:28px 0;position:relative;overflow:hidden;
+}
+.evento-card::before{
+  content:'';position:absolute;
+  top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,rgba(201,168,76,.28),transparent);
+}
+.evento-meta{
+  font-size:.6rem;letter-spacing:.12em;
+  text-transform:uppercase;
+  color:rgba(201,168,76,.45);margin-bottom:8px;
+}
+.evento-card h3{
+  font-size:1.02rem;font-weight:700;
+  color:#f5d680;margin-bottom:10px;
+}
+.evento-card p{
+  font-size:.87rem;
+  color:rgba(212,208,200,.7);line-height:1.78;
+}
+
+/* INFO GRID */
+.info-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(215px,1fr));
+  gap:10px;margin:26px 0;
+}
+.info-item{
+  display:flex;flex-direction:column;gap:3px;
+  padding:13px 15px;
+  background:rgba(201,168,76,.03);
+  border:1px solid rgba(201,168,76,.06);
+  border-radius:8px;
+}
+.info-label{
+  font-size:.57rem;text-transform:uppercase;
+  letter-spacing:.14em;color:rgba(201,168,76,.38);
+}
+.info-value{font-size:.83rem;color:#f5f0e8;font-weight:500}
+
+/* CAIXA */
+.caixa{
+  background:rgba(201,168,76,.025);
+  border:1px solid rgba(201,168,76,.07);
+  border-radius:12px;padding:22px 24px;
+  margin:26px 0;
+}
+.caixa h3{
+  font-size:.9rem;color:#c9a84c;
+  margin-bottom:13px;font-weight:600;
+}
+.caixa ul{list-style:none;padding:0}
+.caixa li{
+  padding:7px 0;
+  border-bottom:1px solid rgba(201,168,76,.05);
+  font-size:.85rem;color:rgba(212,208,200,.68);
+  display:flex;gap:10px;align-items:baseline;
+  line-height:1.65;
+}
+.caixa li:last-child{border-bottom:none}
+.caixa li::before{
+  content:'◆';font-size:.42rem;
+  color:rgba(201,168,76,.32);
+  margin-top:5px;flex-shrink:0;
+}
+
+/* TIMELINE */
+.timeline{
+  margin:26px 0;
+  padding-left:26px;
+  border-left:2px solid rgba(201,168,76,.1);
+}
+.tl-item{
+  position:relative;padding:0 0 26px 20px;
+}
+.tl-item:last-child{padding-bottom:0}
+.tl-item::before{
+  content:'';position:absolute;left:-31px;top:6px;
+  width:10px;height:10px;border-radius:50%;
+  background:rgba(201,168,76,.18);
+  border:2px solid rgba(201,168,76,.3);
+}
+.tl-item.major::before{
+  background:#c9a84c;border-color:#f5d680;
+  box-shadow:0 0 10px rgba(201,168,76,.28);
+}
+.tl-date{
+  font-size:.77rem;font-weight:700;
+  color:#c9a84c;margin-bottom:3px;
+}
+.tl-text{
+  font-size:.83rem;
+  color:rgba(212,208,200,.6);line-height:1.68;
+}
+
+/* DEEP DIVE */
+.deep-dive{
+  margin:20px 0;
+  border:1px solid rgba(100,140,200,.1);
+  border-radius:10px;overflow:hidden;
+}
+.deep-dive-header{
+  display:flex;align-items:center;gap:10px;
+  padding:13px 17px;cursor:pointer;
+  background:rgba(100,140,200,.04);
+  transition:background .2s ease;
+  user-select:none;
+}
+.deep-dive-header:hover{background:rgba(100,140,200,.07)}
+.deep-dive-header .dd-icon{
+  font-size:.72rem;color:rgba(100,140,200,.45);
+  transition:transform .3s ease;flex-shrink:0;
+}
+.deep-dive-header.open .dd-icon{transform:rotate(90deg)}
+.deep-dive-header .dd-tag{
+  font-size:.55rem;padding:2px 8px;
+  border-radius:8px;font-weight:600;letter-spacing:.04em;
+}
+.deep-dive-header h4{
+  flex:1;font-size:.8rem;
+  color:rgba(212,208,200,.65);font-weight:500;
+}
+.deep-dive-body{
+  max-height:0;overflow:hidden;
+  transition:max-height .4s ease,padding .3s ease;
+  padding:0 18px;
+}
+.deep-dive-body.open{
+  max-height:4000px;
+  padding:16px 18px 20px;
+}
+.deep-dive-body p{
+  font-size:.84rem;
+  color:rgba(212,208,200,.6);
+  line-height:1.78;margin-bottom:11px;
+}
+.deep-dive-body p:last-child{margin-bottom:0}
+.deep-dive-body strong{color:rgba(201,168,76,.7)}
+
+/* ORAÇÃO */
+.oracao{
+  text-align:center;
+  padding:42px 30px;margin:44px 0;
+  background:linear-gradient(180deg,rgba(201,168,76,.04),transparent);
+  border-top:1px solid rgba(201,168,76,.09);
+  border-bottom:1px solid rgba(201,168,76,.09);
+  border-radius:14px;
+}
+.oracao-titulo{
+  font-size:.62rem;letter-spacing:.22em;
+  text-transform:uppercase;
+  color:rgba(201,168,76,.45);margin-bottom:20px;
+}
+.oracao p{
+  font-size:.9rem;
+  color:rgba(245,240,232,.72);
+  line-height:2.1;font-style:italic;
+}
+
+/* SEP */
+.sep{
+  text-align:center;
+  color:rgba(201,168,76,.15);
+  font-size:1.3rem;letter-spacing:.6em;
+  margin:55px 0;user-select:none;
+}
+
+/* NAV FOOTER */
+.parte-nav-footer{
+  display:flex;justify-content:space-between;
+  gap:16px;margin-top:60px;flex-wrap:wrap;
+}
+.nav-btn{
+  flex:1;min-width:200px;
+  padding:20px 22px;
+  border:1px solid rgba(201,168,76,.1);
+  border-radius:12px;
+  background:rgba(201,168,76,.02);
+  text-decoration:none;
+  transition:all .3s ease;
+  display:flex;flex-direction:column;gap:4px;
+}
+.nav-btn:hover{
+  border-color:rgba(201,168,76,.22);
+  background:rgba(201,168,76,.05);
+}
+.nav-btn .nb-dir{
+  font-size:.58rem;letter-spacing:.15em;
+  text-transform:uppercase;
+  color:rgba(201,168,76,.4);
+}
+.nav-btn .nb-titulo{
+  font-size:.92rem;color:#f5f0e8;font-weight:600;
+}
+.nav-btn .nb-sub{
+  font-size:.72rem;color:rgba(212,208,200,.4);
+}
+.nav-btn.right{text-align:right}
+
+/* RESPONSIVE */
+@media(max-width:600px){
+  .main-content{padding:30px 16px 80px}
+  .p1-hero{padding:40px 12px 36px}
+  .secao-header{flex-wrap:wrap;gap:8px}
+  .secao-num{font-size:1.6rem;min-width:36px}
+  .secao-meta{margin-left:44px}
+  .vitals{grid-template-columns:1fr 1fr}
+  .info-grid{grid-template-columns:1fr}
+  .citacao{padding:14px 16px}
+  .evento-card{padding:18px 16px}
+  #back-top{bottom:18px;right:18px;width:42px;height:42px}
+}
+</style>
+</head>
+<body>
+
+<!-- PROGRESS BAR -->
+<div id="progress-bar"></div>
+
+<!-- BACK TO TOP -->
+<div id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</div>
+
+<!-- HAMBURGER -->
+<div class="hamburger" id="hamburger" onclick="toggleSidebar()">
+  <span></span><span></span><span></span>
+</div>
+
+<!-- OVERLAY -->
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+<!-- ══════════════════════════════════════
+     SIDEBAR
+     ══════════════════════════════════════ -->
+<nav class="sidebar" id="sidebar">
+
+  <div class="sidebar-brand">
+    <span class="sidebar-brand-parte">Parte 1 de 7</span>
+    <span class="sidebar-brand-titulo">História & Vida</span>
+    <a href="sao-joao-maria-vianney.html" class="sidebar-brand-home">
+      ← Voltar ao índice
+    </a>
+  </div>
+
+  <a href="#sec0" onclick="closeMobile()">
+    <span class="sn">00</span><span class="st">Apresentação</span>
+  </a>
+  <span class="time-est">~2 min</span>
+
+  <a href="#sec1" onclick="closeMobile()">
+    <span class="sn">01</span>
+    <span class="st">Origens — França em Chamas</span>
+    <span class="stag stag-essencial">Essencial</span>
+  </a>
+  <span class="time-est">~5 min</span>
+
+  <a href="#sec2" onclick="closeMobile()">
+    <span class="sn">02</span>
+    <span class="st">Fé na Clandestinidade</span>
+    <span class="stag stag-essencial">Essencial</span>
+  </a>
+  <span class="time-est">~5 min</span>
+
+  <a href="#sec3" onclick="closeMobile()">
+    <span class="sn">03</span>
+    <span class="st">Vocação e Formação</span>
+    <span class="stag stag-essencial">Essencial</span>
+  </a>
+  <span class="time-est">~7 min</span>
+
+  <a href="#sec4" onclick="closeMobile()">
+    <span class="sn">04</span>
+    <span class="st">A Deserção</span>
+    <span class="stag stag-aprofundamento">Aprofundamento</span>
+  </a>
+  <span class="time-est">~5 min</span>
+
+  <a href="#sec5" onclick="closeMobile()">
+    <span class="sn">05</span>
+    <span class="st">A Ordenação</span>
+    <span class="stag stag-essencial">Essencial</span>
+  </a>
+  <span class="time-est">~4 min</span>
+
+  <a href="#sec6" onclick="closeMobile()">
+    <span class="sn">06</span>
+    <span class="st">Chegada em Ars</span>
+    <span class="stag stag-essencial">Essencial</span>
+  </a>
+  <span class="time-est">~6 min</span>
+
+  <a href="#sec7" onclick="closeMobile()">
+    <span class="sn">07</span>
+    <span class="st">Transformação de Ars</span>
+    <span class="stag stag-essencial">Essencial</span>
+  </a>
+  <span class="time-est">~6 min</span>
+
+  <a href="#sec8" onclick="closeMobile()">
+    <span class="sn">08</span>
+    <span class="st">O Confessionário</span>
+    <span class="stag stag-essencial">Essencial</span>
+  </a>
+  <span class="time-est">~7 min</span>
+
+  <a href="#sec9" onclick="closeMobile()">
+    <span class="sn">09</span>
+    <span class="st">O Demônio</span>
+    <span class="stag stag-essencial">Essencial</span>
+  </a>
+  <span class="time-est">~7 min</span>
+
+  <a href="#sec10" onclick="closeMobile()">
+    <span class="sn">10</span>
+    <span class="st">Vida Interior</span>
+    <span class="stag stag-aprofundamento">Aprofundamento</span>
+  </a>
+  <span class="time-est">~6 min</span>
+
+  <a href="#sec11" onclick="closeMobile()">
+    <span class="sn">11</span>
+    <span class="st">As Fugas</span>
+    <span class="stag stag-curiosidade">Curiosidade</span>
+  </a>
+  <span class="time-est">~5 min</span>
+
+  <a href="#sec12" onclick="closeMobile()">
+    <span class="sn">12</span>
+    <span class="st">Últimos Anos e Morte</span>
+    <span class="stag stag-essencial">Essencial</span>
+  </a>
+  <span class="time-est">~6 min</span>
+
+  <a href="#sec13" onclick="closeMobile()">
+    <span class="sn">13</span>
+    <span class="st">Canonização e Legado</span>
+    <span class="stag stag-essencial">Essencial</span>
+  </a>
+  <span class="time-est">~5 min</span>
+
+</nav>
+
+<!-- ══════════════════════════════════════
+     MAIN CONTENT
+     ══════════════════════════════════════ -->
+<div class="main-content">
+
+<!-- ══════ HERO ══════ -->
+<header class="p1-hero" id="sec0">
+  <div class="p1-hero-cross">✦</div>
+  <h1>São <strong>João Maria Vianney</strong></h1>
+  <p class="p1-hero-sub">O Cura d'Ars — pastor de almas perdidas, terror dos demônios<br>e espelho da misericórdia divina</p>
+  <div class="p1-hero-meta">
+    <span><span class="ico">📖</span> Parte 1 de 7 — História & Vida</span>
+    <span><span class="ico">⏱</span> ~65 minutos de leitura</span>
+    <span><span class="ico">📋</span> 13 seções</span>
+  </div>
+
+  <div class="vitals">
+    <div class="vital-card">
+      <div class="vital-label">Nome</div>
+      <div class="vital-value">Jean-Baptiste-Marie Vianney</div>
+    </div>
+    <div class="vital-card">
+      <div class="vital-label">Nascimento</div>
+      <div class="vital-value">8 de maio de 1786 · Dardilly</div>
+    </div>
+    <div class="vital-card">
+      <div class="vital-label">Morte</div>
+      <div class="vital-value">4 de agosto de 1859 · Ars</div>
+    </div>
+    <div class="vital-card">
+      <div class="vital-label">Ordenação</div>
+      <div class="vital-value">13 de agosto de 1815</div>
+    </div>
+    <div class="vital-card">
+      <div class="vital-label">Canonização</div>
+      <div class="vital-value">31 de maio de 1925 · Pio XI</div>
+    </div>
+    <div class="vital-card">
+      <div class="vital-label">Padroeiro</div>
+      <div class="vital-value">Párocos do mundo inteiro</div>
+    </div>
+  </div>
+
+  <div class="how-to">
+    <h3>Como usar este guia</h3>
+    <p>Cada seção pode ser lida independentemente. O menu lateral marca seu progresso. Blocos colapsáveis com a etiqueta <em>Aprofundamento</em> ou <em>Curiosidade</em> contêm detalhes adicionais que você pode abrir quando quiser — sem perder o fio da narrativa principal.</p>
+    <div class="tag-legend">
+      <span class="stag stag-essencial">Essencial</span>
+      <span class="stag stag-aprofundamento">Aprofundamento</span>
+      <span class="stag stag-curiosidade">Curiosidade</span>
+    </div>
+  </div>
+</header>
+
+<div class="sep">· · ·</div>
+
+<!-- ══════ SEC 01 ══════ -->
+<section class="secao" id="sec1">
+  <div class="secao-header">
+    <span class="secao-num">01</span>
+    <div class="secao-linha"></div>
+    <span class="secao-titulo">Origens — A França em Chamas</span>
+  </div>
+  <div class="secao-meta">
+    <span class="stag stag-essencial">Essencial</span>
+    <span class="secao-time">⏱ ~5 minutos</span>
+  </div>
+
+  <div class="bloco">
+    <h3>O menino nascido na tempestade da Revolução</h3>
+    <p><span class="capitular">N</span>asceu em 8 de maio de 1786, em Dardilly, uma pequena aldeia nos arredores de Lyon, na França. O mundo que o recebeu estava prestes a entrar em convulsão. Três anos depois, explodiu a Revolução Francesa — e com ela veio uma perseguição sistemática à Igreja Católica que marcaria para sempre a alma do menino João Maria.</p>
+    <p>Seu pai, Matthieu Vianney, era um lavrador simples e profundamente religioso. Sua mãe, Marie Beluze, era uma mulher de fé ativa e cotidiana — ela que primeiro plantou em João Maria o amor pela oração e pelos santos. A família tinha seis filhos, e João era o quarto. Viviam com frugalidade, mas sem miséria.</p>
+  </div>
+
+  <div class="evento-card">
+    <div class="evento-meta">Dardilly · 1786 · Contexto familiar</div>
+    <h3>A Casa dos Vianney</h3>
+    <p>A casa onde João Maria nasceu ainda existe em Dardilly. Era uma construção típica do campo lionês: pedra, telha de barro, poucas divisões. Matthieu e Marie mantinham um crucifixo sobre a lareira e rezavam o terço em família todas as noites — uma prática que, dentro de poucos anos, se tornaria crime.</p>
+  </div>
+
+  <div class="bloco">
+    <p>Em Dardilly, o menino cresceu entre campos, animais e as histórias de santos que sua mãe lhe contava. Tinha uma característica que os vizinhos logo notaram: quando as outras crianças brincavam, João Maria costumava se isolar com uma pequena imagem da Virgem Maria e orar. Não era melancolia — era atração. Como se algo nele soubesse, desde cedo, que havia sido feito para aquilo.</p>
+  </div>
+
+  <div class="deep-dive">
+    <div class="deep-dive-header" onclick="toggleDeep(this)">
+      <span class="dd-icon">▸</span>
+      <h4>A pequena estátua da Virgem</h4>
+      <span class="dd-tag stag-curiosidade">Curiosidade</span>
+    </div>
+    <div class="deep-dive-body">
+      <p>A tradição hagiográfica conserva um detalhe icônico: o menino João Maria possuía uma pequena estátua de madeira da Virgem Maria, escurecida pelo tempo, que carregava consigo para o campo enquanto cuidava dos animais. Sentava-se numa pedra, colocava a estátua diante de si e rezava por longos períodos. Outras crianças se aproximavam e ele as convidava a rezar juntas — já aos sete ou oito anos, fazendo o que faria pelo resto de sua vida: atraindo pessoas à oração pela força do exemplo.</p>
+      <p>A estátua foi conservada pela família e, mais tarde, transferida para a igreja de Ars. Hoje é uma das relíquias expostas no museu do santuário.</p>
+    </div>
+  </div>
+
+  <div class="bloco">
+    <h3>A França antes e depois de 1789</h3>
+    <p>Para medir o que a Revolução significou para a família Vianney, é preciso entender a França em que nasceram. Era o país mais católico da Europa. Possuía mais de 130 dioceses, dezenas de milhares de paróquias ativas e uma cultura religiosa que permeava cada aspecto da vida civil.</p>
+    <p>Quando a Revolução chegou, tudo ruiu. Entre 1790 e 1801, cerca de 3.000 sacerdotes foram executados, mais de 30.000 foram forçados ao exílio, e milhares de igrejas foram confiscadas, vandalizadas ou convertidas em estábulos e templos do Culto da Razão.</p>
+  </div>
+
+  <div class="destaque">
+    A Revolução matou sacerdotes nas ruas de Paris. João Maria via isso com dez anos de idade. E decidiu, silenciosamente, que queria ser o que estavam tentando apagar do mundo.
+  </div>
+
+  <div class="deep-dive">
+    <div class="deep-dive-header" onclick="toggleDeep(this)">
+      <span class="dd-icon">▸</span>
+      <h4>A Revolução em números — o que a Igreja francesa perdeu</h4>
+      <span class="dd-tag stag-aprofundamento">Aprofundamento</span>
+    </div>
+    <div class="deep-dive-body">
+      <p>A Constituição Civil do Clero (1790) exigia que sacerdotes jurassem fidelidade ao Estado acima da Igreja. Os que recusaram — os chamados <em>prêtres réfractaires</em> — foram declarados fora-da-lei. Estima-se que cerca de metade do clero francês recusou o juramento e entrou na clandestinidade ou no exílio.</p>
+      <p>Nos anos do Terror (1793–1794), igrejas foram rebatizadas como "Templos da Razão". A catedral de Notre-Dame de Paris sediou o Festival da Razão em novembro de 1793. O calendário gregoriano foi substituído. Os domingos foram abolidos.</p>
+      <p>Quando Napoleão assinou a Concordata com Pio VII em 1801, o tecido eclesial da França estava em frangalhos. As paróquias rurais haviam ficado sem padre por anos. Gerações inteiras de crianças não haviam sido catequizadas.</p>
+    </div>
+  </div>
+
+  <div class="info-grid">
+    <div class="info-item">
+      <span class="info-label">Nascimento</span>
+      <span class="info-value">8 de maio de 1786</span>
+    </div>
+    <div class="info-item">
+      <span class="info-label">Local</span>
+      <span class="info-value">Dardilly, arredores de Lyon</span>
+    </div>
+    <div class="info-item">
+      <span class="info-label">Pai</span>
+      <span class="info-value">Matthieu Vianney, lavrador</span>
+    </div>
+    <div class="info-item">
+      <span class="info-label">Mãe</span>
+      <span class="info-value">Marie Beluze</span>
+    </div>
+    <div class="info-item">
+      <span class="info-label">Irmãos</span>
+      <span class="info-value">6 filhos — João Maria era o 4.º</span>
+    </div>
+    <div class="info-item">
+      <span class="info-label">Revolução</span>
+      <span class="info-value">1789 — ele tinha 3 anos</span>
+    </div>
+  </div>
+</section>
+
+<div class="sep">· · ·</div>
+
+<!-- ══════ SEC 02 ══════ -->
+<section class="secao" id="sec2">
+  <div class="secao-header">
+    <span class="secao-num">02</span>
+    <div class="secao-linha"></div>
+    <span class="secao-titulo">A Fé na Clandestinidade</span>
+  </div>
+  <div class="secao-meta">
+    <span class="stag stag-essencial">Essencial</span>
+    <span class="secao-time">⏱ ~5 minutos</span>
+  </div>
+
+  <div class="bloco">
+    <h3>Missas secretas em celeiros e florestas</h3>
+    <p><span class="capitular">D</span>urante os anos mais violentos da Revolução, o Culto da Razão substituiu o catolicismo como religião oficial da França. Igrejas foram confiscadas, sacerdotes executados ou forçados ao exílio. Celebrar a Missa era um ato criminoso punível com a morte.</p>
+    <p>A família Vianney recusou a submissão. Matthieu abria sua casa de madrugada para missas clandestinas celebradas por padres fugitivos que percorriam o interior francês com a vida na mão. João Maria, menino ainda, ficava de vigia na porta enquanto os adultos rezavam dentro. Aprendia assim que a fé podia custar tudo — e que valia pagar o preço.</p>
+  </div>
+
+  <div class="deep-dive">
+    <div class="deep-dive-header" onclick="toggleDeep(this)">
+      <span class="dd-icon">▸</span>
+      <h4>O papel da família Vianney na resistência católica</h4>
+      <span class="dd-tag stag-aprofundamento">Aprofundamento</span>
+    </div>
+    <div class="deep-dive-body">
+      <p>A casa dos Vianney era um dos "postos" conhecidos no circuito clandestino dos padres refratários na região de Lyon. Matthieu arriscava a família inteira ao abrir a porta. A pena para quem abrigasse um padre que recusara o juramento constitucional podia ser a prisão, o confisco de bens e, nos períodos mais agudos, a morte.</p>
+      <p>Marie Beluze preparava o altar improvisado — geralmente uma mesa coberta com toalha branca — e organizava os vizinhos de confiança. Sentinelas eram postados no caminho. As crianças ficavam nas janelas. O sacramento era celebrado na penumbra, com vozes baixas.</p>
+    </div>
+  </div>
+
+  <div class="evento-card">
+    <div class="evento-meta">c. 1799 · Dardilly · Sacramento</div>
+    <h3>A Primeira Comunhão Clandestina</h3>
+    <p>Numa casa de camponeses, com sentinelas postadas nas janelas e um sacerdote disfarçado de civil, o menino João Maria recebeu pela primeira vez o corpo de Cristo. Tinha treze anos. A cerimônia era crime punível com prisão ou morte. Ele jamais esqueceu aquela tarde — e passou o resto da vida tentando que outros experimentassem o que sentiu naquele instante proibido.</p>
+    <p>A sala era pequena, as janelas cobertas com panos escuros, a porta estava trancada. As crianças ajoelharam-se no chão de terra. O sacramento que ele receberia mais de quinze mil vezes ao longo da vida chegou até ele envolto em perigo e silêncio.</p>
+  </div>
+
+  <div class="bloco">
+    <h3>O padre que lhe abriu o caminho</h3>
+    <p>Por volta de 1800, já adolescente, João Maria encontrou o padre Charles Balley — pároco de Écully que exercera o ministério clandestinamente durante os anos mais terríveis. Balley seria seu diretor espiritual, seu professor e, em muitos sentidos, seu pai espiritual. Ele viu no jovem camponês uma chama que outros não enxergavam.</p>
+  </div>
+
+  <div class="destaque">
+    O padre Balley costumava dizer aos que duvidavam de Vianney: "Conheço-o melhor do que vocês. Vocês veem as dificuldades de sua inteligência. Eu vejo as disposições de sua alma."
+  </div>
+
+  <div class="deep-dive">
+    <div class="deep-dive-header" onclick="toggleDeep(this)">
+      <span class="dd-icon">▸</span>
+      <h4>Quem era o padre Charles Balley?</h4>
+      <span class="dd-tag stag-aprofundamento">Aprofundamento</span>
+    </div>
+    <div class="deep-dive-body">
+      <p>Charles Balley (1751–1817) era filho de uma família abastada de Écully. Ordenado antes da Revolução, recusou o juramento constitucional e exerceu o sacerdócio na clandestinidade durante os anos do Terror.</p>
+      <p>Quando conheceu Vianney, reconheceu nele algo que transcendia a capacidade intelectual: uma transparência espiritual que ele comparava à dos santos que havia lido. Assumiu pessoalmente a educação do jovem, financiando seus estudos e intercedendo por ele junto às autoridades eclesiásticas.</p>
+      <p>Balley morreu em 1817, um ano antes de Vianney partir para Ars. Deixou-lhe seus livros, seu cilício e sua disciplina de flagelação — objetos que Vianney usou pelo resto de sua vida.</p>
+    </div>
+  </div>
+</section>
+
+<div class="sep">· · ·</div>
+
+<!-- ══════ SEC 03 ══════ -->
+<section class="secao" id="sec3">
+  <div class="secao-header">
+    <span class="secao-num">03</span>
+    <div class="secao-linha"></div>
+    <span class="secao-titulo">Vocação e Formação — O Pior Aluno, o Maior Santo</span>
+  </div>
+  <div class="secao-meta">
+    <span class="stag stag-essencial">Essencial</span>
+    <span class="secao-time">⏱ ~7 minutos</span>
+  </div>
+
+  <div class="bloco">
+    <h3>O desejo que veio antes das palavras</h3>
+    <p><span class="capitular">D</span>esde a infância, João Maria sabia que queria ser padre. Não era uma aspiração intelectual — era uma atração visceral, anterior ao raciocínio. Quando via um sacerdote celebrar, mesmo nas missas clandestinas de celeiro, algo se acendia nele que as testemunhas descreviam como uma transformação visível.</p>
+    <p>Mas havia um obstáculo que parecia insuperável: sua capacidade intelectual para o estudo formal era limitada. O latim — língua obrigatória do seminário — simplesmente não entrava na sua memória. A filosofia abstrata lhe escapava. Seus professores duvidavam que conseguiria terminar a formação.</p>
+  </div>
+
+  <div class="bloco">
+    <h3>A resistência do pai e o seminário</h3>
+    <p>Matthieu Vianney inicialmente opôs-se à vocação do filho por necessidade prática: a família vivia da terra, e cada par de braços era indispensável. Foram necessários anos de insistência silenciosa e a intervenção do padre Balley para que o pai cedesse.</p>
+    <p>Aos vinte e poucos anos, João Maria ingressou no seminário menor de Verrières e depois no seminário maior de Lyon. Os resultados foram desastrosos. Foi reprovado nos exames. Mandado de volta para casa. O caminho parecia encerrado.</p>
+  </div>
+
+  <div class="deep-dive">
+    <div class="deep-dive-header" onclick="toggleDeep(this)">
+      <span class="dd-icon">▸</span>
+      <h4>Os detalhes das reprovações e humilhações</h4>
+      <span class="dd-tag stag-aprofundamento">Aprofundamento</span>
+    </div>
+    <div class="deep-dive-body">
+      <p>No seminário de Verrières, Vianney era aluno de uma turma de adolescentes — tendo ele mais de vinte anos. Os colegas, mais jovens e mais ágeis intelectualmente, avançavam enquanto ele ficava para trás em quase todas as disciplinas.</p>
+      <p>Em Lyon, os exames de teologia eram conduzidos em latim — e Vianney não conseguia formular respostas coerentes na língua. Os examinadores registraram que o candidato demonstrava "incapacidade notável para as ciências eclesiásticas".</p>
+      <p>O padre Balley interveio pessoalmente, escrevendo ao vigário-geral de Lyon e argumentando que a Igreja precisava de sacerdotes santos tanto quanto de sacerdotes doutos. O vigário-geral concordou em examiná-lo pessoalmente, em francês em vez de latim.</p>
+    </div>
+  </div>
+
+  <div class="citacao">
+    <p>"Este jovem sabe pouco; mas é muito virtuoso. A Igreja de França não tem necessidade apenas de sacerdotes sábios — tem necessidade de sacerdotes santos."</p>
+    <span class="fonte">Vigário-geral de Lyon, ao autorizar a ordenação de João Maria Vianney</span>
+  </div>
+
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-date">c. 1800–1806</div>
+      <div class="tl-text">Estudos privados com o padre Balley em Écully. Progresso lento mas constante.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">1807–1809</div>
+      <div class="tl-text">Seminário menor de Verrières. Dificuldades enormes. Vianney é mais velho que a maioria dos colegas.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">1809</div>
+      <div class="tl-text">Convocado para o exército napoleônico. Interrupção forçada dos estudos.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">1811–1813</div>
+      <div class="tl-text">Retorno após anistia. Seminário de Lyon. Reprovação nos exames de teologia.</div>
+    </div>
+    <div class="tl-item major">
+      <div class="tl-date">1814</div>
+      <div class="tl-text">Exame pessoal pelo vigário-geral de Lyon, em francês. Aprovação por mérito de virtude.</div>
+    </div>
+    <div class="tl-item major">
+      <div class="tl-date">13 de agosto de 1815</div>
+      <div class="tl-text">Ordenação sacerdotal aos 29 anos, em Grenoble.</div>
+    </div>
+  </div>
+</section>
+
+<div class="sep">· · ·</div>
+
+<!-- ══════ SEC 04 ══════ -->
+<section class="secao" id="sec4">
+  <div class="secao-header">
+    <span class="secao-num">04</span>
+    <div class="secao-linha"></div>
+    <span class="secao-titulo">A Deserção — O Fugitivo Involuntário</span>
+  </div>
+  <div class="secao-meta">
+    <span class="stag stag-aprofundamento">Aprofundamento</span>
+    <span class="secao-time">⏱ ~5 minutos</span>
+  </div>
+
+  <div class="bloco">
+    <h3>A convocação napoleônica</h3>
+    <p><span class="capitular">E</span>m 1809, em plena formação, João Maria foi convocado pelo exército de Napoleão para servir na guerra na Espanha. Apresentou-se na capitania de Lyon, mas adoeceu gravemente no caminho. Ficou hospitalizado em Roanne. Quando se recuperou, seu pelotão já havia partido. Oficialmente, passou a ser classificado como desertor.</p>
+  </div>
+
+  <div class="bloco">
+    <h3>Os meses como "Jerome Vincent"</h3>
+    <p>Vianney refugiou-se em Les Noes, uma aldeia remota nas montanhas, onde viveu por vários meses sob o nome falso de Jerome Vincent. Ensinou catecismo às crianças da região e viveu numa angústia que o dilacerava: sabia que não era covarde, mas também sabia que não era soldado.</p>
+    <p>Em 1810, Napoleão concedeu uma anistia geral. Vianney voltou para Écully e retomou os estudos com o padre Balley. O episódio durou menos de dois anos — mas deixou marcas profundas.</p>
+  </div>
+
+  <div class="deep-dive">
+    <div class="deep-dive-header" onclick="toggleDeep(this)">
+      <span class="dd-icon">▸</span>
+      <h4>O que esse período formou nele</h4>
+      <span class="dd-tag stag-curiosidade">Curiosidade</span>
+    </div>
+    <div class="deep-dive-body">
+      <p>Em Les Noes, Vianney experimentou pela primeira vez o isolamento total, a dependência completa de estranhos e a fragilidade da liberdade. Viveu como um pobre entre os mais pobres. Ensinou catecismo a crianças que nunca haviam visto um padre. Era, em miniatura, o que faria em Ars.</p>
+      <p>Na narrativa de sua vida, a deserção parece um desvio absurdo — mas foi durante esses meses que consolidou sua decisão de ser padre a qualquer custo. Quando a anistia chegou, não hesitou um segundo. Voltou para os estudos como quem havia confirmado sua vocação pelo fogo.</p>
+    </div>
+  </div>
+</section>
+
+<div class="sep">· · ·</div>
+
+<!-- ══════ SEC 05 ══════ -->
+<section class="secao" id="sec5">
+  <div class="secao-header">
+    <span class="secao-num">05</span>
+    <div class="secao-linha"></div>
+    <span class="secao-titulo">A Ordenação — O Dia que Mudou a Europa</span>
+  </div>
+  <div class="secao-meta">
+    <span class="stag stag-essencial">Essencial</span>
+    <span class="secao-time">⏱ ~4 minutos</span>
+  </div>
+
+  <div class="evento-card">
+    <div class="evento-meta">13 de agosto de 1815 · Grenoble</div>
+    <h3>O Dia da Ordenação</h3>
+    <p>Aos 29 anos, João Maria Vianney foi ordenado sacerdote em Grenoble. A cerimônia não teve nada de especial exteriormente. Mas para o homem que havia sido reprovado nos exames, vivido como desertor e sido considerado incapaz, aquele dia era a culminação de uma luta de quase duas décadas.</p>
+  </div>
+
+  <div class="bloco">
+    <h3>Os primeiros anos — vicário em Écully</h3>
+    <p>Foi designado vicário do padre Balley em Écully. Os dois anos seguintes foram um período de aprendizado protegido: o mestre e o discípulo trabalhavam juntos, e Vianney absorvia do velho padre o modo de ser padre — a postura diante do altar, o silêncio diante do tabernáculo, a disponibilidade radical para qualquer pessoa que batesse à porta.</p>
+  </div>
+
+  <div class="bloco">
+    <h3>A morte do mestre</h3>
+    <p>Em 1817, o padre Balley morreu. Vianney perdeu o homem que havia acreditado nele quando ninguém mais acreditava. A dor foi profunda. Mas a herança foi maior: Balley deixou-lhe seus livros, seu cilício, sua disciplina de flagelação e um modelo de sacerdócio que Vianney seguiria até a morte.</p>
+  </div>
+
+  <div class="citacao">
+    <p>"A morte do padre Balley me deixou só no mundo. Mas ele me havia ensinado a não estar só diante de Deus."</p>
+    <span class="fonte">Atribuída a São João Maria Vianney</span>
+  </div>
+</section>
+
+<div class="sep">· · ·</div>
+
+<!-- ══════ SEC 06 ══════ -->
+<section class="secao" id="sec6">
+  <div class="secao-header">
+    <span class="secao-num">06</span>
+    <div class="secao-linha"></div>
+    <span class="secao-titulo">Chegada em Ars — O Encontro com o Destino</span>
+  </div>
+  <div class="secao-meta">
+    <span class="stag stag-essencial">Essencial</span>
+    <span class="secao-time">⏱ ~6 minutos</span>
+  </div>
+
+  <div class="bloco">
+    <h3>Uma aldeia esquecida por Deus e pelos homens</h3>
+    <p><span class="capitular">E</span>m fevereiro de 1818, João Maria Vianney chegou a pé à paróquia que lhe havia sido designada: Ars-sur-Formans, uma aldeia de duzentos e trinta habitantes a quarenta quilômetros de Lyon. O caminho era enlameado, o céu estava cinza, e o viajante pediu indicações a um menino pastor chamado Antoine Givre.</p>
+  </div>
+
+  <div class="evento-card">
+    <div class="evento-meta">Fevereiro de 1818 · Estrada para Ars</div>
+    <h3>A Frase que a História Conservou</h3>
+    <p>O menino Antoine Givre apontou o caminho para a aldeia. O padre olhou para ele e disse: <em>"Tu me mostraste o caminho para Ars; eu te mostrarei o caminho para o Céu."</em> Antoine Givre viveu até idade avançada e repetiu essa frase centenas de vezes. Foi uma das testemunhas mais citadas no processo de beatificação.</p>
+  </div>
+
+  <div class="bloco">
+    <h3>O estado moral de Ars e a estratégia pastoral</h3>
+    <p>O que ele encontrou era desolador. A igreja em ruínas. Os homens nas tabernas aos domingos. Os bailes como única diversão. A Missa sem assistência. Ars era um exemplo típico da França pós-revolucionária: um país batizado que havia esquecido o que o batismo significava.</p>
+    <p>Vianney não começou com sermões inflamados. Começou com o joelho. Passava horas diante do Santíssimo Sacramento, sozinho na igreja fria, orando pelos paroquianos que não queriam saber dele. Depois começou a visitar. Casa por casa. Com paciência infinita.</p>
+  </div>
+
+  <div class="deep-dive">
+    <div class="deep-dive-header" onclick="toggleDeep(this)">
+      <span class="dd-icon">▸</span>
+      <h4>Os primeiros meses — invisível e ignorado</h4>
+      <span class="dd-tag stag-aprofundamento">Aprofundamento</span>
+    </div>
+    <div class="deep-dive-body">
+      <p>Nos primeiros meses, Ars tratou o novo padre com indiferença. Não era hostilidade aberta — era o descaso de uma comunidade que havia aprendido a viver sem sacerdote. Celebrava a Missa para uma igreja quase vazia. Pregava para bancos desocupados. Confessava uma ou duas pessoas por semana.</p>
+      <p>O que o sustentou foi uma convicção inabalável: Deus o havia enviado àquele lugar. Portanto, o lugar responderia — não no tempo dele, mas no tempo de Deus. Enquanto isso, ele orava. E esperava.</p>
+    </div>
+  </div>
+
+  <div class="info-grid">
+    <div class="info-item">
+      <span class="info-label">Chegada</span>
+      <span class="info-value">Fevereiro de 1818</span>
+    </div>
+    <div class="info-item">
+      <span class="info-label">População</span>
+      <span class="info-value">~230 habitantes</span>
+    </div>
+    <div class="info-item">
+      <span class="info-label">Distância de Lyon</span>
+      <span class="info-value">~40 km</span>
+    </div>
+    <div class="info-item">
+      <span class="info-label">Estado da igreja</span>
+      <span class="info-value">Em ruínas — telhado furado</span>
+    </div>
+    <div class="info-item">
+      <span class="info-label">Frequência à Missa</span>
+      <span class="info-value">Muito baixa</span>
+    </div>
+    <div class="info-item">
+      <span class="info-label">Anos em Ars</span>
+      <span class="info-value">41 anos (1818–1859)</span>
+    </div>
+  </div>
+</section>
+
+<div class="sep">· · ·</div>
+
+<!-- ══════ SEC 07 ══════ -->
+<section class="secao" id="sec7">
+  <div class="secao-header">
+    <span class="secao-num">07</span>
+    <div class="secao-linha"></div>
+    <span class="secao-titulo">Transformação de Ars — O Milagre Silencioso</span>
+  </div>
+  <div class="secao-meta">
+    <span class="stag stag-essencial">Essencial</span>
+    <span class="secao-time">⏱ ~6 minutos</span>
+  </div>
+
+  <div class="bloco">
+    <h3>A revolução que não fez barulho</h3>
+    <p><span class="capitular">E</span>m alguns anos, o impossível aconteceu. Não por decreto, não por imposição, não por estratégia pastoral sofisticada — mas pela presença silenciosa e constante de um homem que simplesmente não parou de amar. Ars mudou.</p>
+  </div>
+
+  <div class="caixa">
+    <h3>O que aconteceu em Ars — passo a passo</h3>
+    <ul>
+      <li><strong>As tabernas fecharam</strong> — não porque ele as proibiu, mas porque os frequentadores pararam de ir. O dono da principal converteu-se e fechou voluntariamente.</li>
+      <li><strong>Os bailes cessaram</strong> — Vianney pregava contra os bailes com firmeza, mas a mudança veio de dentro: as famílias pararam de querer ir.</li>
+      <li><strong>O domingo voltou a ser santo</strong> — a Missa que tinha meia dúzia de presentes passou a lotar a pequena igreja. Depois passou a ter fila do lado de fora.</li>
+      <li><strong>A confissão se tornou normal</strong> — homens que não se confessavam há décadas começaram a buscar o padre. As filas no confessionário nasceram aqui, muito antes dos peregrinos de fora.</li>
+      <li><strong>A blasfêmia desapareceu</strong> — visitantes comentavam que em Ars não se ouvia uma palavra imprópria. Era algo que não encontravam em nenhuma outra aldeia da França.</li>
+      <li><strong>A caridade se instalou</strong> — os paroquianos começaram a ajudar uns aos outros. Vianney dava o exemplo: tudo que recebia ia para os pobres.</li>
+    </ul>
+  </div>
+
+  <div class="bloco">
+    <h3>Resistências e calúnias</h3>
+    <p>A transformação não aconteceu sem oposição. Chegou-se a espalhar que o padre era um fanático, um desequilibrado, e — no ataque mais grave — que mantinha relações impróprias com mulheres da paróquia.</p>
+    <p>Vianney nunca se defendeu. Limitava-se a dizer: <em>"Se soubessem o que realmente sou, teriam dito coisas piores."</em> A resposta era sempre a mesma: mais oração, mais jejum, mais horas no confessionário. A calúnia morreu por inanição.</p>
+  </div>
+
+  <div class="deep-dive">
+    <div class="deep-dive-header" onclick="toggleDeep(this)">
+      <span class="dd-icon">▸</span>
+      <h4>La Providence — o orfanato que fez milagres</h4>
+      <span class="dd-tag stag-aprofundamento">Aprofundamento</span>
+    </div>
+    <div class="deep-dive-body">
+      <p>Em 1824, Vianney fundou a Providence — um orfanato para meninas pobres e abandonadas. Não tinha dinheiro para sustentá-lo. Financiava a obra com doações que recebia e com o que economizava de sua própria subsistência — que era quase nada.</p>
+      <p>A direção foi confiada a Catherine Lassagne, autora do <em>Petit Mémoire</em>, documento essencial para a biografia do santo. Foi na Providence que aconteceu um dos milagres mais documentados: a multiplicação de grão no celeiro vazio, após Vianney ter colocado uma relíquia de São Francisco de Régis sobre o pouco trigo que restava.</p>
+    </div>
+  </div>
+
+  <div class="destaque">
+    "Quando um pároco virtuoso — um padre como Deus quer — passa por uma paróquia, tudo muda. É como quando se acende um fogo: o calor se espalha sem que se possa dizer exatamente como."
+    <br><br><em style="font-size:.85em;color:rgba(201,168,76,.45)">— São João Maria Vianney</em>
+  </div>
+</section>
+
+<div class="sep">· · ·</div>
+
+<!-- ══════ SEC 08 ══════ -->
+<section class="secao" id="sec8">
+  <div class="secao-header">
+    <span class="secao-num">08</span>
+    <div class="secao-linha"></div>
+    <span class="secao-titulo">O Confessionário — O Fenômeno que Parou a França</span>
+  </div>
+  <div class="secao-meta">
+    <span class="stag stag-essencial">Essencial</span>
+    <span class="secao-time">⏱ ~7 minutos</span>
+  </div>
+
+  <div class="bloco">
+    <h3>Como tudo começou</h3>
+    <p><span class="capitular">A</span> fama começou a se espalhar por volta de 1827. Não era uma fama de milagres espetaculares — era outra coisa, mais desconcertante: dizia-se que o padre de Ars sabia o que estava no coração das pessoas antes que elas abrissem a boca. Que lia consciências. Que convertia pecadores endurecidos em minutos de confissão.</p>
+    <p>Começaram a aparecer visitantes de cidades vizinhas. Depois de Lyon. Depois de Paris. Depois da Europa inteira.</p>
+  </div>
+
+  <div class="evento-card">
+    <div class="evento-meta">1827–1859 · Ars-sur-Formans · 32 anos</div>
+    <h3>O Confessionário Mais Famoso do Mundo</h3>
+    <p>Por mais de trinta anos, João Maria Vianney passou entre onze e dezesseis horas diárias no confessionário. Estima-se que tenha ouvido entre oitocentas mil e um milhão de confissões ao longo de sua vida. Bispos, generais, intelectuais, camponeses — todos fizeram fila no mesmo banco de madeira escura que ainda hoje se conserva na Basílica de Ars.</p>
+  </div>
+
+  <div class="bloco">
+    <h3>A infraestrutura criada pela fé</h3>
+    <p>No auge, entre 1855 e 1859, chegavam a Ars entre trezentas e quinhentas pessoas por dia — numa aldeia de 230 habitantes. Foram criadas linhas especiais de diligência de Lyon até Ars. A estrada de ferro chegou a uma cidade vizinha em parte por causa do tráfego de peregrinos. Uma economia inteira nasceu em torno de um padre no confessionário.</p>
+  </div>
+
+  <div class="deep-dive">
+    <div class="deep-dive-header" onclick="toggleDeep(this)">
+      <span class="dd-icon">▸</span>
+      <h4>Casos documentados de leitura de consciências</h4>
+      <span class="dd-tag stag-aprofundamento">Aprofundamento</span>
+    </div>
+    <div class="deep-dive-body">
+      <p><strong>A mulher de Paris:</strong> Uma senhora da alta sociedade parisiense chegou determinada a não revelar um pecado particular cometido décadas antes. Antes que ela falasse, Vianney descreveu o pecado com precisão — incluindo detalhes de circunstância, lugar e data. Ela saiu convertida e passou o resto da vida como religiosa.</p>
+      <p><strong>O nobre cético:</strong> Um intelectual de Paris veio a Ars por curiosidade — queria desmascarar o "charlatão". Vianney olhou para ele e começou a enumerar, serenamente, os pecados que o homem havia cometido ao longo dos últimos vinte anos. O nobre voltou no dia seguinte para uma confissão real.</p>
+      <p><strong>O padre que se confessou:</strong> Um sacerdote com crise de fé que não contara a ninguém. Antes de dizer uma palavra, Vianney disse: <em>"O que o traz aqui não é curiosidade. É o medo de ter perdido a fé. Não perdeu. Está apenas com medo do escuro."</em></p>
+    </div>
+  </div>
+
+  <div class="bloco">
+    <h3>Misericórdia e firmeza — o equilíbrio raro</h3>
+    <p>Vianney não era um confessor permissivo. Nos primeiros anos, chegava a recusar a absolvição a quem não mostrasse arrependimento suficiente. Com o tempo tornou-se progressivamente mais misericordioso. Nos últimos anos, dizia: <em>"Deem-lhes tempo. Deus tem mais paciência do que nós."</em></p>
+  </div>
+
+  <div class="deep-dive">
+    <div class="deep-dive-header" onclick="toggleDeep(this)">
+      <span class="dd-icon">▸</span>
+      <h4>Bispos e nobres na fila do confessionário</h4>
+      <span class="dd-tag stag-curiosidade">Curiosidade</span>
+    </div>
+    <div class="deep-dive-body">
+      <p>Bispos esperavam na mesma fila que camponeses. Generais do exército se ajoelhavam no mesmo banco que lavadeiras. A condessa de Monclin deixou um testemunho famoso: <em>"Esperamos seis horas na fila. Quando chegou a minha vez, ele me tratou exatamente como havia tratado a velha aldeã antes de mim. Não houve distinção. Deus era igual para todos ali."</em></p>
+    </div>
+  </div>
+
+  <div class="info-grid">
+    <div class="info-item">
+      <span class="info-label">Horas diárias</span>
+      <span class="info-value">11 a 16 horas</span>
+    </div>
+    <div class="info-item">
+      <span class="info-label">Anos de atividade</span>
+      <span class="info-value">~32 anos (1827–1859)</span>
+    </div>
+    <div class="info-item">
+      <span class="info-label">Confissões estimadas</span>
+      <span class="info-value">800.000 a 1.000.000+</span>
+    </div>
+    <div class="info-item">
+      <span class="info-label">Peregrinos/dia (auge)</span>
+      <span class="info-value">300 a 500 pessoas</span>
+    </div>
+    <div class="info-item">
+      <span class="info-label">Confessionário original</span>
+      <span class="info-value">Conservado na Basílica de Ars</span>
+    </div>
+    <div class="info-item">
+      <span class="info-label">Hora de início</span>
+      <span class="info-value">~2h da madrugada</span>
+    </div>
+  </div>
+</section>
+
+<div class="sep">· · ·</div>
+
+<!-- ══════ SEC 09 ══════ -->
+<section class="secao" id="sec9">
+  <div class="secao-header">
+    <span class="secao-num">09</span>
+    <div class="secao-linha"></div>
+    <span class="secao-titulo">O Demônio — Uma Guerra de Três Décadas</span>
+  </div>
+  <div class="secao-meta">
+    <span class="stag stag-essencial">Essencial</span>
+    <span class="secao-time">⏱ ~7 minutos</span>
+  </div>
+
+  <div class="bloco">
+    <h3>O "Grappin" — o nome que ele deu ao seu atormentador</h3>
+    <p><span class="capitular">P</span>or mais de trinta anos, João Maria Vianney foi atormentado por manifestações que ele atribuía ao demônio e descrevia com uma mistura de cansaço e humor seco. Chamava o demônio de <em>le grappin</em> — "o gancho", em dialeto local — com a familiaridade irônica de quem conviveu tanto tempo com um inimigo que o conhece pelos seus hábitos.</p>
+    <p>Os ataques começaram por volta de 1824 e duraram até aproximadamente 1858 — um ano antes de sua morte.</p>
+  </div>
+
+  <div class="caixa">
+    <h3>Tipos de Manifestação Documentados</h3>
+    <ul>
+      <li><strong>Auditivas</strong> — ruídos violentos: batidas, arrastar de móveis, vozes que insultavam. Testemunhas alojadas na casa ouviam os sons.</li>
+      <li><strong>Físicas</strong> — a cama era chacoalhada, arrastada pelo quarto. Em uma ocasião, Vianney foi encontrado no chão, com marcas no corpo.</li>
+      <li><strong>Incêndio</strong> — as cortinas de sua cama foram incendiadas. O fogo foi constatado e apagado por vizinhos.</li>
+      <li><strong>Sensoriais</strong> — cheiros nauseabundos que desapareciam subitamente. Frio intenso em noites que não justificavam.</li>
+      <li><strong>Psicológicas</strong> — tentações contra a fé, sugestões de abandono do sacerdócio.</li>
+    </ul>
+  </div>
+
+  <div class="evento-card">
+    <div class="evento-meta">c. 1824–1858 · Casa Paroquial de Ars</div>
+    <h3>As Noites do Grappin</h3>
+    <p>Visitantes que pernoitavam na casa paroquial relataram consistentemente: barulhos como de um exército atravessando o corredor, a cama do padre sendo chacoalhada, vozes que gritavam insultos. O padre acordava pela manhã e comentava com naturalidade: <em>"O grappin fez muito barulho esta noite. Deve ser que amanhã vem um grande pecador para se converter."</em></p>
+  </div>
+
+  <div class="deep-dive">
+    <div class="deep-dive-header" onclick="toggleDeep(this)">
+      <span class="dd-icon">▸</span>
+      <h4>Testemunhas e casos específicos</h4>
+      <span class="dd-tag stag-aprofundamento">Aprofundamento</span>
+    </div>
+    <div class="deep-dive-body">
+      <p><strong>O padre Toccanier</strong>, que residiu na casa paroquial, declarou em depoimento juramentado: <em>"Ouvi, em várias noites, ruídos que não podem ser explicados por causas naturais. Era como se alguém arrastasse móveis pesados pelo corredor e chacoalhasse a cama do senhor cura com fúria."</em></p>
+      <p><strong>A noite da cama incendiada:</strong> Vizinhos viram fumaça saindo da casa paroquial e correram. Encontraram as cortinas da cama em chamas. O padre estava sentado no chão, sereno, rezando o terço: <em>"O grappin não conseguiu me queimar. Queimou a cama."</em></p>
+      <p><strong>As frases ao demônio:</strong> <em>"Ah, és tu de novo? Que seca. Vá incomodar outro."</em> E: <em>"Tu és muito estúpido. Quanto mais me atormentas, mais almas te arranco."</em></p>
+    </div>
+  </div>
+
+  <div class="deep-dive">
+    <div class="deep-dive-header" onclick="toggleDeep(this)">
+      <span class="dd-icon">▸</span>
+      <h4>Interpretação teológica — o que a Igreja ensina</h4>
+      <span class="dd-tag stag-aprofundamento">Aprofundamento</span>
+    </div>
+    <div class="deep-dive-body">
+      <p>A teologia católica reconhece quatro graus de ação diabólica: tentação (universal), infestação (perturbação externa), obsessão (ataque psicológico intenso) e possessão (controle do corpo). O que Vianney experimentava classificava-se como infestação — manifestações externas que não afetavam sua liberdade interior.</p>
+      <p>Os ataques seguiam um padrão típico da mística cristã: concentravam-se nos momentos de maior eficácia apostólica e cessaram quando a missão de Vianney estava próxima do fim. São João da Cruz, Teresa de Ávila e Padre Pio relataram experiências análogas.</p>
+    </div>
+  </div>
+
+  <div class="bloco">
+    <h3>O fim da guerra — a paz estranha</h3>
+    <p>As manifestações cessaram por completo nos últimos anos de sua vida. Vianney interpretou o silêncio com melancolia: <em>"O grappin ficou calado. Ou eu já não sirvo para nada, ou ele sabe que acabou."</em> E: <em>"Quando éramos jovens, nós lutávamos. Agora somos velhos. Fazemos as pazes."</em></p>
+  </div>
+</section>
+
+<div class="sep">· · ·</div>
+
+<!-- ══════ SEC 10 ══════ -->
+<section class="secao" id="sec10">
+  <div class="secao-header">
+    <span class="secao-num">10</span>
+    <div class="secao-linha"></div>
+    <span class="secao-titulo">Vida Interior — Penitência, Eucaristia e Oração</span>
+  </div>
+  <div class="secao-meta">
+    <span class="stag stag-aprofundamento">Aprofundamento</span>
+    <span class="secao-time">⏱ ~6 minutos</span>
+  </div>
+
+  <div class="bloco">
+    <h3>O ascetismo que desafiava a medicina</h3>
+    <p><span class="capitular">O</span> que Vianney fazia consigo mesmo assustava quem sabia. Durante décadas, dormiu entre duas e quatro horas por noite — não por insônia, mas por escolha. Alimentava-se com o mínimo absoluto: batatas cozidas frias, às vezes nada além de pão e água. Usava cilícios e se flagelava regularmente.</p>
+    <p>Médicos que o examinaram nos últimos anos simplesmente não conseguiam explicar como um homem que comia tão pouco, dormia tão pouco e trabalhava dezesseis horas por dia conseguia manter-se de pé. Sua explicação: <em>"É o bom Deus que cuida disso."</em></p>
+  </div>
+
+  <div class="deep-dive">
+    <div class="deep-dive-header" onclick="toggleDeep(this)">
+      <span class="dd-icon">▸</span>
+      <h4>Detalhes documentados da penitência</h4>
+      <span class="dd-tag stag-aprofundamento">Aprofundamento</span>
+    </div>
+    <div class="deep-dive-body">
+      <p><strong>Sono:</strong> Acordava às duas da madrugada. Deitava-se por volta das onze da noite. Dormia sobre tábuas, sem colchão nos primeiros anos. Mais tarde, por obediência ao bispo, aceitou um colchão fino.</p>
+      <p><strong>Alimentação:</strong> Nos períodos mais intensos, vivia semanas com batatas cozinhadas uma vez por semana, frias e às vezes mofadas. Nos últimos anos, amigos conseguiram que aceitasse uma refeição quente por dia — que ele comia em pé, apressado, para voltar ao confessionário.</p>
+      <p><strong>Cilícios e disciplina:</strong> Usava arame ao redor da cintura. A disciplina herdada do padre Balley era encontrada regularmente manchada de sangue. O bispo de Belley ordenou-lhe que moderasse. Vianney obedeceu parcialmente.</p>
+    </div>
+  </div>
+
+  <div class="bloco">
+    <h3>A Missa como o centro de tudo</h3>
+    <p>Quem assistia à Missa de Vianney descrevia uma experiência que não conseguia colocar em palavras. Havia momentos em que ele parava — imóvel no meio do cânon — e os presentes ficavam em silêncio absoluto, sentindo que era algo que não deveriam interromper.</p>
+  </div>
+
+  <div class="deep-dive">
+    <div class="deep-dive-header" onclick="toggleDeep(this)">
+      <span class="dd-icon">▸</span>
+      <h4>Êxtases e fenômenos durante a liturgia</h4>
+      <span class="dd-tag stag-curiosidade">Curiosidade</span>
+    </div>
+    <div class="deep-dive-body">
+      <p>Alguns testemunhos falam de levitação durante a Missa — o padre erguido levemente acima do solo após a consagração. Outros descrevem uma luz inexplicável ao redor de sua cabeça.</p>
+      <p>Os documentos mais confiáveis registram simplesmente que sua celebração era de uma intensidade que transformava os presentes. Homens chegavam por curiosidade e saíam pedindo para se confessar. Vianney nunca comentava o que acontecia durante as pausas. Uma vez, apenas: <em>"Se soubéssemos o que é a Missa, morreríamos."</em></p>
+    </div>
+  </div>
+
+  <div class="bloco">
+    <h3>A oração como estado permanente</h3>
+    <p>Para Vianney, a oração não era uma atividade separada — era o fundo constante de toda a sua existência. Um velho camponês que passava horas sentado na igreja respondeu, quando perguntado o que fazia ali: <em>"Eu O olho. E Ele me olha."</em> Vianney considerou essa a melhor definição de oração que já havia ouvido — e a repetiu centenas de vezes ao longo de sua vida.</p>
+  </div>
+
+  <div class="citacao">
+    <p>"A oração é ao homem o que a água é ao peixe, o que a chuva é à terra, o que o sol é às flores."</p>
+    <span class="fonte">São João Maria Vianney</span>
+  </div>
+</section>
+
+<div class="sep">· · ·</div>
+
+<!-- ══════ SEC 11 ══════ -->
+<section class="secao" id="sec11">
+  <div class="secao-header">
+    <span class="secao-num">11</span>
+    <div class="secao-linha"></div>
+    <span class="secao-titulo">As Fugas — O Santo que Queria Desaparecer</span>
+  </div>
+  <div class="secao-meta">
+    <span class="stag stag-curiosidade">Curiosidade</span>
+    <span class="secao-time">⏱ ~5 minutos</span>
+  </div>
+
+  <div class="bloco">
+    <h3>O paradoxo central</h3>
+    <p><span class="capitular">H</span>á um paradoxo fascinante no centro da vida do Cura d'Ars: o homem que se tornara o destino de peregrinação mais famoso da França tentou fugir pelo menos quatro vezes. Não da vida religiosa — do sucesso. Da fama. Das multidões. Do confessionário que o devorava.</p>
+    <p>Queria ir para um mosteiro e passar o resto de seus dias em penitência silenciosa. Na sua visão, era indigno de tanto amor dos fiéis. Era apenas um pecador que precisava de solidão para se preparar para a morte.</p>
+  </div>
+
+  <div class="caixa">
+    <h3>As Tentativas de Fuga</h3>
+    <ul>
+      <li><strong>1843 — Primeira tentativa.</strong> Partiu de noite, a pé. Foi alcançado por paroquianos e convencido a voltar.</li>
+      <li><strong>1849 — Segunda tentativa.</strong> Com mais determinação. Os paroquianos organizaram uma vigília permanente.</li>
+      <li><strong>1853 — Terceira e mais famosa.</strong> Fugiu de noite com um embrulho de roupas. Alcançado a quilômetros de Ars.</li>
+      <li><strong>1858 — Último ensaio.</strong> Já muito doente. O bispo interveio pessoalmente. Obedeceu.</li>
+    </ul>
+  </div>
+
+  <div class="evento-card">
+    <div class="evento-meta">Noite de 1853 · Estrada de Ars</div>
+    <h3>"Não Tenho Coragem"</h3>
+    <p>Às três da madrugada, João Maria Vianney partiu a pé com um pequeno embrulho de roupas. Paroquianos que perceberam sua ausência saíram à sua procura com lanternas. Quando o alcançaram na estrada, choravam. Ele olhou para eles — para aqueles rostos que havia batizado, confessado, consolado por décadas — e disse apenas: <em>"Não tenho coragem."</em> Voltou. Nunca mais tentou partir.</p>
+  </div>
+
+  <div class="deep-dive">
+    <div class="deep-dive-header" onclick="toggleDeep(this)">
+      <span class="dd-icon">▸</span>
+      <h4>O que as fugas revelam sobre ele</h4>
+      <span class="dd-tag stag-aprofundamento">Aprofundamento</span>
+    </div>
+    <div class="deep-dive-body">
+      <p>As tentativas de fuga não eram covardia — eram o oposto. Eram o gesto de um homem que genuinamente acreditava ser indigno do que Deus lhe havia confiado.</p>
+      <p>O que o fazia voltar não era o dever abstrato — era o rosto concreto das pessoas que dependiam dele. As fugas são, talvez, o resumo mais perfeito de sua vida: um homem que só queria desaparecer, obrigado pelo amor a ficar visível; um homem que desejava o silêncio, condenado pelo amor a ouvir confissões até o fim.</p>
+    </div>
+  </div>
+</section>
+
+<div class="sep">· · ·</div>
+
+<!-- ══════ SEC 12 ══════ -->
+<section class="secao" id="sec12">
+  <div class="secao-header">
+    <span class="secao-num">12</span>
+    <div class="secao-linha"></div>
+    <span class="secao-titulo">Os Últimos Anos e a Morte</span>
+  </div>
+  <div class="secao-meta">
+    <span class="stag stag-essencial">Essencial</span>
+    <span class="secao-time">⏱ ~6 minutos</span>
+  </div>
+
+  <div class="bloco">
+    <h3>O corpo que se rendeu</h3>
+    <p><span class="capitular">N</span>os últimos anos, João Maria Vianney era um homem devastado fisicamente. Tosse crônica, artrite, febre recorrente, dores constantes. Seu corpo pesava menos de cinquenta quilos. Precisava de ajuda para caminhar. Mas continuava indo ao confessionário.</p>
+    <p>Em 1859, com 73 anos, o verão foi de calor extraordinário. As filas continuavam. No final de julho, celebrou o que viria a ser sua última Missa — com uma dificuldade que testemunhas descreveram como dilacerante de ver.</p>
+  </div>
+
+  <div class="bloco">
+    <h3>Os dias finais</h3>
+    <p>Em 29 de julho de 1859, Vianney colapsou. Uma pneumonia finalmente venceu o corpo que resistia há décadas. Foi à cama e não se levantou mais. Bispos e dignitários chegaram para visitá-lo. Quando lhe trouxeram a Extrema Unção, disse: <em>"Como é triste morrer, se não se amou o bom Deus o bastante."</em></p>
+  </div>
+
+  <div class="deep-dive">
+    <div class="deep-dive-header" onclick="toggleDeep(this)">
+      <span class="dd-icon">▸</span>
+      <h4>As últimas palavras documentadas</h4>
+      <span class="dd-tag stag-aprofundamento">Aprofundamento</span>
+    </div>
+    <div class="deep-dive-body">
+      <p><em>"O bom Deus está chegando. Quando se amou o bom Deus, como é doce morrer!"</em></p>
+      <p><em>"Já não é preciso me atormentar com comida. Deixem-me em paz com Jesus."</em></p>
+      <p><em>"É minha pobre última vez"</em> — ao receber a comunhão como viático.</p>
+      <p>Ao bispo de Belley: <em>"Como é bom que Vossa Excelência esteja aqui. Monsenhor vai cuidar dos meus paroquianos?"</em></p>
+    </div>
+  </div>
+
+  <div class="evento-card">
+    <div class="evento-meta">4 de agosto de 1859 · Ars-sur-Formans · 2h da madrugada</div>
+    <h3>A Morte do Cura d'Ars</h3>
+    <p>Morreu às duas da madrugada — a hora em que costumava acordar para ir ao confessionário. Era como se a morte tivesse respeitado o horário de sua vida. Ao redor do leito estavam o bispo de Belley e vários sacerdotes. A aldeia inteira velou do lado de fora.</p>
+    <p>O corpo foi exposto na igreja. Mais de trinta mil pessoas visitaram-no em dois dias — uma cifra extraordinária para uma aldeia rural no século XIX. A morte confirmava o que a vida já havia mostrado: aquele homem era de todos.</p>
+  </div>
+</section>
+
+<div class="sep">· · ·</div>
+
+<!-- ══════ SEC 13 ══════ -->
+<section class="secao" id="sec13">
+  <div class="secao-header">
+    <span class="secao-num">13</span>
+    <div class="secao-linha"></div>
+    <span class="secao-titulo">Canonização e Legado Universal</span>
+  </div>
+  <div class="secao-meta">
+    <span class="stag stag-essencial">Essencial</span>
+    <span class="secao-time">⏱ ~5 minutos</span>
+  </div>
+
+  <div class="bloco">
+    <h3>O corpo incorrupto</h3>
+    <p><span class="capitular">E</span>m 1904, quarenta e cinco anos após a morte, o corpo foi exumado para o processo de beatificação. O que os investigadores encontraram: o corpo estava intacto. O rosto preservado. As mãos cruzadas sobre o peito mantinham sua forma. Médicos apresentaram relatórios formais afirmando que o estado de preservação não tinha explicação natural.</p>
+  </div>
+
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-date">1904</div>
+      <div class="tl-text">Exumação — corpo encontrado incorrupto após 45 anos. Laudos médicos confirmam inexplicabilidade natural.</div>
+    </div>
+    <div class="tl-item major">
+      <div class="tl-date">8 de janeiro de 1905</div>
+      <div class="tl-text">Beatificado pelo Papa Pio X, ele mesmo de origem camponesa.</div>
+    </div>
+    <div class="tl-item major">
+      <div class="tl-date">31 de maio de 1925</div>
+      <div class="tl-text">Canonizado pelo Papa Pio XI na Basílica de São Pedro.</div>
+    </div>
+    <div class="tl-item major">
+      <div class="tl-date">1929</div>
+      <div class="tl-text">Proclamado Patrono Universal dos Párocos do mundo inteiro por Pio XI.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">1959</div>
+      <div class="tl-text">Papa João XXIII publica a encíclica <em>Sacerdotii Nostri Primordia</em> sobre o Cura d'Ars.</div>
+    </div>
+    <div class="tl-item major">
+      <div class="tl-date">2009</div>
+      <div class="tl-text">Papa Bento XVI proclama o Ano Sacerdotal sob seu patrocínio. Mais de 100.000 sacerdotes peregrinam a Ars.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">2013</div>
+      <div class="tl-text">Papa Francisco faz levar o coração-relicário a Roma. Missa solene na Basílica de São Pedro.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">Hoje</div>
+      <div class="tl-text">Ars recebe mais de 500.000 peregrinos por ano. O corpo repousa numa urna de cristal dourado na Basílica.</div>
+    </div>
+  </div>
+
+  <div class="deep-dive">
+    <div class="deep-dive-header" onclick="toggleDeep(this)">
+      <span class="dd-icon">▸</span>
+      <h4>O coração que viajou o mundo</h4>
+      <span class="dd-tag stag-curiosidade">Curiosidade</span>
+    </div>
+    <div class="deep-dive-body">
+      <p>O coração de Vianney foi separado do corpo durante a exumação de 1904 e conservado num relicário especial. Em 2013, o Papa Francisco pediu que fosse levado a Roma durante o Ano da Fé.</p>
+      <p>O relicário continua sendo levado a dioceses e santuários do mundo inteiro. Em cada lugar que passa, as filas de confissão aumentam. É como se ele continuasse confessando — não com a voz, mas com a presença silenciosa de um órgão que não se decompôs.</p>
+    </div>
+  </div>
+
+  <div class="citacao">
+    <p>"O sacerdócio é o amor do Coração de Jesus. Quando vemos o padre, devemos pensar em Nosso Senhor Jesus Cristo."</p>
+    <span class="fonte">São João Maria Vianney</span>
+  </div>
+
+  <div class="destaque">
+    O camponês que queria morrer em solidão nomeou seminários nos cinco continentes. O homem que reprovou nos exames de teologia inspirou mais de cem mil sacerdotes a peregrinar. O padre que fugia da fama tem hoje quinhentos mil peregrinos por ano. A vida dele é a prova de que Deus escreve certo por linhas que o mundo chama de tortas.
+  </div>
+
+  <!-- ORAÇÃO FINAL -->
+  <div class="oracao">
+    <div class="oracao-titulo">Oração a São João Maria Vianney</div>
+    <p>
+      Ó Santo Cura d'Ars,<br>
+      padroeiro de todos os sacerdotes<br>
+      e amigo dos pecadores de toda a espécie,<br>
+      vós que passastes a vida<br>
+      sentado na penumbra de um confessionário<br>
+      para que outros pudessem sair à luz:<br><br>
+      intercedei pelos sacerdotes do mundo inteiro.<br>
+      Pelos que estão cansados de servir.<br>
+      Pelos que esqueceram por que foram chamados.<br>
+      Pelos que carregam sozinhos o peso<br>
+      de almas que não pedem ajuda.<br><br>
+      E intercedei por nós, que precisamos<br>
+      do que eles têm para dar.<br>
+      Que saibamos chegar.<br>
+      Que tenhamos coragem de abrir a boca.<br>
+      Que acreditemos que o perdão<br>
+      está mais perto do que pensamos.<br><br>
+      <em>"O Céu! O Céu! Lá nos veremos!"</em><br><br>
+      Amém.
+    </p>
+  </div>
+
+  <!-- NAV ENTRE PARTES -->
+  <div class="parte-nav-footer">
+    <a href="sao-joao-maria-vianney.html" class="nav-btn">
+      <span class="nb-dir">← Índice</span>
+      <span class="nb-titulo">Guia Completo</span>
+      <span class="nb-sub">Voltar à página inicial</span>
+    </a>
+    <a href="sao-joao-maria-vianney02.html" class="nav-btn right">
+      <span class="nb-dir">Próxima parte →</span>
+      <span class="nb-titulo">Parte 2 — Espiritualidade</span>
+      <span class="nb-sub">Oração · Penitência · Humildade · Mística</span>
+    </a>
+  </div>
+
+</section>
+
+</div><!-- /main-content -->
+
+<!-- ══════════════════════════════════════
+     SCRIPTS
+     ══════════════════════════════════════ -->
+<script>
+/* PROGRESS BAR */
+const progressBar = document.getElementById('progress-bar');
+window.addEventListener('scroll', () => {
+  const h = document.documentElement;
+  const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
+  progressBar.style.width = pct + '%';
+}, { passive: true });
+
+/* BACK TO TOP */
+const backTop = document.getElementById('back-top');
+window.addEventListener('scroll', () => {
+  backTop.classList.toggle('show', window.scrollY > 600);
+}, { passive: true });
+
+/* SIDEBAR */
+const sidebar   = document.getElementById('sidebar');
+const overlay   = document.getElementById('sidebarOverlay');
+const hamburger = document.getElementById('hamburger');
+
+function toggleSidebar() {
+  sidebar.classList.toggle('open');
+  overlay.classList.toggle('show');
+  hamburger.classList.toggle('active');
+}
+function closeMobile() {
+  if (window.innerWidth < 1100) {
+    sidebar.classList.remove('open');
+    overlay.classList.remove('show');
+    hamburger.classList.remove('active');
+  }
+}
+
+/* ACTIVE NAV LINK */
+const sections = document.querySelectorAll('.secao, .p1-hero');
+const navLinks  = document.querySelectorAll('.sidebar a[href^="#"]');
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const id = entry.target.id;
+      navLinks.forEach(link => {
+        link.classList.toggle('active',
+          link.getAttribute('href') === '#' + id);
+      });
+    }
+  });
+}, { rootMargin: '-20% 0px -70% 0px' });
+
+sections.forEach(sec => observer.observe(sec));
+
+/* DEEP DIVE */
+function toggleDeep(header) {
+  header.classList.toggle('open');
+  header.nextElementSibling.classList.toggle('open');
+}
+</script>
+
+<script src="sao-joao-maria-vianney.js"></script>
+</body>
+</html>
+```
