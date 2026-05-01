@@ -261,7 +261,7 @@ export const listaSantos = [
   { nome: "São Genádio", categorias: ["Bispo"] },
   { nome: "São Romualdo", categorias: ["Abade"] },
   { nome: "São Columbano", categorias: ["Abade"] },
-  { nome: "São João Maria Vianney", categorias: ["Presbítero", "Pastor"], pasta: "presbiteros" },
+  { nome: "São João Maria Vianney", categorias: ["Presbítero", "Pastor"], pasta: "presbiteros/sao-joao-maria-vianney" },
   { nome: "São Lucas da Crimeia", categorias: ["Bispo"] },
   { nome: "São João de Kronstadt", categorias: ["Presbítero"], pasta: "presbiteros/sao-joao-de-kronstadt" },
   { nome: "São Serafim de Sarov", categorias: ["Monge"] },
