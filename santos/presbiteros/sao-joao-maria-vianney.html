@@ -972,19 +972,31 @@
 
 
 <script>
+document.addEventListener("DOMContentLoaded", function () {
+
   const btns = document.querySelectorAll('.nav-btn');
   const paineis = document.querySelectorAll('.painel');
 
   btns.forEach(btn => {
     btn.addEventListener('click', () => {
+
       const alvo = btn.dataset.painel;
+
       btns.forEach(b => b.classList.remove('ativo'));
       paineis.forEach(p => p.classList.remove('ativo'));
+
       btn.classList.add('ativo');
       document.querySelector(`.painel[data-nome="${alvo}"]`).classList.add('ativo');
-      window.scrollTo({ top: document.querySelector('.nav-wrap').offsetTop, behavior: 'smooth' });
+
+      window.scrollTo({
+        top: document.querySelector('.nav-wrap').offsetTop,
+        behavior: 'smooth'
+      });
+
     });
   });
+
+});
 </script>
 </body>
 </html>
