@@ -1,0 +1,2379 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Os 10 Mandamentos – Lux Fidei</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="mandamentos.css">
+</head>
+<body>
+
+<!-- CANVAS DE PARTÍCULAS -->
+<canvas id="particulas"></canvas>
+
+<!-- BARRA DE PROGRESSO DE LEITURA -->
+<div class="barra-progresso-wrap">
+  <div class="barra-progresso" id="barraProgresso"></div>
+  <span class="barra-pct" id="barraPct">0%</span>
+</div>
+
+<!-- NAVEGAÇÃO FLUTUANTE LATERAL (aparece ao scrollar) -->
+<nav class="nav-lateral" id="navLateral">
+  <div class="nav-lat-titulo">Mandamentos</div>
+  <a href="#m1" class="nav-lat-item" data-num="1">I</a>
+  <a href="#m2" class="nav-lat-item" data-num="2">II</a>
+  <a href="#m3" class="nav-lat-item" data-num="3">III</a>
+  <a href="#m4" class="nav-lat-item" data-num="4">IV</a>
+  <a href="#m5" class="nav-lat-item" data-num="5">V</a>
+  <a href="#m6" class="nav-lat-item" data-num="6">VI</a>
+  <a href="#m7" class="nav-lat-item" data-num="7">VII</a>
+  <a href="#m8" class="nav-lat-item" data-num="8">VIII</a>
+  <a href="#m9" class="nav-lat-item" data-num="9">IX</a>
+  <a href="#m10" class="nav-lat-item" data-num="10">X</a>
+  <div class="nav-lat-divisor"></div>
+  <a href="#secaoQuiz" class="nav-lat-item nav-lat-quiz">⚔️</a>
+</nav>
+
+<!-- BOTÃO VOLTAR -->
+<a href="../estudos.html" class="btn-voltar" id="btnVoltar">
+  <span class="voltar-seta">←</span>
+  <span class="voltar-texto">Estudos</span>
+</a>
+
+<!-- BOTÃO TOPO -->
+<button class="btn-topo" id="btnTopo" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Voltar ao topo">↑</button>
+
+
+<!-- ============================================================
+     HERO — ABERTURA CINEMATOGRÁFICA
+     ============================================================ -->
+<section class="hero" id="hero">
+  <div class="hero-bg-overlay"></div>
+
+  <div class="hero-inner">
+
+    <!-- Tábuas animadas -->
+    <div class="tabuas-icon">
+      <div class="tabua tabua-esq">
+        <span>I</span><span>II</span><span>III</span><span>IV</span><span>V</span>
+      </div>
+      <div class="tabua tabua-dir">
+        <span>VI</span><span>VII</span><span>VIII</span><span>IX</span><span>X</span>
+      </div>
+    </div>
+
+    <h1 class="hero-titulo">Os 10 Mandamentos</h1>
+    <p class="hero-subtitulo">A Lei que Deus escreveu com o próprio dedo</p>
+
+    <div class="hero-citacao">
+      <blockquote>
+        "Eu sou o Senhor teu Deus, que te fiz sair da terra do Egito, da casa da servidão."
+      </blockquote>
+      <cite>Êxodo 20,2</cite>
+    </div>
+
+    <p class="hero-descricao">
+      Não são sugestões. Não são conselhos de um guru. São os <strong>10 alicerces</strong>
+      sobre os quais toda a civilização ocidental foi construída — escritos pelo
+      <em>dedo de Deus</em> em pedra, para que nenhum vento da história pudesse apagá-los.
+      E Jesus não veio aboli-los, mas <strong>levá-los à plenitude</strong>.
+    </p>
+
+    <!-- Estatísticas animadas -->
+    <div class="hero-stats">
+      <div class="stat-card">
+        <span class="stat-icone">🏔️</span>
+        <span class="stat-num" data-target="3500">0</span>
+        <span class="stat-label">anos de história</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-icone">📜</span>
+        <span class="stat-num" data-target="2">0</span>
+        <span class="stat-label">tábuas de pedra</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-icone">⚡</span>
+        <span class="stat-num" data-target="10">0</span>
+        <span class="stat-label">mandamentos eternos</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-icone">❤️</span>
+        <span class="stat-num" data-target="2">0</span>
+        <span class="stat-label">resumos de Jesus</span>
+      </div>
+    </div>
+
+    <!-- Pergunta provocativa -->
+    <div class="hero-provocacao">
+      <p>
+        🤔 <strong>Você realmente conhece os 10 Mandamentos?</strong><br>
+        A maioria das pessoas sabe listá-los — mas pouquíssimas entendem o que
+        cada um <em>realmente</em> exige. Prepare-se para se surpreender.
+      </p>
+    </div>
+
+    <button class="btn-comecar" onclick="scrollSuave('contexto')">
+      <span>Começar a Jornada</span>
+      <span class="btn-seta">↓</span>
+    </button>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     CONTEXTO HISTÓRICO — A HISTÓRIA POR TRÁS DA LEI
+     ============================================================ -->
+<section class="secao" id="contexto">
+  <div class="secao-inner">
+
+    <div class="secao-header">
+      <span class="secao-badge">📜 Contexto Histórico</span>
+      <h2>Antes dos Mandamentos: o que aconteceu?</h2>
+      <p class="secao-subtexto">
+        Para entender os Mandamentos, é preciso entender o <strong>drama</strong>
+        que os precedeu. Não são regras caídas do céu sem contexto — são a
+        resposta de Deus a um povo que Ele acabou de libertar.
+      </p>
+    </div>
+
+    <!-- TIMELINE COMPLETA -->
+    <div class="timeline">
+
+      <div class="timeline-item" data-aos>
+        <div class="timeline-marcador">
+          <span class="timeline-ano">~1700 a.C.</span>
+          <div class="timeline-dot"></div>
+        </div>
+        <div class="timeline-conteudo">
+          <h4>🌾 José no Egito</h4>
+          <p>
+            O patriarca José, vendido pelos irmãos, torna-se governador do Egito.
+            Traz toda a família de Jacó (Israel) para lá. No início, são bem recebidos.
+            Mas com o tempo, os faraós mudam — e o que era refúgio vira prisão.
+          </p>
+        </div>
+      </div>
+
+      <div class="timeline-item" data-aos>
+        <div class="timeline-marcador">
+          <span class="timeline-ano">~1700-1250 a.C.</span>
+          <div class="timeline-dot"></div>
+        </div>
+        <div class="timeline-conteudo">
+          <h4>⛓️ 400+ anos de escravidão</h4>
+          <p>
+            Os israelitas se multiplicam, e o faraó sente medo. Escraviza-os.
+            Força-os a construir cidades. Ordena a matança dos meninos recém-nascidos.
+            Um povo inteiro perde sua identidade, sua cultura, e quase esquece seu Deus.
+          </p>
+          <div class="detalhe-extra">
+            <strong>Pense nisso:</strong> Imagine viver como escravo por 400 anos — sem
+            lei, sem direitos, sem identidade. Quando Deus liberta Israel,
+            eles precisam aprender <em>tudo de novo</em>: quem são, como viver,
+            o que é certo e errado. Os Mandamentos são esse "manual de liberdade".
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-item" data-aos>
+        <div class="timeline-marcador">
+          <span class="timeline-ano">~1250 a.C.</span>
+          <div class="timeline-dot"></div>
+        </div>
+        <div class="timeline-conteudo">
+          <h4>👶 O nascimento de Moisés</h4>
+          <p>
+            Uma mãe hebreia esconde o bebê num cesto no rio Nilo. A filha do faraó
+            o encontra e o adota. Moisés cresce no palácio — príncipe egípcio por
+            fora, hebreu por dentro. Aos 40 anos, mata um egípcio que espancava
+            um escravo. Foge para o deserto. Torna-se pastor de ovelhas.
+          </p>
+        </div>
+      </div>
+
+      <div class="timeline-item" data-aos>
+        <div class="timeline-marcador">
+          <span class="timeline-ano">~1210 a.C.</span>
+          <div class="timeline-dot"></div>
+        </div>
+        <div class="timeline-conteudo">
+          <h4>🔥 A sarça ardente</h4>
+          <p>
+            No monte Horeb, Deus aparece a Moisés numa sarça que arde sem se consumir.
+            Revela Seu nome: <strong>"EU SOU O QUE SOU"</strong> (YHWH). Envia Moisés
+            de volta ao Egito com uma missão: <em>"Deixa ir o meu povo"</em> (Ex 5,1).
+          </p>
+          <div class="detalhe-extra">
+            <strong>Curiosidade:</strong> O nome YHWH é tão sagrado que os judeus até
+            hoje não o pronunciam. Dizem "Adonai" (Senhor) em seu lugar. Isso mostra
+            o respeito que o 2º mandamento exige.
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-item" data-aos>
+        <div class="timeline-marcador">
+          <span class="timeline-ano">As 10 pragas</span>
+          <div class="timeline-dot"></div>
+        </div>
+        <div class="timeline-conteudo">
+          <h4>🩸 As 10 pragas do Egito</h4>
+          <p>
+            O faraó resiste. Deus envia 10 pragas devastadoras — cada uma
+            atingindo um "deus" egípcio diferente:
+          </p>
+          <div class="pragas-grid">
+            <span class="praga">1. 🩸 Água em sangue <small>(contra Hápi)</small></span>
+            <span class="praga">2. 🐸 Rãs <small>(contra Heket)</small></span>
+            <span class="praga">3. 🦟 Piolhos <small>(contra Geb)</small></span>
+            <span class="praga">4. 🪰 Moscas <small>(contra Khepri)</small></span>
+            <span class="praga">5. 🐄 Peste nos rebanhos <small>(contra Háthor)</small></span>
+            <span class="praga">6. 🤕 Úlceras <small>(contra Isis)</small></span>
+            <span class="praga">7. 🌩️ Chuva de pedras <small>(contra Nut)</small></span>
+            <span class="praga">8. 🦗 Gafanhotos <small>(contra Osíris)</small></span>
+            <span class="praga">9. 🌑 Trevas <small>(contra Rá)</small></span>
+            <span class="praga">10. 💀 Morte dos primogênitos <small>(contra Faraó)</small></span>
+          </div>
+          <div class="detalhe-extra">
+            <strong>Conexão com o 1º Mandamento:</strong> Cada praga é uma demonstração de que
+            os "deuses" do Egito são <em>nada</em>. Só YHWH é Deus.
+            O 1º mandamento nasce dessa experiência: "Não terás outros deuses".
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-item" data-aos>
+        <div class="timeline-marcador">
+          <span class="timeline-ano">A libertação</span>
+          <div class="timeline-dot"></div>
+        </div>
+        <div class="timeline-conteudo">
+          <h4>🌊 O Êxodo — A travessia do Mar Vermelho</h4>
+          <p>
+            Na noite da Páscoa, Israel sai do Egito. O faraó se arrepende e persegue
+            com carros e cavalos. Deus abre o mar em dois. Israel passa a pé enxuto.
+            As águas se fecham sobre o exército egípcio. O povo é <strong>livre</strong>.
+          </p>
+          <p>
+            Mas liberdade sem direção é caos. Um escravo libertado não sabe
+            automaticamente como viver como homem livre. Deus sabe disso —
+            e por isso prepara algo no deserto.
+          </p>
+        </div>
+      </div>
+
+      <div class="timeline-item" data-aos>
+        <div class="timeline-marcador">
+          <span class="timeline-ano">50 dias depois</span>
+          <div class="timeline-dot"></div>
+        </div>
+        <div class="timeline-conteudo">
+          <h4>🏔️ Monte Sinai — O encontro</h4>
+          <p>
+            50 dias após a saída do Egito, Israel acampa ao pé do monte Sinai.
+            A cena é aterrorizante:
+          </p>
+          <ul class="lista-sinai">
+            <li>⚡ Trovões e relâmpagos cobrem o monte</li>
+            <li>🌫️ Uma nuvem espessa e escura desce</li>
+            <li>🔥 Fogo arde no topo — o monte inteiro treme</li>
+            <li>📯 Um som de trombeta cresce até ser insuportável</li>
+            <li>😨 O povo treme e pede a Moisés: "Fala tu conosco — que Deus não nos fale, para que não morramos!" (Ex 20,19)</li>
+          </ul>
+          <p>
+            Moisés sobe. Fica 40 dias e 40 noites no topo. E quando desce,
+            traz duas tábuas de pedra nas mãos — <strong>escritas pelo dedo
+            de Deus</strong> (Ex 31,18).
+          </p>
+        </div>
+      </div>
+
+      <div class="timeline-item" data-aos>
+        <div class="timeline-marcador">
+          <span class="timeline-ano">O drama</span>
+          <div class="timeline-dot"></div>
+        </div>
+        <div class="timeline-conteudo">
+          <h4>🐂 O bezerro de ouro — A traição</h4>
+          <p>
+            Enquanto Moisés está no monte, o povo se cansa de esperar.
+            Pedem a Arão que faça um deus visível. Arão recolhe brincos de ouro,
+            derrete tudo e faz um bezerro. Israel festeja, adora o ídolo.
+          </p>
+          <p>
+            Moisés desce, vê a cena, e em fúria <strong>quebra as tábuas</strong>
+            (Ex 32,19). O povo acabou de violar o 1º mandamento antes mesmo de
+            ouvi-lo. Deus, em misericórdia, escreve <em>novas</em> tábuas (Ex 34,1).
+          </p>
+          <div class="detalhe-extra">
+            <strong>Reflexão:</strong> Nós fazemos o mesmo. Antes mesmo de terminar
+            de ouvir a vontade de Deus, já estamos fabricando nossos bezerros de ouro —
+            dinheiro, status, prazer, seguidores. O 1º mandamento é eterno porque
+            a tentação da idolatria é eterna.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CAIXA DE CONEXÃO -->
+    <div class="caixa-destaque caixa-conexao">
+      <div class="caixa-icone">🔗</div>
+      <div class="caixa-conteudo">
+        <h4>Conexão: Sinai → Pentecostes</h4>
+        <p>
+          Os judeus celebram a entrega da Lei (Sinai) na festa de <strong>Shavuot</strong>,
+          50 dias após a Páscoa. Os cristãos celebram <strong>Pentecostes</strong> —
+          também 50 dias após a Páscoa de Cristo. No Sinai, Deus deu a Lei em tábuas
+          de pedra. Em Pentecostes, Deus deu o Espírito Santo, que escreve a Lei
+          <em>no coração</em> (Jr 31,33). Não é coincidência — é continuidade.
+        </p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ============================================================
+     AS DUAS TÁBUAS — MAPA VISUAL INTERATIVO
+     ============================================================ -->
+<section class="secao secao-tabuas" id="secaoTabuas">
+  <div class="secao-inner">
+
+    <div class="secao-header">
+      <span class="secao-badge">⚖️ Visão Geral</span>
+      <h2>As Duas Tábuas da Lei</h2>
+      <p class="secao-subtexto">
+        Clique em qualquer mandamento para saltar direto ao estudo aprofundado.
+        As duas tábuas representam as duas dimensões do amor que Jesus ensinou.
+      </p>
+    </div>
+
+    <!-- Citação de Jesus -->
+    <div class="caixa-destaque caixa-jesus">
+      <div class="caixa-icone">✝️</div>
+      <div class="caixa-conteudo">
+        <blockquote>
+          "Amarás o Senhor teu Deus de todo o teu coração, de toda a tua alma e de
+          todo o teu entendimento. Este é o grande e primeiro mandamento. O segundo,
+          semelhante a este, é: Amarás o teu próximo como a ti mesmo.
+          <strong>Destes dois mandamentos dependem toda a Lei e os Profetas.</strong>"
+        </blockquote>
+        <cite>— Jesus Cristo (Mateus 22,37-40)</cite>
+      </div>
+    </div>
+
+    <!-- GRADE DAS TÁBUAS -->
+    <div class="tabuas-grid">
+
+      <!-- TÁBUA 1: Amor a Deus -->
+      <div class="tabua-bloco">
+        <div class="tabua-cabecalho">
+          <span class="tabua-num">1ª Tábua</span>
+          <h3>Amor a Deus</h3>
+          <p>Mandamentos 1–3</p>
+        </div>
+        <div class="tabua-lista">
+          <a href="#m1" class="tabua-item">
+            <span class="ti-num">I</span>
+            <span class="ti-texto">Amar a Deus sobre todas as coisas</span>
+            <span class="ti-seta">→</span>
+          </a>
+          <a href="#m2" class="tabua-item">
+            <span class="ti-num">II</span>
+            <span class="ti-texto">Não tomar Seu Santo Nome em vão</span>
+            <span class="ti-seta">→</span>
+          </a>
+          <a href="#m3" class="tabua-item">
+            <span class="ti-num">III</span>
+            <span class="ti-texto">Guardar domingos e festas de guarda</span>
+            <span class="ti-seta">→</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- TÁBUA 2: Amor ao próximo -->
+      <div class="tabua-bloco">
+        <div class="tabua-cabecalho">
+          <span class="tabua-num">2ª Tábua</span>
+          <h3>Amor ao Próximo</h3>
+          <p>Mandamentos 4–10</p>
+        </div>
+        <div class="tabua-lista">
+          <a href="#m4" class="tabua-item">
+            <span class="ti-num">IV</span>
+            <span class="ti-texto">Honrar pai e mãe</span>
+            <span class="ti-seta">→</span>
+          </a>
+          <a href="#m5" class="tabua-item">
+            <span class="ti-num">V</span>
+            <span class="ti-texto">Não matar</span>
+            <span class="ti-seta">→</span>
+          </a>
+          <a href="#m6" class="tabua-item">
+            <span class="ti-num">VI</span>
+            <span class="ti-texto">Não pecar contra a castidade</span>
+            <span class="ti-seta">→</span>
+          </a>
+          <a href="#m7" class="tabua-item">
+            <span class="ti-num">VII</span>
+            <span class="ti-texto">Não furtar</span>
+            <span class="ti-seta">→</span>
+          </a>
+          <a href="#m8" class="tabua-item">
+            <span class="ti-num">VIII</span>
+            <span class="ti-texto">Não levantar falso testemunho</span>
+            <span class="ti-seta">→</span>
+          </a>
+          <a href="#m9" class="tabua-item">
+            <span class="ti-num">IX</span>
+            <span class="ti-texto">Não desejar a mulher do próximo</span>
+            <span class="ti-seta">→</span>
+          </a>
+          <a href="#m10" class="tabua-item">
+            <span class="ti-num">X</span>
+            <span class="ti-texto">Não cobiçar as coisas alheias</span>
+            <span class="ti-seta">→</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Info extra sobre as tábuas -->
+    <div class="caixa-destaque caixa-info">
+      <div class="caixa-icone">💡</div>
+      <div class="caixa-conteudo">
+        <h4>Por que a divisão importa?</h4>
+        <p>
+          A 1ª tábua (mandamentos 1-3) ordena nosso relacionamento <strong>vertical</strong>
+          — com Deus. A 2ª tábua (mandamentos 4-10) ordena nosso relacionamento
+          <strong>horizontal</strong> — com as pessoas. Não é possível amar o próximo
+          de verdade sem primeiro amar a Deus; e quem diz amar a Deus mas odeia o
+          irmão é "mentiroso" (1Jo 4,20). As duas dimensões são inseparáveis.
+        </p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ============================================================
+     1ª TÁBUA — SEPARADOR VISUAL
+     ============================================================ -->
+<div class="separador-tabua">
+  <div class="separador-linha"></div>
+  <div class="separador-texto">
+    <span class="separador-icone">🔥</span>
+    <h3>1ª Tábua da Lei</h3>
+    <p>O Amor a Deus — Mandamentos I, II, III</p>
+  </div>
+  <div class="separador-linha"></div>
+</div>
+
+
+<!-- ============================================================
+     1º MANDAMENTO
+     ============================================================ -->
+<section class="mandamento" id="m1" data-mandamento="1">
+  <div class="secao-inner">
+
+    <!-- CABEÇALHO -->
+    <div class="mand-header">
+      <div class="mand-numero-grande">I</div>
+      <div class="mand-titulo-bloco">
+        <span class="mand-label">1º Mandamento</span>
+        <h2>Amar a Deus sobre todas as coisas</h2>
+        <div class="mand-citacao">
+          <blockquote>
+            "Eu sou o Senhor teu Deus, que te tirei da terra do Egito, da casa
+            da servidão. Não terás outros deuses diante de mim. Não farás para ti
+            imagem de escultura... Não te encurvarás diante delas nem as servirás."
+          </blockquote>
+          <cite>Êxodo 20,2-5</cite>
+        </div>
+      </div>
+    </div>
+
+    <!-- EXPLICAÇÃO APROFUNDADA -->
+    <div class="mand-secao-conteudo">
+      <h3>🔍 O que este mandamento realmente exige?</h3>
+
+      <p>
+        Este é o <strong>mandamento fundamental</strong> — a raiz de todos os outros.
+        Se você erra neste, todos os outros desmoronam. Se você acerta neste, todos
+        os outros se tornam naturais.
+      </p>
+
+      <p>
+        Não basta "acreditar que Deus existe". <strong>Os demônios também acreditam
+        — e tremem</strong> (Tg 2,19). Este mandamento exige três coisas:
+      </p>
+
+      <div class="tres-pilares">
+        <div class="pilar">
+          <div class="pilar-icone">🙏</div>
+          <h4>Fé</h4>
+          <p>Crer firmemente em tudo que Deus revelou e que a Igreja ensina. Não uma fé vaga — uma fé concreta, informada, adulta.</p>
+        </div>
+        <div class="pilar">
+          <div class="pilar-icone">⚓</div>
+          <h4>Esperança</h4>
+          <p>Confiar que Deus cumprirá suas promessas. Não desesperar nas dificuldades nem presumir a salvação sem esforço.</p>
+        </div>
+        <div class="pilar">
+          <div class="pilar-icone">❤️</div>
+          <h4>Caridade</h4>
+          <p>Amar a Deus acima de tudo e de todos — acima do dinheiro, do prazer, do conforto, da opinião dos outros, de si mesmo.</p>
+        </div>
+      </div>
+
+      <h3>🏛️ O que é idolatria hoje?</h3>
+
+      <p>
+        Ninguém mais adora estátuas de Baal em altares de pedra. Mas a idolatria
+        nunca desapareceu — apenas mudou de roupa. O Catecismo define: <em>"A idolatria
+        consiste em divinizar o que não é Deus"</em> (CIC 2113).
+      </p>
+
+      <div class="idolos-modernos">
+        <h4>Os ídolos do século XXI</h4>
+        <div class="idolo-grid">
+          <div class="idolo-card">
+            <span class="idolo-emoji">💰</span>
+            <strong>Dinheiro</strong>
+            <p>"Não podeis servir a Deus e ao dinheiro" (Mt 6,24). Quando a segurança financeira importa mais que a vontade de Deus.</p>
+          </div>
+          <div class="idolo-card">
+            <span class="idolo-emoji">📱</span>
+            <strong>Redes sociais</strong>
+            <p>Quando likes, seguidores e validação online definem seu valor. O altar mudou — agora é uma tela.</p>
+          </div>
+          <div class="idolo-card">
+            <span class="idolo-emoji">🏆</span>
+            <strong>Sucesso / Carreira</strong>
+            <p>Quando a realização profissional se torna o sentido último da vida. Você trabalha para viver ou vive para trabalhar?</p>
+          </div>
+          <div class="idolo-card">
+            <span class="idolo-emoji">🍷</span>
+            <strong>Prazer</strong>
+            <p>Quando a busca por prazer (comida, bebida, sexo, entretenimento) se torna o centro de tudo.</p>
+          </div>
+          <div class="idolo-card">
+            <span class="idolo-emoji">🪞</span>
+            <strong>Eu mesmo</strong>
+            <p>O ídolo mais sutil. "Eu sou minha própria autoridade." É o pecado original reciclado: ser como Deus.</p>
+          </div>
+          <div class="idolo-card">
+            <span class="idolo-emoji">🔮</span>
+            <strong>Ocultismo</strong>
+            <p>Horóscopo, tarot, mesa branca, amuletos, simpatias. Buscar poder ou conhecimento fora de Deus.</p>
+          </div>
+        </div>
+      </div>
+
+      <h3>📖 O que a Igreja ensina sobre imagens?</h3>
+
+      <p>
+        "Mas e as imagens dos santos católicos? Não é idolatria?" — Esta é a objeção
+        mais comum. A resposta é <strong>não</strong>, e há razões profundas:
+      </p>
+
+      <div class="argumento-bloco">
+        <div class="argumento">
+          <span class="arg-num">1</span>
+          <div>
+            <strong>O próprio Deus mandou fazer imagens:</strong>
+            <p>Deus ordenou a Moisés que fizesse dois querubins de ouro sobre a Arca da Aliança (Ex 25,18-20) e uma serpente de bronze (Nm 21,8-9). Imagem não é ídolo — ídolo é quando se adora a imagem COMO se fosse Deus.</p>
+          </div>
+        </div>
+        <div class="argumento">
+          <span class="arg-num">2</span>
+          <div>
+            <strong>Jesus é a "imagem do Deus invisível" (Cl 1,15):</strong>
+            <p>Quando Deus se fez homem, Ele se tornou visível. A Encarnação inaugurou uma nova relação com as imagens. Se Deus tomou forma humana, pode ser representado.</p>
+          </div>
+        </div>
+        <div class="argumento">
+          <span class="arg-num">3</span>
+          <div>
+            <strong>Venerar ≠ Adorar:</strong>
+            <p>Católicos veneram (honram) os santos como modelos e intercessores. Só Deus recebe adoração (latria). Assim como você honra a foto de sua mãe sem adorá-la.</p>
+          </div>
+        </div>
+        <div class="argumento">
+          <span class="arg-num">4</span>
+          <div>
+            <strong>O Concílio de Niceia II (787) definiu:</strong>
+            <p>"A honra prestada à imagem se dirige ao modelo original." Quem venera a imagem de Cristo venera o próprio Cristo, não o gesso ou a madeira.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PECADOS E VIRTUDES -->
+    <div class="pv-container">
+      <div class="pv-coluna pv-pecados">
+        <div class="pv-cabecalho">
+          <span class="pv-icone">❌</span>
+          <h4>Pecados contra este mandamento</h4>
+        </div>
+        <ul>
+          <li>
+            <strong>Idolatria</strong>
+            <p>Colocar qualquer coisa (dinheiro, pessoa, prazer, ideologia) acima de Deus ou no lugar de Deus.</p>
+          </li>
+          <li>
+            <strong>Superstição</strong>
+            <p>Atribuir poder mágico a objetos, rituais, números ou gestos. Horóscopos, amuletos, simpatias.</p>
+          </li>
+          <li>
+            <strong>Irreligião</strong>
+            <p>Tentar Deus (testar sua bondade), sacrilégio (profanar o sagrado), simonia (comprar/vender coisas espirituais).</p>
+          </li>
+          <li>
+            <strong>Ateísmo prático</strong>
+            <p>Pode até dizer que acredita, mas vive como se Deus não existisse. Nunca reza, nunca vai à Missa, nunca pensa em Deus.</p>
+          </li>
+          <li>
+            <strong>Agnosticismo indiferente</strong>
+            <p>"Tanto faz se Deus existe." A indiferença é a forma mais elegante de negar Deus.</p>
+          </li>
+          <li>
+            <strong>Magia e ocultismo</strong>
+            <p>Sessões espíritas, macumba, bruxaria, consulta a médiuns, uso de tarot, ouija. Gravíssimo.</p>
+          </li>
+        </ul>
+      </div>
+
+      <div class="pv-coluna pv-virtudes">
+        <div class="pv-cabecalho">
+          <span class="pv-icone">✅</span>
+          <h4>Virtudes que este mandamento cultiva</h4>
+        </div>
+        <ul>
+          <li>
+            <strong>Fé viva</strong>
+            <p>Crer em Deus e em tudo que Ele revelou. Estudar a fé, conhecê-la, defendê-la.</p>
+          </li>
+          <li>
+            <strong>Esperança firme</strong>
+            <p>Confiar na providência divina mesmo nos momentos mais escuros. "Esperar contra toda esperança" (Rm 4,18).</p>
+          </li>
+          <li>
+            <strong>Caridade ardente</strong>
+            <p>Amar a Deus com todo o coração — e provar esse amor com ações, não apenas palavras.</p>
+          </li>
+          <li>
+            <strong>Adoração</strong>
+            <p>Reconhecer Deus como Criador e Senhor de tudo. Prostrar-se diante da Sua grandeza com humildade.</p>
+          </li>
+          <li>
+            <strong>Oração constante</strong>
+            <p>Manter diálogo vivo com Deus. Não apenas pedir — mas louvar, agradecer, adorar e escutar.</p>
+          </li>
+          <li>
+            <strong>Religião verdadeira</strong>
+            <p>Dar a Deus o culto que lhe é devido: Missa, sacramentos, oração, vida moral coerente.</p>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- SANTOS QUE VIVERAM ESTE MANDAMENTO -->
+    <div class="mand-santos">
+      <h3>🌟 Santos que viveram este mandamento heroicamente</h3>
+      <div class="santos-grid">
+        <div class="santo-card">
+          <div class="santo-nome">Santo Abraão</div>
+          <p>Deixou tudo — terra, família, segurança — pela voz de um Deus que nem conhecia. Preferiu Deus a seu próprio filho Isaac.</p>
+        </div>
+        <div class="santo-card">
+          <div class="santo-nome">São Maximiliano Kolbe</div>
+          <p>No campo de concentração de Auschwitz, ofereceu sua vida no lugar de outro prisioneiro. Deus acima da própria vida.</p>
+        </div>
+        <div class="santo-card">
+          <div class="santo-nome">Santa Teresa de Ávila</div>
+          <p>"Só Deus basta." Reformou o Carmelo, enfrentou oposição feroz, e ensinou que a oração é o caminho para colocar Deus em primeiro lugar.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- EXAME DE CONSCIÊNCIA -->
+    <div class="mand-exame">
+      <h3>🪞 Exame de Consciência — 1º Mandamento</h3>
+      <p class="exame-intro">Perguntas para reflexão pessoal honesta. Leia devagar. Responda no silêncio do seu coração.</p>
+      <div class="exame-perguntas">
+        <div class="exame-p">
+          <span class="exame-num">1</span>
+          <p>Se alguém analisasse como você gasta seu <strong>tempo</strong> e seu <strong>dinheiro</strong>, conseguiria descobrir que Deus é a prioridade da sua vida?</p>
+        </div>
+        <div class="exame-p">
+          <span class="exame-num">2</span>
+          <p>Existe algo na sua vida que, se Deus pedisse para abandonar, você <strong>não conseguiria</strong> largar?</p>
+        </div>
+        <div class="exame-p">
+          <span class="exame-num">3</span>
+          <p>Você já consultou horóscopo, tarot, mesa branca, ou usou amuletos "por precaução"?</p>
+        </div>
+        <div class="exame-p">
+          <span class="exame-num">4</span>
+          <p>Você reza todos os dias — ou só quando precisa de algo?</p>
+        </div>
+        <div class="exame-p">
+          <span class="exame-num">5</span>
+          <p>Se Deus desaparecesse da sua rotina, o que <strong>concretamente</strong> mudaria no seu dia?</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- APROFUNDAMENTO BÍBLICO -->
+    <div class="mand-biblia">
+      <h3>📖 Aprofundamento Bíblico</h3>
+      <div class="biblia-grid">
+        <div class="biblia-card">
+          <span class="biblia-ref">Dt 6,4-9</span>
+          <p>O Shemá Israel — a oração mais importante do judaísmo: "Ouve, Israel: o Senhor nosso Deus é o único Senhor. Amarás o Senhor teu Deus de todo o teu coração..."</p>
+        </div>
+        <div class="biblia-card">
+          <span class="biblia-ref">Mt 4,10</span>
+          <p>Jesus, tentado no deserto, responde ao diabo: "Ao Senhor teu Deus adorarás e só a Ele servirás."</p>
+        </div>
+        <div class="biblia-card">
+          <span class="biblia-ref">Mt 6,24</span>
+          <p>"Ninguém pode servir a dois senhores... Não podeis servir a Deus e ao dinheiro."</p>
+        </div>
+        <div class="biblia-card">
+          <span class="biblia-ref">1 Jo 5,21</span>
+          <p>"Filhinhos, guardai-vos dos ídolos." — Última frase da primeira carta de São João. Urgente até hoje.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- REFERÊNCIAS DO CATECISMO -->
+    <div class="mand-catecismo">
+      <h3>📕 Catecismo da Igreja Católica</h3>
+      <div class="cat-tags">
+        <span class="cat-tag">CIC 2083-2141</span>
+        <span class="cat-tag">CIC 2110-2128 (superstição e idolatria)</span>
+        <span class="cat-tag">CIC 2129-2141 (imagens sacras)</span>
+        <span class="cat-tag">Dt 6,4-5</span>
+        <span class="cat-tag">Mt 4,10</span>
+        <span class="cat-tag">Mt 22,37</span>
+      </div>
+    </div>
+
+    <!-- CHECK DE ESTUDO -->
+    <div class="mand-check">
+      <label class="check-label">
+        <input type="checkbox" onchange="marcarEstudado(1, this.checked)">
+        <span class="check-caixa"></span>
+        <span class="check-texto">✅ Estudei o 1º Mandamento</span>
+      </label>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ============================================================
+     2º MANDAMENTO
+     ============================================================ -->
+<section class="mandamento" id="m2" data-mandamento="2">
+  <div class="secao-inner">
+
+    <div class="mand-header">
+      <div class="mand-numero-grande">II</div>
+      <div class="mand-titulo-bloco">
+        <span class="mand-label">2º Mandamento</span>
+        <h2>Não tomar o Santo Nome de Deus em vão</h2>
+        <div class="mand-citacao">
+          <blockquote>
+            "Não tomarás o nome do Senhor teu Deus em vão, porque o Senhor não
+            terá por inocente o que tomar o Seu nome em vão."
+          </blockquote>
+          <cite>Êxodo 20,7</cite>
+        </div>
+      </div>
+    </div>
+
+    <div class="mand-secao-conteudo">
+      <h3>🔍 O que este mandamento realmente exige?</h3>
+
+      <p>
+        Na cultura bíblica, o <strong>nome de alguém</strong> não é apenas um rótulo — é a
+        própria pessoa. Saber o nome de Deus é ter acesso à Sua intimidade. Quando Deus
+        revela Seu nome a Moisés ("EU SOU O QUE SOU" — YHWH), é um ato de
+        <strong>confiança divina</strong>. Usar esse nome em vão é trair essa confiança.
+      </p>
+
+      <p>
+        "Em vão" significa: <strong>sem propósito digno</strong>. Cada vez que dizemos
+        "meu Deus!" como expressão de surpresa, "juro por Deus" sem necessidade, ou
+        usamos o nome de Jesus como palavrão, estamos esvaziando de significado o
+        nome mais sagrado do universo.
+      </p>
+
+      <h3>🗣️ Formas de violar este mandamento</h3>
+
+      <div class="violacoes-lista">
+        <div class="violacao">
+          <div class="violacao-titulo">
+            <span class="violacao-icone">🤬</span>
+            <strong>Blasfêmia</strong>
+          </div>
+          <p>
+            Falar contra Deus com ódio, desprezo ou desafio. Atribuir a Deus o mal.
+            Dizer coisas como "se Deus existisse não permitiria isso" com desprezo.
+            É um pecado <strong>gravíssimo</strong> — é dirigir palavras de ódio ao
+            Ser que é puro Amor. O CIC 2148 diz que é pecado grave por sua própria natureza.
+          </p>
+        </div>
+        <div class="violacao">
+          <div class="violacao-titulo">
+            <span class="violacao-icone">🤞</span>
+            <strong>Juramento falso / Perjúrio</strong>
+          </div>
+          <p>
+            Invocar Deus como testemunha de uma mentira. É duplamente grave: é mentir
+            E instrumentalizar Deus para dar credibilidade à mentira.
+            Jesus ensinou: "Seja o vosso sim, sim; e o não, não" (Mt 5,37).
+          </p>
+        </div>
+        <div class="violacao">
+          <div class="violacao-titulo">
+            <span class="violacao-icone">😒</span>
+            <strong>Uso banal do nome de Deus</strong>
+          </div>
+          <p>
+            "Meu Deus!", "Jesus!", "Ai, meu Deus do céu!" — como interjeições vazias.
+            Parece inofensivo, mas banaliza o sagrado. É como usar o nome da sua mãe
+            como palavrão — você não faria isso. Por que fazer com o nome de Deus?
+          </p>
+        </div>
+        <div class="violacao">
+          <div class="violacao-titulo">
+            <span class="violacao-icone">💀</span>
+            <strong>Maldição em nome de Deus</strong>
+          </div>
+          <p>
+            Usar o nome de Deus para desejar mal a alguém. Invocar o poder divino
+            para destruir, amaldiçoar ou punir o próximo.
+          </p>
+        </div>
+      </div>
+
+      <h3>✨ O poder do Nome</h3>
+
+      <p>
+        São Paulo ensina que <em>"ao nome de Jesus todo joelho se dobre, nos céus,
+        na terra e nos infernos"</em> (Fl 2,10). O nome de Jesus tem poder real:
+      </p>
+
+      <ul class="lista-poder">
+        <li>Os apóstolos curavam <strong>"em nome de Jesus"</strong> (At 3,6)</li>
+        <li>Demônios eram expulsos <strong>"em nome de Jesus"</strong> (Mc 16,17)</li>
+        <li>A oração é atendida <strong>"em nome de Jesus"</strong> (Jo 14,13-14)</li>
+        <li>Somos batizados <strong>"em nome do Pai, do Filho e do Espírito Santo"</strong></li>
+      </ul>
+
+      <p>
+        <strong>Se o nome tem esse poder, como podemos tratá-lo como algo banal?</strong>
+        Cada vez que dizemos "Jesus" com fé, movemos o céu. Cada vez que dizemos
+        "Jesus" como palavrão, profanamos o sagrado.
+      </p>
+
+      <h3>✝️ O nome cristão</h3>
+      <p>
+        Este mandamento também se estende ao <strong>nome que recebemos no Batismo</strong>.
+        Somos chamados "cristãos" — portadores do nome de Cristo. Cada vez que agimos
+        de forma indigna, profanamos o nome que carregamos. São Paulo avisa:
+        <em>"O nome de Deus é blasfemado entre os gentios por causa de vós"</em> (Rm 2,24).
+      </p>
+    </div>
+
+    <!-- PECADOS E VIRTUDES -->
+    <div class="pv-container">
+      <div class="pv-coluna pv-pecados">
+        <div class="pv-cabecalho">
+          <span class="pv-icone">❌</span>
+          <h4>Pecados contra este mandamento</h4>
+        </div>
+        <ul>
+          <li><strong>Blasfêmia</strong><p>Falar contra Deus, a Virgem Maria, os santos ou coisas sagradas com desprezo.</p></li>
+          <li><strong>Juramento falso</strong><p>Jurar por Deus sabendo que é mentira, ou fazer promessas em Seu nome sem cumprir.</p></li>
+          <li><strong>Perjúrio</strong><p>Mentir sob juramento (em tribunal, por exemplo).</p></li>
+          <li><strong>Uso banal</strong><p>Usar "Deus", "Jesus", "Nossa Senhora" como interjeições vazias, sem reverência.</p></li>
+          <li><strong>Maldição</strong><p>Invocar o nome de Deus para desejar mal a alguém.</p></li>
+          <li><strong>Irreverência litúrgica</strong><p>Tratar com descaso as orações, os sacramentos, os objetos sagrados.</p></li>
+        </ul>
+      </div>
+
+      <div class="pv-coluna pv-virtudes">
+        <div class="pv-cabecalho">
+          <span class="pv-icone">✅</span>
+          <h4>Virtudes que este mandamento cultiva</h4>
+        </div>
+        <ul>
+          <li><strong>Reverência</strong><p>Tratar o nome de Deus com sacralidade. Pronunciá-lo com amor e respeito.</p></li>
+          <li><strong>Louvor</strong><p>Usar o nome de Deus para bendizer, agradecer e adorar. "Bendito seja Deus!"</p></li>
+          <li><strong>Fidelidade</strong><p>Cumprir promessas feitas em nome de Deus. Ser pessoa de palavra.</p></li>
+          <li><strong>Prudência</strong><p>Evitar juramentos desnecessários. Não brincar com o sagrado.</p></li>
+          <li><strong>Testemunho</strong><p>Honrar o nome "cristão" que carregamos — viver de forma digna do nome de Cristo.</p></li>
+          <li><strong>Oração</strong><p>Invocar o nome de Jesus com fé verdadeira — na oração, no sofrimento, na alegria.</p></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- EXAME -->
+    <div class="mand-exame">
+      <h3>🪞 Exame de Consciência — 2º Mandamento</h3>
+      <div class="exame-perguntas">
+        <div class="exame-p"><span class="exame-num">1</span><p>Quantas vezes hoje você usou o nome de Deus? Foi para <strong>orar</strong> ou apenas como expressão vazia?</p></div>
+        <div class="exame-p"><span class="exame-num">2</span><p>Você já fez promessas a Deus que nunca cumpriu?</p></div>
+        <div class="exame-p"><span class="exame-num">3</span><p>Se gravassem tudo o que você fala durante uma semana, encontrariam o nome de Deus sendo <strong>honrado</strong> ou <strong>banalizado</strong>?</p></div>
+        <div class="exame-p"><span class="exame-num">4</span><p>Sua vida como cristão honra o nome de Cristo diante de quem te observa?</p></div>
+      </div>
+    </div>
+
+    <!-- BÍBLIA E CATECISMO -->
+    <div class="mand-biblia">
+      <h3>📖 Aprofundamento Bíblico</h3>
+      <div class="biblia-grid">
+        <div class="biblia-card"><span class="biblia-ref">Mt 5,33-37</span><p>Jesus proíbe juramentos desnecessários: "Seja o vosso sim, sim; e o vosso não, não."</p></div>
+        <div class="biblia-card"><span class="biblia-ref">Fl 2,9-11</span><p>"Deus lhe deu um nome que está acima de todo nome, para que ao nome de Jesus todo joelho se dobre."</p></div>
+        <div class="biblia-card"><span class="biblia-ref">Ex 3,13-15</span><p>Deus revela Seu nome a Moisés: "EU SOU O QUE SOU." O Nome que expressa a própria essência divina.</p></div>
+        <div class="biblia-card"><span class="biblia-ref">Sl 8,2</span><p>"Ó Senhor, nosso Senhor, como é admirável o vosso nome em toda a terra!"</p></div>
+      </div>
+    </div>
+
+    <div class="mand-catecismo">
+      <h3>📕 Catecismo da Igreja Católica</h3>
+      <div class="cat-tags">
+        <span class="cat-tag">CIC 2142-2167</span>
+        <span class="cat-tag">CIC 2150-2155 (juramento)</span>
+        <span class="cat-tag">CIC 2160-2167 (nome cristão)</span>
+      </div>
+    </div>
+
+    <div class="mand-santos">
+      <h3>🌟 Santos que viveram este mandamento</h3>
+      <div class="santos-grid">
+        <div class="santo-card"><div class="santo-nome">São Bernardino de Sena</div><p>Pregava segurando uma placa com o monograma "IHS" (nome de Jesus). Popularizou a devoção ao Santíssimo Nome de Jesus em toda a Europa.</p></div>
+        <div class="santo-card"><div class="santo-nome">Santa Bernadette</div><p>Na gruta de Lourdes, a Virgem Maria revelou seu nome: "Eu sou a Imaculada Conceição." Bernadette tratou esse nome com reverência absoluta.</p></div>
+      </div>
+    </div>
+
+    <div class="mand-check">
+      <label class="check-label">
+        <input type="checkbox" onchange="marcarEstudado(2, this.checked)">
+        <span class="check-caixa"></span>
+        <span class="check-texto">✅ Estudei o 2º Mandamento</span>
+      </label>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ============================================================
+     3º MANDAMENTO
+     ============================================================ -->
+<section class="mandamento" id="m3" data-mandamento="3">
+  <div class="secao-inner">
+
+    <div class="mand-header">
+      <div class="mand-numero-grande">III</div>
+      <div class="mand-titulo-bloco">
+        <span class="mand-label">3º Mandamento</span>
+        <h2>Guardar domingos e festas de guarda</h2>
+        <div class="mand-citacao">
+          <blockquote>
+            "Lembra-te do dia de sábado para santificá-lo. Seis dias trabalharás
+            e farás todas as tuas obras; mas o sétimo dia é o sábado do Senhor teu Deus."
+          </blockquote>
+          <cite>Êxodo 20,8-10</cite>
+        </div>
+      </div>
+    </div>
+
+    <div class="mand-secao-conteudo">
+      <h3>🔍 O que este mandamento realmente exige?</h3>
+
+      <p>
+        Deus "descansou" no sétimo dia da criação (Gn 2,2-3). Não porque estava cansado
+        — Ele é onipotente! — mas para nos ensinar algo vital: <strong>você não é uma
+        máquina de produzir</strong>. Sua vida não se resume a trabalho. Existe algo
+        maior que a próxima tarefa da lista.
+      </p>
+
+      <h3>📅 Por que domingo e não sábado?</h3>
+
+      <p>
+        Os judeus guardam o sábado (Shabbat). Os cristãos transferiram o dia de
+        descanso para o <strong>domingo</strong> — e há um motivo poderoso:
+      </p>
+
+      <div class="tres-pilares">
+        <div class="pilar">
+          <div class="pilar-icone">✝️</div>
+          <h4>Dia da Ressurreição</h4>
+          <p>Jesus ressuscitou num domingo (Mc 16,2). Cada domingo é uma "mini-Páscoa" — celebração da vitória sobre a morte.</p>
+        </div>
+        <div class="pilar">
+          <div class="pilar-icone">🕊️</div>
+          <h4>Nova Criação</h4>
+          <p>Se Deus descansou no 7º dia após criar o mundo, o 8º dia (domingo) é o início da NOVA criação em Cristo.</p>
+        </div>
+        <div class="pilar">
+          <div class="pilar-icone">🔥</div>
+          <h4>Prática apostólica</h4>
+          <p>Desde o início, os cristãos se reuniam "no primeiro dia da semana" para a fração do pão (At 20,7; 1Cor 16,2).</p>
+        </div>
+      </div>
+
+      <h3>⚠️ A Missa dominical é obrigatória?</h3>
+
+      <div class="caixa-destaque caixa-alerta">
+        <div class="caixa-icone">⚠️</div>
+        <div class="caixa-conteudo">
+          <h4>Sim. É obrigatória.</h4>
+          <p>
+            O CIC 2181 é claro: <em>"Os fiéis são obrigados a participar da Eucaristia
+            nos dias de preceito, a não ser que estejam dispensados por razão séria
+            (doença, cuidado de crianças pequenas) ou tenham obtido dispensa do
+            próprio pastor."</em>
+          </p>
+          <p>
+            <strong>Faltar à Missa dominical deliberadamente, sem motivo grave,
+            é pecado mortal.</strong> Não é opinião — é doutrina da Igreja. Parece
+            forte? É porque é importante.
+          </p>
+        </div>
+      </div>
+
+      <h3>🏖️ O que significa "santificar" o domingo?</h3>
+
+      <p>Santificar vai além de "ir à Missa". O domingo deve ser dia de:</p>
+
+      <div class="lista-santificar">
+        <div class="sant-item">
+          <span class="sant-icone">⛪</span>
+          <div>
+            <strong>Culto a Deus</strong>
+            <p>Participar ativa e devotamente da Santa Missa. Não apenas "estar presente" — participar de verdade.</p>
+          </div>
+        </div>
+        <div class="sant-item">
+          <span class="sant-icone">👨‍👩‍👧‍👦</span>
+          <div>
+            <strong>Família</strong>
+            <p>Tempo de qualidade com a família. Refeições juntos. Conversas. Presença.</p>
+          </div>
+        </div>
+        <div class="sant-item">
+          <span class="sant-icone">🤲</span>
+          <div>
+            <strong>Caridade</strong>
+            <p>Visitar doentes, ajudar necessitados, fazer obras de misericórdia.</p>
+          </div>
+        </div>
+        <div class="sant-item">
+          <span class="sant-icone">📖</span>
+          <div>
+            <strong>Formação</strong>
+            <p>Leitura espiritual, estudo da fé, reflexão pessoal. Alimentar a alma.</p>
+          </div>
+        </div>
+        <div class="sant-item">
+          <span class="sant-icone">😴</span>
+          <div>
+            <strong>Descanso verdadeiro</strong>
+            <p>Não é preguiça — é recuperação. Corpo e alma precisam de pausa. Deus sabe disso melhor que você.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pv-container">
+      <div class="pv-coluna pv-pecados">
+        <div class="pv-cabecalho"><span class="pv-icone">❌</span><h4>Pecados contra este mandamento</h4></div>
+        <ul>
+          <li><strong>Faltar à Missa</strong><p>Sem motivo grave (doença, emergência real). "Estava chovendo" ou "acordei tarde" não são motivos graves.</p></li>
+          <li><strong>Trabalho desnecessário</strong><p>Trabalhar no domingo quando não há necessidade real, impedindo o culto e o descanso.</p></li>
+          <li><strong>Profanar o dia</strong><p>Tratar o domingo como dia de puro consumismo, compras intermináveis, diversões que afastam de Deus.</p></li>
+          <li><strong>Preguiça espiritual</strong><p>"Prefiro dormir", "a Missa é chata", "rezo em casa". Comodismo disfarçado.</p></li>
+          <li><strong>Explorar trabalhadores</strong><p>Obrigar empregados a trabalhar no domingo sem necessidade real ou compensação.</p></li>
+        </ul>
+      </div>
+      <div class="pv-coluna pv-virtudes">
+        <div class="pv-cabecalho"><span class="pv-icone">✅</span><h4>Virtudes que este mandamento cultiva</h4></div>
+        <ul>
+          <li><strong>Piedade eucarística</strong><p>Participar da Missa com fé, atenção e devoção — não como obrigação, mas como encontro com Cristo.</p></li>
+          <li><strong>Temperança</strong><p>Saber parar de trabalhar. Reconhecer que nem tudo depende de você. Deus provê.</p></li>
+          <li><strong>Gratidão</strong><p>O domingo é dia de agradecer. Olhar para trás na semana e reconhecer as bênçãos.</p></li>
+          <li><strong>Vida comunitária</strong><p>Reunir-se com outros cristãos. A fé não é individualista — é vivida em comunidade.</p></li>
+          <li><strong>Alegria</strong><p>O domingo é dia de alegria! A Ressurreição é motivo de festa, não de peso.</p></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="mand-exame">
+      <h3>🪞 Exame de Consciência — 3º Mandamento</h3>
+      <div class="exame-perguntas">
+        <div class="exame-p"><span class="exame-num">1</span><p>Você participa da Missa todos os domingos e festas de guarda? Ou apenas "quando dá"?</p></div>
+        <div class="exame-p"><span class="exame-num">2</span><p>Na Missa, você está <strong>presente de corpo e alma</strong> — ou com o celular na mão pensando no almoço?</p></div>
+        <div class="exame-p"><span class="exame-num">3</span><p>Seu domingo é dedicado a Deus, à família e ao descanso — ou é apenas mais um dia de consumo e distração?</p></div>
+        <div class="exame-p"><span class="exame-num">4</span><p>Você já deixou de ir à Missa por preguiça, chuva, sono ou futebol?</p></div>
+      </div>
+    </div>
+
+    <div class="mand-biblia">
+      <h3>📖 Aprofundamento Bíblico</h3>
+      <div class="biblia-grid">
+        <div class="biblia-card"><span class="biblia-ref">Mc 2,27-28</span><p>"O sábado foi feito para o homem, e não o homem para o sábado. O Filho do Homem é senhor até do sábado."</p></div>
+        <div class="biblia-card"><span class="biblia-ref">At 20,7</span><p>"No primeiro dia da semana, estando nós reunidos para a fração do pão..." — a prática apostólica do culto dominical.</p></div>
+        <div class="biblia-card"><span class="biblia-ref">Ap 1,10</span><p>"Achei-me em espírito no dia do Senhor" — São João chama o domingo de "dia do Senhor" (Dominica dies).</p></div>
+        <div class="biblia-card"><span class="biblia-ref">Hb 10,25</span><p>"Não abandonemos as nossas assembleias, como alguns costumam fazer."</p></div>
+      </div>
+    </div>
+
+    <div class="mand-catecismo">
+      <h3>📕 Catecismo da Igreja Católica</h3>
+      <div class="cat-tags">
+        <span class="cat-tag">CIC 2168-2195</span>
+        <span class="cat-tag">CIC 2174-2176 (dia do Senhor)</span>
+        <span class="cat-tag">CIC 2180-2183 (obrigação da Missa)</span>
+        <span class="cat-tag">CIC 2184-2188 (descanso dominical)</span>
+      </div>
+    </div>
+
+    <div class="mand-check">
+      <label class="check-label">
+        <input type="checkbox" onchange="marcarEstudado(3, this.checked)">
+        <span class="check-caixa"></span>
+        <span class="check-texto">✅ Estudei o 3º Mandamento</span>
+      </label>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ============================================================
+     2ª TÁBUA — SEPARADOR VISUAL
+     ============================================================ -->
+<div class="separador-tabua">
+  <div class="separador-linha"></div>
+  <div class="separador-texto">
+    <span class="separador-icone">❤️</span>
+    <h3>2ª Tábua da Lei</h3>
+    <p>O Amor ao Próximo — Mandamentos IV a X</p>
+  </div>
+  <div class="separador-linha"></div>
+</div>
+
+
+<!-- ============================================================
+     4º MANDAMENTO
+     ============================================================ -->
+<section class="mandamento" id="m4" data-mandamento="4">
+  <div class="secao-inner">
+
+    <div class="mand-header">
+      <div class="mand-numero-grande">IV</div>
+      <div class="mand-titulo-bloco">
+        <span class="mand-label">4º Mandamento</span>
+        <h2>Honrar pai e mãe</h2>
+        <div class="mand-citacao">
+          <blockquote>"Honra teu pai e tua mãe, para que se prolonguem os teus dias na terra que o Senhor teu Deus te dá."</blockquote>
+          <cite>Êxodo 20,12</cite>
+        </div>
+      </div>
+    </div>
+
+    <div class="mand-secao-conteudo">
+      <h3>🔍 O que este mandamento realmente exige?</h3>
+
+      <p>É o <strong>único mandamento que vem com uma promessa</strong>: vida longa e próspera. É também a <strong>ponte</strong> entre as duas tábuas — a relação com os pais é o reflexo terreno da relação com Deus Pai.</p>
+
+      <p>"Honrar" é muito mais que obedecer quando criança:</p>
+
+      <div class="tres-pilares">
+        <div class="pilar">
+          <div class="pilar-icone">🧒</div>
+          <h4>Na infância</h4>
+          <p>Obedecer com amor e respeito. "Filhos, obedecei a vossos pais no Senhor" (Ef 6,1).</p>
+        </div>
+        <div class="pilar">
+          <div class="pilar-icone">🧑</div>
+          <h4>Na vida adulta</h4>
+          <p>Respeitar, consultar, manter vínculos afetivos. Não tratar os pais como "ultrapassados" ou irrelevantes.</p>
+        </div>
+        <div class="pilar">
+          <div class="pilar-icone">👴</div>
+          <h4>Na velhice deles</h4>
+          <p>Cuidar material, emocional e espiritualmente. "Quem abandona o pai é como um blasfemo" (Eclo 3,16).</p>
+        </div>
+      </div>
+
+      <h3>👨‍👩‍👧‍👦 Deveres mútuos</h3>
+
+      <p>Este mandamento não é uma via de mão única. Ele cria obrigações para <strong>ambos os lados</strong>:</p>
+
+      <div class="deveres-duplos">
+        <div class="dever-coluna">
+          <h4>Deveres dos filhos</h4>
+          <ul>
+            <li>Obedecer enquanto menores (em tudo que não é pecado)</li>
+            <li>Respeitar sempre, mesmo discordando</li>
+            <li>Agradecer o que os pais fizeram</li>
+            <li>Cuidar deles na velhice e na doença</li>
+            <li>Rezar por eles — vivos ou falecidos</li>
+            <li>Perdoar suas falhas e imperfeições</li>
+          </ul>
+        </div>
+        <div class="dever-coluna">
+          <h4>Deveres dos pais</h4>
+          <ul>
+            <li>Educar os filhos na fé cristã</li>
+            <li>Dar exemplo de vida moral</li>
+            <li>Prover as necessidades materiais</li>
+            <li>Corrigir com amor, não com violência</li>
+            <li>Respeitar a vocação dos filhos</li>
+            <li>Não provocar a ira dos filhos (Ef 6,4)</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3>🏛️ Extensão a outras autoridades</h3>
+
+      <p>O 4º mandamento se estende a <strong>todas as autoridades legítimas</strong>: professores, patrões, governantes, pastores da Igreja. Devemos respeito e obediência — <strong>desde que não peçam algo contrário à lei de Deus</strong>. "Importa obedecer a Deus antes que aos homens" (At 5,29).</p>
+
+      <div class="caixa-destaque caixa-info">
+        <div class="caixa-icone">⚖️</div>
+        <div class="caixa-conteudo">
+          <h4>E quando os pais são imperfeitos?</h4>
+          <p>Todos os pais são imperfeitos — porque são humanos. O mandamento não diz "honra teus pais se forem perfeitos". Diz "honra". Isso inclui perdoar. Claro: abusos graves devem ser denunciados e tratados. Honrar não significa aceitar o mal. Mas significa que, mesmo com dores, buscamos a cura e não o ódio.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="pv-container">
+      <div class="pv-coluna pv-pecados">
+        <div class="pv-cabecalho"><span class="pv-icone">❌</span><h4>Pecados contra este mandamento</h4></div>
+        <ul>
+          <li><strong>Desobediência</strong><p>Rebeldia injustificada contra autoridade legítima dos pais.</p></li>
+          <li><strong>Desrespeito</strong><p>Tratar os pais com grosseria, deboche, impaciência crônica.</p></li>
+          <li><strong>Abandono</strong><p>Negligenciar pais idosos ou doentes. Mandá-los para asilos por conveniência.</p></li>
+          <li><strong>Ingratidão</strong><p>Não reconhecer sacrifícios que os pais fizeram.</p></li>
+          <li><strong>Vergonha</strong><p>Ter vergonha dos próprios pais diante dos outros.</p></li>
+          <li><strong>Rancor</strong><p>Guardar ódio e amargura sem buscar reconciliação.</p></li>
+        </ul>
+      </div>
+      <div class="pv-coluna pv-virtudes">
+        <div class="pv-cabecalho"><span class="pv-icone">✅</span><h4>Virtudes que este mandamento cultiva</h4></div>
+        <ul>
+          <li><strong>Piedade filial</strong><p>Amor respeitoso, terno e agradecido pelos pais.</p></li>
+          <li><strong>Obediência</strong><p>Não servil, mas livre e consciente — enquanto não contradiz Deus.</p></li>
+          <li><strong>Cuidado</strong><p>Amparar os pais em todas as necessidades — materiais e espirituais.</p></li>
+          <li><strong>Oração</strong><p>Rezar pelos pais diariamente, vivos ou falecidos.</p></li>
+          <li><strong>Perdão</strong><p>Libertar-se da amargura. Perdoar as falhas.</p></li>
+          <li><strong>Gratidão</strong><p>Reconhecer e agradecer — com palavras e ações.</p></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="mand-exame">
+      <h3>🪞 Exame de Consciência — 4º Mandamento</h3>
+      <div class="exame-perguntas">
+        <div class="exame-p"><span class="exame-num">1</span><p>Quando foi a última vez que você disse a seus pais que os ama? Ou que rezou por eles?</p></div>
+        <div class="exame-p"><span class="exame-num">2</span><p>Você trata seus pais com a mesma paciência que tem com seus amigos?</p></div>
+        <div class="exame-p"><span class="exame-num">3</span><p>Existe mágoa ou rancor não resolvido em relação ao seu pai ou à sua mãe?</p></div>
+        <div class="exame-p"><span class="exame-num">4</span><p>Se seus pais são idosos, você cuida deles — ou delegou essa responsabilidade?</p></div>
+        <div class="exame-p"><span class="exame-num">5</span><p><strong>Se você é pai/mãe:</strong> está educando seus filhos na fé? Dá exemplo de oração e virtude?</p></div>
+      </div>
+    </div>
+
+    <div class="mand-biblia">
+      <h3>📖 Aprofundamento Bíblico</h3>
+      <div class="biblia-grid">
+        <div class="biblia-card"><span class="biblia-ref">Ef 6,1-4</span><p>"Filhos, obedecei a vossos pais no Senhor... Pais, não provoqueis a ira dos vossos filhos, mas criai-os na disciplina e na admoestação do Senhor."</p></div>
+        <div class="biblia-card"><span class="biblia-ref">Eclo 3,1-16</span><p>O mais belo texto bíblico sobre honrar os pais: "Quem honra o pai expia seus pecados... Quem abandona o pai é como um blasfemo."</p></div>
+        <div class="biblia-card"><span class="biblia-ref">Lc 2,51</span><p>Jesus, o Filho de Deus, era "submisso" a Maria e José. Se Deus obedeceu a pais humanos, o que nos faz pensar que estamos acima disso?</p></div>
+        <div class="biblia-card"><span class="biblia-ref">Mc 7,10-13</span><p>Jesus condena quem usa pretextos religiosos para não ajudar os pais. Piedade falsa não substitui o dever filial.</p></div>
+      </div>
+    </div>
+
+    <div class="mand-catecismo">
+      <h3>📕 Catecismo da Igreja Católica</h3>
+      <div class="cat-tags">
+        <span class="cat-tag">CIC 2196-2257</span>
+        <span class="cat-tag">CIC 2214-2220 (deveres dos filhos)</span>
+        <span class="cat-tag">CIC 2221-2231 (deveres dos pais)</span>
+        <span class="cat-tag">CIC 2234-2246 (autoridades civis)</span>
+      </div>
+    </div>
+
+    <div class="mand-check">
+      <label class="check-label"><input type="checkbox" onchange="marcarEstudado(4, this.checked)"><span class="check-caixa"></span><span class="check-texto">✅ Estudei o 4º Mandamento</span></label>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ============================================================
+     5º MANDAMENTO
+     ============================================================ -->
+<section class="mandamento" id="m5" data-mandamento="5">
+  <div class="secao-inner">
+
+    <div class="mand-header">
+      <div class="mand-numero-grande">V</div>
+      <div class="mand-titulo-bloco">
+        <span class="mand-label">5º Mandamento</span>
+        <h2>Não matarás</h2>
+        <div class="mand-citacao">
+          <blockquote>"Não matarás."</blockquote>
+          <cite>Êxodo 20,13</cite>
+        </div>
+      </div>
+    </div>
+
+    <div class="mand-secao-conteudo">
+      <h3>🔍 O que este mandamento realmente exige?</h3>
+
+      <p>"Eu nunca matei ninguém." Provavelmente é verdade. Mas Jesus aprofundou radicalmente este mandamento:</p>
+
+      <div class="caixa-destaque caixa-jesus">
+        <div class="caixa-icone">✝️</div>
+        <div class="caixa-conteudo">
+          <blockquote>"Ouvistes que foi dito aos antigos: Não matarás... Eu, porém, vos digo: <strong>todo aquele que se encoleriza contra seu irmão será réu de juízo</strong>; e quem disser ao seu irmão 'imbecil' será réu diante do Sinédrio; e quem disser 'louco' será réu do fogo do inferno."</blockquote>
+          <cite>Mateus 5,21-22</cite>
+        </div>
+      </div>
+
+      <p>Este mandamento protege a <strong>sacralidade de toda vida humana</strong> — desde o primeiro instante da concepção até o último suspiro natural. Mas vai além: proíbe tudo aquilo que <em>destrói</em> o outro, mesmo sem tocá-lo.</p>
+
+      <h3>🛡️ O que este mandamento protege</h3>
+
+      <div class="protecao-grid">
+        <div class="protecao-item">
+          <span class="protecao-icone">👶</span>
+          <h4>Vida desde a concepção</h4>
+          <p><strong>O aborto é gravíssimo.</strong> "Desde o primeiro momento de sua existência, o ser humano deve ver reconhecidos os seus direitos de pessoa" (CIC 2270). A Igreja aplica excomunhão automática a quem pratica, coopera ou financia o aborto (CIC 2272).</p>
+        </div>
+        <div class="protecao-item">
+          <span class="protecao-icone">🏥</span>
+          <h4>Vida até a morte natural</h4>
+          <p><strong>A eutanásia é moralmente inadmissível</strong> (CIC 2277). Ninguém tem o direito de decidir quando a vida de outro deve terminar. Cuidados paliativos? Sim. Matar a dor? Sim. Matar o paciente? Nunca.</p>
+        </div>
+        <div class="protecao-item">
+          <span class="protecao-icone">💔</span>
+          <h4>A própria vida</h4>
+          <p><strong>O suicídio contradiz o amor a Deus, a si mesmo e ao próximo</strong> (CIC 2281). Mas a Igreja reconhece que perturbações psíquicas graves podem diminuir a culpabilidade. Deus é misericordioso — e nós devemos combater a depressão com compaixão.</p>
+        </div>
+        <div class="protecao-item">
+          <span class="protecao-icone">😡</span>
+          <h4>A dignidade interior</h4>
+          <p><strong>O ódio no coração já é matar.</strong> Desejar a morte de alguém. Alegrar-se com o sofrimento do outro. Destruir a reputação. Humilhar. Bullying. Racismo. Tudo viola este mandamento.</p>
+        </div>
+        <div class="protecao-item">
+          <span class="protecao-icone">🍺</span>
+          <h4>O próprio corpo</h4>
+          <p>O corpo é <strong>templo do Espírito Santo</strong> (1Cor 6,19). Abuso de álcool, drogas, excesso alimentar, negligência com a saúde — tudo atenta contra a vida que Deus nos deu.</p>
+        </div>
+        <div class="protecao-item">
+          <span class="protecao-icone">⚠️</span>
+          <h4>A paz social</h4>
+          <p><strong>O escândalo</strong> — induzir outros ao pecado — é uma forma de "matar" espiritualmente. "Quem escandalizar um destes pequeninos, melhor seria que lhe atassem uma pedra ao pescoço" (Mt 18,6).</p>
+        </div>
+      </div>
+
+      <h3>⚔️ E a legítima defesa?</h3>
+
+      <p>A Igreja reconhece o <strong>direito à legítima defesa</strong> (CIC 2263-2267). Defender a própria vida ou a vida de inocentes é moralmente aceitável — e até pode ser um dever. Mas a força usada deve ser <strong>proporcional</strong> à ameaça, e matar só é permitido como último recurso absoluto.</p>
+    </div>
+
+    <div class="pv-container">
+      <div class="pv-coluna pv-pecados">
+        <div class="pv-cabecalho"><span class="pv-icone">❌</span><h4>Pecados contra este mandamento</h4></div>
+        <ul>
+          <li><strong>Homicídio</strong><p>Tirar a vida de um ser humano inocente — em qualquer circunstância.</p></li>
+          <li><strong>Aborto</strong><p>Matar o ser humano no ventre materno. Pecado gravíssimo com excomunhão automática.</p></li>
+          <li><strong>Eutanásia</strong><p>Provocar ou facilitar a morte de doentes, idosos ou deficientes.</p></li>
+          <li><strong>Suicídio</strong><p>Atentar contra a própria vida. Contradiz o amor a Deus, que é o Senhor da vida.</p></li>
+          <li><strong>Ódio</strong><p>Desejar o mal, a morte ou o sofrimento do próximo. O "homicídio do coração".</p></li>
+          <li><strong>Escândalo</strong><p>Induzir outros ao pecado — matar a alma do próximo.</p></li>
+          <li><strong>Abuso de substâncias</strong><p>Drogas, alcoolismo, tudo que destrói o corpo-templo.</p></li>
+          <li><strong>Tortura</strong><p>Infligir sofrimento físico ou psicológico deliberadamente.</p></li>
+        </ul>
+      </div>
+      <div class="pv-coluna pv-virtudes">
+        <div class="pv-cabecalho"><span class="pv-icone">✅</span><h4>Virtudes que este mandamento cultiva</h4></div>
+        <ul>
+          <li><strong>Respeito pela vida</strong><p>Desde a concepção até a morte natural. Toda vida é sagrada.</p></li>
+          <li><strong>Mansidão</strong><p>Controlar a raiva. Não responder ao mal com mal.</p></li>
+          <li><strong>Perdão</strong><p>Renunciar à vingança. "Setenta vezes sete" (Mt 18,22).</p></li>
+          <li><strong>Paz</strong><p>"Bem-aventurados os pacificadores" (Mt 5,9). Ser instrumento de reconciliação.</p></li>
+          <li><strong>Cuidado com a saúde</strong><p>Exercício, alimentação sadia, sono, cuidado mental.</p></li>
+          <li><strong>Defesa do inocente</strong><p>Proteger os mais vulneráveis: crianças, idosos, nascituros, doentes.</p></li>
+          <li><strong>Compaixão</strong><p>Sofrer-com o outro. Consolar. Estar presente na dor alheia.</p></li>
+          <li><strong>Justiça social</strong><p>Combater estruturas que matam: fome, miséria, guerras injustas.</p></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="mand-exame">
+      <h3>🪞 Exame de Consciência — 5º Mandamento</h3>
+      <div class="exame-perguntas">
+        <div class="exame-p"><span class="exame-num">1</span><p>Existe alguém que você <strong>gostaria que não existisse</strong>? Esse é o ódio que Jesus condenou.</p></div>
+        <div class="exame-p"><span class="exame-num">2</span><p>Você já se alegrou com o fracasso ou sofrimento de alguém?</p></div>
+        <div class="exame-p"><span class="exame-num">3</span><p>Como você trata seu corpo? Com respeito ou com abuso?</p></div>
+        <div class="exame-p"><span class="exame-num">4</span><p>Você defende a vida dos mais vulneráveis — nascituros, idosos, doentes — ou se cala?</p></div>
+        <div class="exame-p"><span class="exame-num">5</span><p>Existe alguém que você precisa <strong>perdoar</strong> e ainda não perdoou?</p></div>
+      </div>
+    </div>
+
+    <div class="mand-biblia">
+      <h3>📖 Aprofundamento Bíblico</h3>
+      <div class="biblia-grid">
+        <div class="biblia-card"><span class="biblia-ref">Mt 5,21-26</span><p>Jesus radicaliza: a ira contra o irmão já é julgamento. Reconcilie-se antes de apresentar a oferta no altar.</p></div>
+        <div class="biblia-card"><span class="biblia-ref">Gn 4,8-12</span><p>Caim mata Abel. Deus pergunta: "Onde está teu irmão?" — a pergunta que ecoa até hoje.</p></div>
+        <div class="biblia-card"><span class="biblia-ref">1 Jo 3,15</span><p>"Todo o que odeia seu irmão é homicida." O ódio já é assassinato no coração.</p></div>
+        <div class="biblia-card"><span class="biblia-ref">Mt 25,31-46</span><p>"Tive fome e não me destes de comer..." — a omissão também mata.</p></div>
+      </div>
+    </div>
+
+    <div class="mand-catecismo">
+      <h3>📕 Catecismo da Igreja Católica</h3>
+      <div class="cat-tags">
+        <span class="cat-tag">CIC 2258-2330</span>
+        <span class="cat-tag">CIC 2268-2269 (homicídio)</span>
+        <span class="cat-tag">CIC 2270-2275 (aborto)</span>
+        <span class="cat-tag">CIC 2276-2279 (eutanásia)</span>
+        <span class="cat-tag">CIC 2280-2283 (suicídio)</span>
+        <span class="cat-tag">CIC 2302-2306 (paz)</span>
+      </div>
+    </div>
+
+    <div class="mand-check">
+      <label class="check-label"><input type="checkbox" onchange="marcarEstudado(5, this.checked)"><span class="check-caixa"></span><span class="check-texto">✅ Estudei o 5º Mandamento</span></label>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ============================================================
+     6º MANDAMENTO
+     ============================================================ -->
+<section class="mandamento" id="m6" data-mandamento="6">
+  <div class="secao-inner">
+
+    <div class="mand-header">
+      <div class="mand-numero-grande">VI</div>
+      <div class="mand-titulo-bloco">
+        <span class="mand-label">6º Mandamento</span>
+        <h2>Não pecar contra a castidade</h2>
+        <div class="mand-citacao">
+          <blockquote>"Não cometerás adultério."</blockquote>
+          <cite>Êxodo 20,14</cite>
+        </div>
+      </div>
+    </div>
+
+    <div class="mand-secao-conteudo">
+      <h3>🔍 O que este mandamento realmente exige?</h3>
+
+      <p>A sexualidade foi <strong>criada por Deus</strong> — ela é boa! O Gênesis diz que Deus criou o homem e a mulher, viu tudo e declarou: "muito bom" (Gn 1,31). A Igreja não é "contra o sexo" — é <strong>a favor do sexo vivido como Deus o planejou</strong>.</p>
+
+      <p>O plano de Deus: a sexualidade tem <strong>dois significados inseparáveis</strong>:</p>
+
+      <div class="dois-significados">
+        <div class="signif">
+          <span class="signif-icone">💑</span>
+          <h4>Unitivo</h4>
+          <p>Expressar o amor total, exclusivo e fiel entre marido e esposa. Tornar-se "uma só carne" (Gn 2,24).</p>
+        </div>
+        <div class="signif-mais">+</div>
+        <div class="signif">
+          <span class="signif-icone">👶</span>
+          <h4>Procriativo</h4>
+          <p>Estar aberto à vida. Cooperar com Deus na criação de uma nova pessoa — com alma imortal.</p>
+        </div>
+      </div>
+
+      <p>Quando se separam esses dois significados, a sexualidade se deforma. Sexo sem amor é usar o outro. Amor sem abertura à vida é incompleto.</p>
+
+      <h3>🌿 O que é castidade?</h3>
+
+      <p><strong>Castidade não é repressão.</strong> É <em>integração</em>. É aprender a amar de verdade, sem usar as pessoas como objetos de prazer. O Catecismo define: "A castidade significa a integração da sexualidade na pessoa" (CIC 2337).</p>
+
+      <p>Cada estado de vida tem sua forma de castidade:</p>
+      <ul class="lista-castidade">
+        <li><strong>Solteiros:</strong> abstinência sexual até o matrimônio</li>
+        <li><strong>Casados:</strong> fidelidade exclusiva e abertura à vida</li>
+        <li><strong>Consagrados:</strong> celibato por amor ao Reino</li>
+        <li><strong>Viúvos:</strong> continência ou novo matrimônio válido</li>
+      </ul>
+    </div>
+
+    <div class="pv-container">
+      <div class="pv-coluna pv-pecados">
+        <div class="pv-cabecalho"><span class="pv-icone">❌</span><h4>Pecados contra este mandamento</h4></div>
+        <ul>
+          <li><strong>Adultério</strong><p>Relação sexual com pessoa casada ou sendo casado. Trai o cônjuge e viola a aliança.</p></li>
+          <li><strong>Fornicação</strong><p>Relação sexual entre não-casados. O corpo não é "meu" — é templo do Espírito Santo.</p></li>
+          <li><strong>Pornografia</strong><p>Exposição de atos sexuais para terceiros. Degrada a dignidade humana e vicia o cérebro.</p></li>
+          <li><strong>Masturbação</strong><p>Prazer sexual solitário. Distorce o sentido da sexualidade, que é relacional.</p></li>
+          <li><strong>Atos homossexuais</strong><p>Contrários à lei natural. A Igreja acolhe as pessoas com tendência homossexual com respeito e compaixão, mas os atos são intrinsecamente desordenados (CIC 2357-2359).</p></li>
+          <li><strong>Contracepção artificial</strong><p>Bloquear deliberadamente a abertura à vida no ato conjugal.</p></li>
+          <li><strong>Prostituição</strong><p>Reduzir a pessoa a mercadoria sexual.</p></li>
+        </ul>
+      </div>
+      <div class="pv-coluna pv-virtudes">
+        <div class="pv-cabecalho"><span class="pv-icone">✅</span><h4>Virtudes que este mandamento cultiva</h4></div>
+        <ul>
+          <li><strong>Castidade</strong><p>Integração ordenada da sexualidade segundo o estado de vida.</p></li>
+          <li><strong>Pudor</strong><p>Proteger a intimidade do corpo e dos sentimentos. Resguardar o mistério da pessoa.</p></li>
+          <li><strong>Fidelidade</strong><p>Amor exclusivo e total no matrimônio. "O que Deus uniu, o homem não separe."</p></li>
+          <li><strong>Temperança</strong><p>Domínio sobre os desejos. Não ser escravo dos instintos.</p></li>
+          <li><strong>Pureza de coração</strong><p>"Bem-aventurados os puros de coração, pois verão a Deus" (Mt 5,8).</p></li>
+          <li><strong>Respeito pelo corpo</strong><p>Tratar o corpo — próprio e alheio — como sagrado.</p></li>
+          <li><strong>Amor verdadeiro</strong><p>Amar é querer o BEM do outro — não usá-lo para meu prazer.</p></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="mand-exame">
+      <h3>🪞 Exame de Consciência — 6º Mandamento</h3>
+      <div class="exame-perguntas">
+        <div class="exame-p"><span class="exame-num">1</span><p>Você trata as pessoas como <strong>alguém para amar</strong> ou como <strong>algo para usar</strong>? Essa é a diferença entre amor e luxúria.</p></div>
+        <div class="exame-p"><span class="exame-num">2</span><p>Você consome pornografia? Com que frequência? Já tentou parar?</p></div>
+        <div class="exame-p"><span class="exame-num">3</span><p>Se é casado(a): você é fiel ao seu cônjuge — não apenas no corpo, mas nos pensamentos e nos olhares?</p></div>
+        <div class="exame-p"><span class="exame-num">4</span><p>Seu modo de vestir, falar e se comportar respeita o pudor — ou busca provocar desejos alheios?</p></div>
+      </div>
+    </div>
+
+    <div class="mand-biblia">
+      <h3>📖 Aprofundamento Bíblico</h3>
+      <div class="biblia-grid">
+        <div class="biblia-card"><span class="biblia-ref">Mt 5,27-28</span><p>"Todo aquele que olhar para uma mulher para desejá-la, já cometeu adultério com ela no seu coração."</p></div>
+        <div class="biblia-card"><span class="biblia-ref">1 Cor 6,18-20</span><p>"Fugi da fornicação... O vosso corpo é templo do Espírito Santo. Glorificai a Deus no vosso corpo."</p></div>
+        <div class="biblia-card"><span class="biblia-ref">Ct 8,6-7</span><p>"Forte como a morte é o amor... As águas torrenciais não podem apagá-lo." O Cântico dos Cânticos celebra o amor humano como reflexo do amor divino.</p></div>
+        <div class="biblia-card"><span class="biblia-ref">Ef 5,25-33</span><p>"Maridos, amai vossas mulheres, como Cristo amou a Igreja e se entregou por ela." O casamento é imagem de Cristo.</p></div>
+      </div>
+    </div>
+
+    <div class="mand-catecismo">
+      <h3>📕 Catecismo da Igreja Católica</h3>
+      <div class="cat-tags">
+        <span class="cat-tag">CIC 2331-2400</span>
+        <span class="cat-tag">CIC 2337-2350 (castidade)</span>
+        <span class="cat-tag">CIC 2360-2379 (amor conjugal)</span>
+        <span class="cat-tag">CIC 2380-2391 (ofensas à castidade)</span>
+      </div>
+    </div>
+
+    <div class="mand-check">
+      <label class="check-label"><input type="checkbox" onchange="marcarEstudado(6, this.checked)"><span class="check-caixa"></span><span class="check-texto">✅ Estudei o 6º Mandamento</span></label>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ============================================================
+     7º MANDAMENTO
+     ============================================================ -->
+<section class="mandamento" id="m7" data-mandamento="7">
+  <div class="secao-inner">
+
+    <div class="mand-header">
+      <div class="mand-numero-grande">VII</div>
+      <div class="mand-titulo-bloco">
+        <span class="mand-label">7º Mandamento</span>
+        <h2>Não furtar</h2>
+        <div class="mand-citacao">
+          <blockquote>"Não furtarás."</blockquote>
+          <cite>Êxodo 20,15</cite>
+        </div>
+      </div>
+    </div>
+
+    <div class="mand-secao-conteudo">
+      <h3>🔍 O que este mandamento realmente exige?</h3>
+
+      <p>Vai muito além de "não roubar objetos". Este mandamento estabelece o princípio da <strong>justiça nas relações humanas</strong>. A Igreja defende a propriedade privada como direito natural — mas ensina que todos os bens têm uma <strong>destinação universal</strong>: foram criados para servir a humanidade inteira.</p>
+
+      <h3>💼 Formas modernas de roubo</h3>
+
+      <div class="idolo-grid">
+        <div class="idolo-card"><span class="idolo-emoji">💰</span><strong>Salário injusto</strong><p>Pagar menos do que o trabalho merece. "O salário dos trabalhadores clama ao céu" (Tg 5,4).</p></div>
+        <div class="idolo-card"><span class="idolo-emoji">📋</span><strong>Fraude</strong><p>Enganar em contratos, notas fiscais, balanças, qualidade de produtos.</p></div>
+        <div class="idolo-card"><span class="idolo-emoji">🏛️</span><strong>Corrupção</strong><p>Suborno, propina, desvio de verbas públicas. Roubar do povo é gravíssimo.</p></div>
+        <div class="idolo-card"><span class="idolo-emoji">💳</span><strong>Sonegação</strong><p>Não pagar impostos devidos é furtar da sociedade — e dos mais pobres que dependem do Estado.</p></div>
+        <div class="idolo-card"><span class="idolo-emoji">📀</span><strong>Pirataria</strong><p>Usar software, filmes, músicas sem pagar. O criador merece a recompensa do seu trabalho.</p></div>
+        <div class="idolo-card"><span class="idolo-emoji">🗑️</span><strong>Desperdício</strong><p>Desperdiçar comida, água, recursos enquanto outros passam necessidade. Destruir bens sem razão.</p></li>
+      </div>
+
+      <h3>⚖️ A Doutrina Social da Igreja</h3>
+
+      <p>O 7º mandamento é a base da <strong>Doutrina Social da Igreja</strong>. Alguns princípios fundamentais:</p>
+
+      <div class="argumento-bloco">
+        <div class="argumento"><span class="arg-num">1</span><div><strong>Destinação universal dos bens:</strong><p>"Deus destinou a terra e tudo que ela contém para uso de todos" (GS 69). Ninguém pode acumular enquanto outros passam fome.</p></div></div>
+        <div class="argumento"><span class="arg-num">2</span><div><strong>Direito à propriedade privada:</strong><p>É legítimo possuir bens — mas nunca de forma absoluta. A propriedade tem uma função social.</p></div></div>
+        <div class="argumento"><span class="arg-num">3</span><div><strong>Opção preferencial pelos pobres:</strong><p>A Igreja se coloca ao lado dos mais vulneráveis. "O que fizestes ao menor destes irmãos, foi a mim que fizestes" (Mt 25,40).</p></div></div>
+        <div class="argumento"><span class="arg-num">4</span><div><strong>Restituição:</strong><p>Quem roubou deve devolver. Quem lesou deve reparar. Não basta confessar — é preciso restituir.</p></div></div>
+      </div>
+    </div>
+
+    <div class="pv-container">
+      <div class="pv-coluna pv-pecados">
+        <div class="pv-cabecalho"><span class="pv-icone">❌</span><h4>Pecados contra este mandamento</h4></div>
+        <ul>
+          <li><strong>Roubo/Furto</strong><p>Tomar o que pertence a outro contra sua vontade razoável.</p></li>
+          <li><strong>Fraude</strong><p>Enganar em negócios, contratos, promessas comerciais.</p></li>
+          <li><strong>Salário injusto</strong><p>Não pagar ao trabalhador o que lhe é devido.</p></li>
+          <li><strong>Usura</strong><p>Cobrar juros abusivos que esmagam o devedor.</p></li>
+          <li><strong>Corrupção</strong><p>Suborno, propina, tráfico de influência.</p></li>
+          <li><strong>Escravização</strong><p>Tratar pessoas como mercadoria. Trabalho escravo.</p></li>
+          <li><strong>Destruição ambiental</strong><p>Degradar a criação de Deus por ganância. "A terra é do Senhor" (Sl 24,1).</p></li>
+        </ul>
+      </div>
+      <div class="pv-coluna pv-virtudes">
+        <div class="pv-cabecalho"><span class="pv-icone">✅</span><h4>Virtudes que este mandamento cultiva</h4></div>
+        <ul>
+          <li><strong>Justiça</strong><p>Dar a cada um o que lhe é devido. Em tudo.</p></li>
+          <li><strong>Generosidade</strong><p>Partilhar com os necessitados. Esmola, doação, voluntariado.</p></li>
+          <li><strong>Honestidade</strong><p>Integridade nos negócios, nos contratos, nas promessas.</p></li>
+          <li><strong>Restituição</strong><p>Devolver o que foi tomado. Reparar o dano causado.</p></li>
+          <li><strong>Trabalho digno</strong><p>Ganhar o pão com honra e competência.</p></li>
+          <li><strong>Sobriedade</strong><p>Viver com simplicidade. Não acumular além do necessário.</p></li>
+          <li><strong>Cuidado com a criação</strong><p>Ser administrador responsável do mundo que Deus nos confiou.</p></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="mand-exame">
+      <h3>🪞 Exame de Consciência — 7º Mandamento</h3>
+      <div class="exame-perguntas">
+        <div class="exame-p"><span class="exame-num">1</span><p>Se todos agissem <strong>exatamente como você</strong> em questões de dinheiro e bens materiais, o mundo seria mais justo?</p></div>
+        <div class="exame-p"><span class="exame-num">2</span><p>Você já ficou com algo que não era seu — mesmo "coisas pequenas"? Troco a mais, objetos "esquecidos"?</p></div>
+        <div class="exame-p"><span class="exame-num">3</span><p>Você é generoso com quem precisa — ou acumula mais do que necessita enquanto outros sofrem?</p></div>
+        <div class="exame-p"><span class="exame-num">4</span><p>Você cuida do meio ambiente — ou trata a criação de Deus com descaso?</p></div>
+      </div>
+    </div>
+
+    <div class="mand-biblia">
+      <h3>📖 Aprofundamento Bíblico</h3>
+      <div class="biblia-grid">
+        <div class="biblia-card"><span class="biblia-ref">Lc 19,1-10</span><p>Zaqueu, o cobrador de impostos: "Senhor, dou a metade dos meus bens aos pobres, e se defraudei alguém, restituo o quádruplo." Jesus diz: "Hoje a salvação entrou nesta casa."</p></div>
+        <div class="biblia-card"><span class="biblia-ref">Tg 5,1-6</span><p>"Vós, ricos, chorai... O salário dos trabalhadores que ceifaram os vossos campos e que vós retivestes clama, e os gritos chegaram aos ouvidos do Senhor."</p></div>
+        <div class="biblia-card"><span class="biblia-ref">Mt 25,14-30</span><p>Parábola dos talentos: Deus nos deu bens para administrar — e pedirá contas.</p></div>
+      </div>
+    </div>
+
+    <div class="mand-catecismo">
+      <h3>📕 Catecismo da Igreja Católica</h3>
+      <div class="cat-tags"><span class="cat-tag">CIC 2401-2463</span><span class="cat-tag">CIC 2419-2436 (doutrina social)</span><span class="cat-tag">CIC 2443-2449 (amor aos pobres)</span></div>
+    </div>
+
+    <div class="mand-check">
+      <label class="check-label"><input type="checkbox" onchange="marcarEstudado(7, this.checked)"><span class="check-caixa"></span><span class="check-texto">✅ Estudei o 7º Mandamento</span></label>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ============================================================
+     8º MANDAMENTO
+     ============================================================ -->
+<section class="mandamento" id="m8" data-mandamento="8">
+  <div class="secao-inner">
+
+    <div class="mand-header">
+      <div class="mand-numero-grande">VIII</div>
+      <div class="mand-titulo-bloco">
+        <span class="mand-label">8º Mandamento</span>
+        <h2>Não levantar falso testemunho</h2>
+        <div class="mand-citacao">
+          <blockquote>"Não dirás falso testemunho contra o teu próximo."</blockquote>
+          <cite>Êxodo 20,16</cite>
+        </div>
+      </div>
+    </div>
+
+    <div class="mand-secao-conteudo">
+      <h3>🔍 O que este mandamento realmente exige?</h3>
+
+      <p>Deus é <strong>a Verdade</strong> (Jo 14,6). O diabo é o <strong>"pai da mentira"</strong> (Jo 8,44). Cada vez que mentimos, nos alinhamos com quem? A verdade não é opcional para o cristão — é constitutiva.</p>
+
+      <h3>🎭 As muitas faces da mentira</h3>
+
+      <div class="violacoes-lista">
+        <div class="violacao">
+          <div class="violacao-titulo"><span class="violacao-icone">🗣️</span><strong>Mentira direta</strong></div>
+          <p>Dizer o contrário do que se sabe ser verdade. Toda mentira é pecado — mesmo as "mentiras brancas". A gravidade varia conforme o dano causado.</p>
+        </div>
+        <div class="violacao">
+          <div class="violacao-titulo"><span class="violacao-icone">🔪</span><strong>Calúnia</strong></div>
+          <p>Atribuir a alguém um defeito ou crime <strong>falso</strong>. É assassinato da reputação. Destroi a vida social da pessoa inocente.</p>
+        </div>
+        <div class="violacao">
+          <div class="violacao-titulo"><span class="violacao-icone">📢</span><strong>Difamação</strong></div>
+          <p>Revelar defeitos <strong>reais</strong> de alguém sem necessidade. "Mas eu só disse a verdade!" — sim, mas não toda verdade precisa ser dita a todos.</p>
+        </div>
+        <div class="violacao">
+          <div class="violacao-titulo"><span class="violacao-icone">🫖</span><strong>Fofoca</strong></div>
+          <p>Espalhar informações sobre a vida alheia por curiosidade ou prazer. A fofoca destrói comunidades, famílias e amizades.</p>
+        </div>
+        <div class="violacao">
+          <div class="violacao-titulo"><span class="violacao-icone">⚖️</span><strong>Juízo temerário</strong></div>
+          <p>Julgar negativamente o próximo sem provas suficientes. Assumir o pior sobre as intenções do outro.</p>
+        </div>
+        <div class="violacao">
+          <div class="violacao-titulo"><span class="violacao-icone">🎭</span><strong>Bajulação e hipocrisia</strong></div>
+          <p>Elogiar para manipular. Fingir ser o que não é. Viver uma dupla vida.</p>
+        </div>
+      </div>
+
+      <div class="caixa-destaque caixa-info">
+        <div class="caixa-icone">💡</div>
+        <div class="caixa-conteudo">
+          <h4>Fofoca vs. Difamação vs. Calúnia</h4>
+          <p><strong>Fofoca:</strong> "Você soube que o João..." (espalhar notícias alheias)<br>
+          <strong>Difamação:</strong> "O João tem esse defeito..." (revelar verdade sem necessidade)<br>
+          <strong>Calúnia:</strong> "O João fez isso..." (atribuir algo falso)<br>
+          Todas são pecaminosas. A calúnia é a mais grave — mas a difamação pode ser igualmente destrutiva.</p>
+        </div>
+      </div>
+
+      <h3>🔐 O sigilo e a discrição</h3>
+      <p>Nem toda verdade deve ser dita a todos. O <strong>sigilo sacramental</strong> (confissão) é inviolável — o padre que o quebrasse seria excomungado. Mas também existem <strong>segredos profissionais</strong> (médicos, advogados) e <strong>segredos pessoais</strong> que devem ser respeitados.</p>
+    </div>
+
+    <div class="pv-container">
+      <div class="pv-coluna pv-pecados">
+        <div class="pv-cabecalho"><span class="pv-icone">❌</span><h4>Pecados contra este mandamento</h4></div>
+        <ul>
+          <li><strong>Mentira</strong><p>Dizer o contrário do que se sabe ser verdade, com intenção de enganar.</p></li>
+          <li><strong>Calúnia</strong><p>Atribuir ao próximo defeitos ou crimes que não cometeu.</p></li>
+          <li><strong>Difamação</strong><p>Revelar faltas reais do próximo sem motivo justo.</p></li>
+          <li><strong>Fofoca</strong><p>Espalhar informações sobre a vida alheia sem necessidade.</p></li>
+          <li><strong>Juízo temerário</strong><p>Presumir o pior sobre as intenções do outro sem fundamento.</p></li>
+          <li><strong>Perjúrio</strong><p>Mentir sob juramento.</p></li>
+          <li><strong>Bajulação</strong><p>Elogio falso para manipular ou obter vantagem.</p></li>
+        </ul>
+      </div>
+      <div class="pv-coluna pv-virtudes">
+        <div class="pv-cabecalho"><span class="pv-icone">✅</span><h4>Virtudes que este mandamento cultiva</h4></div>
+        <ul>
+          <li><strong>Veracidade</strong><p>Falar a verdade — com caridade, prudência e no momento certo.</p></li>
+          <li><strong>Discrição</strong><p>Guardar segredos. Não espalhar o que foi confiado.</p></li>
+          <li><strong>Coragem</strong><p>Dar testemunho da verdade mesmo quando é difícil ou impopular.</p></li>
+          <li><strong>Boa fama</strong><p>Proteger a reputação do próximo. Interpretar com benevolência.</p></li>
+          <li><strong>Simplicidade</strong><p>"Seja o vosso sim, sim; e o não, não" (Mt 5,37).</p></li>
+          <li><strong>Justiça reparadora</strong><p>Se caluniou ou difamou, reparar publicamente o dano causado.</p></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="mand-exame">
+      <h3>🪞 Exame de Consciência — 8º Mandamento</h3>
+      <div class="exame-perguntas">
+        <div class="exame-p"><span class="exame-num">1</span><p>Se tudo o que você disse <strong>sobre os outros esta semana</strong> fosse publicado num mural para todos lerem… você ficaria em paz?</p></div>
+        <div class="exame-p"><span class="exame-num">2</span><p>Você costuma falar mal de pessoas ausentes? Por quê?</p></div>
+        <div class="exame-p"><span class="exame-num">3</span><p>Quando soube de algo ruim sobre alguém, seu primeiro impulso foi <strong>espalhar</strong> ou <strong>guardar</strong>?</p></div>
+        <div class="exame-p"><span class="exame-num">4</span><p>Você julga as intenções dos outros sem conhecer a história completa?</p></div>
+      </div>
+    </div>
+
+    <div class="mand-biblia">
+      <h3>📖 Aprofundamento Bíblico</h3>
+      <div class="biblia-grid">
+        <div class="biblia-card"><span class="biblia-ref">Tg 3,5-12</span><p>"A língua é um fogo... Nenhum homem pode domar a língua. É um mal incontrolável, cheio de veneno mortífero."</p></div>
+        <div class="biblia-card"><span class="biblia-ref">Jo 8,32</span><p>"Conhecereis a verdade e a verdade vos libertará."</p></div>
+        <div class="biblia-card"><span class="biblia-ref">Ef 4,25</span><p>"Abandonando a mentira, fale cada um a verdade com o seu próximo."</p></div>
+        <div class="biblia-card"><span class="biblia-ref">Pr 18,21</span><p>"A morte e a vida estão no poder da língua." Suas palavras constroem ou destroem.</p></div>
+      </div>
+    </div>
+
+    <div class="mand-catecismo">
+      <h3>📕 Catecismo da Igreja Católica</h3>
+      <div class="cat-tags"><span class="cat-tag">CIC 2464-2513</span><span class="cat-tag">CIC 2475-2487 (ofensas à verdade)</span><span class="cat-tag">CIC 2488-2492 (sigilo)</span></div>
+    </div>
+
+    <div class="mand-check">
+      <label class="check-label"><input type="checkbox" onchange="marcarEstudado(8, this.checked)"><span class="check-caixa"></span><span class="check-texto">✅ Estudei o 8º Mandamento</span></label>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ============================================================
+     9º MANDAMENTO
+     ============================================================ -->
+<section class="mandamento" id="m9" data-mandamento="9">
+  <div class="secao-inner">
+
+    <div class="mand-header">
+      <div class="mand-numero-grande">IX</div>
+      <div class="mand-titulo-bloco">
+        <span class="mand-label">9º Mandamento</span>
+        <h2>Não desejar a mulher do próximo</h2>
+        <div class="mand-citacao">
+          <blockquote>"Não cobiçarás a mulher do teu próximo."</blockquote>
+          <cite>Êxodo 20,17</cite>
+        </div>
+      </div>
+    </div>
+
+    <div class="mand-secao-conteudo">
+      <h3>🔍 O que este mandamento realmente exige?</h3>
+
+      <p>Se o 6º mandamento fala das <strong>ações externas</strong>, o 9º vai ao <strong>coração</strong>. Jesus revelou: <em>"Todo aquele que               olhar para uma mulher para desejá-la, já cometeu adultério com ela 
+              em seu coração"</em> (Mt 5,28).
+      </p>
+
+      <p>
+        A batalha pela pureza começa <strong>antes da ação</strong> — começa no olhar, 
+        no pensamento, na imaginação. Não se trata de nunca sentir atração: isso é natural 
+        e não é pecado. O pecado começa quando <em>consentimos</em> e <em>alimentamos</em> 
+        esses desejos deliberadamente.
+      </p>
+
+      <div class="tres-pilares">
+        <div class="pilar">
+          <div class="pilar-icone">👁️</div>
+          <h4>O olhar</h4>
+          <p>O pecado começa com o olhar que busca o prazer impuro. "Fiz um pacto com meus olhos" (Jó 31,1). A guarda dos olhos é a primeira batalha.</p>
+        </div>
+        <div class="pilar">
+          <div class="pilar-icone">🧠</div>
+          <h4>O pensamento</h4>
+          <p>O pensamento que passa não é pecado. O pensamento que você convida para sentar, serve chá e alimenta — esse é o problema.</p>
+        </div>
+        <div class="pilar">
+          <div class="pilar-icone">❤️</div>
+          <h4>O coração</h4>
+          <p>"Bem-aventurados os puros de coração" (Mt 5,8). Pureza de coração é o objetivo — não apenas controle externo de comportamento.</p>
+        </div>
+      </div>
+
+      <h3>📱 O mundo digital e este mandamento</h3>
+
+      <p>
+        Nunca na história humana foi tão fácil violar o 9º mandamento como hoje. 
+        A pornografia está a um clique de distância. O algoritmo das redes sociais 
+        é projetado para capturar o olhar. Os aplicativos de namoro tratam pessoas 
+        como catálogos. A cultura inteira conspira contra a pureza de coração.
+      </p>
+
+      <div class="caixa-destaque caixa-alerta">
+        <div class="caixa-icone">⚠️</div>
+        <div class="caixa-conteudo">
+          <h4>A pornografia e o cérebro</h4>
+          <p>
+            A neurociência confirma o que a teologia já sabia: a pornografia cria 
+            <strong>vício real</strong>, com os mesmos mecanismos do vício em drogas. 
+            Ela deforma a percepção do outro, diminui a satisfação conjugal real, 
+            e cria um apetite que nunca é saciado. É uma armadilha sofisticada — 
+            e a Igreja avisa desde sempre.
+          </p>
+        </div>
+      </div>
+
+      <h3>🛡️ Como cultivar a pureza de coração</h3>
+
+      <div class="lista-santificar">
+        <div class="sant-item">
+          <span class="sant-icone">🙏</span>
+          <div>
+            <strong>Oração frequente</strong>
+            <p>A pureza é uma graça, não apenas um esforço. Peça a Deus diariamente. A Virgem Maria é a Rainha da Pureza — invoque-a.</p>
+          </div>
+        </div>
+        <div class="sant-item">
+          <span class="sant-icone">⛪</span>
+          <div>
+            <strong>Sacramentos regulares</strong>
+            <p>Confissão frequente e Eucaristia dominical. A graça sacramental fortalece onde o esforço humano falha.</p>
+          </div>
+        </div>
+        <div class="sant-item">
+          <span class="sant-icone">👁️</span>
+          <div>
+            <strong>Guarda dos sentidos</strong>
+            <p>Cuidado com o que se vê, ouve e lê. Não é paranoia — é saber que o coração é moldado pelo que entra nele.</p>
+          </div>
+        </div>
+        <div class="sant-item">
+          <span class="sant-icone">🏃</span>
+          <div>
+            <strong>Fuga da ocasião</strong>
+            <p>"Fugi da fornicação" (1Cor 6,18) — São Paulo não disse "resista firme". Disse <em>fuja</em>. Há sabedoria nessa humildade.</p>
+          </div>
+        </div>
+        <div class="sant-item">
+          <span class="sant-icone">👥</span>
+          <div>
+            <strong>Comunidade</strong>
+            <p>Ter amigos que compartilham os mesmos valores. Isolamento é terreno fértil para a impureza.</p>
+          </div>
+        </div>
+        <div class="sant-item">
+          <span class="sant-icone">🎯</span>
+          <div>
+            <strong>Mortificação</strong>
+            <p>Pequenas renúncias voluntárias fortalecem a vontade: jeuns, abrir mão de prazeres lícitos, disciplina corporal.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pv-container">
+      <div class="pv-coluna pv-pecados">
+        <div class="pv-cabecalho"><span class="pv-icone">❌</span><h4>Pecados contra este mandamento</h4></div>
+        <ul>
+          <li><strong>Cobiça carnal</strong><p>Desejar sexualmente quem não é — ou não pode ser — seu cônjuge.</p></li>
+          <li><strong>Fantasias impuras deliberadas</strong><p>Alimentar pensamentos sexuais sobre pessoas reais ou fictícias conscientemente.</p></li>
+          <li><strong>Olhar malicioso</strong><p>Olhar para "consumir" o corpo alheio como objeto de desejo.</p></li>
+          <li><strong>Flerte com comprometidos</strong><p>Seduzir ou tentar quem já tem compromisso conjugal.</p></li>
+          <li><strong>Consumo de pornografia</strong><p>Alimentar o desejo impuro com imagens — viola este e o 6º mandamento.</p></li>
+          <li><strong>Conversas impuras</strong><p>Piadas ou conversas de conteúdo sexual degradante.</p></li>
+        </ul>
+      </div>
+      <div class="pv-coluna pv-virtudes">
+        <div class="pv-cabecalho"><span class="pv-icone">✅</span><h4>Virtudes que este mandamento cultiva</h4></div>
+        <ul>
+          <li><strong>Pureza de coração</strong><p>"Bem-aventurados os puros de coração, pois verão a Deus." (Mt 5,8)</p></li>
+          <li><strong>Modéstia</strong><p>No olhar, no vestir, no falar. Proteger o próprio mistério e o dos outros.</p></li>
+          <li><strong>Guarda dos sentidos</strong><p>Vigiar o que entra pelos olhos, ouvidos e imaginação.</p></li>
+          <li><strong>Oração pela pureza</strong><p>"Senhor, fazei de mim um canal do vosso amor." Pedir a graça humildemente.</p></li>
+          <li><strong>Temperança</strong><p>Domínio sereno sobre os instintos. Não suprimir — mas ordenar.</p></li>
+          <li><strong>Pudor</strong><p>O pudor é o guardião da intimidade — uma virtude, não uma fraqueza.</p></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="mand-exame">
+      <h3>🪞 Exame de Consciência — 9º Mandamento</h3>
+      <div class="exame-perguntas">
+        <div class="exame-p"><span class="exame-num">1</span><p>Se Deus pudesse colocar seus <strong>pensamentos dos últimos 7 dias</strong> em um telão… haveria algo que você preferiria esconder?</p></div>
+        <div class="exame-p"><span class="exame-num">2</span><p>Você alimenta fantasias impuras deliberadamente — ou as combate logo ao surgir?</p></div>
+        <div class="exame-p"><span class="exame-num">3</span><p>Seu modo de olhar para as pessoas respeita sua dignidade — ou as reduz a objetos?</p></div>
+        <div class="exame-p"><span class="exame-num">4</span><p>Você consome conteúdo que alimenta desejos impuros — séries, redes sociais, imagens?</p></div>
+        <div class="exame-p"><span class="exame-num">5</span><p>Você pede a Deus e à Nossa Senhora a graça da pureza — ou tenta vencer sozinho?</p></div>
+      </div>
+    </div>
+
+    <div class="mand-biblia">
+      <h3>📖 Aprofundamento Bíblico</h3>
+      <div class="biblia-grid">
+        <div class="biblia-card"><span class="biblia-ref">Mt 5,27-28</span><p>"Todo aquele que olhar para uma mulher para desejá-la, já cometeu adultério com ela no seu coração." Jesus vai à raiz.</p></div>
+        <div class="biblia-card"><span class="biblia-ref">1 Jo 2,16</span><p>"Tudo o que há no mundo — a concupiscência da carne, a concupiscência dos olhos e a soberba da vida — não vem do Pai, mas do mundo."</p></div>
+        <div class="biblia-card"><span class="biblia-ref">Jó 31,1</span><p>"Fiz um pacto com meus olhos; como poderia eu fixar o olhar numa virgem?" — modelo de guarda do olhar.</p></div>
+        <div class="biblia-card"><span class="biblia-ref">Fl 4,8</span><p>"Tudo o que é verdadeiro, honesto, justo, puro, amável... pensai nestas coisas." A alternativa positiva.</p></div>
+      </div>
+    </div>
+
+    <div class="mand-catecismo">
+      <h3>📕 Catecismo da Igreja Católica</h3>
+      <div class="cat-tags">
+        <span class="cat-tag">CIC 2514-2533</span>
+        <span class="cat-tag">CIC 2517-2519 (pureza de coração)</span>
+        <span class="cat-tag">CIC 2520-2527 (modéstia)</span>
+      </div>
+    </div>
+
+    <div class="mand-check">
+      <label class="check-label">
+        <input type="checkbox" onchange="marcarEstudado(9, this.checked)">
+        <span class="check-caixa"></span>
+        <span class="check-texto">✅ Estudei o 9º Mandamento</span>
+      </label>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ============================================================
+     10º MANDAMENTO
+     ============================================================ -->
+<section class="mandamento" id="m10" data-mandamento="10">
+  <div class="secao-inner">
+
+    <div class="mand-header">
+      <div class="mand-numero-grande">X</div>
+      <div class="mand-titulo-bloco">
+        <span class="mand-label">10º Mandamento</span>
+        <h2>Não cobiçar as coisas alheias</h2>
+        <div class="mand-citacao">
+          <blockquote>
+            "Não cobiçarás a casa do teu próximo; não cobiçarás a mulher do teu 
+            próximo, nem o seu servo, nem a sua serva, nem o seu boi, nem o seu 
+            jumento, nem coisa alguma que lhe pertença."
+          </blockquote>
+          <cite>Êxodo 20,17</cite>
+        </div>
+      </div>
+    </div>
+
+    <div class="mand-secao-conteudo">
+      <h3>🔍 O que este mandamento realmente exige?</h3>
+
+      <p>
+        Assim como o 9º aprofunda o 6º, o 10º aprofunda o 7º. Não basta não roubar — 
+        é preciso <strong>não desejar desordenadamente</strong> o que pertence ao outro. 
+        Este mandamento combate o pecado mais invisível e mais devastador: 
+        a <strong>cobiça</strong>.
+      </p>
+
+      <p>
+        São Paulo chama a cobiça de <em>"idolatria"</em> (Cl 3,5). Quando você cobiça, 
+        coloca o bem desejado acima de Deus — e acima do amor ao próximo. 
+        É, portanto, uma violação simultânea do 1º e do 2º grande mandamento de Jesus.
+      </p>
+
+      <h3>😈 Cobiça vs. Desejo legítimo</h3>
+
+      <div class="dois-significados">
+        <div class="signif">
+          <span class="signif-icone">✅</span>
+          <h4>Desejo legítimo</h4>
+          <p>Querer ter um bom emprego, uma casa confortável, reconhecimento pelo trabalho bem feito. Isso é natural e bom.</p>
+        </div>
+        <div class="signif-mais">≠</div>
+        <div class="signif">
+          <span class="signif-icone">❌</span>
+          <h4>Cobiça / Inveja</h4>
+          <p>Querer o que é do outro especificamente. Sentir tristeza pelo bem alheio. Desejar que o outro perca o que tem.</p>
+        </div>
+      </div>
+
+      <h3>📱 A fábrica de inveja chamada redes sociais</h3>
+
+      <p>
+        Nunca na história foi tão fácil cobiçar. As redes sociais são 
+        <strong>máquinas industriais de inveja</strong>. Cada post é uma vitrine 
+        da vida perfeita do outro: o corpo perfeito, a viagem dos sonhos, 
+        o casamento idílico, o sucesso profissional.
+      </p>
+
+      <div class="caixa-destaque caixa-alerta">
+        <div class="caixa-icone">📊</div>
+        <div class="caixa-conteudo">
+          <h4>Você sabia?</h4>
+          <p>
+            Estudos mostram que quanto mais tempo as pessoas passam no Instagram, 
+            maior é a sua insatisfação com a própria vida. O algoritmo foi projetado 
+            para isso — comparação constante gera engajamento. 
+            <strong>O antídoto cristão é a gratidão.</strong>
+          </p>
+        </div>
+      </div>
+
+      <h3>🙏 O antídoto: Gratidão e Desprendimento</h3>
+
+      <p>
+        A gratidão é o oposto perfeito da cobiça. Quem é profundamente grato pelo 
+        que tem não precisa cobiçar o que é do outro. E o <strong>desprendimento</strong> — 
+        a "pobreza de espírito" que Jesus beatifica (Mt 5,3) — liberta o coração de 
+        qualquer escravidão às coisas.
+      </p>
+
+      <div class="lista-santificar">
+        <div class="sant-item">
+          <span class="sant-icone">📝</span>
+          <div>
+            <strong>Diário de gratidão</strong>
+            <p>Escreva 3 coisas pelas quais você é grato toda manhã. É um exercício espiritual poderoso.</p>
+          </div>
+        </div>
+        <div class="sant-item">
+          <span class="sant-icone">😊</span>
+          <div>
+            <strong>Alegrar-se com o bem do outro</strong>
+            <p>A "munificência" — alegria sincera pelo sucesso alheio — é o oposto exato da inveja.</p>
+          </div>
+        </div>
+        <div class="sant-item">
+          <span class="sant-icone">🤲</span>
+          <div>
+            <strong>Dar</strong>
+            <p>Quem doa com alegria se liberta da escravidão aos bens. A generosidade cura a cobiça.</p>
+          </div>
+        </div>
+        <div class="sant-item">
+          <span class="sant-icone">🔌</span>
+          <div>
+            <strong>Jejum digital</strong>
+            <p>Diminuir o tempo nas redes sociais. Você não precisa saber o que todo mundo está fazendo o tempo todo.</p>
+          </div>
+        </div>
+      </div>
+
+      <h3>⚓ "Onde está teu tesouro..."</h3>
+
+      <div class="caixa-destaque caixa-jesus">
+        <div class="caixa-icone">✝️</div>
+        <div class="caixa-conteudo">
+          <blockquote>
+            "Não acumuleis para vós tesouros na terra, onde a traça e a ferrugem 
+            os corroem e onde os ladrões arrombam e roubam. Acumulai para vós 
+            tesouros no céu... Porque, <strong>onde estiver o teu tesouro, 
+            aí estará também o teu coração.</strong>"
+          </blockquote>
+          <cite>Mateus 6,19-21</cite>
+        </div>
+      </div>
+    </div>
+
+    <div class="pv-container">
+      <div class="pv-coluna pv-pecados">
+        <div class="pv-cabecalho"><span class="pv-icone">❌</span><h4>Pecados contra este mandamento</h4></div>
+        <ul>
+          <li><strong>Inveja</strong><p>Tristeza pelo bem do próximo e desejo de se apropriar dele. Um dos sete pecados capitais.</p></li>
+          <li><strong>Avareza</strong><p>Apego excessivo aos bens materiais. Incapacidade de dar e partilhar.</p></li>
+          <li><strong>Cobiça</strong><p>Desejo insaciável de ter mais e mais — nunca estar satisfeito.</p></li>
+          <li><strong>Consumismo</strong><p>Buscar a felicidade nas coisas materiais. "Compro, logo sou."</p></li>
+          <li><strong>Comparação viciosa</strong><p>Medir-se constantemente pelos outros. "Por que ele tem e eu não?"</p></li>
+          <li><strong>Ingratidão</strong><p>Não reconhecer as bênçãos recebidas. Focar sempre no que falta.</p></li>
+          <li><strong>Ambição desordenada</strong><p>Querer poder, status e reconhecimento a qualquer custo.</p></li>
+        </ul>
+      </div>
+      <div class="pv-coluna pv-virtudes">
+        <div class="pv-cabecalho"><span class="pv-icone">✅</span><h4>Virtudes que este mandamento cultiva</h4></div>
+        <ul>
+          <li><strong>Gratidão</strong><p>Agradecer concretamente a Deus pelas bênçãos — grandes e pequenas.</p></li>
+          <li><strong>Desprendimento</strong><p>Usar as coisas sem ser escravo delas. "Tudo é vosso, vós sois de Cristo" (1Cor 3,22-23).</p></li>
+          <li><strong>Confiança</strong><p>"O Senhor é o meu pastor; nada me falta" (Sl 23,1). Deus provê.</p></li>
+          <li><strong>Generosidade</strong><p>Dar com alegria. O doador alegre é amado por Deus (2Cor 9,7).</p></li>
+          <li><strong>Pobreza de espírito</strong><p>Liberdade interior. Não precisar das coisas para ser feliz.</p></li>
+          <li><strong>Satisfação</strong><p>"Aprendi a contentar-me em qualquer situação" (Fl 4,11). Santo Paulo.</p></li>
+          <li><strong>Alegria pelo bem alheio</strong><p>Celebrar genuinamente as conquistas e bênçãos do próximo.</p></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="mand-exame">
+      <h3>🪞 Exame de Consciência — 10º Mandamento</h3>
+      <div class="exame-perguntas">
+        <div class="exame-p"><span class="exame-num">1</span><p>Quando você vê alguém com algo que deseja — o carro, a casa, o emprego, o casamento — seu primeiro impulso é <strong>agradecer a Deus pelo que tem</strong> ou <strong>sentir que a vida é injusta</strong>?</p></div>
+        <div class="exame-p"><span class="exame-num">2</span><p>Você consegue alegrar-se <em>genuinamente</em> com o sucesso de alguém que você conhece?</p></div>
+        <div class="exame-p"><span class="exame-num">3</span><p>Quanto tempo você passa comparando sua vida com a dos outros nas redes sociais?</p></div>
+        <div class="exame-p"><span class="exame-num">4</span><p>Se você perdesse tudo amanhã — emprego, casa, bens — sua fé em Deus sobreviveria?</p></div>
+        <div class="exame-p"><span class="exame-num">5</span><p>Você já agradeceu a Deus hoje pelas bênçãos que tem?</p></div>
+      </div>
+    </div>
+
+    <div class="mand-biblia">
+      <h3>📖 Aprofundamento Bíblico</h3>
+      <div class="biblia-grid">
+        <div class="biblia-card"><span class="biblia-ref">Fl 4,11-13</span><p>"Aprendi a contentar-me em qualquer situação... Posso tudo naquele que me fortalece." São Paulo, preso, escrevendo sobre contentamento.</p></div>
+        <div class="biblia-card"><span class="biblia-ref">1 Tm 6,6-10</span><p>"A piedade com contentamento é grande lucro... O amor ao dinheiro é a raiz de todos os males."</p></div>
+        <div class="biblia-card"><span class="biblia-ref">Lc 12,15-21</span><p>Parábola do rico insensato: "Tolo! Esta noite te reclamarão a alma. E o que preparaste, de quem será?" — a insensatez de acumular sem enriquecer para Deus.</p></div>
+        <div class="biblia-card"><span class="biblia-ref">Mt 6,25-34</span><p>"Não vos preocupeis com o que haveis de comer... O vosso Pai celestial sabe que necessitais de tudo isso."</p></div>
+      </div>
+    </div>
+
+    <div class="mand-catecismo">
+      <h3>📕 Catecismo da Igreja Católica</h3>
+      <div class="cat-tags">
+        <span class="cat-tag">CIC 2534-2557</span>
+        <span class="cat-tag">CIC 2536-2540 (inveja)</span>
+        <span class="cat-tag">CIC 2544-2547 (pobreza de coração)</span>
+        <span class="cat-tag">CIC 2548-2550 (desejo de Deus)</span>
+      </div>
+    </div>
+
+    <div class="mand-check">
+      <label class="check-label">
+        <input type="checkbox" onchange="marcarEstudado(10, this.checked)">
+        <span class="check-caixa"></span>
+        <span class="check-texto">✅ Estudei o 10º Mandamento</span>
+      </label>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ============================================================
+     QUIZ INTERATIVO
+     ============================================================ -->
+<section class="secao secao-quiz" id="secaoQuiz">
+  <div class="secao-inner">
+
+    <div class="secao-header">
+      <span class="secao-badge">⚔️ Desafio</span>
+      <h2>Você realmente conhece os 10 Mandamentos?</h2>
+      <p class="secao-subtexto">
+        10 perguntas para testar o que você aprendeu. Cada pergunta traz uma 
+        explicação aprofundada — mesmo que você acerte. Quanto você vai conseguir?
+      </p>
+    </div>
+
+    <!-- CONTAINER PRINCIPAL DO QUIZ -->
+    <div class="quiz-box" id="quizBox">
+
+      <!-- TELA INICIAL DO QUIZ -->
+      <div class="quiz-intro" id="quizIntro">
+        <div class="quiz-intro-icone">⚡</div>
+        <h3>Pronto para o desafio?</h3>
+        <p>10 perguntas. Feedback imediato. Resultado personalizado.</p>
+        <div class="quiz-intro-stats">
+          <div class="qi-stat"><span>10</span><small>Perguntas</small></div>
+          <div class="qi-stat"><span>∞</span><small>Tentativas</small></div>
+          <div class="qi-stat"><span>📖</span><small>Aprenda errando</small></div>
+        </div>
+        <button class="btn-quiz-comecar" onclick="iniciarQuiz()">
+          Começar o Quiz ⚡
+        </button>
+      </div>
+
+      <!-- PERGUNTAS DO QUIZ -->
+      <div class="quiz-perguntas" id="quizPerguntas" style="display:none;">
+        <div class="quiz-header-barra">
+          <span class="quiz-num-txt" id="quizNumTxt">Pergunta 1 de 10</span>
+          <div class="quiz-barra-wrap">
+            <div class="quiz-barra-fill" id="quizBarraFill"></div>
+          </div>
+          <span class="quiz-acertos-txt" id="quizAcertosTxt">✅ 0 acertos</span>
+        </div>
+
+        <div class="quiz-pergunta-txt" id="quizPerguntaTxt"></div>
+
+        <div class="quiz-opcoes" id="quizOpcoes"></div>
+
+        <div class="quiz-feedback" id="quizFeedback"></div>
+
+        <button class="btn-proximo" id="btnProximo" onclick="proximaPergunta()" style="display:none;">
+          Próxima →
+        </button>
+      </div>
+
+      <!-- RESULTADO FINAL -->
+      <div class="quiz-resultado" id="quizResultado" style="display:none;">
+        <div class="resultado-emoji" id="resultadoEmoji"></div>
+        <h3 id="resultadoTitulo"></h3>
+        <div class="resultado-score-grande">
+          <span id="scoreFinal"></span>
+          <small>de 10</small>
+        </div>
+        <p id="resultadoMsg"></p>
+        <div class="resultado-barra-wrap">
+          <div class="resultado-barra-fill" id="resultadoBarraFill"></div>
+        </div>
+        <div class="resultado-acoes">
+          <button class="btn-reiniciar" onclick="reiniciarQuiz()">🔄 Tentar novamente</button>
+          <button class="btn-rever" onclick="scrollSuave('contexto')">📖 Rever conteúdo</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     SEÇÃO FINAL — CONCLUSÃO E PROGRESSO
+     ============================================================ -->
+<section class="secao secao-final" id="secaoFinal">
+  <div class="secao-inner">
+
+    <div class="secao-header">
+      <span class="secao-badge">✝️ Conclusão</span>
+      <h2>Não são correntes — são asas</h2>
+    </div>
+
+    <div class="final-citacao">
+      <blockquote>
+        "Se me amais, guardareis os meus mandamentos."
+      </blockquote>
+      <cite>— Jesus Cristo (João 14,15)</cite>
+    </div>
+
+    <div class="final-texto">
+      <p>
+        Os mandamentos não existem para nos <strong>prender</strong> — existem para 
+        nos <strong>libertar</strong>. Um peixe não é "preso" pela água — ela é o 
+        elemento em que floresce. Assim são os mandamentos para a alma humana: 
+        o ambiente em que ela encontra paz, sentido e plenitude.
+      </p>
+      <p>
+        Quem vive os 10 mandamentos não vive menos — vive <strong>mais</strong>. 
+        Com mais paz, porque a consciência não carrega culpas escondidas. 
+        Com mais amor verdadeiro, porque aprendeu a dar sem usar. 
+        Com mais liberdade, porque nenhum vício ou medo o escraviza.
+      </p>
+      <p>
+        E quando falhar — e você vai falhar, porque somos humanos — 
+        existe a <strong>Confissão</strong>. O sacramento que Deus criou exatamente 
+        para isso: recomeçar sempre, quantas vezes for necessário.
+      </p>
+    </div>
+
+    <!-- BLOCO DE PROGRESSO -->
+    <div class="progresso-container">
+      <h3>📊 Seu Progresso de Estudo</h3>
+      <p class="progresso-subtexto">Marque os mandamentos que já estudou usando os botões no final de cada seção.</p>
+
+      <div class="progresso-dots" id="progressoDots"></div>
+
+      <div class="progresso-barra-geral">
+        <div class="progresso-barra-fill-geral" id="progressoBarraGeral"></div>
+      </div>
+
+      <p class="progresso-mensagem" id="progressoMensagem"></p>
+    </div>
+
+    <!-- PRÓXIMOS PASSOS -->
+    <div class="proximos-passos">
+      <h3>🚀 Próximos passos</h3>
+      <div class="passos-grid">
+        <div class="passo-card">
+          <span class="passo-icone">⛪</span>
+          <h4>Vá à Missa</h4>
+          <p>O melhor estudo da fé acontece na Eucaristia. Leve o que aprendeu ao encontro com Cristo.</p>
+        </div>
+        <div class="passo-card">
+          <span class="passo-icone">🙏</span>
+          <h4>Confissão</h4>
+          <p>Use este estudo para um exame de consciência completo e vá à confissão.</p>
+        </div>
+        <div class="passo-card">
+          <span class="passo-icone">📖</span>
+          <h4>Catecismo</h4>
+          <p>Aprofunde-se no CIC seções 2052-2557. Disponível gratuitamente online.</p>
+        </div>
+        <div class="passo-card">
+          <span class="passo-icone">👥</span>
+          <h4>Compartilhe</h4>
+          <p>Envie este estudo para alguém que pode se beneficiar. A fé cresce quando é partilhada.</p>
+        </div>
+      </div>
+    </div>
+
+    <a href="../estudos.html" class="btn-voltar-final">← Voltar ao Centro de Estudos</a>
+
+  </div>
+</section>
+
+
+<!-- RODAPÉ -->
+<footer>
+  <p>© 2026 – Lux Fidei &nbsp;·&nbsp; Luz da Fé Católica</p>
+</footer>
+
+<script src="mandamentos.js"></script>
+</body>
+</html>
