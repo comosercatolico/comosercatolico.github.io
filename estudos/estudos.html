@@ -2,147 +2,175 @@
 <html lang="pt-BR">
 <head>
 
-<meta charset="UTF-8">
-<title>Estudos – Lux Fidei</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <title>Estudos – Lux Fidei</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link rel="stylesheet" href="../style.css">
-<link rel="stylesheet" href="estudos.css">
-<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-  
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="estudos.css">
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
 </head>
-
 <body>
 
-<!-- MENU LATERAL -->
+<!-- ================================================
+     MENU LATERAL (aparece no celular ao clicar ☰)
+     Para adicionar links: copie um <a> e mude o href
+     ================================================ -->
 
 <div class="sidebar" id="sidebar">
-
-<a href="#" onclick="fecharMenu()">✖ Fechar</a>
-
-<a href="../index.html">Início</a>
-
-<a href="liturgiadiaria.html">Liturgia diária</a>
-
-<a href="santos.html">Santos</a>
-
-<a href="biblioteca.html">Biblioteca</a>
-
-<a href="estudos.html">Estudos</a>
-
-<a href="../jogos.html">Jogos</a>
-
-<hr>
-
-<a href="../sobre.html">Sobre</a>
-
-<a href="../privacy.html">Privacidade</a>
-
+  <a href="#" onclick="fecharMenu()">✖ Fechar</a>
+  <a href="../index.html">Início</a>
+  <a href="liturgiadiaria.html">Liturgia diária</a>
+  <a href="santos.html">Santos</a>
+  <a href="biblioteca.html">Biblioteca</a>
+  <a href="estudos.html">Estudos</a>
+  <a href="../jogos.html">Jogos</a>
+  <hr>
+  <a href="../sobre.html">Sobre</a>
+  <a href="../privacy.html">Privacidade</a>
 </div>
+
+<!-- ================================================
+     CABEÇALHO DO SITE (logo + nome)
+     ================================================ -->
 
 <header>
-
-<span class="menu-btn" onclick="abrirMenu()">☰</span>
-
-<h1>Lux Fidei</h1>
-<p style="opacity:0.8">Luz da Fé Católica</p>
-
+  <span class="menu-btn" onclick="abrirMenu()">☰</span>
+  <h1>Lux Fidei</h1>
+  <p style="opacity:0.8">Luz da Fé Católica</p>
 </header>
 
+<!-- ================================================
+     MENU DE NAVEGAÇÃO SUPERIOR
+     Para adicionar uma página nova:
+     1. Copie um <a class="menu-item">
+     2. Mude o href para o caminho da sua página
+     3. Mude o texto do link
+     ================================================ -->
+
 <nav class="menu">
-
-<a href="../index.html" class="menu-item">Início</a>
-
-<a href="../liturgia_diaria/liturgiadiaria.html" class="menu-item">Liturgia Diária</a>
-
-<a href="../santos/santos.html" class="menu-item">Santos</a>
-
-<a href="../biblioteca/biblioteca.html" class="menu-item">Biblioteca</a>
-
-<a href="estudos.html" class="menu-item active">Estudos</a>
-
-<a href="../jogos/jogos.html" class="menu-item">Jogos</a>
-
-<span class="menu-indicator"></span>
-
+  <a href="../index.html" class="menu-item">Início</a>
+  <a href="../liturgia_diaria/liturgiadiaria.html" class="menu-item">Liturgia Diária</a>
+  <a href="../santos/santos.html" class="menu-item">Santos</a>
+  <a href="../biblioteca/biblioteca.html" class="menu-item">Biblioteca</a>
+  <a href="estudos.html" class="menu-item active">Estudos</a>
+  <a href="../jogos/jogos.html" class="menu-item">Jogos</a>
+  <span class="menu-indicator"></span>
 </nav>
 
+<!-- ================================================
+     CABEÇALHO DA PÁGINA DE ESTUDOS
+     O botão "📜 Histórico" abre o painel lateral direito
+     ================================================ -->
+
 <section class="estudos-header">
-<button class="btn-historico" onclick="toggleHistorico()">
-📜 Histórico
-</button>
-<h2>Centro de Estudos da Fé Católica</h2>
-
-<p>
-Aqui estão organizados ensinamentos fundamentais da fé católica,
-desde a catequese básica até temas profundos de teologia.
-</p>
-
+  <button class="btn-historico" onclick="toggleHistorico()">
+    📜 Histórico
+  </button>
+  <h2>Centro de Estudos da Fé Católica</h2>
+  <p>
+    Aqui estão organizados ensinamentos fundamentais da fé católica,
+    desde a catequese básica até temas profundos de teologia.
+  </p>
 </section>
 
-<!-- CATEGORIAS -->
+<!-- ================================================
+     BOTÕES DE FILTRO POR CATEGORIA
+     Para adicionar uma nova categoria:
+     1. Copie um <button class="categoria-btn">
+     2. Mude o texto (ex: "Mariologia")
+     3. Mude o onclick para filtrar('suacategoria')
+     4. Lembre de usar o mesmo nome no data-cat do card!
+     ================================================ -->
 
 <div class="categorias">
-
-<button class="categoria-btn active" onclick="filtrar('todos')">Todos</button>
-
-<button class="categoria-btn" onclick="filtrar('catequese')">Catequese</button>
-
-<button class="categoria-btn" onclick="filtrar('sacramentos')">Sacramentos</button>
-
-<button class="categoria-btn" onclick="filtrar('moral')">Moral Cristã</button>
-
-<button class="categoria-btn" onclick="filtrar('igreja')">Igreja</button>
-
-<button class="categoria-btn" onclick="filtrar('teologia')">Teologia</button>
-
-<button class="categoria-btn" onclick="filtrar('basico')">Básico</button>
-
+  <button class="categoria-btn active" onclick="filtrar('todos')">Todos</button>
+  <button class="categoria-btn" onclick="filtrar('catequese')">Catequese</button>
+  <button class="categoria-btn" onclick="filtrar('sacramentos')">Sacramentos</button>
+  <button class="categoria-btn" onclick="filtrar('moral')">Moral Cristã</button>
+  <button class="categoria-btn" onclick="filtrar('igreja')">Igreja</button>
+  <button class="categoria-btn" onclick="filtrar('teologia')">Teologia</button>
+  <button class="categoria-btn" onclick="filtrar('basico')">Básico</button>
 </div>
 
-<!-- GRID -->
+<!-- ================================================
+     GRADE DE CARDS DE ESTUDO
+     
+     ✅ COMO ADICIONAR UM NOVO CARD:
+     
+     Copie o bloco abaixo e cole DENTRO desta section,
+     antes do fechamento </section>:
+
+     <div class="estudo-card" data-cat="CATEGORIA" onclick="window.location.href='PASTA/arquivo.html'">
+       <h3>🔖 Título do Estudo</h3>
+       <p>Breve descrição do que será visto neste estudo.</p>
+     </div>
+
+     - data-cat: deve ser igual ao filtrar('') do botão
+       Categorias disponíveis: catequese | sacramentos |
+       moral | igreja | teologia | basico
+     - onclick: caminho para a página do estudo
+     
+     ================================================ -->
 
 <section class="estudos-grid">
 
+  <!-- CARD: Concílios Ecumênicos -->
   <div class="estudo-card" data-cat="igreja" onclick="abrirConcilios()">
     <h3>⛪ Concílios Ecumênicos</h3>
     <p>Os 21 concílios reconhecidos pela Igreja Católica — história, decisões e impacto.</p>
   </div>
 
+  <!-- CARD: Hierarquia da Igreja -->
+  <div class="estudo-card" data-cat="igreja" onclick="window.location.href='hierarquia/hierarquia.html'">
+    <h3>⛪ Hierarquia da Igreja</h3>
+    <p>Da cátedra de Pedro aos fiéis leigos — conheça cada vocação, cargo e ministério que compõe o Corpo de Cristo.</p>
+  </div>
+
+  <!-- CARD: Calendário Litúrgico -->
+  <div class="estudo-card" data-cat="igreja" onclick="window.location.href='calendario/liturgico.html'">
+    <h3>📅 Calendário Litúrgico</h3>
+    <p>Conheça os tempos e festas do ano litúrgico católico — do Advento ao Tempo Comum.</p>
+  </div>
+
+  <!-- 
+    ✏️ ADICIONE NOVOS CARDS AQUI
+    Exemplo de card novo:
+
+    <div class="estudo-card" data-cat="sacramentos" onclick="window.location.href='sacramentos/batismo.html'">
+      <h3>💧 O Batismo</h3>
+      <p>O primeiro sacramento da iniciação cristã — sua origem, significado e efeitos.</p>
+    </div>
+  -->
+
+  <!-- Aviso de novos estudos (remova quando tiver mais cards) -->
   <p style="color:#777; text-align:center; grid-column: 1/-1; padding: 60px 20px;">
     Em breve novos estudos serão adicionados aqui. 🕯️
   </p>
-<!-- Cole este card no .estudos-grid, junto com o card dos Concílios -->
 
-<div class="estudo-card" data-cat="igreja" onclick="window.location.href='hierarquia/hierarquia.html'">
-  <h3>⛪ Hierarquia da Igreja</h3>
-  <p>Da cátedra de Pedro aos fiéis leigos — conheça cada vocação, cargo e ministério que compõe o Corpo de Cristo.</p>
-</div>
 </section>
-  
-<!-- Cole dentro do .estudos-grid, junto com os outros cards -->
-<div class="estudo-card" data-cat="igreja" onclick="window.location.href='calendario/liturgico.html'">
-  <h3>📅 Calendário Litúrgico</h3>
-  <p>Conheça os tempos e festas do ano litúrgico católico — do Advento ao Tempo Comum.</p>
-</div>
-<!-- HISTÓRICO -->
+
+<!-- ================================================
+     PAINEL DE HISTÓRICO (desliza pela direita)
+     Registra automaticamente os estudos visitados
+     Não precisa mexer aqui
+     ================================================ -->
 
 <div class="historico" id="historico">
-<div class="fechar-historico" onclick="toggleHistorico()">
-❯
-</div>
-<h3>📖 Histórico</h3>
-
-<div id="lista-historico">
-<p style="color:#777;">Nenhum estudo visto ainda.</p>
+  <div class="fechar-historico" onclick="toggleHistorico()">❯</div>
+  <h3>📖 Histórico</h3>
+  <div id="lista-historico">
+    <p style="color:#777;">Nenhum estudo visto ainda.</p>
+  </div>
 </div>
 
-</div>
+<!-- ================================================
+     RODAPÉ
+     ================================================ -->
 
 <footer>
-
-© 2026 – Lux Fidei
-
+  © 2026 – Lux Fidei
 </footer>
 
 <script src="estudos.js"></script>
