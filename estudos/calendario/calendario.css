@@ -1,0 +1,409 @@
+:root {
+    --ink: #1a140d;
+    --ink-soft: #3d3023;
+    --ink-mid: #6b5840;
+    --gold: #9a7a3a;
+    --gold-lt: #c8a870;
+    --gold-pale: #f0e6cc;
+    --parchment: #f7f2e8;
+    --white: #fdfaf4;
+    --bg-dark: #0e0b07;
+    --rule: rgba(154, 122, 58, 0.25);
+    --shadow: rgba(26, 20, 13, 0.35);
+    --transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: var(--bg-dark);
+    color: var(--ink);
+    font-family: 'EB Garamond', Georgia, serif;
+    font-size: 18px;
+    line-height: 1.8;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* ── TEXTURAS ── */
+.noise-overlay {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.5;
+}
+
+/* ── CABEÇALHO ── */
+.topo {
+    background: rgba(14, 11, 7, 0.95);
+    backdrop-filter: blur(12px);
+    padding: 1rem 2rem;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    border-bottom: 1px solid rgba(154, 122, 58, 0.2);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.btn-voltar {
+    font-family: 'Cinzel', serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold-lt);
+    text-decoration: none;
+    border: 1px solid rgba(200, 168, 112, 0.3);
+    padding: 0.6rem 1.2rem;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.btn-voltar:hover {
+    background: rgba(200, 168, 112, 0.1);
+    border-color: var(--gold);
+    color: var(--gold-pale);
+}
+
+.topo-titulo {
+    font-family: 'Cinzel', serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    opacity: 0.7;
+}
+
+/* ── HERO ── */
+.hero {
+    padding: 6rem 2rem 4rem;
+    text-align: center;
+    background: radial-gradient(circle at top, #2a1a08 0%, #0e0b07 70%);
+    position: relative;
+}
+
+.hero-pretitle {
+    font-family: 'Cinzel', serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.5em;
+    color: var(--gold-lt);
+    display: block;
+    margin-bottom: 1rem;
+    opacity: 0.8;
+}
+
+.hero h1 {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: clamp(2.5rem, 8vw, 4.5rem);
+    color: var(--gold-pale);
+    text-shadow: 0 0 30px rgba(154, 122, 58, 0.4);
+    margin-bottom: 1rem;
+}
+
+.hero-sub {
+    font-style: italic;
+    color: var(--gold-lt);
+    font-size: 1.3rem;
+    opacity: 0.9;
+}
+
+.hero-ornamento {
+    display: block;
+    margin-top: 2rem;
+    color: var(--gold);
+    font-size: 1.5rem;
+    opacity: 0.5;
+}
+
+/* ── LEGENDA ── */
+.legenda-wrap {
+    background: rgba(14, 11, 7, 0.8);
+    border-block: 1px solid var(--rule);
+    padding: 1.5rem;
+}
+
+.legenda {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.5rem 3rem;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.leg-item {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold-lt);
+}
+
+.leg-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    box-shadow: 0 0 8px currentColor;
+}
+
+/* ── RODA LITÚRGICA ── */
+.roda-section {
+    padding: 4rem 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: radial-gradient(circle, #1a1208 0%, #0e0b07 100%);
+}
+
+.roda-outer {
+    width: 100%;
+    max-width: 600px;
+    position: relative;
+    filter: drop-shadow(0 0 30px rgba(0,0,0,0.5));
+}
+
+#roda-svg {
+    width: 100%;
+    height: auto;
+    overflow: visible;
+}
+
+.arco-tempo {
+    cursor: pointer;
+    transition: var(--transition);
+    stroke: rgba(0,0,0,0.2);
+    stroke-width: 0.5;
+}
+
+.arco-tempo:hover {
+    filter: brightness(1.2) saturate(1.2);
+    transform: scale(1.02);
+    transform-origin: center;
+}
+
+.centro-texto-ano { font-family: 'Cinzel', serif; font-size: 10px; fill: var(--gold-lt); letter-spacing: 4px; }
+.centro-texto-liturgico { font-family: 'Cinzel', serif; font-size: 10px; fill: var(--gold-lt); letter-spacing: 2px; }
+.centro-texto-extra { font-family: 'Cinzel', serif; font-size: 8px; fill: var(--gold); opacity: 0.4; letter-spacing: 2px; }
+
+.roda-instrucao {
+    margin-top: 2rem;
+    font-style: italic;
+    color: var(--gold-lt);
+    opacity: 0.6;
+    font-size: 0.95rem;
+}
+
+/* ── CONTEÚDO DETALHES ── */
+.conteudo-detalhes {
+    background: var(--parchment);
+    padding: 4rem 2rem;
+    min-height: 400px;
+    position: relative;
+}
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.sec-label {
+    display: none;
+    font-family: 'Cinzel', serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 2rem;
+    text-align: center;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.sec-label::before, .sec-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--rule), transparent);
+}
+
+.sec-label.vis { display: flex; }
+
+.tempo-header {
+    display: none;
+    margin-bottom: 3rem;
+    text-align: center;
+}
+
+.tempo-header.vis { display: block; animation: fadeIn 0.8s ease; }
+
+.tempo-badge {
+    display: inline-block;
+    padding: 0.5rem 1.5rem;
+    font-family: 'Cinzel', serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: white;
+    border-radius: 2px;
+    margin-bottom: 1rem;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.tempo-desc {
+    font-style: italic;
+    color: var(--ink-mid);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* ── GRID SEMANAS ── */
+.semanas-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+    margin-bottom: 3rem;
+}
+
+.semana-btn {
+    background: var(--white);
+    border: none;
+    padding: 1.5rem;
+    text-align: left;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.semana-btn:hover {
+    background: var(--gold-pale);
+}
+
+.semana-btn.ativa {
+    background: var(--gold-pale);
+    box-shadow: inset 4px 0 0 var(--gold);
+}
+
+.semana-num {
+    display: block;
+    font-family: 'Cinzel', serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    margin-bottom: 0.5rem;
+}
+
+.semana-titulo {
+    font-weight: 500;
+    color: var(--ink-soft);
+    font-size: 0.95rem;
+}
+
+/* ── PAINEL DE REFLEXÃO ── */
+.reflexao-painel {
+    display: none;
+    background: var(--white);
+    border: 1px solid var(--rule);
+    border-top: 4px solid var(--gold);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+}
+
+.reflexao-painel.vis { display: block; animation: slideUp 0.6s ease; }
+
+.reflexao-inner {
+    padding: 4rem;
+}
+
+.reflexao-titulo {
+    font-family: 'Cinzel', serif;
+    font-size: 1.8rem;
+    color: var(--ink);
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.reflexao-sub {
+    font-style: italic;
+    color: var(--ink-mid);
+    margin-bottom: 2rem;
+    font-size: 1.1rem;
+}
+
+.reflexao-texto {
+    text-align: justify;
+    color: var(--ink-soft);
+}
+
+.reflexao-texto p { margin-bottom: 1.5rem; }
+
+.reflexao-texto p:first-of-type::first-letter {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 4rem;
+    float: left;
+    line-height: 0.8;
+    margin-right: 0.5rem;
+    color: var(--gold);
+}
+
+.reflexao-cita {
+    margin: 3rem 0;
+    padding: 2rem;
+    background: rgba(154, 122, 58, 0.05);
+    border-left: 4px solid var(--gold);
+    font-style: italic;
+}
+
+.reflexao-cita cite {
+    display: block;
+    margin-top: 1rem;
+    font-family: 'Cinzel', serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    font-style: normal;
+}
+
+/* ── FOOTER ── */
+.rodape {
+    background: var(--bg-dark);
+    color: var(--gold-lt);
+    padding: 4rem 2rem;
+    text-align: center;
+    opacity: 0.6;
+}
+
+.footer-ornamento {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.footer-motto {
+    font-family: 'Cinzel', serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    margin-top: 0.5rem;
+}
+
+/* ── ANIMAÇÕES ── */
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+
+@media (max-width: 768px) {
+    .reflexao-inner { padding: 2rem; }
+    .hero h1 { font-size: 2.5rem; }
+    .semanas-grid { grid-template-columns: 1fr; }
+}
