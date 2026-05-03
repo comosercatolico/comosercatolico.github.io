@@ -1,4 +1,10 @@
 export const listaSantos = [
+
+  // --- ANJOS E ARCANJOS ---
+{ nome: "São Miguel Arcanjo", categorias: ["Arcanjo"], pasta: "arcanjos" },
+{ nome: "São Gabriel Arcanjo", categorias: ["Arcanjo"], pasta: "arcanjos" },
+{ nome: "São Rafael Arcanjo", categorias: ["Arcanjo"], pasta: "arcanjos" }, 
+  
   // --- APÓSTOLOS E EVANGELISTAS ---
   { nome: "São Pedro", categorias: ["Apóstolo", "Papa", "Mártir"] },
   { nome: "São Paulo", categorias: ["Apóstolo", "Mártir"] },
