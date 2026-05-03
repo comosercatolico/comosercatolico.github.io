@@ -6,136 +6,1454 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Cinzel:wght@400;600;700&family=Cinzel+Decorative:wght@400&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="calendario.css">
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Cinzel:wght@400;500;600;700&family=Cinzel+Decorative:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* ═══════════════════════════════════════════════════════════
+           DESIGN TOKENS & RESET
+        ═══════════════════════════════════════════════════════════ */
+        :root {
+            --ink: #0e0a06;
+            --ink-soft: #2d2218;
+            --ink-mid: #5a4530;
+            --ink-faint: #8b7055;
+            --gold-deep: #6b4f1a;
+            --gold: #9a7a3a;
+            --gold-mid: #c8a042;
+            --gold-lt: #d4b06a;
+            --gold-pale: #f0e6cc;
+            --gold-glow: #f5eacc;
+            --parchment: #f8f3e8;
+            --parchment-dark: #ede7d5;
+            --cream: #fdfaf4;
+            --bg-deep: #050301;
+            --bg-dark: #0a0704;
+            --bg-mid: #130d07;
+            --rule: rgba(154, 122, 58, 0.2);
+            --rule-strong: rgba(154, 122, 58, 0.4);
+            --ease: cubic-bezier(0.23, 1, 0.32, 1);
+            --ease-in: cubic-bezier(0.4, 0, 1, 1);
+            --ease-out: cubic-bezier(0, 0, 0.2, 1);
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            background: var(--bg-deep);
+            color: var(--ink);
+            font-family: 'EB Garamond', Georgia, serif;
+            font-size: 18px;
+            line-height: 1.8;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* ═══════════════════════════════════════════════════════════
+           GRAIN OVERLAY + VIGNETTE
+        ═══════════════════════════════════════════════════════════ */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 9999;
+            mix-blend-mode: overlay;
+        }
+
+        /* ═══════════════════════════════════════════════════════════
+           SCROLL PROGRESS
+        ═══════════════════════════════════════════════════════════ */
+        #scroll-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 2px;
+            width: 0%;
+            background: linear-gradient(90deg, var(--gold-deep), var(--gold-mid), var(--gold-lt));
+            z-index: 10001;
+            transition: width 0.1s linear;
+        }
+
+        /* ═══════════════════════════════════════════════════════════
+           HEADER / NAVEGAÇÃO
+        ═══════════════════════════════════════════════════════════ */
+        .topo {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(5, 3, 1, 0.92);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border-bottom: 1px solid var(--rule);
+            padding: 0 2.5rem;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 2rem;
+        }
+
+        .topo-esq { display: flex; align-items: center; gap: 2rem; }
+
+        .btn-nav {
+            font-family: 'Cinzel', serif;
+            font-size: 0.6rem;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--gold-lt);
+            text-decoration: none;
+            border: 1px solid rgba(200, 168, 112, 0.25);
+            padding: 0.55rem 1.4rem;
+            transition: all 0.3s var(--ease);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: transparent;
+            cursor: pointer;
+        }
+
+        .btn-nav:hover {
+            background: rgba(200, 168, 112, 0.08);
+            border-color: var(--gold-mid);
+            color: var(--gold-pale);
+            box-shadow: 0 0 20px rgba(154, 122, 58, 0.15);
+        }
+
+        .topo-logo {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 1rem;
+            color: var(--gold-lt);
+            letter-spacing: 0.1em;
+            text-shadow: 0 0 20px rgba(154, 122, 58, 0.3);
+        }
+
+        .topo-logo span { color: var(--gold-pale); }
+
+        .topo-subtitulo {
+            font-family: 'Cinzel', serif;
+            font-size: 0.55rem;
+            letter-spacing: 0.4em;
+            text-transform: uppercase;
+            color: var(--gold);
+            opacity: 0.55;
+        }
+
+        .topo-dir { display: flex; align-items: center; gap: 1rem; }
+
+        .ano-badge {
+            font-family: 'Cinzel', serif;
+            font-size: 0.6rem;
+            letter-spacing: 0.2em;
+            color: var(--gold);
+            border: 1px solid var(--rule-strong);
+            padding: 0.3rem 0.9rem;
+            opacity: 0.7;
+        }
+
+        /* ═══════════════════════════════════════════════════════════
+           HERO
+        ═══════════════════════════════════════════════════════════ */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            padding: 4rem 2rem;
+            background:
+                radial-gradient(ellipse 80% 60% at 50% 0%, #2a1a05 0%, transparent 60%),
+                radial-gradient(ellipse 40% 40% at 20% 80%, #1a0d00 0%, transparent 50%),
+                radial-gradient(ellipse 40% 40% at 80% 20%, #160b00 0%, transparent 50%),
+                var(--bg-deep);
+        }
+
+        /* Candles / rays effect */
+        .hero-rays {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            background:
+                conic-gradient(from 180deg at 50% -20%, transparent 340deg, rgba(154,122,58,0.04) 350deg, transparent 360deg),
+                conic-gradient(from 180deg at 50% -20%, transparent 15deg, rgba(154,122,58,0.03) 25deg, transparent 35deg),
+                conic-gradient(from 180deg at 50% -20%, transparent 35deg, rgba(154,122,58,0.02) 45deg, transparent 55deg);
+        }
+
+        .hero-crosses {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .hero-cross-deco {
+            position: absolute;
+            width: 1px;
+            background: linear-gradient(180deg, transparent, rgba(154,122,58,0.15), transparent);
+            animation: crossFade 8s ease-in-out infinite;
+        }
+
+        @keyframes crossFade {
+            0%, 100% { opacity: 0; }
+            50% { opacity: 1; }
+        }
+
+        .hero-pretitle {
+            font-family: 'Cinzel', serif;
+            font-size: 0.65rem;
+            letter-spacing: 0.7em;
+            color: var(--gold-lt);
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+            opacity: 0;
+            animation: heroReveal 1.2s var(--ease) 0.3s forwards;
+        }
+
+        .hero-pretitle::before, .hero-pretitle::after {
+            content: '';
+            width: 60px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold));
+        }
+
+        .hero-pretitle::after { background: linear-gradient(90deg, var(--gold), transparent); }
+
+        .hero h1 {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: clamp(2.8rem, 9vw, 5.5rem);
+            color: var(--gold-pale);
+            line-height: 1.1;
+            letter-spacing: 0.02em;
+            text-shadow:
+                0 0 60px rgba(154, 122, 58, 0.4),
+                0 0 120px rgba(154, 122, 58, 0.15);
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            animation: heroReveal 1.4s var(--ease) 0.6s forwards;
+        }
+
+        .hero-sub {
+            font-style: italic;
+            color: var(--gold-lt);
+            font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+            opacity: 0;
+            max-width: 560px;
+            animation: heroReveal 1.2s var(--ease) 0.9s forwards;
+        }
+
+        @keyframes heroReveal {
+            from { opacity: 0; transform: translateY(24px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero-cta {
+            margin-top: 3.5rem;
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            opacity: 0;
+            animation: heroReveal 1.2s var(--ease) 1.2s forwards;
+        }
+
+        .btn-primario {
+            font-family: 'Cinzel', serif;
+            font-size: 0.65rem;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--bg-deep);
+            background: linear-gradient(135deg, var(--gold-mid), var(--gold-lt));
+            border: none;
+            padding: 1rem 2.5rem;
+            cursor: pointer;
+            transition: all 0.4s var(--ease);
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: 0 8px 30px rgba(154, 122, 58, 0.3);
+        }
+
+        .btn-primario:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 16px 40px rgba(154, 122, 58, 0.4);
+            background: linear-gradient(135deg, var(--gold-lt), var(--gold-pale));
+        }
+
+        .btn-secundario {
+            font-family: 'Cinzel', serif;
+            font-size: 0.65rem;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--gold-lt);
+            background: transparent;
+            border: 1px solid rgba(200, 168, 112, 0.35);
+            padding: 1rem 2.5rem;
+            cursor: pointer;
+            transition: all 0.4s var(--ease);
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-secundario:hover {
+            border-color: var(--gold-mid);
+            color: var(--gold-pale);
+            background: rgba(154, 122, 58, 0.06);
+            transform: translateY(-2px);
+        }
+
+        .hero-scroll {
+            position: absolute;
+            bottom: 2.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            opacity: 0;
+            animation: heroReveal 1s var(--ease) 1.8s forwards;
+        }
+
+        .hero-scroll span {
+            font-family: 'Cinzel', serif;
+            font-size: 0.5rem;
+            letter-spacing: 0.4em;
+            color: var(--gold);
+            opacity: 0.5;
+        }
+
+        .scroll-line {
+            width: 1px;
+            height: 50px;
+            background: linear-gradient(180deg, var(--gold), transparent);
+            animation: scrollPulse 2.5s ease-in-out infinite;
+        }
+
+        @keyframes scrollPulse {
+            0%, 100% { opacity: 0.3; transform: scaleY(1); }
+            50% { opacity: 1; transform: scaleY(1.2); }
+        }
+
+        /* ═══════════════════════════════════════════════════════════
+           LEGENDA
+        ═══════════════════════════════════════════════════════════ */
+        .legenda-section {
+            background: var(--bg-mid);
+            border-top: 1px solid var(--rule);
+            border-bottom: 1px solid var(--rule);
+            padding: 2rem;
+        }
+
+        .legenda {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1.2rem 2.5rem;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .leg-item {
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            font-family: 'Cinzel', serif;
+            font-size: 0.58rem;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--gold-lt);
+            cursor: pointer;
+            transition: all 0.3s var(--ease);
+            padding: 0.4rem 0.8rem;
+            border: 1px solid transparent;
+        }
+
+        .leg-item:hover {
+            border-color: var(--rule);
+            color: var(--gold-pale);
+        }
+
+        .leg-cor {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            flex-shrink: 0;
+            box-shadow: 0 0 12px currentColor;
+            position: relative;
+        }
+
+        .leg-cor::after {
+            content: '';
+            position: absolute;
+            inset: -3px;
+            border-radius: 50%;
+            border: 1px solid currentColor;
+            opacity: 0.3;
+        }
+
+        /* ═══════════════════════════════════════════════════════════
+           SEÇÃO RODA
+        ═══════════════════════════════════════════════════════════ */
+        .roda-section {
+            padding: 7rem 2rem;
+            background:
+                radial-gradient(ellipse 70% 70% at 50% 50%, #1a1005 0%, var(--bg-deep) 100%);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+            align-items: center;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 900px) {
+            .roda-section { grid-template-columns: 1fr; gap: 3rem; }
+        }
+
+        .roda-texto {
+            padding-right: 2rem;
+        }
+
+        .roda-kicker {
+            font-family: 'Cinzel', serif;
+            font-size: 0.6rem;
+            letter-spacing: 0.5em;
+            color: var(--gold);
+            text-transform: uppercase;
+            display: block;
+            margin-bottom: 1.5rem;
+            opacity: 0.8;
+        }
+
+        .roda-heading {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            color: var(--gold-pale);
+            line-height: 1.2;
+            margin-bottom: 2rem;
+        }
+
+        .roda-p {
+            color: var(--gold-lt);
+            font-size: 1.05rem;
+            line-height: 1.9;
+            opacity: 0.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .roda-hint {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-family: 'Cinzel', serif;
+            font-size: 0.6rem;
+            letter-spacing: 0.2em;
+            color: var(--gold);
+            opacity: 0.6;
+            margin-top: 3rem;
+        }
+
+        .roda-hint::before {
+            content: '';
+            display: inline-block;
+            width: 24px;
+            height: 1px;
+            background: var(--gold);
+        }
+
+        .roda-wrap {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .roda-outer {
+            width: 100%;
+            max-width: 520px;
+            position: relative;
+            filter: drop-shadow(0 0 60px rgba(0,0,0,0.8)) drop-shadow(0 0 30px rgba(154,122,58,0.12));
+        }
+
+        #roda-svg {
+            width: 100%;
+            height: auto;
+            overflow: visible;
+        }
+
+        /* Arco base */
+        .arco-tempo {
+            cursor: pointer;
+            transition: filter 0.4s var(--ease), transform 0.4s var(--ease);
+            stroke: rgba(0,0,0,0.4);
+            stroke-width: 0.8;
+        }
+
+        .arco-tempo:hover {
+            filter: brightness(1.35) saturate(1.3);
+        }
+
+        .arco-tempo.ativo {
+            filter: brightness(1.5) saturate(1.5);
+            stroke: rgba(255,255,255,0.15);
+            stroke-width: 1.5;
+        }
+
+        /* Rótulos SVG */
+        .arco-label {
+            pointer-events: none;
+            user-select: none;
+        }
+
+        .arco-label-main {
+            font-family: 'Cinzel', serif;
+            font-size: 9px;
+            font-weight: 600;
+            fill: rgba(255,255,255,0.9);
+            letter-spacing: 0.12em;
+        }
+
+        .arco-label-sub {
+            font-family: 'EB Garamond', serif;
+            font-size: 7.5px;
+            fill: rgba(255,255,255,0.55);
+            font-style: italic;
+        }
+
+        /* Elementos do centro */
+        .centro-tex-ano {
+            font-family: 'Cinzel', serif;
+            font-size: 9px;
+            fill: var(--gold-lt);
+            letter-spacing: 5px;
+        }
+
+        .centro-tex-liturgico {
+            font-family: 'Cinzel', serif;
+            font-size: 8px;
+            fill: var(--gold-lt);
+            letter-spacing: 3px;
+        }
+
+        .centro-tex-extra {
+            font-family: 'Cinzel', serif;
+            font-size: 7px;
+            fill: var(--gold);
+            opacity: 0.35;
+            letter-spacing: 3px;
+        }
+
+        /* ═══════════════════════════════════════════════════════════
+           ÁREA DE DETALHES
+        ═══════════════════════════════════════════════════════════ */
+        .detalhes-section {
+            background: var(--parchment);
+            position: relative;
+        }
+
+        /* Faixa decorativa topo */
+        .detalhes-section::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, var(--gold-deep), var(--gold-mid), var(--gold-deep), transparent);
+        }
+
+        .detalhes-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 5rem 2.5rem;
+        }
+
+        /* Estado vazio */
+        .detalhes-vazio {
+            text-align: center;
+            padding: 6rem 2rem;
+        }
+
+        .detalhes-vazio-ornamento {
+            font-size: 3rem;
+            color: var(--gold);
+            opacity: 0.25;
+            margin-bottom: 2rem;
+            display: block;
+        }
+
+        .detalhes-vazio p {
+            font-family: 'Cinzel', serif;
+            font-size: 0.7rem;
+            letter-spacing: 0.3em;
+            color: var(--ink-faint);
+            text-transform: uppercase;
+        }
+
+        /* Cabeçalho do tempo selecionado */
+        .tempo-cabecalho {
+            display: none;
+            animation: slideDown 0.6s var(--ease) forwards;
+        }
+
+        .tempo-cabecalho.vis { display: block; }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .tempo-header-grid {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 2.5rem;
+            align-items: start;
+            padding-bottom: 3rem;
+            margin-bottom: 3rem;
+            border-bottom: 1px solid rgba(154,122,58,0.15);
+        }
+
+        .tempo-cor-bar {
+            width: 4px;
+            height: 100%;
+            min-height: 80px;
+            border-radius: 2px;
+        }
+
+        .tempo-nome {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: clamp(1.6rem, 3vw, 2.4rem);
+            color: var(--ink);
+            margin-bottom: 0.5rem;
+        }
+
+        .tempo-periodo {
+            font-family: 'Cinzel', serif;
+            font-size: 0.65rem;
+            letter-spacing: 0.3em;
+            color: var(--gold);
+            text-transform: uppercase;
+            margin-bottom: 1.2rem;
+        }
+
+        .tempo-descricao {
+            color: var(--ink-mid);
+            font-size: 1.05rem;
+            line-height: 1.9;
+            font-style: italic;
+            max-width: 600px;
+        }
+
+        /* ═══════════════════════════════════════════════════════════
+           GRID DE SEMANAS
+        ═══════════════════════════════════════════════════════════ */
+        .semanas-titulo {
+            font-family: 'Cinzel', serif;
+            font-size: 0.6rem;
+            letter-spacing: 0.4em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .semanas-titulo::before, .semanas-titulo::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(154,122,58,0.3), transparent);
+        }
+
+        .semanas-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 2px;
+            background: rgba(154,122,58,0.12);
+            border: 1px solid rgba(154,122,58,0.15);
+            margin-bottom: 3.5rem;
+        }
+
+        .semana-btn {
+            background: var(--cream);
+            border: none;
+            padding: 1.4rem 1.8rem;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.3s var(--ease);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .semana-btn::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; bottom: 0;
+            width: 0;
+            background: currentColor;
+            opacity: 0.05;
+            transition: width 0.3s var(--ease);
+        }
+
+        .semana-btn:hover {
+            background: var(--parchment-dark);
+        }
+
+        .semana-btn:hover::before { width: 100%; }
+
+        .semana-btn.ativa {
+            background: var(--parchment-dark);
+        }
+
+        .semana-btn.ativa .semana-acento {
+            transform: scaleX(1);
+        }
+
+        .semana-acento {
+            position: absolute;
+            left: 0; top: 0; bottom: 0;
+            width: 3px;
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s var(--ease);
+        }
+
+        .semana-num {
+            display: block;
+            font-family: 'Cinzel', serif;
+            font-size: 0.55rem;
+            letter-spacing: 0.2em;
+            color: var(--gold);
+            margin-bottom: 0.5rem;
+        }
+
+        .semana-titulo-txt {
+            font-weight: 500;
+            color: var(--ink-soft);
+            font-size: 0.92rem;
+            line-height: 1.4;
+        }
+
+        .semana-seta {
+            position: absolute;
+            right: 1.2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gold);
+            opacity: 0;
+            transition: opacity 0.3s var(--ease), transform 0.3s var(--ease);
+            font-size: 0.8rem;
+        }
+
+        .semana-btn:hover .semana-seta,
+        .semana-btn.ativa .semana-seta {
+            opacity: 1;
+            transform: translateY(-50%) translateX(2px);
+        }
+
+        /* ═══════════════════════════════════════════════════════════
+           PAINEL DE REFLEXÃO (com IA)
+        ═══════════════════════════════════════════════════════════ */
+        .reflexao-painel {
+            display: none;
+            position: relative;
+        }
+
+        .reflexao-painel.vis {
+            display: block;
+            animation: panelReveal 0.7s var(--ease) forwards;
+        }
+
+        @keyframes panelReveal {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .reflexao-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 2rem;
+            margin-bottom: 0;
+        }
+
+        .reflexao-card {
+            background: var(--cream);
+            border: 1px solid rgba(154,122,58,0.15);
+            border-top-width: 0;
+            box-shadow:
+                0 30px 80px rgba(26,20,13,0.08),
+                0 4px 20px rgba(26,20,13,0.05);
+            overflow: hidden;
+        }
+
+        .reflexao-topo {
+            padding: 2.5rem 3.5rem 2rem;
+            border-bottom: 1px solid rgba(154,122,58,0.1);
+            position: relative;
+        }
+
+        .reflexao-topo-line {
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+        }
+
+        .reflexao-kicker {
+            font-family: 'Cinzel', serif;
+            font-size: 0.55rem;
+            letter-spacing: 0.4em;
+            color: var(--gold);
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .reflexao-titulo {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(1.3rem, 2.5vw, 1.9rem);
+            color: var(--ink);
+            letter-spacing: 0.03em;
+            margin-bottom: 0.5rem;
+        }
+
+        .reflexao-sub {
+            font-style: italic;
+            color: var(--ink-mid);
+            font-size: 1.05rem;
+        }
+
+        .reflexao-corpo {
+            padding: 3rem 3.5rem;
+        }
+
+        /* Texto da reflexão gerado pela IA */
+        .reflexao-texto {
+            color: var(--ink-soft);
+            font-size: 1.05rem;
+            line-height: 2;
+            text-align: justify;
+            hyphens: auto;
+        }
+
+        .reflexao-texto p { margin-bottom: 1.8rem; }
+
+        .reflexao-texto p:first-of-type::first-letter {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 4.5rem;
+            float: left;
+            line-height: 0.75;
+            margin: 0.15em 0.12em 0 0;
+            color: var(--gold-deep);
+        }
+
+        .reflexao-cita {
+            margin: 2.5rem 0;
+            padding: 2rem 2.5rem;
+            background: rgba(154, 122, 58, 0.04);
+            border-left: 3px solid var(--gold);
+            position: relative;
+        }
+
+        .reflexao-cita::before {
+            content: '\201C';
+            position: absolute;
+            top: -0.5rem;
+            left: 1.5rem;
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 4rem;
+            color: var(--gold);
+            opacity: 0.15;
+            line-height: 1;
+        }
+
+        .reflexao-cita p {
+            font-style: italic;
+            color: var(--ink-soft);
+            margin-bottom: 0.8rem;
+        }
+
+        .reflexao-cita cite {
+            display: block;
+            font-family: 'Cinzel', serif;
+            font-size: 0.6rem;
+            letter-spacing: 0.2em;
+            color: var(--gold);
+            font-style: normal;
+        }
+
+        /* Loading state da IA */
+        .reflexao-loading {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+            padding: 4rem;
+            color: var(--ink-mid);
+        }
+
+        .loading-cruz {
+            width: 32px;
+            height: 32px;
+            position: relative;
+            animation: cruzeGira 3s linear infinite;
+        }
+
+        .loading-cruz::before, .loading-cruz::after {
+            content: '';
+            position: absolute;
+            background: var(--gold);
+            border-radius: 1px;
+        }
+
+        .loading-cruz::before {
+            width: 2px; height: 100%;
+            top: 0; left: 50%; transform: translateX(-50%);
+        }
+
+        .loading-cruz::after {
+            width: 100%; height: 2px;
+            top: 50%; left: 0; transform: translateY(-50%);
+        }
+
+        @keyframes cruzeGira {
+            from { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(1.1); }
+            to { transform: rotate(360deg) scale(1); }
+        }
+
+        .loading-txt {
+            font-family: 'Cinzel', serif;
+            font-size: 0.6rem;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--gold);
+            opacity: 0.7;
+        }
+
+        .loading-dots {
+            display: flex;
+            gap: 6px;
+        }
+
+        .loading-dots span {
+            width: 4px; height: 4px;
+            border-radius: 50%;
+            background: var(--gold);
+            opacity: 0.4;
+            animation: dotPulse 1.4s ease-in-out infinite;
+        }
+
+        .loading-dots span:nth-child(2) { animation-delay: 0.2s; }
+        .loading-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes dotPulse {
+            0%, 80%, 100% { opacity: 0.3; transform: scale(1); }
+            40% { opacity: 1; transform: scale(1.4); }
+        }
+
+        /* Badge IA */
+        .ia-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-family: 'Cinzel', serif;
+            font-size: 0.5rem;
+            letter-spacing: 0.2em;
+            color: var(--gold);
+            border: 1px solid rgba(154,122,58,0.3);
+            padding: 0.25rem 0.7rem;
+            margin-left: 1rem;
+            opacity: 0.75;
+        }
+
+        .ia-badge-dot {
+            width: 4px; height: 4px;
+            border-radius: 50%;
+            background: var(--gold-mid);
+            animation: dotPulse 2s ease-in-out infinite;
+        }
+
+        .reflexao-rodape {
+            padding: 1.5rem 3.5rem 2rem;
+            border-top: 1px solid rgba(154,122,58,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-fechar {
+            font-family: 'Cinzel', serif;
+            font-size: 0.58rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--ink-mid);
+            background: transparent;
+            border: 1px solid rgba(154,122,58,0.2);
+            padding: 0.6rem 1.4rem;
+            cursor: pointer;
+            transition: all 0.3s var(--ease);
+        }
+
+        .btn-fechar:hover {
+            border-color: var(--gold);
+            color: var(--ink);
+        }
+
+        .btn-regenerar {
+            font-family: 'Cinzel', serif;
+            font-size: 0.58rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--gold);
+            background: transparent;
+            border: 1px solid rgba(154,122,58,0.3);
+            padding: 0.6rem 1.4rem;
+            cursor: pointer;
+            transition: all 0.3s var(--ease);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-regenerar:hover {
+            border-color: var(--gold-mid);
+            color: var(--gold-pale);
+            background: rgba(154,122,58,0.05);
+        }
+
+        /* ═══════════════════════════════════════════════════════════
+           RODAPÉ
+        ═══════════════════════════════════════════════════════════ */
+        footer {
+            background: var(--bg-deep);
+            border-top: 1px solid var(--rule);
+            padding: 5rem 2rem 3rem;
+            text-align: center;
+            position: relative;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 10%; right: 10%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold-deep), transparent);
+        }
+
+        .footer-monograma {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 2.5rem;
+            color: var(--gold);
+            opacity: 0.25;
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+
+        .footer-nome {
+            font-family: 'Cinzel', serif;
+            font-size: 0.7rem;
+            letter-spacing: 0.4em;
+            color: var(--gold-lt);
+            opacity: 0.5;
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-motto {
+            font-family: 'EB Garamond', serif;
+            font-style: italic;
+            color: var(--gold);
+            opacity: 0.3;
+            font-size: 0.9rem;
+            letter-spacing: 0.05em;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2.5rem;
+            margin-top: 2.5rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--rule);
+        }
+
+        .footer-links a {
+            font-family: 'Cinzel', serif;
+            font-size: 0.55rem;
+            letter-spacing: 0.25em;
+            color: var(--gold);
+            opacity: 0.4;
+            text-decoration: none;
+            text-transform: uppercase;
+            transition: opacity 0.3s;
+        }
+
+        .footer-links a:hover { opacity: 0.8; }
+
+        /* ═══════════════════════════════════════════════════════════
+           SEPARADORES ORNAMENTAIS
+        ═══════════════════════════════════════════════════════════ */
+        .ornamento-divisor {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .ornamento-divisor::before, .ornamento-divisor::after {
+            content: '';
+            flex: 1;
+            max-width: 200px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(154,122,58,0.3));
+        }
+
+        .ornamento-divisor::after {
+            background: linear-gradient(90deg, rgba(154,122,58,0.3), transparent);
+        }
+
+        .ornamento-symbol {
+            font-size: 0.9rem;
+            color: var(--gold);
+            opacity: 0.4;
+        }
+
+        /* ═══════════════════════════════════════════════════════════
+           UTILITIES
+        ═══════════════════════════════════════════════════════════ */
+        .visually-hidden {
+            position: absolute;
+            width: 1px; height: 1px;
+            padding: 0; margin: -1px;
+            overflow: hidden;
+            clip: rect(0,0,0,0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        @media (max-width: 768px) {
+            .topo { padding: 0 1.2rem; }
+            .roda-texto { padding-right: 0; }
+            .reflexao-topo, .reflexao-corpo, .reflexao-rodape { padding-left: 1.5rem; padding-right: 1.5rem; }
+            .reflexao-texto p:first-of-type::first-letter { font-size: 3rem; }
+            .semanas-grid { grid-template-columns: 1fr; }
+            .hero-cta { flex-direction: column; align-items: center; }
+            .topo-dir { display: none; }
+        }
+
+        /* Streaming text cursor */
+        .streaming::after {
+            content: '▎';
+            animation: blink 0.8s step-start infinite;
+            color: var(--gold);
+            opacity: 0.7;
+        }
+
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+    </style>
 </head>
 <body>
-    <!-- Overlay de Ruído para Textura de Pergaminho -->
-    <div class="noise-overlay"></div>
 
-    <header class="topo">
-        <a href="#" class="btn-voltar">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+<div id="scroll-bar"></div>
+
+<!-- ══════════════════════════════════════
+     HEADER
+══════════════════════════════════════ -->
+<header class="topo" role="banner">
+    <div class="topo-esq">
+        <a href="#" class="btn-nav">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M19 12H5M12 19l-7-7 7-7"/>
+            </svg>
             Voltar
         </a>
-        <span class="topo-titulo">Calendário Litúrgico</span>
-    </header>
+        <div>
+            <div class="topo-logo">Lux <span>Fidei</span></div>
+            <div class="topo-subtitulo">Ecclesia Catholica</div>
+        </div>
+    </div>
+    <div class="topo-dir">
+        <span class="ano-badge" id="ano-badge">Ano B · 2025–2026</span>
+    </div>
+</header>
 
-    <main>
-        <section class="hero">
-            <div class="hero-content">
-                <span class="hero-pretitle">Ecclesia Catholica</span>
-                <h1>O Ciclo da Fé</h1>
-                <p class="hero-sub">A jornada da alma através do Ano Litúrgico</p>
-                <span class="hero-ornamento">❦</span>
-            </div>
-        </section>
+<!-- ══════════════════════════════════════
+     HERO
+══════════════════════════════════════ -->
+<main>
+<section class="hero" aria-label="Introdução ao Ano Litúrgico">
+    <div class="hero-rays" aria-hidden="true"></div>
+    <div aria-hidden="true" style="position:absolute;top:30%;left:15%;width:1px;height:200px;background:linear-gradient(180deg,transparent,rgba(154,122,58,0.08),transparent);animation:crossFade 6s ease-in-out 1s infinite;"></div>
+    <div aria-hidden="true" style="position:absolute;top:20%;right:18%;width:1px;height:160px;background:linear-gradient(180deg,transparent,rgba(154,122,58,0.06),transparent);animation:crossFade 8s ease-in-out 3s infinite;"></div>
 
-        <section class="legenda-wrap">
-            <div class="legenda">
-                <div class="leg-item"><span class="leg-dot" style="background: #6a1faa;"></span> Advento</div>
-                <div class="leg-item"><span class="leg-dot" style="background: #b89040;"></span> Natal</div>
-                <div class="leg-item"><span class="leg-dot" style="background: #2a5898;"></span> Comum I</div>
-                <div class="leg-item"><span class="leg-dot" style="background: #7a3a10;"></span> Quaresma</div>
-                <div class="leg-item"><span class="leg-dot" style="background: #0e5a2e;"></span> Tríduo</div>
-                <div class="leg-item"><span class="leg-dot" style="background: #1a8048;"></span> Pascal</div>
-                <div class="leg-item"><span class="leg-dot" style="background: #1e4880;"></span> Comum II</div>
-            </div>
-        </section>
+    <span class="hero-pretitle">Ecclesia Catholica · Anno Domini</span>
 
-        <section class="roda-section">
-            <div class="roda-container">
-                <div class="roda-outer">
-                    <svg id="roda-svg" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
-                        <!-- Definições de Gradientes e Filtros -->
-                        <defs>
-                            <filter id="f-glow-gold" x="-20%" y="-20%" width="140%" height="140%">
-                                <feGaussianBlur stdDeviation="2.5" result="blur" />
-                                <feComposite in="SourceGraphic" in2="blur" operator="over" />
-                            </filter>
-                            <pattern id="pat-dots" x="0" y="0" width="10" height="10" patternUnits="userSpaceOnUse">
-                                <circle cx="1" cy="1" r="0.5" fill="rgba(154,122,58,0.15)"/>
-                            </pattern>
-                            
-                            <!-- Gradientes para os Tempos -->
-                            <linearGradient id="g-advento" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%" stop-color="#4a148c"/><stop offset="100%" stop-color="#7b1fa2"/>
-                            </linearGradient>
-                            <linearGradient id="g-natal" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%" stop-color="#d4af37"/><stop offset="100%" stop-color="#b8860b"/>
-                            </linearGradient>
-                            <linearGradient id="g-comum1" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%" stop-color="#1565c0"/><stop offset="100%" stop-color="#1e88e5"/>
-                            </linearGradient>
-                            <linearGradient id="g-quaresma" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%" stop-color="#5d4037"/><stop offset="100%" stop-color="#8d6e63"/>
-                            </linearGradient>
-                            <linearGradient id="g-triduo" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%" stop-color="#1b5e20"/><stop offset="100%" stop-color="#2e7d32"/>
-                            </linearGradient>
-                            <linearGradient id="g-pascal" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%" stop-color="#2e7d32"/><stop offset="100%" stop-color="#43a047"/>
-                            </linearGradient>
-                            <linearGradient id="g-comum2" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%" stop-color="#0d47a1"/><stop offset="100%" stop-color="#1976d2"/>
-                            </linearGradient>
-                        </defs>
+    <h1>O Ciclo da Fé</h1>
 
-                        <!-- Elementos de Fundo da Roda -->
-                        <circle cx="300" cy="300" r="280" fill="none" stroke="rgba(154,122,58,0.1)" stroke-width="1"/>
-                        <circle cx="300" cy="300" r="270" fill="none" stroke="rgba(154,122,58,0.05)" stroke-width="40"/>
-                        
-                        <!-- Grupo para os Arcos (Gerado via JS) -->
-                        <g id="g-arcos"></g>
+    <p class="hero-sub">A jornada da alma através do Ano Litúrgico — tempo sagrado em que a Igreja vive o mistério de Cristo</p>
 
-                        <!-- Centro da Roda -->
-                        <g class="roda-centro">
-                            <circle cx="300" cy="300" r="115" fill="#110d08"/>
-                            <circle cx="300" cy="300" r="115" fill="url(#pat-dots)" opacity="0.6"/>
-                            
-                            <!-- Cruz Central -->
-                            <g class="centro-cruz" transform="translate(300,300)">
-                                <rect x="-2" y="-35" width="4" height="70" rx="1" fill="var(--gold-lt)" filter="url(#f-glow-gold)"/>
-                                <rect x="-35" y="-2" width="70" height="4" rx="1" fill="var(--gold-lt)" filter="url(#f-glow-gold)"/>
-                                <circle cx="0" cy="0" r="8" fill="none" stroke="var(--gold)" stroke-width="1"/>
-                            </g>
+    <div class="hero-cta">
+        <a href="#roda" class="btn-primario">Contemplar a Roda</a>
+        <a href="#detalhes" class="btn-secundario">Ver os Tempos</a>
+    </div>
 
-                            <text x="300" y="280" text-anchor="middle" class="centro-texto-ano">ANO</text>
-                            <text x="300" y="300" text-anchor="middle" class="centro-texto-liturgico">LITÚRGICO</text>
-                            <text x="300" y="325" text-anchor="middle" class="centro-texto-extra">ECCLESIA</text>
-                        </g>
-                    </svg>
+    <div class="hero-scroll" aria-hidden="true">
+        <span>Descer</span>
+        <div class="scroll-line"></div>
+    </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     LEGENDA
+══════════════════════════════════════ -->
+<nav class="legenda-section" aria-label="Tempos litúrgicos">
+    <div class="legenda" role="list">
+        <div class="leg-item" role="listitem" data-tempo="advento" tabindex="0">
+            <span class="leg-cor" style="background:#7b1fa2;color:#7b1fa2;box-shadow:0 0 10px #7b1fa2"></span>
+            Advento
+        </div>
+        <div class="leg-item" role="listitem" data-tempo="natal" tabindex="0">
+            <span class="leg-cor" style="background:#d4af37;color:#d4af37;box-shadow:0 0 10px #d4af37"></span>
+            Natal
+        </div>
+        <div class="leg-item" role="listitem" data-tempo="comum1" tabindex="0">
+            <span class="leg-cor" style="background:#1e88e5;color:#1e88e5;box-shadow:0 0 10px #1e88e5"></span>
+            Tempo Comum I
+        </div>
+        <div class="leg-item" role="listitem" data-tempo="quaresma" tabindex="0">
+            <span class="leg-cor" style="background:#8d6e63;color:#8d6e63;box-shadow:0 0 10px #8d6e63"></span>
+            Quaresma
+        </div>
+        <div class="leg-item" role="listitem" data-tempo="triduo" tabindex="0">
+            <span class="leg-cor" style="background:#2e7d32;color:#2e7d32;box-shadow:0 0 10px #2e7d32"></span>
+            Tríduo Pascal
+        </div>
+        <div class="leg-item" role="listitem" data-tempo="pascal" tabindex="0">
+            <span class="leg-cor" style="background:#43a047;color:#43a047;box-shadow:0 0 10px #43a047"></span>
+            Tempo Pascal
+        </div>
+        <div class="leg-item" role="listitem" data-tempo="comum2" tabindex="0">
+            <span class="leg-cor" style="background:#1976d2;color:#1976d2;box-shadow:0 0 10px #1976d2"></span>
+            Tempo Comum II
+        </div>
+    </div>
+</nav>
+
+<!-- ══════════════════════════════════════
+     RODA LITÚRGICA
+══════════════════════════════════════ -->
+<section id="roda" class="roda-section" aria-label="Roda do Ano Litúrgico">
+    <div class="roda-texto">
+        <span class="roda-kicker">O Tempo Sagrado</span>
+        <h2 class="roda-heading">A Roda do<br>Ano Litúrgico</h2>
+        <p class="roda-p">
+            A Igreja organiza o tempo em torno do mistério pascal de Cristo — 
+            sua Paixão, Morte e Ressurreição. Cada tempo litúrgico tem cor, 
+            tom espiritual e graça própria.
+        </p>
+        <p class="roda-p">
+            Selecione um tempo na roda para contemplar suas semanas e 
+            receber uma reflexão gerada especialmente para o momento.
+        </p>
+        <div class="roda-hint">Clique nos arcos para explorar cada tempo</div>
+    </div>
+
+    <div class="roda-wrap">
+        <div class="roda-outer">
+            <svg id="roda-svg" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg"
+                 role="img" aria-label="Roda interativa do Ano Litúrgico">
+                <title>Roda do Ano Litúrgico</title>
+                <desc>Diagrama circular interativo mostrando os sete tempos do Ano Litúrgico Católico</desc>
+
+                <defs>
+                    <!-- Filtros -->
+                    <filter id="f-gold" x="-30%" y="-30%" width="160%" height="160%">
+                        <feGaussianBlur stdDeviation="3" result="b"/>
+                        <feComposite in="SourceGraphic" in2="b" operator="over"/>
+                    </filter>
+                    <filter id="f-inner-shadow" x="-5%" y="-5%" width="110%" height="110%">
+                        <feGaussianBlur in="SourceAlpha" stdDeviation="4" result="b"/>
+                        <feOffset dx="0" dy="2" result="o"/>
+                        <feComposite in="o" in2="SourceAlpha" operator="in" result="c"/>
+                        <feMerge><feMergeNode in="c"/><feMergeNode in="SourceGraphic"/></feMerge>
+                    </filter>
+
+                    <!-- Pattern pontilhado centro -->
+                    <pattern id="pat-centro" x="0" y="0" width="12" height="12" patternUnits="userSpaceOnUse">
+                        <circle cx="1.5" cy="1.5" r="0.8" fill="rgba(154,122,58,0.12)"/>
+                    </pattern>
+
+                    <!-- Gradientes Tempos -->
+                    <linearGradient id="g-advento" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#4a148c"/>
+                        <stop offset="100%" stop-color="#8e24aa"/>
+                    </linearGradient>
+                    <linearGradient id="g-natal" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#b8860b"/>
+                        <stop offset="100%" stop-color="#e8c84a"/>
+                    </linearGradient>
+                    <linearGradient id="g-comum1" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#0d47a1"/>
+                        <stop offset="100%" stop-color="#2196f3"/>
+                    </linearGradient>
+                    <linearGradient id="g-quaresma" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#4e342e"/>
+                        <stop offset="100%" stop-color="#a1887f"/>
+                    </linearGradient>
+                    <linearGradient id="g-triduo" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#1b5e20"/>
+                        <stop offset="100%" stop-color="#388e3c"/>
+                    </linearGradient>
+                    <linearGradient id="g-pascal" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#2e7d32"/>
+                        <stop offset="100%" stop-color="#66bb6a"/>
+                    </linearGradient>
+                    <linearGradient id="g-comum2" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#0d47a1"/>
+                        <stop offset="100%" stop-color="#1976d2"/>
+                    </linearGradient>
+
+                    <!-- Gradiente borda dourada centro -->
+                    <radialGradient id="g-centro-borda" cx="50%" cy="50%" r="50%">
+                        <stop offset="80%" stop-color="rgba(154,122,58,0)" />
+                        <stop offset="100%" stop-color="rgba(154,122,58,0.35)" />
+                    </radialGradient>
+                    <radialGradient id="g-centro-borda2" cx="50%" cy="50%" r="50%">
+                        <stop offset="85%" stop-color="rgba(154,122,58,0)" />
+                        <stop offset="100%" stop-color="rgba(154,122,58,0.2)" />
+                    </radialGradient>
+                </defs>
+
+                <!-- Anel externo decorativo -->
+                <circle cx="300" cy="300" r="285" fill="none" stroke="rgba(154,122,58,0.08)" stroke-width="1.5"/>
+                <circle cx="300" cy="300" r="278" fill="none" stroke="rgba(154,122,58,0.05)" stroke-width="0.5"/>
+
+                <!-- Arcos gerados por JS -->
+                <g id="g-arcos"></g>
+
+                <!-- Anel separador interno/externo -->
+                <circle cx="300" cy="300" r="260" fill="none" stroke="rgba(0,0,0,0.5)" stroke-width="1"/>
+                <circle cx="300" cy="300" r="258" fill="none" stroke="rgba(154,122,58,0.1)" stroke-width="1"/>
+
+                <!-- Centro -->
+                <circle cx="300" cy="300" r="128" fill="#0a0704"/>
+                <circle cx="300" cy="300" r="128" fill="url(#pat-centro)"/>
+                <circle cx="300" cy="300" r="128" fill="url(#g-centro-borda)"/>
+                <circle cx="300" cy="300" r="128" fill="none" stroke="rgba(154,122,58,0.25)" stroke-width="1.5"/>
+                <circle cx="300" cy="300" r="122" fill="none" stroke="rgba(154,122,58,0.08)" stroke-width="0.5"/>
+
+                <!-- Cruz central -->
+                <g transform="translate(300,300)" filter="url(#f-gold)">
+                    <rect x="-1.5" y="-42" width="3" height="84" rx="1.5" fill="#c8a042" opacity="0.85"/>
+                    <rect x="-42" y="-1.5" width="84" height="3" rx="1.5" fill="#c8a042" opacity="0.85"/>
+                    <circle cx="0" cy="0" r="5" fill="#c8a042" opacity="0.5"/>
+                    <circle cx="0" cy="0" r="9" fill="none" stroke="#9a7a3a" stroke-width="0.8" opacity="0.5"/>
+                    <circle cx="0" cy="0" r="14" fill="none" stroke="#9a7a3a" stroke-width="0.4" opacity="0.25"/>
+                </g>
+
+                <!-- Textos do centro -->
+                <text x="300" y="278" text-anchor="middle" class="centro-tex-ano">ANO</text>
+                <text x="300" y="297" text-anchor="middle" class="centro-tex-liturgico">LITÚRGICO</text>
+                <text x="300" y="320" text-anchor="middle" class="centro-tex-extra">ECCLESIA</text>
+
+                <!-- Pontos decorativos nos eixos -->
+                <circle cx="300" cy="172" r="2.5" fill="rgba(154,122,58,0.3)"/>
+                <circle cx="300" cy="428" r="2.5" fill="rgba(154,122,58,0.3)"/>
+                <circle cx="172" cy="300" r="2.5" fill="rgba(154,122,58,0.3)"/>
+                <circle cx="428" cy="300" r="2.5" fill="rgba(154,122,58,0.3)"/>
+            </svg>
+        </div>
+    </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     DETALHES / SEMANAS / REFLEXÃO
+══════════════════════════════════════ -->
+<section id="detalhes" class="detalhes-section" aria-live="polite" aria-label="Detalhes do tempo litúrgico selecionado">
+    <div class="detalhes-inner">
+
+        <!-- Estado vazio inicial -->
+        <div id="estado-vazio" class="detalhes-vazio">
+            <span class="detalhes-vazio-ornamento" aria-hidden="true">✦</span>
+            <p>Selecione um tempo litúrgico na roda acima</p>
+        </div>
+
+        <!-- Cabeçalho do tempo -->
+        <div id="tempo-cabecalho" class="tempo-cabecalho">
+            <div class="tempo-header-grid">
+                <div id="tempo-cor-bar" class="tempo-cor-bar"></div>
+                <div>
+                    <p id="tempo-periodo" class="tempo-periodo"></p>
+                    <h2 id="tempo-nome" class="tempo-nome"></h2>
+                    <p id="tempo-descricao" class="tempo-descricao"></p>
                 </div>
-                <p class="roda-instrucao">Selecione um tempo para contemplar suas semanas</p>
             </div>
-        </section>
 
-        <section class="conteudo-detalhes">
-            <div class="container">
-                <div id="sec-label" class="sec-label">Semanas do Tempo</div>
-                
-                <div id="tempo-header" class="tempo-header">
-                    <div id="tempo-badge-el" class="tempo-badge"></div>
-                    <p id="tempo-desc-el" class="tempo-desc"></p>
+            <p class="semanas-titulo">Semanas do Tempo</p>
+
+            <div id="semanas-container" class="semanas-grid" role="list"></div>
+        </div>
+
+        <!-- Painel Reflexão -->
+        <article id="reflexao-painel" class="reflexao-painel" aria-label="Reflexão litúrgica">
+            <div class="reflexao-card">
+                <div class="reflexao-topo">
+                    <div id="reflexao-topo-line" class="reflexao-topo-line"></div>
+                    <p id="reflexao-kicker" class="reflexao-kicker">
+                        Reflexão Litúrgica
+                        <span class="ia-badge">
+                            <span class="ia-badge-dot"></span>
+                            IA · Lux Fidei
+                        </span>
+                    </p>
+                    <h3 id="reflexao-titulo" class="reflexao-titulo"></h3>
+                    <p id="reflexao-sub" class="reflexao-sub"></p>
                 </div>
-
-                <div id="semanas-container" class="semanas-grid"></div>
-
-                <article id="reflexao-painel" class="reflexao-painel">
-                    <div id="reflexao-conteudo" class="reflexao-inner">
-                        <!-- Conteúdo dinâmico -->
-                    </div>
-                </article>
+                <div id="reflexao-corpo" class="reflexao-corpo">
+                    <div id="reflexao-conteudo" class="reflexao-texto"></div>
+                </div>
+                <div class="reflexao-rodape">
+                    <button class="btn-fechar" onclick="fecharReflexao()">
+                        ✕ Fechar reflexão
+                    </button>
+                    <button class="btn-regenerar" id="btn-regenerar" onclick="regenerarReflexao()">
+                        ↻ Nova reflexão
+                    </button>
+                </div>
             </div>
-        </section>
-    </main>
+        </article>
 
-    <footer class="rodape">
-        <div class="footer-ornamento">❦</div>
-        <p>&copy; 2026 &ndash; Lux Fidei</p>
-        <p class="footer-motto">Omnia ad maiorem Dei gloriam</p>
-    </footer>
+    </div>
+</section>
+</main>
 
-    <script src="calendario.js"></script>
+<!-- ══════════════════════════════════════
+     RODAPÉ
+══════════════════════════════════════ -->
+<footer role="contentinfo">
+    <span class="footer-monograma" aria-hidden="true">✦</span>
+    <p class="footer-nome">Lux Fidei · © 2026</p>
+    <p class="footer-motto">Omnia ad maiorem Dei gloriam</p>
+    <nav class="footer-links" aria-label="Links do rodapé">
+        <a href="#">Início</a>
+        <a href="#">Sobre</a>
+        <a href="#">Orações</a>
+        <a href="#">Santos</a>
+    </nav>
+</footer>
+
+
 </body>
 </html>
