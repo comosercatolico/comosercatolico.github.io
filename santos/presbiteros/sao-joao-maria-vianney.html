@@ -54,59 +54,54 @@
     </div>
 
     <script>
-        const contentArea = document.getElementById('content-area');
-        const loader = document.getElementById('loader');
-        const buttons = document.querySelectorAll('.sl-nav-btn');
-        const cache = {};
+    const contentArea = document.getElementById('content-area');
+    const loader = document.getElementById('loader');
+    const buttons = document.querySelectorAll('.sl-nav-btn');
+    const cache = {};
 
-        async function loadTab(tabName) {
-            // Atualizar UI dos botões
-            buttons.forEach(btn => {
-                if(btn.getAttribute('data-painel') === tabName) {
-                    btn.classList.add('ativo');
-                } else {
-                    btn.classList.remove('ativo');
-                }
-            });
-
-            // Verificar cache
-            if (cache[tabName]) {
-                contentArea.innerHTML = cache[tabName];
-                return;
-            }
-
-            // Carregar arquivo
-            loader.style.display = 'flex';
-            try {
-                const response = await fetch(`presbiteros-dados/sao-joao-maria-vianney-dados/${tabName}.html`);
-                if (!response.ok) throw new Error('Falha ao carregar aba');
-                const html = await response.text();
-                
-                // Adicionar classe ativo ao painel carregado para garantir visibilidade
-                const tempDiv = document.createElement('div');
-                tempDiv.innerHTML = html;
-                const painel = tempDiv.querySelector('.sl-painel');
-                if (painel) painel.classList.add('ativo');
-                
-                cache[tabName] = tempDiv.innerHTML;
-                contentArea.innerHTML = cache[tabName];
-            } catch (error) {
-                contentArea.innerHTML = `<div class="sl-alerta">Erro ao carregar o conteúdo: ${error.message}</div>`;
-            } finally {
-                loader.style.display = 'none';
-            }
-        }
-
-        // Event listeners
+    async function loadTab(tabName) {
         buttons.forEach(btn => {
-            btn.addEventListener('click', () => {
-                const tab = btn.getAttribute('data-painel');
-                loadTab(tab);
-            });
+            btn.getAttribute('data-painel') === tabName
+                ? btn.classList.add('ativo')
+                : btn.classList.remove('ativo');
         });
 
-        // Carregar aba inicial
-        loadTab('historia');
-    </script>
+        if (cache[tabName]) {
+            contentArea.innerHTML = cache[tabName];
+            return;
+        }
+
+        loader.style.display = 'flex';
+        try {
+            const response = await fetch(`sao-joao-maria-vianney-dados/${tabName}.html`);
+            if (!response.ok) throw new Error('Falha ao carregar aba');
+            const html = await response.text();
+
+            // ✅ CORREÇÃO: usar outerHTML para preservar a classe ativo no elemento raiz
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = html;
+            const painel = tempDiv.querySelector('.sl-painel');
+            if (painel) {
+                painel.classList.add('ativo');
+                painel.style.display = 'block'; // força visibilidade
+                cache[tabName] = tempDiv.outerHTML; // salva o wrapper com tudo
+            } else {
+                cache[tabName] = html; // sem painel, usa o HTML direto
+            }
+
+            contentArea.innerHTML = cache[tabName];
+        } catch (error) {
+            contentArea.innerHTML = `<div class="sl-alerta">Erro: ${error.message}</div>`;
+        } finally {
+            loader.style.display = 'none';
+        }
+    }
+
+    buttons.forEach(btn => {
+        btn.addEventListener('click', () => loadTab(btn.getAttribute('data-painel')));
+    });
+
+    loadTab('historia');
+</script>
 </body>
 </html>
