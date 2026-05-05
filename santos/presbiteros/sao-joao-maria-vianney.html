@@ -82,14 +82,13 @@
             tempDiv.innerHTML = html;
             const painel = tempDiv.querySelector('.sl-painel');
             if (painel) {
-                painel.classList.add('ativo');
-                painel.style.display = 'block'; // força visibilidade
-                cache[tabName] = tempDiv.outerHTML; // salva o wrapper com tudo
-            } else {
-                cache[tabName] = html; // sem painel, usa o HTML direto
-            }
+          painel.classList.add('ativo');
+         cache[tabName] = painel.outerHTML; // ← correção aqui
+          } else {
+         cache[tabName] = html;
+         }
 
-            contentArea.innerHTML = cache[tabName];
+          contentArea.innerHTML = cache[tabName];
         } catch (error) {
             contentArea.innerHTML = `<div class="sl-alerta">Erro: ${error.message}</div>`;
         } finally {
