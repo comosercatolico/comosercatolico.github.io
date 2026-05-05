@@ -38,7 +38,7 @@
     --radius-xs:   8px;
     --radius-full: 50px;
 
-    /* Sombras — aprimoradas com camadas */
+    /* Sombras */
     --shadow:    0 2px 8px rgba(0,0,0,0.05), 0 4px 20px rgba(0,0,0,0.07);
     --shadow-md: 0 4px 12px rgba(0,0,0,0.08), 0 8px 24px rgba(0,0,0,0.12);
     --shadow-lg: 0 8px 24px rgba(0,0,0,0.10), 0 20px 48px rgba(0,0,0,0.15);
@@ -87,7 +87,6 @@
    3. COMPONENTES BASE REUTILIZÁVEIS
    ========================================= */
 
-/* 3.1 Badge genérico — com brilho sutil */
 .badge {
     background:    linear-gradient(135deg, var(--gold-pale), #fffaf0);
     color:         var(--gold);
@@ -109,7 +108,6 @@
     transform:   translateY(-1px);
 }
 
-/* 3.2 Botão primário */
 .btn-primary {
     background:    linear-gradient(135deg, var(--gold) 0%, #a07840 100%);
     color:         var(--white);
@@ -142,32 +140,59 @@
 }
 
 /* =========================================
-   4. GRID PRINCIPAL
+   4. GRID PRINCIPAL — ADAPTADO PARA GRIDVIRTUAL
+   ─────────────────────────────────────────
+   O GridVirtual define position:relative e
+   insere os cards com position:absolute.
+   O padding e max-width ficam aqui para
+   centralizar o container; a altura total
+   é controlada pelo spacer interno do JS.
    ========================================= */
 .santos-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap:        24px;
-    padding:    32px 24px 60px;
+    /* Layout base */
+    position:   relative;      /* ← obrigatório para o GridVirtual */
+    display:    block;         /* ← era grid; agora o JS posiciona tudo */
+    width:      100%;
     max-width:  1320px;
     margin:     0 auto;
+
+    /*
+     * O padding lateral cria uma calha visual.
+     * O GridVirtual leva isso em conta ao
+     * calcular left/width de cada card.
+     * Se mudar aqui, ajuste PADDING_H em gridVirtual.js também.
+     */
+    padding:    32px 24px 60px;
+
+    /* Altura mínima enquanto carrega */
+    min-height: 200px;
 }
 
 /* =========================================
-   5. CARD DO SANTO — MELHORIAS VISUAIS
+   5. CARD DO SANTO
+   ─────────────────────────────────────────
+   Os cards são inseridos com position:absolute
+   pelo GridVirtual. Removemos flex do card
+   raiz (era flex-direction:column na tag
+   <article>) — o card-inner já cuida disso.
    ========================================= */
 .santo-card {
     background:    var(--white);
     border-radius: var(--radius);
     box-shadow:    var(--shadow);
-
-    /* Borda com leve tom dourado */
     border:        1px solid rgba(139, 111, 61, 0.10);
     overflow:      hidden;
-    display:       flex;
+
+    /*
+     * position, top, left, width e height
+     * são definidos pelo GridVirtual em JS.
+     * NÃO defina position:relative aqui —
+     * isso quebraria o posicionamento absoluto.
+     */
+
+    display:        flex;
     flex-direction: column;
-    cursor:        pointer;
-    position:      relative;
+    cursor:         pointer;
 
     /* Animação de entrada */
     opacity:   0;
@@ -184,14 +209,13 @@
     transform: translateY(0);
 }
 
-/* Hover com elevação + glow dourado */
 .santo-card:hover {
     transform:    translateY(-8px);
     box-shadow:   var(--shadow-lg), var(--shadow-gold);
     border-color: rgba(139, 111, 61, 0.22);
+    z-index:      10; /* ← evita que o card elevado fique atrás dos vizinhos */
 }
 
-/* Linha decorativa dourada no topo — aparece no hover */
 .santo-card::before {
     content:    '';
     position:   absolute;
@@ -209,7 +233,6 @@
     opacity: 1;
 }
 
-/* Wrapper interno */
 .santo-card .card-inner {
     display:        flex;
     flex-direction: column;
@@ -217,7 +240,6 @@
     position:       relative;
 }
 
-/* ── Imagem ── */
 .santo-card .image-container {
     width:         calc(100% - 16px);
     height:        200px;
@@ -230,7 +252,6 @@
     flex-shrink:   0;
 }
 
-/* Gradiente sobre a imagem para legibilidade */
 .santo-card .image-container::after {
     content:  '';
     position: absolute;
@@ -257,7 +278,6 @@
     transform: scale(1.07);
 }
 
-/* ── Badges container ── */
 .santo-badge-container {
     display:         flex;
     flex-wrap:       wrap;
@@ -268,7 +288,6 @@
     z-index:         var(--z-card-content);
 }
 
-/* ── Conteúdo textual ── */
 .santo-card-content {
     padding:    12px 20px 20px;
     text-align: center;
@@ -286,25 +305,21 @@
     transition:  color 0.4s ease;
 }
 
-/* Nome muda para dourado no hover */
 .santo-card:hover h3 {
     color: var(--gold);
 }
 
-/* ── Rodapé ── */
 .card-footer {
     margin-top: 4px;
 }
 
 /* =========================================
-   5.1 BARRA DE PROGRESSO DO CARD — NOVO
+   5.1 BARRA DE PROGRESSO DO CARD
    ========================================= */
-
-/* Wrapper da barra no card principal */
 .card-progress-wrap {
-    padding:    0 20px 16px;
-    position:   relative;
-    z-index:    var(--z-card-content);
+    padding:  0 20px 16px;
+    position: relative;
+    z-index:  var(--z-card-content);
 }
 
 .card-progress-bar {
@@ -317,23 +332,22 @@
 }
 
 .card-progress-fill {
-    height:     100%;
-    background: linear-gradient(90deg, var(--gold), var(--gold-light));
+    height:        100%;
+    background:    linear-gradient(90deg, var(--gold), var(--gold-light));
     border-radius: 10px;
-    transition: width 1s var(--ease);
+    transition:    width 1s var(--ease);
 }
 
 .card-progress-label {
-    display:        flex;
-    align-items:    center;
+    display:         flex;
+    align-items:     center;
     justify-content: flex-end;
-    gap:            5px;
-    font-size:      0.68rem;
-    color:          var(--text-muted);
-    letter-spacing: 0.3px;
+    gap:             5px;
+    font-size:       0.68rem;
+    color:           var(--text-muted);
+    letter-spacing:  0.3px;
 }
 
-/* Quando concluído */
 .card-progress-fill.concluido {
     background: linear-gradient(90deg, var(--success), #6dd5a8);
 }
@@ -453,7 +467,6 @@
     padding:         0 2px;
 }
 
-/* Título com ornamento lateral */
 .historico-titulo {
     font-family:    'Libre Baskerville', serif;
     font-size:      1.05rem;
@@ -491,12 +504,11 @@
     border-color: var(--gold-border);
 }
 
-/* Scroll horizontal */
 .historico-scroll {
-    display:        flex;
-    gap:            18px;
-    overflow-x:     auto;
-    padding:        6px 2px 18px;
+    display:         flex;
+    gap:             18px;
+    overflow-x:      auto;
+    padding:         6px 2px 18px;
     scrollbar-width: thin;
     scrollbar-color: rgba(139,111,61,0.25) transparent;
 }
@@ -508,7 +520,7 @@
 }
 
 /* =========================================
-   8.1 CARD DO HISTÓRICO — MELHORADO
+   8.1 CARD DO HISTÓRICO
    ========================================= */
 .hist-card {
     flex-shrink:   0;
@@ -532,7 +544,6 @@
     border-color: rgba(139, 111, 61, 0.22);
 }
 
-/* Linha dourada no topo no hover */
 .hist-card::before {
     content:    '';
     position:   absolute;
@@ -550,12 +561,10 @@
     opacity: 1;
 }
 
-/* Borda sutil quando concluído */
 .hist-card.lido {
     border-color: rgba(76, 175, 130, 0.30);
 }
 
-/* Barra de progresso */
 .hist-progresso-barra {
     position:      absolute;
     bottom:        0;
@@ -568,11 +577,11 @@
 }
 
 .hist-progresso-barra-fill {
-    height:     100%;
-    width:       0%;
-    background:  linear-gradient(90deg, var(--gold), var(--gold-light));
+    height:        100%;
+    width:         0%;
+    background:    linear-gradient(90deg, var(--gold), var(--gold-light));
     border-radius: inherit;
-    transition:  width 1.3s var(--ease);
+    transition:    width 1.3s var(--ease);
 }
 
 .hist-card.lido .hist-progresso-barra-fill {
@@ -584,7 +593,6 @@
     display: none !important;
 }
 
-/* Imagem */
 .hist-img-wrap {
     position:      relative;
     margin:        8px;
@@ -596,7 +604,6 @@
     z-index:       var(--z-card-content);
 }
 
-/* Gradiente sobre a imagem do histórico */
 .hist-img-wrap::after {
     content:  '';
     position: absolute;
@@ -623,7 +630,6 @@
     transform: scale(1.06);
 }
 
-/* Badge LIDO — reposicionado sobre o gradiente */
 .hist-badge-lido {
     display:        none;
     position:       absolute;
@@ -645,7 +651,6 @@
     display: block;
 }
 
-/* Informações */
 .hist-info {
     padding:    10px 14px 20px;
     text-align: center;
@@ -667,7 +672,6 @@
     color: var(--gold);
 }
 
-/* Divisor ornamental entre nome e porcentagem */
 .hist-info::before {
     content:    '';
     display:    block;
@@ -678,14 +682,14 @@
 }
 
 .hist-pct {
-    font-size:      0.7rem;
-    color:          var(--text-muted);
-    margin:         0;
-    letter-spacing: 0.3px;
-    display:        flex;
-    align-items:    center;
+    font-size:       0.7rem;
+    color:           var(--text-muted);
+    margin:          0;
+    letter-spacing:  0.3px;
+    display:         flex;
+    align-items:     center;
     justify-content: center;
-    gap:            4px;
+    gap:             4px;
 }
 
 /* =========================================
@@ -723,18 +727,17 @@
     animation: fadeUp 0.35s var(--ease) both;
 }
 
-/* Header com imagem */
 .modal-header-img {
-    width:           100%;
-    min-height:      36vh;
-    background-size: cover;
+    width:               100%;
+    min-height:          36vh;
+    background-size:     cover;
     background-position: center top;
-    position:        relative;
-    flex-shrink:     0;
-    display:         flex;
-    align-items:     flex-end;
-    justify-content: center;
-    padding:         0 20px 40px;
+    position:            relative;
+    flex-shrink:         0;
+    display:             flex;
+    align-items:         flex-end;
+    justify-content:     center;
+    padding:             0 20px 40px;
 }
 
 .modal-header-img::before {
@@ -751,7 +754,6 @@
     z-index: 1;
 }
 
-/* Linha dourada — mais elegante */
 .modal-header-img::after {
     content:   '';
     position:  absolute;
@@ -777,7 +779,6 @@
     z-index:        2;
 }
 
-/* Corpo do modal */
 .modal-body-padding {
     padding:   36px 24px 80px;
     max-width: 780px;
@@ -785,7 +786,6 @@
     width:     100%;
 }
 
-/* Badge de vocação */
 .vocation-badge {
     display:        block;
     text-align:     center;
@@ -798,7 +798,6 @@
     font-family:    'Inter', sans-serif;
 }
 
-/* Contêiner da biografia */
 .biografia-container {
     font-family: 'Georgia', serif;
     line-height: 1.9;
@@ -806,26 +805,25 @@
     font-size:   1rem;
 }
 
-/* Botão fechar — spring animation */
 .close-modal {
-    position:      fixed;
-    top:           24px;
-    right:         24px;
-    width:         44px;
-    height:        44px;
-    border-radius: 50%;
-    background:    var(--white);
-    color:         var(--gold);
-    border:        1.5px solid var(--gold-border);
-    font-size:     22px;
-    cursor:        pointer;
-    box-shadow:    var(--shadow-md);
-    z-index:       var(--z-modal-controls);
-    display:       flex;
-    align-items:   center;
+    position:        fixed;
+    top:             24px;
+    right:           24px;
+    width:           44px;
+    height:          44px;
+    border-radius:   50%;
+    background:      var(--white);
+    color:           var(--gold);
+    border:          1.5px solid var(--gold-border);
+    font-size:       22px;
+    cursor:          pointer;
+    box-shadow:      var(--shadow-md);
+    z-index:         var(--z-modal-controls);
+    display:         flex;
+    align-items:     center;
     justify-content: center;
-    line-height:   1;
-    transition:    all var(--duration) var(--ease-spring);
+    line-height:     1;
+    transition:      all var(--duration) var(--ease-spring);
 }
 
 .close-modal:hover {
@@ -836,7 +834,6 @@
     box-shadow:   var(--shadow-gold);
 }
 
-/* Botão toggle de marcação */
 .toggle-highlight {
     position:      fixed;
     top:           24px;
@@ -860,7 +857,6 @@
     box-shadow:   var(--shadow-gold);
 }
 
-/* Botão Marcar como finalizado */
 .btn-finalizado {
     display:        block;
     margin:         40px auto 0;
@@ -942,15 +938,14 @@
 }
 
 .sl-intro p {
-    font-size:  15px;
-    color:      #666;
-    font-style: italic;
+    font-size:   15px;
+    color:       #666;
+    font-style:  italic;
     line-height: 1.7;
-    max-width:  480px;
-    margin:     0 auto;
+    max-width:   480px;
+    margin:      0 auto;
 }
 
-/* Navegação por abas */
 .sl-nav {
     display:         flex;
     justify-content: center;
@@ -980,10 +975,9 @@
     border-bottom: 2px solid var(--gold);
 }
 
-.sl-painel        { display: none; }
-.sl-painel.ativo  { display: block; }
+.sl-painel       { display: none; }
+.sl-painel.ativo { display: block; }
 
-/* Seção */
 .sl-secao {
     margin-bottom: 56px;
 }
@@ -1011,7 +1005,6 @@
     background: var(--border-light);
 }
 
-/* Bloco de conteúdo */
 .sl-bloco {
     margin-bottom:  40px;
     padding-bottom: 40px;
@@ -1042,7 +1035,6 @@
 
 .sl-bloco p:last-child { margin-bottom: 0; }
 
-/* Letra capitular */
 .sl-capitular {
     font-size:   3.2em;
     font-weight: bold;
@@ -1053,7 +1045,6 @@
     font-family: 'Georgia', serif;
 }
 
-/* Citação */
 .sl-citacao {
     margin:        32px 0;
     padding:       24px 32px;
@@ -1091,7 +1082,6 @@
     font-style:     normal;
 }
 
-/* Destaque */
 .sl-destaque {
     background:    linear-gradient(120deg, var(--bg-card) 0%, #f5efe3 100%);
     padding:       24px 32px;
@@ -1104,7 +1094,6 @@
     line-height:   1.85;
 }
 
-/* Card de milagre */
 .sl-milagre-card {
     background:    var(--bg-card);
     border:        1px solid var(--border-light);
@@ -1157,7 +1146,6 @@
     margin-bottom:  8px;
 }
 
-/* Seção escura */
 .sl-secao-escura {
     background:    linear-gradient(135deg, #1a1a1a 0%, #2c241b 100%);
     color:         #f5f0e8;
@@ -1174,16 +1162,15 @@
 .sl-secao-escura .sl-bloco p    { color: #e8dfd0; }
 .sl-secao-escura .sl-bloco      { border-bottom-color: rgba(255,255,255,0.07); }
 
-/* Grid de informações */
 .sl-info-grid {
-    display:        grid;
+    display:               grid;
     grid-template-columns: 1fr 1fr;
-    gap:            1px;
-    background:     var(--border-light);
-    border:         1px solid var(--border-light);
-    border-radius:  6px;
-    overflow:       hidden;
-    margin-bottom:  40px;
+    gap:                   1px;
+    background:            var(--border-light);
+    border:                1px solid var(--border-light);
+    border-radius:         6px;
+    overflow:              hidden;
+    margin-bottom:         40px;
 }
 
 .sl-info-item {
@@ -1211,7 +1198,6 @@
     line-height: 1.5;
 }
 
-/* Box de lista */
 .sl-box {
     background:    var(--white);
     border:        1px solid var(--border-light);
@@ -1254,14 +1240,13 @@
 .sl-lista li:last-child { border-bottom: none; }
 
 .sl-lista li::before {
-    content:  '❧';
-    position: absolute;
-    left:     0;
-    color:    var(--gold);
+    content:   '❧';
+    position:  absolute;
+    left:      0;
+    color:     var(--gold);
     font-size: 1em;
 }
 
-/* Linha do tempo */
 .sl-timeline {
     border-left:  2px solid var(--border-light);
     padding-left: 24px;
@@ -1302,7 +1287,6 @@
     margin-bottom:  4px;
 }
 
-/* Nota de rodapé */
 .sl-nota {
     font-size:   12px;
     color:       var(--text-light);
@@ -1311,7 +1295,6 @@
     line-height: 1.6;
 }
 
-/* Separador ornamental */
 .sl-sep {
     text-align:     center;
     margin:         48px 0;
@@ -1320,7 +1303,6 @@
     letter-spacing: 8px;
 }
 
-/* Tag inline */
 .sl-tag {
     display:        inline-block;
     font-size:      9px;
@@ -1333,7 +1315,6 @@
     margin-bottom:  12px;
 }
 
-/* Bloco de oração */
 .sl-oracao {
     background:    linear-gradient(135deg, var(--bg-card) 0%, #f5efe3 100%);
     border:        1px solid var(--border-light);
@@ -1380,9 +1361,12 @@
    ========================================= */
 @media (max-width: 768px) {
 
+    /*
+     * Em tablet, o GridVirtual detecta 2 colunas
+     * via _detectarColunas(). Não precisa mudar
+     * display aqui — só o padding e tamanhos visuais.
+     */
     .santos-grid {
-        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-        gap:     14px;
         padding: 20px 14px 40px;
     }
 
@@ -1414,8 +1398,6 @@
 @media (max-width: 480px) {
 
     .santos-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap:     12px;
         padding: 16px 12px 40px;
     }
 
