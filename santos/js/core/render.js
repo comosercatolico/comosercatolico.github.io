@@ -2,6 +2,7 @@ const appearanceObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
             entry.target.classList.add("visible");
+            _carregarConteudoCard(entry.target); // ← carrega só agora
             appearanceObserver.unobserve(entry.target);
         }
     });
@@ -76,7 +77,6 @@ async function _extrairECachearCor(slug, imgEl) {
         img.src = src;
     });
 
-    // Tenta png depois jpg
     let cor = await extrair(`imagens/santos/${slug}.png`);
     if (!cor) cor = await extrair(`imagens/santos/${slug}.jpg`);
     if (cor) localStorage.setItem(cacheKey, JSON.stringify(cor));
@@ -248,6 +248,73 @@ function _criarBadgesCategorias(categorias) {
 }
 
 // ─────────────────────────────────────────────
+//  CARREGAR CONTEÚDO DO CARD (chamado só ao entrar na viewport)
+// ─────────────────────────────────────────────
+function _carregarConteudoCard(card) {
+    // Marca como carregado para não repetir
+    if (card.dataset.carregado === '1') return;
+    card.dataset.carregado = '1';
+
+    const slug       = card.dataset.slug;
+    const progresso  = _getProgresso(slug);
+    const lido       = _getLido(slug);
+    const cor        = _getCorDominanteCache(slug);
+    const corFill    = _getCorFill(lido, progresso, cor);
+    const alturaFill = lido ? '100%' : `${progresso}%`;
+    const corNome    = (lido || progresso >= 50) ? '#ffffff' : '';
+    const modo       = card.dataset.modo || 'grid'; // 'grid' ou 'hist'
+    const nome       = card.dataset.nome;
+    const categorias = JSON.parse(card.dataset.categorias || '[]');
+
+    // ── Monta o innerHTML real agora ──────────────────────────
+    const inner = card.querySelector('.card-inner');
+
+    // Fill líquido
+    if (corFill) {
+        inner.insertAdjacentHTML('afterbegin', _criarFill(slug, corFill));
+    }
+
+    // Imagem + badges (substitui o placeholder)
+    const imgWrapper = card.querySelector('.img-wrapper');
+    imgWrapper.innerHTML = `
+        <img
+            src="${_getImgSrc(slug)}"
+            onerror="${IMG_FALLBACK_HANDLER}"
+            alt="${nome}"
+            loading="lazy"
+            style="
+                width:100%; height:100%;
+                object-fit:cover;
+                object-position:center top;
+                display:block;
+                transition:transform 0.6s ease;
+            "
+        >
+        ${_criarBadgesCategorias(categorias)}
+        ${_criarBadgeStatus(lido, progresso, slug, cor)}
+    `;
+
+    // Hover na imagem
+    const img = imgWrapper.querySelector('img');
+    card.addEventListener('mouseenter', () => img.style.transform = 'scale(1.05)');
+    card.addEventListener('mouseleave', () => img.style.transform = 'scale(1)');
+
+    // Extrai cor dominante ao carregar imagem
+    img.addEventListener('load', () => _extrairECachearCor(slug, img), { once: true });
+
+    // Barra de progresso
+    const barraSlot = card.querySelector('.barra-slot');
+    if (barraSlot) barraSlot.innerHTML = _criarMiniBarra(progresso, lido, modo);
+
+    // Cor do nome
+    const nomeEl = card.querySelector('[data-nome-slug]');
+    if (nomeEl && corNome) nomeEl.style.color = corNome;
+
+    // Animações
+    _animarElementos(card, slug, alturaFill, 80);
+}
+
+// ─────────────────────────────────────────────
 //  RENDER DO GRID PRINCIPAL
 // ─────────────────────────────────────────────
 export function renderizarGrid(lista, grid, abrirModal) {
@@ -260,15 +327,17 @@ export function renderizarGrid(lista, grid, abrirModal) {
         card.className = "santo-card";
         card.style.transitionDelay = `${(index % 15) * 30}ms`;
 
-        const slug      = _slugify(santo.nome);
-        const progresso = _getProgresso(slug);
-        const lido      = _getLido(slug);
-        const cor       = _getCorDominanteCache(slug);
-        const corFill   = _getCorFill(lido, progresso, cor);
-        const alturaFill = lido ? '100%' : `${progresso}%`;
-        const btn       = _getBtnConfig(lido, progresso);
-        const corNome   = (lido || progresso >= 50) ? '#ffffff' : '';
+        const slug = _slugify(santo.nome);
 
+        // ── Guarda os dados no dataset — conteúdo real só no observer ──
+        card.dataset.slug       = slug;
+        card.dataset.nome       = santo.nome;
+        card.dataset.categorias = JSON.stringify(santo.categorias);
+        card.dataset.modo       = 'grid';
+
+        const btn = _getBtnConfig(_getLido(slug), _getProgresso(slug));
+
+        // Esqueleto leve: só estrutura, SEM imagem, SEM fill, SEM cor
         card.innerHTML = `
             <div class="card-inner" style="
                 position:relative;
@@ -278,36 +347,19 @@ export function renderizarGrid(lista, grid, abrirModal) {
                 display:flex;
                 flex-direction:column;
             ">
-                ${corFill ? _criarFill(slug, corFill) : ''}
-
-                <!-- IMAGEM + BADGES OVERLAY -->
-                <div style="
+                <!-- placeholder da imagem -->
+                <div class="img-wrapper" style="
                     position:relative; z-index:3;
                     margin:8px 8px 0;
                     border-radius:12px;
                     overflow:hidden;
                     aspect-ratio:3/4;
                     flex-shrink:0;
+                    background:#1a1a2e;
                     box-shadow:0 4px 12px rgba(0,0,0,0.2);
-                ">
-                    <img
-                        src="${_getImgSrc(slug)}"
-                        onerror="${IMG_FALLBACK_HANDLER}"
-                        alt="${santo.nome}"
-                        loading="lazy"
-                        style="
-                            width:100%; height:100%;
-                            object-fit:cover;
-                            object-position:center top;
-                            display:block;
-                            transition:transform 0.6s ease;
-                        "
-                    >
-                    ${_criarBadgesCategorias(santo.categorias)}
-                    ${_criarBadgeStatus(lido, progresso, slug, cor)}
-                </div>
+                "></div>
 
-                <!-- CONTEÚDO -->
+                <!-- conteúdo -->
                 <div class="santo-card-content" style="
                     position:relative; z-index:3;
                     padding:10px 12px 14px;
@@ -316,14 +368,11 @@ export function renderizarGrid(lista, grid, abrirModal) {
                 ">
                     <h3
                         data-nome-slug="${slug}"
-                        style="
-                            margin:0 0 4px;
-                            transition:color 0.5s ease;
-                            ${corNome ? `color:${corNome};` : ''}
-                        "
+                        style="margin:0 0 4px; transition:color 0.5s ease;"
                     >${santo.nome}</h3>
 
-                    ${_criarMiniBarra(progresso, lido, 'grid')}
+                    <!-- barra preenchida pelo observer -->
+                    <div class="barra-slot"></div>
 
                     <div class="card-footer" style="margin-top:auto; padding-top:8px;">
                         <button class="btn-primary" aria-label="${btn.label} - ${santo.nome}">
@@ -332,25 +381,14 @@ export function renderizarGrid(lista, grid, abrirModal) {
                         </button>
                     </div>
                 </div>
-
             </div>
         `;
-
-        // Hover na imagem
-        const img = card.querySelector('img');
-        card.addEventListener('mouseenter', () => img.style.transform = 'scale(1.05)');
-        card.addEventListener('mouseleave', () => img.style.transform = 'scale(1)');
-
-        // Extrai cor dominante após imagem carregar (para próxima visita)
-        img.addEventListener('load', () => _extrairECachearCor(slug, img), { once: true });
-
-        _animarElementos(card, slug, alturaFill, 80 + (index % 15) * 30);
 
         card.querySelector(".btn-primary")
             .addEventListener("click", () => abrirModal(santo.nome));
 
         fragment.appendChild(card);
-        appearanceObserver.observe(card);
+        appearanceObserver.observe(card); // ← só carrega quando aparecer
     });
 
     grid.appendChild(fragment);
@@ -383,25 +421,24 @@ export function renderizarHistorico(baseDados, abrirModal) {
     scroll.innerHTML = '';
     const fragment = document.createDocumentFragment();
 
-    hist.forEach((nome, index) => {
+    hist.forEach((nome) => {
         const santo = baseDados.find(s => s.nome === nome);
         if (!santo) return;
 
-        const slug       = _slugify(nome);
-        const progresso  = _getProgresso(slug);
-        const lido       = _getLido(slug);
-        const cor        = _getCorDominanteCache(slug);
-        const corFill    = _getCorFill(lido, progresso, cor);
-        const alturaFill = lido ? '100%' : `${progresso}%`;
-        const corNome    = (lido || progresso >= 50) ? '#ffffff' : '';
+        const slug = _slugify(nome);
+        const lido = _getLido(slug);
 
         const card        = document.createElement('div');
         card.className    = `hist-card${lido ? ' lido' : ''}`;
-        card.dataset.slug = slug;
+        card.dataset.slug       = slug;
+        card.dataset.nome       = nome;
+        card.dataset.categorias = JSON.stringify(santo.categorias);
+        card.dataset.modo       = 'hist';
         card.setAttribute('role', 'button');
         card.setAttribute('tabindex', '0');
         card.setAttribute('aria-label', `Ver biografia de ${nome}`);
 
+        // Esqueleto leve
         card.innerHTML = `
             <div class="card-inner" style="
                 position:relative;
@@ -411,36 +448,19 @@ export function renderizarHistorico(baseDados, abrirModal) {
                 display:flex;
                 flex-direction:column;
             ">
-                ${corFill ? _criarFill(slug, corFill) : ''}
-
-                <!-- IMAGEM + BADGES OVERLAY -->
-                <div style="
+                <!-- placeholder da imagem -->
+                <div class="img-wrapper" style="
                     position:relative; z-index:3;
                     margin:8px 8px 0;
                     border-radius:12px;
                     overflow:hidden;
                     aspect-ratio:3/4;
                     flex-shrink:0;
+                    background:#1a1a2e;
                     box-shadow:0 4px 14px rgba(0,0,0,0.25);
-                ">
-                    <img
-                        src="${_getImgSrc(slug)}"
-                        onerror="${IMG_FALLBACK_HANDLER}"
-                        alt="${nome}"
-                        loading="lazy"
-                        style="
-                            width:100%; height:100%;
-                            object-fit:cover;
-                            object-position:center top;
-                            display:block;
-                            transition:transform 0.6s ease;
-                        "
-                    >
-                    ${_criarBadgesCategorias(santo.categorias)}
-                    ${_criarBadgeStatus(lido, progresso, slug, cor)}
-                </div>
+                "></div>
 
-                <!-- INFO -->
+                <!-- info -->
                 <div class="hist-info" style="
                     position:relative; z-index:3;
                     padding:10px 14px 14px;
@@ -451,27 +471,15 @@ export function renderizarHistorico(baseDados, abrirModal) {
                     <div
                         class="hist-nome"
                         data-nome-slug="${slug}"
-                        style="
-                            ${corNome ? `color:${corNome};` : ''}
-                            transition:color 0.5s ease;
-                        "
+                        style="transition:color 0.5s ease;"
                     >${nome}</div>
 
-                    ${_criarMiniBarra(progresso, lido, 'hist')}
+                    <!-- barra preenchida pelo observer -->
+                    <div class="barra-slot"></div>
                 </div>
-
             </div>
         `;
 
-        // Hover na imagem
-        const img = card.querySelector('img');
-        card.addEventListener('mouseenter', () => img.style.transform = 'scale(1.05)');
-        card.addEventListener('mouseleave', () => img.style.transform = 'scale(1)');
-
-        // Extrai cor dominante após imagem carregar
-        img.addEventListener('load', () => _extrairECachearCor(slug, img), { once: true });
-
-        // Acessibilidade
         card.addEventListener('keydown', (e) => {
             if (e.key === 'Enter' || e.key === ' ') {
                 e.preventDefault();
@@ -479,10 +487,9 @@ export function renderizarHistorico(baseDados, abrirModal) {
             }
         });
 
-        _animarElementos(card, slug, alturaFill, 80 + (index % 10) * 40);
-
         card.addEventListener('click', () => abrirModal(nome));
         fragment.appendChild(card);
+        appearanceObserver.observe(card); // ← só carrega quando aparecer
     });
 
     scroll.appendChild(fragment);
