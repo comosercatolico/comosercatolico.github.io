@@ -53,54 +53,66 @@
         </div>
     </div>
 
-    <script>
-    const contentArea = document.getElementById('content-area');
-    const loader = document.getElementById('loader');
-    const buttons = document.querySelectorAll('.sl-nav-btn');
-    const cache = {};
+<script>
+  const contentArea = document.getElementById('content-area');
+  const loader = document.getElementById('loader');
+  const buttons = document.querySelectorAll('.sl-nav-btn');
 
-    async function loadTab(tabName) {
-        buttons.forEach(btn => {
-            btn.getAttribute('data-painel') === tabName
-                ? btn.classList.add('ativo')
-                : btn.classList.remove('ativo');
-        });
+  // cache guarda o HTML bruto retornado do fetch
+  const cache = {};
 
-        if (cache[tabName]) {
-            contentArea.innerHTML = cache[tabName];
-            return;
-        }
-
-        loader.style.display = 'flex';
-        try {
-            const response = await fetch(`https://comosercatolico.github.io/santos/presbiteros/presbiteros-dados/sao-joao-maria-vianney-dados/${tabName}.html`);
-            if (!response.ok) throw new Error('Falha ao carregar aba');
-            const html = await response.text();
-
-            // ✅ CORREÇÃO: usar outerHTML para preservar a classe ativo no elemento raiz
-            const tempDiv = document.createElement('div');
-            tempDiv.innerHTML = html;
-            const painel = tempDiv.querySelector('.sl-painel');
-            if (painel) {
-          painel.classList.add('ativo');
-         cache[tabName] = painel.outerHTML; // ← correção aqui
-          } else {
-         cache[tabName] = html;
-         }
-
-          contentArea.innerHTML = cache[tabName];
-        } catch (error) {
-            contentArea.innerHTML = `<div class="sl-alerta">Erro: ${error.message}</div>`;
-        } finally {
-            loader.style.display = 'none';
-        }
-    }
-
+  async function loadTab(tabName) {
+    // marca botões como ativo
     buttons.forEach(btn => {
-        btn.addEventListener('click', () => loadTab(btn.getAttribute('data-painel')));
+      const ativo = btn.getAttribute('data-painel') === tabName;
+      btn.classList.toggle('ativo', ativo);
     });
 
-    loadTab('historia');
+    // se já carregou, reaproveita
+    if (cache[tabName]) {
+      contentArea.innerHTML = cache[tabName];
+
+      // garante que o painel visível tem ativo
+      const painel = contentArea.querySelector('.sl-painel');
+      if (painel) painel.classList.add('ativo');
+
+      return;
+    }
+
+    loader.style.display = 'flex';
+    try {
+      const response = await fetch(
+        `https://comosercatolico.github.io/santos/presbiteros/presbiteros-dados/sao-joao-maria-vianney-dados/${tabName}.html`
+      );
+      if (!response.ok) throw new Error('Falha ao carregar aba');
+
+      const html = await response.text();
+
+      // injeta primeiro o HTML retornado
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = html;
+
+      // garante que o painel recebe ativo (se existir)
+      const painel = tempDiv.querySelector('.sl-painel');
+      if (painel) painel.classList.add('ativo');
+
+      // salva o HTML já pronto para renderizar
+      cache[tabName] = tempDiv.innerHTML;
+
+      // renderiza
+      contentArea.innerHTML = cache[tabName];
+    } catch (error) {
+      contentArea.innerHTML = `<div class="sl-alerta">Erro: ${error.message}</div>`;
+    } finally {
+      loader.style.display = 'none';
+    }
+  }
+
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => loadTab(btn.getAttribute('data-painel')));
+  });
+
+  loadTab('historia');
 </script>
 </body>
 </html>
