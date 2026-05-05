@@ -94,11 +94,14 @@
       );
       if (!response.ok) throw new Error('Falha ao carregar aba');
 
-      const html = await response.text();
+     const html = await response.text();
 
-      // injeta o HTML “cru” no lugar certo
-      contentArea.innerHTML = html;
+      console.log(html);
 
+       contentArea.innerHTML = html;
+
+       console.log(contentArea.innerHTML);
+   
       // aplica ativo no(s) .sl-painel(s) que agora existem no DOM
       showPainelDoContent();
 
