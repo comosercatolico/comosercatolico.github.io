@@ -250,112 +250,294 @@ function _criarBadgesCategorias(categorias) {
 // ─────────────────────────────────────────────
 //  RENDER DO GRID PRINCIPAL
 // ─────────────────────────────────────────────
-export function renderizarGrid(lista, grid, abrirModal) {
-    if (!grid) return;
-    grid.innerHTML = "";
-    const fragment = document.createDocumentFragment();
+// ─────────────────────────────────────────────
+//  GRID VIRTUAL — renderiza só os cards visíveis
+//  Substitui renderizarGrid() em render.js
+// ─────────────────────────────────────────────
 
-    lista.forEach((santo, index) => {
-        const card     = document.createElement("article");
-        card.className = "santo-card";
-        card.style.transitionDelay = `${(index % 15) * 30}ms`;
+import {
+    _slugify,
+    _getProgresso,
+    _getLido,
+    _getCorDominanteCache,
+    _getCorFill,
+    _getBtnConfig,
+    _getImgSrc,
+    _criarFill,
+    _criarMiniBarra,
+    _criarBadgeStatus,
+    _criarBadgesCategorias,
+    _animarElementos,
+    _extrairECachearCor,
+    IMG_FALLBACK_HANDLER,
+} from "./render.js"; // todas as funções internas já existem lá
 
-        const slug      = _slugify(santo.nome);
-        const progresso = _getProgresso(slug);
-        const lido      = _getLido(slug);
-        const cor       = _getCorDominanteCache(slug);
-        const corFill   = _getCorFill(lido, progresso, cor);
-        const alturaFill = lido ? '100%' : `${progresso}%`;
-        const btn       = _getBtnConfig(lido, progresso);
-        const corNome   = (lido || progresso >= 50) ? '#ffffff' : '';
+// ─────────────────────────────────────────────
+//  CONSTANTES DE LAYOUT
+//  Ajuste conforme seu CSS atual
+// ─────────────────────────────────────────────
+const ALTURA_CARD   = 400;  // px — altura estimada de cada card
+const GAP           = 16;   // px — gap entre cards (mesmo do seu CSS)
+const MARGEM_EXTRA  = 600;  // px — quantos px fora da tela já pré-carrega
 
-        card.innerHTML = `
-            <div class="card-inner" style="
-                position:relative;
-                border-radius:var(--radius);
-                overflow:hidden;
-                height:100%;
-                display:flex;
-                flex-direction:column;
-            ">
-                ${corFill ? _criarFill(slug, corFill) : ''}
-
-                <!-- IMAGEM + BADGES OVERLAY -->
-                <div style="
-                    position:relative; z-index:3;
-                    margin:8px 8px 0;
-                    border-radius:12px;
-                    overflow:hidden;
-                    aspect-ratio:3/4;
-                    flex-shrink:0;
-                    box-shadow:0 4px 12px rgba(0,0,0,0.2);
-                ">
-                    <img
-                        src="${_getImgSrc(slug)}"
-                        onerror="${IMG_FALLBACK_HANDLER}"
-                        alt="${santo.nome}"
-                        loading="lazy"
-                        style="
-                            width:100%; height:100%;
-                            object-fit:cover;
-                            object-position:center top;
-                            display:block;
-                            transition:transform 0.6s ease;
-                        "
-                    >
-                    ${_criarBadgesCategorias(santo.categorias)}
-                    ${_criarBadgeStatus(lido, progresso, slug, cor)}
-                </div>
-
-                <!-- CONTEÚDO -->
-                <div class="santo-card-content" style="
-                    position:relative; z-index:3;
-                    padding:10px 12px 14px;
-                    display:flex; flex-direction:column;
-                    flex:1;
-                ">
-                    <h3
-                        data-nome-slug="${slug}"
-                        style="
-                            margin:0 0 4px;
-                            transition:color 0.5s ease;
-                            ${corNome ? `color:${corNome};` : ''}
-                        "
-                    >${santo.nome}</h3>
-
-                    ${_criarMiniBarra(progresso, lido, 'grid')}
-
-                    <div class="card-footer" style="margin-top:auto; padding-top:8px;">
-                        <button class="btn-primary" aria-label="${btn.label} - ${santo.nome}">
-                            <span>${btn.label}</span>
-                            <i class="fas ${btn.icon}" aria-hidden="true"></i>
-                        </button>
-                    </div>
-                </div>
-
-            </div>
-        `;
-
-        // Hover na imagem
-        const img = card.querySelector('img');
-        card.addEventListener('mouseenter', () => img.style.transform = 'scale(1.05)');
-        card.addEventListener('mouseleave', () => img.style.transform = 'scale(1)');
-
-        // Extrai cor dominante após imagem carregar (para próxima visita)
-        img.addEventListener('load', () => _extrairECachearCor(slug, img), { once: true });
-
-        _animarElementos(card, slug, alturaFill, 80 + (index % 15) * 30);
-
-        card.querySelector(".btn-primary")
-            .addEventListener("click", () => abrirModal(santo.nome));
-
-        fragment.appendChild(card);
-        appearanceObserver.observe(card);
-    });
-
-    grid.appendChild(fragment);
+// ─────────────────────────────────────────────
+//  DETECTA NÚMERO DE COLUNAS DINAMICAMENTE
+// ─────────────────────────────────────────────
+function _detectarColunas(container) {
+    const estilo = getComputedStyle(container);
+    const cols   = estilo.gridTemplateColumns;
+    // conta quantas colunas o CSS grid definiu
+    return cols === "none" ? 1 : cols.trim().split(/\s+/).length;
 }
 
+// ─────────────────────────────────────────────
+//  CRIA UM CARD COMPLETO (extrai lógica do render.js)
+// ─────────────────────────────────────────────
+function _criarCard(santo, index, abrirModal) {
+    const card      = document.createElement("article");
+    card.className  = "santo-card";
+
+    const slug      = _slugify(santo.nome);
+    const progresso = _getProgresso(slug);
+    const lido      = _getLido(slug);
+    const cor       = _getCorDominanteCache(slug);
+    const corFill   = _getCorFill(lido, progresso, cor);
+    const alturaFill= lido ? "100%" : `${progresso}%`;
+    const btn       = _getBtnConfig(lido, progresso);
+    const corNome   = (lido || progresso >= 50) ? "#ffffff" : "";
+
+    card.innerHTML = `
+        <div class="card-inner" style="
+            position:relative;
+            border-radius:var(--radius);
+            overflow:hidden;
+            height:100%;
+            display:flex;
+            flex-direction:column;
+        ">
+            ${corFill ? _criarFill(slug, corFill) : ""}
+
+            <div style="
+                position:relative; z-index:3;
+                margin:8px 8px 0;
+                border-radius:12px;
+                overflow:hidden;
+                aspect-ratio:3/4;
+                flex-shrink:0;
+                box-shadow:0 4px 12px rgba(0,0,0,0.2);
+            ">
+                <img
+                    src="${_getImgSrc(slug)}"
+                    onerror="${IMG_FALLBACK_HANDLER}"
+                    alt="${santo.nome}"
+                    loading="lazy"
+                    style="
+                        width:100%; height:100%;
+                        object-fit:cover;
+                        object-position:center top;
+                        display:block;
+                        transition:transform 0.6s ease;
+                    "
+                >
+                ${_criarBadgesCategorias(santo.categorias)}
+                ${_criarBadgeStatus(lido, progresso, slug, cor)}
+            </div>
+
+            <div class="santo-card-content" style="
+                position:relative; z-index:3;
+                padding:10px 12px 14px;
+                display:flex; flex-direction:column;
+                flex:1;
+            ">
+                <h3
+                    data-nome-slug="${slug}"
+                    style="
+                        margin:0 0 4px;
+                        transition:color 0.5s ease;
+                        ${corNome ? `color:${corNome};` : ""}
+                    "
+                >${santo.nome}</h3>
+
+                ${_criarMiniBarra(progresso, lido, "grid")}
+
+                <div class="card-footer" style="margin-top:auto; padding-top:8px;">
+                    <button class="btn-primary" aria-label="${btn.label} - ${santo.nome}">
+                        <span>${btn.label}</span>
+                        <i class="fas ${btn.icon}" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    `;
+
+    const img = card.querySelector("img");
+    card.addEventListener("mouseenter", () => (img.style.transform = "scale(1.05)"));
+    card.addEventListener("mouseleave", () => (img.style.transform = "scale(1)"));
+    img.addEventListener("load", () => _extrairECachearCor(slug, img), { once: true });
+    _animarElementos(card, slug, alturaFill, 80);
+
+    card.querySelector(".btn-primary")
+        .addEventListener("click", () => abrirModal(santo.nome));
+
+    return card;
+}
+
+// ─────────────────────────────────────────────
+//  CLASSE PRINCIPAL
+// ─────────────────────────────────────────────
+export class GridVirtual {
+    /**
+     * @param {HTMLElement} container  — o elemento #santosGrid
+     * @param {Function}    abrirModal — sua função abrirModalWrapper
+     */
+    constructor(container, abrirModal) {
+        this.container  = container;
+        this.abrirModal = abrirModal;
+        this.lista      = [];
+        this.cache      = new Map();   // index → elemento DOM do card
+        this.spacer     = null;
+        this.colunas    = 1;
+        this._scrollHandler = () => this._renderizar();
+        this._resizeHandler = () => this._onResize();
+    }
+
+    // ── Carrega (ou troca) a lista e reconstrói tudo ──
+    carregar(lista) {
+        this.lista = lista;
+        this._destruir();
+        this._construir();
+    }
+
+    // ── Monta o spacer e ouve eventos ──
+    _construir() {
+        if (this.lista.length === 0) {
+            this.container.innerHTML = "";
+            return;
+        }
+
+        this.colunas = _detectarColunas(this.container);
+
+        // O container precisa ser relative para position:absolute funcionar
+        this.container.style.position = "relative";
+        this.container.style.padding  = "0";
+
+        this.spacer = document.createElement("div");
+        this._atualizarAlturaTotal();
+        this.container.appendChild(this.spacer);
+
+        window.addEventListener("scroll", this._scrollHandler, { passive: true });
+        window.addEventListener("resize", this._resizeHandler, { passive: true });
+
+        this._renderizar();
+    }
+
+    // ── Remove tudo e limpa listeners ──
+    _destruir() {
+        window.removeEventListener("scroll", this._scrollHandler);
+        window.removeEventListener("resize", this._resizeHandler);
+        this.cache.forEach(card => card.remove());
+        this.cache.clear();
+        if (this.spacer) {
+            this.spacer.remove();
+            this.spacer = null;
+        }
+        this.container.innerHTML = "";
+    }
+
+    // ── Recalcula altura total do spacer ──
+    _atualizarAlturaTotal() {
+        const totalLinhas  = Math.ceil(this.lista.length / this.colunas);
+        const alturaTotal  = totalLinhas * (ALTURA_CARD + GAP);
+        this.spacer.style.cssText = `
+            position: relative;
+            width: 100%;
+            height: ${alturaTotal}px;
+        `;
+    }
+
+    // ── Responde ao resize: detecta mudança de colunas ──
+    _onResize() {
+        const novasColunas = _detectarColunas(this.container);
+        if (novasColunas !== this.colunas) {
+            this.colunas = novasColunas;
+            this._atualizarAlturaTotal();
+            // Reposiciona todos os cards em cache
+            this.cache.forEach((card, i) => this._posicionarCard(card, i));
+        }
+        this._renderizar();
+    }
+
+    // ── Calcula quais índices devem estar visíveis ──
+    _janela() {
+        const scrollY    = window.scrollY;
+        const viewH      = window.innerHeight;
+        const offsetTop  = this.container.getBoundingClientRect().top + scrollY;
+        const alturaLinha= ALTURA_CARD + GAP;
+
+        const primeiraLinha = Math.max(0,
+            Math.floor((scrollY - offsetTop - MARGEM_EXTRA) / alturaLinha)
+        );
+        const ultimaLinha = Math.ceil(
+            (scrollY - offsetTop + viewH + MARGEM_EXTRA) / alturaLinha
+        );
+
+        const inicio = primeiraLinha * this.colunas;
+        const fim    = Math.min(ultimaLinha * this.colunas, this.lista.length);
+        return { inicio, fim };
+    }
+
+    // ── Posiciona card no lugar certo via position:absolute ──
+    _posicionarCard(card, index) {
+        const linha  = Math.floor(index / this.colunas);
+        const coluna = index % this.colunas;
+        const largura= (100 / this.colunas);
+
+        card.style.position = "absolute";
+        card.style.top      = `${linha * (ALTURA_CARD + GAP)}px`;
+        card.style.left     = `calc(${coluna * largura}% + ${coluna > 0 ? GAP / 2 : 0}px)`;
+        card.style.width    = `calc(${largura}% - ${GAP}px)`;
+        card.style.height   = `${ALTURA_CARD}px`;
+        card.style.boxSizing= "border-box";
+    }
+
+    // ── Renderiza a janela visível ──
+    _renderizar() {
+        if (!this.spacer) return;
+        const { inicio, fim } = this._janela();
+
+        // Remove os que saíram da janela
+        this.cache.forEach((card, index) => {
+            if (index < inicio || index >= fim) {
+                card.remove();
+                this.cache.delete(index);
+            }
+        });
+
+        // Adiciona os que entraram na janela
+        for (let i = inicio; i < fim; i++) {
+            if (this.cache.has(i)) continue;
+
+            const card = _criarCard(this.lista[i], i, this.abrirModal);
+            this._posicionarCard(card, i);
+            this.spacer.appendChild(card);
+            this.cache.set(i, card);
+        }
+    }
+
+    // ── Atualiza um card já renderizado (ex: após marcar como lido) ──
+    atualizarCard(nomeSanto) {
+        const index = this.lista.findIndex(s => s.nome === nomeSanto);
+        if (index === -1) return;
+
+        const cardAntigo = this.cache.get(index);
+        if (!cardAntigo) return; // fora da janela, será recriado ao rolar
+
+        const cardNovo = _criarCard(this.lista[index], index, this.abrirModal);
+        this._posicionarCard(cardNovo, index);
+        cardAntigo.replaceWith(cardNovo);
+        this.cache.set(index, cardNovo);
+    }
+}
 // ─────────────────────────────────────────────
 //  HISTÓRICO
 // ─────────────────────────────────────────────
