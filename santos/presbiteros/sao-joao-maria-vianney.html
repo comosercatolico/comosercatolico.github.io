@@ -39,65 +39,83 @@
     margin-bottom: 30px;
   }
 
+  /* MENU EM 2 FILEIRAS DE 5 */
   .sl-lista {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    border-top: 1px solid #d9d4c7;
-    border-bottom: 1px solid #d9d4c7;
+    display: grid !important;
+    grid-template-columns: repeat(5, 1fr) !important;
+    list-style: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: none !important;
+    border-top: 1px solid #d9d4c7 !important;
+    border-bottom: 1px solid #d9d4c7 !important;
+    background: transparent !important;
   }
 
   .sl-lista li {
-    margin: 0;
-    text-align: center;
+    margin: 0 !important;
+    padding: 0 !important;
+    text-align: center !important;
+    border: none !important;
+    background: none !important;
+    list-style: none !important;
   }
 
-  /* Remove ícones/símbolos do tema */
+  /* Linha divisória entre as duas fileiras */
+  .sl-lista li:nth-child(n+6) {
+    border-top: 1px solid #d9d4c7 !important;
+  }
+
+  /* Remove ícones/símbolos do tema Jekyll */
+  .sl-lista::before,
+  .sl-lista::after,
   .sl-lista li::before,
-  .sl-lista a::before,
-  .sl-lista a span::before {
+  .sl-lista li::after,
+  .sl-lista a::before {
     content: none !important;
     display: none !important;
+    background: none !important;
   }
 
   .sl-lista li a {
-    display: block;
-    text-decoration: none;
-    color: #a8a8a0;
-    font-family: Georgia, 'Times New Roman', serif;
-    font-size: 14px;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    padding: 22px 10px;
-    position: relative;
-    transition: color 0.3s ease;
+    display: block !important;
+    text-decoration: none !important;
+    color: #a8a8a0 !important;
+    font-family: Georgia, 'Times New Roman', serif !important;
+    font-size: 13px !important;
+    letter-spacing: 3px !important;
+    text-transform: uppercase !important;
+    padding: 22px 6px !important;
+    position: relative !important;
+    transition: color 0.3s ease !important;
+    background: none !important;
+    border: none !important;
   }
 
   .sl-lista li a::after {
-    content: "";
-    position: absolute;
-    left: 50%;
-    bottom: -1px;
-    width: 0;
-    height: 2px;
-    background-color: #b8862a;
-    transition: all 0.3s ease;
-    transform: translateX(-50%);
+    content: "" !important;
+    position: absolute !important;
+    left: 50% !important;
+    bottom: -1px !important;
+    width: 0 !important;
+    height: 2px !important;
+    background-color: #b8862a !important;
+    transition: all 0.3s ease !important;
+    transform: translateX(-50%) !important;
+    display: block !important;
   }
 
   .sl-lista li a:hover {
-    color: #2b2b2b;
+    color: #2b2b2b !important;
   }
 
   .sl-lista li a:hover::after,
   .sl-lista li a.ativo::after {
-    width: 60%;
+    width: 60% !important;
   }
 
   .sl-lista li a.ativo {
-    color: #2b2b2b;
+    color: #2b2b2b !important;
   }
 
   .sl-conteudo {
@@ -109,20 +127,32 @@
 
   @media (max-width: 768px) {
     .sl-lista {
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(2, 1fr) !important;
+    }
+    .sl-lista li:nth-child(n+6) {
+      border-top: none !important;
+    }
+    .sl-lista li:nth-child(n+3) {
+      border-top: 1px solid #d9d4c7 !important;
     }
     .sl-lista li a {
-      padding: 15px 8px;
-      font-size: 11px;
-      letter-spacing: 2px;
+      padding: 15px 8px !important;
+      font-size: 11px !important;
+      letter-spacing: 2px !important;
     }
   }
 </style>
 
 
 <script>
-  // Detecta automaticamente o nome do arquivo atual e marca a aba como ativa
   (function() {
+    // Remove qualquer target="_blank" que o tema possa ter colocado
+    document.querySelectorAll('.sl-lista a').forEach(link => {
+      link.removeAttribute('target');
+      link.setAttribute('target', '_self');
+    });
+
+    // Marca a aba ativa
     const caminho = window.location.pathname;
     const arquivo = caminho.substring(caminho.lastIndexOf('/') + 1).replace('.html', '') || 'historia';
     
