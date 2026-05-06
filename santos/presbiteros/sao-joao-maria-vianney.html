@@ -67,6 +67,41 @@
 
   </ul>
 </div>  
+<style>
+  .sl-lista {
+    display: grid;
+    /* Cria 5 colunas de tamanhos iguais */
+    grid-template-columns: repeat(5, 1fr); 
+    /* Espaço entre as barras */
+    gap: 10px; 
+    /* Remove as bolinhas da lista */
+    list-style: none; 
+    padding: 0;
+  }
+
+  .sl-lista li a {
+    display: block;
+    background-color: #f0f0f0; /* Cor de fundo da barra */
+    padding: 15px 5px;
+    text-align: center;
+    text-decoration: none;
+    color: #333;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    transition: background 0.3s;
+  }
+
+  .sl-lista li a:hover {
+    background-color: #e0e0e0; /* Cor ao passar o mouse */
+  }
+
+  /* Responsividade: Se a tela for pequena (celular), vira 1 coluna */
+  @media (max-width: 600px) {
+    .sl-lista {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
 <div class="sl-painel" data-nome="confessionario">
 
   <!-- 01 · COMO A FILA COMEÇOU -->
