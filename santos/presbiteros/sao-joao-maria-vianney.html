@@ -12,7 +12,7 @@
     </li>
 
     <li>
-      <a href="santos/presbiteros/presbiteros-dados/sao-joao-maria-vianney-dados/ars.html">
+      <a href="presbiteros/presbiteros-dados/sao-joao-maria-vianney-dados/ars.html">
         <span class="sl-nome">Ars</span>
       </a>
     </li>
@@ -70,35 +70,55 @@
 <style>
   .sl-lista {
     display: grid;
-    /* Cria 5 colunas de tamanhos iguais */
-    grid-template-columns: repeat(5, 1fr); 
-    /* Espaço entre as barras */
-    gap: 10px; 
-    /* Remove as bolinhas da lista */
-    list-style: none; 
-    padding: 0;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 25px 40px;
+    list-style: none;
+    padding: 30px 0;
+    margin: 0;
+  }
+
+  .sl-lista li {
+    text-align: center;
   }
 
   .sl-lista li a {
-    display: block;
-    background-color: #f0f0f0; /* Cor de fundo da barra */
-    padding: 15px 5px;
-    text-align: center;
+    display: inline-block;
     text-decoration: none;
-    color: #333;
-    border-radius: 4px;
-    border: 1px solid #ccc;
-    transition: background 0.3s;
+    color: #2b2b2b;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 16px;
+    letter-spacing: 1px;
+    padding: 8px 4px;
+    position: relative;
+    transition: color 0.3s ease;
+  }
+
+  /* Linha dourada que aparece embaixo no hover */
+  .sl-lista li a::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    width: 0;
+    height: 1px;
+    background-color: #b8a06a; /* tom dourado igual ao do site */
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
   }
 
   .sl-lista li a:hover {
-    background-color: #e0e0e0; /* Cor ao passar o mouse */
+    color: #b8a06a;
   }
 
-  /* Responsividade: Se a tela for pequena (celular), vira 1 coluna */
-  @media (max-width: 600px) {
+  .sl-lista li a:hover::after {
+    width: 100%;
+  }
+
+  /* Responsividade */
+  @media (max-width: 768px) {
     .sl-lista {
-      grid-template-columns: 1fr;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
     }
   }
 </style>
