@@ -6,7 +6,7 @@
   <ul class="sl-lista">
     
     <li>
-      <a href="historia.html">
+      <a href="presbiteros/presbiteros-dados/sao-joao-maria-vianney-dados/historia.html" class="ativo">
         <span class="sl-nome">História</span>
       </a>
     </li>
@@ -18,19 +18,19 @@
     </li>
 
     <li>
-      <a href="confessionario.html">
+      <a href="presbiteros/presbiteros-dados/sao-joao-maria-vianney-dados/confessionario.html">
         <span class="sl-nome">O confessionário</span>
       </a>
     </li>
 
     <li>
-      <a href="combate.html">
+      <a href="presbiteros/presbiteros-dados/sao-joao-maria-vianney-dados/combate.html">
         <span class="sl-nome">Combate Espiritual</span>
       </a>
     </li>
 
     <li>
-      <a href="espiritualidade.html">
+      <a href="presbiteros/presbiteros-dados/sao-joao-maria-vianney-dados/espiritualidade.html">
         <span class="sl-nome">Espiritualidade</span>
       </a>
     </li>
@@ -42,25 +42,25 @@
     </li>
 
     <li>
-      <a href="milagres.html">
+      <a href="presbiteros/presbiteros-dados/sao-joao-maria-vianney-dados/milagres.html">
         <span class="sl-nome">Milagres</span>
       </a>
     </li>
 
     <li>
-      <a href="morte.html">
+      <a href="presbiteros/presbiteros-dados/sao-joao-maria-vianney-dados/morte.html">
         <span class="sl-nome">Morte</span>
       </a>
     </li>
 
     <li>
-      <a href="legado.html">
+      <a href="presbiteros/presbiteros-dados/sao-joao-maria-vianney-dados/legado.html">
         <span class="sl-nome">Legado</span>
       </a>
     </li>
 
     <li>
-      <a href="referencias.html">
+      <a href="presbiteros/presbiteros-dados/sao-joao-maria-vianney-dados/referencias.html">
         <span class="sl-nome">Referências</span>
       </a>
     </li>
@@ -69,56 +69,69 @@
 </div>  
 <style>
   .sl-lista {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 25px 40px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
     list-style: none;
-    padding: 30px 0;
+    padding: 0;
     margin: 0;
+    border-top: 1px solid #d9d4c7;
+    border-bottom: 1px solid #d9d4c7;
   }
 
   .sl-lista li {
-    text-align: center;
+    margin: 0;
   }
 
   .sl-lista li a {
-    display: inline-block;
+    display: block;
     text-decoration: none;
-    color: #2b2b2b;
+    color: #a8a8a0;
     font-family: Georgia, 'Times New Roman', serif;
-    font-size: 16px;
-    letter-spacing: 1px;
-    padding: 8px 4px;
+    font-size: 14px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 22px 28px;
     position: relative;
     transition: color 0.3s ease;
   }
 
-  /* Linha dourada que aparece embaixo no hover */
+  /* Traço dourado embaixo */
   .sl-lista li a::after {
     content: "";
     position: absolute;
     left: 50%;
-    bottom: 0;
+    bottom: -1px;
     width: 0;
-    height: 1px;
-    background-color: #b8a06a; /* tom dourado igual ao do site */
+    height: 2px;
+    background-color: #b8862a; /* dourado */
     transition: all 0.3s ease;
     transform: translateX(-50%);
   }
 
   .sl-lista li a:hover {
-    color: #b8a06a;
+    color: #2b2b2b;
   }
 
   .sl-lista li a:hover::after {
-    width: 100%;
+    width: 70%;
   }
 
-  /* Responsividade */
+  /* Item ativo (adicione class="ativo" no <a> da página atual) */
+  .sl-lista li a.ativo {
+    color: #2b2b2b;
+  }
+
+  .sl-lista li a.ativo::after {
+    width: 70%;
+  }
+
+  /* Responsividade no celular */
   @media (max-width: 768px) {
-    .sl-lista {
-      grid-template-columns: repeat(2, 1fr);
-      gap: 20px;
+    .sl-lista li a {
+      padding: 15px 14px;
+      font-size: 12px;
+      letter-spacing: 2px;
     }
   }
 </style>
