@@ -4,7 +4,6 @@
   </div>
 
   <ul class="sl-lista">
-    
     <li>
       <a href="presbiteros/presbiteros-dados/sao-joao-maria-vianney-dados/historia.html" class="ativo">
         <span class="sl-nome">História</span>
@@ -64,11 +63,30 @@
         <span class="sl-nome">Referências</span>
       </a>
     </li>
-
   </ul>
-</div>  
+</div>
+
 <style>
-<style>
+  .sl-wrap {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 10px 0 0;
+  }
+
+  .sl-intro {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .sl-intro p {
+    margin: 0;
+    color: #6f6758;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 15px;
+    font-style: italic;
+    letter-spacing: 0.5px;
+  }
+
   .sl-lista {
     display: flex;
     justify-content: center;
@@ -76,86 +94,87 @@
     list-style: none;
     padding: 0;
     margin: 0;
-    border-top: 1px solid #e8e3d5;
-    border-bottom: 1px solid #e8e3d5;
-    background-color: transparent;
-    font-family: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+    border-top: 1px solid #d8d1c2;
+    border-bottom: 1px solid #d8d1c2;
+    background: #faf8f3;
   }
 
   .sl-lista li {
     margin: 0;
+    list-style: none;
+  }
+
+  .sl-lista li::marker {
+    content: "";
   }
 
   .sl-lista li a {
-    display: inline-block;
+    display: block;
     text-decoration: none;
-    color: #b8b3a3;
+    color: #6e6a60;
     font-family: Georgia, 'Times New Roman', serif;
     font-size: 13px;
-    font-weight: 400;
-    letter-spacing: 4px;
+    letter-spacing: 2px;
     text-transform: uppercase;
-    padding: 28px 38px;
+    padding: 18px 22px;
     position: relative;
-    transition: color 0.4s ease;
+    transition: all 0.3s ease;
+    background: transparent;
   }
 
-  /* Traço inferior */
+  /* Remove qualquer símbolo/ícone inserido */
+  .sl-lista li a::before,
+  .sl-lista li a span::before,
+  .sl-lista li a span::after {
+    content: none !important;
+    display: none !important;
+  }
+
+  /* Linha elegante inferior */
   .sl-lista li a::after {
     content: "";
     position: absolute;
     left: 50%;
-    bottom: -1px;
+    bottom: 8px;
     width: 0;
-    height: 2px;
-    background-color: #2b2b2b; /* escuro como na imagem */
-    transition: width 0.4s ease;
+    height: 1px;
+    background-color: #b08a3c;
+    transition: width 0.3s ease;
     transform: translateX(-50%);
   }
 
-  /* Hover suave */
   .sl-lista li a:hover {
-    color: #2b2b2b;
+    color: #2f2a22;
+    background-color: #f3eee3;
   }
 
   .sl-lista li a:hover::after {
-    width: 60%;
-    background-color: #b8862a; /* dourado no hover */
+    width: 55%;
   }
 
-  /* Item ativo - traço escuro firme como na foto */
   .sl-lista li a.ativo {
-    color: #2b2b2b;
-    font-weight: 500;
+    color: #2f2a22;
+    background-color: #f5f0e5;
   }
 
   .sl-lista li a.ativo::after {
-    width: 75%;
-    height: 2px;
-    background-color: #2b2b2b;
+    width: 55%;
   }
 
-  /* Responsividade */
   @media (max-width: 768px) {
+    .sl-lista {
+      padding: 6px 0;
+    }
+
     .sl-lista li a {
-      padding: 18px 18px;
+      padding: 14px 12px;
       font-size: 11px;
-      letter-spacing: 2.5px;
+      letter-spacing: 1.5px;
+    }
+
+    .sl-intro p {
+      font-size: 14px;
+      padding: 0 10px;
     }
   }
-
-  @media (max-width: 480px) {
-    .sl-lista li a {
-      padding: 15px 12px;
-      font-size: 10px;
-      letter-spacing: 2px;
-    }
-  }
-</style>
-
-<ul class="sl-lista">
-  <li><a href="#" class="ativo">História</a></li>
-  <li><a href="#">Geral</a></li>
-  <li><a href="#">Milagres</a></li>
-</ul>
 </style>
