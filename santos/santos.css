@@ -1,6 +1,3 @@
-# CSS Completo Corrigido e Aprimorado
-
-```css
 /* =========================================
    1. VARIÁVEIS DE DESIGN (LUX FIDEI)
    ========================================= */
@@ -41,10 +38,10 @@
     --radius-xs:   8px;
     --radius-full: 50px;
 
-    /* Sombras */
-    --shadow:      0 2px 8px rgba(0,0,0,0.05), 0 4px 20px rgba(0,0,0,0.07);
-    --shadow-md:   0 4px 12px rgba(0,0,0,0.08), 0 8px 24px rgba(0,0,0,0.12);
-    --shadow-lg:   0 8px 24px rgba(0,0,0,0.10), 0 20px 48px rgba(0,0,0,0.15);
+    /* Sombras — aprimoradas com camadas */
+    --shadow:    0 2px 8px rgba(0,0,0,0.05), 0 4px 20px rgba(0,0,0,0.07);
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.08), 0 8px 24px rgba(0,0,0,0.12);
+    --shadow-lg: 0 8px 24px rgba(0,0,0,0.10), 0 20px 48px rgba(0,0,0,0.15);
     --shadow-gold: 0 8px 32px rgba(139, 111, 61, 0.18);
 
     /* Transições */
@@ -71,7 +68,6 @@
     box-sizing: border-box;
 }
 
-/* ── Neutraliza first-letter indesejado ── */
 .biografia-container p::first-letter,
 .sl-wrap p::first-letter,
 .sl-wrap .sl-milagre-card p::first-letter,
@@ -91,48 +87,48 @@
    3. COMPONENTES BASE REUTILIZÁVEIS
    ========================================= */
 
-/* 3.1 Badge genérico */
+/* 3.1 Badge genérico — com brilho sutil */
 .badge {
-    background:     linear-gradient(135deg, var(--gold-pale), #fffaf0);
-    color:          var(--gold);
-    font-size:      0.62rem;
-    font-weight:    700;
+    background:    linear-gradient(135deg, var(--gold-pale), #fffaf0);
+    color:         var(--gold);
+    font-size:     0.62rem;
+    font-weight:   700;
     text-transform: uppercase;
     letter-spacing: 0.9px;
-    padding:        4px 11px;
-    border-radius:  20px;
-    border:         1px solid var(--gold-border);
-    white-space:    nowrap;
-    box-shadow:     0 1px 4px rgba(139, 111, 61, 0.08);
-    transition:     all 0.2s var(--ease);
+    padding:       4px 11px;
+    border-radius: 20px;
+    border:        1px solid var(--gold-border);
+    white-space:   nowrap;
+    box-shadow:    0 1px 4px rgba(139, 111, 61, 0.08);
+    transition:    all 0.2s var(--ease);
 }
 
 .badge:hover {
-    background: linear-gradient(135deg, #f0e6d0, var(--gold-pale));
-    box-shadow: 0 2px 8px rgba(139, 111, 61, 0.15);
-    transform:  translateY(-1px);
+    background:  linear-gradient(135deg, #f0e6d0, var(--gold-pale));
+    box-shadow:  0 2px 8px rgba(139, 111, 61, 0.15);
+    transform:   translateY(-1px);
 }
 
 /* 3.2 Botão primário */
 .btn-primary {
-    background:      linear-gradient(135deg, var(--gold) 0%, #a07840 100%);
-    color:           var(--white);
-    border:          none;
-    padding:         12px 24px;
-    border-radius:   var(--radius-sm);
-    font-weight:     600;
-    font-size:       0.88rem;
-    cursor:          pointer;
-    width:           100%;
-    display:         flex;
-    align-items:     center;
+    background:    linear-gradient(135deg, var(--gold) 0%, #a07840 100%);
+    color:         var(--white);
+    border:        none;
+    padding:       12px 24px;
+    border-radius: var(--radius-sm);
+    font-weight:   600;
+    font-size:     0.88rem;
+    cursor:        pointer;
+    width:         100%;
+    display:       flex;
+    align-items:   center;
     justify-content: center;
-    gap:             8px;
-    letter-spacing:  0.3px;
+    gap:           8px;
+    letter-spacing: 0.3px;
     transition:
-        background var(--duration) var(--ease),
-        box-shadow var(--duration) var(--ease),
-        transform  0.2s           var(--ease);
+        background  var(--duration) var(--ease),
+        box-shadow  var(--duration) var(--ease),
+        transform   0.2s           var(--ease);
 }
 
 .btn-primary:hover {
@@ -149,27 +145,29 @@
    4. GRID PRINCIPAL
    ========================================= */
 .santos-grid {
-    display:               grid;
+    display: grid;
     grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap:                   24px;
-    padding:               32px 24px 60px;
-    max-width:             1320px;
-    margin:                0 auto;
+    gap:        24px;
+    padding:    32px 24px 60px;
+    max-width:  1320px;
+    margin:     0 auto;
 }
 
 /* =========================================
-   5. CARD DO SANTO
+   5. CARD DO SANTO — MELHORIAS VISUAIS
    ========================================= */
 .santo-card {
-    background:     var(--white);
-    border-radius:  var(--radius);
-    box-shadow:     var(--shadow);
-    border:         1px solid rgba(139, 111, 61, 0.10);
-    overflow:       hidden;
-    display:        flex;
+    background:    var(--white);
+    border-radius: var(--radius);
+    box-shadow:    var(--shadow);
+
+    /* Borda com leve tom dourado */
+    border:        1px solid rgba(139, 111, 61, 0.10);
+    overflow:      hidden;
+    display:       flex;
     flex-direction: column;
-    cursor:         pointer;
-    position:       relative;
+    cursor:        pointer;
+    position:      relative;
 
     /* Animação de entrada */
     opacity:   0;
@@ -186,13 +184,14 @@
     transform: translateY(0);
 }
 
+/* Hover com elevação + glow dourado */
 .santo-card:hover {
     transform:    translateY(-8px);
     box-shadow:   var(--shadow-lg), var(--shadow-gold);
     border-color: rgba(139, 111, 61, 0.22);
 }
 
-/* Linha decorativa dourada no topo */
+/* Linha decorativa dourada no topo — aparece no hover */
 .santo-card::before {
     content:    '';
     position:   absolute;
@@ -231,42 +230,27 @@
     flex-shrink:   0;
 }
 
-/* Gradiente sobre a imagem */
+/* Gradiente sobre a imagem para legibilidade */
 .santo-card .image-container::after {
-    content:        '';
-    position:       absolute;
-    inset:          0;
-    background:     linear-gradient(
+    content:  '';
+    position: absolute;
+    inset:    0;
+    background: linear-gradient(
         to bottom,
         transparent 45%,
         rgba(15, 10, 5, 0.45) 100%
     );
-    border-radius:  inherit;
-    z-index:        1;
+    border-radius: inherit;
+    z-index:  1;
     pointer-events: none;
 }
 
 .santo-card .image-container img {
-    width:      100%;
-    height:     100%;
-    object-fit: cover;
-    display:    block;
-    transition: transform 0.6s var(--ease);
-}
-
-/* ✅ Fallback quando imagem não carrega */
-.santo-card .image-container img[src=""],
-.santo-card .image-container img:not([src]) {
-    visibility: hidden;
-}
-
-.santo-card .image-container::before {
-    content:         '';
-    position:        absolute;
-    inset:           0;
-    background:      linear-gradient(135deg, var(--gold-pale), #e8ddd0);
-    z-index:         0;
-    border-radius:   inherit;
+    width:       100%;
+    height:      100%;
+    object-fit:  cover;
+    display:     block;
+    transition:  transform 0.6s var(--ease);
 }
 
 .santo-card:hover .image-container img {
@@ -302,6 +286,7 @@
     transition:  color 0.4s ease;
 }
 
+/* Nome muda para dourado no hover */
 .santo-card:hover h3 {
     color: var(--gold);
 }
@@ -312,12 +297,14 @@
 }
 
 /* =========================================
-   5.1 BARRA DE PROGRESSO DO CARD
+   5.1 BARRA DE PROGRESSO DO CARD — NOVO
    ========================================= */
+
+/* Wrapper da barra no card principal */
 .card-progress-wrap {
-    padding:  0 20px 16px;
-    position: relative;
-    z-index:  var(--z-card-content);
+    padding:    0 20px 16px;
+    position:   relative;
+    z-index:    var(--z-card-content);
 }
 
 .card-progress-bar {
@@ -330,22 +317,23 @@
 }
 
 .card-progress-fill {
-    height:        100%;
-    background:    linear-gradient(90deg, var(--gold), var(--gold-light));
+    height:     100%;
+    background: linear-gradient(90deg, var(--gold), var(--gold-light));
     border-radius: 10px;
-    transition:    width 1s var(--ease);
+    transition: width 1s var(--ease);
 }
 
 .card-progress-label {
-    display:         flex;
-    align-items:     center;
+    display:        flex;
+    align-items:    center;
     justify-content: flex-end;
-    gap:             5px;
-    font-size:       0.68rem;
-    color:           var(--text-muted);
-    letter-spacing:  0.3px;
+    gap:            5px;
+    font-size:      0.68rem;
+    color:          var(--text-muted);
+    letter-spacing: 0.3px;
 }
 
+/* Quando concluído */
 .card-progress-fill.concluido {
     background: linear-gradient(90deg, var(--success), #6dd5a8);
 }
@@ -465,6 +453,7 @@
     padding:         0 2px;
 }
 
+/* Título com ornamento lateral */
 .historico-titulo {
     font-family:    'Libre Baskerville', serif;
     font-size:      1.05rem;
@@ -504,10 +493,10 @@
 
 /* Scroll horizontal */
 .historico-scroll {
-    display:         flex;
-    gap:             18px;
-    overflow-x:      auto;
-    padding:         6px 2px 18px;
+    display:        flex;
+    gap:            18px;
+    overflow-x:     auto;
+    padding:        6px 2px 18px;
     scrollbar-width: thin;
     scrollbar-color: rgba(139,111,61,0.25) transparent;
 }
@@ -519,18 +508,18 @@
 }
 
 /* =========================================
-   8.1 CARD DO HISTÓRICO
+   8.1 CARD DO HISTÓRICO — MELHORADO
    ========================================= */
 .hist-card {
-    flex-shrink:    0;
-    width:          220px;
-    background:     var(--white);
-    border-radius:  var(--radius);
-    box-shadow:     var(--shadow);
-    border:         1px solid rgba(139, 111, 61, 0.10);
-    overflow:       hidden;
-    position:       relative;
-    cursor:         pointer;
+    flex-shrink:   0;
+    width:         220px;
+    background:    var(--white);
+    border-radius: var(--radius);
+    box-shadow:    var(--shadow);
+    border:        1px solid rgba(139, 111, 61, 0.10);
+    overflow:      hidden;
+    position:      relative;
+    cursor:        pointer;
     transition:
         transform    var(--duration) var(--ease-spring),
         box-shadow   var(--duration) var(--ease),
@@ -543,7 +532,7 @@
     border-color: rgba(139, 111, 61, 0.22);
 }
 
-/* Linha dourada no topo */
+/* Linha dourada no topo no hover */
 .hist-card::before {
     content:    '';
     position:   absolute;
@@ -561,6 +550,7 @@
     opacity: 1;
 }
 
+/* Borda sutil quando concluído */
 .hist-card.lido {
     border-color: rgba(76, 175, 130, 0.30);
 }
@@ -578,11 +568,11 @@
 }
 
 .hist-progresso-barra-fill {
-    height:        100%;
-    width:         0%;
-    background:    linear-gradient(90deg, var(--gold), var(--gold-light));
+    height:     100%;
+    width:       0%;
+    background:  linear-gradient(90deg, var(--gold), var(--gold-light));
     border-radius: inherit;
-    transition:    width 1.3s var(--ease);
+    transition:  width 1.3s var(--ease);
 }
 
 .hist-card.lido .hist-progresso-barra-fill {
@@ -602,35 +592,22 @@
     height:        160px;
     border-radius: var(--radius-md);
     overflow:      hidden;
-    background:    linear-gradient(135deg, var(--gold-pale), #e8ddd0);
+    background:    #e8e0d4;
     z-index:       var(--z-card-content);
-}
-
-/* ✅ Fallback visual quando imagem não carrega */
-.hist-img-wrap::before {
-    content:       '✦';
-    position:      absolute;
-    inset:         0;
-    display:       flex;
-    align-items:   center;
-    justify-content: center;
-    font-size:     2rem;
-    color:         rgba(139, 111, 61, 0.25);
-    z-index:       0;
 }
 
 /* Gradiente sobre a imagem do histórico */
 .hist-img-wrap::after {
-    content:        '';
-    position:       absolute;
-    inset:          0;
-    background:     linear-gradient(
+    content:  '';
+    position: absolute;
+    inset:    0;
+    background: linear-gradient(
         to bottom,
         transparent 40%,
         rgba(15, 10, 5, 0.40) 100%
     );
-    border-radius:  inherit;
-    z-index:        1;
+    border-radius: inherit;
+    z-index:  1;
     pointer-events: none;
 }
 
@@ -639,8 +616,6 @@
     height:     100%;
     object-fit: cover;
     display:    block;
-    position:   relative;
-    z-index:    1;
     transition: transform var(--duration-lg) var(--ease);
 }
 
@@ -648,7 +623,7 @@
     transform: scale(1.06);
 }
 
-/* Badge LIDO */
+/* Badge LIDO — reposicionado sobre o gradiente */
 .hist-badge-lido {
     display:        none;
     position:       absolute;
@@ -692,6 +667,7 @@
     color: var(--gold);
 }
 
+/* Divisor ornamental entre nome e porcentagem */
 .hist-info::before {
     content:    '';
     display:    block;
@@ -702,29 +678,29 @@
 }
 
 .hist-pct {
-    font-size:       0.7rem;
-    color:           var(--text-muted);
-    margin:          0;
-    letter-spacing:  0.3px;
-    display:         flex;
-    align-items:     center;
+    font-size:      0.7rem;
+    color:          var(--text-muted);
+    margin:         0;
+    letter-spacing: 0.3px;
+    display:        flex;
+    align-items:    center;
     justify-content: center;
-    gap:             4px;
+    gap:            4px;
 }
 
 /* =========================================
    9. MODAL — FULLSCREEN PREMIUM
    ========================================= */
 .modal-blur {
-    position:                fixed;
-    inset:                   0;
-    background:              rgba(10, 8, 5, 0.92);
-    backdrop-filter:         blur(20px);
+    position:          fixed;
+    inset:             0;
+    background:        rgba(10, 8, 5, 0.92);
+    backdrop-filter:   blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    display:                 none;
-    justify-content:         center;
-    align-items:             center;
-    z-index:                 var(--z-modal);
+    display:           none;
+    justify-content:   center;
+    align-items:       center;
+    z-index:           var(--z-modal);
 }
 
 .modal-blur.active {
@@ -732,14 +708,14 @@
 }
 
 .modal-content {
-    position:        fixed;
-    inset:           0;
-    background:      var(--bg-warm);
-    color:           var(--text);
-    overflow-y:      auto;
-    display:         flex;
-    flex-direction:  column;
-    z-index:         var(--z-modal-content);
+    position:       fixed;
+    inset:          0;
+    background:     var(--bg-warm);
+    color:          var(--text);
+    overflow-y:     auto;
+    display:        flex;
+    flex-direction: column;
+    z-index:        var(--z-modal-content);
     scroll-behavior: smooth;
 }
 
@@ -747,26 +723,18 @@
     animation: fadeUp 0.35s var(--ease) both;
 }
 
-/* ── Header com imagem ── */
+/* Header com imagem */
 .modal-header-img {
-    width:               100%;
-    min-height:          36vh;
-
-    /* ✅ Cor de fallback sempre presente */
-    background-color:    var(--gold-pale);
-    background-size:     cover;
+    width:           100%;
+    min-height:      36vh;
+    background-size: cover;
     background-position: center top;
-    background-repeat:   no-repeat;
-
-    position:            relative;
-    flex-shrink:         0;
-    display:             flex;
-    align-items:         flex-end;
-    justify-content:     center;
-    padding:             0 20px 40px;
-
-    /* ✅ Transição suave ao trocar imagem */
-    transition:          background-image 0.4s ease;
+    position:        relative;
+    flex-shrink:     0;
+    display:         flex;
+    align-items:     flex-end;
+    justify-content: center;
+    padding:         0 20px 40px;
 }
 
 .modal-header-img::before {
@@ -783,6 +751,7 @@
     z-index: 1;
 }
 
+/* Linha dourada — mais elegante */
 .modal-header-img::after {
     content:   '';
     position:  absolute;
@@ -793,21 +762,6 @@
     height:    1px;
     background: linear-gradient(90deg, transparent, var(--gold), transparent);
     z-index:   3;
-}
-
-/* ✅ Ícone placeholder quando não há imagem */
-.modal-header-img.sem-imagem {
-    background-color: var(--gold-pale);
-    background-image: none;
-}
-
-.modal-header-img.sem-imagem::before {
-    background: linear-gradient(
-        to bottom,
-        transparent 0%,
-        rgba(253,251,248,0.9) 70%,
-        rgba(253,251,248,1)   100%
-    );
 }
 
 #modalTitle {
@@ -852,26 +806,26 @@
     font-size:   1rem;
 }
 
-/* ── Botão fechar ── */
+/* Botão fechar — spring animation */
 .close-modal {
-    position:        fixed;
-    top:             24px;
-    right:           24px;
-    width:           44px;
-    height:          44px;
-    border-radius:   50%;
-    background:      var(--white);
-    color:           var(--gold);
-    border:          1.5px solid var(--gold-border);
-    font-size:       22px;
-    cursor:          pointer;
-    box-shadow:      var(--shadow-md);
-    z-index:         var(--z-modal-controls);
-    display:         flex;
-    align-items:     center;
+    position:      fixed;
+    top:           24px;
+    right:         24px;
+    width:         44px;
+    height:        44px;
+    border-radius: 50%;
+    background:    var(--white);
+    color:         var(--gold);
+    border:        1.5px solid var(--gold-border);
+    font-size:     22px;
+    cursor:        pointer;
+    box-shadow:    var(--shadow-md);
+    z-index:       var(--z-modal-controls);
+    display:       flex;
+    align-items:   center;
     justify-content: center;
-    line-height:     1;
-    transition:      all var(--duration) var(--ease-spring);
+    line-height:   1;
+    transition:    all var(--duration) var(--ease-spring);
 }
 
 .close-modal:hover {
@@ -882,7 +836,7 @@
     box-shadow:   var(--shadow-gold);
 }
 
-/* ── Toggle de marcação ── */
+/* Botão toggle de marcação */
 .toggle-highlight {
     position:      fixed;
     top:           24px;
@@ -906,14 +860,7 @@
     box-shadow:   var(--shadow-gold);
 }
 
-/* ── Modo marcação ativo — indicação visual ── */
-.toggle-highlight[aria-pressed="true"] {
-    background:   var(--gold);
-    color:        var(--white);
-    border-color: var(--gold);
-}
-
-/* ── Botão Finalizado ── */
+/* Botão Marcar como finalizado */
 .btn-finalizado {
     display:        block;
     margin:         40px auto 0;
@@ -931,10 +878,10 @@
 }
 
 .btn-finalizado:hover {
-    background: var(--success);
-    color:      var(--white);
-    box-shadow: 0 6px 20px var(--success-glow);
-    transform:  translateY(-1px);
+    background:  var(--success);
+    color:       var(--white);
+    box-shadow:  0 6px 20px var(--success-glow);
+    transform:   translateY(-1px);
 }
 
 .btn-finalizado.ativo {
@@ -995,12 +942,12 @@
 }
 
 .sl-intro p {
-    font-size:   15px;
-    color:       #666;
-    font-style:  italic;
+    font-size:  15px;
+    color:      #666;
+    font-style: italic;
     line-height: 1.7;
-    max-width:   480px;
-    margin:      0 auto;
+    max-width:  480px;
+    margin:     0 auto;
 }
 
 /* Navegação por abas */
@@ -1009,7 +956,6 @@
     justify-content: center;
     margin-bottom:   48px;
     border-bottom:   1px solid var(--border-light);
-    flex-wrap:       wrap;
 }
 
 .sl-nav-btn {
@@ -1034,8 +980,8 @@
     border-bottom: 2px solid var(--gold);
 }
 
-.sl-painel       { display: none; }
-.sl-painel.ativo { display: block; }
+.sl-painel        { display: none; }
+.sl-painel.ativo  { display: block; }
 
 /* Seção */
 .sl-secao {
@@ -1230,14 +1176,14 @@
 
 /* Grid de informações */
 .sl-info-grid {
-    display:               grid;
+    display:        grid;
     grid-template-columns: 1fr 1fr;
-    gap:                   1px;
-    background:            var(--border-light);
-    border:                1px solid var(--border-light);
-    border-radius:         6px;
-    overflow:              hidden;
-    margin-bottom:         40px;
+    gap:            1px;
+    background:     var(--border-light);
+    border:         1px solid var(--border-light);
+    border-radius:  6px;
+    overflow:       hidden;
+    margin-bottom:  40px;
 }
 
 .sl-info-item {
@@ -1308,10 +1254,10 @@
 .sl-lista li:last-child { border-bottom: none; }
 
 .sl-lista li::before {
-    content:   '❧';
-    position:  absolute;
-    left:      0;
-    color:     var(--gold);
+    content:  '❧';
+    position: absolute;
+    left:     0;
+    color:    var(--gold);
     font-size: 1em;
 }
 
@@ -1429,11 +1375,6 @@
     100% { background-position:  200% center; }
 }
 
-@keyframes skeletonPulse {
-    0%,100% { opacity: .4; }
-    50%     { opacity: .9; }
-}
-
 /* =========================================
    13. RESPONSIVO — TABLET (≤ 768px)
    ========================================= */
@@ -1457,14 +1398,14 @@
     .close-modal        { top: 16px; right: 16px; }
     .toggle-highlight   { top: 16px; right: 68px; }
 
-    .sl-secao-escura { padding: 28px 20px; }
-    .sl-oracao       { padding: 24px 20px; }
-    .sl-capitular    { font-size: 2.5em; }
-    .sl-nav-btn      { padding: 12px 14px; letter-spacing: 2px; font-size: 9px; }
-    .sl-bloco h3     { font-size: 15px; }
-    .sl-bloco p      { font-size: 14px; }
-    .sl-citacao p    { font-size: 14px; }
-    .sl-info-grid    { grid-template-columns: 1fr; }
+    .sl-secao-escura  { padding: 28px 20px; }
+    .sl-oracao        { padding: 24px 20px; }
+    .sl-capitular     { font-size: 2.5em; }
+    .sl-nav-btn       { padding: 12px 14px; letter-spacing: 2px; font-size: 9px; }
+    .sl-bloco h3      { font-size: 15px; }
+    .sl-bloco p       { font-size: 14px; }
+    .sl-citacao p     { font-size: 14px; }
+    .sl-info-grid     { grid-template-columns: 1fr; }
 }
 
 /* =========================================
@@ -1482,44 +1423,8 @@
 
     .categorias-container { gap: 7px; padding: 14px; }
     .chip                 { font-size: 0.76rem; padding: 7px 13px; }
-
-    /* ✅ Botões do modal em mobile */
-    .close-modal {
-        top:   12px;
-        right: 12px;
-        width: 38px;
-        height: 38px;
-    }
-
-    .toggle-highlight {
-        top:   12px;
-        right: 60px;
-    }
-
-    /* ✅ Abas em mobile — scroll horizontal */
-    .sl-nav {
-        flex-wrap:    nowrap;
-        overflow-x:   auto;
-        justify-content: flex-start;
-        padding:      0 8px;
-        scrollbar-width: none;
-    }
-
-    .sl-nav::-webkit-scrollbar { display: none; }
-
-    .sl-nav-btn {
-        flex-shrink: 0;
-        padding:     12px 16px;
-    }
-
-    /* ✅ Header do modal menor */
-    .modal-header-img {
-        min-height: 22vh;
-        padding:    0 16px 32px;
-    }
 }
 
 /* =========================================
    FIM DO ARQUIVO — santos.css
    ========================================= */
-```
