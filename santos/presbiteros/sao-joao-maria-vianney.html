@@ -1,403 +1,137 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="São João Maria Vianney - Pároco de Ars, confessor e padroeiro dos sacerdotes">
-  <meta name="theme-color" content="#faf8f1">
-  <title>São João Maria Vianney - Pároco de Ars</title>
-  
-  <style>
-    * {
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      margin: 0;
-      padding: 0;
-      background-color: #faf8f1;
-      font-family: Georgia, 'Times New Roman', serif;
-      color: #2b2b2b;
-      line-height: 1.6;
-    }
-
-    .sl-titulo {
-      text-align: center;
-      padding: 60px 20px 10px;
-      font-size: 48px;
-      letter-spacing: 4px;
-      font-weight: bold;
-      margin: 0;
-    }
-
-    .sl-subtitulo {
-      text-align: center;
-      color: #b8862a;
-      letter-spacing: 4px;
-      font-size: 13px;
-      text-transform: uppercase;
-      margin-bottom: 40px;
-    }
-
-    .sl-wrap {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 20px;
-    }
-
-    .sl-intro {
-      text-align: center;
-      font-style: italic;
-      color: #6e6e6e;
-      margin-bottom: 30px;
-    }
-
-    .sl-lista {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      border-top: 1px solid #d9d4c7;
-      border-bottom: 1px solid #d9d4c7;
-      gap: 0;
-    }
-
-    .sl-lista li {
-      margin: 0;
-      text-align: center;
-      border-right: 1px solid #d9d4c7;
-    }
-
-    .sl-lista li:nth-child(5n) {
-      border-right: none;
-    }
-
-    .sl-lista li:nth-child(n+6) {
-      border-top: 1px solid #d9d4c7;
-    }
-
-    .sl-lista li a {
-      display: block;
-      text-decoration: none;
-      color: #a8a8a0;
-      font-family: Georgia, 'Times New Roman', serif;
-      font-size: 13px;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      padding: 22px 6px;
-      position: relative;
-      cursor: pointer;
-      transition: color 0.3s ease;
-      outline-offset: -2px;
-    }
-
-    .sl-lista li a:focus {
-      outline: 2px solid #b8862a;
-    }
-
-    .sl-lista li a::after {
-      content: "";
-      position: absolute;
-      left: 50%;
-      bottom: -1px;
-      width: 0;
-      height: 2px;
-      background-color: #b8862a;
-      transition: all 0.3s ease;
-      transform: translateX(-50%);
-    }
-
-    .sl-lista li a:hover {
-      color: #2b2b2b;
-    }
-
-    .sl-lista li a:hover::after,
-    .sl-lista li a.ativo::after {
-      width: 60%;
-    }
-
-    .sl-lista li a.ativo {
-      color: #2b2b2b;
-    }
-
-    .sl-conteudo {
-      padding: 60px 20px;
-      line-height: 1.8;
-      font-size: 17px;
-      max-width: 800px;
-      margin: 0 auto;
-      min-height: 300px;
-      animation: fadeIn 0.4s ease;
-    }
-
-    .sl-conteudo h2 {
-      font-size: 28px;
-      letter-spacing: 2px;
-      margin-bottom: 30px;
-      margin-top: 0;
-    }
-
-    .sl-conteudo h3 {
-      font-size: 20px;
-      margin-top: 40px;
-      margin-bottom: 15px;
-    }
-
-    .sl-conteudo p {
-      margin-bottom: 20px;
-      text-align: justify;
-    }
-
-    .sl-loading {
-      text-align: center;
-      color: #a8a8a0;
-      padding: 60px;
-      font-style: italic;
-    }
-
-    .sl-error {
-      text-align: center;
-      color: #c85a54;
-      padding: 60px 20px;
-      font-style: italic;
-    }
-
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(8px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    @media (max-width: 768px) {
-      .sl-lista {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .sl-lista li {
-        border-right: 1px solid #d9d4c7;
-      }
-
-      .sl-lista li:nth-child(2n) {
-        border-right: none;
-      }
-
-      .sl-lista li:nth-child(5n) {
-        border-right: 1px solid #d9d4c7;
-      }
-
-      .sl-lista li:nth-child(n+3) {
-        border-top: 1px solid #d9d4c7;
-      }
-
-      .sl-lista li a {
-        padding: 15px 8px;
-        font-size: 11px;
-        letter-spacing: 2px;
-      }
-
-      .sl-titulo {
-        font-size: 32px;
-        padding: 40px 20px 10px;
-      }
-
-      .sl-conteudo {
-        padding: 40px 20px;
-        font-size: 16px;
-      }
-
-      .sl-conteudo h2 {
-        font-size: 24px;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .sl-titulo {
-        font-size: 24px;
-        letter-spacing: 2px;
-      }
-
-      .sl-subtitulo {
-        font-size: 11px;
-      }
-
-      .sl-lista {
-        grid-template-columns: 1fr;
-      }
-
-      .sl-lista li {
-        border-right: none;
-        border-bottom: 1px solid #d9d4c7;
-      }
-
-      .sl-lista li:last-child {
-        border-bottom: none;
-      }
-
-      .sl-lista li:nth-child(n+3) {
-        border-top: none;
-      }
-    }
-  </style>
-</head>
-
-<body>
-
-  <h1 class="sl-titulo">São João Maria Vianney</h1>
-  <p class="sl-subtitulo">Presbítero • Pastor</p>
-
-  <div class="sl-wrap">
-    <div class="sl-intro">
-      <p>Pároco de Ars, confessor e padroeiro dos sacerdotes</p>
-    </div>
-
-    <nav aria-label="Seções do conteúdo">
-      <ul class="sl-lista">
-        <li><a href="#historia" data-aba="historia" class="ativo">História</a></li>
-        <li><a href="#ars" data-aba="ars">Ars</a></li>
-        <li><a href="#confessionario" data-aba="confessionario">O confessionário</a></li>
-        <li><a href="#combate" data-aba="combate">Combate Espiritual</a></li>
-        <li><a href="#espiritualidade" data-aba="espiritualidade">Espiritualidade</a></li>
-        <li><a href="#relacoes" data-aba="relacoes">Relações</a></li>
-        <li><a href="#milagres" data-aba="milagres">Milagres</a></li>
-        <li><a href="#morte" data-aba="morte">Morte</a></li>
-        <li><a href="#legado" data-aba="legado">Legado</a></li>
-        <li><a href="#referencias" data-aba="referencias">Referências</a></li>
-      </ul>
-    </nav>
-
-    <!-- Container onde o conteúdo será carregado -->
-    <main class="sl-conteudo" id="conteudo" role="main">
-      <div class="sl-loading">Carregando...</div>
-    </main>
-
+<div class="sl-wrap">
+  <div class="sl-intro">
+    <p>Pároco de Ars, confessor e padroeiro dos sacerdotes</p>
   </div>
 
-  <script>
-    'use strict';
+  <ul class="sl-lista">
+    
+    <li>
+      <a href="presbiteros/presbiteros-dados/sao-joao-maria-vianney-dados/historia.html" class="ativo">
+        <span class="sl-nome">História</span>
+      </a>
+    </li>
 
-    const conteudo = document.getElementById('conteudo');
-    const links = document.querySelectorAll('.sl-lista a');
+    <li>
+      <a href="presbiteros/presbiteros-dados/sao-joao-maria-vianney-dados/ars.html">
+        <span class="sl-nome">Ars</span>
+      </a>
+    </li>
 
-    // Configuração de cache
-    const cache = new Map();
+    <li>
+      <a href="presbiteros/presbiteros-dados/sao-joao-maria-vianney-dados/confessionario.html">
+        <span class="sl-nome">O confessionário</span>
+      </a>
+    </li>
 
-    // Validar nome da aba para prevenir path traversal
-    function validarNomeAba(nomeAba) {
-      return /^[a-z\-]+$/.test(nomeAba) && nomeAba.length > 0 && nomeAba.length < 50;
+    <li>
+      <a href="presbiteros/presbiteros-dados/sao-joao-maria-vianney-dados/combate.html">
+        <span class="sl-nome">Combate Espiritual</span>
+      </a>
+    </li>
+
+    <li>
+      <a href="presbiteros/presbiteros-dados/sao-joao-maria-vianney-dados/espiritualidade.html">
+        <span class="sl-nome">Espiritualidade</span>
+      </a>
+    </li>
+
+    <li>
+      <a href="relacoes.html">
+        <span class="sl-nome">Relações</span>
+      </a>
+    </li>
+
+    <li>
+      <a href="presbiteros/presbiteros-dados/sao-joao-maria-vianney-dados/milagres.html">
+        <span class="sl-nome">Milagres</span>
+      </a>
+    </li>
+
+    <li>
+      <a href="presbiteros/presbiteros-dados/sao-joao-maria-vianney-dados/morte.html">
+        <span class="sl-nome">Morte</span>
+      </a>
+    </li>
+
+    <li>
+      <a href="presbiteros/presbiteros-dados/sao-joao-maria-vianney-dados/legado.html">
+        <span class="sl-nome">Legado</span>
+      </a>
+    </li>
+
+    <li>
+      <a href="presbiteros/presbiteros-dados/sao-joao-maria-vianney-dados/referencias.html">
+        <span class="sl-nome">Referências</span>
+      </a>
+    </li>
+
+  </ul>
+</div>  
+<style>
+  .sl-lista {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border-top: 1px solid #d9d4c7;
+    border-bottom: 1px solid #d9d4c7;
+  }
+
+  .sl-lista li {
+    margin: 0;
+  }
+
+  .sl-lista li a {
+    display: block;
+    text-decoration: none;
+    color: #a8a8a0;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 14px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 22px 28px;
+    position: relative;
+    transition: color 0.3s ease;
+  }
+
+  /* Traço dourado embaixo */
+  .sl-lista li a::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: -1px;
+    width: 0;
+    height: 2px;
+    background-color: #b8862a; /* dourado */
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+  }
+
+  .sl-lista li a:hover {
+    color: #2b2b2b;
+  }
+
+  .sl-lista li a:hover::after {
+    width: 70%;
+  }
+
+  /* Item ativo (adicione class="ativo" no <a> da página atual) */
+  .sl-lista li a.ativo {
+    color: #2b2b2b;
+  }
+
+  .sl-lista li a.ativo::after {
+    width: 70%;
+  }
+
+  /* Responsividade no celular */
+  @media (max-width: 768px) {
+    .sl-lista li a {
+      padding: 15px 14px;
+      font-size: 12px;
+      letter-spacing: 2px;
     }
-
-    // Função que carrega o conteúdo de um arquivo .html
-    async function carregarAba(nomeAba) {
-      // Validação
-      if (!validarNomeAba(nomeAba)) {
-        conteudo.innerHTML = '<div class="sl-error">Aba inválida.</div>';
-        return;
-      }
-
-      // Verifica cache
-      if (cache.has(nomeAba)) {
-        conteudo.innerHTML = cache.get(nomeAba);
-        reapliarAnimacao();
-        return;
-      }
-
-      conteudo.innerHTML = '<div class="sl-loading">Carregando...</div>';
-
-      try {
-        const resposta = await fetch('presbiteros-dados/sao-joao-maria-vianney-dados/' + nomeAba + '.html', {
-          method: 'GET',
-          headers: {
-            'Accept': 'text/html'
-          },
-          signal: AbortSignal.timeout(5000) // timeout de 5 segundos
-        });
-
-        if (!resposta.ok) {
-          throw new Error(`Erro HTTP: ${resposta.status}`);
-        }
-
-        const html = await resposta.text();
-
-        // Sanitizar HTML simples (remover scripts)
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(html, 'text/html');
-
-        // Remover scripts
-        const scripts = doc.querySelectorAll('script');
-        scripts.forEach(script => script.remove());
-
-        const htmlSanitizado = doc.body.innerHTML;
-        cache.set(nomeAba, htmlSanitizado);
-        conteudo.innerHTML = htmlSanitizado;
-        reapliarAnimacao();
-      } catch (erro) {
-        if (erro.name === 'AbortError') {
-          conteudo.innerHTML = '<div class="sl-error">Timeout ao carregar o conteúdo. Tente novamente.</div>';
-        } else {
-          console.error('Erro ao carregar:', erro);
-          conteudo.innerHTML = '<div class="sl-error">Não foi possível carregar o conteúdo. Verifique sua conexão.</div>';
-        }
-      }
-    }
-
-    // Reaplicar animação
-    function reapliarAnimacao() {
-      conteudo.style.animation = 'none';
-      void conteudo.offsetHeight; // força reflow
-      conteudo.style.animation = 'fadeIn 0.4s ease';
-    }
-
-    // Adiciona evento de clique nas abas
-    links.forEach(link => {
-      link.addEventListener('click', function(e) {
-        e.preventDefault();
-
-        // Atualiza visual da aba ativa
-        links.forEach(a => a.classList.remove('ativo'));
-        this.classList.add('ativo');
-
-        const aba = this.getAttribute('data-aba');
-        carregarAba(aba);
-
-        // Atualiza URL
-        history.pushState({ aba }, '', '#' + aba);
-      });
-    });
-
-    // Suporte aos botões "voltar/avançar" do navegador
-    window.addEventListener('popstate', function(e) {
-      const aba = (e.state && e.state.aba) || window.location.hash.substring(1) || 'historia';
-      ativarAba(aba);
-    });
-
-    // Função para ativar aba
-    function ativarAba(nomeAba) {
-      if (!validarNomeAba(nomeAba)) {
-        nomeAba = 'historia';
-      }
-
-      links.forEach(a => a.classList.remove('ativo'));
-      const link = document.querySelector(`.sl-lista a[data-aba="${nomeAba}"]`);
-      if (link) {
-        link.classList.add('ativo');
-        carregarAba(nomeAba);
-      }
-    }
-
-    // Carrega aba inicial
-    const abaInicial = window.location.hash.substring(1) || 'historia';
-    ativarAba(abaInicial);
-  </script>
-
-</body>
-</html>
+  }
+</style>
