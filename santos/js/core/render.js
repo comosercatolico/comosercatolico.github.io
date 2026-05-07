@@ -1,3 +1,5 @@
+import { setarImagemOtimizada, gerarPlaceholderSVG } from './imagem-loader.js';
+
 const appearanceObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -32,10 +34,6 @@ function _getLido(slug) {
     return localStorage.getItem(`lido-${slug}`) === '1';
 }
 
-function _getImgSrc(slug) {
-    return `imagens/santos/${slug}.png`;
-}
-
 // ─────────────────────────────────────────────
 //  COR DOMINANTE (cache no localStorage)
 // ─────────────────────────────────────────────
@@ -47,6 +45,9 @@ function _getCorDominanteCache(slug) {
 async function _extrairECachearCor(slug, imgEl) {
     const cacheKey = `cor-dominante-${slug}`;
     if (localStorage.getItem(cacheKey)) return;
+
+    // Skip se for placeholder
+    if (imgEl.dataset.placeholder === 'true') return;
 
     const extrair = (src) => new Promise((resolve) => {
         const img = new Image();
@@ -76,24 +77,9 @@ async function _extrairECachearCor(slug, imgEl) {
         img.src = src;
     });
 
-    // Tenta png depois jpg
-    let cor = await extrair(`imagens/santos/${slug}.png`);
-    if (!cor) cor = await extrair(`imagens/santos/${slug}.jpg`);
+    let cor = await extrair(imgEl.src);
     if (cor) localStorage.setItem(cacheKey, JSON.stringify(cor));
 }
-
-// ─────────────────────────────────────────────
-//  FALLBACK DE IMAGEM
-// ─────────────────────────────────────────────
-const IMG_FALLBACK_HANDLER = `
-    if (!this._triedJpg) {
-        this._triedJpg = true;
-        this.src = this.src.replace('.png', '.jpg');
-    } else {
-        this.onerror = null;
-        this.src = 'imagens/default.jpg';
-    }
-`.replace(/\s+/g, ' ').trim();
 
 // ─────────────────────────────────────────────
 //  FILL LÍQUIDO
@@ -250,12 +236,13 @@ function _criarBadgesCategorias(categorias) {
 // ─────────────────────────────────────────────
 //  RENDER DO GRID PRINCIPAL
 // ─────────────────────────────────────────────
-export function renderizarGrid(lista, grid, abrirModal) {
+export async function renderizarGrid(lista, grid, abrirModal) {
     if (!grid) return;
     grid.innerHTML = "";
     const fragment = document.createDocumentFragment();
 
-    lista.forEach((santo, index) => {
+    for (let index = 0; index < lista.length; index++) {
+        const santo = lista[index];
         const card     = document.createElement("article");
         card.className = "santo-card";
         card.style.transitionDelay = `${(index % 15) * 30}ms`;
@@ -291,8 +278,7 @@ export function renderizarGrid(lista, grid, abrirModal) {
                     box-shadow:0 4px 12px rgba(0,0,0,0.2);
                 ">
                     <img
-                        src="${_getImgSrc(slug)}"
-                        onerror="${IMG_FALLBACK_HANDLER}"
+                        src="imagens/loading-placeholder.svg"
                         alt="${santo.nome}"
                         loading="lazy"
                         style="
@@ -336,13 +322,17 @@ export function renderizarGrid(lista, grid, abrirModal) {
             </div>
         `;
 
-        // Hover na imagem
         const img = card.querySelector('img');
+        
+        // Carrega a imagem otimizada
+        (async () => {
+            await setarImagemOtimizada(img, slug);
+            _extrairECachearCor(slug, img);
+        })();
+
+        // Hover na imagem
         card.addEventListener('mouseenter', () => img.style.transform = 'scale(1.05)');
         card.addEventListener('mouseleave', () => img.style.transform = 'scale(1)');
-
-        // Extrai cor dominante após imagem carregar (para próxima visita)
-        img.addEventListener('load', () => _extrairECachearCor(slug, img), { once: true });
 
         _animarElementos(card, slug, alturaFill, 80 + (index % 15) * 30);
 
@@ -351,7 +341,7 @@ export function renderizarGrid(lista, grid, abrirModal) {
 
         fragment.appendChild(card);
         appearanceObserver.observe(card);
-    });
+    }
 
     grid.appendChild(fragment);
 }
@@ -367,7 +357,7 @@ export function salvarHistorico(nomeSanto) {
     localStorage.setItem('historico-santos', JSON.stringify(hist));
 }
 
-export function renderizarHistorico(baseDados, abrirModal) {
+export async function renderizarHistorico(baseDados, abrirModal) {
     const section = document.getElementById('historicoSection');
     const scroll  = document.getElementById('historicoScroll');
     const limpar  = document.getElementById('historicoLimpar');
@@ -383,9 +373,10 @@ export function renderizarHistorico(baseDados, abrirModal) {
     scroll.innerHTML = '';
     const fragment = document.createDocumentFragment();
 
-    hist.forEach((nome, index) => {
+    for (let index = 0; index < hist.length; index++) {
+        const nome = hist[index];
         const santo = baseDados.find(s => s.nome === nome);
-        if (!santo) return;
+        if (!santo) continue;
 
         const slug       = _slugify(nome);
         const progresso  = _getProgresso(slug);
@@ -424,8 +415,7 @@ export function renderizarHistorico(baseDados, abrirModal) {
                     box-shadow:0 4px 14px rgba(0,0,0,0.25);
                 ">
                     <img
-                        src="${_getImgSrc(slug)}"
-                        onerror="${IMG_FALLBACK_HANDLER}"
+                        src="imagens/loading-placeholder.svg"
                         alt="${nome}"
                         loading="lazy"
                         style="
@@ -463,13 +453,17 @@ export function renderizarHistorico(baseDados, abrirModal) {
             </div>
         `;
 
-        // Hover na imagem
         const img = card.querySelector('img');
+        
+        // Carrega a imagem otimizada
+        (async () => {
+            await setarImagemOtimizada(img, slug);
+            _extrairECachearCor(slug, img);
+        })();
+
+        // Hover na imagem
         card.addEventListener('mouseenter', () => img.style.transform = 'scale(1.05)');
         card.addEventListener('mouseleave', () => img.style.transform = 'scale(1)');
-
-        // Extrai cor dominante após imagem carregar
-        img.addEventListener('load', () => _extrairECachearCor(slug, img), { once: true });
 
         // Acessibilidade
         card.addEventListener('keydown', (e) => {
@@ -483,7 +477,7 @@ export function renderizarHistorico(baseDados, abrirModal) {
 
         card.addEventListener('click', () => abrirModal(nome));
         fragment.appendChild(card);
-    });
+    }
 
     scroll.appendChild(fragment);
 
