@@ -1,79 +1,56 @@
-document.addEventListener('DOMContentLoaded', function() {
-    const navButtons = document.querySelectorAll('.sl-nav-btn');
-    const painelContainer = document.getElementById('painel-container');
-    let painelAtualCarregado = 'historia';
+const menuHTML = `
+<div class="sl-wrap">
+  <div class="sl-intro">
+    <p>Pároco de Ars, confessor e padroeiro dos sacerdotes</p>
+  </div>
 
-    // Carrega o painel inicial (história)
-    carregarPainel('historia');
+  <ul class="sl-lista">
+    <li><a href="presbiteros/presbiteros-dados/sao-joao-maria-vianney-dados/historia.html"><span class="sl-nome">História</span></a></li>
+    <li><a href="presbiteros/presbiteros-dados/sao-joao-maria-vianney-dados/ars.html"><span class="sl-nome">Ars</span></a></li>
+    <li><a href="presbiteros/presbiteros-dados/sao-joao-maria-vianney-dados/confessionario.html"><span class="sl-nome">O confessionário</span></a></li>
+    <li><a href="presbiteros/presbiteros-dados/sao-joao-maria-vianney-dados/combate.html"><span class="sl-nome">Combate Espiritual</span></a></li>
+    <li><a href="presbiteros/presbiteros-dados/sao-joao-maria-vianney-dados/espiritualidade.html"><span class="sl-nome">Espiritualidade</span></a></li>
+    <li><a href="relacoes.html"><span class="sl-nome">Relações</span></a></li>
+    <li><a href="presbiteros/presbiteros-dados/sao-joao-maria-vianney-dados/milagres.html"><span class="sl-nome">Milagres</span></a></li>
+    <li><a href="presbiteros/presbiteros-dados/sao-joao-maria-vianney-dados/morte.html"><span class="sl-nome">Morte</span></a></li>
+    <li><a href="presbiteros/presbiteros-dados/sao-joao-maria-vianney-dados/legado.html"><span class="sl-nome">Legado</span></a></li>
+    <li><a href="presbiteros/presbiteros-dados/sao-joao-maria-vianney-dados/referencias.html"><span class="sl-nome">Referências</span></a></li>
+  </ul>
+</div>
 
-    navButtons.forEach(btn => {
-        btn.addEventListener('click', function() {
-            const targetPanel = this.dataset.painel;
-            
-            // Se for o mesmo painel, não faz nada
-            if (targetPanel === painelAtualCarregado) return;
+<style>
+  .sl-wrap { max-width: 1200px; margin: 0 auto; padding: 10px 0 0; }
+  .sl-intro { text-align: center; margin-bottom: 20px; }
+  .sl-intro p { margin: 0; color: #6f6758; font-family: Georgia, 'Times New Roman', serif; font-size: 15px; font-style: italic; letter-spacing: 0.5px; }
+  .sl-lista { display: flex; justify-content: center; flex-wrap: wrap; list-style: none; padding: 0; margin: 0; border-top: 1px solid #d8d1c2; border-bottom: 1px solid #d8d1c2; background: #faf8f3; }
+  .sl-lista li { margin: 0; list-style: none; }
+  .sl-lista li::marker { content: ""; }
+  .sl-lista li a { display: block; text-decoration: none; color: #6e6a60; font-family: Georgia, 'Times New Roman', serif; font-size: 13px; letter-spacing: 2px; text-transform: uppercase; padding: 18px 22px; position: relative; transition: all 0.3s ease; background: transparent; }
+  .sl-lista li a::before, .sl-lista li a span::before, .sl-lista li a span::after { content: none !important; display: none !important; }
+  .sl-lista li a::after { content: ""; position: absolute; left: 50%; bottom: 8px; width: 0; height: 1px; background-color: #b08a3c; transition: width 0.3s ease; transform: translateX(-50%); }
+  .sl-lista li a:hover { color: #2f2a22; background-color: #f3eee3; }
+  .sl-lista li a:hover::after { width: 55%; }
+  .sl-lista li a.ativo { color: #2f2a22; background-color: #f5f0e5; }
+  .sl-lista li a.ativo::after { width: 55%; }
+  @media (max-width: 768px) {
+    .sl-lista { padding: 6px 0; }
+    .sl-lista li a { padding: 14px 12px; font-size: 11px; letter-spacing: 1.5px; }
+    .sl-intro p { font-size: 14px; padding: 0 10px; }
+  }
+</style>
+`;
 
-            // Remove ativo de todos os botões
-            navButtons.forEach(b => b.classList.remove('ativo'));
-            
-            // Ativa o botão clicado
-            this.classList.add('ativo');
+// Insere o menu na div com id "menu-container"
+document.write(menuHTML);
 
-            // Carrega o painel
-            carregarPainel(targetPanel);
-            painelAtualCarregado = targetPanel;
-        });
-    });
+// Lógica para marcar a aba ativa automaticamente
+document.addEventListener("DOMContentLoaded", function() {
+    let links = document.querySelectorAll('.sl-lista a');
+    let urlAtual = window.location.href;
 
-    function carregarPainel(nomePainel) {
-        const painel = document.querySelector(`.sl-painel[data-nome="${nomePainel}"]`);
-        
-        // Se já existe na DOM, apenas mostra
-        if (painel && painel.innerHTML.trim() !== '<p style="text-align: center; padding: 2rem; color: #666;">Carregando...</p>') {
-            painel.classList.add('ativo');
-            document.querySelectorAll('.sl-painel').forEach(p => {
-                if (p !== painel) p.classList.remove('ativo');
-            });
-            return;
+    links.forEach(link => {
+        if (urlAtual.includes(link.getAttribute('href'))) {
+            link.classList.add('ativo');
         }
-
-        // Fetch do arquivo HTML
-        fetch(`paineis/${nomePainel}.html`)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`Erro ao carregar ${nomePainel}.html`);
-                }
-                return response.text();
-            })
-            .then(html => {
-                // Limpa o container e insere o novo conteúdo
-                painelContainer.innerHTML = `<div class="sl-painel ativo" data-nome="${nomePainel}">${html}</div>`;
-                
-                // Re-vincula os botões em caso de necessidade
-                revincularbotoes();
-            })
-            .catch(error => {
-                console.error('Erro ao carregar painel:', error);
-                painelContainer.innerHTML = `<div class="sl-painel ativo" data-nome="${nomePainel}"><p style="color: red; padding: 2rem;">Erro ao carregar conteúdo.</p></div>`;
-            });
-    }
-
-    function revincularbotoes() {
-        // Reconecta os botões de navegação após mudança de conteúdo
-        const botoesAtualizados = document.querySelectorAll('.sl-nav-btn');
-        botoesAtualizados.forEach(btn => {
-            btn.removeEventListener('click', null);
-            btn.addEventListener('click', function() {
-                const targetPanel = this.dataset.painel;
-                
-                if (targetPanel === painelAtualCarregado) return;
-
-                botoesAtualizados.forEach(b => b.classList.remove('ativo'));
-                this.classList.add('ativo');
-
-                carregarPainel(targetPanel);
-                painelAtualCarregado = targetPanel;
-            });
-        });
-    }
+    });
 });
