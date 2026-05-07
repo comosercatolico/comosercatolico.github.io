@@ -46,8 +46,8 @@ async function _extrairECachearCor(slug, imgEl) {
     const cacheKey = `cor-dominante-${slug}`;
     if (localStorage.getItem(cacheKey)) return;
 
-    // Skip se for placeholder
-    if (imgEl.dataset.placeholder === 'true') return;
+    // Skip se for placeholder SVG
+    if (imgEl.src.includes('data:image/svg')) return;
 
     const extrair = (src) => new Promise((resolve) => {
         const img = new Image();
@@ -278,7 +278,7 @@ export async function renderizarGrid(lista, grid, abrirModal) {
                     box-shadow:0 4px 12px rgba(0,0,0,0.2);
                 ">
                     <img
-                        src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 300'%3E%3Crect fill='%23e8e0d4' width='200' height='300'/%3E%3C/svg%3E"
+                        src="#"
                         alt="${santo.nome}"
                         loading="lazy"
                         style="
@@ -287,6 +287,7 @@ export async function renderizarGrid(lista, grid, abrirModal) {
                             object-position:center top;
                             display:block;
                             transition:transform 0.6s ease;
+                            background:#e8e0d4;
                         "
                     >
                     ${_criarBadgesCategorias(santo.categorias)}
@@ -324,11 +325,9 @@ export async function renderizarGrid(lista, grid, abrirModal) {
 
         const img = card.querySelector('img');
         
-        // Carrega a imagem otimizada (async, sem bloquear)
-        (async () => {
-            await setarImagemOtimizada(img, slug);
-            _extrairECachearCor(slug, img);
-        })();
+        // CARREGA A IMAGEM UMA ÚNICA VEZ
+        setarImagemOtimizada(img, slug);
+        _extrairECachearCor(slug, img);
 
         // Hover na imagem
         card.addEventListener('mouseenter', () => img.style.transform = 'scale(1.05)');
@@ -415,7 +414,7 @@ export async function renderizarHistorico(baseDados, abrirModal) {
                     box-shadow:0 4px 14px rgba(0,0,0,0.25);
                 ">
                     <img
-                        src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 300'%3E%3Crect fill='%23e8e0d4' width='200' height='300'/%3E%3C/svg%3E"
+                        src="#"
                         alt="${nome}"
                         loading="lazy"
                         style="
@@ -424,6 +423,7 @@ export async function renderizarHistorico(baseDados, abrirModal) {
                             object-position:center top;
                             display:block;
                             transition:transform 0.6s ease;
+                            background:#e8e0d4;
                         "
                     >
                     ${_criarBadgesCategorias(santo.categorias)}
@@ -455,11 +455,9 @@ export async function renderizarHistorico(baseDados, abrirModal) {
 
         const img = card.querySelector('img');
         
-        // Carrega a imagem otimizada (async, sem bloquear)
-        (async () => {
-            await setarImagemOtimizada(img, slug);
-            _extrairECachearCor(slug, img);
-        })();
+        // CARREGA A IMAGEM UMA ÚNICA VEZ
+        setarImagemOtimizada(img, slug);
+        _extrairECachearCor(slug, img);
 
         // Hover na imagem
         card.addEventListener('mouseenter', () => img.style.transform = 'scale(1.05)');
