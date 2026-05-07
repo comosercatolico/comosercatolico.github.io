@@ -41,8 +41,8 @@ function abrirModalWrapper(nome) {
 /* =========================
       INICIALIZAÇÃO
 ========================= */
-document.addEventListener("DOMContentLoaded", async () => {
-    // 🔥 Precarrega imagens em background (sem bloquear)
+document.addEventListener("DOMContentLoaded", () => {
+    // 🔥 Precarrega imagens em background (sem erros 404)
     precarregarImagens(baseDados);
 
     // 🔥 Cria modal
@@ -75,6 +75,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     // 🔥 Contador inicial
     atualizarContador(baseDados.length);
 
-    // 🔥 Log de sucesso (pode remover depois)
+    // 🔥 Log de sucesso
     console.log(`✅ Lux Fidei carregado | ${baseDados.length} santos disponíveis`);
 });
