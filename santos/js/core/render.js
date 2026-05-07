@@ -45,6 +45,9 @@ function _getCorDominanteCache(slug) {
 }
 
 async function _extrairECachearCor(slug, imgEl) {
+    // Se a imagem for a default, não extraímos cor para não poluir o cache
+    if (imgEl.src.includes('default.jpg')) return;
+
     const cacheKey = `cor-dominante-${slug}`;
     if (localStorage.getItem(cacheKey)) return;
 
@@ -76,9 +79,8 @@ async function _extrairECachearCor(slug, imgEl) {
         img.src = src;
     });
 
-    // Tenta png depois jpg
-    let cor = await extrair(`imagens/santos/${slug}.png`);
-    if (!cor) cor = await extrair(`imagens/santos/${slug}.jpg`);
+    // Só tenta extrair se a imagem carregou com sucesso
+    let cor = await extrair(imgEl.src);
     if (cor) localStorage.setItem(cacheKey, JSON.stringify(cor));
 }
 
@@ -421,7 +423,7 @@ export function renderizarHistorico(baseDados, abrirModal) {
                     overflow:hidden;
                     aspect-ratio:3/4;
                     flex-shrink:0;
-                    box-shadow:0 4px 14px rgba(0,0,0,0.25);
+                    box-shadow:0 4px 14 rgba(0,0,0,0.25);
                 ">
                     <img
                         src="${_getImgSrc(slug)}"
