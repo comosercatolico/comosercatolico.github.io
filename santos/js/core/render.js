@@ -1,5 +1,3 @@
-import { setarImagemOtimizada } from "../utils/imagem-loader.js";
-
 const appearanceObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -34,6 +32,10 @@ function _getLido(slug) {
     return localStorage.getItem(`lido-${slug}`) === '1';
 }
 
+function _getImgSrc(slug) {
+    return `imagens/santos/${slug}.png`;
+}
+
 // ─────────────────────────────────────────────
 //  COR DOMINANTE (cache no localStorage)
 // ─────────────────────────────────────────────
@@ -41,6 +43,57 @@ function _getCorDominanteCache(slug) {
     const cached = localStorage.getItem(`cor-dominante-${slug}`);
     return cached ? JSON.parse(cached) : null;
 }
+
+async function _extrairECachearCor(slug, imgEl) {
+    const cacheKey = `cor-dominante-${slug}`;
+    if (localStorage.getItem(cacheKey)) return;
+
+    const extrair = (src) => new Promise((resolve) => {
+        const img = new Image();
+        img.crossOrigin = 'anonymous';
+        img.onload = () => {
+            try {
+                const canvas = document.createElement('canvas');
+                canvas.width = 50; canvas.height = 50;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0, 50, 50);
+                const data = ctx.getImageData(0, 0, 50, 50).data;
+                let r = 0, g = 0, b = 0, count = 0;
+                for (let i = 0; i < data.length; i += 16) {
+                    r += data[i]; g += data[i+1]; b += data[i+2]; count++;
+                }
+                r = Math.round(r/count);
+                g = Math.round(g/count);
+                b = Math.round(b/count);
+                const esc = (v) => Math.max(0, v - 50);
+                resolve({
+                    fill:  `linear-gradient(180deg,rgba(${r},${g},${b},0.88) 0%,rgba(${esc(r)},${esc(g)},${esc(b)},0.98) 100%)`,
+                    badge: `rgba(${r},${g},${b},0.92)`
+                });
+            } catch { resolve(null); }
+        };
+        img.onerror = () => resolve(null);
+        img.src = src;
+    });
+
+    // Tenta png depois jpg
+    let cor = await extrair(`imagens/santos/${slug}.png`);
+    if (!cor) cor = await extrair(`imagens/santos/${slug}.jpg`);
+    if (cor) localStorage.setItem(cacheKey, JSON.stringify(cor));
+}
+
+// ─────────────────────────────────────────────
+//  FALLBACK DE IMAGEM
+// ─────────────────────────────────────────────
+const IMG_FALLBACK_HANDLER = `
+    if (!this._triedJpg) {
+        this._triedJpg = true;
+        this.src = this.src.replace('.png', '.jpg');
+    } else {
+        this.onerror = null;
+        this.src = 'imagens/default.jpg';
+    }
+`.replace(/\s+/g, ' ').trim();
 
 // ─────────────────────────────────────────────
 //  FILL LÍQUIDO
@@ -202,8 +255,7 @@ export function renderizarGrid(lista, grid, abrirModal) {
     grid.innerHTML = "";
     const fragment = document.createDocumentFragment();
 
-    for (let index = 0; index < lista.length; index++) {
-        const santo = lista[index];
+    lista.forEach((santo, index) => {
         const card     = document.createElement("article");
         card.className = "santo-card";
         card.style.transitionDelay = `${(index % 15) * 30}ms`;
@@ -239,7 +291,10 @@ export function renderizarGrid(lista, grid, abrirModal) {
                     box-shadow:0 4px 12px rgba(0,0,0,0.2);
                 ">
                     <img
+                        src="${_getImgSrc(slug)}"
+                        onerror="${IMG_FALLBACK_HANDLER}"
                         alt="${santo.nome}"
+                        loading="lazy"
                         style="
                             width:100%; height:100%;
                             object-fit:cover;
@@ -281,14 +336,13 @@ export function renderizarGrid(lista, grid, abrirModal) {
             </div>
         `;
 
-        const img = card.querySelector('img');
-        
-        // CARREGA O PLACEHOLDER (sem tentar outras extensões)
-        setarImagemOtimizada(img, slug);
-
         // Hover na imagem
+        const img = card.querySelector('img');
         card.addEventListener('mouseenter', () => img.style.transform = 'scale(1.05)');
         card.addEventListener('mouseleave', () => img.style.transform = 'scale(1)');
+
+        // Extrai cor dominante após imagem carregar (para próxima visita)
+        img.addEventListener('load', () => _extrairECachearCor(slug, img), { once: true });
 
         _animarElementos(card, slug, alturaFill, 80 + (index % 15) * 30);
 
@@ -297,7 +351,7 @@ export function renderizarGrid(lista, grid, abrirModal) {
 
         fragment.appendChild(card);
         appearanceObserver.observe(card);
-    }
+    });
 
     grid.appendChild(fragment);
 }
@@ -329,10 +383,9 @@ export function renderizarHistorico(baseDados, abrirModal) {
     scroll.innerHTML = '';
     const fragment = document.createDocumentFragment();
 
-    for (let index = 0; index < hist.length; index++) {
-        const nome = hist[index];
+    hist.forEach((nome, index) => {
         const santo = baseDados.find(s => s.nome === nome);
-        if (!santo) continue;
+        if (!santo) return;
 
         const slug       = _slugify(nome);
         const progresso  = _getProgresso(slug);
@@ -371,7 +424,10 @@ export function renderizarHistorico(baseDados, abrirModal) {
                     box-shadow:0 4px 14px rgba(0,0,0,0.25);
                 ">
                     <img
+                        src="${_getImgSrc(slug)}"
+                        onerror="${IMG_FALLBACK_HANDLER}"
                         alt="${nome}"
+                        loading="lazy"
                         style="
                             width:100%; height:100%;
                             object-fit:cover;
@@ -407,14 +463,13 @@ export function renderizarHistorico(baseDados, abrirModal) {
             </div>
         `;
 
-        const img = card.querySelector('img');
-        
-        // CARREGA O PLACEHOLDER (sem tentar outras extensões)
-        setarImagemOtimizada(img, slug);
-
         // Hover na imagem
+        const img = card.querySelector('img');
         card.addEventListener('mouseenter', () => img.style.transform = 'scale(1.05)');
         card.addEventListener('mouseleave', () => img.style.transform = 'scale(1)');
+
+        // Extrai cor dominante após imagem carregar
+        img.addEventListener('load', () => _extrairECachearCor(slug, img), { once: true });
 
         // Acessibilidade
         card.addEventListener('keydown', (e) => {
@@ -428,7 +483,7 @@ export function renderizarHistorico(baseDados, abrirModal) {
 
         card.addEventListener('click', () => abrirModal(nome));
         fragment.appendChild(card);
-    }
+    });
 
     scroll.appendChild(fragment);
 
