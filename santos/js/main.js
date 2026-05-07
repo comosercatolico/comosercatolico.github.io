@@ -5,7 +5,6 @@ import { renderizarGrid, salvarHistorico, renderizarHistorico } from "./core/ren
 import { iniciarPesquisa, inicializarCategorias } from "./core/filtros.js";
 import { criarModal, abrirModal, eventosModal } from "./core/modal.js";
 import { listaSantos } from "./dados/santos.js";
-import { precarregarImagens } from "./utils/imagem-loader.js";
 
 /* =========================
       ELEMENTOS DOM
@@ -42,9 +41,6 @@ function abrirModalWrapper(nome) {
       INICIALIZAÇÃO
 ========================= */
 document.addEventListener("DOMContentLoaded", () => {
-    // 🔥 Precarrega imagens em background (sem erros 404)
-    precarregarImagens(baseDados);
-
     // 🔥 Cria modal
     criarModal(baseDados);
 
