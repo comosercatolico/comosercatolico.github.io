@@ -42,45 +42,6 @@ function _getCorDominanteCache(slug) {
     return cached ? JSON.parse(cached) : null;
 }
 
-async function _extrairECachearCor(slug, imgEl) {
-    const cacheKey = `cor-dominante-${slug}`;
-    if (localStorage.getItem(cacheKey)) return;
-
-    // Skip se for placeholder SVG
-    if (imgEl.src.includes('data:image/svg')) return;
-
-    const extrair = (src) => new Promise((resolve) => {
-        const img = new Image();
-        img.crossOrigin = 'anonymous';
-        img.onload = () => {
-            try {
-                const canvas = document.createElement('canvas');
-                canvas.width = 50; canvas.height = 50;
-                const ctx = canvas.getContext('2d');
-                ctx.drawImage(img, 0, 0, 50, 50);
-                const data = ctx.getImageData(0, 0, 50, 50).data;
-                let r = 0, g = 0, b = 0, count = 0;
-                for (let i = 0; i < data.length; i += 16) {
-                    r += data[i]; g += data[i+1]; b += data[i+2]; count++;
-                }
-                r = Math.round(r/count);
-                g = Math.round(g/count);
-                b = Math.round(b/count);
-                const esc = (v) => Math.max(0, v - 50);
-                resolve({
-                    fill:  `linear-gradient(180deg,rgba(${r},${g},${b},0.88) 0%,rgba(${esc(r)},${esc(g)},${esc(b)},0.98) 100%)`,
-                    badge: `rgba(${r},${g},${b},0.92)`
-                });
-            } catch { resolve(null); }
-        };
-        img.onerror = () => resolve(null);
-        img.src = src;
-    });
-
-    let cor = await extrair(imgEl.src);
-    if (cor) localStorage.setItem(cacheKey, JSON.stringify(cor));
-}
-
 // ─────────────────────────────────────────────
 //  FILL LÍQUIDO
 // ─────────────────────────────────────────────
@@ -236,7 +197,7 @@ function _criarBadgesCategorias(categorias) {
 // ─────────────────────────────────────────────
 //  RENDER DO GRID PRINCIPAL
 // ─────────────────────────────────────────────
-export async function renderizarGrid(lista, grid, abrirModal) {
+export function renderizarGrid(lista, grid, abrirModal) {
     if (!grid) return;
     grid.innerHTML = "";
     const fragment = document.createDocumentFragment();
@@ -278,16 +239,13 @@ export async function renderizarGrid(lista, grid, abrirModal) {
                     box-shadow:0 4px 12px rgba(0,0,0,0.2);
                 ">
                     <img
-                        src="#"
                         alt="${santo.nome}"
-                        loading="lazy"
                         style="
                             width:100%; height:100%;
                             object-fit:cover;
                             object-position:center top;
                             display:block;
                             transition:transform 0.6s ease;
-                            background:#e8e0d4;
                         "
                     >
                     ${_criarBadgesCategorias(santo.categorias)}
@@ -325,9 +283,8 @@ export async function renderizarGrid(lista, grid, abrirModal) {
 
         const img = card.querySelector('img');
         
-        // CARREGA A IMAGEM UMA ÚNICA VEZ
+        // CARREGA O PLACEHOLDER (sem tentar outras extensões)
         setarImagemOtimizada(img, slug);
-        _extrairECachearCor(slug, img);
 
         // Hover na imagem
         card.addEventListener('mouseenter', () => img.style.transform = 'scale(1.05)');
@@ -356,7 +313,7 @@ export function salvarHistorico(nomeSanto) {
     localStorage.setItem('historico-santos', JSON.stringify(hist));
 }
 
-export async function renderizarHistorico(baseDados, abrirModal) {
+export function renderizarHistorico(baseDados, abrirModal) {
     const section = document.getElementById('historicoSection');
     const scroll  = document.getElementById('historicoScroll');
     const limpar  = document.getElementById('historicoLimpar');
@@ -414,16 +371,13 @@ export async function renderizarHistorico(baseDados, abrirModal) {
                     box-shadow:0 4px 14px rgba(0,0,0,0.25);
                 ">
                     <img
-                        src="#"
                         alt="${nome}"
-                        loading="lazy"
                         style="
                             width:100%; height:100%;
                             object-fit:cover;
                             object-position:center top;
                             display:block;
                             transition:transform 0.6s ease;
-                            background:#e8e0d4;
                         "
                     >
                     ${_criarBadgesCategorias(santo.categorias)}
@@ -455,9 +409,8 @@ export async function renderizarHistorico(baseDados, abrirModal) {
 
         const img = card.querySelector('img');
         
-        // CARREGA A IMAGEM UMA ÚNICA VEZ
+        // CARREGA O PLACEHOLDER (sem tentar outras extensões)
         setarImagemOtimizada(img, slug);
-        _extrairECachearCor(slug, img);
 
         // Hover na imagem
         card.addEventListener('mouseenter', () => img.style.transform = 'scale(1.05)');
