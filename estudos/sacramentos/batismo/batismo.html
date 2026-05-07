@@ -1,0 +1,2122 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>O Batismo – Estudo Completo – Lux Fidei</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;600&family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================
+   RESET & BASE
+   ============================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --azul-escuro:   #0a1628;
+  --azul-medio:    #1a2f5e;
+  --azul-real:     #1e3a8a;
+  --dourado:       #c9a84c;
+  --dourado-claro: #e8c97a;
+  --dourado-pale:  #f5e6c0;
+  --branco:        #ffffff;
+  --cinza-claro:   #f8f6f2;
+  --cinza-texto:   #4a4a5a;
+  --vermelho-card: #7c1f1f;
+  --roxo-card:     #3d1a6e;
+  --verde-card:    #1a4a2e;
+  --sombra:        0 4px 24px rgba(0,0,0,0.18);
+  --sombra-forte:  0 8px 40px rgba(0,0,0,0.28);
+  --borda-dourada: 2px solid var(--dourado);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--cinza-claro);
+  color: var(--cinza-texto);
+  line-height: 1.8;
+  font-size: 16px;
+}
+
+/* ============================================
+   SIDEBAR
+   ============================================ */
+.sidebar {
+  position: fixed;
+  top: 0; left: -280px;
+  width: 280px; height: 100vh;
+  background: var(--azul-escuro);
+  z-index: 1000;
+  transition: left 0.35s ease;
+  display: flex;
+  flex-direction: column;
+  padding: 2rem 1.5rem;
+  gap: 0.5rem;
+  box-shadow: var(--sombra-forte);
+}
+.sidebar.aberta { left: 0; }
+.sidebar a {
+  color: var(--dourado-claro);
+  text-decoration: none;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.95rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  transition: background 0.2s, color 0.2s;
+  letter-spacing: 0.03em;
+}
+.sidebar a:hover { background: rgba(201,168,76,0.15); color: var(--branco); }
+.sidebar hr { border-color: rgba(201,168,76,0.2); margin: 0.5rem 0; }
+
+/* ============================================
+   HEADER
+   ============================================ */
+header {
+  background: linear-gradient(135deg, var(--azul-escuro) 0%, var(--azul-medio) 60%, #0d2154 100%);
+  color: var(--branco);
+  text-align: center;
+  padding: 2rem 1rem 1.5rem;
+  position: relative;
+  border-bottom: 3px solid var(--dourado);
+}
+header::after {
+  content: '';
+  position: absolute;
+  bottom: -1px; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--dourado), transparent);
+}
+.menu-btn {
+  position: absolute;
+  left: 1.2rem; top: 1.5rem;
+  font-size: 1.6rem;
+  cursor: pointer;
+  color: var(--dourado-claro);
+  transition: transform 0.2s;
+}
+.menu-btn:hover { transform: scale(1.15); }
+header h1 {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--dourado-claro);
+  text-shadow: 0 2px 12px rgba(0,0,0,0.4);
+}
+header p {
+  font-family: 'Libre Baskerville', serif;
+  font-style: italic;
+  font-size: 0.95rem;
+  color: rgba(232,201,122,0.8);
+  margin-top: 0.3rem;
+  letter-spacing: 0.08em;
+}
+
+/* ============================================
+   NAVEGAÇÃO
+   ============================================ */
+nav.menu {
+  background: var(--azul-medio);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0;
+  border-bottom: 2px solid var(--dourado);
+}
+nav.menu a {
+  color: rgba(232,201,122,0.85);
+  text-decoration: none;
+  padding: 0.75rem 1.2rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  transition: background 0.2s, color 0.2s;
+  border-bottom: 3px solid transparent;
+}
+nav.menu a:hover {
+  background: rgba(201,168,76,0.12);
+  color: var(--dourado-claro);
+  border-bottom-color: var(--dourado);
+}
+
+/* ============================================
+   ÍNDICE RÁPIDO
+   ============================================ */
+.indice-rapido {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--azul-escuro);
+  border-bottom: 2px solid var(--dourado);
+  padding: 0.6rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.indice-btn {
+  background: var(--dourado);
+  color: var(--azul-escuro);
+  border: none;
+  padding: 0.45rem 1.1rem;
+  border-radius: 20px;
+  font-family: 'Cinzel', serif;
+  font-weight: 600;
+  font-size: 0.82rem;
+  cursor: pointer;
+  letter-spacing: 0.05em;
+  transition: background 0.2s, transform 0.2s;
+  white-space: nowrap;
+}
+.indice-btn:hover { background: var(--dourado-claro); transform: scale(1.04); }
+.indice-menu {
+  display: none;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+.indice-menu.aberto { display: flex; }
+.indice-menu a {
+  color: var(--dourado-claro);
+  text-decoration: none;
+  font-size: 0.8rem;
+  padding: 0.3rem 0.8rem;
+  border: 1px solid rgba(201,168,76,0.3);
+  border-radius: 14px;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.indice-menu a:hover {
+  background: rgba(201,168,76,0.15);
+  border-color: var(--dourado);
+  color: var(--branco);
+}
+
+/* ============================================
+   SEÇÕES GERAIS
+   ============================================ */
+.estudo-section {
+  max-width: 1100px;
+  margin: 0 auto 3rem;
+  padding: 2.5rem 2rem;
+}
+.estudo-section h3 {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+  color: var(--azul-real);
+  border-bottom: var(--borda-dourada);
+  padding-bottom: 0.6rem;
+  margin-bottom: 2rem;
+  letter-spacing: 0.05em;
+}
+
+/* ============================================
+   HERO
+   ============================================ */
+.hero-estudo {
+  background: linear-gradient(135deg, var(--azul-escuro) 0%, #102244 50%, var(--azul-medio) 100%);
+  color: var(--branco);
+  border-radius: 16px;
+  padding: clamp(2rem, 5vw, 4rem) clamp(1.5rem, 4vw, 3.5rem);
+  text-align: center;
+  margin-bottom: 3rem;
+  border: var(--borda-dourada);
+  box-shadow: var(--sombra-forte);
+  position: relative;
+  overflow: hidden;
+}
+.hero-estudo::before {
+  content: '✦';
+  position: absolute;
+  top: 1rem; left: 2rem;
+  font-size: 1.5rem;
+  color: rgba(201,168,76,0.2);
+}
+.hero-estudo::after {
+  content: '✦';
+  position: absolute;
+  bottom: 1rem; right: 2rem;
+  font-size: 1.5rem;
+  color: rgba(201,168,76,0.2);
+}
+.hero-estudo h2 {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(1.8rem, 5vw, 3rem);
+  color: var(--dourado-claro);
+  letter-spacing: 0.12em;
+  margin-bottom: 0.5rem;
+  text-shadow: 0 2px 16px rgba(0,0,0,0.5);
+}
+.subtitulo-principal {
+  font-family: 'Libre Baskerville', serif;
+  font-style: italic;
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  color: rgba(232,201,122,0.85);
+  margin-bottom: 2rem;
+  letter-spacing: 0.06em;
+}
+.citacao-inicio {
+  background: rgba(255,255,255,0.06);
+  border-left: 4px solid var(--dourado);
+  border-radius: 8px;
+  padding: 1.2rem 1.8rem;
+  font-family: 'Libre Baskerville', serif;
+  font-style: italic;
+  font-size: clamp(0.95rem, 1.8vw, 1.1rem);
+  color: var(--dourado-pale);
+  line-height: 1.9;
+  max-width: 700px;
+  margin: 0 auto;
+}
+.citacao-inicio strong { color: var(--dourado-claro); font-style: normal; }
+
+/* ============================================
+   LAYOUT FLEXÍVEL (INTRO)
+   ============================================ */
+.conteudo-flexivel {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 2rem;
+  align-items: start;
+}
+@media (max-width: 768px) {
+  .conteudo-flexivel { grid-template-columns: 1fr; }
+}
+.texto-principal p {
+  margin-bottom: 1.2rem;
+  color: #2a2a3a;
+  font-size: 1rem;
+}
+.caixa-destaque {
+  background: linear-gradient(135deg, #fffbf0, #fef3d0);
+  border-left: 5px solid var(--dourado);
+  border-radius: 10px;
+  padding: 1.4rem 1.6rem;
+  margin-top: 1.5rem;
+  box-shadow: 0 2px 12px rgba(201,168,76,0.15);
+}
+.caixa-destaque h4 {
+  font-family: 'Cinzel', serif;
+  color: var(--azul-real);
+  margin-bottom: 0.6rem;
+  font-size: 0.95rem;
+  letter-spacing: 0.04em;
+}
+.info-destaque {
+  background: var(--azul-escuro);
+  border-radius: 12px;
+  padding: 1.5rem;
+  border: var(--borda-dourada);
+  box-shadow: var(--sombra);
+}
+.info-destaque h4 {
+  font-family: 'Cinzel', serif;
+  color: var(--dourado-claro);
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(201,168,76,0.3);
+  letter-spacing: 0.05em;
+}
+.info-destaque ul { list-style: none; }
+.info-destaque li {
+  color: rgba(232,201,122,0.9);
+  font-size: 0.85rem;
+  padding: 0.4rem 0;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  line-height: 1.5;
+}
+.info-destaque li strong { color: var(--dourado-claro); }
+
+/* ============================================
+   AVISO DE CITAÇÕES
+   ============================================ */
+.aviso-citacao {
+  background: #fff8e1;
+  border: 1px solid #f0c040;
+  border-left: 4px solid #d4a017;
+  border-radius: 8px;
+  padding: 0.9rem 1.2rem;
+  font-size: 0.85rem;
+  color: #5a4a00;
+  margin-bottom: 2rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+}
+.aviso-citacao::before { content: '⚠️'; flex-shrink: 0; }
+
+/* ============================================
+   CARDS DE TEOLOGIA
+   ============================================ */
+.card-teologia {
+  background: var(--branco);
+  border-radius: 14px;
+  padding: 2rem;
+  margin-bottom: 1.8rem;
+  border-top: 4px solid var(--dourado);
+  box-shadow: var(--sombra);
+  transition: transform 0.25s, box-shadow 0.25s;
+}
+.card-teologia:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--sombra-forte);
+}
+.card-teologia h4 {
+  font-family: 'Cinzel', serif;
+  color: var(--azul-real);
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+  letter-spacing: 0.04em;
+}
+.citacao-card {
+  background: linear-gradient(135deg, #f0f4ff, #e8edff);
+  border-left: 4px solid var(--azul-real);
+  border-radius: 8px;
+  padding: 1.1rem 1.4rem;
+  font-family: 'Libre Baskerville', serif;
+  font-style: italic;
+  font-size: 0.95rem;
+  color: #1a2a5e;
+  margin: 1rem 0;
+  line-height: 1.85;
+}
+.citacao-card strong { font-style: normal; color: var(--azul-real); }
+
+/* ============================================
+   TIMELINE
+   ============================================ */
+.timeline { position: relative; padding-left: 2.5rem; }
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 1rem;
+  top: 0; bottom: 0;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--dourado), rgba(201,168,76,0.1));
+}
+.timeline-item {
+  position: relative;
+  margin-bottom: 2.5rem;
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  gap: 1.5rem;
+  align-items: start;
+}
+.timeline-marker {
+  text-align: right;
+  padding-top: 0.2rem;
+  position: relative;
+}
+.timeline-marker::after {
+  content: '';
+  position: absolute;
+  right: -1.9rem;
+  top: 0.6rem;
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  background: var(--dourado);
+  border: 3px solid var(--branco);
+  box-shadow: 0 0 0 2px var(--dourado);
+}
+.ano {
+  font-family: 'Cinzel', serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--dourado);
+  letter-spacing: 0.04em;
+  background: var(--azul-escuro);
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  display: inline-block;
+}
+.timeline-conteudo {
+  background: var(--branco);
+  border-radius: 10px;
+  padding: 1.3rem 1.5rem;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  border-left: 3px solid var(--dourado);
+}
+.timeline-conteudo h4 {
+  font-family: 'Cinzel', serif;
+  color: var(--azul-real);
+  font-size: 0.95rem;
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.03em;
+}
+.timeline-conteudo p { font-size: 0.92rem; color: #3a3a4a; }
+
+/* ============================================
+   BÍBLIA GRID
+   ============================================ */
+.biblia-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+  gap: 1.5rem;
+}
+.biblia-card {
+  background: var(--branco);
+  border-radius: 12px;
+  padding: 1.5rem;
+  border-top: 4px solid var(--azul-real);
+  box-shadow: var(--sombra);
+  transition: transform 0.2s;
+}
+.biblia-card:hover { transform: translateY(-3px); }
+.biblia-card h4 {
+  font-family: 'Cinzel', serif;
+  color: var(--azul-real);
+  font-size: 0.95rem;
+  margin-bottom: 0.8rem;
+  letter-spacing: 0.04em;
+}
+.biblia-card blockquote {
+  font-family: 'Libre Baskerville', serif;
+  font-style: italic;
+  font-size: 0.9rem;
+  color: #2a2a4a;
+  border-left: 3px solid var(--dourado);
+  padding-left: 0.9rem;
+  margin-bottom: 0.8rem;
+  line-height: 1.75;
+}
+.biblia-card p { font-size: 0.87rem; color: #5a5a6a; }
+
+/* ============================================
+   TIPOS DE BATISMO
+   ============================================ */
+.tipos-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.8rem;
+  margin-bottom: 2rem;
+}
+.tipo-card {
+  border-radius: 14px;
+  padding: 1.8rem;
+  box-shadow: var(--sombra);
+  color: var(--branco);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.25s;
+}
+.tipo-card:hover { transform: translateY(-4px); }
+.tipo-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--dourado);
+}
+.tipo-agua  { background: linear-gradient(135deg, #0a2a5e, #1a4080); }
+.tipo-sangue{ background: linear-gradient(135deg, #5c0a0a, #8c1a1a); }
+.tipo-desejo{ background: linear-gradient(135deg, #2a0a5c, #4a1a8c); }
+.tipo-card h4 {
+  font-family: 'Cinzel', serif;
+  color: var(--dourado-claro);
+  font-size: 1rem;
+  margin-bottom: 0.8rem;
+  letter-spacing: 0.04em;
+}
+.tipo-card p { font-size: 0.92rem; line-height: 1.7; opacity: 0.92; }
+.tipo-card .detalhes {
+  margin-top: 1rem;
+  border-top: 1px solid rgba(201,168,76,0.3);
+  padding-top: 1rem;
+}
+.tipo-card .detalhes p { font-size: 0.85rem; color: var(--dourado-pale); margin-bottom: 0.4rem; }
+.tipo-card ul { list-style: none; }
+.tipo-card ul li {
+  font-size: 0.84rem;
+  padding: 0.25rem 0;
+  padding-left: 1rem;
+  position: relative;
+  opacity: 0.9;
+}
+.tipo-card ul li::before {
+  content: '›';
+  position: absolute;
+  left: 0;
+  color: var(--dourado);
+  font-weight: bold;
+}
+.caixa-importante {
+  background: linear-gradient(135deg, #fff8e1, #fef3c7);
+  border: 2px solid var(--dourado);
+  border-radius: 12px;
+  padding: 1.4rem 1.8rem;
+  box-shadow: 0 2px 12px rgba(201,168,76,0.15);
+}
+.caixa-importante h4 {
+  font-family: 'Cinzel', serif;
+  color: #7a5000;
+  margin-bottom: 0.6rem;
+  font-size: 0.95rem;
+}
+.caixa-importante p { color: #5a4000; font-size: 0.93rem; }
+
+/* ============================================
+   RITO — PASSOS
+   ============================================ */
+.intro-rito {
+  font-family: 'Libre Baskerville', serif;
+  font-style: italic;
+  color: #3a3a5a;
+  margin-bottom: 2rem;
+  font-size: 1rem;
+  text-align: center;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.rito-passos { display: flex; flex-direction: column; gap: 1.2rem; }
+.passo {
+  display: grid;
+  grid-template-columns: 60px 1fr;
+  gap: 1.5rem;
+  align-items: start;
+  background: var(--branco);
+  border-radius: 12px;
+  padding: 1.4rem 1.6rem;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+  border-left: 4px solid var(--dourado);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.passo:hover { transform: translateX(4px); box-shadow: var(--sombra); }
+.numero-passo {
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--azul-real), var(--azul-escuro));
+  color: var(--dourado-claro);
+  font-family: 'Cinzel', serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  flex-shrink: 0;
+}
+.descricao-passo h4 {
+  font-family: 'Cinzel', serif;
+  color: var(--azul-real);
+  font-size: 0.95rem;
+  margin-bottom: 0.4rem;
+  letter-spacing: 0.03em;
+}
+.descricao-passo p { font-size: 0.92rem; color: #3a3a4a; }
+.nota-rito {
+  margin-top: 2rem;
+  background: #f0f4ff;
+  border-left: 4px solid var(--azul-real);
+  border-radius: 8px;
+  padding: 1rem 1.4rem;
+  font-size: 0.88rem;
+  color: #2a2a5a;
+}
+
+/* ============================================
+   EFEITOS ESPIRITUAIS
+   ============================================ */
+.efeitos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 1.4rem;
+}
+.efeito-card {
+  background: var(--branco);
+  border-radius: 14px;
+  padding: 1.5rem;
+  text-align: center;
+  box-shadow: var(--sombra);
+  border-bottom: 4px solid var(--dourado);
+  transition: transform 0.25s, box-shadow 0.25s;
+}
+.efeito-card:hover { transform: translateY(-5px); box-shadow: var(--sombra-forte); }
+.efeito-icone { font-size: 2rem; margin-bottom: 0.7rem; display: block; }
+.efeito-card h4 {
+  font-family: 'Cinzel', serif;
+  color: var(--azul-real);
+  font-size: 0.9rem;
+  margin-bottom: 0.6rem;
+  letter-spacing: 0.03em;
+}
+.efeito-card p { font-size: 0.87rem; color: #4a4a5a; }
+.detalhe {
+  margin-top: 0.6rem;
+  font-size: 0.82rem !important;
+  color: #888 !important;
+  border-top: 1px solid #eee;
+  padding-top: 0.5rem;
+}
+
+/* ============================================
+   VOZES DOS SANTOS
+   ============================================ */
+.intro-santos {
+  font-family: 'Libre Baskerville', serif;
+  font-style: italic;
+  color: #4a4a5a;
+  margin-bottom: 2rem;
+  text-align: center;
+  font-size: 1rem;
+}
+.santos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.6rem;
+}
+.santo-card {
+  background: linear-gradient(135deg, var(--azul-escuro) 0%, #102244 100%);
+  border-radius: 14px;
+  padding: 1.8rem;
+  border: 1px solid rgba(201,168,76,0.2);
+  box-shadow: var(--sombra);
+  transition: transform 0.25s, border-color 0.25s;
+}
+.santo-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(201,168,76,0.5);
+}
+.santo-card h4 {
+  font-family: 'Cinzel', serif;
+  color: var(--dourado-claro);
+  font-size: 0.92rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(201,168,76,0.25);
+  letter-spacing: 0.04em;
+}
+.santo-card blockquote {
+  font-family: 'Libre Baskerville', serif;
+  font-style: italic;
+  font-size: 0.92rem;
+  color: var(--dourado-pale);
+  line-height: 1.8;
+  margin-bottom: 1rem;
+  padding-left: 0.8rem;
+  border-left: 3px solid rgba(201,168,76,0.4);
+}
+.nota-santo {
+  font-size: 0.82rem;
+  color: rgba(232,201,122,0.65);
+  line-height: 1.6;
+}
+.nota-santo strong { color: var(--dourado-claro); }
+
+/* ============================================
+   NA PRÁTICA
+   ============================================ */
+.pratica-bloco {
+  background: var(--branco);
+  border-radius: 14px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  box-shadow: var(--sombra);
+  border-top: 4px solid var(--dourado);
+}
+.pratica-bloco h4 {
+  font-family: 'Cinzel', serif;
+  color: var(--azul-real);
+  font-size: 1.05rem;
+  margin-bottom: 1.2rem;
+  letter-spacing: 0.04em;
+}
+.comparacao {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.4rem;
+  margin-top: 1rem;
+}
+@media (max-width: 600px) { .comparacao { grid-template-columns: 1fr; } }
+.item-comparacao {
+  background: var(--cinza-claro);
+  border-radius: 10px;
+  padding: 1.2rem;
+  border-top: 3px solid var(--azul-real);
+}
+.item-comparacao h5 {
+  font-family: 'Cinzel', serif;
+  color: var(--azul-real);
+  font-size: 0.88rem;
+  margin-bottom: 0.8rem;
+  letter-spacing: 0.03em;
+}
+.item-comparacao ul { list-style: none; }
+.item-comparacao li {
+  font-size: 0.87rem;
+  color: #3a3a5a;
+  padding: 0.25rem 0;
+  padding-left: 1rem;
+  position: relative;
+}
+.item-comparacao li::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: var(--dourado);
+}
+.lista-pratica { display: flex; flex-direction: column; gap: 1rem; }
+.item-lista {
+  background: var(--cinza-claro);
+  border-radius: 10px;
+  padding: 1.1rem 1.3rem;
+  border-left: 4px solid var(--azul-real);
+}
+.item-lista strong {
+  display: block;
+  font-family: 'Cinzel', serif;
+  color: var(--azul-real);
+  font-size: 0.88rem;
+  margin-bottom: 0.4rem;
+  letter-spacing: 0.03em;
+}
+.item-lista p { font-size: 0.9rem; color: #3a3a5a; }
+.citacao-carismatica,
+.citacao-tradicional {
+  background: linear-gradient(135deg, #f8f4ff, #ede8ff);
+  border-left: 4px solid #7a4aaa;
+  border-radius: 8px;
+  padding: 1rem 1.3rem;
+  font-family: 'Libre Baskerville', serif;
+  font-style: italic;
+  font-size: 0.92rem;
+  color: #3a1a5a;
+  margin: 1rem 0;
+}
+
+/* ============================================
+   FAQ
+   ============================================ */
+.faq-container { display: flex; flex-direction: column; gap: 1rem; }
+.faq-item {
+  background: var(--branco);
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.07);
+  overflow: hidden;
+  border: 1px solid rgba(201,168,76,0.15);
+  transition: border-color 0.2s;
+}
+.faq-item:hover { border-color: rgba(201,168,76,0.4); }
+.faq-pergunta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.2rem 1.5rem;
+  cursor: pointer;
+  gap: 1rem;
+  background: linear-gradient(135deg, #f8f6ff, #f0f4ff);
+  transition: background 0.2s;
+}
+.faq-pergunta:hover { background: linear-gradient(135deg, #ede8ff, #e8edff); }
+.faq-pergunta h4 {
+  font-family: 'Libre Baskerville', serif;
+  color: var(--azul-real);
+  font-size: 0.95rem;
+  line-height: 1.5;
+  font-weight: 400;
+}
+.faq-seta {
+  color: var(--dourado);
+  font-size: 1rem;
+  flex-shrink: 0;
+  transition: transform 0.3s;
+}
+.faq-seta.aberta { transform: rotate(180deg); }
+.faq-resposta {
+  display: none;
+  padding: 1.3rem 1.5rem;
+  border-top: 1px solid rgba(201,168,76,0.15);
+}
+.faq-resposta.aberta { display: block; }
+.faq-resposta p { font-size: 0.92rem; color: #3a3a5a; margin-bottom: 0.7rem; }
+.faq-resposta ul { margin-left: 1.5rem; margin-top: 0.5rem; }
+.faq-resposta ul li { font-size: 0.9rem; color: #4a4a5a; padding: 0.2rem 0; }
+.faq-resposta blockquote {
+  background: #f5f5ff;
+  border-left: 3px solid var(--azul-real);
+  border-radius: 6px;
+  padding: 0.8rem 1.1rem;
+  font-family: 'Libre Baskerville', serif;
+  font-style: italic;
+  font-size: 0.9rem;
+  color: #2a2a5a;
+  margin: 0.8rem 0;
+}
+
+/* ============================================
+   FONTES BIBLIOGRÁFICAS
+   ============================================ */
+.fontes-section {
+  background: var(--azul-escuro);
+  border-radius: 14px;
+  padding: 2rem;
+  margin-top: 2rem;
+  border: var(--borda-dourada);
+}
+.fontes-section h4 {
+  font-family: 'Cinzel', serif;
+  color: var(--dourado-claro);
+  font-size: 1rem;
+  margin-bottom: 1.2rem;
+  letter-spacing: 0.05em;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(201,168,76,0.3);
+}
+.fontes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 0.8rem;
+}
+.fonte-item {
+  background: rgba(255,255,255,0.05);
+  border-radius: 8px;
+  padding: 0.8rem 1rem;
+  border-left: 3px solid var(--dourado);
+}
+.fonte-item strong {
+  display: block;
+  color: var(--dourado-claro);
+  font-size: 0.83rem;
+  margin-bottom: 0.2rem;
+}
+.fonte-item span { color: rgba(232,201,122,0.65); font-size: 0.8rem; }
+
+/* ============================================
+   CONCLUSÃO
+   ============================================ */
+.conclusao {
+  background: linear-gradient(135deg, var(--azul-escuro) 0%, #102244 100%);
+  border-radius: 16px;
+  padding: clamp(2rem, 5vw, 3.5rem);
+  color: var(--branco);
+  border: var(--borda-dourada);
+  box-shadow: var(--sombra-forte);
+  max-width: 1100px;
+  margin: 0 auto 3rem;
+}
+.conclusao h3 {
+  font-family: 'Cinzel', serif;
+  color: var(--dourado-claro);
+  font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+  border-bottom: var(--borda-dourada);
+  padding-bottom: 0.6rem;
+  margin-bottom: 2rem;
+  letter-spacing: 0.07em;
+}
+.texto-conclusao p {
+  font-size: clamp(0.95rem, 1.5vw, 1.05rem);
+  color: rgba(255,255,255,0.88);
+  margin-bottom: 1.2rem;
+  line-height: 1.9;
+}
+.texto-conclusao strong { color: var(--dourado-claro); }
+.assinatura-conclusao {
+  margin-top: 2rem !important;
+  font-family: 'Libre Baskerville', serif;
+  font-style: italic;
+  color: var(--dourado-pale) !important;
+  text-align: center;
+  border-top: 1px solid rgba(201,168,76,0.3);
+  padding-top: 1.5rem;
+  font-size: 1rem !important;
+}
+
+/* ============================================
+   RODAPÉ
+   ============================================ */
+footer {
+  background: var(--azul-escuro);
+  color: rgba(232,201,122,0.6);
+  text-align: center;
+  padding: 1.5rem;
+  font-family: 'Cinzel', serif;
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  border-top: 2px solid var(--dourado);
+}
+
+/* ============================================
+   RESPONSIVIDADE
+   ============================================ */
+@media (max-width: 768px) {
+  .estudo-section { padding: 1.5rem 1rem; }
+  .timeline-item { grid-template-columns: 80px 1fr; gap: 1rem; }
+  .passo { grid-template-columns: 48px 1fr; gap: 1rem; padding: 1.1rem; }
+  .indice-rapido { padding: 0.5rem; }
+}
+@media (max-width: 480px) {
+  .timeline-item { grid-template-columns: 1fr; }
+  .timeline-marker { text-align: left; }
+  .timeline-marker::after { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<div class="sidebar" id="sidebar">
+  <a href="#" onclick="fecharMenu()">✖ Fechar</a>
+  <a href="../../../index.html">Início</a>
+  <a href="../../../liturgia_diaria/liturgiadiaria.html">Liturgia diária</a>
+  <a href="../../../santos/santos.html">Santos</a>
+  <a href="../../../biblioteca/biblioteca.html">Biblioteca</a>
+  <a href="../../estudos.html">Estudos</a>
+  <a href="../../../jogos.html">Jogos</a>
+  <hr>
+  <a href="../../../sobre.html">Sobre</a>
+  <a href="../../../privacy.html">Privacidade</a>
+</div>
+
+<!-- CABEÇALHO -->
+<header>
+  <span class="menu-btn" onclick="abrirMenu()">☰</span>
+  <h1>Lux Fidei</h1>
+  <p>Luz da Fé Católica</p>
+</header>
+
+<!-- NAVEGAÇÃO -->
+<nav class="menu">
+  <a href="../../../index.html">Início</a>
+  <a href="../../../liturgia_diaria/liturgiadiaria.html">Liturgia Diária</a>
+  <a href="../../../santos/santos.html">Santos</a>
+  <a href="../../../biblioteca/biblioteca.html">Biblioteca</a>
+  <a href="../../estudos.html">Estudos</a>
+  <a href="../../../jogos.html">Jogos</a>
+</nav>
+
+<!-- ÍNDICE -->
+<div class="indice-rapido">
+  <button class="indice-btn" onclick="toggleIndice()">📑 Índice</button>
+  <div class="indice-menu" id="indiceMenu">
+    <a href="#introducao">Introdução</a>
+    <a href="#teologia">Teologia</a>
+    <a href="#historia">História</a>
+    <a href="#biblia">Bíblia</a>
+    <a href="#tipos">Tipos</a>
+    <a href="#rito">Rito</a>
+    <a href="#efeitos">Efeitos</a>
+    <a href="#santos">Santos</a>
+    <a href="#pratica">Prática</a>
+    <a href="#faq">FAQ</a>
+    <a href="#fontes">Fontes</a>
+  </div>
+</div>
+
+<!-- ================================================
+     INTRODUÇÃO
+     ================================================ -->
+<section class="estudo-section" id="introducao">
+  <div class="hero-estudo">
+    <h2>💧 O Batismo</h2>
+    <p class="subtitulo-principal">O Sacramento da Nova Vida em Cristo</p>
+    <blockquote class="citacao-inicio">
+      "Quem crer e for batizado será salvo;<br>quem não crer será condenado."
+      <br><strong>— Marcos 16:16</strong>
+    </blockquote>
+  </div>
+
+  <div class="conteudo-flexivel">
+    <div class="texto-principal">
+      <p>
+        O Batismo é o <strong>primeiro dos sete sacramentos</strong> — a porta solene de entrada
+        para a vida cristã. Não é um ritual meramente simbólico ou tradição cultural,
+        mas um <strong>sinal eficaz</strong> pelo qual Cristo age diretamente: lava o pecado,
+        incorpora à Sua Igreja e inicia a santificação da alma.
+      </p>
+      <p>
+        Desde os primórdios da fé, o Batismo foi reconhecido como
+        <strong>absolutamente necessário para a salvação</strong> — salvo nos casos
+        extraordinários de Batismo de Sangue ou de Desejo. Pelas águas batismais,
+        morremos ao pecado e ressuscitamos em Cristo: não apenas em figura,
+        mas <strong>sacramentalmente eficaz</strong>.
+      </p>
+      <div class="caixa-destaque">
+        <h4>⚡ O Batismo em uma frase</h4>
+        <p>
+          Sacramento de purificação, incorporação e santificação:
+          remissão de todos os pecados, morte e ressurreição em Cristo,
+          e nascimento como filho adotivo de Deus e membro vivo da Igreja.
+        </p>
+      </div>
+    </div>
+
+    <div class="barra-lateral">
+      <div class="info-destaque">
+        <h4>Dados Essenciais</h4>
+        <ul>
+          <li><strong>Nome:</strong> Do grego <em>baptizein</em> — imergir</li>
+          <li><strong>Tipo:</strong> Sacramento da Iniciação Cristã</li>
+          <li><strong>Necessidade:</strong> Absolutamente necessário</li>
+          <li><strong>Matéria:</strong> Água natural</li>
+          <li><strong>Forma:</strong> Invocação da Santíssima Trindade</li>
+          <li><strong>Ministro ordinário:</strong> Bispo ou Padre</li>
+          <li><strong>Ministro extraordinário:</strong> Diácono ou Leigo</li>
+          <li><strong>Efeito:</strong> Caráter indelével — não se repete</li>
+          <li><strong>Referência:</strong> CIC nn. 1213–1284</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================
+     TEOLOGIA
+     ================================================ -->
+<section class="estudo-section" id="teologia">
+  <h3>🎯 A Teologia Profunda do Batismo</h3>
+
+  <div class="card-teologia">
+    <h4>🔄 Morte e Ressurreição em Cristo</h4>
+    <p>O Batismo não é limpeza externa — é <strong>morte sacramental e ressurreição espiritual</strong>.
+    São Paulo expõe isso com clareza insuperável:</p>
+    <blockquote class="citacao-card">
+      "Ou vocês não sabem que todos nós, que fomos batizados em Cristo Jesus,
+      fomos batizados em sua morte? Fomos, portanto, sepultados com Ele pelo Batismo
+      em sua morte, a fim de que, assim como Cristo foi ressuscitado dos mortos
+      pela glória do Pai, assim também nós andemos em novidade de vida."
+      <br><strong>— Romanos 6:3-4</strong>
+    </blockquote>
+    <p>Assim como Cristo desceu à morte e ressuscitou glorioso,
+    o batizado desce às águas — símbolo do sepulcro — e emerge para
+    <strong>vida nova e imperecível em Cristo</strong>.</p>
+  </div>
+
+  <div class="card-teologia">
+    <h4>🌳 Incorporação ao Corpo de Cristo</h4>
+    <p>O Batismo não é salvação puramente individual — é <strong>incorporação ao Corpo Místico</strong>
+    que é a Igreja:</p>
+    <blockquote class="citacao-card">
+      "Pois em um só Espírito todos nós fomos batizados para formar um só corpo,
+      quer judeus, quer gregos, quer escravos, quer livres."
+      <br><strong>— 1 Coríntios 12:13</strong>
+    </blockquote>
+    <p>O batizado não é apenas "salvo" — é <strong>inserido vivo</strong> numa comunidade
+    sacramental, partilhando a mesma Eucaristia, os mesmos sacramentos,
+    a mesma fé apostólica.</p>
+  </div>
+
+  <div class="card-teologia">
+    <h4>👑 Filiação Divina Adotiva</h4>
+    <p>Pelo Batismo, somos feitos filhos adotivos de Deus — não servos, mas herdeiros:</p>
+    <blockquote class="citacao-card">
+      "Porque todos sois filhos de Deus pela fé em Cristo Jesus.
+      Pois quantos de vós foram batizados em Cristo, vos revestistes de Cristo."
+      <br><strong>— Gálatas 3:26-27</strong>
+    </blockquote>
+    <p>O batizado não é mais escravo do pecado ou do inimigo —
+    é <strong>filho do Rei dos Céus</strong>, com direito à herança da vida eterna.</p>
+  </div>
+
+  <div class="card-teologia">
+    <h4>✨ Infusão de Graça Santificante</h4>
+    <p>O Batismo <strong>confere graça santificante</strong> — não apenas perdão, mas infusão de vida divina:</p>
+    <blockquote class="citacao-card">
+      "O Batismo não só perdoa os pecados, mas faz de nós 'nova criatura' (2Cor 5,17),
+      filhos adotivos de Deus (Gal 4,5-7), 'partícipes da natureza divina' (2Pd 1,4)."
+      <br><strong>— Catecismo da Igreja Católica, n° 1265</strong>
+    </blockquote>
+    <p>O batizado sai das águas já <strong>santificado</strong>, não apenas absolvido.
+    Recebe as virtudes teologais (fé, esperança, caridade)
+    e os sete dons do Espírito Santo.</p>
+  </div>
+</section>
+
+<!-- ================================================
+     HISTÓRIA
+     ================================================ -->
+<section class="estudo-section" id="historia">
+  <h3>📜 História do Batismo na Tradição da Igreja</h3>
+
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="timeline-marker"><span class="ano">~30 d.C.</span></div>
+      <div class="timeline-conteudo">
+        <h4>O Batismo de Jesus no Jordão</h4>
+        <p>Cristo desce às águas do Jordão e as santifica para sempre.
+        Embora sem pecado, Jesus <strong>consagra o elemento água</strong> como veículo de graça.
+        Neste instante, a Santíssima Trindade se manifesta plenamente:
+        a voz do Pai, a presença do Filho, a descida do Espírito em forma de pomba.</p>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-marker"><span class="ano">~33 d.C.</span></div>
+      <div class="timeline-conteudo">
+        <h4>Pentecostes — A Igreja Batiza</h4>
+        <p>Pedro prega e 3.000 pessoas são batizadas em um único dia (At 2:38-41).
+        O Batismo se torna imediatamente a <strong>resposta sacramental ao anúncio do Evangelho</strong>.
+        Desde o primeiro dia da Igreja, batismo e conversão são inseparáveis.</p>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-marker"><span class="ano">Séc. I–III</span></div>
+      <div class="timeline-conteudo">
+        <h4>Didaché e Padres Apostólicos</h4>
+        <p>A <em>Didaché</em> (~100 d.C.) já descreve o rito com detalhes:
+        instrução prévia, jejum, preferência por água corrente.
+        <strong>A tradição batismal estava estabelecida</strong> desde os apóstolos,
+        confirmada pelos primeiros discípulos.</p>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-marker"><span class="ano">Séc. II–V</span></div>
+      <div class="timeline-conteudo">
+        <h4>Grandes Padres Desenvolvem a Teologia</h4>
+        <p>Justino Mártir, Tertuliano, Cirilo de Jerusalém, Ambrósio, Agostinho e Crisóstomo
+        escrevem tratados sobre o Batismo. <strong>Consenso unânime:</strong>
+        graça real, necessidade absoluta, caráter indelével.</p>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-marker"><span class="ano">1439</span></div>
+      <div class="timeline-conteudo">
+        <h4>Concílio de Florença</h4>
+        <p>Define com precisão canônica o Batismo como <strong>primeiro dos sete sacramentos</strong>,
+        sua matéria (água), forma (Trindade) e efeitos. Marco fundamental da sistematização sacramental.</p>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-marker"><span class="ano">1545–1563</span></div>
+      <div class="timeline-conteudo">
+        <h4>Concílio de Trento</h4>
+        <p>Contra os que negavam a eficácia sacramental, Trento define com rigor:
+        o Batismo confere <strong>graça real e verdadeira</strong>,
+        foi instituído por Cristo, e é absolutamente necessário para a salvação.</p>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-marker"><span class="ano">1962–1965</span></div>
+      <div class="timeline-conteudo">
+        <h4>Concílio Vaticano II</h4>
+        <p>Reafirma a doutrina tradicional e aprofunda o <strong>caráter comunitário</strong>
+        do sacramento: o batizado não é apenas salvo individualmente,
+        mas incorporado ao Povo de Deus vivo e missionário.</p>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-marker"><span class="ano">1983</span></div>
+      <div class="timeline-conteudo">
+        <h4>Código de Direito Canônico</h4>
+        <p>Cânones 849–878 codificam: batismo de emergência por leigos,
+        reconhecimento de batismos válidos de outras denominações,
+        e procedimentos para verificar a validade de batismos duvidosos.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================
+     BÍBLIA
+     ================================================ -->
+<section class="estudo-section" id="biblia">
+  <h3>📖 A Palavra de Deus sobre o Batismo</h3>
+
+  <div class="biblia-grid">
+    <div class="biblia-card">
+      <h4>💧 João 3:5</h4>
+      <blockquote>"Quem não renascer da água e do Espírito Santo
+      não pode entrar no Reino de Deus."</blockquote>
+      <p><strong>Necessidade absoluta.</strong> "Não pode" — não é conselho, é condição.</p>
+    </div>
+
+    <div class="biblia-card">
+      <h4>🌍 Mateus 28:19</h4>
+      <blockquote>"Ide e fazei discípulos de todas as nações,
+      batizando-os em nome do Pai, do Filho e do Espírito Santo."</blockquote>
+      <p><strong>Mandamento apostólico.</strong> O Batismo é o centro da missão universal da Igreja.</p>
+    </div>
+
+    <div class="biblia-card">
+      <h4>🕊️ Atos 2:38</h4>
+      <blockquote>"Arrependei-vos e sede batizados em nome de Jesus Cristo,
+      para remissão dos pecados; e recebereis o dom do Espírito Santo."</blockquote>
+      <p><strong>Duplo efeito:</strong> remissão dos pecados e dons do Espírito — graça ativa, não apenas perdão.</p>
+    </div>
+
+    <div class="biblia-card">
+      <h4>⚓ 1 Pedro 3:21</h4>
+      <blockquote>"O batismo agora vos salva — não como remoção de impureza do corpo,
+      mas como apelo de uma boa consciência a Deus."</blockquote>
+      <p><strong>Causa de salvação.</strong> Não cerimônia externa — ato interior e sacramental.</p>
+    </div>
+
+    <div class="biblia-card">
+      <h4>🌊 Tito 3:5</h4>
+      <blockquote>"Ele nos salvou mediante o banho de regeneração
+      e de renovação pelo Espírito Santo."</blockquote>
+      <p><strong>Regeneração real.</strong> "Banho" — imagem direta do Batismo como nascimento novo.</p>
+    </div>
+
+    <div class="biblia-card">
+      <h4>🔐 Atos 8:36-38</h4>
+      <blockquote>"Disse o eunuco: Eis aqui água; que impede que eu seja batizado?
+      E Filipe disse: Se crês de todo o coração, é lícito."</blockquote>
+      <p><strong>Fé e Batismo inseparáveis.</strong> A fé precede, o Batismo sela — foi <em>Filipe</em>, não Pedro.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================
+     TIPOS
+     ================================================ -->
+<section class="estudo-section" id="tipos">
+  <h3>🌊 Os Três Tipos de Batismo</h3>
+
+  <div class="tipos-container">
+    <div class="tipo-card tipo-agua">
+      <h4>💧 Batismo de Água — Sacramental</h4>
+      <p>O caminho ordinário e necessário.
+      Imersão ou aspersão de água natural com invocação da Santíssima Trindade.
+      Confere todos os efeitos sacramentais.</p>
+      <div class="detalhes">
+        <p><strong>Elementos essenciais:</strong></p>
+        <ul>
+          <li>Matéria: água natural pura</li>
+          <li>Forma: "Eu te batizo em nome do Pai, do Filho e do Espírito Santo"</li>
+          <li>Intenção: fazer o que a Igreja faz</li>
+          <li>Disposição: fé e arrependimento (se adulto)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tipo-card tipo-sangue">
+      <h4>⚔️ Batismo de Sangue — Martírio</h4>
+      <p>Quem sofre morte <strong>por ódio à fé cristã</strong>,
+      recusando apostatar, é batizado pelo próprio sangue.
+      Produz todos os efeitos do Batismo de Água.</p>
+      <div class="detalhes">
+        <p><strong>Condições:</strong></p>
+        <ul>
+          <li>Morte por testemunho da fé cristã</li>
+          <li>Não exige ser católico formalmente</li>
+          <li>Exemplos: mártires dos primeiros séculos</li>
+          <li>Fundamentado em Mt 10:32 e Ap 7:14</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tipo-card tipo-desejo">
+      <h4>💭 Batismo de Desejo</h4>
+      <p>Para quem deseja sinceramente o Batismo mas morre
+      antes de recebê-lo, ou vive em <strong>ignorância invencível</strong>
+      da necessidade do sacramento.</p>
+      <div class="detalhes">
+        <p><strong>Condições:</strong></p>
+        <ul>
+          <li>Desejo explícito ou implícito de Deus</li>
+          <li>Contrição perfeita (se adulto pecador)</li>
+          <li>Ignorância invencível da Igreja Católica</li>
+          <li>Ex.: catecúmeno morto antes do batismo</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="caixa-importante">
+    <h4>⚠️ Nota Doutrinária — CIC n° 1257-1261</h4>
+    <p>
+      É o <strong>Batismo de Água que a Igreja ordena como caminho ordinário</strong>.
+      Os batismos de Sangue e Desejo são provisões divinas para casos excepcionais —
+      não substituem a graça sacramental plena do Batismo de Água.
+      A ninguém é lícito desprezar o Batismo sacramental baseando-se nessas exceções.
+    </p>
+  </div>
+</section>
+
+<!-- ================================================
+     RITO
+     ================================================ -->
+<section class="estudo-section" id="rito">
+  <h3>🎭 O Rito Batismal — Passo a Passo</h3>
+
+  <p class="intro-rito">
+    O Batismo Solene — especialmente na Vigília Pascal — segue um ritual antigo e profundo.
+    Cada gesto carrega séculos de fé e significado teológico.
+  </p>
+
+  <div class="rito-passos">
+    <div class="passo">
+      <div class="numero-passo">1</div>
+      <div class="descricao-passo">
+        <h4>Bênção e Consagração da Água</h4>
+        <p>A água é exorcizada e consagrada com oração solene.
+        Invoca-se o Espírito Santo sobre ela, tornando-a <strong>veículo eficaz da graça divina</strong>.
+        Sem essa consagração, o Batismo não seria sacramental.</p>
+      </div>
+    </div>
+
+    <div class="passo">
+      <div class="numero-passo">2</div>
+      <div class="descricao-passo">
+        <h4>Renúncia a Satanás</h4>
+        <p>O batizando (ou pais/padrinhos) renuncia solenemente a Satanás,
+        a todas as suas obras e seduções.
+        É uma <strong>ruptura formal e sacramental com o reino das trevas</strong>
+        — não mera formalidade, mas declaração de guerra espiritual.</p>
+      </div>
+    </div>
+
+    <div class="passo">
+      <div class="numero-passo">3</div>
+      <div class="descricao-passo">
+        <h4>Profissão de Fé</h4>
+        <p>Segue-se a adesão a Cristo e a profissão do Credo Apostólico.
+        O Batismo nasce da fé — primeiro se crê, depois se batiza.
+        Nos infantes, é a <strong>fé da Igreja e da família</strong> que sustenta o ato.</p>
+      </div>
+    </div>
+
+    <div class="passo">
+      <div class="numero-passo">4</div>
+      <div class="descricao-passo">
+        <h4>Unção com Óleo dos Catecúmenos</h4>
+        <p>Um óleo consagrado fortalece o batizando antes da imersão —
+        como um <strong>atleta ungido para o combate espiritual</strong>.
+        Símbolo de força, proteção e preparação para a luta cristã.</p>
+      </div>
+    </div>
+
+    <div class="passo">
+      <div class="numero-passo">5</div>
+      <div class="descricao-passo">
+        <h4>A Imersão ou Aspersão — O Coração do Sacramento</h4>
+        <p>O ministro derrama água sobre a cabeça (ou imerge) pronunciando:
+        <br><strong>"Eu te batizo em nome do Pai, do Filho e do Espírito Santo."</strong>
+        <br>Neste instante, <strong>o batizado morre para o pecado e ressuscita em Cristo</strong>.
+        É o momento sacramental central.</p>
+      </div>
+    </div>
+
+    <div class="passo">
+      <div class="numero-passo">6</div>
+      <div class="descricao-passo">
+        <h4>Unção com Santo Crisma</h4>
+        <p>O Crisma (óleo consagrado pelo bispo na Quinta-feira Santa) unge a testa.
+        O batizando se torna <strong>"Christus" — o Ungido</strong>.
+        Sinal de participação no sacerdócio, profecia e realeza de Cristo.</p>
+      </div>
+    </div>
+
+    <div class="passo">
+      <div class="numero-passo">7</div>
+      <div class="descricao-passo">
+        <h4>Imposição da Veste Branca</h4>
+        <p>Símbolo poderoso: o batizado reveste a inocência de Cristo.
+        <strong>"Revestistes de Cristo"</strong> (Gl 3,27) — a veste branca anuncia
+        que a alma está agora sem mancha diante de Deus.</p>
+      </div>
+    </div>
+
+    <div class="passo">
+      <div class="numero-passo">8</div>
+      <div class="descricao-passo">
+        <h4>Entrega da Vela Acesa</h4>
+        <p>A vela é acesa da Vela Pascal — Cristo Ressuscitado.
+        O batizado é agora <strong>luz do mundo em Cristo</strong>.
+        Muitas famílias guardam essa vela por toda a vida,
+        acendendo-a em momentos solenes: Crisma, Casamento, última hora.</p>
+      </div>
+    </div>
+
+    <div class="passo">
+      <div class="numero-passo">9</div>
+      <div class="descricao-passo">
+        <h4>Apresentação à Comunidade</h4>
+        <p>O batizado é apresentado à assembleia reunida.
+        Não é ato privado — é entrada pública num Corpo vivo.
+        A Igreja inteira o recebe como membro novo.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="nota-rito">
+    <strong>📌 Nota Litúrgica:</strong> O Rito Ordinário (pós-1969) e o Rito Extraordinário
+    (Forma Tridentina) diferem em detalhes — o rito tradicional mantém mais exorcismos
+    e enfatiza mais explicitamente o combate espiritual. Ambos são plenamente válidos e lícitos.
+    Converse com sua paróquia ou comunidade sobre a forma celebrada localmente.
+  </div>
+</section>
+
+<!-- ================================================
+     EFEITOS
+     ================================================ -->
+<section class="estudo-section" id="efeitos">
+  <h3>✨ Os Efeitos Espirituais do Batismo</h3>
+
+  <div class="efeitos-grid">
+    <div class="efeito-card">
+      <span class="efeito-icone">🔄</span>
+      <h4>Remissão Total dos Pecados</h4>
+      <p>Lava o pecado original, todos os pecados pessoais (se adulto) e toda pena devida.</p>
+      <p class="detalhe"><em>A alma sai das águas sem mancha alguma diante de Deus.</em></p>
+    </div>
+
+    <div class="efeito-card">
+      <span class="efeito-icone">👑</span>
+      <h4>Filiação Divina</h4>
+      <p>Torna-se filho adotivo de Deus. O batizado pode chamar Deus de "Abba, Pai".</p>
+      <p class="detalhe"><em>Herdeiro do Reino dos Céus — não servo, mas filho.</em></p>
+    </div>
+
+    <div class="efeito-card">
+      <span class="efeito-icone">⛪</span>
+      <h4>Incorporação à Igreja</h4>
+      <p>Membro vivo do Corpo de Cristo, com acesso a todos os sacramentos e graças da Igreja.</p>
+      <p class="detalhe"><em>Participa da comunhão dos santos vivos e defuntos.</em></p>
+    </div>
+
+    <div class="efeito-card">
+      <span class="efeito-icone">✨</span>
+      <h4>Graça Santificante</h4>
+      <p>Infusão de vida divina — a alma torna-se templo vivo do Espírito Santo.</p>
+      <p class="detalhe"><em>Não apenas perdão: transformação ontológica real.</em></p>
+    </div>
+
+    <div class="efeito-card">
+      <span class="efeito-icone">🎁</span>
+      <h4>Virtudes Teologais</h4>
+      <p>Fé, Esperança e Caridade são infundidas — capacidades sobrenaturais para amar e conhecer Deus.</p>
+      <p class="detalhe"><em>Dons permanentes que sustentam toda a vida cristã.</em></p>
+    </div>
+
+    <div class="efeito-card">
+      <span class="efeito-icone">🕊️</span>
+      <h4>Sete Dons do Espírito</h4>
+      <p>Sabedoria, Entendimento, Conselho, Fortaleza, Ciência, Piedade e Temor de Deus.</p>
+      <p class="detalhe"><em>Atuam conforme a abertura e cooperação do batizado.</em></p>
+    </div>
+
+    <div class="efeito-card">
+      <span class="efeito-icone">🔐</span>
+      <h4>Caráter Indelével</h4>
+      <p>Marca permanente e irrepetível na alma — pertença a Cristo que nenhum pecado apaga.</p>
+      <p class="detalhe"><em>Por isso o Batismo jamais se repete.</em></p>
+    </div>
+
+    <div class="efeito-card">
+      <span class="efeito-icone">🚪</span>
+      <h4>Acesso aos Sacramentos</h4>
+      <p>O Batismo abre a porta para todos os demais sacramentos: Eucaristia, Confirmação, Penitência...</p>
+      <p class="detalhe"><em>Sem Batismo, nenhum outro sacramento pode ser recebido.</em></p>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================
+     VOZES DOS SANTOS
+     ================================================ -->
+<section class="estudo-section" id="santos">
+  <h3>🙏 Vozes dos Santos e Doutores da Igreja</h3>
+
+  <p class="aviso-citacao">
+    As citações abaixo refletem fielmente o pensamento dos autores indicados,
+    mas algumas são sínteses doutrinárias ou adaptações de seus escritos,
+    não necessariamente transcrições literais. Para citação acadêmica,
+    consulte as obras originais referenciadas na seção de Fontes.
+  </p>
+
+  <p class="intro-santos">
+    Ao longo de dois milênios, os maiores espíritos da Igreja contemplaram
+    o mistério do Batismo e nos legaram luzes preciosas.
+  </p>
+
+  <div class="santos-grid">
+    <div class="santo-card">
+      <h4>✝️ Santo Agostinho (354–430)</h4>
+      <blockquote>
+        "O Batismo não é só o perdão dos pecados:
+        é a morte do homem velho e o nascimento do homem novo.
+        Quem foi batizado, morreu; quem morreu em Cristo, viverá para sempre."
+      </blockquote>
+      <p class="nota-santo">
+        Agostinho — <em>In Ioannem</em> e <em>De Baptismo</em> —
+        insistia na transformação <strong>ontológica</strong> real do batizado,
+        não apenas jurídica. Teologia que moldou todo o Ocidente.
+      </p>
+    </div>
+
+    <div class="santo-card">
+      <h4>🕯️ São João Crisóstomo (347–407)</h4>
+      <blockquote>
+        "A pia batismal é ao mesmo tempo sepulcro e mãe:
+        nela enterramos o homem velho e dali nasce o homem novo,
+        gerado pelo Espírito Santo."
+      </blockquote>
+      <p class="nota-santo">
+        Crisóstomo nas <em>Catequeses Batismais</em> —
+        imagem clássica da pia como <strong>útero e túmulo</strong>.
+        Pregava com urgência sobre a eficácia real do sacramento.
+      </p>
+    </div>
+
+    <div class="santo-card">
+      <h4>📖 Santo Cirilo de Jerusalém (313–386)</h4>
+      <blockquote>
+        "Descestes nas águas, portadores do pecado,
+        e subistes portadores da graça.
+        Ide, pois, para aquele que vos convocou."
+      </blockquote>
+      <p class="nota-santo">
+        Das <em>Catequeses Mistagógicas</em> — Cirilo ensinava
+        os recém-batizados na semana após a Páscoa, revelando
+        os <strong>mistérios sacramentais</strong> passo a passo.
+      </p>
+    </div>
+
+    <div class="santo-card">
+      <h4>⛪ Santo Tomás de Aquino (1225–1274)</h4>
+      <blockquote>
+        "O Batismo é a porta dos sacramentos e a porta do Reino.
+        Sem ele, os outros sacramentos não podem ser recebidos
+        nem a salvação alcançada."
+      </blockquote>
+      <p class="nota-santo">
+        <em>Summa Theologiae</em>, III, q. 66 —
+        Tomás sistematizou a teologia sacramental com precisão:
+        <strong>matéria + forma + intenção = eficácia ex opere operato</strong>.
+      </p>
+    </div>
+
+    <div class="santo-card">
+      <h4>🔥 São Cirilo de Alexandria (376–444)</h4>
+      <blockquote>
+        "Pelo Batismo somos chamados a participar da natureza divina.
+        Esta é a grandeza do dom: não apenas o perdão,
+        mas a participação na vida do próprio Deus."
+      </blockquote>
+      <p class="nota-santo">
+        Cirilo de Alexandria, <em>Commentarii in Ioannem</em> —
+        enfatizava a dimensão da <strong>theosis</strong> (divinização)
+        já iniciada no Batismo. Visão característica da tradição oriental.
+      </p>
+    </div>
+
+    <div class="santo-card">
+      <h4>💫 São João Paulo II (1920–2005)</h4>
+      <blockquote>
+        "O Batismo é o fundamento de toda a vida cristã.
+        Nele nos tornamos filhos de Deus, membros de Cristo
+        e templos do Espírito Santo."
+      </blockquote>
+      <p class="nota-santo">
+        <em>Catecismo da Igreja Católica</em>, prefácio —
+        João Paulo II sempre insistia na <strong>dignidade baptismal</strong>
+        como base de toda a identidade cristã e vocação missionária.
+      </p>
+    </div>
+
+    <div class="santo-card">
+      <h4>🕊️ Papa Bento XVI (1927–2022)</h4>
+      <blockquote>
+        "Somente quando compreendemos que o Batismo
+        nos insere no mistério pascal de Cristo —
+        Sua morte e ressurreição — entendemos quem somos como cristãos."
+      </blockquote>
+      <p class="nota-santo">
+        Homilia na Vigília Pascal, 2008 —
+        Bento XVI sempre unia o Batismo ao <strong>mistério pascal</strong>:
+        não há identidade cristã sem participação na morte e ressurreição de Cristo.
+      </p>
+    </div>
+
+    <div class="santo-card">
+      <h4>🌟 Papa Francisco (1936–)</h4>
+      <blockquote>
+        "O Batismo nos faz membros do Corpo de Cristo
+        e do povo de Deus.
+        Não é um ato privado — é ato de Igreja,
+        nascimento numa família e numa missão."
+      </blockquote>
+      <p class="nota-santo">
+        Audiência Geral, fevereiro de 2014 —
+        Francisco enfatiza a dimensão <strong>comunitária e missionária</strong>:
+        o batizado não é salvo para si mesmo, mas enviado para os outros.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================
+     NA PRÁTICA
+     ================================================ -->
+<section class="estudo-section" id="pratica">
+  <h3>🎯 O Batismo na Prática Cristã</h3>
+
+  <div class="pratica-sections">
+
+    <div class="pratica-bloco">
+      <h4>👶 Batismo Infantil versus Batismo de Adultos</h4>
+      <p>A Igreja Católica pratica e valoriza ambos como legítimos e plenos.
+      O debate não é "qual é válido" — ambos o são —
+      mas compreender as especificidades de cada um.</p>
+      <div class="comparacao">
+        <div class="item-comparacao">
+          <h5>🍼 Batismo Infantil</h5>
+          <ul>
+            <li>Atestado na Igreja desde o séc. II</li>
+            <li>Fé da família e da comunidade eclesial</li>
+            <li>Remove pecado original imediatamente</li>
+            <li>Inserção na comunidade desde o início</li>
+            <li>Exige formação cristã posterior</li>
+            <li>Base: CIC n° 1250–1252</li>
+          </ul>
+        </div>
+        <div class="item-comparacao">
+          <h5>👨 Batismo de Adultos (RICA)</h5>
+          <ul>
+            <li>Processo catecumenal de iniciação</li>
+            <li>Fé pessoal, consciente e livre</li>
+            <li>Remove pecado original e pessoais</li>
+            <li>Conversão explícita e deliberada</li>
+            <li>Celebrado preferencialmente na Vigília Pascal</li>
+            <li>Base: CIC n° 1247–1249</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="pratica-bloco">
+      <h4>🛁 Preparando o Batismo de uma Criança</h4>
+      <div class="lista-pratica">
+        <div class="item-lista">
+          <strong>1 — Escolha de Padrinhos com Critério</strong>
+          <p>Padrinhos são <em>responsáveis espirituais</em> da criança perante Deus e a Igreja.
+          O Direito Canônico (c. 874) exige: batizados, confirmados, praticantes,
+          de vida exemplar e com mais de 16 anos.
+          Não escolha por afeição apenas — escolha por testemunho de fé.</p>
+        </div>
+        <div class="item-lista">
+          <strong>2 — Catequese Familiar Prévia</strong>
+          <p>A paróquia normalmente exige ao menos um encontro de preparação.
+          Aproveite-o genuinamente. A família inteira deve compreender:
+          não é festejo social, é sacramento.</p>
+        </div>
+        <div class="item-lista">
+          <strong>3 — Guardar a Vela Batismal</strong>
+          <p>A vela acesa no Batismo acompanha toda a vida.
+          Acenda-a na Crisma, no Casamento, nos aniversários de fé.
+          Escreva no verso: nome, data, padrinho/madrinha, pároco.</p>
+        </div>
+        <div class="item-lista">
+          <strong>4 — Participar Atentamente da Liturgia</strong>
+          <p>Não vá como espectador. Renuncie ao pecado quando solicitado.
+          Afirme o Credo com convicção.
+          É ato sacramental, não espetáculo fotográfico.</p>
+        </div>
+        <div class="item-lista">
+          <strong>5 — Cuidado com o Nome Batismal</strong>
+          <p>A tradição católica recomenda nomear a criança com um <strong>santo patrono</strong>
+          (CIC c. 855). Esse santo será intercessor e modelo para a vida inteira.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="pratica-bloco">
+      <h4>🕯️ Vivendo o Batismo ao Longo da Vida</h4>
+      <div class="lista-pratica">
+        <div class="item-lista">
+          <strong>Renovação dos Votos Batismais — Vigília Pascal</strong>
+          <p>A Igreja inteira renova seus votos batismais a cada Páscoa.
+          É o momento mais solene do ano litúrgico para recordar quem somos.
+          Não falte à Vigília Pascal.</p>
+        </div>
+        <div class="item-lista">
+          <strong>Celebrar o Aniversário do Batismo</strong>
+          <p>Seu "segundo nascimento" merece tanta memória quanto o primeiro.
+          Comemore com uma Missa votiva, leitura do Evangelho do Batismo,
+          ou simplesmente acendendo a vela batismal em família.</p>
+        </div>
+        <div class="item-lista">
+          <strong>A Água Benta como Memória Diária</strong>
+          <p>Benzer-se com água benta ao entrar numa Igreja
+          é <strong>gesto de memória batismal</strong>.
+          A Igreja sempre ensinou isso — não é superstição, é teologia vivida.</p>
+        </div>
+        <div class="item-lista">
+          <strong>Exercer a Vocação Batismal Missionária</strong>
+          <p>Todo batizado é <strong>sacerdote, profeta e rei</strong> (CIC n° 1268).
+          Isso não é apenas título — é missão:
+          oferecer a Deus o próprio dia, anunciar o Evangelho com a vida,
+          e servir ao próximo com autoridade de filho de Deus.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="pratica-bloco">
+      <h4>⚡ Nota para os Fiéis da Renovação Carismática</h4>
+      <p>A experiência do "Batismo no Espírito Santo" é reconhecida pela Igreja
+      como graça espiritual autêntica e preciosa.
+      Contudo, teologicamente ela <strong>não é um sacramento distinto</strong>:
+      é uma <em>atualização vivencial</em> dos dons já conferidos sacramentalmente no Batismo.</p>
+      <blockquote class="citacao-carismatica">
+        "Os dons do Espírito Santo são dados no Batismo e na Confirmação.
+        O que a experiência carismática realiza é despertar, ativar e manifestar
+        conscientemente aquilo que o Espírito já havia infundido sacramentalmente."
+        <br>— Síntese doutrinal a partir do CIC nn. 798–801 e 1266
+      </blockquote>
+      <p>Celebre a experiência — e entenda que ela aprofunda o Batismo que você já recebeu.</p>
+    </div>
+
+    <div class="pratica-bloco">
+      <h4>👑 Nota para os Fiéis de Tradição Litúrgica</h4>
+      <p>O Rito Extraordinário do Batismo (Forma Tridentina) é totalmente válido e lícito,
+      celebrado em comunidades com permissão ordinária.
+      Distingue-se pelo maior número de exorcismos,
+      a ênfase explícita no combate espiritual
+      e a solene sequência de unções.</p>
+      <blockquote class="citacao-tradicional">
+        "No rito tradicional, cada gesto, cada exorcismo e cada unção
+        declara a gravidade do que acontece: Cristo arranca uma alma das trevas
+        e a consagra à luz. Não é celebração sentimental — é batalha espiritual vencida."
+        <br>— Nota pastoral; ambos os ritos são plenamente válidos.
+      </blockquote>
+    </div>
+
+  </div>
+</section>
+
+<!-- ================================================
+     FAQ
+     ================================================ -->
+<section class="estudo-section" id="faq">
+  <h3>❓ Perguntas Frequentes</h3>
+
+  <div class="faq-container">
+
+    <div class="faq-item">
+      <div class="faq-pergunta" onclick="toggleFaq(this)">
+        <h4>Se meu batismo é questionável, posso ser batizado novamente?</h4>
+        <span class="faq-seta">▼</span>
+      </div>
+      <div class="faq-resposta">
+        <p>Se há dúvida séria e fundamentada sobre a validade do batismo anterior
+        (uso de líquido diferente de água, fórmula trinitária ausente, falta de intenção),
+        a Igreja admite o <strong>Batismo Condicional</strong>:</p>
+        <blockquote>"Se não és ainda batizado, eu te batizo em nome do Pai, do Filho e do Espírito Santo."</blockquote>
+        <p>Isso reconhece a possível validade anterior enquanto assegura a validade presente.
+        Fale com seu pároco para avaliar o caso.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-pergunta" onclick="toggleFaq(this)">
+        <h4>Uma criança batizada que morre antes da Confirmação está salva?</h4>
+        <span class="faq-seta">▼</span>
+      </div>
+      <div class="faq-resposta">
+        <p>Sim, plenamente. O Batismo é completo em si mesmo.
+        A Confirmação aprofunda e sela o que o Batismo iniciou,
+        mas não é complementação <em>necessária</em> para a salvação.</p>
+        <p>Uma criança batizada, morta em inocência, é membro pleno da Igreja
+        e herdeira da vida eterna (CIC n° 1250).</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-pergunta" onclick="toggleFaq(this)">
+        <h4>Um leigo pode batizar? O batismo é válido?</h4>
+        <span class="faq-seta">▼</span>
+      </div>
+      <div class="faq-resposta">
+        <p>Sim — em caso de perigo de morte, qualquer pessoa pode batizar validamente (CIC c. 861 §2):</p>
+        <ul>
+          <li>Use água natural (não sumo, não leite)</li>
+          <li>Derrame sobre a cabeça</li>
+          <li>Diga simultaneamente: <em>"Eu te batizo em nome do Pai, do Filho e do Espírito Santo"</em></li>
+          <li>Tenha intenção de fazer o que a Igreja faz</li>
+        </ul>
+        <p>Se a pessoa sobreviver, o batismo de emergência deve ser notificado à paróquia
+        para registro e celebração dos demais ritos.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-pergunta" onclick="toggleFaq(this)">
+        <h4>O batismo protestante é reconhecido pela Igreja Católica?</h4>
+        <span class="faq-seta">▼</span>
+      </div>
+      <div class="faq-resposta">
+        <p>Em geral sim, se realizado com validade. A Igreja reconhece batismos de outras denominações se:</p>
+        <ul>
+          <li>Usou-se água natural</li>
+          <li>Invocou-se a Santíssima Trindade (Pai, Filho e Espírito Santo)</li>
+          <li>Havia intenção de fazer o que o Batismo cristão faz</li>
+        </ul>
+        <p>Exceção: denomin ações que negam a Trindade (ex.: Testemunhas de Jeová, Mórmons)
+        têm batismos considerados inválidos pela Igreja Católica.
+        O adulto proveniente dessas tradições é batizado, não "recebido".</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-pergunta" onclick="toggleFaq(this)">
+        <h4>Posso batizar em casa ou é obrigatório na igreja?</h4>
+        <span class="faq-seta">▼</span>
+      </div>
+      <div class="faq-resposta">
+        <p>Ordinariamente, o Batismo deve ser celebrado na Igreja paroquial,
+        na pia batismal consagrada, em celebração comunitária (CIC c. 857).</p>
+        <p>Em perigo de morte iminente, qualquer lugar é válido e necessário.
+        Para outras situações excepcionais, é preciso licença do ordinário local.
+        Consulte sua paróquia.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-pergunta" onclick="toggleFaq(this)">
+        <h4>Qual é a diferença entre imersão, aspersão e infusão?</h4>
+        <span class="faq-seta">▼</span>
+      </div>
+      <div class="faq-resposta">
+        <p>São os três modos válidos de administrar o Batismo (CIC c. 854):</p>
+        <ul>
+          <li><strong>Imersão:</strong> o batizando é submerso na água — simbolismo mais rico da morte e ressurreição</li>
+          <li><strong>Infusão:</strong> água é derramada sobre a cabeça — forma mais comum no Ocidente</li>
+          <li><strong>Aspersão:</strong> água é aspergida sobre a pessoa — menos comum, reservada a situações especiais</li>
+        </ul>
+        <p>Todos são válidos. O pároco escolhe conforme a tradição da comunidade e as circunstâncias.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-pergunta" onclick="toggleFaq(this)">
+        <h4>O Batismo "cancela" se a pessoa deixa a fé?</h4>
+        <span class="faq-seta">▼</span>
+      </div>
+      <div class="faq-resposta">
+        <p>Não. O caráter batismal é <strong>indelével</strong> — permanece para sempre,
+        independentemente de qualquer ato humano posterior (CIC n° 1272).</p>
+        <p>Quem abandona a fé permanece batizado ontologicamente.
+        Por isso, ao retornar à Igreja após apostasia,
+        não se administra novo batismo — faz-se apenas a reconciliação sacramental (Confissão).
+        A marca de Deus não se apaga por decisão humana.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-pergunta" onclick="toggleFaq(this)">
+        <h4>Quando devo renovar meus votos batismais?</h4>
+        <span class="faq-seta">▼</span>
+      </div>
+      <div class="faq-resposta">
+        <p>A renovação pública mais solene é na <strong>Vigília Pascal</strong> — coração do ano litúrgico.
+        Além disso, é espiritualmente fecundo renovar os votos:</p>
+        <ul>
+          <li>No aniversário do próprio Batismo</li>
+          <li>Na recepção da Crisma e Eucaristia</li>
+          <li>No dia do Casamento</li>
+          <li>Em retiros espirituais e momentos de conversão</li>
+          <li>Pessoalmente, sempre que sentir o chamado a reafirmar a fé</li>
+        </ul>
+        <p>Não há limite. Cada renovação é fruto e expressão da graça batismal viva.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ================================================
+     FONTES BIBLIOGRÁFICAS
+     ================================================ -->
+<section class="estudo-section" id="fontes">
+  <h3>📚 Fontes e Referências</h3>
+
+  <div class="fontes-section">
+    <h4>📖 Fontes Primárias e Documentos da Igreja</h4>
+    <div class="fontes-grid">
+      <div class="fonte-item">
+        <strong>Catecismo da Igreja Católica</strong>
+        <span>Nn. 1213–1284 (Sobre o Batismo)</span>
+      </div>
+      <div class="fonte-item">
+        <strong>Código de Direito Canônico</strong>
+        <span>Cânones 849–878</span>
+      </div>
+      <div class="fonte-item">
+        <strong>Sacrosanctum Concilium</strong>
+        <span>Constituição sobre a Liturgia, Vaticano II</span>
+      </div>
+      <div class="fonte-item">
+        <strong>Summa Theologiae</strong>
+        <span>Santo Tomás de Aquino, III, qq. 66–71</span>
+      </div>
+      <div class="fonte-item">
+        <strong>Didaché</strong>
+        <span>Capítulo VII — O Batismo (~100 d.C.)</span>
+      </div>
+      <div class="fonte-item">
+        <strong>Catequeses Mistagógicas</strong>
+        <span>São Cirilo de Jerusalém (séc. IV)</span>
+      </div>
+      <div class="fonte-item">
+        <strong>De Baptismo</strong>
+        <span>Santo Agostinho de Hipona</span>
+      </div>
+      <div class="fonte-item">
+        <strong>Catequeses Batismais</strong>
+        <span>São João Crisóstomo</span>
+      </div>
+      <div class="fonte-item">
+        <strong>Concílio de Trento</strong>
+        <span>Sessão VII — Decreto sobre os Sacramentos (1547)</span>
+      </div>
+      <div class="fonte-item">
+        <strong>Concílio de Florença</strong>
+        <span>Decreto para os Armênios (1439)</span>
+      </div>
+      <div class="fonte-item">
+        <strong>Lumen Gentium</strong>
+        <span>Nn. 7, 11 — Vaticano II</span>
+      </div>
+      <div class="fonte-item">
+        <strong>Audiência Geral — Bento XVI</strong>
+        <span>Série sobre os sacramentos, 2012</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================
+     CONCLUSÃO
+     ================================================ -->
+<section class="conclusao" id="conclusao">
+  <h3>🕊️ Conclusão — O Batismo é Sempre Presente</h3>
+
+  <div class="texto-conclusao">
+    <p>
+      Caro leitor, o Batismo não é memória do passado — é
+      <strong>realidade viva e operante</strong> em você neste exato momento.
+      Aquelas águas que tocaram sua testa naquele dia
+      continuam a agir, invisíveis mas reais, na profundidade de sua alma.
+    </p>
+
+    <p>
+      Quer você tenha sido batizado aos oito dias de vida,
+      ou aos oitenta anos de idade, a realidade é a mesma:
+      <strong>você é criatura nova em Cristo</strong>.
+      A antiga natureza foi sepultada. O Espírito Santo habita em você.
+      Você é templo vivo de Deus.
+    </p>
+
+    <p>
+      Essa verdade não depende de seus sentimentos,
+      nem de sua fidelidade, nem de sua santidade atual.
+      Ela foi gravada por Deus em sua alma com marca que nenhum pecado apaga,
+      nenhuma apostasia cancela, nenhuma fraqueza humana desfaz.
+    </p>
+
+    <p>
+      <strong>Você foi batizado. Você pertence a Cristo.
+      Esse compromisso não tem prazo de validade.</strong>
+    </p>
+
+    <p>
+      O que resta é a sua resposta cotidiana:
+      viver à altura daquilo que você já é —
+      filho de Deus, membro do Corpo de Cristo,
+      templo do Espírito Santo,
+      herdeiro do Reino dos Céus.
+    </p>
+
+    <p class="assinatura-conclusao">
+      "Não vos esqueceis de que fostes batizados,
+      e que o Batismo é o fundamento de toda a vossa vida cristã."
+      <br><em>— São João Paulo II, Audiência Geral, 1980</em>
+    </p>
+  </div>
+</section>
+
+<!-- RODAPÉ -->
+<footer>
+  © 2026 — Lux Fidei · Luz da Fé Católica
+</footer>
+
+<script>
+// Sidebar
+function abrirMenu() {
+  document.getElementById('sidebar').classList.add('aberta');
+}
+function fecharMenu() {
+  document.getElementById('sidebar').classList.remove('aberta');
+}
+document.addEventListener('click', function(e) {
+  const sidebar = document.getElementById('sidebar');
+  if (sidebar.classList.contains('aberta') &&
+      !sidebar.contains(e.target) &&
+      !e.target.classList.contains('menu-btn')) {
+    fecharMenu();
+  }
+});
+
+// Índice
+function toggleIndice() {
+  const menu = document.getElementById('indiceMenu');
+  menu.classList.toggle('aberto');
+}
+document.querySelectorAll('.indice-menu a').forEach(link => {
+  link.addEventListener('click', () => {
+    document.getElementById('indiceMenu').classList.remove('aberto');
+  });
+});
+
+// FAQ
+function toggleFaq(el) {
+  const item    = el.closest('.faq-item');
+  const resp    = item.querySelector('.faq-resposta');
+  const seta    = item.querySelector('.faq-seta');
+  const aberta  = resp.classList.contains('aberta');
+
+  // Fechar todos
+  document.querySelectorAll('.faq-resposta').forEach(r => r.classList.remove('aberta'));
+  document.querySelectorAll('.faq-seta').forEach(s => s.classList.remove('aberta'));
+
+  if (!aberta) {
+    resp.classList.add('aberta');
+    seta.classList.add('aberta');
+  }
+}
+
+// Scroll suave com offset (índice sticky)
+document.querySelectorAll('a[href^="#"]').forEach(link => {
+  link.addEventListener('click', function(e) {
+    const id = this.getAttribute('href').slice(1);
+    const el = document.getElementById(id);
+    if (el) {
+      e.preventDefault();
+      const offset = 70;
+      const top = el.getBoundingClientRect().top + window.scrollY - offset;
+      window.scrollTo({ top, behavior: 'smooth' });
+    }
+  });
+});
+
+// Animação de entrada nas seções
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.style.opacity = '1';
+      entry.target.style.transform = 'translateY(0)';
+    }
+  });
+}, { threshold: 0.08 });
+
+document.querySelectorAll(
+  '.card-teologia, .biblia-card, .efeito-card, .santo-card, .passo, .timeline-item'
+).forEach(el => {
+  el.style.opacity = '0';
+  el.style.transform = 'translateY(20px)';
+  el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+  observer.observe(el);
+});
+</script>
+</body>
+</html>
