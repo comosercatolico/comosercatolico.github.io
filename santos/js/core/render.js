@@ -1,4 +1,4 @@
-import { setarImagemOtimizada, gerarPlaceholderSVG } from './imagem-loader.js';
+import { setarImagemOtimizada } from "../utils/imagem-loader.js";
 
 const appearanceObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
@@ -278,7 +278,7 @@ export async function renderizarGrid(lista, grid, abrirModal) {
                     box-shadow:0 4px 12px rgba(0,0,0,0.2);
                 ">
                     <img
-                        src="imagens/loading-placeholder.svg"
+                        src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 300'%3E%3Crect fill='%23e8e0d4' width='200' height='300'/%3E%3C/svg%3E"
                         alt="${santo.nome}"
                         loading="lazy"
                         style="
@@ -324,7 +324,7 @@ export async function renderizarGrid(lista, grid, abrirModal) {
 
         const img = card.querySelector('img');
         
-        // Carrega a imagem otimizada
+        // Carrega a imagem otimizada (async, sem bloquear)
         (async () => {
             await setarImagemOtimizada(img, slug);
             _extrairECachearCor(slug, img);
@@ -415,7 +415,7 @@ export async function renderizarHistorico(baseDados, abrirModal) {
                     box-shadow:0 4px 14px rgba(0,0,0,0.25);
                 ">
                     <img
-                        src="imagens/loading-placeholder.svg"
+                        src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 300'%3E%3Crect fill='%23e8e0d4' width='200' height='300'/%3E%3C/svg%3E"
                         alt="${nome}"
                         loading="lazy"
                         style="
@@ -455,7 +455,7 @@ export async function renderizarHistorico(baseDados, abrirModal) {
 
         const img = card.querySelector('img');
         
-        // Carrega a imagem otimizada
+        // Carrega a imagem otimizada (async, sem bloquear)
         (async () => {
             await setarImagemOtimizada(img, slug);
             _extrairECachearCor(slug, img);
