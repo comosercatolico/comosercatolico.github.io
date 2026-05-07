@@ -5,12 +5,12 @@ const menuHTML = `
   </div>
 
   <ul class="sl-lista">
-    <li><a href="presbiteros/"><span class="sl-nome">História</span></a></li>
+    <li><a href="presbiteros/sao-joao-maria-vianney.html"><span class="sl-nome">História</span></a></li>
     <li><a href="presbiteros/presbiteros-dados/sao-joao-maria-vianney-dados/ars.html"><span class="sl-nome">Ars</span></a></li>
     <li><a href="presbiteros/presbiteros-dados/sao-joao-maria-vianney-dados/confessionario.html"><span class="sl-nome">O confessionário</span></a></li>
     <li><a href="presbiteros/presbiteros-dados/sao-joao-maria-vianney-dados/combate.html"><span class="sl-nome">Combate Espiritual</span></a></li>
     <li><a href="presbiteros/presbiteros-dados/sao-joao-maria-vianney-dados/espiritualidade.html"><span class="sl-nome">Espiritualidade</span></a></li>
-    <li><a href="relacoes.html"><span class="sl-nome">Relações</span></a></li>
+    <li><a href="presbiteros/presbiteros-dados/sao-joao-maria-vianney-dados/relacoes.html"><span class="sl-nome">Relações</span></a></li>
     <li><a href="presbiteros/presbiteros-dados/sao-joao-maria-vianney-dados/milagres.html"><span class="sl-nome">Milagres</span></a></li>
     <li><a href="presbiteros/presbiteros-dados/sao-joao-maria-vianney-dados/morte.html"><span class="sl-nome">Morte</span></a></li>
     <li><a href="presbiteros/presbiteros-dados/sao-joao-maria-vianney-dados/legado.html"><span class="sl-nome">Legado</span></a></li>
