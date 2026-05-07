@@ -1,197 +1,67 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <!-- Charset e Viewport obrigatórios -->
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  <!-- SEO Básico -->
-  <title>Santos – Lux Fidei | Luz da Fé Católica</title>
-  <meta name="description" content="Conheça a vida, milagres e ensinamentos dos santos da Igreja Católica. Seção completa com biografias, datas de festa e história.">
-  <meta name="theme-color" content="#1a1a1a">
-  <meta name="color-scheme" content="light dark">
-  
-  <!-- Open Graph (para compartilhamento em redes sociais) -->
-  <meta property="og:title" content="Santos – Lux Fidei">
-  <meta property="og:description" content="Conheça a vida dos santos da Igreja Católica">
-  <meta property="og:type" content="website">
-  <meta property="og:image" content="https://seusite.com/og-image.png">
-  <meta property="og:url" content="https://seusite.com/santos/">
-  
-  <!-- Canonical URL -->
-  <link rel="canonical" href="https://seusite.com/santos/">
-  
-  <!-- Favicon -->
-  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
-  <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
-  
-  <!-- Preload de Fonts (melhora performance) -->
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Inter:wght@300;400;600&display=swap">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Inter:wght@300;400;600&display=swap">
-  
-  <!-- CSS crítico inline (acima do fold) - OPCIONAL -->
-  <style>
-    :root {
-      --primary-color: #1a1a1a;
-      --accent-color: #d4af37;
-      --background: #ffffff;
-      --text: #000000;
-    }
-  </style>
-  
-  <!-- CSS principal -->
-  <link rel="stylesheet" href="../css/reset.css">
-  <link rel="stylesheet" href="../css/variables.css">
-  <link rel="stylesheet" href="../css/base.css">
-  <link rel="stylesheet" href="../css/layout.css">
-  <link rel="stylesheet" href="../css/components.css">
-  <link rel="stylesheet" href="css/santos.css">
+<meta charset="UTF-8">
+<title>Santos – Lux Fidei</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="santos.css">
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 <body>
-  <!-- Skip Link para acessibilidade -->
-  <a href="#main-content" class="skip-link">Pular para conteúdo principal</a>
-  
-  <!-- MENU LATERAL (Drawer) -->
-  <aside class="sidebar" id="sidebar" aria-label="Menu de navegação" aria-hidden="true">
-    <div class="sidebar-header">
-      <h2 class="sr-only">Menu de Navegação</h2>
-      <button class="sidebar-close" id="sidebarClose" aria-label="Fechar menu">
-        <span aria-hidden="true">✖</span>
-      </button>
-    </div>
-    
-    <nav class="sidebar-nav">
-      <ul role="list">
-        <li><a href="../index.html" class="sidebar-link">Início</a></li>
-        <li><a href="../index.html#liturgia" class="sidebar-link">Liturgia diária</a></li>
-        <li><a href="santos.html" class="sidebar-link active" aria-current="page">Santos</a></li>
-        <li><a href="../biblioteca/biblioteca.html" class="sidebar-link">Biblioteca</a></li>
-        <li><a href="../estudos/estudos.html" class="sidebar-link">Estudos</a></li>
-        <li><a href="../jogos/jogos.html" class="sidebar-link">Jogos</a></li>
-      </ul>
-    </nav>
-    
-    <hr class="sidebar-divider" aria-hidden="true">
-    
-    <nav class="sidebar-nav sidebar-nav--secondary">
-      <ul role="list">
-        <li><a href="../sobre.html" class="sidebar-link">Sobre</a></li>
-        <li><a href="../privacy.html" class="sidebar-link">Privacidade</a></li>
-      </ul>
-    </nav>
-  </aside>
-  
-  <!-- HEADER -->
-  <header class="header" role="banner">
-    <div class="header-container">
-      <button class="header-menu-btn" id="menuBtn" aria-label="Abrir menu de navegação" aria-controls="sidebar" aria-expanded="false">
-        <span aria-hidden="true">☰</span>
-      </button>
-      
-      <div class="header-brand">
-        <h1 class="header-title">Lux Fidei</h1>
-        <p class="header-tagline">Luz da Fé Católica</p>
-      </div>
-      
-      <!-- Espaço para possíveis ícones adicionais -->
-      <div class="header-actions"></div>
-    </div>
-  </header>
-  
-  <!-- MENU PRINCIPAL (Breadcrumb/Navbar) -->
-  <nav class="main-nav" role="navigation" aria-label="Navegação principal">
-    <ul class="main-nav-list" role="list">
-      <li class="main-nav-item">
-        <a href="../index.html" class="main-nav-link">Início</a>
-      </li>
-      <li class="main-nav-item">
-        <a href="../liturgia_diaria/liturgiadiaria.html" class="main-nav-link">Liturgia Diária</a>
-      </li>
-      <li class="main-nav-item">
-        <a href="santos.html" class="main-nav-link active" aria-current="page">Santos</a>
-      </li>
-      <li class="main-nav-item">
-        <a href="../biblioteca/biblioteca.html" class="main-nav-link">Biblioteca</a>
-      </li>
-      <li class="main-nav-item">
-        <a href="../estudos/estudos.html" class="main-nav-link">Estudos</a>
-      </li>
-      <li class="main-nav-item">
-        <a href="../jogos/jogos.html" class="main-nav-link">Jogos</a>
-      </li>
-    </ul>
-    <span class="main-nav-indicator" aria-hidden="true"></span>
-  </nav>
-  
-  <!-- CONTEÚDO PRINCIPAL -->
-  <main id="main-content">
-    <!-- CABEÇALHO -->
-    <section class="page-header" aria-labelledby="page-title">
-      <div class="page-header-container">
-        <h2 id="page-title">Santos da Igreja</h2>
-        <p class="page-description">
-          A Igreja Católica reconhece ao longo dos séculos homens e mulheres que viveram de maneira heroica a fé cristã. Nesta seção você poderá conhecer a vida, os milagres e os ensinamentos de cada santo.
-        </p>
-      </div>
-    </section>
-    
-    <!-- FILTRO DE CATEGORIAS -->
-    <section class="categories-section" aria-labelledby="categories-title">
-      <h3 id="categories-title" class="sr-only">Filtrar por categoria</h3>
-      <div class="categories-container" id="categoriasContainer" role="group" aria-label="Categorias de santos"></div>
-    </section>
-    
-    <!-- PESQUISA -->
-    <section class="search-section">
-      <form class="search-form" role="search" onsubmit="return false;">
-        <label for="pesquisaSantos" class="sr-only">Pesquisar santo por nome</label>
-        <input 
-          type="search"
-          id="pesquisaSantos"
-          class="search-input"
-          placeholder="🔍 Pesquisar santo..."
-          aria-label="Campo de busca de santos"
-          autocomplete="off"
-        >
-      </form>
-    </section>
-    
-    <!-- HISTÓRICO -->
-    <section class="history-section" id="historicoSection" aria-labelledby="history-title" style="display:none;">
-      <div class="history-header">
-        <h3 id="history-title" class="history-title">Continue lendo</h3>
-        <button class="history-clear-btn" id="historicoLimpar" aria-label="Limpar histórico de leitura">
-          Limpar histórico
-        </button>
-      </div>
-      <div class="history-scroll" id="historicoScroll" role="region" aria-label="Histórico de santos visualizados"></div>
-    </section>
-    
-    <!-- GRID DE SANTOS -->
-    <section class="saints-section" aria-labelledby="saints-title">
-      <h3 id="saints-title" class="sr-only">Lista de santos</h3>
-      <div class="saints-grid" id="santosGrid" role="list"></div>
-    </section>
-  </main>
-  
-  <!-- FOOTER -->
-  <footer class="footer" role="contentinfo">
-    <div class="footer-container">
-      <p>&copy; 2026 – Lux Fidei. Todos os direitos reservados.</p>
-      <nav class="footer-nav" aria-label="Links do rodapé">
-        <ul role="list">
-          <li><a href="../privacy.html">Política de Privacidade</a></li>
-          <li><a href="../termos.html">Termos de Uso</a></li>
-          <li><a href="../contato.html">Contato</a></li>
-        </ul>
-      </nav>
-    </div>
-  </footer>
-  
-  <!-- Scripts - Carregamento otimizado -->
-  <script type="module" src="js/main.js" defer></script>
-  <noscript>
-    <p class="noscript-message">Este site requer JavaScript ativado. Por favor, habilite-o em suas configurações de navegador.</p>
-  </noscript>
+<!-- MENU LATERAL -->
+<div class="sidebar" id="sidebar">
+  <a href="#" onclick="fecharMenu()">✖ Fechar</a>
+  <a href="../index.html">Início</a>
+  <a href="../index.html#liturgia">Liturgia diária</a>
+  <a href="santos.html">Santos</a>
+  <a href="../biblioteca/biblioteca.html">Biblioteca</a>
+  <a href="../estudos/estudos.html">Estudos</a>
+  <a href="../jogos/jogos.html">Jogos</a>
+  <hr>
+  <a href="../sobre.html">Sobre</a>
+  <a href="../privacy.html">Privacidade</a>
+</div>
+<!-- HEADER -->
+<header>
+  <span class="menu-btn" onclick="abrirMenu()">☰</span>
+  <h1>Lux Fidei</h1>
+  <p style="opacity:0.8">Luz da Fé Católica</p>
+</header>
+<!-- MENU PRINCIPAL -->
+<nav class="menu">
+  <a href="../index.html" class="menu-item">Início</a>
+  <a href="../liturgia_diaria/liturgiadiaria.html" class="menu-item">Liturgia Diária</a>
+  <a href="santos.html" class="menu-item active">Santos</a>
+  <a href="../biblioteca/biblioteca.html" class="menu-item">Biblioteca</a>
+  <a href="../estudos/estudos.html" class="menu-item">Estudos</a>
+  <a href="../jogos/jogos.html" class="menu-item">Jogos</a>
+  <span class="menu-indicator"></span>
+</nav>
+<!-- CABEÇALHO -->
+<section class="santos-header">
+  <h2>Santos da Igreja</h2>
+  <p>A Igreja Católica reconhece ao longo dos séculos homens e mulheres que viveram de maneira heroica a fé cristã. Nesta seção você poderá conhecer a vida, os milagres e os ensinamentos de cada santo.</p>
+</section>
+<!-- FILTRO DE CATEGORIAS -->
+<div class="categorias-container" id="categoriasContainer"></div>
+<!-- PESQUISA -->
+<div class="santos-pesquisa">
+  <input type="text" id="pesquisaSantos" placeholder="🔍  Pesquisar santo...">
+</div>
+<!-- HISTÓRICO -->
+<section class="historico-section" id="historicoSection" style="display:none;">
+  <div class="historico-header">
+    <h3 class="historico-titulo">Continue lendo</h3>
+    <button class="historico-limpar" id="historicoLimpar">Limpar histórico</button>
+  </div>
+  <div class="historico-scroll" id="historicoScroll"></div>
+</section>
+<!-- GRID DE SANTOS -->
+<section class="santos-grid" id="santosGrid"></section>
+<footer>
+  © 2026 – Lux Fidei
+</footer>
+<script type="module" src="js/main.js"></script>
 </body>
 </html>
