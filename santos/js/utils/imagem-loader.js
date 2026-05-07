@@ -1,58 +1,36 @@
 // ─────────────────────────────────────────────
-//  CACHE DE IMAGENS DISPONÍVEIS
+//  SISTEMA SIMPLES DE IMAGENS
+//  Sem verificações, sem HEAD requests
+//  Só usa placeholders quando imagem não carrega
 // ─────────────────────────────────────────────
-const imagemCache = new Map();
-const imagensDisponíveis = new Set();
 
-// ─────────────────────────────────────────────
-//  VERIFICAR EXISTÊNCIA DE IMAGEM (head request)
-// ─────────────────────────────────────────────
-async function verificarImagemExiste(src) {
-    // Usa cache se já verificada
-    if (imagemCache.has(src)) {
-        return imagemCache.get(src);
-    }
+export function setarImagemOtimizada(imgEl, slug) {
+    if (!imgEl) return;
 
-    try {
-        const response = await fetch(src, { method: 'HEAD', cache: 'default' });
-        const existe = response.ok;
-        imagemCache.set(src, existe);
-        return existe;
-    } catch {
-        // Se houver erro (CORS, rede, etc), assume que não existe
-        imagemCache.set(src, false);
-        return false;
-    }
-}
-
-// ─────────────────────────────────────────────
-//  ENCONTRAR MELHOR IMAGEM DISPONÍVEL
-// ─────────────────────────────────────────────
-async function encontrarMelhorImagem(slug) {
-    const caminhos = [
-        `imagens/santos/${slug}.png`,
-        `imagens/santos/${slug}.jpg`,
-        `imagens/santos/${slug}.jpeg`,
-        `imagens/santos/${slug}.webp`,
-        `../imagens/santos/${slug}.png`,
-        `../imagens/santos/${slug}.jpg`,
-        `../imagens/santos/${slug}.jpeg`,
-        `../imagens/santos/${slug}.webp`,
-    ];
-
-    for (const caminho of caminhos) {
-        if (await verificarImagemExiste(caminho)) {
-            imagensDisponíveis.add(slug);
-            return caminho;
+    // Tenta PNG primeiro (mais comum)
+    imgEl.src = `imagens/santos/${slug}.png`;
+    
+    // Se falhar, tenta JPG
+    imgEl.onerror = function() {
+        if (!this._tentouJpg) {
+            this._tentouJpg = true;
+            this.src = `imagens/santos/${slug}.jpg`;
+            return;
         }
-    }
-
-    // Fallback padrão
-    return 'imagens/default.jpg';
+        
+        // Se ambas falharem, usa placeholder SVG
+        if (!this._tentouPlaceholder) {
+            this._tentouPlaceholder = true;
+            this.src = gerarPlaceholderSVG(imgEl.alt || slug);
+            this.style.objectFit = 'contain';
+            this.style.background = '#f5ede0';
+            this.onerror = null; // Para de tentar
+        }
+    };
 }
 
 // ─────────────────────────────────────────────
-//  GERAR PLACEHOLDER COM INITIALS (SVG)
+//  GERAR PLACEHOLDER SVG COM INICIAIS
 // ─────────────────────────────────────────────
 function gerarPlaceholderSVG(nome, cor = '#8b6f3d') {
     const initials = nome
@@ -66,67 +44,27 @@ function gerarPlaceholderSVG(nome, cor = '#8b6f3d') {
 }
 
 // ─────────────────────────────────────────────
-//  SETAR IMAGEM OTIMIZADA EM ELEMENT
+//  PRECARREGAR IMAGENS
+//  SEM FAZER VERIFICAÇÕES - só carrega as reais
 // ─────────────────────────────────────────────
-export async function setarImagemOtimizada(imgEl, slug) {
-    if (!imgEl) return;
-
-    const melhorSrc = await encontrarMelhorImagem(slug);
-
-    if (melhorSrc.includes('default.jpg')) {
-        // Placeholder SVG com iniciais
-        imgEl.src = gerarPlaceholderSVG(imgEl.alt || slug, '#d4af37');
-        imgEl.style.objectFit = 'contain';
-        imgEl.style.background = '#f5ede0';
-        imgEl.dataset.placeholder = 'true';
-    } else {
-        imgEl.src = melhorSrc;
-        imgEl.dataset.placeholder = 'false';
-    }
-
-    // Remove fallback handler que causa 404s
-    imgEl.onerror = null;
-}
-
-// ─────────────────────────────────────────────
-//  PRELOAD DE IMAGENS (background)
-// ─────────────────────────────────────────────
-export async function precarregarImagens(baseDados) {
-    // Carrega em background sem bloquear
-    // Usa um pequeno delay para não sobrecarregar
-    for (const santo of baseDados) {
+export function precarregarImagens(baseDados) {
+    // Cria uma lista de imagens para preload (silencioso)
+    baseDados.forEach(santo => {
         const slug = santo.nome
             .toLowerCase()
             .normalize("NFD")
             .replace(/[\u0300-\u036f]/g, "")
             .replace(/ /g, '-')
             .replace(/'/g, '');
+
+        // Tenta PNG
+        const img1 = new Image();
+        img1.src = `imagens/santos/${slug}.png`;
         
-        // Inicia verificação sem await (background)
-        encontrarMelhorImagem(slug).catch(err => {
-            console.debug(`Erro ao precarregar ${slug}:`, err);
-        });
-    }
-}
-
-// ─────────────────────────────────────────────
-//  VERIFICAR SE IMAGEM EXISTE (para UI)
-// ─────────────────────────────────────────────
-export function imagemDisponível(slug) {
-    return imagensDisponíveis.has(slug);
-}
-
-// ─────────────────────────────────────────────
-//  OBTER CACHE PARA DEBUG
-// ─────────────────────────────────────────────
-export function obterCacheImagens() {
-    return imagemCache;
-}
-
-// ─────────────────────────────────────────────
-//  LIMPAR CACHE (se necessário)
-// ─────────────────────────────────────────────
-export function limparCacheImagens() {
-    imagemCache.clear();
-    imagensDisponíveis.clear();
+        // Se não carregar PNG, tenta JPG
+        img1.onerror = () => {
+            const img2 = new Image();
+            img2.src = `imagens/santos/${slug}.jpg`;
+        };
+    });
 }
