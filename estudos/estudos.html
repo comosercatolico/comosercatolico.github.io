@@ -1,23 +1,16 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-
   <meta charset="UTF-8">
   <title>Estudos – Lux Fidei</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <link rel="stylesheet" href="../style.css">
   <link rel="stylesheet" href="estudos.css">
   <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-
 </head>
 <body>
 
-<!-- ================================================
-     MENU LATERAL (aparece no celular ao clicar ☰)
-     Para adicionar links: copie um <a> e mude o href
-     ================================================ -->
-
+<!-- SIDEBAR -->
 <div class="sidebar" id="sidebar">
   <a href="#" onclick="fecharMenu()">✖ Fechar</a>
   <a href="../index.html">Início</a>
@@ -31,24 +24,14 @@
   <a href="../privacy.html">Privacidade</a>
 </div>
 
-<!-- ================================================
-     CABEÇALHO DO SITE (logo + nome)
-     ================================================ -->
-
+<!-- CABEÇALHO -->
 <header>
   <span class="menu-btn" onclick="abrirMenu()">☰</span>
   <h1>Lux Fidei</h1>
   <p style="opacity:0.8">Luz da Fé Católica</p>
 </header>
 
-<!-- ================================================
-     MENU DE NAVEGAÇÃO SUPERIOR
-     Para adicionar uma página nova:
-     1. Copie um <a class="menu-item">
-     2. Mude o href para o caminho da sua página
-     3. Mude o texto do link
-     ================================================ -->
-
+<!-- NAVEGAÇÃO -->
 <nav class="menu">
   <a href="../index.html" class="menu-item">Início</a>
   <a href="../liturgia_diaria/liturgiadiaria.html" class="menu-item">Liturgia Diária</a>
@@ -59,11 +42,7 @@
   <span class="menu-indicator"></span>
 </nav>
 
-<!-- ================================================
-     CABEÇALHO DA PÁGINA DE ESTUDOS
-     O botão "📜 Histórico" abre o painel lateral direito
-     ================================================ -->
-
+<!-- CABEÇALHO DA PÁGINA -->
 <section class="estudos-header">
   <button class="btn-historico" onclick="toggleHistorico()">
     📜 Histórico
@@ -75,15 +54,7 @@
   </p>
 </section>
 
-<!-- ================================================
-     BOTÕES DE FILTRO POR CATEGORIA
-     Para adicionar uma nova categoria:
-     1. Copie um <button class="categoria-btn">
-     2. Mude o texto (ex: "Mariologia")
-     3. Mude o onclick para filtrar('suacategoria')
-     4. Lembre de usar o mesmo nome no data-cat do card!
-     ================================================ -->
-
+<!-- FILTROS -->
 <div class="categorias">
   <button class="categoria-btn active" onclick="filtrar('todos')">Todos</button>
   <button class="categoria-btn" onclick="filtrar('catequese')">Catequese</button>
@@ -95,25 +66,8 @@
 </div>
 
 <!-- ================================================
-     GRADE DE CARDS DE ESTUDO
-     
-     ✅ COMO ADICIONAR UM NOVO CARD:
-     
-     Copie o bloco abaixo e cole DENTRO desta section,
-     antes do fechamento </section>:
-
-     <div class="estudo-card" data-cat="CATEGORIA" onclick="window.location.href='PASTA/arquivo.html'">
-       <h3>🔖 Título do Estudo</h3>
-       <p>Breve descrição do que será visto neste estudo.</p>
-     </div>
-
-     - data-cat: deve ser igual ao filtrar('') do botão
-       Categorias disponíveis: catequese | sacramentos |
-       moral | igreja | teologia | basico
-     - onclick: caminho para a página do estudo
-     
+     GRADE DE ESTUDOS
      ================================================ -->
-
 <section class="estudos-grid">
 
   <!-- CARD: Concílios Ecumênicos -->
@@ -123,52 +77,59 @@
   </div>
 
   <!-- CARD: Hierarquia da Igreja -->
-  <div class="estudo-card" data-cat="igreja" onclick="window.location.href='hierarquia/hierarquia.html'">
+  <div class="estudo-card" data-cat="igreja"
+       onclick="window.location.href='hierarquia/hierarquia.html'">
     <h3>⛪ Hierarquia da Igreja</h3>
-    <p>Da cátedra de Pedro aos fiéis leigos — conheça cada vocação, cargo e ministério que compõe o Corpo de Cristo.</p>
+    <p>Da cátedra de Pedro aos fiéis leigos — conheça cada vocação, cargo e ministério
+       que compõe o Corpo de Cristo.</p>
   </div>
 
   <!-- CARD: Calendário Litúrgico -->
-  <div class="estudo-card" data-cat="igreja" onclick="window.location.href='calendario/liturgico.html'">
+  <div class="estudo-card" data-cat="igreja"
+       onclick="window.location.href='calendario/liturgico.html'">
     <h3>📅 Calendário Litúrgico</h3>
     <p>Conheça os tempos e festas do ano litúrgico católico — do Advento ao Tempo Comum.</p>
   </div>
-  
-<!-- CARD: Os 10 Mandamentos -->
-<div class="estudo-card" data-cat="catequese" onclick="window.location.href='mandamentos/mandamentos.html'">
-  <h3>⚡ Os 10 Mandamentos</h3>
-  <p>Você <em>realmente</em> conhece os 10 Mandamentos? Descubra o que Deus pediu — e o que a maioria nunca te contou.</p>
-  <span style="display:block;margin-top:10px;font-size:0.85em;color:#c9a84c;font-weight:600;">🔥 Desafio interativo incluso</span>
-</div>
-  
-  <div class="estudo-card" data-cat="catequese" onclick="window.location.href='mandamentos/mandamentos-igreja.html'">
-  <h3>Os preceitos da Igreja</h3>
-  <p>Conheça<em>os</em> preceitos de nossa mãe Igreja - O que deveria estar gravado em todo católico</p>
-  <span style="display:block;margin-top:10px;font-size:0.85em;color:#c9a84c;font-weight:600;">🔥 Desafio interativo incluso</span>
-</div>
-  <!-- 
-    ✏️ ADICIONE NOVOS CARDS AQUI
-    Exemplo de card novo:
 
-    <div class="estudo-card" data-cat="sacramentos" onclick="window.location.href='sacramentos/batismo.html'">
-      <h3>💧 O Batismo</h3>
-      <p>O primeiro sacramento da iniciação cristã — sua origem, significado e efeitos.</p>
-    </div>
-  -->
+  <!-- CARD: Os 10 Mandamentos -->
+  <div class="estudo-card" data-cat="catequese"
+       onclick="window.location.href='mandamentos/mandamentos.html'">
+    <h3>⚡ Os 10 Mandamentos</h3>
+    <p>Você <em>realmente</em> conhece os 10 Mandamentos?
+       Descubra o que Deus pediu — e o que a maioria nunca te contou.</p>
+    <span style="display:block;margin-top:10px;font-size:0.85em;
+                 color:#c9a84c;font-weight:600;">🔥 Desafio interativo incluso</span>
+  </div>
 
-  <!-- Aviso de novos estudos (remova quando tiver mais cards) -->
-  <p style="color:#777; text-align:center; grid-column: 1/-1; padding: 60px 20px;">
+  <!-- CARD: Preceitos da Igreja -->
+  <div class="estudo-card" data-cat="catequese"
+       onclick="window.location.href='mandamentos/mandamentos-igreja.html'">
+    <h3>📋 Os Preceitos da Igreja</h3>
+    <p>Conheça os preceitos de nossa mãe Igreja —
+       o que deveria estar gravado em todo católico.</p>
+    <span style="display:block;margin-top:10px;font-size:0.85em;
+                 color:#c9a84c;font-weight:600;">🔥 Desafio interativo incluso</span>
+  </div>
+
+  <!-- ✅ CARD NOVO: O Batismo -->
+  <div class="estudo-card" data-cat="sacramentos"
+       onclick="window.location.href='sacramentos/batismo/batismo.html'">
+    <h3>💧 O Batismo</h3>
+    <p>O primeiro sacramento da iniciação cristã —
+       teologia profunda, história, rito e efeitos espirituais explicados com clareza.</p>
+    <span style="display:block;margin-top:10px;font-size:0.85em;
+                 color:#c9a84c;font-weight:600;">📖 Estudo completo · FAQ · Fontes</span>
+  </div>
+
+  <!-- Aviso de novos estudos -->
+  <p style="color:#777; text-align:center;
+            grid-column: 1/-1; padding: 60px 20px;">
     Em breve novos estudos serão adicionados aqui. 🕯️
   </p>
 
 </section>
 
-<!-- ================================================
-     PAINEL DE HISTÓRICO (desliza pela direita)
-     Registra automaticamente os estudos visitados
-     Não precisa mexer aqui
-     ================================================ -->
-
+<!-- PAINEL DE HISTÓRICO -->
 <div class="historico" id="historico">
   <div class="fechar-historico" onclick="toggleHistorico()">❯</div>
   <h3>📖 Histórico</h3>
@@ -177,10 +138,7 @@
   </div>
 </div>
 
-<!-- ================================================
-     RODAPÉ
-     ================================================ -->
-
+<!-- RODAPÉ -->
 <footer>
   © 2026 – Lux Fidei
 </footer>
