@@ -13,7 +13,7 @@ const menuHTML = `
 
   <nav class="sl-nav">
     <ul class="sl-lista">
-      <li><a href="presbiteros/sao-joao-maria-vianney.html"><span class="sl-nome">História</span></a></li>
+      <li><a href="../presbiteros/sao-joao-maria-vianney.html"><span class="sl-nome">História</span></a></li>
       <li><a href="presbiteros/presbiteros-dados/sao-joao-maria-vianney-dados/ars.html"><span class="sl-nome">Ars</span></a></li>
       <li><a href="presbiteros/presbiteros-dados/sao-joao-maria-vianney-dados/confessionario.html"><span class="sl-nome">O Confessionário</span></a></li>
       <li><a href="presbiteros/presbiteros-dados/sao-joao-maria-vianney-dados/combate.html"><span class="sl-nome">Combate Espiritual</span></a></li>
