@@ -1,0 +1,1400 @@
+```html
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Primeira Comunhão - Guia Completo</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #C41E3A;
+            --primary-light: #E85A6F;
+            --primary-dark: #8B1428;
+            --gold: #D4AF37;
+            --light-bg: #F8F7F4;
+            --text-dark: #2C2C2C;
+            --text-light: #666;
+            --border-color: #E0E0E0;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background-color: #fff;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        header h1 { font-size: 3em; margin-bottom: 10px; text-shadow: 2px 2px 4px rgba(0,0,0,0.2); }
+        header p { font-size: 1.2em; opacity: 0.95; max-width: 600px; margin: 0 auto; }
+
+        nav {
+            background-color: var(--light-bg);
+            padding: 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 2px solid var(--primary);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        nav button {
+            background: none;
+            border: none;
+            padding: 15px 18px;
+            cursor: pointer;
+            font-size: 0.9em;
+            font-weight: 500;
+            color: var(--text-dark);
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+        }
+
+        nav button:hover {
+            background-color: rgba(196, 30, 58, 0.05);
+            border-bottom-color: var(--primary);
+            color: var(--primary);
+        }
+
+        nav button.active {
+            background-color: rgba(196, 30, 58, 0.1);
+            border-bottom-color: var(--primary);
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .container { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
+
+        .section { display: none; padding: 50px 0; }
+
+        .section.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section h2 {
+            color: var(--primary);
+            font-size: 2.2em;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .section h3 { color: var(--primary-dark); font-size: 1.4em; margin-top: 30px; margin-bottom: 15px; }
+        .section h4 { color: var(--primary-dark); font-size: 1.15em; margin-top: 20px; margin-bottom: 10px; }
+
+        .section p, .section li { font-size: 1.05em; line-height: 1.8; margin-bottom: 15px; color: var(--text-dark); }
+        .section ul, .section ol { margin-left: 25px; margin-bottom: 20px; }
+        .section li { margin-bottom: 10px; }
+
+        .card {
+            background: var(--light-bg);
+            border-left: 5px solid var(--primary);
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover { transform: translateX(5px); box-shadow: 0 4px 12px rgba(196, 30, 58, 0.15); }
+
+        .card-title {
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, rgba(196, 30, 58, 0.05) 100%);
+            border: 2px solid var(--gold);
+            padding: 30px;
+            border-radius: 10px;
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        .highlight-box p { font-size: 1.2em; color: var(--primary-dark); font-weight: 500; font-style: italic; }
+
+        .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; margin: 30px 0; }
+
+        .feature-card {
+            background: white;
+            border: 2px solid var(--border-color);
+            padding: 25px;
+            border-radius: 10px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            border-color: var(--primary);
+            box-shadow: 0 8px 20px rgba(196, 30, 58, 0.15);
+            transform: translateY(-5px);
+        }
+
+        .feature-card i { font-size: 2.5em; color: var(--primary); margin-bottom: 15px; }
+        .feature-card h4 { color: var(--primary); margin-bottom: 10px; font-size: 1.1em; }
+
+        .timeline { position: relative; padding: 20px 0; }
+
+        .timeline-item {
+            padding-left: 40px;
+            padding-bottom: 30px;
+            border-left: 3px solid var(--primary);
+            position: relative;
+        }
+
+        .timeline-item:last-child { border-left: 3px solid transparent; }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -9px;
+            top: 0;
+            width: 15px;
+            height: 15px;
+            background: var(--primary);
+            border-radius: 50%;
+            border: 3px solid white;
+            box-shadow: 0 0 0 2px var(--primary);
+        }
+
+        .timeline-item h4 { color: var(--primary); font-size: 1.1em; margin-bottom: 10px; }
+
+        .quote {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 8px;
+            margin: 30px 0;
+            font-size: 1.1em;
+            font-style: italic;
+            text-align: center;
+            border-left: 5px solid var(--gold);
+        }
+
+        .quote::before { content: '"'; font-size: 3em; opacity: 0.3; }
+
+        .tabs { display: flex; gap: 10px; margin: 25px 0; flex-wrap: wrap; }
+
+        .tab-button {
+            background: white;
+            border: 2px solid var(--border-color);
+            padding: 12px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            color: var(--text-dark);
+        }
+
+        .tab-button:hover { border-color: var(--primary); color: var(--primary); }
+        .tab-button.active { background: var(--primary); color: white; border-color: var(--primary); }
+
+        .tab-content { display: none; padding: 25px; background: var(--light-bg); border-radius: 8px; margin-top: 15px; }
+        .tab-content.active { display: block; }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .comparison-table th { background: var(--primary); color: white; padding: 15px; text-align: left; font-weight: 600; }
+        .comparison-table td { padding: 15px; border-bottom: 1px solid var(--border-color); }
+        .comparison-table tr:hover { background: var(--light-bg); }
+
+        .prayer-box {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin: 25px 0;
+            text-align: center;
+        }
+
+        .prayer-box h4 { margin-bottom: 15px; font-size: 1.2em; font-weight: 700; color: var(--gold); }
+        .prayer-box p { font-style: italic; line-height: 2; font-size: 1.05em; margin-bottom: 0; color: white; }
+
+        .faq-item {
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin: 15px 0;
+            overflow: hidden;
+        }
+
+        .faq-question {
+            background: var(--light-bg);
+            padding: 20px 25px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            color: var(--primary-dark);
+            transition: all 0.3s ease;
+            border: none;
+            width: 100%;
+            text-align: left;
+            font-size: 1.05em;
+        }
+
+        .faq-question:hover { background: rgba(196, 30, 58, 0.08); color: var(--primary); }
+        .faq-question.open { background: var(--primary); color: white; }
+        .faq-question.open i { transform: rotate(180deg); }
+
+        .faq-answer {
+            display: none;
+            padding: 25px;
+            border-top: 1px solid var(--border-color);
+            background: white;
+        }
+
+        .faq-answer.open { display: block; }
+        .faq-question i { transition: transform 0.3s ease; }
+
+        footer {
+            background: var(--text-dark);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            margin-top: 60px;
+        }
+
+        footer p { margin: 10px 0; opacity: 0.9; }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--primary);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(196, 30, 58, 0.3);
+            z-index: 99;
+        }
+
+        .back-to-top.show { opacity: 1; visibility: visible; }
+        .back-to-top:hover { background: var(--primary-dark); transform: translateY(-3px); }
+
+        .reading-time {
+            color: var(--text-light);
+            font-size: 0.9em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .badge {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+
+        @media (max-width: 768px) {
+            header h1 { font-size: 2em; }
+            nav button { padding: 10px 12px; font-size: 0.82em; }
+            .section { padding: 30px 0; }
+            .section h2 { font-size: 1.8em; }
+            .grid-2 { grid-template-columns: 1fr; }
+            .back-to-top { width: 45px; height: 45px; bottom: 20px; right: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>⛪ Primeira Comunhão</h1>
+    <p>Um guia completo sobre um dos momentos mais importantes da vida cristã</p>
+</header>
+
+<nav>
+    <ul>
+        <li><button class="nav-btn active" data-section="inicio"><i class="fas fa-home"></i> Início</button></li>
+        <li><button class="nav-btn" data-section="o-que-e"><i class="fas fa-book"></i> O que é</button></li>
+        <li><button class="nav-btn" data-section="importancia"><i class="fas fa-star"></i> Importância</button></li>
+        <li><button class="nav-btn" data-section="historia"><i class="fas fa-landmark"></i> História</button></li>
+        <li><button class="nav-btn" data-section="preparacao"><i class="fas fa-graduation-cap"></i> Preparação</button></li>
+        <li><button class="nav-btn" data-section="celebracao"><i class="fas fa-church"></i> Celebração</button></li>
+        <li><button class="nav-btn" data-section="oracoes"><i class="fas fa-hands-praying"></i> Orações</button></li>
+        <li><button class="nav-btn" data-section="vida-eucaristica"><i class="fas fa-heart"></i> Vida Eucarística</button></li>
+        <li><button class="nav-btn" data-section="comunidade"><i class="fas fa-people-group"></i> Comunidade</button></li>
+        <li><button class="nav-btn" data-section="duvidas"><i class="fas fa-circle-question"></i> Dúvidas</button></li>
+        <li><button class="nav-btn" data-section="referencias"><i class="fas fa-file-alt"></i> Referências</button></li>
+    </ul>
+</nav>
+
+<div class="container">
+
+    <!-- ===== INÍCIO ===== -->
+    <section id="inicio" class="section active">
+        <h2><i class="fas fa-cross"></i> Bem-vindo</h2>
+        <p>Este guia oferece uma visão abrangente sobre a Primeira Comunhão, preparado para diferentes públicos: aqueles que desejam conhecer mais sobre o catolicismo, tradicionistas, estudiosos e famílias em preparação para este sacramento sagrado.</p>
+
+        <div class="highlight-box">
+            <p>✨ A Primeira Comunhão é o primeiro encontro consciente e sacramental de uma pessoa com Jesus Cristo na forma de pão e vinho consagrados.</p>
+        </div>
+
+        <h3>Por que este guia?</h3>
+        <p>A Primeira Comunhão é um dos sete sacramentos do catolicismo, representando um marco espiritual fundamental na vida de qualquer cristão. Este recurso foi criado para:</p>
+
+        <div class="grid-2">
+            <div class="feature-card">
+                <i class="fas fa-lightbulb"></i>
+                <h4>Esclarecer conceitos</h4>
+                <p>Entender o significado teológico e espiritual do sacramento</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-users"></i>
+                <h4>Auxiliar famílias</h4>
+                <p>Orientar pais e crianças na preparação adequada</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-book-open"></i>
+                <h4>Aprofundar estudos</h4>
+                <p>Para aqueles que desejam estudar a tradição católica</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-heart"></i>
+                <h4>Fortalecer fé</h4>
+                <p>Reconhecer a importância deste momento sagrado</p>
+            </div>
+        </div>
+
+        <h3>O que você encontra aqui</h3>
+        <div class="grid-2">
+            <div class="feature-card">
+                <i class="fas fa-landmark"></i>
+                <h4>História do Sacramento</h4>
+                <p>Da Igreja primitiva até o Vaticano II, como a Primeira Comunhão evoluiu ao longo dos séculos</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-hands-praying"></i>
+                <h4>Orações Completas</h4>
+                <p>Anima Christi, São Tomás de Aquino, Ato de Contrição e mais — com texto completo</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-people-group"></i>
+                <h4>Eucaristia e Comunidade</h4>
+                <p>Por que a Missa é comunitária e o que significa ser enviado ao mundo</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-circle-question"></i>
+                <h4>Dúvidas Respondidas</h4>
+                <p>As perguntas mais frequentes respondidas com profundidade e clareza</p>
+            </div>
+        </div>
+
+        <h3>Navegação</h3>
+        <p>Use o menu superior para navegar pelas diferentes seções. Cada uma aborda aspectos específicos da Primeira Comunhão de forma progressiva e detalhada.</p>
+    </section>
+
+    <!-- ===== O QUE É ===== -->
+    <section id="o-que-e" class="section">
+        <div class="reading-time"><i class="fas fa-clock"></i> Tempo de leitura: 8 minutos</div>
+        <h2><i class="fas fa-book"></i> O que é a Primeira Comunhão?</h2>
+
+        <h3>1. Definição e significado</h3>
+        <p>A Primeira Comunhão é o primeiro momento em que uma criança recebe conscientemente o Sacramento da Eucaristia durante uma celebração da Santa Missa. É um ato formal e solene que marca o início de uma relação pessoal e contínua com Jesus Cristo presente na Eucaristia.</p>
+
+        <div class="card">
+            <div class="card-title"><i class="fas fa-cross"></i> A Eucaristia explicada</div>
+            <p>A palavra <strong>"Eucaristia"</strong> vem do grego <em>eucharistia</em>, que significa <strong>"ação de graças"</strong>. Representa a presença real de Jesus Cristo sob as espécies de pão e vinho consagrados pelo sacerdote durante a Missa.</p>
+        </div>
+
+        <h3>2. Não é apenas pão e vinho</h3>
+        <p>Um conceito fundamental da fé católica é que, após a consagração na Missa, o pão e o vinho não são apenas símbolos. Conforme a doutrina eucarística:</p>
+        <ul>
+            <li><strong>Transubstanciação:</strong> A substância do pão e do vinho são transformadas na substância do Corpo e Sangue de Cristo, enquanto as características sensíveis (aparência, sabor, textura) permanecem as mesmas</li>
+            <li><strong>Presença Real:</strong> Jesus Cristo está verdadeiramente presente na Eucaristia — corpo, sangue, alma e divindade</li>
+            <li><strong>Encontro real:</strong> Comungar é um encontro verdadeiro e profundo com o próprio Cristo</li>
+        </ul>
+
+        <div class="quote">
+            Aquele que comer a minha carne e beber o meu sangue permanece em mim e eu nele.
+            <br><small style="font-style: normal;">— João 6:56</small>
+        </div>
+
+        <h3>3. Primeiro encontro sacramental consciente</h3>
+        <p>Embora as crianças possam ter estado presentes em Missas desde bebês, a Primeira Comunhão é o primeiro momento em que:</p>
+        <ul>
+            <li>A criança recebe conscientemente um sacramento</li>
+            <li>Tem compreensão básica do que está acontecendo</li>
+            <li>Participa ativamente do sacramento</li>
+            <li>Faz seu primeiro encontro eucarístico de forma consciente e deliberada</li>
+        </ul>
+
+        <h3>4. Contexto na Santa Missa</h3>
+        <p>A Primeira Comunhão ocorre durante a celebração da Missa, especificamente no momento chamado de Rito da Comunhão. Este é um dos momentos mais solenes da liturgia, onde toda a comunidade recebe o Corpo e Sangue de Cristo.</p>
+
+        <div class="highlight-box">
+            <p>💡 A Primeira Comunhão não é um sacramento isolado, mas a entrada da criança na vida sacramental que continuará ao longo de toda sua vida cristã.</p>
+        </div>
+
+        <h3>5. Os nomes tradicionais</h3>
+        <ul>
+            <li><strong>Primeira Comunhão Solene:</strong> Quando celebrada com maior formalidade litúrgica</li>
+            <li><strong>Primeira Eucaristia:</strong> Termo mais técnico usado pela Igreja</li>
+            <li><strong>Primeira Mesa:</strong> Expressão poética usada por alguns padres do passado</li>
+        </ul>
+
+        <h3>6. Diferença entre Primeira Comunhão e Crisma</h3>
+        <div class="card">
+            <div class="card-title"><i class="fas fa-info-circle"></i> Primeira Comunhão × Crisma</div>
+            <p><strong>Primeira Comunhão:</strong> Primeiro encontro com a Eucaristia, recebimento do Corpo e Sangue de Cristo. Ocorre quando a criança tem compreensão básica da fé.</p>
+            <p><strong>Crisma:</strong> Sacramento da Confirmação que vem depois. Selação do Espírito Santo e confirmação dos votos batismais. Geralmente entre 12 e 16 anos.</p>
+        </div>
+    </section>
+
+    <!-- ===== IMPORTÂNCIA ===== -->
+    <section id="importancia" class="section">
+        <div class="reading-time"><i class="fas fa-clock"></i> Tempo de leitura: 10 minutos</div>
+        <h2><i class="fas fa-star"></i> Por que a Primeira Comunhão é Tão Importante</h2>
+
+        <h3>1. Marcos da iniciação cristã</h3>
+        <div class="timeline">
+            <div class="timeline-item">
+                <h4>Batismo</h4>
+                <p>Nascimento espiritual da criança, incorporação à Igreja. Normalmente ocorre nos primeiros dias de vida.</p>
+            </div>
+            <div class="timeline-item">
+                <h4>Primeira Comunhão</h4>
+                <p>Primeiro encontro consciente com a Eucaristia. Ocorre quando a criança tem compreensão do sacramento.</p>
+            </div>
+            <div class="timeline-item">
+                <h4>Crisma / Confirmação</h4>
+                <p>Fortalecimento espiritual pela ação do Espírito Santo. Completa a iniciação cristã.</p>
+            </div>
+        </div>
+
+        <h3>2. Aproximação íntima com Jesus</h3>
+        <p>Até a Primeira Comunhão, a criança conhecia Jesus principalmente através do catecismo, das orações aprendidas, das histórias bíblicas e da observação do culto litúrgico. Com a Primeira Comunhão, essa relação torna-se concreta e sacramental:</p>
+        <ul>
+            <li>Recebe o próprio Corpo e Sangue de Cristo</li>
+            <li>Experimenta uma união íntima com o Divino</li>
+            <li>Transforma seu conhecimento intelectual em experiência espiritual</li>
+            <li>Participa do sacrifício redentor de forma consciente</li>
+        </ul>
+
+        <div class="quote">
+            Eu sou o Pão da Vida. Aquele que vem a mim nunca mais terá fome.
+            <br><small style="font-style: normal;">— João 6:35</small>
+        </div>
+
+        <h3>3. Efeitos espirituais reais</h3>
+        <div class="grid-2">
+            <div class="feature-card">
+                <i class="fas fa-seedling"></i>
+                <h4>Graça santificante</h4>
+                <p>Aumenta a presença da graça de Deus na alma, fortalecendo a vida interior</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-shield-halved"></i>
+                <h4>Proteção espiritual</h4>
+                <p>Fortalece contra as tentações e ajuda a evitar o pecado mortal</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-link"></i>
+                <h4>União com a Igreja</h4>
+                <p>Aprofunda o vínculo com o Corpo Místico de Cristo — a comunidade dos fiéis</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-heart"></i>
+                <h4>Crescimento nas virtudes</h4>
+                <p>Desenvolve caridade, esperança, paciência e outras virtudes cristãs</p>
+            </div>
+        </div>
+
+        <h3>4. A criança passa de espectadora a participante</h3>
+        <div class="card">
+            <div class="card-title"><i class="fas fa-heart"></i> Sentido espiritual profundo</div>
+            <p>A Primeira Comunhão marca o momento em que a criança deixa de ser apenas espectadora da vida da Igreja e torna-se participante ativa do maior mistério da fé cristã — a presença real de Deus no sacramento da Eucaristia.</p>
+        </div>
+
+        <div class="highlight-box">
+            <p>🙏 A importância da Primeira Comunhão não está apenas na cerimônia em si, mas no significado eterno do encontro com Cristo que ela inaugura.</p>
+        </div>
+    </section>
+
+    <!-- ===== HISTÓRIA ===== -->
+    <section id="historia" class="section">
+        <div class="reading-time"><i class="fas fa-clock"></i> Tempo de leitura: 12 minutos</div>
+        <h2><i class="fas fa-landmark"></i> História do Sacramento</h2>
+
+        <h3>1. A Eucaristia nos primeiros séculos</h3>
+        <p>Nos primeiros séculos do cristianismo, a prática eucarística era muito diferente do que conhecemos hoje. A Igreja ainda estava se organizando, perseguida pelo Império Romano, e as celebrações ocorriam em casas particulares ou catacumbas.</p>
+
+        <div class="card">
+            <div class="card-title"><i class="fas fa-scroll"></i> A Igreja primitiva e a Comunhão</div>
+            <p>Nos primeiros séculos, os cristãos recebiam a Eucaristia com grande frequência — muitas comunidades comungavam diariamente. Crianças batizadas podiam receber a Comunhão desde muito cedo, pois o Batismo era o critério principal de acesso. Não havia uma cerimônia formal de "Primeira Comunhão" como conhecemos hoje; a entrada na vida eucarística coincidia com o próprio Batismo, especialmente para os adultos convertidos.</p>
+        </div>
+
+        <div class="timeline">
+            <div class="timeline-item">
+                <h4>Séculos I e II — A Ceia do Senhor nas casas</h4>
+                <p>As primeiras comunidades cristãs reuniam-se nas casas para o "partir do pão" (Atos 2:42). Todos os batizados participavam, incluindo crianças. Não havia distinção formal de "primeira" ou "demais" comunhões.</p>
+            </div>
+            <div class="timeline-item">
+                <h4>Séculos III e IV — Organização da catequese</h4>
+                <p>Com o crescimento da Igreja, surgem as escolas catequéticas. O processo de iniciação torna-se mais estruturado: Batismo, Confirmação e Eucaristia na Vigília Pascal. O catecumenato podia durar até 3 anos.</p>
+            </div>
+            <div class="timeline-item">
+                <h4>Século IV — Edito de Milão e crescimento</h4>
+                <p>Com a liberdade religiosa concedida por Constantino (313 d.C.), a Igreja cresce rapidamente. A prática dos sacramentos se organiza mais formalmente. Santo Agostinho (354-430) escreve sobre a necessidade da Eucaristia mesmo para as crianças.</p>
+            </div>
+            <div class="timeline-item">
+                <h4>Séculos V ao XII — A Comunhão torna-se menos frequente</h4>
+                <p>Paradoxalmente, com o crescimento do respeito pelo sacramento, a frequência com que os fiéis comungavam diminuiu. O povo passou a comungar apenas na Páscoa, com medo de se aproximar indignamente. O IV Concílio de Latrão (1215) estabeleceu a obrigação mínima de comungar ao menos uma vez por ano, na Páscoa.</p>
+            </div>
+            <div class="timeline-item">
+                <h4>Século XIII — Definição doutrinária</h4>
+                <p><strong>O Concílio de Latrão IV (1215)</strong> foi o primeiro a usar o termo oficial <em>transubstanciação</em> para descrever o que acontece na consagração. Este é o marco histórico da definição dogmática da doutrina eucarística pela Igreja.</p>
+            </div>
+            <div class="timeline-item">
+                <h4>Século XVI — Concílio de Trento</h4>
+                <p>Em resposta à Reforma Protestante, o Concílio de Trento (1545-1563) reafirmou e aprofundou a doutrina católica sobre a Eucaristia: a presença real, a transubstanciação e o caráter sacrificial da Missa. Estabeleceu também que crianças que ainda não atingiram o uso da razão não são obrigadas a comungar.</p>
+            </div>
+        </div>
+
+        <h3>2. Quando o Papa Pio X mudou a idade da Primeira Comunhão</h3>
+        <p>Este é um dos momentos mais importantes da história moderna do sacramento.</p>
+
+        <div class="card">
+            <div class="card-title"><i class="fas fa-crown"></i> O Decreto <em>Quam Singulari</em> — 1910</div>
+            <p>Antes do Papa Pio X, a prática comum na Igreja era que as crianças só fizessem a Primeira Comunhão entre <strong>12 e 14 anos</strong>, às vezes até mais tarde. Isso decorria de uma interpretação rigorosa sobre o "discernimento" necessário para o sacramento.</p>
+            <p>Em <strong>8 de agosto de 1910</strong>, o Papa Pio X publicou o decreto <em>Quam Singulari</em>, que mudou completamente essa prática. Os pontos centrais foram:</p>
+            <ul style="margin-left: 0;">
+                <li><strong>A idade da razão é suficiente:</strong> Quando a criança consegue distinguir o Pão Eucarístico do pão comum — geralmente por volta dos 7 anos — ela já pode comungar</li>
+                <li><strong>Crítica ao rigorismo:</strong> Pio X considerou uma "abominação" privar crianças pequenas de Jesus por tantos anos</li>
+                <li><strong>Fundamento espiritual:</strong> Disse que Jesus mesmo disse "Deixai vir a mim as crianças" e que a Eucaristia é remédio, não prêmio</li>
+                <li><strong>Consequência prática:</strong> A Primeira Comunhão passou a ocorrer tipicamente entre 7 e 8 anos, como ainda é hoje</li>
+            </ul>
+        </div>
+
+        <div class="quote">
+            A ignorância de Cristo não é santidade, mas culpa gravíssima.
+            <br><small style="font-style: normal;">— Papa Pio X, Quam Singulari, 1910</small>
+        </div>
+
+        <h3>3. O que mudou com o Concílio Vaticano II</h3>
+        <p>O Concílio Vaticano II (1962-1965) trouxe mudanças significativas na forma como a Eucaristia é celebrada e vivida, sem alterar a doutrina essencial.</p>
+
+        <div class="tabs">
+            <button class="tab-button active" onclick="showTab(event, 'tab-antes')">Antes do Vaticano II</button>
+            <button class="tab-button" onclick="showTab(event, 'tab-depois')">Depois do Vaticano II</button>
+            <button class="tab-button" onclick="showTab(event, 'tab-mantido')">O que não mudou</button>
+        </div>
+
+        <div id="tab-antes" class="tab-content active">
+            <ul>
+                <li>Missa celebrada em latim (Forma Tridentina)</li>
+                <li>Sacerdote de costas para o povo (voltado ao Oriente)</li>
+                <li>Comunhão apenas na boca, ajoelhado na grade</li>
+                <li>Jejum eucarístico rigoroso (desde a meia-noite)</li>
+                <li>Participação do povo mais silenciosa e contemplativa</li>
+                <li>Cânon da Missa rezado em silêncio pelo padre</li>
+            </ul>
+        </div>
+
+        <div id="tab-depois" class="tab-content">
+            <ul>
+                <li>Missa na língua vernácula (português, etc.) — Nova Forma Ordinária</li>
+                <li>Sacerdote voltado para o povo</li>
+                <li>Comunhão permitida nas mãos (além da boca)</li>
+                <li>Jejum eucarístico reduzido para 1 hora antes da Missa</li>
+                <li>Maior participação ativa dos fiéis nas respostas e cantos</li>
+                <li>Cânon proclamado em voz alta</li>
+                <li>Concelebração de múltiplos sacerdotes na mesma Missa</li>
+            </ul>
+        </div>
+
+        <div id="tab-mantido" class="tab-content">
+            <ul>
+                <li>A doutrina da presença real de Cristo na Eucaristia</li>
+                <li>A transubstanciação — o pão e o vinho tornam-se o Corpo e Sangue de Cristo</li>
+                <li>O caráter sacrificial da Missa</li>
+                <li>A necessidade do estado de graça para comungar</li>
+                <li>O papel exclusivo do sacerdote ordenado na consagração</li>
+                <li>A Eucaristia como centro da vida cristã</li>
+                <li>A idade da razão como critério para a Primeira Comunhão</li>
+            </ul>
+        </div>
+
+        <div class="highlight-box">
+            <p>📜 A doutrina eucarística nunca mudou. O que o Vaticano II renovou foi a forma de celebrar, para tornar a participação mais ativa e consciente — não o conteúdo da fé.</p>
+        </div>
+
+        <h3>4. A Primeira Comunhão ao longo da história — resumo</h3>
+        <div class="comparison-table">
+            <thead>
+                <tr>
+                    <th>Período</th>
+                    <th>Prática da Primeira Comunhão</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Séculos I–IV</strong></td>
+                    <td>Ocorria junto com o Batismo; sem cerimônia separada</td>
+                </tr>
+                <tr>
+                    <td><strong>Séculos V–XII</strong></td>
+                    <td>Comunhão tornava-se menos frequente; crianças comungavam raramente</td>
+                </tr>
+                <tr>
+                    <td><strong>Séculos XIII–XIX</strong></td>
+                    <td>Primeira Comunhão entre 12 e 14 anos; muito formalizada</td>
+                </tr>
+                <tr>
+                    <td><strong>1910 — Pio X</strong></td>
+                    <td>Decreto <em>Quam Singulari</em>: idade da razão (~7 anos)</td>
+                </tr>
+                <tr>
+                    <td><strong>Após Vaticano II (1965–)</strong></td>
+                    <td>Mantida aos ~7-8 anos; forma da celebração renovada</td>
+                </tr>
+            </tbody>
+        </div>
+    </section>
+
+    <!-- ===== PREPARAÇÃO ===== -->
+    <section id="preparacao" class="section">
+        <div class="reading-time"><i class="fas fa-clock"></i> Tempo de leitura: 12 minutos</div>
+        <h2><i class="fas fa-graduation-cap"></i> Preparação para a Primeira Comunhão</h2>
+
+        <h3>1. A catequese: fundação essencial</h3>
+        <p>A preparação para a Primeira Comunhão começa muito antes do dia da celebração. A catequese é o processo educativo através do qual a criança aprende os fundamentos da fé católica.</p>
+
+        <div class="card">
+            <div class="card-title"><i class="fas fa-book"></i> O que a catequese aborda</div>
+            <ul style="margin-left: 0;">
+                <li><strong>Conhecimento de Deus:</strong> Quem é Deus, seus atributos, seu amor infinito</li>
+                <li><strong>Jesus Cristo:</strong> Sua vida, ensinamentos, redenção, ressurreição</li>
+                <li><strong>Espírito Santo:</strong> Sua ação na vida dos cristãos</li>
+                <li><strong>A Igreja:</strong> Corpo Místico de Cristo, comunidade de fé</li>
+                <li><strong>Os Sacramentos:</strong> Especialmente a Eucaristia</li>
+                <li><strong>A Vida Cristã:</strong> Virtudes, mandamentos, moral bem vivida</li>
+            </ul>
+        </div>
+
+        <h3>2. Aprendizados essenciais</h3>
+        <div class="tabs">
+            <button class="tab-button active" onclick="showTab(event, 'essencial')">Essencial</button>
+            <button class="tab-button" onclick="showTab(event, 'teologico')">Teológico</button>
+            <button class="tab-button" onclick="showTab(event, 'liturgico')">Litúrgico</button>
+        </div>
+
+        <div id="essencial" class="tab-content active">
+            <ul>
+                <li>O que é a Eucaristia e por que é tão importante</li>
+                <li>Que Jesus está verdadeiramente presente no sacramento</li>
+                <li>Como se aproximar dignamente para comungar</li>
+                <li>A importância da Missa na vida cristã</li>
+                <li>Noção básica de respeito, silêncio e reverência</li>
+            </ul>
+        </div>
+
+        <div id="teologico" class="tab-content">
+            <ul>
+                <li>Transubstanciação em linguagem adaptada à criança</li>
+                <li>A presença real de Cristo — corpo, sangue, alma e divindade</li>
+                <li>O sacrifício da Missa e sua relação com a Cruz</li>
+                <li>A graça que os sacramentos conferem</li>
+                <li>A diferença entre pecado venial e mortal</li>
+            </ul>
+        </div>
+
+        <div id="liturgico" class="tab-content">
+            <ul>
+                <li>As partes principais da Missa e seus significados</li>
+                <li>O sentido das palavras de consagração</li>
+                <li>O Rito da Comunhão: como funciona</li>
+                <li>Posturas adequadas: genuflexão, inclinação, mãos juntas</li>
+                <li>Comportamento reverente durante toda a celebração</li>
+            </ul>
+        </div>
+
+        <h3>3. A Confissão antes da Primeira Comunhão</h3>
+        <div class="card">
+            <div class="card-title"><i class="fas fa-dove"></i> Por que confessar antes?</div>
+            <p><strong>Estado de graça:</strong> Para receber a Eucaristia dignamente, é necessário estar em estado de graça — ou seja, sem pecado mortal na alma. A Confissão restaura esse estado.</p>
+            <p><strong>São Paulo adverte:</strong> "Quem comer o pão ou beber o cálice do Senhor indignamente será réu do Corpo e do Sangue do Senhor" (1 Coríntios 11:27). Por isso a Igreja exige a Confissão prévia.</p>
+            <p><strong>Primeira Confissão:</strong> Para a maioria das crianças, este é também o primeiro Sacramento da Reconciliação — um encontro igualmente importante com o perdão de Deus.</p>
+        </div>
+
+        <h3>4. Requisitos básicos</h3>
+        <ul>
+            <li><strong>Estar batizado:</strong> A Eucaristia pressupõe o Batismo</li>
+            <li><strong>Ter alcançado o uso da razão:</strong> Capacidade de entender o que é um sacramento (~7 anos)</li>
+            <li><strong>Ter recebido catequese adequada:</strong> Conhecer as verdades essenciais</li>
+            <li><strong>Estar em estado de graça:</strong> Ter confessado os pecados mortais</li>
+            <li><strong>Ter desejo sincero:</strong> Vontade genuína de encontrar-se com Cristo</li>
+            <li><strong>Observar o jejum:</strong> Abstinência de alimentos por 1 hora antes da Missa</li>
+        </ul>
+
+        <h3>5. O papel da família</h3>
+        <p>A Igreja reconhece que os pais são os "primeiros catequistas". Por isso:</p>
+        <ul>
+            <li>Os pais são convidados a participar da catequese junto com os filhos</li>
+            <li>São encorajados a participar da Missa em família regularmente</li>
+            <li>Devem ser exemplo de vida cristã em casa</li>
+            <li>Ajudam a criança a viver as virtudes ensinadas no cotidiano</li>
+        </ul>
+
+        <div class="quote">
+            Deixai vir a mim as crianças, e não as impeçais; porque delas é o reino dos céus.
+            <br><small style="font-style: normal;">— Mateus 19:14</small>
+        </div>
+
+        <div class="highlight-box">
+            <p>📚 A preparação é progressiva: começa com conhecimentos simples e avança para compreensões mais profundas, sempre de acordo com a maturidade da criança.</p>
+        </div>
+    </section>
+
+    <!-- ===== CELEBRAÇÃO ===== -->
+    <section id="celebracao" class="section">
+        <div class="reading-time"><i class="fas fa-clock"></i> Tempo de leitura: 10 minutos</div>
+        <h2><i class="fas fa-church"></i> A Celebração da Primeira Comunhão</h2>
+
+        <h3>1. O contexto litúrgico</h3>
+        <table class="comparison-table">
+            <thead>
+                <tr>
+                    <th>Aspecto</th>
+                    <th>Missa Dominical Comum</th>
+                    <th>Celebração Solene</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Contexto</strong></td>
+                    <td>Primeira Comunhão dentro de uma Missa normal</td>
+                    <td>Missa especialmente preparada para as Primeiras Comunhões</td>
+                </tr>
+                <tr>
+                    <td><strong>Participantes</strong></td>
+                    <td>Comunidade toda participa normalmente</td>
+                    <td>Grupo de crianças, famílias, padrinhos reunidos</td>
+                </tr>
+                <tr>
+                    <td><strong>Vestes</strong></td>
+                    <td>Roupa apropriada, muitas vezes simples</td>
+                    <td>Traje branco ou formal, de grande simbolismo</td>
+                </tr>
+                <tr>
+                    <td><strong>Procissão</strong></td>
+                    <td>Sem procissão especial</td>
+                    <td>Procissão de entrada das crianças, frequentemente com velas</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>2. As partes da Missa</h3>
+        <div class="timeline">
+            <div class="timeline-item">
+                <h4>Ritos Iniciais</h4>
+                <p>Entrada do celebrante, sinal da cruz, ato penitencial, Kyrie, Glória. Prepara o coração dos presentes.</p>
+            </div>
+            <div class="timeline-item">
+                <h4>Liturgia da Palavra</h4>
+                <p>Leituras do Antigo e Novo Testamento, Salmo responsorial e Evangelho. Deus fala através da Escritura.</p>
+            </div>
+            <div class="timeline-item">
+                <h4>Homilia</h4>
+                <p>O padre explica a Palavra, frequentemente com palavras especiais dirigidas às crianças que vão comungar.</p>
+            </div>
+            <div class="timeline-item">
+                <h4>Profissão de Fé e Oração dos Fiéis</h4>
+                <p>Todos reafirmam a fé da Igreja e intercede por intenções diversas.</p>
+            </div>
+            <div class="timeline-item">
+                <h4>Cânon — A Consagração</h4>
+                <p>O padre pronuncia as palavras sacramentais: <em>"Isto é meu Corpo... Este é meu Sangue"</em>. O pão e o vinho tornam-se verdadeiramente o Corpo e Sangue de Cristo.</p>
+            </div>
+            <div class="timeline-item">
+                <h4>Rito da Comunhão</h4>
+                <p>Recebimento do Corpo e Sangue de Cristo. Momento central para as crianças em sua Primeira Comunhão.</p>
+            </div>
+            <div class="timeline-item">
+                <h4>Encerramento</h4>
+                <p>Bênção final e envio. A Missa conclui, mas a missão começa.</p>
+            </div>
+        </div>
+
+        <h3>3. Como se aproximar dignamente</h3>
+        <div class="card">
+            <div class="card-title"><i class="fas fa-hands-praying"></i> Passo a passo</div>
+            <ul style="margin-left: 0;">
+                <li>Fazer uma inclinação de cabeça ou genuflexão antes de receber</li>
+                <li>Aproximar-se em silêncio e com passo moderado</li>
+                <li>Juntar as mãos em oração durante a fila</li>
+                <li>Receber na boca (forma tradicional) ou nas mãos (forma permitida)</li>
+                <li>Responder "Amém" com fé ao ouvir "O Corpo de Cristo"</li>
+                <li>Afastar-se em silêncio para um local de oração</li>
+                <li>Permanecer em recolhimento amoroso após comungar</li>
+            </ul>
+        </div>
+
+        <h3>4. O "Amém" — uma profissão de fé</h3>
+        <p>Quando o sacerdote diz <em>"O Corpo de Cristo"</em>, o fiel responde <strong>"Amém"</strong>. Esse simples "Amém" significa:</p>
+        <ul>
+            <li><strong>"Eu acredito"</strong> — profissão de fé na presença real</li>
+            <li><strong>"Assim seja"</strong> — consentimento e abertura ao sacramento</li>
+            <li><strong>Participação ativa</strong> — não é passivo, mas responsivo</li>
+            <li><strong>Compromisso</strong> — ao dizer Amém, a criança une sua vida a Cristo</li>
+        </ul>
+
+        <h3>5. Vestuário e seu simbolismo</h3>
+        <ul>
+            <li><strong>Branco:</strong> Pureza batismal, inocência, nova vida em Cristo</li>
+            <li><strong>Simples:</strong> Foco no sacramento, não na aparência</li>
+            <li><strong>Modesto:</strong> Respeito pela seriedade do momento</li>
+        </ul>
+
+        <div class="highlight-box">
+            <p>✨ O dia da Primeira Comunhão é um dia de festa — mas uma festa cristã, alegre e centrada em Cristo, a verdadeira razão de toda celebração.</p>
+        </div>
+    </section>
+
+    <!-- ===== ORAÇÕES ===== -->
+    <section id="oracoes" class="section">
+        <div class="reading-time"><i class="fas fa-clock"></i> Tempo de leitura: 8 minutos</div>
+        <h2><i class="fas fa-hands-praying"></i> Orações para a Primeira Comunhão</h2>
+
+        <p>As orações a seguir são tradicionais da Igreja Católica e acompanham o fiel antes e depois de receber a Sagrada Comunhão. Conhecê-las e rezá-las com fé transforma a Comunhão em um encontro verdadeiro e profundo com Jesus Cristo.</p>
+
+        <h3>1. Ato de Contrição</h3>
+        <p>Rezado antes da Confissão e pode ser também rezado antes de comungar, como ato de humildade e arrependimento:</p>
+
+        <div class="prayer-box">
+            <h4>✝ Ato de Contrição</h4>
+            <p>
+                Meu Deus, porque sois infinitamente bom,<br>
+                eu vos amo sobre todas as coisas<br>
+                e me arrependo de todo o coração de vos ter ofendido.<br>
+                Com o vosso auxílio, proponho firmemente<br>
+                não tornar a pecar e evitar as ocasiões de pecado.<br>
+                Senhor, misericórdia! Perdoai-me!
+            </p>
+        </div>
+
+        <h3>2. Oração antes da Comunhão</h3>
+        <p>Rezada no momento de preparar o coração para receber Jesus, na fila da Comunhão ou em silêncio antes de se aproximar:</p>
+
+        <div class="prayer-box">
+            <h4>✝ Oração antes da Sagrada Comunhão</h4>
+            <p>
+                Senhor Jesus Cristo,<br>
+                eu creio firmemente que estais presente<br>
+                neste Sacramento do Altar,<br>
+                como Deus e como Homem,<br>
+                com o vosso Corpo, Sangue, Alma e Divindade.<br><br>
+                Eu vos adoro com toda a humildade<br>
+                e vos peço perdão pelos meus pecados.<br>
+                Acendei em mim o fogo do vosso amor<br>
+                para que eu vos receba dignamente.<br><br>
+                Vinde, Senhor Jesus, vinde ao meu coração.<br>
+                Fazei-o digno da vossa presença.<br>
+                Amém.
+            </p>
+        </div>
+
+        <h3>3. Oração de São Tomás de Aquino antes da Comunhão</h3>
+        <p>Uma das mais belas e profundas orações da tradição católica. São Tomás de Aquino, o maior teólogo da Eucaristia, a compôs como preparação espiritual para receber Cristo:</p>
+
+        <div class="prayer-box">
+            <h4>✝ Oração de São Tomás de Aquino — "Adoro Te Devote" (adaptada)</h4>
+            <p>
+                Onipotente e eterno Deus,<br>
+                eis que me aproximo do sacramento<br>
+                do vosso Filho único, Nosso Senhor Jesus Cristo.<br><br>
+                Aproxime-me como doente ao médico da vida,<br>
+                como impuro à fonte da misericórdia,<br>
+                como cego à luz da eterna claridade,<br>
+                como pobre ao Senhor do céu e da terra.<br><br>
+                Peço-vos, pela vossa infinita misericórdia,<br>
+                que cureis a minha enfermidade,<br>
+                laveis a minha impureza,<br>
+                ilumineis a minha cegueira,<br>
+                enriqueceis a minha pobreza<br>
+                e cobrais a minha nudez.<br><br>
+                Que eu receba o Pão dos Anjos,<br>
+                o Rei dos reis e o Senhor dos senhores,<br>
+                com tanta reverência e humildade,<br>
+                com tanta contrição e devoção,<br>
+                com tanta pureza e fé,<br>
+                com tal propósito e intenção<br>
+                que me seja para a salvação da alma e do corpo.<br>
+                Amém.
+            </p>
+        </div>
+
+        <h3>4. Anima Christi</h3>
+        <p>Uma das orações mais antigas e amadas da Igreja, tradicionalmente rezada após receber a Sagrada Comunhão. É atribuída ao século XIV e foi muito difundida por Santo Inácio de Loyola:</p>
+
+        <div class="prayer-box">
+            <h4>✝ Anima Christi — Alma de Cristo</h4>
+            <p>
+                Alma de Cristo, santificai-me.<br>
+                Corpo de Cristo, salvai-me.<br>
+                Sangue de Cristo, embriagai-me.<br>
+                Água do lado de Cristo, lavai-me.<br>
+                Paixão de Cristo, fortalecei-me.<br><br>
+                Ó bom Jesus, ouvi-me.<br>
+                Nas vossas chagas, escondei-me.<br>
+                Não permitais que me aparte de vós.<br>
+                Do inimigo mau, defendei-me.<br>
+                Na hora da morte, chamai-me.<br><br>
+                E mandai-me ir a vós,<br>
+                para que com vossos santos vos louve<br>
+                pelos séculos dos séculos.<br>
+                Amém.
+            </p>
+        </div>
+
+        <h3>5. Oração de Ação de Graças após a Comunhão</h3>
+        <p>Rezada em silêncio depois de receber Jesus, nos momentos de recolhimento após a Comunhão:</p>
+
+        <div class="prayer-box">
+            <h4>✝ Ação de Graças após a Sagrada Comunhão</h4>
+            <p>
+                Obrigado, Senhor Jesus,<br>
+                por teres vindo ao meu coração.<br>
+                Aqui estou diante de vós,<br>
+                pequeno e inddigno,<br>
+                mas cheio de alegria pela vossa presença.<br><br>
+                Ficai comigo, Senhor,<br>
+                como ficastes com os discípulos de Emaús.<br>
+                Ficai comigo durante este dia,<br>
+                durante toda a minha vida.<br><br>
+                Transformai-me à vossa semelhança,<br>
+                fazei de mim um testemunho do vosso amor<br>
+                para todos que encontrar.<br><br>
+                Maria, Mãe de Jesus,<br>
+                ajudai-me a guardar Jesus em mim<br>
+                como guardastes no vosso coração.<br>
+                Amém.
+            </p>
+        </div>
+
+        <div class="highlight-box">
+            <p>🙏 Rezar antes e depois de comungar não é obrigação, mas amor. É a resposta natural de quem entende que acabou de encontrar o próprio Deus.</p>
+        </div>
+
+        <h3>6. Sequência recomendada de orações</h3>
+        <div class="timeline">
+            <div class="timeline-item">
+                <h4>Antes da Confissão</h4>
+                <p>Exame de consciência + Ato de Contrição</p>
+            </div>
+            <div class="timeline-item">
+                <h4>Na preparação para a Missa</h4>
+                <p>Oração de São Tomás de Aquino</p>
+            </div>
+            <div class="timeline-item">
+                <h4>Durante a fila da Comunhão</h4>
+                <p>Oração antes da Comunhão — em silêncio interior</p>
+            </div>
+            <div class="timeline-item">
+                <h4>Imediatamente após comungar</h4>
+                <p>Anima Christi — em profundo recolhimento</p>
+            </div>
+            <div class="timeline-item">
+                <h4>Ao final da Missa</h4>
+                <p>Ação de Graças após a Comunhão</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== VIDA EUCARÍSTICA ===== -->
+    <section id="vida-eucaristica" class="section">
+        <div class="reading-time"><i class="fas fa-clock"></i> Tempo de leitura: 10 minutos</div>
+        <h2><i class="fas fa-heart"></i> Vida Eucarística Após a Primeira Comunhão</h2>
+
+        <h3>1. A Primeira Comunhão é o início, não o fim</h3>
+        <p>Um dos maiores equívocos que acontecem nas famílias é tratar a Primeira Comunhão como uma cerimônia de encerramento da catequese. Na visão da Igreja, é exatamente o contrário:</p>
+
+        <div class="card">
+            <div class="card-title"><i class="fas fa-arrow-right"></i> O que deve continuar</div>
+            <ul style="margin-left: 0;">
+                <li>Participação semanal na Missa — obrigação de todo católico</li>
+                <li>Comunhão frequente — idealmente em cada Missa</li>
+                <li>Confissão regular — para manter o estado de graça</li>
+                <li>Continuação da catequese e formação na fé</li>
+                <li>Oração diária pessoal</li>
+                <li>Preparação para o próximo sacramento: a Crisma</li>
+            </ul>
+        </div>
+
+        <h3>2. Quanto tempo dura a presença de Jesus após a comunhão?</h3>
+        <p>Esta é uma pergunta frequente e importante. A Igreja ensina que:</p>
+
+        <div class="card">
+            <div class="card-title"><i class="fas fa-clock"></i> A presença real e a presença espiritual</div>
+            <p><strong>A presença sacramental</strong> — ou seja, a presença real de Cristo nas espécies eucarísticas dentro do corpo — dura enquanto as aparências do pão permanecem intactas. Em termos práticos, isso corresponde aproximadamente ao tempo de digestão, que os teólogos tradicionalmente estimam em torno de <strong>15 a 20 minutos</strong> após a comunhão.</p>
+            <p><strong>Porém, a presença espiritual</strong> — a graça, a união com Cristo, os efeitos do sacramento — permanece e cresce enquanto a pessoa vive em estado de graça. Jesus não "vai embora" depois de 15 minutos: a transformação que Ele opera continua na alma.</p>
+            <p>Por isso, o tempo imediatamente após comungar é precioso para a oração — é o momento em que a presença sacramental ainda está viva no corpo, e o coração deve aproveitar esse encontro único.</p>
+        </div>
+
+        <div class="quote">
+            Não sois vós que me escolhestes, mas eu que vos escolhi e vos designei para que vades e deis fruto, e o vosso fruto permaneça.
+            <br><small style="font-style: normal;">— João 15:16</small>
+        </div>
+
+        <h3>3. O que é a "Visita ao Santíssimo"?</h3>
+        <p>Depois da Missa, as hóstias consagradas restantes são guardadas no <strong>sacrário</strong> — um pequeno cofre no altar, sinalizado por uma lâmpada acesa (a luz vermelha do sacrário). Ali, Jesus está presente.</p>
+
+        <div class="card">
+            <div class="card-title"><i class="fas fa-candle"></i> O que é e como fazer</div>
+            <p><strong>Visita ao Santíssimo</strong> é o ato de ir à Igreja fora do horário da Missa, sentar-se diante do sacrário (ou do ostensório, se houver exposição) e orar em silêncio diante de Jesus presente na Eucaristia.</p>
+            <p><strong>Como fazer:</strong></p>
+            <ul style="margin-left: 0;">
+                <li>Entrar na Igreja em silêncio e genuflectir diante do sacrário</li>
+                <li>Sentar-se próximo ao altar, em recolhimento</li>
+                <li>Conversar com Jesus como se conversaria com um amigo presente</li>
+                <li>Rezar as orações eucarísticas, ler a Bíblia ou simplesmente permanecer em silêncio</li>
+                <li>Ao sair, genuflectir novamente como sinal de adoração</li>
+            </ul>
+            <p><strong>Por que é importante:</strong> Os santos afirmavam que nenhuma hora da vida é mais bem aproveitada do que a passada diante do Santíssimo. É o amor pela presença real de Cristo expresso em visita pessoal.</p>
+        </div>
+
+        <h3>4. Como manter vivo o espírito da Primeira Comunhão</h3>
+        <div class="grid-2">
+            <div class="feature-card">
+                <i class="fas fa-church"></i>
+                <h4>Missa toda semana</h4>
+                <p>Não como obrigação pesada, mas como encontro desejado com Cristo</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-book-bible"></i>
+                <h4>Ler a Bíblia</h4>
+                <p>Especialmente João 6 — o discurso do Pão da Vida — e os relatos da Última Ceia</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-person-praying"></i>
+                <h4>Visitar o Santíssimo</h4>
+                <p>Passar tempo em adoração diante de Jesus no sacrário, além das Missas</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-handshake-angle"></i>
+                <h4>Servir ao próximo</h4>
+                <p>Quem recebe Jesus deve levá-Lo ao mundo — na caridade, no cuidado com o outro</p>
+            </div>
+        </div>
+
+        <div class="highlight-box">
+            <p>💡 O teste de uma boa Primeira Comunhão não é a beleza da festa, mas o fruto espiritual nos meses e anos seguintes: a criança cresceu em amor, em bondade, em fé?</p>
+        </div>
+    </section>
+
+    <!-- ===== COMUNIDADE ===== -->
+    <section id="comunidade" class="section">
+        <div class="reading-time"><i class="fas fa-clock"></i> Tempo de leitura: 8 minutos</div>
+        <h2><i class="fas fa-people-group"></i> Eucaristia e Comunidade</h2>
+
+        <h3>1. A Eucaristia cria comunidade</h3>
+        <p>Um aspecto fundamental que muitas pessoas desconhecem é que a Eucaristia não é apenas um encontro individual com Cristo — é também um ato profundamente comunitário.</p>
+
+        <div class="card">
+            <div class="card-title"><i class="fas fa-link"></i> Um só pão, um só corpo</div>
+            <p>São Paulo explica com clareza: <em>"Porque há um só pão, nós, embora muitos, somos um só corpo, pois todos participamos desse único pão"</em> (1 Coríntios 10:17).</p>
+            <p>Quando todos os fiéis recebem a mesma Eucaristia, estão sendo unidos não apenas a Cristo, mas uns aos outros. A Comunhão cria literalmente a comunidade — o Corpo Místico de Cristo, que é a Igreja.</p>
+        </div>
+
+        <h3>2. Por que não existe "Missa sozinho" como regra?</h3>
+        <p>O sacerdote pode, em casos excepcionais, celebrar a Missa sozinho — mas isso é exceção, não a regra. A razão é teológica e profunda:</p>
+
+        <ul>
+            <li><strong>A Missa é ação da Igreja, não ato privado:</strong> Cristo instituiu a Eucaristia no contexto de uma refeição comunitária — a Última Ceia</li>
+            <li><strong>O povo sacerdotal:</strong> Todo o povo batizado participa do sacerdócio comum de Cristo. A Missa precisa desse povo</li>
+            <li><strong>Testemunho e edificação:</strong> A comunidade reunida é sinal visível da Igreja — Body Místico de Cristo</li>
+            <li><strong>Natureza da Missa como sacramento:</strong> Os sacramentos são da Igreja e para a Igreja, não apenas para o indivíduo</li>
+        </ul>
+
+        <div class="quote">
+            Onde dois ou três estiverem reunidos em meu nome, ali estou eu no meio deles.
+            <br><small style="font-style: normal;">— Mateus 18:20</small>
+        </div>
+
+        <h3>3. A ligação entre Eucaristia e serviço ao próximo</h3>
+        <p>Existe uma conexão inseparável entre receber Cristo na Eucaristia e servi-Lo nos pobres e necessitados. Essa é uma das dimensões mais importantes — e mais esquecidas — do sacramento.</p>
+
+        <div class="card">
+            <div class="card-title"><i class="fas fa-hands-holding-heart"></i> "O que fizerdes ao menor..."</div>
+            <p>Jesus disse: <em>"O que fizerdes a um desses meus irmãos mais pequeninos, a mim o fizestes"</em> (Mateus 25:40). A Eucaristia não pode ser vivida sem consequências para com o próximo.</p>
+            <p>Quem recebe Cristo no pão consagrado deve reconhecê-Lo também no rosto dos pobres, dos doentes, dos solitários. Caso contrário, a comunhão torna-se contraditória.</p>
+            <p>A tradição da Igreja sempre uniu a Eucaristia à caridade: as primeiras comunidades cristãs partiam o pão e distribuíam os bens conforme cada um necessitava (Atos 2:44-45).</p>
+        </div>
+
+        <h3>4. "Ite, Missa est" — O que significa ser enviado?</h3>
+        <p>No encerramento da Missa, o sacerdote diz as palavras latinas <strong>"Ite, Missa est"</strong>, traduzidas como <em>"Ide, a Missa acabou"</em> ou, mais profundamente, <em>"Ide, sois enviados"</em>.</p>
+
+        <div class="card">
+            <div class="card-title"><i class="fas fa-paper-plane"></i> O significado do envio</div>
+            <p>A palavra <em>Missa</em> vem do latim <em>mittere</em>, que significa "enviar". O nome "Missa" para a celebração eucarística vem exatamente desse envio final.</p>
+            <p><strong>O que significa na prática:</strong></p>
+            <ul style="margin-left: 0;">
+                <li>A Missa não termina dentro da Igreja — continua na vida</li>
+                <li>O fiel é <strong>enviado</strong> ao mundo como testemunha de Cristo</li>
+                <li>Quem comungou com Cristo deve levá-Lo para fora — no trabalho, na família, na escola</li>
+                <li>A Eucaristia é combustível para a missão, não apenas conforto espiritual</li>
+                <li>Cada domingo, o cristão sai renovado para ser sal e luz no mundo (Mateus 5:13-14)</li>
+            </ul>
+        </div>
+
+        <div class="highlight-box">
+            <p>🌍 A Eucaristia transforma quem a recebe em missionário. Não se pode amar a Jesus na hóstia e ignorar Jesus nos pobres. São o mesmo Cristo.</p>
+        </div>
+    </section>
+
+    <!-- ===== DÚVIDAS ===== -->
+    <section id="duvidas" class="section">
+        <div class="reading-time"><i class="fas fa-clock"></i> Tempo de leitura: 12 minutos</div>
+        <h2><i class="fas fa-circle-question"></i> Dúvidas Frequentes</h2>
+
+        <p>Abaixo estão respondidas as perguntas mais comuns sobre a Primeira Comunhão e a Eucaristia, com clareza e fidelidade à doutrina da Igreja:</p>
+
+        <div class="faq-item">
+            <button class="faq-question" onclick="toggleFaq(this)">
+                Por que não posso comungar se não sou católico?
+                <i class="fas fa-chevron-down"></i>
+            </button>
+            <div class="faq-answer">
+                <p>A Eucaristia não é apenas um símbolo de fraternidade que qualquer pessoa de boa vontade pode receber. Para a Igreja Católica, ela é a expressão e ao mesmo tempo a fonte de uma unidade completa — de fé, de sacramentos e de comunhão eclesial.</p>
+                <p>Receber a Eucaristia pressupõe:</p>
+                <ul>
+                    <li>Crer em tudo o que a Igreja Católica ensina, especialmente na presença real de Cristo</li>
+                    <li>Estar batizado na Igreja Católica ou em uma Igreja reconhecida por ela</li>
+                    <li>Estar em estado de graça (sem pecado mortal)</li>
+                    <li>Estar em plena comunhão com a Igreja</li>
+                </ul>
+                <p>A Igreja não proíbe o não-católico por falta de respeito ou exclusivismo. Ao contrário: considera que oferecer a Eucaristia a quem não compartilha plenamente da fé católica seria desonesto — como comemorar uma união que ainda não existe. O objetivo é que todos cheguem a essa plena comunhão, não que se simule uma unidade ainda incompleta.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question" onclick="toggleFaq(this)">
+                E se eu não sentir nada ao comungar?
+                <i class="fas fa-chevron-down"></i>
+            </button>
+            <div class="faq-answer">
+                <p>Esta é uma das dúvidas mais honestas e frequentes dos fiéis — e também uma das mais importantes de responder corretamente.</p>
+                <p><strong>A presença de Cristo na Eucaristia não depende do que você sente.</strong> O sacramento opera pela sua própria natureza (ex opere operato), não pela intensidade emocional de quem o recebe. Cristo está presente independentemente de emoções, consolações ou ausência delas.</p>
+                <p>Os grandes santos da Igreja — inclusive Santa Teresinha do Menino Jesus e São João da Cruz — viveram longos períodos sem "sentir" nada em suas orações e comunhões. Isso não os impediu de serem santos.</p>
+                <p>O que realmente importa é:</p>
+                <ul>
+                    <li>A fé com que você se aproxima — mesmo que fraca</li>
+                    <li>Estar em estado de graça</li>
+                    <li>A disposição de acolher Cristo, mesmo sem emoções intensas</li>
+                </ul>
+                <p>A fé não é sentimento. É assentimento da inteligência e da vontade. Se você comunga com fé e amor — mesmo sem "sentir" nada — Cristo age em você de forma real.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question" onclick="toggleFaq(this)">
+                Comungar todo domingo vira rotina e perde o valor?
+                <i class="fas fa-chevron-down"></i>
+            </button>
+            <div class="faq-answer">
+                <p>Esta preocupação é legítima — mas a conclusão errada seria comungar menos para "valorizar mais". Isso seria como parar de comer para valorizar mais a comida.</p>
+                <p>O problema não está na frequência, mas na disposição interior. A solução para a rotina não é comungar menos, mas melhorar a preparação:</p>
+                <ul>
+                    <li><strong>Chegar à Missa com antecedência</strong> e preparar o coração em silêncio</li>
+                    <li><strong>Fazer a confissão regularmente</strong> para renovar o estado de graça</li>
+                    <li><strong>Rezar as orações antes de comungar</strong>, especialmente a de São Tomás de Aquino</li>
+                    <li><strong>Permanecer em silêncio após comungar</strong>, conversando com Cristo</li>
+                    <li><strong>Renovar a intenção a cada Missa</strong> — oferecer algo a Deus, pedir graça por alguém</li>
+                </ul>
+                <p>A Eucaristia nunca perde valor — somos nós que nos tornamos menos atentos a ela. O remédio é a renovação interior, não a redução da frequência.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question" onclick="toggleFaq(this)">
+                Por que precisa ser na Missa? Não posso comungar em casa?
+                <i class="fas fa-chevron-down"></i>
+            </button>
+            <div class="faq-answer">
+                <p>A Eucaristia só existe porque existe a Missa. A consagração — o momento em que o pão se torna o Corpo de Cristo — acontece única e exclusivamente na celebração eucarística presidida por um sacerdote ordenado.</p>
+                <p>Portanto, não é possível "comungar em casa" de forma autêntica sem que uma hóstia consagrada tenha sido levada da Igreja. Em casos de doença ou impossibilidade grave, existe a <strong>Comunhão dos doentes</strong>, em que um ministro extraordinário leva a hóstia consagrada à casa do enfermo — mas a hóstia veio da Missa.</p>
+                <p>A Missa não é um "extra" opcional para receber a Comunhão. Ela é o contexto necessário e sagrado em que Cristo se torna presente no altar. Separar a Comunhão da Missa é esvaziar o sacramento de seu sentido.</p>
+                <p>Existe também a prática da <strong>Comunhão espiritual</strong> — um ato de desejo ardente de receber Cristo quando a comunhão sacramental não é possível. Mas ela não substitui, apenas complementa.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question" onclick="toggleFaq(this)">
+                A criança realmente entende o que está recebendo?
+                <i class="fas fa-chevron-down"></i>
+            </button>
+            <div class="faq-answer">
+                <p>Esta é uma das perguntas mais profundas sobre a Primeira Comunhão. A resposta honesta é: <strong>parcialmente — e isso é suficiente.</strong></p>
+                <p>O critério estabelecido pelo Papa Pio X (decreto <em>Quam Singulari</em>, 1910) e confirmado pelo Código de Direito Canônico é o <strong>"uso da razão"</strong> — a capacidade de distinguir o Pão Eucarístico do pão comum, e de perceber a seriedade do que está recebendo.</p>
+                <p>Nenhum adulto entende plenamente a Eucaristia. É um mistério que transcende qualquer compreensão humana. O que se exige da criança é:</p>
+                <ul>
+                    <li>Saber que não é pão comum</li>
+                    <li>Saber que é Jesus</li>
+                    <li>Querer recebê-Lo com respeito e amor</li>
+                </ul>
+                <p>O próprio Jesus disse: <em>"Se não vos tornardes como crianças, não entrareis no Reino dos Céus"</em> (Mateus 18:3). A fé simples e confiante da criança pode ser, em muitos aspectos, mais perfeita do que a fé complicada e duvidosa dos adultos.</p>
+            </div>
+        </div>
+
+        <div class="highlight-box">
+            <p>💬 Ter dúvidas sobre a fé não é sinal de fraqueza — é sinal de que você está levando a fé a sério. O importante é buscar respostas com humildade e abertura.</p>
+        </div>
+    </section>
+
+    <!-- ===== REFERÊNCIAS ===== -->
+    <section id="referencias" class="section">
+        <div class="reading-time"><i class="fas fa-clock"></i> Tempo de leitura: 6 minutos</div>
+        <h2><i class="fas fa-file-alt"></i> Referências e Aprofundamento</h2>
+
+        <h3>1. Documentos oficiais da Igreja</h3>
+        <div class="card">
+            <div class="card-title"><i class="fas fa-book"></i> Fontes doutrinárias</div>
+            <ul style="margin-left: 0;">
+                <li><strong>Catecismo da Igreja Católica</strong> — Parágrafos 1322-1419: sobre a Eucaristia</li>
+                <li><strong>Quam Singulari</strong> (1910) — Decreto do Papa Pio X sobre a idade da Primeira Comunhão</li>
+                <li><strong>Sacrosanctum Concilium</strong> — Constituição sobre a Liturgia (Vaticano II, 1963)</li>
+                <li><strong>Mysterium Fidei</strong> — Encíclica do Papa Paulo VI sobre a Eucaristia (1965)</li>
+                <li><strong>Ecclesia de Eucharistia</strong> — Encíclica de João Paulo II (2003)</li>
+                <li><strong>Sacramentum Caritatis</strong> — Exortação de Bento XVI sobre a Eucaristia (2007)</li>
+            </ul>
+        </div>
+
+        <h3>2. Bíblia — Passagens essenciais</h3>
+        <ul>
+            <li><strong>João 6:25-71</strong> — Discurso do Pão da Vida (essencial)</li>
+            <li><strong>Mateus 26:26-29</strong> — Instituição da Eucaristia</li>
+            <li><strong>Marcos 14:22-25</strong> — Instituição da Eucaristia</li>
+            <li><strong>Lucas 22:14-20</strong> — Instituição da Eucaristia</li>
+            <li><strong>1 Coríntios 11:23-30</strong> — Ensino de Paulo, indignidade e exame</li>
+            <li><strong>1 Coríntios 10:16-17</strong> — Um só pão, um só corpo</li>
+            <li><strong>Atos 2:42-47</strong> — Partir do pão na Igreja primitiva</li>
+        </ul>
+
+        <h3>3. Mensagem final</h3>
+        <div class="highlight-box">
+            <p>🙏 A Primeira Comunhão é um tesouro inestimável — o início de uma vida inteira unido a Cristo através do Sacramento da Eucaristia. Que cada criança que recebe este sacramento possa crescer em fé, amor e santidade, e que nunca se afaste deste encontro sagrado.</p>
+        </div>
+
+        <div class="quote">
+            Quem comer este pão viverá eternamente. E o pão que eu darei é a minha carne, que darei pela vida do mundo.
+            <br><small style="font-style: normal;">— João 6:51</small>
+        </div>
+    </section>
+
+</div>
+
+<footer>
+    <p><strong>Guia Completo sobre a Primeira Comunhão</strong></p>
+    <p>Desenvolvido com o objetivo de informar, instruir e edificar a fé católica</p>
+    <p>© 2024 | Inspirado na doutrina e tradição da Igreja Católica</p>
+    <p><small>Este guia segue as orientações do Catecismo da Igreja Católica e ensinamentos oficiais da Igreja</small></p>
+</footer>
+
+<div class="back-to-top" id="backToTop" onclick="scrollToTop()">
+    <i class="fas fa-arrow-up"></i>
+</div>
+
+<script>
+    const navButtons = document.querySelectorAll('.nav-btn');
+    const sections = document.querySelectorAll('.section');
+    const backToTopBtn = document.getElementById('backToTop');
+
+    navButtons.forEach(button => {
+        button.addEventListener('click', (e) => {
+            const sectionId = e.target.closest('button').getAttribute('data-section');
+            showSection(sectionId);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    });
+
+    function showSection(sectionId) {
+        sections.forEach(s => s.classList.remove('active'));
+        navButtons.forEach(b => b.classList.remove('active'));
+        document.getElementById(sectionId).classList.add('active');
+        document.querySelector(`[data-section="${sectionId}"]`).classList.add('active');
+    }
+
+    window.addEventListener('scroll', () => {
+        backToTopBtn.classList.toggle('show', window.scrollY > 300);
+    });
+
+    function scrollToTop() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function showTab(evt, tabName) {
+        const allContents = document.querySelectorAll('.tab-content');
+        const allButtons = document.querySelectorAll('.tab-button');
+        allContents.forEach(c => c.classList.remove('active'));
+        allButtons.forEach(b => b.classList.remove('active'));
+        document.getElementById(tabName).classList.add('active');
+        evt.currentTarget.classList.add('active');
+    }
+
+    function toggleFaq(btn) {
+        const answer = btn.nextElementSibling;
+        const isOpen = answer.classList.contains('open');
+        document.querySelectorAll('.faq-answer').forEach(a => a.classList.remove('open'));
+        document.querySelectorAll('.faq-question').forEach(q => q.classList.remove('open'));
+        if (!isOpen) {
+            answer.classList.add('open');
+            btn.classList.add('open');
+        }
+    }
+</script>
+</body>
+</html>
+```
