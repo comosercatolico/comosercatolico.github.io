@@ -1,266 +1,675 @@
-<div class="sl-painel" data-nome="confessionario">
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Combate Espiritual — São João Maria Vianney</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        /* ═══════════════════════════════════════
+           ESTILOS DO MENU
+           ═══════════════════════════════════════ */
+        .sl-wrap { max-width: 1200px; margin: 0 auto; padding: 40px 20px 0; font-family: Georgia, 'Times New Roman', serif; }
+        .sl-cabecalho { text-align: center; margin-bottom: 30px; }
+        .sl-santo-nome { font-family: Georgia, 'Times New Roman', serif; font-size: 42px; font-weight: 400; color: #2f2a22; letter-spacing: 2px; margin: 0 0 14px; line-height: 1.15; }
+        .sl-divisor { display: flex; align-items: center; justify-content: center; gap: 12px; margin: 12px 0; }
+        .sl-divisor-linha { display: inline-block; width: 60px; height: 1px; background: #b08a3c; opacity: 0.5; }
+        .sl-divisor-orn { color: #b08a3c; font-size: 10px; }
+        .sl-santo-titulo { margin: 8px 0 14px; color: #b08a3c; font-family: Georgia, 'Times New Roman', serif; font-size: 12px; letter-spacing: 4px; text-transform: uppercase; font-weight: 600; }
+        .sl-intro-frase { margin: 0; color: #6f6758; font-family: Georgia, 'Times New Roman', serif; font-size: 15px; font-style: italic; letter-spacing: 0.5px; }
+        .sl-nav { border-top: 1px solid #d8d1c2; border-bottom: 1px solid #d8d1c2; background: #faf8f3; padding: 4px 0; }
+        .sl-lista { display: grid; grid-template-columns: repeat(5, 1fr); list-style: none; padding: 0; margin: 0; }
+        .sl-lista li { margin: 0; padding: 0; list-style: none; }
+        .sl-lista li::marker, .sl-lista li::before { content: "" !important; display: none !important; }
+        .sl-lista li a { display: flex; align-items: center; justify-content: center; text-align: center; text-decoration: none; color: #6e6a60; font-family: Georgia, 'Times New Roman', serif; font-size: 12.5px; letter-spacing: 2px; text-transform: uppercase; padding: 18px 12px; position: relative; transition: all 0.3s ease; background: transparent; min-height: 56px; box-sizing: border-box; }
+        .sl-lista li a::before, .sl-lista li a span::before, .sl-lista li a span::after { content: none !important; display: none !important; }
+        .sl-lista .sl-nome { display: inline-block; line-height: 1.3; }
+        .sl-lista li a::after { content: ""; position: absolute; left: 50%; bottom: 8px; width: 0; height: 1px; background-color: #b08a3c; transition: width 0.3s ease; transform: translateX(-50%); }
+        .sl-lista li a:hover { color: #2f2a22; background-color: #f3eee3; }
+        .sl-lista li a:hover::after { width: 50%; }
+        .sl-lista li a.ativo { color: #2f2a22; background-color: #f5f0e5; }
+        .sl-lista li a.ativo::after { width: 50%; }
 
-  <!-- 01 · COMO A FILA COMEÇOU -->
-  <div class="sl-secao">
-    <div class="sl-secao-header">
-      <span class="sl-secao-num">01</span>
-      <div class="sl-secao-linha"></div>
-      <span class="sl-secao-titulo">Como a Fila Começou — A Expansão da Fama</span>
-    </div>
+        @media (max-width: 900px) {
+            .sl-santo-nome { font-size: 32px; letter-spacing: 1px; }
+            .sl-lista li a { font-size: 11px; letter-spacing: 1.5px; padding: 14px 8px; }
+        }
+        @media (max-width: 600px) {
+            .sl-wrap { padding: 24px 12px 0; }
+            .sl-santo-nome { font-size: 24px; }
+            .sl-santo-titulo { font-size: 10px; letter-spacing: 3px; }
+            .sl-intro-frase { font-size: 13px; padding: 0 10px; }
+            .sl-lista li a { font-size: 9.5px; letter-spacing: 1px; padding: 12px 4px; min-height: 50px; }
+        }
+        @media (max-width: 420px) {
+            .sl-lista li a { font-size: 8.5px; padding: 10px 3px; letter-spacing: 0.5px; }
+        }
 
-    <div class="sl-bloco">
-      <h3>Os primeiros peregrinos externos — quando e de onde</h3>
-      <p><span class="sl-capitular">A</span> fama de João Vianney não explodiu de uma vez. Cresceu por acumulação — um peregrino contava para outro, uma carta mencionava o padre de Ars para um amigo em Lyon, um padre de paróquia vizinha comentava com o bispo o fenômeno que estava acontecendo a poucos quilômetros. O processo levou anos e seguiu uma progressão que os arquivos permitem reconstruir com razoável precisão.</p>
-      <p>Os primeiros visitantes externos chegaram provavelmente no final da década de 1820 — pessoas da região do Ain e dos arredores de Lyon que haviam ouvido falar de um pároco com qualidades incomuns. Não eram ainda peregrinos no sentido pleno do termo: chegavam sem certeza do que encontrariam, movidos por curiosidade mais do que por fé determinada. O que encontravam — a fila já existente de paroquianos, o padre no confessionário às quatro da manhã, a qualidade do ambiente da aldeia — era suficientemente diferente do que esperavam para que voltassem aos lugares de origem com uma história para contar.</p>
-      <p>As histórias que contavam tinham um núcleo consistente: que havia em Ars um padre que sabia coisas. Que no confessionário acontecia algo que não era possível explicar pela psicologia ou pelo método pastoral convencional. Que as pessoas que chegavam céticas saíam diferentes. Essa consistência no relato — o mesmo núcleo narrado por pessoas que não se conheciam e que chegavam de direções diferentes — foi o que deu à fama de Ars uma credibilidade que resistia ao ceticismo natural dos que nunca haviam ido.</p>
-    </div>
+        /* ═══════════════════════════════════════
+           VARIÁVEIS & BASE
+           ═══════════════════════════════════════ */
+        :root {
+            --cb-fundo: #faf8f4;
+            --cb-texto: #3a3530;
+            --cb-texto-leve: #6f6758;
+            --cb-dourado: #b08a3c;
+            --cb-dourado-claro: #d4b872;
+            --cb-borda: #e2dcd0;
+            --cb-borda-leve: #ece8df;
+            --cb-bloco-bg: #ffffff;
+            --cb-nota-bg: #f5f1e8;
+            --cb-nota-borda: #d4c9a8;
+            --cb-escuro-bg: #1e1a14;
+            --cb-escuro-borda: rgba(212, 175, 55, 0.25);
+            --cb-serif: Georgia, 'Times New Roman', 'Noto Serif', serif;
+            --cb-max: 820px;
+        }
 
-    <div class="sl-bloco">
-      <h3>O papel da imprensa católica francesa</h3>
-      <p>A França do século XIX era um país com uma imprensa católica desenvolvida e influente — jornais, revistas e boletins paroquiais que circulavam entre os fiéis e que, ao longo da década de 1830 e 1840, começaram a publicar artigos sobre o fenômeno de Ars. Esses artigos alcançavam leitores em Paris, em Bordeaux, em Marselha — cidades das quais Ars estava a distâncias que, antes da ferrovia, representavam viagens de dias.</p>
-      <p>O tom dos artigos variava: alguns eram devotamente entusiasmados, outros mais cautelosos, alguns francamente céticos. Mas todos tinham em comum o efeito de colocar o nome de Ars na consciência de leitores que de outra forma nunca o teriam encontrado. O cético que lia um artigo sobre Ars podia decidir ir verificar pessoalmente — e muitos foram, com exatamente essa intenção, e voltaram com histórias que não encaixavam no ceticismo com que haviam chegado.</p>
-      <p>A imprensa anticlerical também cobriu Ars — mas com dificuldade crescente, à medida que os argumentos de sensacionalismo e credulidade popular se chocavam com o fato objetivo de que entre os peregrinos de Ars havia médicos, advogados, professores universitários e outras pessoas cujas credenciais tornavam difícil a acusação de ingenuidade.</p>
-    </div>
+        body {
+            background: var(--cb-fundo);
+            margin: 0;
+            padding: 0;
+        }
 
-    <div class="sl-bloco">
-      <h3>A infraestrutura que surgiu ao redor da peregrinação</h3>
-      <p>A aldeia de duzentos e trinta habitantes não estava preparada para receber milhares de visitantes por semana. A infraestrutura que surgiu ao redor da peregrinação de Ars foi improvisada, gradual e reveladora do impacto econômico e social de um fenômeno religioso num lugar que não havia sido planejado para acomodá-lo.</p>
-      <p>Famílias da aldeia abriram as casas como alojamento — um ou dois quartos disponibilizados para peregrinos que chegavam de longe e precisavam de onde dormir antes de garantir um lugar na fila do dia seguinte. Pequenos estabelecimentos de alimentação surgiam e fechavam conforme o fluxo variava. Artesãos locais e comerciantes das cidades próximas vendiam medalhas, imagens e objetos religiosos associados ao Cura d'Ars — uma indústria devocional que o próprio João ignorava com uma consistência que os que o conheciam descreviam como deliberada.</p>
-      <p>A reitoria precisou de adaptações. A igreja precisou de ampliações. O acesso à aldeia pelas estradas existentes tornou-se insuficiente nos dias de pico — certas festas litúrgicas e certos períodos do ano atraíam concentrações que excediam qualquer capacidade planejada. Ars tornou-se, sem ter querido, um destino — e os destinos geram a infraestrutura que os destinos requerem, com ou sem o consentimento dos que os tornam destinos.</p>
-    </div>
+        /* ═══════════════════════════════════════
+           HERO
+           ═══════════════════════════════════════ */
+        .cb-hero {
+            text-align: center;
+            padding: 60px 20px 50px;
+            max-width: var(--cb-max);
+            margin: 0 auto;
+        }
+        .cb-hero-num {
+            display: inline-block;
+            font-family: var(--cb-serif);
+            font-size: 14px;
+            letter-spacing: 4px;
+            color: var(--cb-dourado);
+            margin-bottom: 16px;
+        }
+        .cb-hero-titulo {
+            font-family: var(--cb-serif);
+            font-size: 46px;
+            font-weight: 400;
+            color: var(--cb-texto);
+            letter-spacing: 2px;
+            margin: 0 0 12px;
+            line-height: 1.15;
+        }
+        .cb-hero-sub {
+            font-family: var(--cb-serif);
+            font-size: 17px;
+            font-style: italic;
+            color: var(--cb-texto-leve);
+            letter-spacing: 0.5px;
+            margin: 0;
+        }
+        .cb-hero-ornamento {
+            margin-top: 30px;
+            font-size: 12px;
+            color: var(--cb-dourado-claro);
+            letter-spacing: 8px;
+        }
 
-    <div class="sl-bloco">
-      <h3>A linha de trem e o que ela significa historicamente</h3>
-      <p>Em 1862 — três anos após a morte do Cura — a companhia ferroviária francesa que operava a linha entre Lyon e Bourg-en-Bresse adaptou os horários de certas composições para sincronizar com o fluxo de peregrinos que se deslocavam para Ars. A estação mais próxima era Villefranche-sur-Saône, de onde os peregrinos faziam o restante do percurso a pé, de carruagem ou, mais tarde, por outros meios.</p>
-      <p>O fato de que uma empresa ferroviária comercial — uma instituição do século XIX do progresso e da racionalidade econômica, completamente alheia a considerações religiosas — adaptou seus horários para servir uma rota de peregrinação é um dado histórico que merece ser sublinhado. Não o fez por devoção. Fez-o porque havia demanda suficiente para justificar o ajuste do ponto de vista de receita. O fenômeno de Ars era suficientemente grande para ser economicamente mensurável por uma empresa secular.</p>
-      <p>A linha continua existindo. Os peregrinos do século XXI — brasileiros, coreanos, americanos, poloneses, africanos — chegam a Villefranche-sur-Saône pela mesma ferrovia e percorrem o mesmo caminho final até a aldeia que os peregrinos do século XIX percorriam. A infraestrutura mudou; o destino é o mesmo confessionário de madeira escura.</p>
-    </div>
+        /* ═══════════════════════════════════════
+           SECÇÃO
+           ═══════════════════════════════════════ */
+        .cb-secao {
+            max-width: var(--cb-max);
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        .cb-secao-header {
+            margin-bottom: 40px;
+            padding-top: 10px;
+        }
+        .cb-secao-marca {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 14px;
+        }
+        .cb-secao-num {
+            font-family: var(--cb-serif);
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--cb-dourado);
+            letter-spacing: 3px;
+            flex-shrink: 0;
+        }
+        .cb-secao-linha {
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(to right, var(--cb-borda), transparent);
+        }
+        .cb-secao-titulo {
+            font-family: var(--cb-serif);
+            font-size: 24px;
+            font-weight: 400;
+            color: var(--cb-texto);
+            letter-spacing: 0.5px;
+            line-height: 1.35;
+            margin: 0;
+        }
 
-    <div class="sl-destaque">
-      No ano de 1858 — o último ano completo de vida de João Vianney — estima-se que cem mil peregrinos visitaram Ars. A aldeia tinha duzentos e trinta habitantes. O fluxo de visitantes excedia a população local em mais de quatrocentas vezes. Nenhum santuário da França recebia, naquele período, um número comparável de visitantes — e a maioria dos santuários franceses tinha como atrativo uma aparição mariana, uma relíquia famosa ou uma história milagrosa específica. O único atrativo de Ars era um padre vivo de setenta e dois anos sentado num confessionário de madeira.
+        /* ═══════════════════════════════════════
+           BLOCO
+           ═══════════════════════════════════════ */
+        .cb-bloco {
+            background: var(--cb-bloco-bg);
+            border: 1px solid var(--cb-borda-leve);
+            border-radius: 4px;
+            margin-bottom: 28px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+        }
+        .cb-bloco-titulo {
+            font-family: var(--cb-serif);
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--cb-texto);
+            letter-spacing: 0.3px;
+            margin: 0;
+            padding: 22px 30px 0;
+            line-height: 1.4;
+        }
+        .cb-bloco-corpo {
+            padding: 16px 30px 28px;
+        }
+        .cb-bloco-corpo p {
+            font-family: var(--cb-serif);
+            font-size: 15.5px;
+            line-height: 1.85;
+            color: var(--cb-texto);
+            margin: 0 0 18px;
+            text-align: justify;
+            hyphens: auto;
+        }
+        .cb-bloco-corpo p:last-child { margin-bottom: 0; }
+        .cb-bloco-corpo em { color: #5a4e3a; font-style: italic; }
+        .cb-bloco-corpo strong { color: var(--cb-texto); font-weight: 700; }
+
+        /* ═══════════════════════════════════════
+           CAPITULAR
+           ═══════════════════════════════════════ */
+        .cb-capitular {
+            float: left;
+            font-family: var(--cb-serif);
+            font-size: 58px;
+            line-height: 0.8;
+            font-weight: 400;
+            color: var(--cb-dourado);
+            padding: 4px 10px 0 0;
+            margin-top: 4px;
+        }
+
+        /* ═══════════════════════════════════════
+           NOTA
+           ═══════════════════════════════════════ */
+        .cb-nota {
+            background: var(--cb-nota-bg);
+            border-left: 3px solid var(--cb-nota-borda);
+            border-radius: 0 4px 4px 0;
+            margin: 24px 0 0;
+            padding: 18px 24px;
+        }
+        .cb-nota p {
+            font-family: var(--cb-serif) !important;
+            font-size: 14px !important;
+            line-height: 1.75 !important;
+            color: var(--cb-texto-leve) !important;
+            margin: 0 !important;
+            font-style: italic;
+        }
+
+        /* ═══════════════════════════════════════
+           BLOCO ESCURO (frases do Grappin)
+           ═══════════════════════════════════════ */
+        .cb-escuro {
+            background: var(--cb-escuro-bg);
+            border: 1px solid var(--cb-escuro-borda);
+            border-radius: 4px;
+            max-width: var(--cb-max);
+            margin: 0 auto 40px;
+            padding: 0 20px;
+            overflow: hidden;
+        }
+        .cb-escuro-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 32px 10px 20px;
+        }
+        .cb-escuro-ornamento {
+            font-size: 14px;
+            color: rgba(212, 175, 55, 0.8);
+            flex-shrink: 0;
+        }
+        .cb-escuro-linha {
+            flex: 1;
+            height: 1px;
+            background: rgba(212, 175, 55, 0.2);
+        }
+        .cb-escuro-titulo {
+            font-family: var(--cb-serif);
+            font-size: 15px;
+            font-weight: 400;
+            color: rgba(212, 175, 55, 0.8);
+            letter-spacing: 0.5px;
+            line-height: 1.4;
+            margin: 0;
+        }
+        .cb-escuro-corpo {
+            padding: 0 10px 32px;
+        }
+        .cb-escuro-corpo p {
+            font-family: var(--cb-serif);
+            font-size: 15px;
+            line-height: 1.85;
+            color: rgba(255, 248, 230, 0.85);
+            margin: 0 0 22px;
+        }
+        .cb-escuro-corpo p:last-child { margin-bottom: 0; }
+        .cb-escuro-corpo strong {
+            color: #d4af37;
+            font-style: italic;
+            font-weight: 400;
+        }
+
+        /* ═══════════════════════════════════════
+           SEPARADOR
+           ═══════════════════════════════════════ */
+        .cb-sep {
+            text-align: center;
+            padding: 40px 0;
+            max-width: var(--cb-max);
+            margin: 0 auto;
+        }
+        .cb-sep span {
+            display: inline-block;
+            font-size: 11px;
+            color: var(--cb-dourado-claro);
+            letter-spacing: 14px;
+            position: relative;
+        }
+        .cb-sep span::before,
+        .cb-sep span::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            width: 80px;
+            height: 1px;
+        }
+        .cb-sep span::before {
+            right: calc(100% + 20px);
+            background: linear-gradient(to left, var(--cb-borda), transparent);
+        }
+        .cb-sep span::after {
+            left: calc(100% + 6px);
+            background: linear-gradient(to right, var(--cb-borda), transparent);
+        }
+
+        /* ═══════════════════════════════════════
+           RESPONSIVO
+           ═══════════════════════════════════════ */
+        @media (max-width: 768px) {
+            .cb-hero { padding: 40px 16px 36px; }
+            .cb-hero-titulo { font-size: 32px; }
+            .cb-hero-sub { font-size: 15px; }
+            .cb-secao { padding: 0 14px; }
+            .cb-secao-titulo { font-size: 20px; }
+            .cb-bloco-titulo { padding: 18px 20px 0; font-size: 15px; }
+            .cb-bloco-corpo { padding: 14px 20px 22px; }
+            .cb-bloco-corpo p { font-size: 14.5px; line-height: 1.8; text-align: left; }
+            .cb-capitular { font-size: 44px; padding: 2px 8px 0 0; }
+            .cb-nota { padding: 14px 18px; }
+            .cb-nota p { font-size: 13px !important; }
+            .cb-escuro { padding: 0 14px; }
+            .cb-escuro-corpo p { font-size: 14px; }
+            .cb-sep span::before, .cb-sep span::after { width: 50px; }
+        }
+        @media (max-width: 480px) {
+            .cb-hero-titulo { font-size: 26px; letter-spacing: 1px; }
+            .cb-secao-titulo { font-size: 18px; }
+            .cb-bloco-titulo { padding: 16px 16px 0; font-size: 14.5px; }
+            .cb-bloco-corpo { padding: 12px 16px 18px; }
+            .cb-bloco-corpo p { font-size: 14px; line-height: 1.75; }
+            .cb-escuro-titulo { font-size: 13px; }
+            .cb-escuro-corpo p { font-size: 13.5px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════
+     MENU
+     ═══════════════════════════════════════ -->
+<div class="sl-wrap">
+  <div class="sl-cabecalho">
+    <h1 class="sl-santo-nome">São João Maria Vianney</h1>
+    <div class="sl-divisor">
+      <span class="sl-divisor-linha"></span>
+      <span class="sl-divisor-orn">✦</span>
+      <span class="sl-divisor-linha"></span>
     </div>
+    <p class="sl-santo-titulo">Presbítero · Pastor</p>
+    <p class="sl-intro-frase">Pároco de Ars, confessor e padroeiro dos sacerdotes</p>
   </div>
 
-  <div class="sl-sep">· · ·</div>
+  <nav class="sl-nav">
+    <ul class="sl-lista">
+      <li><a href="/santos/presbiteros/sao-joao-maria-vianney.html"><span class="sl-nome">História</span></a></li>
+      <li><a href="/santos/presbiteros/presbiteros-dados/sao-joao-maria-vianney-dados/ars.html"><span class="sl-nome">Ars</span></a></li>
+      <li><a href="/santos/presbiteros/presbiteros-dados/sao-joao-maria-vianney-dados/confessionario.html"><span class="sl-nome">O Confessionário</span></a></li>
+      <li><a href="/santos/presbiteros/presbiteros-dados/sao-joao-maria-vianney-dados/combate.html"><span class="sl-nome">Combate Espiritual</span></a></li>
+      <li><a href="/santos/presbiteros/presbiteros-dados/sao-joao-maria-vianney-dados/espiritualidade.html"><span class="sl-nome">Espiritualidade</span></a></li>
+      <li><a href="/santos/presbiteros/presbiteros-dados/sao-joao-maria-vianney-dados/relacoes.html"><span class="sl-nome">Relações</span></a></li>
+      <li><a href="/santos/presbiteros/presbiteros-dados/sao-joao-maria-vianney-dados/milagres.html"><span class="sl-nome">Milagres</span></a></li>
+      <li><a href="/santos/presbiteros/presbiteros-dados/sao-joao-maria-vianney-dados/morte.html"><span class="sl-nome">Morte</span></a></li>
+      <li><a href="/santos/presbiteros/presbiteros-dados/sao-joao-maria-vianney-dados/legado.html"><span class="sl-nome">Legado</span></a></li>
+      <li><a href="/santos/presbiteros/presbiteros-dados/sao-joao-maria-vianney-dados/referencias.html"><span class="sl-nome">Referências</span></a></li>
+    </ul>
+  </nav>
+</div>
 
-  <!-- 02 · A ROTINA DO CONFESSIONÁRIO -->
-  <div class="sl-secao">
-    <div class="sl-secao-header">
-      <span class="sl-secao-num">02</span>
-      <div class="sl-secao-linha"></div>
-      <span class="sl-secao-titulo">A Rotina do Confessionário — Horas, Números, Corpo</span>
-    </div>
+<!-- ═══════════════════════════════════════
+     CONTEÚDO — COMBATE ESPIRITUAL
+     ═══════════════════════════════════════ -->
 
-    <div class="sl-bloco">
-      <h3>O horário real documentado pelos vigários</h3>
-      <p>O Père Toccanier e outros vigários que viveram na reitoria de Ars deixaram registros suficientemente detalhados para que a rotina de João Vianney no confessionário possa ser reconstituída com precisão razoável — pelo menos para os últimos quinze anos de sua vida, quando o ministério estava no seu pico de intensidade.</p>
-      <p>O horário era o seguinte: João levantava entre as duas e as três da manhã. Rezava durante um período — a duração variava, mas raramente era inferior a uma hora. Chegava ao confessionário entre as três e meia e as quatro da manhã. Ali permanecia, com pausas para celebrar a missa e para as refeições mínimas que ingeria, até as onze da noite ou à meia-noite.</p>
-      <p>As pausas eram realmente pausas — interrupções breves num contínuo. A missa era celebrada geralmente às onze da manhã, após horas de confissões. As refeições eram tomadas no confessionário ou numa cadeira próxima, rapidamente, às vezes com um vigário trazendo o que havia — frequentemente as batatas frias que constituíam a dieta habitual. O regresso à reitoria à meia-noite era seguido de algumas horas de sono e do recomeço antes do alvorecer.</p>
-      <p>O Père Toccanier calculou, com base nos seus registros, que nos anos de pico João Vianney passava entre onze e dezasseis horas por dia no confessionário. Nos períodos de maior fluxo — certas festas, o verão, a Quaresma — o número subia para as dezasseis a dezoito horas. Não havia fim de semana, não havia férias, não havia períodos de descanso pastoral. O confessionário abria todos os dias do ano.</p>
-    </div>
+<header class="cb-hero">
+  <span class="cb-hero-num">IV</span>
+  <h2 class="cb-hero-titulo">Combate Espiritual</h2>
+  <p class="cb-hero-sub">O Grappin e as Perturbações da Reitoria</p>
+  <div class="cb-hero-ornamento">✦</div>
+</header>
 
-    <div class="sl-bloco">
-      <h3>Quantas confissões — o cálculo impossível e necessário</h3>
-      <p>Nenhum registro sistemático do número de confissões ouvidas por João Vianney foi mantido — isso seria, dado o sigilo sacramental, impossível além de inadequado. O que existe são estimativas baseadas nos dados disponíveis: o número de peregrinos por ano, a duração média de cada confissão, as horas disponíveis.</p>
-      <p>Os biógrafos que tentaram esse cálculo chegam a números que variam conforme as suposições de base, mas que convergem numa magnitude da mesma ordem: ao longo de trinta anos de confissionário intensivo — excluindo os primeiros anos em Ars, quando o fluxo era ainda local — o número de confissões ouvidas por João Vianney está provavelmente entre um milhão e meio e três milhões.</p>
-      <p>O número é tão grande que perde concretude. Para recuperá-la: um confissão por pessoa. Uma história, um pecado, uma vida específica, um peso específico trazido ao confessionário e deixado lá. Multiplicado por um milhão e meio. O padre que recebia cada uma dessas histórias não as recebia como número — recebia-as como pessoa. A exaustão que isso produzia não era a exaustão da repetição mecânica. Era a exaustão de alguém que havia carregado, durante trinta anos, o peso específico e individual de um número de vidas que excede a capacidade humana de imaginar.</p>
+<!-- 01 · O GRAPPIN -->
+<section class="cb-secao">
+  <div class="cb-secao-header">
+    <div class="cb-secao-marca">
+      <span class="cb-secao-num">01</span>
+      <span class="cb-secao-linha"></span>
     </div>
-
-    <div class="sl-bloco">
-      <h3>O estado físico dentro do confessionário</h3>
-      <p>O confessionário de Ars era uma estrutura de madeira escura, relativamente pequena, posicionada numa lateral da igreja. No verão, com dezenas de pessoas em fila dentro da nave — a espera podia durar horas ou dias — o calor acumulado tornava o ambiente sufocante. Os vigários registraram múltiplos episódios em que João foi encontrado dentro do confessionário com sintomas de exaustão térmica — face vermelha, respiração difícil, incapacidade de continuar sem intervenção.</p>
-      <p>No inverno, a situação invertia-se: o confessionário às quatro da manhã, com a igreja vazia e as temperaturas da planície de Dombes no pleno inverno, era um ambiente de frio intenso. Os vigários que chegavam para assistir à missa da manhã encontravam, ocasionalmente, João com os dedos roxos de frio mas recusando-se a abandonar o confessionário antes de ter ouvido os que estavam esperando.</p>
-      <p>Os desmaios foram documentados com suficiente frequência para não serem episódicos — eram parte do padrão dos anos finais. Quando João perdia a consciência ou ficava incapacitado de continuar, os vigários o carregavam para a sacristia ou para a reitoria, onde repousava brevemente antes de insistir em voltar. A instrução que dava aos vigários era consistente: não interromper as confissões por causa do seu estado, a não ser que fosse absolutamente impossível continuar.</p>
-    </div>
-
-    <div class="sl-bloco">
-      <h3>Os que dormiam na rua para garantir lugar</h3>
-      <p>A fila do confessionário de Ars tinha uma dimensão que excedia a fila física dentro da igreja. Peregrinos que chegavam de tarde e encontravam a fila já formada para o dia seguinte tomavam uma decisão que os documentos descrevem com uma frequência que sugere que era prática comum: dormiam. Na rua, no adro da igreja, em colchões improvisados nos alpendres dos edifícios próximos, no chão da nave quando os vigários permitiam.</p>
-      <p>O tempo médio de espera para chegar ao confessionário de João Vianney, nos períodos de maior fluxo, era estimado pelos contemporâneos entre dois e oito dias. Pessoas que haviam viajado de Paris — uma jornada de dias — chegavam e descobriam que precisariam esperar mais uma semana antes de entrar no confessionário. A maioria esperava.</p>
-      <p>Essa disposição para esperar é, por si mesma, um dado histórico que merece reflexão. O que as pessoas vinham buscar em Ars não era conforto, não era espetáculo, não era uma experiência de entretenimento religioso. Vinham buscar alguma coisa que acreditavam encontrar especificamente naquele confessionário, com aquele padre, numa aldeia que não tinha mais nada para oferecer. E achavam que a espera valia.</p>
-    </div>
+    <h3 class="cb-secao-titulo">O Grappin — Origem e Primeiros Episódios</h3>
   </div>
 
-  <div class="sl-sep">· · ·</div>
-
-  <!-- 03 · O QUE ACONTECIA DENTRO -->
-  <div class="sl-secao">
-    <div class="sl-secao-header">
-      <span class="sl-secao-num">03</span>
-      <div class="sl-secao-linha"></div>
-      <span class="sl-secao-titulo">O Que Acontecia Dentro — Testemunhos Diretos</span>
+  <article class="cb-bloco">
+    <h4 class="cb-bloco-titulo">1824 — quando começou</h4>
+    <div class="cb-bloco-corpo">
+      <p><span class="cb-capitular">N</span>o inverno de 1824, seis anos após a chegada de João Vianney a Ars, os moradores da reitoria começaram a ouvir barulhos noturnos que não tinham explicação natural imediata. Não eram os barulhos comuns de uma casa velha — estruturas que rangem com o frio, animais que passam, ventos que entram pelas frinchas. Eram barulhos de outra ordem: pancadas ritmadas em superfícies específicas, sons de móveis sendo arrastados em quartos que estavam fechados, um estrépito que os que o ouviram descreveram consistentemente como semelhante a uma tropa passando pelo corredor de madeira da reitoria.</p>
+      <p>João acordava com esses barulhos. Nos primeiros episódios, segundo os relatos que deu aos seus colaboradores mais próximos, levantava, verificava os quartos, não encontrava nada deslocado, voltava a deitar. A repetição — noite após noite, com variações de intensidade mas com a mesma qualidade inexplicável — levou-o gradualmente a uma conclusão que ele exprimiu com a sobriedade direta que caracterizava o seu discurso sobre qualquer assunto: que o que o perturbava à noite não era natural.</p>
+      <p>O ano de 1824 é significativo na cronologia do seu ministério: foi o mesmo ano em que fundou a Providence, em que o fluxo de peregrinos externos começou a aumentar perceptivelmente, e em que os primeiros relatos de cardiognosia no confessionário chegaram ao conhecimento de pessoas fora de Ars. Na interpretação posterior de João — e na dos teólogos que avaliaram os episódios — a coincidência não era fortuita.</p>
     </div>
+  </article>
 
-    <div class="sl-bloco">
-      <h3>A experiência dos penitentes antes de falar</h3>
-      <p>Os relatos dos penitentes que chegaram ao confessionário de João Vianney seguem um padrão suficientemente consistente para merecer análise. O padrão não é universal — há testemunhos que descrevem uma confissão normal, sem nenhum elemento extraordinário, com um padre atento e misericordioso mas sem fenômenos especiais. Esses testemunhos são importantes precisamente porque mostram que o confissionário de Ars não era uma máquina de produzir experiências místicas — era um sacramento, e como tal funcionava de maneiras diferentes com pessoas diferentes.</p>
-      <p>Mas havia um subconjunto de testemunhos — suficientemente numeroso e suficientemente consistente para que os processos canônicos os tratassem com seriedade — que descrevia algo diferente. A experiência comum a esses relatos: ao aproximar-se da grade do confessionário, antes de dizer qualquer coisa, o penitente era confrontado — pelo padre, ou simplesmente pela situação — com uma consciência súbita e aguda de algo que havia evitado pensar. Um pecado esquecido. Uma situação não resolvida. Uma mentira de longa data. A experiência não era necessariamente verbalizada pelo padre — às vezes era apenas um olhar, um silêncio, uma pergunta que não era a pergunta esperada. Mas o efeito era o de alguém que havia sido visto.</p>
-      <p>Ser visto — não julgado, não acusado, mas simplesmente visto — era, segundo muitos dos relatos, o que tornava o confessionário de Ars diferente de outros confessionários. A maioria das confissões acontece com o penitente no controle da narrativa: ele decide o que contar, em que ordem, com que grau de detalhe. No confessionário de João Vianney, esse controle era frequentemente retirado de uma maneira que os penitentes descreviam como surpreendente mas não violenta — como se alguém houvesse gentilmente rearranjo a conversa de modo que o que precisava ser dito pudesse ser dito.</p>
+  <article class="cb-bloco">
+    <h4 class="cb-bloco-titulo">O que João descreveu nas primeiras ocorrências</h4>
+    <div class="cb-bloco-corpo">
+      <p>Os relatos mais detalhados das primeiras perturbações vêm de João Vianney ele mesmo — transmitidos aos vigários e colaboradores que conviviam com ele, colhidos posteriormente nos processos canônicos. Ele descrevia as experiências com uma precisão que sugeria observação cuidadosa e sem amplificação dramática — a mesma qualidade de atenção que havia aprendido nos campos de Dardilly quando pastoreava animais e que havia transferido para o confessionário quando pastoreava pessoas.</p>
+      <p>As primeiras ocorrências eram predominantemente auditivas: pancadas nas portas da reitoria — não batidas únicas mas sequências, às vezes ritmadas, às vezes aleatórias. Sons de objetos caindo em quartos vazios, verificados imediatamente depois e encontrados intactos. Um som específico que João descreveu em mais de uma ocasião como semelhante ao de uma grande caixa sendo arrastada pelo soalho do andar superior, num ritmo lento e deliberado.</p>
+      <p>Depois — em episódios que os biógrafos situam nos anos seguintes ao início — as perturbações adquiriram uma componente física mais direta: a cama de João sendo sacudida com violência suficiente para acordá-lo do sono leve que conseguia; a sensação de pressão física sobre o corpo sem que nenhuma causa visível estivesse presente; temperatura extrema — calor intenso ou frio agudo — localizada no espaço imediato ao redor da cama, sem que as condições externas o justificassem.</p>
+      <aside class="cb-nota">
+        <p>João relatava esses episódios com uma ausência notável de dramatismo. Os que o ouviam — vigários, confessores, colaboradores — registraram que a maneira como ele descrevia as perturbações era semelhante à maneira como descrevia qualquer outro aspecto da vida pastoral: com atenção ao detalhe, sem exagero, sem a tonalidade de quem está narrando algo que pretende impressionar. Era a sobriedade de alguém que havia decidido que o que ocorria era real, que tinha uma causa identificável, e que a causa não merecia nem pânico nem indiferença.</p>
+      </aside>
     </div>
+  </article>
 
-    <div class="sl-bloco">
-      <h3>Casos específicos com nomes — a cardiognosia documentada</h3>
-      <p>Os processos de beatificação e canonização coletaram casos específicos de cardiognosia — o conhecimento sobrenatural do interior alheio — com nomes, datas e circunstâncias verificáveis. Alguns exemplos que os biógrafos documentam com suficiente detalhe:</p>
-      <p><strong>O padre em crise de fé:</strong> Um padre de Paris — identificado nas fontes pelo nome de Père X, com a discreção habitual nos documentos eclesiásticos — chegou a Ars em estado de crise vocacional grave, considerando abandonar o sacerdócio. Não havia comunicado a ninguém o motivo da viagem — havia dito apenas que ia a Ars "por curiosidade". Quando chegou à frente do confessionário e se ajoelhou, João Vianney voltou-se para ele e disse, antes que o padre tivesse falado, qual era a questão central da crise — não em termos gerais, mas com uma especificidade que o padre descreveu depois como se o Cura houvesse lido o diário que ele mesmo nunca havia escrito. O padre ficou em Ars por vários dias. Voltou a Paris como sacerdote. Nunca mais pensou em abandonar o ministério.</p>
-      <p><strong>A mulher de Lyon:</strong> Uma mulher de Lyon — casada, de família burguesa, identificada nos processos — havia viajado a Ars por pressão da família, sem intenção de se confessar. Havia carregado por vinte anos um pecado que nunca havia confessado — não porque não o considerasse grave, mas porque não conseguia enunciar as palavras. Aproximou-se do confessionário como observadora, sem intenção de entrar. João, que estava confessando outro penitente, virou-se brevemente na direção dela — ela estava do lado de fora da grade — e disse o nome do pecado. Não como acusação. Como reconhecimento. A mulher entrou e confessou. Descreveu depois que a sensação não havia sido de exposição mas de alívio — como se um peso que havia carregado por vinte anos houvesse sido visto por alguém que entendia o peso sem ser esmagado por ele.</p>
-      <p><strong>O oficial militar:</strong> Um oficial do exército francês — identificado pelo posto e pela data aproximada da visita nos processos — chegou a Ars declaradamente como cético, acompanhando um familiar que queria ir. Entrou no confessionário por cortesia, sem intenção de confissão séria. João começou a falar sobre um episódio específico da vida militar do oficial — um episódio que o homem nunca havia mencionado a ninguém, que havia guardado como segredo por anos e que envolvia uma ação de que se envergonhava profundamente. O oficial confessou. Saiu do confissionário com o rosto visivelmente diferente do rosto com que havia entrado. O familiar que o acompanhava confirmou a mudança nos documentos coletados posteriormente.</p>
+  <article class="cb-bloco">
+    <h4 class="cb-bloco-titulo">O nome — <em>le Grappin</em> — e o que revela</h4>
+    <div class="cb-bloco-corpo">
+      <p>Em determinado momento dos primeiros anos das perturbações, João Vianney começou a referir-se ao seu perturbador noturno pelo nome que ficaria associado para sempre a essa dimensão da sua vida: <em>le Grappin</em>. Em francês antigo e regional, a palavra designa um gancho, um agarrador — o instrumento que se usa para prender algo que não quer ficar quieto, ou para arrastar algo que resiste.</p>
+      <p>A escolha do nome é teologicamente reveladora em vários planos. Primeiro, nomeou o que o perturbava — e nomear é um ato de poder sobre o nomeado, não de submissão. Na tradição bíblica e na tradição do exorcismo cristão, conhecer o nome do adversário é o primeiro passo para não ser dominado por ele. João não nomeou o seu adversário com terror — nomeou-o com a familiaridade levemente desdenhosa de quem reconhece um inimigo de longa data e já não está impressionado com ele.</p>
+      <p>Segundo: o nome implica uma função — o que agarra, o que tenta prender. É uma descrição da intenção do adversário, não da sua natureza. João não estava fazendo teologia sobre o demônio ao chamá-lo de Grappin — estava descrevendo o que o demônio tentava fazer com ele: agarrá-lo, prendê-lo, impedir o movimento pastoral que as conversões do confessionário representavam.</p>
+      <p>Terceiro: o tom. Os contemporâneos que ouviram João falar do Grappin descreveram consistentemente que a tonalidade não era de medo mas de algo próximo do humor — um humor seco, adulto, o humor de alguém que reconhece o ridículo da situação sem deixar de levá-la a sério. <em>"O Grappin esteve barulhento esta noite"</em> — dito com o mesmo tom com que se comenta o tempo.</p>
     </div>
+  </article>
+</section>
 
-    <div class="sl-bloco">
-      <h3>O manejo das confissões difíceis</h3>
-      <p>Nem todos os que chegavam ao confessionário de João Vianney chegavam dispostos a converter-se. Havia os que chegavam por curiosidade e ficavam sem receber o que procuravam. Havia os que chegavam em estado de resistência ativa — que queriam provar que o padre famoso não tinha nada de especial. E havia os que chegavam numa zona intermediária difícil: sabendo que precisavam de algo, mas sem a disposição para fazer o que esse algo exigia.</p>
-      <p>Com esses últimos — os mais numerosos e os mais difíceis pastoralmente — João desenvolveu ao longo dos anos um conjunto de abordagens que os seus vigários observaram e registraram. Não era um método sistematizado, mas havia padrões.</p>
-      <p>Com os resistentes: paciência. João não pressionava. Fazia perguntas — às vezes perguntas que pareciam oblíquas ao assunto mas que os penitentes descreviam depois como tendo chegado ao centro pela rota menos esperada. Deixava silêncios. Os silêncios no confessionário de João eram, segundo vários testemunhos, diferentes dos silêncios em outros confessionários — tinham uma qualidade de espera ativa que os penitentes sentiam como uma presença, não como uma ausência.</p>
-      <p>Com os que chegavam sem arrependimento real: João às vezes adiava a absolvição. Era um dos pontos em que os críticos jansenistas o acusavam de inconsistência — por um lado absolviam com facilidade os que estavam dispostos, por outro adiavam a absolvição dos que não demonstravam disposição suficiente. A lógica interna era coerente: a misericórdia pressupõe arrependimento, e o arrependimento não é uma formalidade que se cumpre com presença física numa grade de madeira. Quando João percebia que o que estava diante dele era uma confissão sem conversão, dizia ao penitente que voltasse — e a forma como dizia isso era, segundo os relatos, menos um julgamento do que um convite.</p>
-    </div>
+<div class="cb-sep"><span>✦</span></div>
 
-    <div class="sl-bloco">
-      <h3>O que restava depois — o penitente que saía</h3>
-      <p>Os que saíam do confessionário de João Vianney foram observados por outros peregrinos que estavam na fila com uma atenção que o contexto tornava natural. Vários desses observadores deixaram registros da experiência de ver os que saíam.</p>
-      <p>O padrão mais frequente nos relatos: a pessoa que saía do confessionário estava visivelmente diferente da pessoa que havia entrado. Não de forma dramática — não havia colapsos teatrais, não havia visões espetaculares. Era algo mais discreto e mais difícil de descrever: uma mudança na postura, uma expressão diferente no rosto, uma qualidade no andar que os observadores descreviam com termos como "mais leve", "mais presente", "como se houvesse deixado algo dentro".</p>
-      <p>Havia também os que saíam em lágrimas — não o choro de quem havia sido confrontado dolorosamente, mas o choro específico de quem havia sido aliviado de um peso que havia carregado por tempo demais. Os peregrinos que observavam essa categoria de saída descreviam a experiência de observá-la como perturbadora no melhor sentido: que alguém pudesse sair de uma conversa numa caixa de madeira com um padre de setenta anos com esse rosto — esse rosto específico, lavado e aliviado e de certa forma espantado — era algo que tornava difícil manter o ceticismo com que se havia chegado a Ars.</p>
+<!-- 02 · O QUE AS TESTEMUNHAS REGISTRARAM -->
+<section class="cb-secao">
+  <div class="cb-secao-header">
+    <div class="cb-secao-marca">
+      <span class="cb-secao-num">02</span>
+      <span class="cb-secao-linha"></span>
     </div>
+    <h3 class="cb-secao-titulo">O Que as Testemunhas Registraram</h3>
   </div>
 
-  <div class="sl-sep">· · ·</div>
-
-  <!-- 04 · A TEOLOGIA DO CONFESSIONÁRIO -->
-  <div class="sl-secao">
-    <div class="sl-secao-header">
-      <span class="sl-secao-num">04</span>
-      <div class="sl-secao-linha"></div>
-      <span class="sl-secao-titulo">A Teologia do Confessionário — O Que Ele Acreditava</span>
+  <article class="cb-bloco">
+    <h4 class="cb-bloco-titulo">Père Toccanier e o diário — episódios com datas</h4>
+    <div class="cb-bloco-corpo">
+      <p>O Père François Toccanier viveu na reitoria de Ars por um período considerável dos anos finais do ministério de João Vianney. Era um homem de temperamento que os que o conheceram descreveram como prático, organizado e naturalmente cético em relação ao que não conseguia explicar — qualidades que tornam o seu diário uma fonte particularmente valiosa para os episódios noturnos da reitoria.</p>
+      <p>Toccanier registrou no diário, com datas específicas, as perturbações que ele mesmo ouviu — não que havia ouvido João dizer que ouvira, mas que ele próprio havia ouvido, acordado no seu quarto, sem mediação. As entradas são redigidas com a sobriedade de alguém que estava registrando um fenômeno que não conseguia classificar adequadamente mas que não conseguia ignorar: data, hora aproximada, natureza do barulho, duração, condições do tempo exterior naquela noite, estado da casa verificado na manhã seguinte.</p>
+      <p>Uma entrada de novembro — o ano não foi preservado com certeza, mas os biógrafos situam na década de 1840 — descreve uma sequência de pancadas que acordou Toccanier às duas da manhã. Ele levantou, verificou o corredor, verificou o quarto de João — que estava acordado, sentado na beira da cama, em silêncio. João disse-lhe apenas: <em>"É o Grappin. Volte dormir."</em> Toccanier registrou que não conseguiu voltar a dormir por mais de uma hora e que o barulho continuou intermitentemente até próximo do alvorecer.</p>
+      <p>Outra entrada descreve um episódio em que Toccanier ouviu, de forma inequívoca, o som de algo pesado sendo arrastado pelo quarto de João — um som com a qualidade física de um peso real sendo movido por uma força real, não o som estrutural de uma casa que range. Verificou o quarto imediatamente depois. Nada estava deslocado. João estava ajoelhado em oração, como se o barulho não houvesse sido suficiente para interromper o que estava fazendo.</p>
     </div>
+  </article>
 
-    <div class="sl-bloco">
-      <h3>A visão do pecado mortal e da graça santificante</h3>
-      <p>João Vianney tinha sobre o pecado uma visão que era simultaneamente severa e misericordiosa — uma combinação que os que o ouviam encontravam paradoxal mas que, ao ouvirem mais, percebiam como coerente. A severidade estava no diagnóstico: o pecado mortal era, para João, uma ruptura real com Deus, não uma formalidade religiosa ou uma transgressão de código social. Quando falava de pecado mortal, havia na sua voz e no seu rosto algo que os testemunhos descrevem como genuíno horror — não o horror performático do pregador que usa o tema como instrumento retórico, mas o horror de alguém que havia contemplado o que o pecado mortal significa na sua extensão real: a morte da vida divina na alma.</p>
-      <p>Mas a severidade do diagnóstico não produzia em João severidade pastoral. Produzia urgência misericordiosa — a urgência de quem vê alguém gravemente doente e quer que o doente seja curado, não punido por ter adoecido. O confessionário, nessa visão, não era um tribunal — era uma enfermaria. O padre não era um juiz — era um médico que tinha à disposição um remédio que curava completamente, independentemente da gravidade da doença, desde que o doente o quisesse tomar.</p>
+  <article class="cb-bloco">
+    <h4 class="cb-bloco-titulo">Os sons, os cheiros, os objetos físicos afetados</h4>
+    <div class="cb-bloco-corpo">
+      <p>Os registros dos moradores da reitoria ao longo dos anos identificam três categorias distintas de fenômenos, suficientemente consistentes nos relatos independentes para merecerem ser tratadas separadamente.</p>
+      <p><strong>Os sons:</strong> a categoria mais documentada e a mais variada. Pancadas em portas e paredes — às vezes únicas e violentas, às vezes em sequências ritmadas. Sons de móveis arrastados em quartos que, verificados imediatamente, estavam intactos. Um som específico descrito por múltiplas testemunhas independentes como semelhante ao de cavalaria — uma ressonância pesada e ritmada percorrendo os corredores de madeira da reitoria. Vozes — este é o elemento mais raro e o menos uniformemente atestado: alguns testemunhos mencionam sons articulados, outros descrevem apenas barulho amorfo. Os processos canônicos trataram os sons articulados com cautela particular.</p>
+      <p><strong>Os cheiros:</strong> múltiplos testemunhos — de Toccanier, de outros vigários, de peregrinos que passaram noites na reitoria a convite de João — descrevem a presença ocasional de um cheiro intenso e inconfundível de enxofre em determinadas áreas da reitoria, sem fonte identificável. O cheiro era suficientemente forte para ser mencionado como perturbador, não como incidental. Aparecia especialmente nos momentos de maior intensidade dos barulhos e desaparecia sem deixar resíduo verificável.</p>
+      <p><strong>Os objetos:</strong> além da cama — que trataremos separadamente — os testemunhos mencionam ocasionalmente objetos encontrados deslocados da posição em que haviam sido deixados na véspera, sem que ninguém houvesse entrado no quarto no intervalo. O critério para incluir esses episódios nos registros era rigoroso — Toccanier, em particular, verificava as condições dos quartos com suficiente regularidade para poder afirmar com confiança quando algo havia mudado sem causa natural identificável.</p>
     </div>
+  </article>
 
-    <div class="sl-bloco">
-      <h3>Por que discordava dos rigoristas</h3>
-      <p>O ponto central da discordância de João Vianney com a corrente rigorista não era teológico em sentido estrito — era antropológico. Os rigoristas tendiam a ver o penitente que chegava ao confessionário com suspeita: será que o arrependimento é real? Será que a proposta de emenda é sincera? Será que a absolvição prematura não o confortará numa situação que exige perturbação?</p>
-      <p>João invertia a questão: a pessoa que fez o esforço de vir ao confessionário — que venceu a vergonha, que esperou na fila, que se ajoelhou diante do padre — já demonstrou, pelo próprio ato, algo que merece ser recebido com confiança e não com suspeita. O arrependimento imperfeito — motivado mais pelo medo das consequências do que pelo amor a Deus — era, para a teologia sacramental que João praticava, suficiente para a validade do sacramento. Deus encontrava o arrependimento onde estava e o transformava no confessionário — não exigia que fosse perfeito antes de entrar.</p>
-      <p>Essa posição — perfeitamente ortodoxa, plenamente sustentada pela teologia sacramental da Igreja — era o fundamento da sua misericórdia pastoral. Não era ingenuidade, não era laxismo. Era uma confiança específica na eficácia do sacramento que excedia a confiança na perfeição do penitente.</p>
+  <article class="cb-bloco">
+    <h4 class="cb-bloco-titulo">A cama com marcas de queimadura</h4>
+    <div class="cb-bloco-corpo">
+      <p>A cama de João Vianney é uma das relíquias preservadas em Ars. É uma cama simples, de madeira, do tipo que um pároco rural do século XIX usaria — sem ornamentação, funcional, adequada ao lugar e ao homem. Apresenta marcas de queimadura que são visíveis aos peregrinos que a observam.</p>
+      <p>A explicação naturalista é simples e foi avançada pelos críticos desde o século XIX: as marcas são resultado de velas caídas durante as madrugadas de oração, numa cama onde um homem que dormia pouco e mal podia facilmente adormecer com uma vela acesa. É uma explicação razoável e que os historiadores sérios não descartam.</p>
+      <p>A tradição de Ars — sustentada pelos testemunhos de moradores da reitoria — atribui as marcas a um episódio específico em que o fogo foi colocado na cama deliberadamente, do exterior, sem que João estivesse usando velas. O episódio é narrado em termos que tornam a identificação do agente inequívoca para os que o narraram: o Grappin, numa noite de perturbação particularmente intensa, havia tentado incendiar a cama com o Cura dentro.</p>
+      <p>João sobreviveu ao episódio — evidentemente, dado que continuou em Ars por muitos anos depois. O que sobreviveu além dele são as marcas na madeira. Os peregrinos que as tocam ficam, geralmente, em silêncio por um momento. É o tipo de silêncio que acontece quando a abstração teológica do combate espiritual encontra a concretude física de uma superfície queimada.</p>
     </div>
+  </article>
 
-    <div class="sl-citacao">
-      <p>"Se eu fosse juiz e não padre, hesitaria. Mas sendo padre, Deus me deu um coração de pai — e um pai não pode condenar o filho que se arrepende."</p>
-      <span class="sl-fonte">João Maria Vianney</span>
+  <article class="cb-bloco">
+    <h4 class="cb-bloco-titulo">Outros moradores da reitoria — testemunhos independentes</h4>
+    <div class="cb-bloco-corpo">
+      <p>Além de Toccanier, outros moradores da reitoria deixaram testemunhos sobre as perturbações noturnas. A independência desses testemunhos — pessoas que não se conheciam entre si antes de chegar a Ars, que chegaram em épocas diferentes, que registraram os episódios em suportes diferentes e com estilos diferentes — é o que torna a evidência coletiva mais difícil de descartar do que qualquer testemunho individual.</p>
+      <p>Um vigário que serviu em Ars nos anos 1840 — identificado nos processos pelo nome mas que os biógrafos, por praxe de discrição, referem apenas pelo título — deixou um relato escrito de uma noite específica em que os barulhos na reitoria foram de intensidade suficiente para acordar todos os moradores simultaneamente. O relato descreve cinco adultos acordados no mesmo momento, verificando os quartos, encontrando nada deslocado, e reunindo-se no corredor em silêncio — cada um com a mesma expressão, segundo o narrador, de quem acabou de confirmar algo que esperava que fosse ter outra explicação.</p>
+      <p>Uma mulher que havia ficado na reitoria por alguns dias a convite de Catherine Lassagne — identificada nos processos pelo nome — descreveu num testemunho posterior uma noite em que sentiu a cama em que dormia ser sacudida com uma violência que a fez cair no chão. Verificou a estrutura da cama na manhã seguinte com o ajudante da reitoria: estava intacta, sem defeito que explicasse o movimento. João, quando ela lhe relatou o episódio, respondeu apenas: <em>"Não se preocupe. O Grappin não faz mal às pessoas que não têm nada a temer."</em></p>
     </div>
+  </article>
+</section>
 
-    <div class="sl-citacao">
-      <p>"Os nossos pecados são como grãos de areia ao lado do grande monte de misericórdia de Deus."</p>
-      <span class="sl-fonte">João Maria Vianney</span>
-    </div>
+<div class="cb-sep"><span>✦</span></div>
 
-    <div class="sl-bloco">
-      <h3>A relação entre confissão e Eucaristia no seu pensamento</h3>
-      <p>Para João Vianney, confissão e Eucaristia não eram dois sacramentos paralelos e independentes — eram dois momentos de um único movimento de aproximação a Deus, inseparáveis na prática pastoral e na vida espiritual. A confissão preparava para a Eucaristia; a Eucaristia sustentava o que a confissão havia restaurado.</p>
-      <p>Essa visão tinha consequências práticas na sua pastoral. Quando aconselhava os penitentes sobre a frequência à comunhão — um tema de debate no catolicismo do seu tempo, com posições que variavam do jansenismo restritivo à devoção mais frequente que o próprio João favorecia — o argumento central era sempre o mesmo: o sacramento da confissão existe para que o sacramento da Eucaristia seja possível, e a Eucaristia existe para que a vida da confissão — a vida de conversão contínua — seja sustentável. Retirar um dos dois da equação era empobrecer a vida cristã de uma forma que nem a virtude individual nem a oração pessoal podiam compensar.</p>
-      <p class="sl-nota">A posição de João sobre a frequência à comunhão era mais favorável à comunhão frequente do que a corrente jansenista do seu tempo admitia. Isso gerou algumas tensões com colegas mais rigoristas. Mas estava em linha com a orientação que a Igreja viria a formalizar mais claramente décadas depois, especialmente com o decreto de Pio X sobre a comunhão frequente em 1905 — o mesmo papa que beatificaria João Vianney no mesmo ano.</p>
+<!-- 03 · A INTERPRETAÇÃO DE VIANNEY -->
+<section class="cb-secao">
+  <div class="cb-secao-header">
+    <div class="cb-secao-marca">
+      <span class="cb-secao-num">03</span>
+      <span class="cb-secao-linha"></span>
     </div>
-
-    <div class="sl-bloco">
-      <h3>O que ele dizia sobre a misericórdia de Deus</h3>
-      <p>A teologia da misericórdia de João Vianney não era uma teologia construída sistematicamente — era uma teologia vivida e depois expressa em imagens que os seus penitentes levavam para casa e repetiam para outros. As imagens tinham a força das coisas simples que chegam onde os argumentos não chegam.</p>
-    </div>
-
-    <div class="sl-citacao">
-      <p>"A misericórdia de Deus é como um rio transbordante — arrasta tudo o que encontra pela frente."</p>
-      <span class="sl-fonte">João Maria Vianney</span>
-    </div>
-
-    <div class="sl-citacao">
-      <p>"Nosso Senhor, que é a verdade em pessoa, disse: haverá mais alegria no céu por um pecador que se converte do que por noventa e nove justos que não precisam de conversão. Isso nos deve encher de confiança."</p>
-      <span class="sl-fonte">João Maria Vianney</span>
-    </div>
-
-    <div class="sl-citacao">
-      <p>"O bom Deus sabe tudo. Antes que confesseis, ele já sabe que pecareis de novo — e ainda assim vos perdoa. Que amor!"</p>
-      <span class="sl-fonte">João Maria Vianney</span>
-    </div>
+    <h3 class="cb-secao-titulo">A Interpretação de Vianney — Teologia do Ataque</h3>
   </div>
 
-  <div class="sl-sep">· · ·</div>
-
-  <!-- 05 · CONVERSÕES DOCUMENTADAS -->
-  <div class="sl-secao">
-    <div class="sl-secao-header">
-      <span class="sl-secao-num">05</span>
-      <div class="sl-secao-linha"></div>
-      <span class="sl-secao-titulo">Conversões Documentadas — Casos Específicos</span>
+  <article class="cb-bloco">
+    <h4 class="cb-bloco-titulo">Por que o demônio o atacava — a explicação de João</h4>
+    <div class="cb-bloco-corpo">
+      <p>João Vianney não especulava sobre os ataques do Grappin. Tinha sobre eles uma explicação que exprimia de forma consistente ao longo dos anos — uma explicação simples, coerente com a sua visão teológica geral, e que os que o ouviam encontravam mais iluminadora do que as análises mais elaboradas que os teólogos visitantes às vezes propunham.</p>
+      <p>A explicação era esta: o demônio atacava porque as conversões do confessionário o privavam de almas que havia considerado suas. Cada grande pecador que entrava no confessionário de Ars e saía absolvido e convertido era, na visão de João, uma perda concreta para o inimigo — uma alma retirada do território das trevas e devolvida ao território da graça. O demônio respondia a essa perda com raiva proporcional. Os ataques noturnos eram a expressão dessa raiva — e a sua intensidade variava em função da importância da conversão iminente.</p>
+      <p>Era uma teologia pastoral antes de ser uma teologia especulativa. João não estava fazendo afirmações sobre a natureza do demônio, sobre os mecanismos da ação demoníaca ou sobre os limites do que o demônio pode e não pode fazer. Estava fazendo uma observação empírica: que havia uma correlação entre a intensidade das perturbações noturnas e a chegada subsequente de penitentes que ele identificava como tendo realizado conversões particularmente significativas.</p>
     </div>
+  </article>
 
-    <div class="sl-bloco">
-      <h3>Frédéric Ozanam — o intelectual que voltou crente</h3>
-      <p>Frédéric Ozanam era, em 1852, uma das figuras mais importantes do catolicismo intelectual francês. Fundador das Conferências de São Vicente de Paulo, professor de literatura na Sorbonne, escritor e polemista, era um homem que tinha o tipo de inteligência que não era facilmente impressionada por fenômenos religiosos sem sustentação racional.</p>
-      <p>Foi a Ars em 1852 — já doente, num dos últimos anos da sua vida — com o que ele mesmo descreveu como "curiosidade intelectual misturada com algo que não consigo nomear". Não foi como devoto que busca confirmação. Foi como um homem que tinha perguntas e que havia ouvido que em Ars havia algo que valia ser verificado pessoalmente.</p>
-      <p>O que encontrou no confessionário de João Vianney não foi descrito por Ozanam em termos de fenômenos extraordinários — o relato que deixou não menciona cardiognosia nem nenhum outro elemento sobrenatural específico. O que descreveu foi uma experiência de presença — a convicção, ao sair do confessionário, de que havia estado na presença de alguém que tinha acesso a uma realidade que Ozanam conhecia intelectualmente mas que naquele momento experimentou de outra forma. A frase que os biógrafos citam: <em>"Fui a Ars como um curioso. Voltei como um crente."</em> Ozanam morreu em 1853, um ano após a visita. Morreu em paz.</p>
+  <article class="cb-bloco">
+    <h4 class="cb-bloco-titulo">A relação entre intensidade dos ataques e conversões iminentes</h4>
+    <div class="cb-bloco-corpo">
+      <p>A correlação que João identificava entre a intensidade das perturbações e as conversões que se seguiam era suficientemente consistente para que os vigários da reitoria a verificassem de forma independente — e suficientemente notável para que Toccanier a registrasse no diário com uma precisão que sugere que ele próprio estava tentando verificar se a correlação era real ou se era uma coincidência que a expectativa tornava aparente.</p>
+      <p>O padrão que emergiu dos registros: nas noites em que as perturbações eram de intensidade excepcional — os episódios que acordavam todos os moradores, que produziam barulhos de uma escala incomum mesmo para os padrões já incomuns da reitoria — o dia seguinte trazia ao confessionário penitentes que os vigários, ao observar as saídas, classificavam retrospectivamente como conversões de primeiro grau: pessoas que chegavam em estado de resistência severa ou de afastamento de Deus de longa data, e que saíam com o rosto transformado.</p>
+      <p>João usava essa correlação de forma pastoral — como sinal, não como profecia. Nas manhãs após noites de perturbação intensa, dizia aos vigários coisas como: <em>"Preparem-se — virá alguém hoje que precisará de atenção particular."</em> Os vigários aprenderam a confiar nesses avisos com suficiente regularidade para não os descartarem. Não eram avisos infalíveis — havia noites de perturbação que não produziam conversões extraordinárias no dia seguinte, e havia conversões extraordinárias após noites tranquilas. Mas a correlação era frequente o suficiente para ser levada a sério.</p>
     </div>
+  </article>
 
-    <div class="sl-bloco">
-      <h3>O caso do ateu de Lyon</h3>
-      <p>Os arquivos de Ars preservam, com graus variáveis de detalhe, relatos de conversões de pessoas que chegaram declaradamente sem fé ou com fé activamente hostil. Um caso particularmente bem documentado nos processos canônicos envolve um homem de Lyon — identificado pela profissão e pela data aproximada, mas não pelo nome completo — que chegou a Ars acompanhando a esposa e que declarou explicitamente à família, antes de partir, que ia "ver o circo do padre milagreiro".</p>
-      <p>O homem entrou no confessionário. Os documentos não preservam o conteúdo da conversa — o sigilo sacramental protege isso mesmo nos processos canônicos. O que preservam é o testemunho da esposa sobre o que viu ao marido sair: que o rosto estava diferente de qualquer rosto que ela havia visto nele em anos de casamento. Que ele não disse nada durante o caminho de volta à hospedagem. Que na manhã seguinte pediu para voltar à igreja — não ao confessionário, mas à missa. E que voltaram a Lyon como uma família que havia mudado em algo que a esposa descreveu, quarenta anos depois aos vice-postuladores, como "fundamental e permanente".</p>
+  <article class="cb-bloco">
+    <h4 class="cb-bloco-titulo">Como ele usava os ataques como sinal pastoral</h4>
+    <div class="cb-bloco-corpo">
+      <p>O uso que João fazia dos ataques como sinal pastoral é um dos aspectos mais originais e menos comentados da sua vida espiritual. Em vez de tratar as perturbações noturnas como sofrimento a ser suportado passivamente, ou como provação a ser oferecida silenciosamente, João as integrou na sua vida pastoral ativa — transformando o que poderia ser apenas um fardo numa informação que guiava o seu ministério.</p>
+      <p>Os vigários relatam que, nos dias após noites de perturbação intensa, João chegava ao confessionário com uma qualidade de atenção diferente — não maior em geral, porque a sua atenção era sempre total, mas direcionada de forma diferente. Havia uma vigilância específica em relação aos penitentes que chegavam sem ter sido anunciados, às pessoas que estavam na fila mas que demonstravam uma hesitação que os habituais não demonstravam, aos que chegavam de longe e que, ao aproximarem-se da grade, tinham no rosto aquela expressão específica de quem carrega algo pesado há muito tempo e não sabe se vai conseguir depositá-lo.</p>
+      <p>Era uma atenção pastoral informada por um sinal espiritual — a transcrição prática de uma teologia que afirmava que o inimigo, ao atacar com particular intensidade, estava inadvertidamente revelando onde a graça estava prestes a agir com particular eficácia. O ataque como antecipação involuntária da vitória que o atacante tentava impedir.</p>
     </div>
+  </article>
 
-    <div class="sl-bloco">
-      <h3>Padres renovados — o padrão recorrente</h3>
-      <p>Um dos padrões mais frequentes e menos publicitados nas conversões documentadas de Ars é o dos padres em crise que chegavam e saíam renovados. Não eram padres que haviam abandonado o sacerdócio — eram padres que permaneciam no ministério mas que haviam perdido, ao longo dos anos, a convicção interior que havia motivado a ordenação.</p>
-      <p>O número de padres que visitaram Ars ao longo das décadas do ministério de João é impossível de quantificar com precisão — muitos chegavam como peregrinos anônimos, sem se identificar como sacerdotes. Mas os relatos que chegaram aos biógrafos, através dos processos e das correspondências preservadas, sugerem que Ars funcionou durante décadas como um lugar de renovação para o clero com uma eficácia que nenhuma retiro espiritual estruturado da época conseguia comparar.</p>
-      <p>O mecanismo era simples: ver um padre que acreditava absolutamente no que fazia, que havia encontrado no sacerdócio não uma carreira mas uma identidade total, que estava exausto mas não amargo, que havia dado tudo e que não parecia estar medindo o que havia dado contra o que havia recebido — ver isso, de perto, por alguns dias, fazia algo aos sacerdotes em crise que as exortações e os exercícios espirituais não faziam. Era o testemunho de uma vida inteira, visível e verificável, que respondia a perguntas que os livros não respondem.</p>
+  <article class="cb-bloco">
+    <h4 class="cb-bloco-titulo">O humor com que tratava o assunto</h4>
+    <div class="cb-bloco-corpo">
+      <p>Não há forma de compreender a relação de João Vianney com o Grappin sem levar a sério o humor que permeava essa relação. Não era humor performático — não era a postura edificante do hagiógrafo que apresenta o santo desafiando corajosamente as trevas. Era humor real, espontâneo, o humor de alguém que havia passado décadas num combate cujas regras conhecia bem o suficiente para encontrar em certas situações o elemento absurdo que o humor identifica.</p>
+      <p>As frases preservadas pelos vigários têm essa qualidade de forma consistente. <em>"O Grappin esteve muito barulhento esta noite — é sinal de que amanhã virá um grande pecador para se converter"</em> — dito na manhã após uma noite de perturbação, com o tom de quem comenta uma previsão do tempo levemente inconveniente. <em>"O pobre Grappin — trabalha tanto e ganha tão pouco"</em> — dito num contexto que os biógrafos não especificam completamente, mas que sugere uma noite de ataques que havia sido seguida de uma manhã de conversões particularmente numerosas.</p>
+      <p>Havia também as frases dirigidas ao Grappin diretamente — João falava para o seu perturbador invisível com uma familiaridade que os vigários que ouviram descreviam como simultaneamente impressionante e ligeiramente cómica: <em>"Ainda estás aí? Vai-te embora — tens o que fazer e eu também."</em></p>
+      <p>O humor não diminuía a seriedade da situação. Mas revelava algo importante sobre o estado interior de João diante dela: uma ausência completa de medo. O medo é incompatível com esse tipo de humor. Quem teme genuinamente não consegue ser engraçado sobre o objeto do temor. João Vianney não tinha medo do Grappin — tinha a certeza teológica de que o que atacava era inferior ao que defendia, e essa certeza tornava possível o humor que o medo torna impossível.</p>
     </div>
+  </article>
+</section>
 
-    <div class="sl-bloco">
-      <h3>O padrão comum nos relatos de conversão</h3>
-      <p>Analisando os relatos de conversão associados ao confissionário de Ars — tanto os formalmente documentados nos processos canônicos quanto os preservados em correspondências, diários e testemunhos orais transmitidos pelas famílias — emerge um padrão com elementos recorrentes suficientes para merecer ser nomeado.</p>
-      <p>Primeiro elemento: a chegada sem expectativa clara, ou com expectativa cética. A maioria das conversões documentadas não envolve pessoas que chegaram a Ars com a intenção de se converter. Chegaram por curiosidade, por pressão familiar, por acompanhar alguém, por uma razão que não conseguiam nomear completamente. A disposição de chegar, mesmo sem intenção clara, parece ter sido suficiente para que algo acontecesse.</p>
-      <p>Segundo elemento: o momento de confronto não violento. Em quase todos os relatos, há um ponto em que o penitente é confrontado com algo que havia evitado — uma verdade sobre si mesmo, um pecado esquecido, uma situação não resolvida. O confronto não é agressivo: é o tipo de confronto que acontece quando alguém nos vê realmente, sem a armadura que normalmente protege o interior dos outros.</p>
-      <p>Terceiro elemento: o alívio. A saída do confessionário era descrita, na vasta maioria dos casos, não como a saída de um interrogatório concluído, mas como a saída de um peso deposto. O que a pessoa havia entrado carregando — por anos, às vezes por décadas — havia ficado dentro. O que saiu era o mesmo corpo, mas com algo diferente na postura e no olhar.</p>
-      <p>Quarto elemento: a permanência. As conversões documentadas em Ars não foram, em geral, conversões temporárias — entusiasmos religiosos que arrefeciam com a distância e o tempo. Os testemunhos colhidos anos depois da visita descrevem mudanças que permaneceram. Não perfeição — mas uma direção diferente, uma orientação interior que o confessionário havia ajustado e que o tempo não havia desajustado.</p>
+<div class="cb-sep"><span>✦</span></div>
+
+<!-- 04 · O FIM DAS PERTURBAÇÕES -->
+<section class="cb-secao">
+  <div class="cb-secao-header">
+    <div class="cb-secao-marca">
+      <span class="cb-secao-num">04</span>
+      <span class="cb-secao-linha"></span>
     </div>
+    <h3 class="cb-secao-titulo">O Fim das Perturbações — 1858</h3>
   </div>
 
-  <div class="sl-sep">· · ·</div>
-
-  <!-- 06 · O CONFESSIONÁRIO HOJE -->
-  <div class="sl-secao">
-    <div class="sl-secao-header">
-      <span class="sl-secao-num">06</span>
-      <div class="sl-secao-linha"></div>
-      <span class="sl-secao-titulo">O Confessionário Hoje — O Que Sobrou</span>
+  <article class="cb-bloco">
+    <h4 class="cb-bloco-titulo">Quando pararam e em que circunstâncias</h4>
+    <div class="cb-bloco-corpo">
+      <p>As perturbações noturnas que haviam acompanhado João Vianney por mais de trinta anos cessaram por volta de 1858 — o último ano completo da sua vida. A cessação não foi gradual: os registros de Toccanier e dos outros moradores da reitoria que ainda estavam presentes nesse período sugerem uma interrupção relativamente abrupta, depois de um período de intensidade crescente nos meses anteriores.</p>
+      <p>Os últimos meses de perturbações documentadas — o inverno e a primavera de 1857-1858 — foram, segundo os registros disponíveis, de intensidade superior à média dos anos anteriores. Toccanier anotou no diário, em entradas dos primeiros meses de 1858, que havia noites em que a reitoria inteira parecia vibrar com uma energia que ele não conseguia descrever em termos naturais, e que a exaustão de João no dia seguinte a essas noites era visível a qualquer pessoa que o observasse.</p>
+      <p>Então pararam. Não gradualmente, não com episódios esporádicos que foram diminuindo — pararam com uma completude que os moradores da reitoria notaram e comentaram. A reitoria ficou silenciosa à noite. João dormia — as duas ou três horas que conseguia dormir — sem ser acordado por barulhos. As manhãs eram diferentes das manhãs dos trinta anos anteriores.</p>
     </div>
+  </article>
 
-    <div class="sl-bloco">
-      <h3>O confessionário original preservado</h3>
-      <p>O confessionário onde João Vianney passou quarenta anos da sua vida ainda existe. Está posicionado na Igreja de Ars — não na Basílica construída após a sua morte, mas na igreja original onde chegou em 1818 e onde a maior parte do seu ministério aconteceu. A estrutura é de madeira escura, relativamente pequena, sem ornamentação particular — um móvel litúrgico funcional do tipo que existia em centenas de paróquias francesas do século XIX.</p>
-      <p>Está a oito metros do relicário onde repousa o corpo do Cura d'Ars. A proximidade não é acidental — é a proximidade original, a distância entre o lugar onde João trabalhava e o lugar onde agora descansa. Peregrinos que entram na igreja percorrem esses oito metros e ficam, geralmente, em silêncio diante de um ou do outro, ou dos dois.</p>
-      <p>O estado de conservação é bom — a estrutura de madeira foi preservada com o cuidado que se dá a relíquias de segundo grau, que é o que efetivamente é. As marcas do uso acumulado ao longo de décadas são visíveis para quem as procura: o desgaste nas superfícies que João tocava, o escurecimento da madeira nas áreas de contato frequente, os detalhes que não são da fabricação original mas do uso incessante.</p>
+  <article class="cb-bloco">
+    <h4 class="cb-bloco-titulo">O que João disse sobre o fim</h4>
+    <div class="cb-bloco-corpo">
+      <p>Os vigários que estavam em Ars nos últimos meses perguntaram a João sobre o silêncio noturno. A resposta que deu — e que chegou aos biógrafos através de pelo menos dois testemunhos independentes — foi caracteristicamente direta e reveladora em múltiplos planos.</p>
+      <p><em>"O Grappin desistiu. Sabe que não tenho muito tempo e que logo estarei fora do seu alcance."</em></p>
+      <p>A frase tem várias camadas. A primeira é a mais imediata: João sabia que estava morrendo. Não como pressentimento vago — como certeza calma de alguém que havia lido os sinais do próprio corpo com suficiente objetividade para saber o que significavam. O corpo que havia resistido por décadas a condições que deviam tê-lo destruído muito antes estava, finalmente, a chegar ao fim do que conseguia resistir.</p>
+      <p>A segunda camada é teológica: a cessação dos ataques como reconhecimento, por parte do inimigo, de que a batalha por aquela alma específica estava perdida de forma irrevogável. O demônio atacava onde havia algo a ganhar — onde a possibilidade de perturbação, de desvio, de abandono do ministério existia como possibilidade real. Quando essa possibilidade desapareceu — quando o fim natural estava suficientemente próximo para que a perturbação não pudesse produzir nenhum resultado útil para o inimigo — o ataque cessou. Não por misericórdia, mas por inutilidade.</p>
+      <p>A terceira camada é pastoral, e é a mais surpreendente: João interpretou o silêncio noturno não como recompensa ou como sinal de santidade alcançada, mas simplesmente como informação sobre o tempo que restava. O Grappin havia desistido porque o tempo útil para desistir havia acabado. A morte estava próxima — e com a morte, a batalha que havia durado trinta e quatro anos chegaria ao seu fim natural.</p>
     </div>
+  </article>
 
-    <div class="sl-bloco">
-      <h3>O que os peregrinos atuais experimentam no local</h3>
-      <p>Ars recebe entre 450.000 e 600.000 peregrinos por ano — um número que, para uma aldeia de pouco mais de trezentos habitantes, representa uma presença permanente de estranhos que a comunidade local aprendeu, ao longo de gerações, a receber como parte da sua identidade.</p>
-      <p>Os peregrinos que chegam à Igreja de Ars descrevem experiências variadas diante do confessionário original. Alguns ficam em oração prolongada — o silêncio diante de um lugar onde aconteceu algo importante tem uma qualidade específica que as palavras não alcançam bem. Outros simplesmente olham, por um tempo, antes de continuar. Outros tocam a madeira — o gesto ancestral de contato com o sagrado através do material, o mesmo gesto que leva as pessoas a tocar as paredes dos lugares onde aconteceram coisas que importam.</p>
-      <p>Sacerdotes que visitam Ars — e há um número considerável que vai especificamente para renovar o ministério, especialmente nos primeiros anos após a ordenação ou em momentos de crise pastoral — descrevem a experiência de ficar diante do confessionário como diferente de outras experiências de peregrinação. Não uma diferença dramática, não um fenômeno extraordinário — mas uma qualidade de presença que funciona como um espelho: o confessionário de um padre que passou quarenta anos nele reflete, para o padre que o contempla, perguntas sobre os seus próprios quarenta anos, ou dez anos, ou um ano.</p>
+  <article class="cb-bloco">
+    <h4 class="cb-bloco-titulo">A interpretação teológica do silêncio final</h4>
+    <div class="cb-bloco-corpo">
+      <p>O silêncio dos últimos meses de João Vianney — tanto o silêncio noturno da reitoria quanto o silêncio mais interior que os vigários descrevem como tendo se aprofundado nos meses finais — tem sido interpretado de maneiras diferentes pelos teólogos e biógrafos que se debruçaram sobre esse período.</p>
+      <p>Uma interpretação: o silêncio como confirmação. Que o cessamento dos ataques demoníacos era o equivalente espiritual de um inimigo que baixa as armas — não porque quisesse, mas porque havia reconhecido que não tinha mais posição sustentável. João havia resistido durante trinta e quatro anos sem ceder e sem quebrar. O inimigo havia perdido. O silêncio era a confirmação sonora dessa derrota.</p>
+      <p>Uma segunda interpretação, mais sóbria e igualmente válida: o silêncio como preparação. Os últimos meses de uma vida longa e exaustiva têm uma qualidade específica de recolhimento — o mundo exterior recua, as questões permanentes avançam, a oração que havia sido sempre presente torna-se a atividade dominante de forma ainda mais exclusiva do que havia sido. Nesse contexto, o silêncio da reitoria não era apenas a ausência de barulho — era o ambiente adequado para o que estava acontecendo interiormente.</p>
+      <p>Uma terceira interpretação, que João mesmo sugeria: o silêncio como irrelevância. O Grappin havia desistido porque João havia saído do alcance em que os ataques faziam sentido. Um homem que está a morrer não pode ser perturbado da mesma forma que um homem que está a trabalhar — não porque seja mais santo, mas porque as categorias de perturbação relevantes para quem está ainda em batalha não se aplicam a quem está a chegar ao fim. João estava, nos últimos meses, além do alcance do inimigo — não por mérito especial, mas simplesmente porque o tempo de batalha havia terminado e o tempo de chegada havia começado.</p>
     </div>
+  </article>
+</section>
 
-    <div class="sl-bloco">
-      <h3>O confessionário como símbolo no magistério papal</h3>
-      <p>O confessionário de Ars tornou-se, no magistério papal do século XX e XXI, um símbolo de referência recorrente quando os papas falam do sacramento da Reconciliação e do ministério sacerdotal. João Paulo II visitou o confessionário em 1986 e ficou em silêncio diante dele por vários minutos — um silêncio que os fotógrafos presentes descreveram como diferente de qualquer silêncio que haviam observado no papa durante as longas viagens apostólicas.</p>
-      <p>Bento XVI, ao abrir o Ano Sacerdotal em 2009, invocou explicitamente o confessionário de Ars como símbolo do que o sacerdócio é, no seu núcleo essencial: não administração, não pregação, não liderança comunitária — mas o estar disponível, num lugar específico, para que as pessoas que chegam possam depositar o que carregam e sair diferentes. A imagem era simples. Era também teologicamente precisa.</p>
-      <p>Francisco, na carta ao clero de 2019, retomou o tema: <em>"O Cura d'Ars não cansava de insistir que é impossível dar o que não se tem — e por isso nunca deixou de alimentar-se dos sacramentos."</em> O confessionário de Ars, nessa leitura, é o sinal de que o padre que pede às pessoas que se confessem precisa ele mesmo ser alguém que sabe o que é confessar-se — que conhece o alívio do outro lado da grade não apenas como ministro, mas como penitente.</p>
+<div class="cb-sep"><span>✦</span></div>
+
+<!-- 05 · O CONTEXTO TEOLÓGICO -->
+<section class="cb-secao">
+  <div class="cb-secao-header">
+    <div class="cb-secao-marca">
+      <span class="cb-secao-num">05</span>
+      <span class="cb-secao-linha"></span>
     </div>
-
-    <div class="sl-bloco">
-      <h3>O número estimado de confissões — e o que significa</h3>
-      <p>Qualquer cálculo do número total de confissões ouvidas por João Vianney ao longo de quarenta e um anos é necessariamente uma estimativa com margem de erro considerável. Mas mesmo as estimativas conservadoras chegam a números que têm uma escala difícil de assimilar.</p>
-      <p>Se considerarmos apenas os últimos vinte anos do seu ministério — quando o fluxo de peregrinos estava no pico — e se utilizarmos uma estimativa conservadora de cinquenta confissões por dia, trezentos e sessenta e cinco dias por ano, chegamos a trezentos e sessenta e cinco mil confissões em vinte anos. O número real era quase certamente superior — os contemporâneos estimavam entre cem e duzentos penitentes por dia nos períodos de maior fluxo.</p>
-      <p>Mas o número não é o ponto. O ponto é o que o número representa: cinquenta, ou cem, ou duzentas vidas específicas por dia, cada uma chegando com o seu peso específico, cada uma saindo com algo que havia deixado dentro. Multiplicado por vinte anos, ou trinta, ou quarenta. O confessionário de Ars foi, ao longo das décadas do ministério de João Vianney, um dos lugares onde mais misericórdia foi distribuída por metro quadrado em qualquer período da história moderna. É uma afirmação que soa estranha mas que os números, por mais conservadores que sejam, suportam.</p>
-    </div>
-
+    <h3 class="cb-secao-titulo">O Contexto Teológico — Exorcismo e Discernimento</h3>
   </div>
 
-</div><!-- /confessionario -->
+  <article class="cb-bloco">
+    <h4 class="cb-bloco-titulo">A tradição da Igreja sobre combate espiritual</h4>
+    <div class="cb-bloco-corpo">
+      <p>O combate espiritual — a experiência de resistência demoníaca ativa contra pessoas de particular santidade ou de particular importância no plano da providência — tem uma longa história na tradição cristã que precede e contextualiza o caso de João Vianney. Não é uma categoria teológica marginal ou popular: está documentada nos escritos dos Padres da Igreja, tratada sistematicamente pelos teólogos medievais, e reconhecida nas categorias formais da teologia ascética e mística que a tradição católica desenvolveu ao longo de séculos.</p>
+      <p>São Antão do Deserto — o fundador do monaquismo cristão, do século III — é talvez o exemplo mais famoso de combate espiritual físico documentado na hagiografia antiga. As perturbações que a tradição atribui a Antão têm elementos estruturalmente similares aos de Ars: barulhos noturnos, agressões físicas, tentativas de perturbação que a tradição interpreta como reação à eficácia espiritual do atacado.</p>
+      <p>São João da Cruz, no século XVI, descreveu nas suas obras teológicas — especialmente na <em>Noite Escura da Alma</em> — os mecanismos pelos quais o adversário espiritual atua contra quem avança na vida mística. A sistematização de João da Cruz não era abstrata: baseava-se na experiência própria e na direção espiritual de outros, e produziu um mapa do combate espiritual que os teólogos posteriores utilizaram como referência.</p>
+      <p>Santa Teresa de Ávila, contemporânea de João da Cruz, descreveu com a franqueza que a caracterizava os episódios físicos de combate espiritual que havia experimentado — incluindo agressões físicas verificáveis. Os seus escritos foram examinados pela Inquisição e considerados conformes à fé: a Igreja reconheceu que o que Teresa descrevia era real e que a interpretação que ela lhe dava era teologicamente correta.</p>
+    </div>
+  </article>
+
+  <article class="cb-bloco">
+    <h4 class="cb-bloco-titulo">Como os teólogos avaliaram os episódios de Ars</h4>
+    <div class="cb-bloco-corpo">
+      <p>Os teólogos que avaliaram os episódios de Ars durante os processos de beatificação e canonização — e os que os estudaram posteriormente — chegaram a conclusões que variam em função da metodologia e da perspectiva, mas que convergem num conjunto de pontos de partida comuns.</p>
+      <p>Primeiro ponto de convergência: os fenômenos eram reais no sentido de que aconteceram. A quantidade de testemunhos independentes, a sua consistência interna, a qualidade dos que os forneceram — incluindo pessoas de formação intelectual sólida como Toccanier — torna insustentável a hipótese de que todos os episódios foram imaginados, confundidos com fenômenos naturais ou fabricados. Algo aconteceu na reitoria de Ars durante trinta e quatro anos.</p>
+      <p>Segundo ponto de convergência: a interpretação de João era teologicamente coerente. A identificação dos fenômenos com atividade demoníaca e a leitura pastoral que fazia dessa atividade eram conformes à tradição da Igreja e estavam sustentadas por uma experiência espiritual que os seus confessores e diretores avaliaram como sólida. João não estava fazendo teologia selvagem — estava aplicando a tradição ao que vivia, com uma precisão que os teólogos avaliaram como correta.</p>
+      <p>Terceiro ponto — onde existe mais divergência: se os fenômenos eram de origem sobrenatural no sentido estrito ou se podiam ter explicações naturais não identificadas. Os processos canônicos não foram obrigados a pronunciar-se definitivamente sobre este ponto — a canonização não dependia da confirmação de atividade demoníaca, mas da santidade de João. A questão da origem exata dos fenômenos permanece, para a maioria dos teólogos que a examinaram, em aberto — não como dúvida sobre o que aconteceu, mas como modéstia sobre a capacidade humana de identificar com precisão as causas do que acontece no nível espiritual.</p>
+    </div>
+  </article>
+
+  <article class="cb-bloco">
+    <h4 class="cb-bloco-titulo">O que os processos canônicos decidiram</h4>
+    <div class="cb-bloco-corpo">
+      <p>Os processos de beatificação e canonização de João Vianney incluíram o exame dos episódios de combate espiritual como parte da avaliação geral da sua vida. Os advogados do diabo — cujo papel formal era questionar tudo o que pudesse ser questionado — examinaram os testemunhos sobre as perturbações noturnas com atenção particular.</p>
+      <p>Os argumentos que levantaram incluíam: a possibilidade de alucinações auditivas num homem cronicamente privado de sono; a sugestão de que os moradores da reitoria, predispostos pela expectativa, poderiam ter interpretado sons naturais como sobrenaturais; e a observação de que a ausência de testemunhos de peregrinos — que estavam em Ars em grandes números mas que dormiam fora da reitoria — limitava os testemunhos a um círculo de pessoas que viviam próximas de João e que podiam ser consideradas predispostas à crença.</p>
+      <p>As respostas a esses argumentos incluíram: a consistência dos testemunhos de Toccanier, cuja sobriedade e prática eram documentadas; os casos de moradores temporários da reitoria que não tinham predisposição particular e que relataram fenômenos consistentes com os dos moradores permanentes; e a evidência física da cama — que não é explicável plenamente pela hipótese das velas caídas quando se consideram os detalhes específicos dos testemunhos sobre o episódio do incêndio.</p>
+      <p>A decisão dos processos foi de não pronunciamento definitivo sobre a origem sobrenatural dos fenômenos enquanto categoria — mas de reconhecimento de que os testemunhos eram credíveis, que a interpretação de João era ortodoxa, e que os fenômenos, qualquer que fosse a sua origem exata, não constituíam obstáculo à canonização mas antes um elemento adicional do quadro de uma vida extraordinária.</p>
+    </div>
+  </article>
+
+  <article class="cb-bloco">
+    <h4 class="cb-bloco-titulo">Casos similares na hagiografia — como Ars se compara</h4>
+    <div class="cb-bloco-corpo">
+      <p>O caso de João Vianney não é único na hagiografia cristã — mas ocupa nela uma posição particular que resulta de três fatores combinados: a abundância dos testemunhos, a qualidade de alguns dos que os forneceram, e a era histórica em que ocorreu.</p>
+      <p>São Padre Pio de Pietrelcina — canonizado em 2002, contemporâneo posterior de Vianney — descreveu e testemunhou experiências de combate espiritual físico que têm elementos estruturalmente similares aos de Ars: barulhos, agressões físicas, intensidade variável em função da atividade espiritual. O caso de Padre Pio ocorreu num século em que os instrumentos de documentação eram superiores aos do século XIX, mas a distância temporal dos testemunhos é menor e o processo de verificação ainda está em curso nalguns aspectos.</p>
+      <p>São João Bosco, contemporâneo de Vianney e fundador dos Salesianos, descreveu episódios de atividade espiritual perturbadora que os seus biógrafos classificam na mesma categoria — com a particularidade de que Bosco tinha, como Vianney, um humor específico em relação ao assunto que o distinguia dos que tratavam o combate espiritual com solenidade exclusiva.</p>
+      <p>O que torna o caso de Ars singular no conjunto é a duração — trinta e quatro anos de perturbações documentadas é um período incomum mesmo na hagiografia mais rica em fenômenos extraordinários — e a correlação específica que João identificou e que os seus vigários verificaram de forma independente entre a intensidade das perturbações e as conversões subsequentes. Essa correlação pastoral — o fenômeno sobrenatural integrado de forma funcional na vida pastoral, não apenas suportado como provação — é um elemento que distingue o caso de Ars de outros casos comparáveis e que os teólogos que o estudaram encontraram particularmente digno de atenção.</p>
+    </div>
+  </article>
+</section>
+
+<!-- ═══════════════════════════════════════
+     BLOCO ESCURO — Frases preservadas
+     ═══════════════════════════════════════ -->
+<div class="cb-escuro">
+  <div class="cb-escuro-header">
+    <span class="cb-escuro-ornamento">✦</span>
+    <span class="cb-escuro-linha"></span>
+    <h3 class="cb-escuro-titulo">O que João disse sobre o Grappin — frases preservadas</h3>
+  </div>
+  <div class="cb-escuro-corpo">
+    <p><strong>"O Grappin estava muito barulhento esta noite — é sinal de que amanhã virá um grande pecador para se converter."</strong> — dito na manhã após noites de perturbação intensa, com regularidade suficiente para que os vigários aprendessem a tomá-lo como aviso pastoral.</p>
+    <p><strong>"O pobre Grappin — trabalha tanto e ganha tão pouco."</strong> — dito num contexto de conversões particularmente numerosas após uma noite de ataques intensos.</p>
+    <p><strong>"Não se preocupem com o Grappin. Ele late mas não morde — pelo menos não morde os que não têm nada a temer."</strong> — resposta habitual aos vigários que expressavam preocupação após noites de perturbação.</p>
+    <p><strong>"Ainda estás aí? Vai-te embora — tens o que fazer e eu também."</strong> — dirigido diretamente ao perturbador invisível, segundo o testemunho de um vigário que ouviu João falar sozinho numa noite de barulhos intensos.</p>
+    <p><strong>"O Grappin desistiu. Sabe que não tenho muito tempo e que logo estarei fora do seu alcance."</strong> — resposta aos vigários que perguntaram sobre o silêncio noturno nos últimos meses de 1858.</p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     SCRIPT — Destaque automático da aba ativa
+     ═══════════════════════════════════════ -->
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const links = document.querySelectorAll('.sl-lista a');
+        const urlAtual = window.location.pathname;
+
+        links.forEach(link => link.classList.remove('ativo'));
+
+        let melhorMatch = null;
+        let melhorTamanho = 0;
+
+        links.forEach(link => {
+            const href = link.getAttribute('href');
+            const arquivo = href.split('/').pop();
+
+            if (urlAtual.endsWith(arquivo) && arquivo.length > melhorTamanho) {
+                melhorMatch = link;
+                melhorTamanho = arquivo.length;
+            }
+        });
+
+        if (melhorMatch) {
+            melhorMatch.classList.add('ativo');
+        }
+    });
+</script>
+
+</body>
+</html>
