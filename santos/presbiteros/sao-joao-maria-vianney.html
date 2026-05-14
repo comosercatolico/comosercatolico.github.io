@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        /* ===== ESTILOS DO MENU (FORNECIDOS PELO USUÁRIO) ===== */
+        /* ===== ESTILOS DO MENU ===== */
         .sl-wrap {
             max-width: 1200px;
             margin: 0 auto;
@@ -157,7 +157,6 @@
             width: 50%;
         }
 
-        /* ===== RESPONSIVO ===== */
         @media (max-width: 900px) {
             .sl-santo-nome { font-size: 32px; letter-spacing: 1px; }
             .sl-lista li a { font-size: 11px; letter-spacing: 1.5px; padding: 14px 8px; }
@@ -175,7 +174,7 @@
             .sl-lista li a { font-size: 8.5px; padding: 10px 3px; letter-spacing: 0.5px; }
         }
 
-        /* ===== ESTILOS ADICIONAIS PARA A BIOGRAFIA ===== */
+        /* ===== ESTILOS DA BIOGRAFIA ===== */
         .sl-secao { margin-bottom: 40px; }
         .sl-secao-header { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; }
         .sl-secao-num { font-family: 'Libre Baskerville', serif; font-size: 24px; color: #b08a3c; font-weight: bold; }
@@ -194,6 +193,7 @@
 </head>
 <body>
 
+<!-- ===== MENU ===== -->
 <div class="sl-wrap">
   <div class="sl-cabecalho">
     <h1 class="sl-santo-nome">São João Maria Vianney</h1>
@@ -208,20 +208,21 @@
 
   <nav class="sl-nav">
     <ul class="sl-lista">
-      <li><a href="../presbiteros/sao-joao-maria-vianney.html" class="ativo"><span class="sl-nome">História</span></a></li>
-      <li><a href="presbiteros/presbiteros-dados/sao-joao-maria-vianney-dados/ars.html"><span class="sl-nome">Ars</span></a></li>
-      <li><a href="presbiteros/presbiteros-dados/sao-joao-maria-vianney-dados/confessionario.html"><span class="sl-nome">O Confessionário</span></a></li>
-      <li><a href="presbiteros/presbiteros-dados/sao-joao-maria-vianney-dados/combate.html"><span class="sl-nome">Combate Espiritual</span></a></li>
-      <li><a href="presbiteros/presbiteros-dados/sao-joao-maria-vianney-dados/espiritualidade.html"><span class="sl-nome">Espiritualidade</span></a></li>
-      <li><a href="presbiteros/presbiteros-dados/sao-joao-maria-vianney-dados/relacoes.html"><span class="sl-nome">Relações</span></a></li>
-      <li><a href="presbiteros/presbiteros-dados/sao-joao-maria-vianney-dados/milagres.html"><span class="sl-nome">Milagres</span></a></li>
-      <li><a href="presbiteros/presbiteros-dados/sao-joao-maria-vianney-dados/morte.html"><span class="sl-nome">Morte</span></a></li>
-      <li><a href="presbiteros/presbiteros-dados/sao-joao-maria-vianney-dados/legado.html"><span class="sl-nome">Legado</span></a></li>
-      <li><a href="presbiteros/presbiteros-dados/sao-joao-maria-vianney-dados/referencias.html"><span class="sl-nome">Referências</span></a></li>
+      <li><a href="/santos/presbiteros/sao-joao-maria-vianney.html"><span class="sl-nome">História</span></a></li>
+      <li><a href="/santos/presbiteros/presbiteros-dados/sao-joao-maria-vianney-dados/ars.html"><span class="sl-nome">Ars</span></a></li>
+      <li><a href="/santos/presbiteros/presbiteros-dados/sao-joao-maria-vianney-dados/confessionario.html"><span class="sl-nome">O Confessionário</span></a></li>
+      <li><a href="/santos/presbiteros/presbiteros-dados/sao-joao-maria-vianney-dados/combate.html"><span class="sl-nome">Combate Espiritual</span></a></li>
+      <li><a href="/santos/presbiteros/presbiteros-dados/sao-joao-maria-vianney-dados/espiritualidade.html"><span class="sl-nome">Espiritualidade</span></a></li>
+      <li><a href="/santos/presbiteros/presbiteros-dados/sao-joao-maria-vianney-dados/relacoes.html"><span class="sl-nome">Relações</span></a></li>
+      <li><a href="/santos/presbiteros/presbiteros-dados/sao-joao-maria-vianney-dados/milagres.html"><span class="sl-nome">Milagres</span></a></li>
+      <li><a href="/santos/presbiteros/presbiteros-dados/sao-joao-maria-vianney-dados/morte.html"><span class="sl-nome">Morte</span></a></li>
+      <li><a href="/santos/presbiteros/presbiteros-dados/sao-joao-maria-vianney-dados/legado.html"><span class="sl-nome">Legado</span></a></li>
+      <li><a href="/santos/presbiteros/presbiteros-dados/sao-joao-maria-vianney-dados/referencias.html"><span class="sl-nome">Referências</span></a></li>
     </ul>
   </nav>
 </div>
 
+<!-- ===== CONTEÚDO ===== -->
 <main>
     <div class="sl-painel ativo" data-nome="historia">
 
@@ -512,23 +513,25 @@
         </div>
       </div>
 
-    </div><!-- /historia -->
+    </div>
 </main>
 
+<!-- ===== SCRIPT DE DESTAQUE DO MENU ===== -->
 <script>
-    src="presbiteros-dados/sao-joao-maria-vianney-dados/sao-joao-maria-vianney.js"
-
     document.addEventListener("DOMContentLoaded", function() {
         const links = document.querySelectorAll('.sl-lista a');
         const urlAtual = window.location.pathname;
-        
+
+        // Remove qualquer classe ativo existente
+        links.forEach(link => link.classList.remove('ativo'));
+
         let melhorMatch = null;
         let melhorTamanho = 0;
 
         links.forEach(link => {
             const href = link.getAttribute('href');
             const arquivo = href.split('/').pop();
-            
+
             if (urlAtual.endsWith(arquivo) && arquivo.length > melhorTamanho) {
                 melhorMatch = link;
                 melhorTamanho = arquivo.length;
