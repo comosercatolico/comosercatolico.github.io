@@ -1,280 +1,740 @@
-<div class="sl-painel ativo" data-nome="espiritualidade">
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Espiritualidade — São João Maria Vianney</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        /* ═══════════════════════════════════════
+           ESTILOS DO MENU
+           ═══════════════════════════════════════ */
+        .sl-wrap { max-width: 1200px; margin: 0 auto; padding: 40px 20px 0; font-family: Georgia, 'Times New Roman', serif; }
+        .sl-cabecalho { text-align: center; margin-bottom: 30px; }
+        .sl-santo-nome { font-family: Georgia, 'Times New Roman', serif; font-size: 42px; font-weight: 400; color: #2f2a22; letter-spacing: 2px; margin: 0 0 14px; line-height: 1.15; }
+        .sl-divisor { display: flex; align-items: center; justify-content: center; gap: 12px; margin: 12px 0; }
+        .sl-divisor-linha { display: inline-block; width: 60px; height: 1px; background: #b08a3c; opacity: 0.5; }
+        .sl-divisor-orn { color: #b08a3c; font-size: 10px; }
+        .sl-santo-titulo { margin: 8px 0 14px; color: #b08a3c; font-family: Georgia, 'Times New Roman', serif; font-size: 12px; letter-spacing: 4px; text-transform: uppercase; font-weight: 600; }
+        .sl-intro-frase { margin: 0; color: #6f6758; font-family: Georgia, 'Times New Roman', serif; font-size: 15px; font-style: italic; letter-spacing: 0.5px; }
+        .sl-nav { border-top: 1px solid #d8d1c2; border-bottom: 1px solid #d8d1c2; background: #faf8f3; padding: 4px 0; }
+        .sl-lista { display: grid; grid-template-columns: repeat(5, 1fr); list-style: none; padding: 0; margin: 0; }
+        .sl-lista li { margin: 0; padding: 0; list-style: none; }
+        .sl-lista li::marker, .sl-lista li::before { content: "" !important; display: none !important; }
+        .sl-lista li a { display: flex; align-items: center; justify-content: center; text-align: center; text-decoration: none; color: #6e6a60; font-family: Georgia, 'Times New Roman', serif; font-size: 12.5px; letter-spacing: 2px; text-transform: uppercase; padding: 18px 12px; position: relative; transition: all 0.3s ease; background: transparent; min-height: 56px; box-sizing: border-box; }
+        .sl-lista li a::before, .sl-lista li a span::before, .sl-lista li a span::after { content: none !important; display: none !important; }
+        .sl-lista .sl-nome { display: inline-block; line-height: 1.3; }
+        .sl-lista li a::after { content: ""; position: absolute; left: 50%; bottom: 8px; width: 0; height: 1px; background-color: #b08a3c; transition: width 0.3s ease; transform: translateX(-50%); }
+        .sl-lista li a:hover { color: #2f2a22; background-color: #f3eee3; }
+        .sl-lista li a:hover::after { width: 50%; }
+        .sl-lista li a.ativo { color: #2f2a22; background-color: #f5f0e5; }
+        .sl-lista li a.ativo::after { width: 50%; }
 
-  <!-- 01 · A ORAÇÃO -->
-  <div class="sl-secao">
-    <div class="sl-secao-header">
-      <span class="sl-secao-num">01</span>
-      <div class="sl-secao-linha"></div>
-      <span class="sl-secao-titulo">A Oração — Método e Prática</span>
+        @media (max-width: 900px) {
+            .sl-santo-nome { font-size: 32px; letter-spacing: 1px; }
+            .sl-lista li a { font-size: 11px; letter-spacing: 1.5px; padding: 14px 8px; }
+        }
+        @media (max-width: 600px) {
+            .sl-wrap { padding: 24px 12px 0; }
+            .sl-santo-nome { font-size: 24px; }
+            .sl-santo-titulo { font-size: 10px; letter-spacing: 3px; }
+            .sl-intro-frase { font-size: 13px; padding: 0 10px; }
+            .sl-lista li a { font-size: 9.5px; letter-spacing: 1px; padding: 12px 4px; min-height: 50px; }
+        }
+        @media (max-width: 420px) {
+            .sl-lista li a { font-size: 8.5px; padding: 10px 3px; letter-spacing: 0.5px; }
+        }
+
+        /* ═══════════════════════════════════════
+           VARIÁVEIS & BASE
+           ═══════════════════════════════════════ */
+        :root {
+            --esp-fundo: #faf8f4;
+            --esp-texto: #3a3530;
+            --esp-texto-leve: #6f6758;
+            --esp-dourado: #b08a3c;
+            --esp-dourado-claro: #d4b872;
+            --esp-borda: #e2dcd0;
+            --esp-borda-leve: #ece8df;
+            --esp-bloco-bg: #ffffff;
+            --esp-nota-bg: #f5f1e8;
+            --esp-nota-borda: #d4c9a8;
+            --esp-serif: Georgia, 'Times New Roman', 'Noto Serif', serif;
+            --esp-max: 820px;
+        }
+
+        body {
+            background: var(--esp-fundo);
+            margin: 0;
+            padding: 0;
+        }
+
+        /* ═══════════════════════════════════════
+           HERO
+           ═══════════════════════════════════════ */
+        .esp-hero {
+            text-align: center;
+            padding: 60px 20px 50px;
+            max-width: var(--esp-max);
+            margin: 0 auto;
+        }
+        .esp-hero-num {
+            display: inline-block;
+            font-family: var(--esp-serif);
+            font-size: 14px;
+            letter-spacing: 4px;
+            color: var(--esp-dourado);
+            margin-bottom: 16px;
+        }
+        .esp-hero-titulo {
+            font-family: var(--esp-serif);
+            font-size: 46px;
+            font-weight: 400;
+            color: var(--esp-texto);
+            letter-spacing: 2px;
+            margin: 0 0 12px;
+            line-height: 1.15;
+        }
+        .esp-hero-sub {
+            font-family: var(--esp-serif);
+            font-size: 17px;
+            font-style: italic;
+            color: var(--esp-texto-leve);
+            letter-spacing: 0.5px;
+            margin: 0;
+        }
+        .esp-hero-ornamento {
+            margin-top: 30px;
+            font-size: 12px;
+            color: var(--esp-dourado-claro);
+            letter-spacing: 8px;
+        }
+
+        /* ═══════════════════════════════════════
+           SECÇÃO
+           ═══════════════════════════════════════ */
+        .esp-secao {
+            max-width: var(--esp-max);
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        .esp-secao-header {
+            margin-bottom: 40px;
+            padding-top: 10px;
+        }
+        .esp-secao-marca {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 14px;
+        }
+        .esp-secao-num {
+            font-family: var(--esp-serif);
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--esp-dourado);
+            letter-spacing: 3px;
+            flex-shrink: 0;
+        }
+        .esp-secao-linha {
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(to right, var(--esp-borda), transparent);
+        }
+        .esp-secao-titulo {
+            font-family: var(--esp-serif);
+            font-size: 24px;
+            font-weight: 400;
+            color: var(--esp-texto);
+            letter-spacing: 0.5px;
+            line-height: 1.35;
+            margin: 0;
+        }
+
+        /* ═══════════════════════════════════════
+           BLOCO
+           ═══════════════════════════════════════ */
+        .esp-bloco {
+            background: var(--esp-bloco-bg);
+            border: 1px solid var(--esp-borda-leve);
+            border-radius: 4px;
+            margin-bottom: 28px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+        }
+        .esp-bloco-titulo {
+            font-family: var(--esp-serif);
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--esp-texto);
+            letter-spacing: 0.3px;
+            margin: 0;
+            padding: 22px 30px 0;
+            line-height: 1.4;
+        }
+        .esp-bloco-corpo {
+            padding: 16px 30px 28px;
+        }
+        .esp-bloco-corpo p {
+            font-family: var(--esp-serif);
+            font-size: 15.5px;
+            line-height: 1.85;
+            color: var(--esp-texto);
+            margin: 0 0 18px;
+            text-align: justify;
+            hyphens: auto;
+        }
+        .esp-bloco-corpo p:last-child { margin-bottom: 0; }
+        .esp-bloco-corpo em { color: #5a4e3a; font-style: italic; }
+        .esp-bloco-corpo strong { color: var(--esp-texto); font-weight: 700; }
+
+        /* ═══════════════════════════════════════
+           CAPITULAR
+           ═══════════════════════════════════════ */
+        .esp-capitular {
+            float: left;
+            font-family: var(--esp-serif);
+            font-size: 58px;
+            line-height: 0.8;
+            font-weight: 400;
+            color: var(--esp-dourado);
+            padding: 4px 10px 0 0;
+            margin-top: 4px;
+        }
+
+        /* ═══════════════════════════════════════
+           NOTA
+           ═══════════════════════════════════════ */
+        .esp-nota {
+            background: var(--esp-nota-bg);
+            border-left: 3px solid var(--esp-nota-borda);
+            border-radius: 0 4px 4px 0;
+            margin: 24px 0 0;
+            padding: 18px 24px;
+        }
+        .esp-nota p {
+            font-family: var(--esp-serif) !important;
+            font-size: 14px !important;
+            line-height: 1.75 !important;
+            color: var(--esp-texto-leve) !important;
+            margin: 0 !important;
+            font-style: italic;
+        }
+
+        /* ═══════════════════════════════════════
+           CITAÇÃO
+           ═══════════════════════════════════════ */
+        .esp-citacao {
+            max-width: 620px;
+            margin: 36px auto;
+            text-align: center;
+            font-style: italic;
+            background: #fdfaf3;
+            padding: 30px;
+            border-radius: 8px;
+            border: 1px solid #f3eee3;
+        }
+        .esp-citacao p {
+            font-family: var(--esp-serif);
+            font-size: 1.15em;
+            color: #2f2a22;
+            margin: 0 0 10px;
+            line-height: 1.7;
+        }
+        .esp-citacao p:last-of-type { margin-bottom: 0; }
+        .esp-fonte {
+            display: block;
+            margin-top: 14px;
+            font-size: 0.8em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--esp-dourado);
+            font-style: normal;
+        }
+
+        /* ═══════════════════════════════════════
+           SEPARADOR
+           ═══════════════════════════════════════ */
+        .esp-sep {
+            text-align: center;
+            padding: 40px 0;
+            max-width: var(--esp-max);
+            margin: 0 auto;
+        }
+        .esp-sep span {
+            display: inline-block;
+            font-size: 11px;
+            color: var(--esp-dourado-claro);
+            letter-spacing: 14px;
+            position: relative;
+        }
+        .esp-sep span::before,
+        .esp-sep span::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            width: 80px;
+            height: 1px;
+        }
+        .esp-sep span::before {
+            right: calc(100% + 20px);
+            background: linear-gradient(to left, var(--esp-borda), transparent);
+        }
+        .esp-sep span::after {
+            left: calc(100% + 6px);
+            background: linear-gradient(to right, var(--esp-borda), transparent);
+        }
+
+        /* ═══════════════════════════════════════
+           RESPONSIVO
+           ═══════════════════════════════════════ */
+        @media (max-width: 768px) {
+            .esp-hero { padding: 40px 16px 36px; }
+            .esp-hero-titulo { font-size: 32px; }
+            .esp-hero-sub { font-size: 15px; }
+            .esp-secao { padding: 0 14px; }
+            .esp-secao-titulo { font-size: 20px; }
+            .esp-bloco-titulo { padding: 18px 20px 0; font-size: 15px; }
+            .esp-bloco-corpo { padding: 14px 20px 22px; }
+            .esp-bloco-corpo p { font-size: 14.5px; line-height: 1.8; text-align: left; }
+            .esp-capitular { font-size: 44px; padding: 2px 8px 0 0; }
+            .esp-nota { padding: 14px 18px; }
+            .esp-nota p { font-size: 13px !important; }
+            .esp-citacao { padding: 22px 20px; margin: 28px 14px; }
+            .esp-sep span::before, .esp-sep span::after { width: 50px; }
+        }
+        @media (max-width: 480px) {
+            .esp-hero-titulo { font-size: 26px; letter-spacing: 1px; }
+            .esp-secao-titulo { font-size: 18px; }
+            .esp-bloco-titulo { padding: 16px 16px 0; font-size: 14.5px; }
+            .esp-bloco-corpo { padding: 12px 16px 18px; }
+            .esp-bloco-corpo p { font-size: 14px; line-height: 1.75; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════
+     MENU
+     ═══════════════════════════════════════ -->
+<div class="sl-wrap">
+  <div class="sl-cabecalho">
+    <h1 class="sl-santo-nome">São João Maria Vianney</h1>
+    <div class="sl-divisor">
+      <span class="sl-divisor-linha"></span>
+      <span class="sl-divisor-orn">✦</span>
+      <span class="sl-divisor-linha"></span>
     </div>
+    <p class="sl-santo-titulo">Presbítero · Pastor</p>
+    <p class="sl-intro-frase">Pároco de Ars, confessor e padroeiro dos sacerdotes</p>
+  </div>
 
-    <div class="sl-bloco">
-      <h3>As horas diante do tabernáculo</h3>
-      <p><span class="sl-capitular">H</span>avia em Ars um hábito que os moradores da aldeia notaram desde as primeiras semanas do novo pároco e que nunca deixou de surpreender os que chegavam de fora: João Vianney orava. Não no sentido habitual em que um padre ora — as horas canônicas, a missa, o breviário. Orava além de tudo isso, nas horas que restavam, que eram poucas, e que ele escolhia preencher do mesmo modo.</p>
-      <p>Os vigários que passaram por Ars ao longo dos quarenta anos documentaram o hábito com uma consistência que impede qualquer dúvida sobre os fatos básicos. Père Toccanier, que viveu em Ars durante anos e manteve um diário, registrou que o Cura chegava à igreja antes das quatro da manhã — às vezes antes das três — e ficava prostrado diante do tabernáculo em silêncio por períodos que ele mesmo nunca cronometrou porque a tentativa de cronometrar teria parecido um desrespeito à qualidade do que via. A estimativa que aparece nas fontes é consistente: entre duas e três horas de oração mental antes do início do confessionário, em dias que já duravam dezesseis ou dezessete horas no total.</p>
+  <nav class="sl-nav">
+    <ul class="sl-lista">
+      <li><a href="/santos/presbiteros/sao-joao-maria-vianney.html"><span class="sl-nome">História</span></a></li>
+      <li><a href="/santos/presbiteros/presbiteros-dados/sao-joao-maria-vianney-dados/ars.html"><span class="sl-nome">Ars</span></a></li>
+      <li><a href="/santos/presbiteros/presbiteros-dados/sao-joao-maria-vianney-dados/confessionario.html"><span class="sl-nome">O Confessionário</span></a></li>
+      <li><a href="/santos/presbiteros/presbiteros-dados/sao-joao-maria-vianney-dados/combate.html"><span class="sl-nome">Combate Espiritual</span></a></li>
+      <li><a href="/santos/presbiteros/presbiteros-dados/sao-joao-maria-vianney-dados/espiritualidade.html"><span class="sl-nome">Espiritualidade</span></a></li>
+      <li><a href="/santos/presbiteros/presbiteros-dados/sao-joao-maria-vianney-dados/relacoes.html"><span class="sl-nome">Relações</span></a></li>
+      <li><a href="/santos/presbiteros/presbiteros-dados/sao-joao-maria-vianney-dados/milagres.html"><span class="sl-nome">Milagres</span></a></li>
+      <li><a href="/santos/presbiteros/presbiteros-dados/sao-joao-maria-vianney-dados/morte.html"><span class="sl-nome">Morte</span></a></li>
+      <li><a href="/santos/presbiteros/presbiteros-dados/sao-joao-maria-vianney-dados/legado.html"><span class="sl-nome">Legado</span></a></li>
+      <li><a href="/santos/presbiteros/presbiteros-dados/sao-joao-maria-vianney-dados/referencias.html"><span class="sl-nome">Referências</span></a></li>
+    </ul>
+  </nav>
+</div>
+
+<!-- ═══════════════════════════════════════
+     CONTEÚDO — ESPIRITUALIDADE
+     ═══════════════════════════════════════ -->
+
+<header class="esp-hero">
+  <span class="esp-hero-num">V</span>
+  <h2 class="esp-hero-titulo">Espiritualidade</h2>
+  <p class="esp-hero-sub">Oração, Eucaristia e Teologia Vivida</p>
+  <div class="esp-hero-ornamento">✦</div>
+</header>
+
+<!-- 01 · A ORAÇÃO -->
+<section class="esp-secao">
+  <div class="esp-secao-header">
+    <div class="esp-secao-marca">
+      <span class="esp-secao-num">01</span>
+      <span class="esp-secao-linha"></span>
+    </div>
+    <h3 class="esp-secao-titulo">A Oração — Método e Prática</h3>
+  </div>
+
+  <article class="esp-bloco">
+    <h4 class="esp-bloco-titulo">As horas diante do tabernáculo</h4>
+    <div class="esp-bloco-corpo">
+      <p><span class="esp-capitular">H</span>avia em Ars um hábito que os moradores da aldeia notaram desde as primeiras semanas do novo pároco e que nunca deixou de surpreender os que chegavam de fora: João Vianney orava. Não no sentido habitual em que um padre ora — as horas canônicas, a missa, o breviário. Orava além de tudo isso, nas horas que restavam, que eram poucas, e que ele escolhia preencher do mesmo modo.</p>
+      <p>Os vigários que passaram por Ars ao longo dos quarenta anos documentaram o hábito com uma consistência que impede qualquer dúvida sobre os fatos básicos. Père Toccanier, que viveu em Ars durante anos e manteve um diário, registrou que o Cura chegava à igreja antes das quatro da manhã — às vezes antes das três — e ficava prostrado diante do tabernáculo em silêncio por períodos que ele mesmo nunca cronometrou porque a tentativa de cronometrar teria parecido um desrespeito à qualidade do que via. A estimativa que aparece nas fontes é consistente: entre duas e três horas de oração mental antes do início do confessionário, em dias que já duravam dezesseis ou dezassete horas no total.</p>
       <p>O que ele fazia nessas horas não era observável de fora. A postura variava — ajoelhado, prostrado, sentado com a cabeça inclinada — mas havia algo constante que os que entravam na igreja descreviam com as mesmas palavras, independentemente de quando o haviam visto: a impressão de que o espaço ao redor estava diferente. Não mais silencioso do que qualquer igreja vazia. Diferente de uma maneira que não encontrava vocabulário adequado nos relatos leigos e que os relatos clericais descreviam, com mais precisão, como a presença sensível de algo que excedia o silêncio físico.</p>
     </div>
+  </article>
 
-    <div class="sl-bloco">
-      <h3>O método que ensinava — a conversa simples</h3>
+  <article class="esp-bloco">
+    <h4 class="esp-bloco-titulo">O método que ensinava — a conversa simples</h4>
+    <div class="esp-bloco-corpo">
       <p>Quando os paroquianos de Ars ou os peregrinos que chegavam de mais longe perguntavam a João Vianney como se devia orar, a resposta que dava não era uma resposta de manual de espiritualidade. Não citava os graus de oração de Teresa de Ávila. Não explicava a distinção entre oração vocal, meditação e contemplação. Dava uma resposta que qualquer camponês analfabeto podia compreender e aplicar imediatamente.</p>
       <p>A oração, dizia, é uma conversa. E numa conversa, é tão importante ouvir quanto falar. O erro que a maioria das pessoas comete na oração é transformá-la numa lista de pedidos — que é, na prática, um monólogo dirigido a Deus — sem deixar espaço para que Deus responda. A resposta de Deus não chega em palavras audíveis, na maioria das vezes. Chega como clareza, como quietude, como a percepção súbita de que uma coisa que parecia impossível é, afinal, possível. Mas só chega se houver silêncio suficiente para percebê-la.</p>
       <p>Esse ensino não era teologia sofisticada. Era a destilação prática de décadas de experiência pessoal, formulada na linguagem mais simples que Vianney conseguia encontrar — que era sempre a linguagem mais simples disponível, porque era a linguagem em que ele mesmo pensava. E funcionava, a julgar pelos testemunhos dos que o ouviram e tentaram: a simplicidade do método tornava-o acessível a pessoas que nunca haveriam chegado aos métodos mais elaborados de espiritualidade formal.</p>
     </div>
+  </article>
 
-    <div class="sl-bloco">
-      <h3>O camponês e o tabernáculo</h3>
+  <article class="esp-bloco">
+    <h4 class="esp-bloco-titulo">O camponês e o tabernáculo</h4>
+    <div class="esp-bloco-corpo">
       <p>Entre os episódios mais citados de toda a hagiografia de Vianney, um se destaca pela precisão com que ilustra o seu entendimento de oração — não como conceito, mas como prática viva. João Vianney notou, durante seus primeiros anos em Ars, um camponês idoso que vinha à igreja todas as tardes, ficava sentado por longos períodos diante do tabernáculo e depois ia embora. Sem rosário visível nas mãos. Sem livro de orações. Sem o movimento de lábios que acompanha a oração vocal.</p>
       <p>Curioso, o Cura abordou o homem um dia e perguntou o que ele fazia durante aquelas horas na igreja. A resposta que recebeu tornou-se, com o tempo, uma das frases mais reproduzidas no corpus da espiritualidade católica moderna:</p>
     </div>
+  </article>
 
-    <div class="sl-citacao">
-      <p>"Eu o olho e ele me olha."</p>
-      <span class="sl-fonte">Camponês anônimo de Ars, ao ser perguntado por João Vianney sobre o que fazia diante do tabernáculo</span>
-    </div>
+  <div class="esp-citacao">
+    <p>"Eu o olho e ele me olha."</p>
+    <span class="esp-fonte">Camponês anônimo de Ars, ao ser perguntado por João Vianney sobre o que fazia diante do tabernáculo</span>
+  </div>
 
-    <div class="sl-bloco">
+  <article class="esp-bloco">
+    <h4 class="esp-bloco-titulo">O que essa resposta revelou</h4>
+    <div class="esp-bloco-corpo">
       <p>João Vianney repetiu essa frase ao longo dos anos seguintes com uma frequência que sugere que ela havia cristalizado para ele algo que ele mesmo não havia conseguido formular com tanta precisão. Era exatamente o que ele fazia nas madrugadas diante do tabernáculo — não uma lista de pedidos, não uma meditação estruturada, não uma análise de textos espirituais. Um olhar. A disponibilidade para ser visto e para ver. A contemplação no sentido mais literal e mais simples do termo.</p>
       <p>O episódio revela também algo sobre o método pedagógico de Vianney: ele aprendia com os seus paroquianos tanto quanto os seus paroquianos aprendiam com ele. A espiritualidade que ensinava não era importada de livros que havia lido — era construída na observação direta de como as pessoas simples se relacionavam com Deus quando ninguém havia complicado essa relação com sistemas e categorias.</p>
     </div>
+  </article>
 
-    <div class="sl-bloco">
-      <h3>A relação física com o espaço sagrado</h3>
+  <article class="esp-bloco">
+    <h4 class="esp-bloco-titulo">A relação física com o espaço sagrado</h4>
+    <div class="esp-bloco-corpo">
       <p>João Vianney tinha uma relação com o espaço físico da igreja que os que o observavam descreviam como visceral — não metafórica. Quando entrava na nave, havia uma mudança perceptível no seu modo de se mover: mais lento, mais deliberado, como alguém que entra num lugar onde está ciente de uma presença que exige atenção diferente. Não era performance devocional. Era a expressão corporal de uma convicção sobre o que estava acontecendo naquele espaço.</p>
       <p>O confessionário ficava dentro da igreja. O altar onde celebrava a missa ficava dentro da igreja. O tabernáculo onde orava nas madrugadas ficava dentro da igreja. Toda a vida espiritual e pastoral de João Vianney gravitava em torno de um único ponto físico — a pequena igreja de pedra de Ars, que foi sendo ampliada ao longo dos anos à medida que os peregrinos tornavam o espaço original insuficiente, mas que permaneceu, para ele, o centro irremovível de tudo.</p>
-      <p>Quando tentou fugir de Ars — quatro vezes, em episódios que a Aba 2 detalha — o que sentia ao pensar em partir era descrito por ele como a impossibilidade de imaginar a oração longe daquela presença específica. Não que Deus não pudesse ser encontrado em outro lugar. Mas que ele, João Vianney, havia aprendido a encontrá-Lo ali, e que a ideia de ter que reaprender em outro lugar era, na prática, paralisante.</p>
+      <p>Quando tentou fugir de Ars — quatro vezes, em episódios que a aba Ars detalha — o que sentia ao pensar em partir era descrito por ele como a impossibilidade de imaginar a oração longe daquela presença específica. Não que Deus não pudesse ser encontrado em outro lugar. Mas que ele, João Vianney, havia aprendido a encontrá-Lo ali, e que a ideia de ter que reaprender em outro lugar era, na prática, paralisante.</p>
     </div>
+  </article>
+</section>
+
+<div class="esp-sep"><span>✦</span></div>
+
+<!-- 02 · A EUCARISTIA -->
+<section class="esp-secao">
+  <div class="esp-secao-header">
+    <div class="esp-secao-marca">
+      <span class="esp-secao-num">02</span>
+      <span class="esp-secao-linha"></span>
+    </div>
+    <h3 class="esp-secao-titulo">A Eucaristia — Centro de Tudo</h3>
   </div>
 
-  <div class="sl-sep">· · ·</div>
-
-  <!-- 02 · A EUCARISTIA -->
-  <div class="sl-secao">
-    <div class="sl-secao-header">
-      <span class="sl-secao-num">02</span>
-      <div class="sl-secao-linha"></div>
-      <span class="sl-secao-titulo">A Eucaristia — Centro de Tudo</span>
-    </div>
-
-    <div class="sl-bloco">
-      <h3>Como celebrava a missa</h3>
+  <article class="esp-bloco">
+    <h4 class="esp-bloco-titulo">Como celebrava a missa</h4>
+    <div class="esp-bloco-corpo">
       <p>Os que assistiram à missa de João Vianney — e ao longo de quarenta anos em Ars foram dezenas de milhares — descreveram a experiência com um vocabulário que se repete com consistência suficiente para ser tratado como dado histórico: havia na celebração uma qualidade de presença que excedia o que era visível. Não se tratava de missa longa ou particularmente elaborada — Vianney não era dado a ornamentos externos. Era a intensidade do celebrante que transformava o espaço.</p>
       <p>Os movimentos eram lentos — mais lentos do que o rubricismo do século XIX exigia, mais lentos do que a paciência de uma congregação comum comportaria. Mas os que estavam em Ars não eram uma congregação comum. Vinham especificamente para ver, para estar perto, para levar consigo algo que não conseguiam nomear. E a lentidão da missa não os irritava — produzia neles o efeito oposto: uma atenção que o ritmo ordinário da celebração raramente induz.</p>
       <p>O momento da consagração era o que os testemunhos destacam de forma mais unânime. Quando Vianney elevava a hóstia, havia uma pausa que os presentes descreviam como mais longa do que a rubrica determinava — e que parecia, do ponto de vista dos fiéis, absolutamente apropriada. Como se o gesto de elevar o pão consagrado exigisse, para ser honesto, todo o tempo que uma eternidade requer para ser reconhecida.</p>
     </div>
+  </article>
 
-    <div class="sl-bloco">
-      <h3>Os êxtases durante a consagração</h3>
+  <article class="esp-bloco">
+    <h4 class="esp-bloco-titulo">Os êxtases durante a consagração</h4>
+    <div class="esp-bloco-corpo">
       <p>Múltiplos testemunhos — de padres, de leigos letrados e de camponeses analfabetos — registraram episódios em que João Vianney permanecia imóvel durante a elevação por períodos que excediam qualquer pausa intencional. O olhar dirigido à hóstia não era o olhar de alguém que segura um objeto ritual. Era o olhar de alguém que vê algo.</p>
       <p>Os médicos que ocasionalmente estavam presentes em Ars e que observaram esses episódios — e havia médicos, porque os peregrinos chegavam de toda a França e alguns eram profissionais da saúde — não encontraram, nos episódios que viram, sinais de crise neurológica ou de perturbação psicológica. O que observaram era alguém em estado de concentração intensa, com os reflexos normais suspendidos, que retornava ao fluxo normal da celebração sem confusão ou desorientação.</p>
       <p>Vianney não falava sobre esses episódios. Quando pressionado, desviava a pergunta ou a respondia com uma pergunta diferente. Os vigários que viviam com ele e que o conheciam melhor aprenderam a não perguntar — o silêncio era a única resposta disponível, e o silêncio dizia o suficiente.</p>
     </div>
+  </article>
 
-    <div class="sl-bloco">
-      <h3>A doutrina eucarística em linguagem própria</h3>
+  <article class="esp-bloco">
+    <h4 class="esp-bloco-titulo">A doutrina eucarística em linguagem própria</h4>
+    <div class="esp-bloco-corpo">
       <p>O que João Vianney ensinava sobre a Eucaristia não estava formulado na linguagem técnica da teologia escolástica — que ele não dominava e não pretendia dominar. Estava formulado na linguagem de quem havia passado quarenta anos diante de um tabernáculo e acreditava, com a totalidade do que era, que o que estava dentro daquele tabernáculo era uma presença real e não uma representação simbólica.</p>
       <p>As frases que sobreviveram nos registros dos vigários, nas anotações dos peregrinos e nas reconstruções biográficas têm uma característica comum: a ausência completa de distância entre o falante e o assunto. Vianney não falava da Eucaristia como um professor fala de um conceito que domina. Falava como alguém que fala de uma pessoa que conhece — com a especificidade e o calor que só a experiência direta produz.</p>
     </div>
+  </article>
 
-    <div class="sl-citacao">
-      <p>"Todos os bens do mundo não valem nada comparados ao Santíssimo Sacramento. Deus na Eucaristia — que riqueza!"</p>
-      <span class="sl-fonte">João Vianney — registrado por Père Toccanier nos cadernos de Ars</span>
-    </div>
+  <div class="esp-citacao">
+    <p>"Todos os bens do mundo não valem nada comparados ao Santíssimo Sacramento. Deus na Eucaristia — que riqueza!"</p>
+    <span class="esp-fonte">João Vianney — registrado por Père Toccanier nos cadernos de Ars</span>
+  </div>
 
-    <div class="sl-bloco">
+  <article class="esp-bloco">
+    <h4 class="esp-bloco-titulo">Tudo gravitava em torno do altar</h4>
+    <div class="esp-bloco-corpo">
       <p>Essa frase, e as dezenas de variações sobre o mesmo tema que os registros preservam, não eram exagero retórico de um pregador que precisa emocionar a plateia. Eram declarações literais de uma hierarquia de valor que organizava toda a vida de Vianney. O confessionário servia à Eucaristia — porque o pecado mortal impede a comunhão, e a comunhão era, na sua visão, o ponto de chegada de todo o esforço pastoral. A penitência servia à Eucaristia — porque o corpo penitente tornava-se capaz de uma atenção que o corpo confortável raramente alcança. A pregação servia à Eucaristia — porque convencer as pessoas a voltarem à missa era convencê-las a voltarem ao centro.</p>
       <p>Tudo gravitava em torno do tabernáculo. O mapa espiritual de João Vianney tinha um único ponto de referência, e esse ponto era o altar.</p>
     </div>
+  </article>
 
-    <div class="sl-bloco">
-      <h3>A relação entre missa e confessionário</h3>
+  <article class="esp-bloco">
+    <h4 class="esp-bloco-titulo">A relação entre missa e confessionário</h4>
+    <div class="esp-bloco-corpo">
       <p>Na espiritualidade de Vianney, missa e confessionário não eram dois ministérios paralelos. Eram um único movimento em dois tempos — como a inspiração e a expiração num mesmo ato de respirar.</p>
       <p>O confessionário existia para restaurar a capacidade de receber a comunhão. A missa existia para dar o que a confissão havia tornado novamente possível receber. Separar os dois — oferecer confissão sem conduzir à Eucaristia, ou celebrar missa sem o cuidado com os que não podiam recebê-la por causa do pecado — seria, na lógica de Vianney, tratar cada Sacramento como um fim em si mesmo, quando cada um era, na verdade, ordenado ao outro.</p>
-      <p>Essa integração explica uma peculiaridade do seu ministério que os observadores externos às vezes achavam excessiva: ele perguntava, no confissionário, sobre a frequência à missa. Não como policiamento moral, mas como diagnóstico espiritual — porque a ausência da missa revelava uma ruptura no centro, e uma ruptura no centro não se resolve apenas com uma absolvição, mas com a restauração do que a absolvição tornava novamente acessível.</p>
+      <p>Essa integração explica uma peculiaridade do seu ministério que os observadores externos às vezes achavam excessiva: ele perguntava, no confessionário, sobre a frequência à missa. Não como policiamento moral, mas como diagnóstico espiritual — porque a ausência da missa revelava uma ruptura no centro, e uma ruptura no centro não se resolve apenas com uma absolvição, mas com a restauração do que a absolvição tornava novamente acessível.</p>
     </div>
+  </article>
+</section>
+
+<div class="esp-sep"><span>✦</span></div>
+
+<!-- 03 · A MARIOLOGIA PRÁTICA -->
+<section class="esp-secao">
+  <div class="esp-secao-header">
+    <div class="esp-secao-marca">
+      <span class="esp-secao-num">03</span>
+      <span class="esp-secao-linha"></span>
+    </div>
+    <h3 class="esp-secao-titulo">A Mariologia Prática</h3>
   </div>
 
-  <div class="sl-sep">· · ·</div>
-
-  <!-- 03 · A MARIOLOGIA PRÁTICA -->
-  <div class="sl-secao">
-    <div class="sl-secao-header">
-      <span class="sl-secao-num">03</span>
-      <div class="sl-secao-linha"></div>
-      <span class="sl-secao-titulo">A Mariologia Prática</span>
-    </div>
-
-    <div class="sl-bloco">
-      <h3>Como entendia a intercessão de Maria</h3>
+  <article class="esp-bloco">
+    <h4 class="esp-bloco-titulo">Como entendia a intercessão de Maria</h4>
+    <div class="esp-bloco-corpo">
       <p>A mariologia de João Vianney não era construída sobre tratados teológicos — era construída sobre a experiência acumulada de décadas de devoção que havia começado nos campos de Dardilly com uma imagem pequena e continuado na sacristia de Ars até a última semana de vida. O que ele ensinava sobre Maria era o que havia aprendido fazendo, não estudando.</p>
       <p>O núcleo do seu entendimento da intercessão mariana era radicalmente simples: Maria intercede porque é mãe, e uma mãe não recusa o filho que pede. A argumentação teológica sofisticada — a mediação de Maria em relação à mediação única de Cristo, as distinções entre intercessão e mediação, os debates sobre o título de Corredentora — estava além do horizonte intelectual de Vianney, e ele não fingia o contrário. O que tinha era uma convicção prática, forjada na experiência, de que quando pedia algo pela intercessão de Maria, havia uma diferença perceptível no que acontecia depois.</p>
       <p>Essa convicção não era ingênua no sentido de ser acrítica. Vianney distinguia entre o pedido feito com disposição de conversão genuína e o pedido feito como tentativa de manipular a providência — e dizia que o segundo raramente era atendido da forma esperada. Maria não intercede para confirmar vontades que contradizem a vontade de Deus. Intercede para conduzir o filho que pede até a vontade de Deus, que pode ou não coincidir com o que ele pediu.</p>
     </div>
+  </article>
 
-    <div class="sl-bloco">
-      <h3>O Rosário — como rezava, o que ensinava</h3>
+  <article class="esp-bloco">
+    <h4 class="esp-bloco-titulo">O Rosário — como rezava, o que ensinava</h4>
+    <div class="esp-bloco-corpo">
       <p>João Vianney rezava o Rosário todos os dias — não como obrigação devocional, mas como hábito tão integrado à rotina que a sua ausência teria parecido, para ele, uma incompletude do dia comparável a não comer. Rezava andando quando não havia tempo para ajoelhar. Rezava no confessionário nos momentos de espera entre um penitente e outro. Rezava à noite, quando o corpo já estava no limite do que aguenta e o que ainda restava de energia consciente ia para as contas do rosário.</p>
       <p>O que ensinava sobre o Rosário aos paroquianos e peregrinos era consistente com o que ensinava sobre a oração em geral: a qualidade importa mais do que a quantidade, mas a quantidade que vem da qualidade é bem-vinda. Rezar o Rosário enquanto o pensamento está inteiramente em outro lugar é um gesto de boa vontade — e a boa vontade tem valor. Mas rezar o Rosário com atenção real — deixando que cada mistério seja uma contemplação genuína e não apenas uma palavra que desencadeia a próxima palavra — é um gesto de amor, e o amor tem valor diferente.</p>
       <p>Não exigia perfeição. Aceitava o Rosário rezado com distração como melhor do que o Rosário não rezado. Mas empurrava gentilmente na direção da atenção — não como exigência moral, mas como convite prático: <em>tente ficar com os mistérios um pouco mais, veja o que acontece.</em></p>
     </div>
+  </article>
 
-    <div class="sl-bloco">
-      <h3>A devoção a Nossa Senhora dos Mártires em Ars</h3>
+  <article class="esp-bloco">
+    <h4 class="esp-bloco-titulo">A devoção a Nossa Senhora dos Mártires em Ars</h4>
+    <div class="esp-bloco-corpo">
       <p>Ars possuía uma pequena ermida dedicada a Nossa Senhora, conhecida localmente como Nossa Senhora dos Mártires — o título fazia referência aos mártires da perseguição revolucionária, memória ainda fresca na região quando Vianney chegou em 1818. A ermida estava em estado de abandono quando ele assumiu a paróquia.</p>
       <p>Uma das primeiras obras concretas de João Vianney em Ars foi a restauração dessa ermida. Não era um projeto de prestígio — a ermida era pequena e ficava fora do caminho principal da aldeia. Era um projeto de devoção pessoal que coincidiu com uma necessidade da comunidade: devolver à memória local o sentido dos que haviam sofrido pela fé, e situar Ars dentro de uma história maior do que a cotidiana.</p>
       <p>A ermida tornou-se um dos destinos das pequenas procissões que Vianney organizava ao longo do ano litúrgico. Os peregrinos que começaram a chegar a Ars na década de 1820 encontravam, ao lado do confessionário e da missa, essa dimensão exterior da devoção mariana — a caminhada até a ermida, as flores, as velas, a oração no espaço simples que o pároco havia recuperado do esquecimento.</p>
     </div>
+  </article>
 
-    <div class="sl-bloco">
-      <h3>A relação complicada com Santa Filomena</h3>
+  <article class="esp-bloco">
+    <h4 class="esp-bloco-titulo">A relação complicada com Santa Filomena</h4>
+    <div class="esp-bloco-corpo">
       <p>Nenhuma análise honesta da mariologia e da devoção dos santos em Vianney pode ignorar o problema de Santa Filomena — e o problema é real o suficiente para merecer tratamento direto.</p>
       <p>João Vianney tinha uma devoção intensa a Santa Filomena, mártir cujos restos ósseos foram descobertos nas catacumbas romanas em 1802 e que se tornaram objeto de culto popular crescente no século XIX. Vianney a invocava com frequência, atribuía a ela várias graças recebidas em Ars — incluindo algumas curas que os processos de canonização documentaram como inexplicadas pelos meios naturais — e tinha uma imagem sua na igreja que tratava com visível afeto devocional.</p>
       <p>O problema: em 1961, a Congregação dos Ritos removeu Santa Filomena do calendário litúrgico romano após investigação que concluiu que não havia evidências históricas suficientes para confirmar a existência da personagem como mártir histórica. A inscrição nas catacumbas que havia dado origem ao culto foi reanalisada e considerada provavelmente uma combinação de elementos de diferentes túmulos, sem relação necessária com uma única mártir identificável.</p>
       <p>Isso coloca em questão retrospectiva parte da devoção de Vianney — não a devoção em si, que era genuína, mas o objeto a que a devoção se dirigia. A resposta teológica que os especialistas em hagiografia geralmente oferecem é que a graça de Deus pode operar através de uma intercessão que o orante acredita genuinamente estar fazendo, independentemente de questões históricas sobre a identificação do intercessor. A fé de Vianney era real; as graças documentadas são reais; a questão histórica sobre Filomena é separável de ambas.</p>
-      <p class="sl-nota">O magistério não reviu retroativamente os milagres atribuídos à intercessão de Filomena em Ars. Manteve a canonização de Vianney intacta. O que removeu foi o culto litúrgico oficial da santa — não a validade das graças que as pessoas obtiveram através de uma devoção que exerceram de boa-fé.</p>
+      <aside class="esp-nota">
+        <p>O magistério não reviu retroativamente os milagres atribuídos à intercessão de Filomena em Ars. Manteve a canonização de Vianney intacta. O que removeu foi o culto litúrgico oficial da santa — não a validade das graças que as pessoas obtiveram através de uma devoção que exerceram de boa-fé.</p>
+      </aside>
     </div>
+  </article>
+</section>
+
+<div class="esp-sep"><span>✦</span></div>
+
+<!-- 04 · OS FINS ÚLTIMOS -->
+<section class="esp-secao">
+  <div class="esp-secao-header">
+    <div class="esp-secao-marca">
+      <span class="esp-secao-num">04</span>
+      <span class="esp-secao-linha"></span>
+    </div>
+    <h3 class="esp-secao-titulo">A Doutrina sobre os Fins Últimos</h3>
   </div>
 
-  <div class="sl-sep">· · ·</div>
-
-  <!-- 04 · OS FINS ÚLTIMOS -->
-  <div class="sl-secao">
-    <div class="sl-secao-header">
-      <span class="sl-secao-num">04</span>
-      <div class="sl-secao-linha"></div>
-      <span class="sl-secao-titulo">A Doutrina sobre os Fins Últimos</span>
-    </div>
-
-    <div class="sl-bloco">
-      <h3>Morte, juízo, inferno, paraíso — os quatro fins</h3>
+  <article class="esp-bloco">
+    <h4 class="esp-bloco-titulo">Morte, juízo, inferno, paraíso — os quatro fins</h4>
+    <div class="esp-bloco-corpo">
       <p>A doutrina católica tradicional dos quatro fins últimos — morte, juízo, inferno e paraíso — foi o eixo temático mais consistente da pregação de João Vianney ao longo de quarenta anos. Não alternava entre os quatro com equilíbrio pedagógico. Voltava a eles de formas diferentes, em contextos diferentes, com intensidades diferentes, mas voltava — porque a sua urgência pastoral nascia precisamente da convicção de que a maioria das pessoas vive como se os quatro fins não fossem reais.</p>
       <p>A pregação sobre a morte era concreta: acontece, acontece de forma inesperada com frequência, e o estado espiritual em que se morre determina o que vem depois. Não havia eufemismo sobre o corpo que se decompõe, sobre o momento específico em que a alma deixa o corpo, sobre o silêncio que então se instala e que não é interrompido por nenhuma segunda chance. A morte, nos sermões de Vianney, era um evento específico e irreversível — não uma abstração poética sobre a transitoriedade da existência.</p>
       <p>O juízo particular — a avaliação imediata após a morte — era tema que Vianney associava sistematicamente ao confessionário. A pergunta que colocava aos paroquianos não era filosófica: não "existe julgamento após a morte?" mas "se você morresse esta noite, o que aconteceria?" A pergunta era pastoral, destinada a criar o tipo de urgência que converte o pensamento abstrato sobre a salvação em decisão concreta sobre o que fazer amanhã.</p>
     </div>
+  </article>
 
-    <div class="sl-bloco">
-      <h3>Por que falava do inferno — e sem eufemismos</h3>
+  <article class="esp-bloco">
+    <h4 class="esp-bloco-titulo">Por que falava do inferno — e sem eufemismos</h4>
+    <div class="esp-bloco-corpo">
       <p>A pregação de Vianney sobre o inferno era o aspecto da sua pregação que mais desconfortava os que chegavam a Ars com sensibilidades espirituais formadas pelo otimismo sentimental que marcou certa religiosidade do século XIX. Ele não suavizava. Não transformava o inferno numa metáfora da alienação existencial ou numa condição temporária de afastamento que seria eventualmente resolvida pela misericórdia divina. Pregava o inferno como a tradição teológica o definira: eterno, real, habitado por pessoas que escolheram, com pleno conhecimento e liberdade, rejeitar Deus.</p>
       <p>O que justificava essa ênfase, na sua própria explicação, era a misericórdia — não apesar da misericórdia. Um médico que sabe que o paciente tem uma doença mortal e não o diz, por medo de causar sofrimento, não está sendo misericordioso. Está sendo covarde à custa do paciente. A misericórdia real exige dizer a verdade que permite a escolha — e a verdade sobre o inferno era, para Vianney, a informação mais urgente que qualquer ser humano podia receber, porque era a informação que tornava a conversão não opcional, mas necessária.</p>
       <p>Há uma passagem preservada nos registros dos vigários em que Vianney, após um sermão particularmente intenso sobre os fins últimos, foi abordado por um paroquiano que disse que o sermão havia sido pesado demais. A resposta foi direta: <em>"Se eu pudesse fazer você chorar agora, você talvez não chorasse para sempre."</em> A lógica era pastoral, não sádica — o sofrimento produtivo da conversão como alternativa ao sofrimento definitivo da condenação.</p>
     </div>
+  </article>
 
-    <div class="sl-bloco">
-      <h3>A visão do purgatório e as implicações pastorais</h3>
+  <article class="esp-bloco">
+    <h4 class="esp-bloco-titulo">A visão do purgatório e as implicações pastorais</h4>
+    <div class="esp-bloco-corpo">
       <p>Se a pregação sobre o inferno era austera, a pregação sobre o purgatório revelava uma dimensão diferente do pensamento espiritual de Vianney — mais terna, mais próxima, mais diretamente conectada à vida cotidiana dos fiéis.</p>
       <p>Vianney acreditava no purgatório com a mesma concretude com que acreditava em tudo o mais — não como possibilidade dogmática abstrata, mas como realidade habitada por pessoas específicas que haviam amado Deus mas chegado à morte com resíduos de apego ao pecado que precisavam ser purificados. Essas pessoas eram, em muitos casos, os pais e avós dos que estavam na missa, os amigos que haviam morrido recentemente, os que ninguém mais lembrava de rezar.</p>
       <p>A implicação pastoral era imediata: rezar pelos mortos não é gesto simbólico de homenagem à memória, mas ato real de assistência a pessoas reais que ainda estão num processo de purificação e que são ajudadas pela oração de intercessão dos vivos. Isso tornava a missa, o Rosário pelas almas do purgatório e a visita aos cemitérios não obrigações piedosas, mas formas concretas de caridade — caridade dirigida aos que mais precisam dela e que não podem mais ajudar-se a si mesmos.</p>
       <p>Vianney rezava pelas almas do purgatório como parte da sua rotina diária de oração. Mencionava-as nos sermões de forma regular. E a convicção com que falava sobre elas produzia, nos ouvintes, o mesmo efeito que produzia quando falava sobre a Eucaristia: a impressão de alguém que fala de uma realidade que conhece, não de uma doutrina que defende.</p>
     </div>
+  </article>
 
-    <div class="sl-bloco">
-      <h3>Como esse pensamento moldou a urgência no confessionário</h3>
+  <article class="esp-bloco">
+    <h4 class="esp-bloco-titulo">Como esse pensamento moldou a urgência no confessionário</h4>
+    <div class="esp-bloco-corpo">
       <p>A conexão entre a doutrina dos fins últimos e o confessionário em Vianney não era teórica — era a mola que mantinha o confessionário funcionando dezesseis horas por dia.</p>
       <p>Se a morte pode chegar a qualquer momento, e se o estado espiritual no momento da morte determina o destino eterno, e se o confessionário é o lugar onde o estado espiritual pode ser transformado — então cada pessoa que está em pecado mortal e que poderia ir ao confessionário e não vai está, objetivamente, em risco de uma consequência que excede em gravidade qualquer outra consequência imaginável. Esse encadeamento lógico era o que dava a Vianney a energia para permanecer no confessionário quando o corpo pedia descanso — não ascetismo voluntarista, não heroísmo performático, mas a lógica simples de uma urgência real.</p>
       <p>Os peregrinos que chegavam a Ars às vezes perguntavam aos vigários por que o Cura parecia nunca descansar. A resposta que os vigários davam, e que Vianney confirmava quando perguntado diretamente, era essencialmente essa: quando se acredita de verdade no que a doutrina dos fins últimos diz, o descanso deixa de ser a prioridade mais óbvia. O que se torna óbvio é permanecer disponível enquanto houver alguém esperando.</p>
     </div>
+  </article>
+</section>
+
+<div class="esp-sep"><span>✦</span></div>
+
+<!-- 05 · A TEOLOGIA DO SOFRIMENTO -->
+<section class="esp-secao">
+  <div class="esp-secao-header">
+    <div class="esp-secao-marca">
+      <span class="esp-secao-num">05</span>
+      <span class="esp-secao-linha"></span>
+    </div>
+    <h3 class="esp-secao-titulo">A Teologia do Sofrimento</h3>
   </div>
 
-  <div class="sl-sep">· · ·</div>
-
-  <!-- 05 · A TEOLOGIA DO SOFRIMENTO -->
-  <div class="sl-secao">
-    <div class="sl-secao-header">
-      <span class="sl-secao-num">05</span>
-      <div class="sl-secao-linha"></div>
-      <span class="sl-secao-titulo">A Teologia do Sofrimento</span>
-    </div>
-
-    <div class="sl-bloco">
-      <h3>Por que a penitência era central — a fundamentação</h3>
+  <article class="esp-bloco">
+    <h4 class="esp-bloco-titulo">Por que a penitência era central — a fundamentação</h4>
+    <div class="esp-bloco-corpo">
       <p>O regime de mortificação corporal de João Vianney — o sono mínimo, a alimentação quase inexistente, as penitências físicas que os vigários documentaram com desconforto crescente à medida que compreendiam sua extensão — não era a expressão de um temperamento masoquista nem o resíduo de uma espiritualidade medieval que o século XIX deveria ter abandonado. Era a expressão prática de uma teologia do sofrimento que Vianney nunca sistematizou em tratado mas que praticou com uma coerência que permite reconstruí-la a partir dos seus atos e das suas frases preservadas.</p>
       <p>O núcleo dessa teologia era a ideia de substituição — a convicção de que o sofrimento voluntário de uma pessoa pode, pela comunhão com o sofrimento de Cristo, ter valor reparador para os pecados de outras. Não no sentido de que o sofrimento humano acrescenta algo à redenção de Cristo, que é completa e suficiente. No sentido de que a participação no sofrimento de Cristo — o que Paulo chama de "completar o que falta aos sofrimentos de Cristo" na carta aos Colossenses — é uma forma real de cooperação com a obra salvífica.</p>
       <p>Para Vianney, que passava as horas no confessionário recebendo o peso dos pecados humanos numa aldeia que eventualmente expandiu para o mundo inteiro, havia uma correspondência entre o que ouvia e o que fazia com o próprio corpo. Não era simples expiação pessoal — era pastoral. As penitências que impunha a si mesmo estavam explicitamente conectadas, na sua própria explicação, à conversão dos penitentes que chegavam ao confessionário. A lógica: se a conversão genuína exige graça, e se a graça pode ser obtida pela intercessão e pela penitência vicária, então penitência e confessionário são parte do mesmo movimento.</p>
     </div>
+  </article>
 
-    <div class="sl-bloco">
-      <h3>A diferença entre penitência imposta e voluntária</h3>
-      <p>Uma das características mais notáveis do Cura d'Ars no confessionário — e que o diferenciava radicalmente dos confessores rigoristas da sua época — era a leveza das penitências que impunha aos penitentes. Enquanto certos confessores do século XIX mantinham tradições de penitências pesadas como condição de absolvição, Vianney absolvida com facilidade e impunha penitências mínimas.</p>
+  <article class="esp-bloco">
+    <h4 class="esp-bloco-titulo">A diferença entre penitência imposta e voluntária</h4>
+    <div class="esp-bloco-corpo">
+      <p>Uma das características mais notáveis do Cura d'Ars no confessionário — e que o diferenciava radicalmente dos confessores rigoristas da sua época — era a leveza das penitências que impunha aos penitentes. Enquanto certos confessores do século XIX mantinham tradições de penitências pesadas como condição de absolvição, Vianney absolvia com facilidade e impunha penitências mínimas.</p>
       <p>O aparente paradoxo — um homem que se impunha penitências severas que tornava as penitências dos outros leves — dissolve-se quando se compreende a distinção que ele fazia entre penitência imposta e penitência voluntária. A penitência imposta pelo confessor tem uma função sacramental específica — é parte do sacramento, sinal de reparação, expressão do compromisso com a conversão. Deve ser proporcional às possibilidades do penitente, acessível, realizável. Torná-la pesada demais é criar um obstáculo que afasta da confissão, e afastar da confissão é afastar da Eucaristia, e afastar da Eucaristia é o pior resultado possível.</p>
       <p>A penitência voluntária — a que o próprio padre se impunha, a que sugeria apenas aos que demonstravam disposição e capacidade — é diferente. Nasce do amor e não da obrigação. Não tem limite de dose recomendada, porque o amor não tem limite mensurável. E tem eficácia espiritual diferente precisamente porque é livre — não cumprimento de débito, mas oferta.</p>
       <p>Essa distinção explica por que Vianney nunca impunha aos outros o que fazia a si mesmo — e por que teria sido teologicamente errado fazê-lo. O que era vocação específica dele não era modelo universal. O que era universal era a disposição para o sofrimento voluntário quando o amor o exige — e a dosagem específica dessa disposição era assunto entre cada pessoa e Deus, não entre o confessor e o penitente.</p>
     </div>
+  </article>
 
-    <div class="sl-bloco">
-      <h3>Como explicava o sofrimento dos inocentes</h3>
+  <article class="esp-bloco">
+    <h4 class="esp-bloco-titulo">Como explicava o sofrimento dos inocentes</h4>
+    <div class="esp-bloco-corpo">
       <p>A pergunta sobre o sofrimento dos inocentes — por que crianças sofrem, por que pessoas boas são afligidas por doenças, perdas e injustiças enquanto pessoas más prosperam — é a pergunta que mais frequentemente abala a fé das pessoas simples e que os teólogos mais sofisticados raramente respondem de forma que satisfaça quem está sofrendo.</p>
       <p>Vianney não tinha uma resposta filosófica nova para essa pergunta. Não oferecia um teodiceu — uma justificação racional do sofrimento que reconciliasse a bondade de Deus com a realidade do mal. O que oferecia era uma perspectiva diferente sobre o valor do sofrimento, derivada da teologia da Cruz: o sofrimento do inocente, unido ao sofrimento de Cristo, tem um valor que a perspectiva puramente horizontal — aquela que mede o sofrimento apenas em termos de dano causado — não pode perceber.</p>
       <p>A resposta que dava aos que vinham ao confessionário destroçados pelo sofrimento injusto tinha uma estrutura reconhecível: primeiro, o reconhecimento do sofrimento como real e legítimo — sem pressa para chegar à consolação teológica. Depois, a pergunta sobre o que a pessoa estava fazendo com aquele sofrimento — oferecendo-o, carregando-o com raiva, tentando eliminá-lo a qualquer custo. E depois, a proposta: e se esse sofrimento, que não pode ser eliminado, pudesse ser transformado em algo que vale — em oferta, em oração, em participação no que Cristo fez?</p>
       <p>Não era uma resposta que eliminava a dor. Era uma resposta que tentava mudar a relação do sofredor com a própria dor — de vítima passiva para participante ativo numa história maior. Se funcionava dependia do penitente, do grau de fé, do grau de sofrimento. Mas os que descreveram esses encontros com Vianney mencionam, com frequência, que saíam do confessionário sem que a situação objetiva houvesse mudado — e com algo diferente dentro que tornava a situação objetiva suportável de uma maneira que não havia sido antes.</p>
     </div>
+  </article>
 
-    <div class="sl-bloco">
-      <h3>A cruz como presente — o que a frase significa</h3>
-      <p>Uma das frases mais citadas de João Vianney — e que aparece em variações diferentes nos registros dos vigários, sugerindo que era tema ao qual voltava regularmente — é esta:</p>
+  <article class="esp-bloco">
+    <h4 class="esp-bloco-titulo">A cruz como presente — o que a frase significa</h4>
+    <div class="esp-bloco-corpo">
+      <p>Uma das frases mais citadas de João Vianney — e que aparece em variações diferentes nos registros dos vigários, sugerindo que era tema ao qual voltava regularmente — resume o núcleo da sua teologia do sofrimento:</p>
     </div>
+  </article>
 
-    <div class="sl-citacao">
-      <p>"A cruz é o presente que Deus faz aos seus amigos."</p>
-      <span class="sl-fonte">João Vianney — diversas variações registradas pelos vigários de Ars</span>
-    </div>
+  <div class="esp-citacao">
+    <p>"A cruz é o presente que Deus faz aos seus amigos."</p>
+    <span class="esp-fonte">João Vianney — diversas variações registradas pelos vigários de Ars</span>
+  </div>
 
-    <div class="sl-bloco">
+  <article class="esp-bloco">
+    <h4 class="esp-bloco-titulo">O que a frase significa teologicamente</h4>
+    <div class="esp-bloco-corpo">
       <p>A frase é chocante se lida fora do conjunto do pensamento de Vianney, e ininteligível se lida fora da tradição teológica que ele habitava. Dentro desse conjunto e dessa tradição, ela tem uma precisão que merece ser desdobrada.</p>
       <p>A ideia de que o sofrimento é presente — e não punição, não negligência, não ausência de Deus — pressupõe a teologia da Cruz como evento não apenas histórico, mas paradigmático. Se Deus escolheu salvar o mundo através do sofrimento do seu Filho, e não apesar dele, então o sofrimento não é o contrário do amor divino — pode ser sua expressão mais intensa. O que Cristo fez na Cruz não foi suportar o sofrimento com resignação. Foi transformar o sofrimento em instrumento de salvação pelo amor com que o abraçou.</p>
       <p>O que Vianney propunha — e que praticava pessoalmente com uma consistência que tornava a proposta credível — era que o mesmo movimento era possível para qualquer sofrimento: não eliminá-lo, mas abraçá-lo com o amor suficiente para transformá-lo em oferta. Essa transformação não muda o conteúdo do sofrimento — a dor continua doendo, a perda continua sendo perda. Muda o sentido do sofrimento, e a mudança de sentido, na experiência de quem passou por ela, é descrita como mais profunda do que qualquer mudança de circunstância poderia ser.</p>
-      <p>Vianney dizia isso como alguém que havia testado a proposta pessoalmente — nas noites sem dormir, nas doenças ignoradas, nos ataques que a Aba 4 detalha, nas décadas de um ministério que consumia mais do que qualquer organismo humano é razoavelmente projetado para dar. Quando dizia que a cruz é um presente, não estava teorizando sobre o sofrimento dos outros. Estava descrevendo, na linguagem mais direta que conseguia, o que havia descoberto na própria experiência.</p>
+      <p>Vianney dizia isso como alguém que havia testado a proposta pessoalmente — nas noites sem dormir, nas doenças ignoradas, nos ataques que a aba Combate Espiritual detalha, nas décadas de um ministério que consumia mais do que qualquer organismo humano é razoavelmente projetado para dar. Quando dizia que a cruz é um presente, não estava teorizando sobre o sofrimento dos outros. Estava descrevendo, na linguagem mais direta que conseguia, o que havia descoberto na própria experiência.</p>
     </div>
+  </article>
+</section>
+
+<div class="esp-sep"><span>✦</span></div>
+
+<!-- 06 · A VISÃO DO SACERDÓCIO -->
+<section class="esp-secao">
+  <div class="esp-secao-header">
+    <div class="esp-secao-marca">
+      <span class="esp-secao-num">06</span>
+      <span class="esp-secao-linha"></span>
+    </div>
+    <h3 class="esp-secao-titulo">A Visão do Sacerdócio — O Que Ele Acreditava Ser</h3>
   </div>
 
-  <div class="sl-sep">· · ·</div>
-
-  <!-- 06 · A VISÃO DO SACERDÓCIO -->
-  <div class="sl-secao">
-    <div class="sl-secao-header">
-      <span class="sl-secao-num">06</span>
-      <div class="sl-secao-linha"></div>
-      <span class="sl-secao-titulo">A Visão do Sacerdócio — O Que Ele Acreditava Ser</span>
-    </div>
-
-    <div class="sl-bloco">
-      <h3>O padre e o anjo — contexto e significado</h3>
+  <article class="esp-bloco">
+    <h4 class="esp-bloco-titulo">O padre e o anjo — contexto e significado</h4>
+    <div class="esp-bloco-corpo">
       <p>Entre as frases de João Vianney sobre o sacerdócio, uma é citada com frequência tão desproporcional que acabou sendo destacada do contexto que lhe dá sentido. A frase — em várias variações preservadas — afirma que o sacerdote é algo maior do que um anjo, porque o anjo não pode consagrar o Corpo de Cristo e o padre pode.</p>
       <p>Lida isoladamente, a frase parece extravagância devocional — o tipo de hipérbole piedosa que não deve ser levada ao pé da letra. Lida no conjunto do pensamento de Vianney sobre o sacerdócio, é uma declaração teológica coerente com a tradição — e cuja radicalidade ele havia compreendido, a partir da sua infância, de uma forma que a maioria das pessoas compreende apenas abstratamente.</p>
       <p>O que a frase diz, em termos teológicos, é que a ordenação sacerdotal confere uma capacidade que não pertence à natureza humana e que nem os anjos possuem: a capacidade de tornar presente, sob as espécies do pão e do vinho, o Corpo e o Sangue de Cristo. Não uma representação simbólica dessa presença, mas a presença real. Se essa crença é verdadeira — e Vianney acreditava que era verdadeira com a totalidade do que era —, então o sacerdócio é, objetivamente, uma dignidade que excede tudo o mais que pode ser dito sobre um ser humano.</p>
       <p>A consequência prática dessa convicção era a seriedade com que tratava tudo o que se relacionava com o sacerdócio — a missa, a confissão, a unção dos enfermos, a preparação para cada sacramento. Não era seriedade de funcionário que respeita o protocolo. Era seriedade de alguém que acredita que o que faz é o ato mais importante que um ser humano pode executar — e que a menor desatenção nesse ato é, proporcionalmente, a maior forma de descuido possível.</p>
     </div>
+  </article>
 
-    <div class="sl-bloco">
-      <h3>Por que recusou o bispado — a teologia por trás</h3>
+  <article class="esp-bloco">
+    <h4 class="esp-bloco-titulo">Por que recusou o bispado — a teologia por trás</h4>
+    <div class="esp-bloco-corpo">
       <p>João Vianney recusou o episcopado quando foi proposto — e foi proposto mais de uma vez, por autoridades diocesanas que reconheciam nele qualidades que justificavam a promoção hierárquica. A recusa foi consistente e fundamentada, não performática.</p>
       <p>A fundamentação que dava não era apenas a humildade convencional — o "não sou digno" que os santos frequentemente dizem e que às vezes é verdadeiro e às vezes é forma de deferência protocolada. Era uma fundamentação específica sobre o tipo de serviço que o episcopado exigiria e o tipo de serviço que o sacerdócio paroquial permitia.</p>
       <p>Um bispo administra, supervisiona, representa a diocese — funções que exigem mobilidade, capacidade de abstração institucional, habilidade para gerir estruturas complexas. Nada disso era o que Vianney havia sido chamado a fazer. O que havia sido chamado a fazer era ficar num lugar, conhecer as pessoas desse lugar, ouvi-las nos seus pecados e nas suas dores, estar disponível. O episcopado, mesmo que ele o exercesse com santidade, o removeria da única coisa para a qual se sentia equipado e o colocaria numa posição para a qual claramente não estava equipado — e para a qual reconhecia, com honestidade, não ter sido chamado.</p>
       <p>Havia também a dimensão mais simples: ele não queria. E o querer ou não querer, para alguém que havia passado quarenta anos aprendendo a distinguir os próprios desejos da vontade de Deus, não era dado irrelevante. Era informação espiritual. E a informação que tinha era clara: Ars, o confessionário, os penitentes. Não Lyon, o palácio episcopal, a administração diocesana.</p>
     </div>
+  </article>
 
-    <div class="sl-bloco">
-      <h3>O sacerdócio como identidade total</h3>
+  <article class="esp-bloco">
+    <h4 class="esp-bloco-titulo">O sacerdócio como identidade total</h4>
+    <div class="esp-bloco-corpo">
       <p>O que distingue João Vianney de muitos padres santíssimos que a história da Igreja preserva é a ausência completa de separação entre vida e ministério. Não havia o padre que celebrava a missa e o homem que descansava, que tinha hobbies, que reservava tempo para si mesmo. Havia apenas um ser humano que era padre, que fazia o que um padre faz, e que descansava quando o corpo não conseguia mais e então recomeçava.</p>
       <p>Essa identidade total não era o resultado de uma decisão consciente de abolir o tempo privado. Era a expressão natural de uma visão do sacerdócio que não distinguia entre o sagrado e o secular na própria vida do padre — porque o padre é, pela ordenação, alguém que foi posto à parte para uma função específica, e essa função específica é sua identidade, não apenas sua ocupação.</p>
       <p>A consequência prática era visível nos detalhes: as pessoas que o interrompiam durante as refeições — quando comia, o que era raro o suficiente para ser notável — eram recebidas sem impaciência perceptível. Os que chegavam tarde à noite quando ele já estava no mínimo de sono que o corpo aceitava eram recebidos da mesma forma que os que chegavam de manhã. Não porque Vianney não sentisse cansaço — os registros médicos e os relatos dos vigários tornam claro que sentia — mas porque o cansaço não era, no seu sistema de prioridades, razão suficiente para deixar de ser o que era.</p>
     </div>
+  </article>
 
-    <div class="sl-bloco">
-      <h3>O que ensinava aos jovens que queriam ser padres</h3>
+  <article class="esp-bloco">
+    <h4 class="esp-bloco-titulo">O que ensinava aos jovens que queriam ser padres</h4>
+    <div class="esp-bloco-corpo">
       <p>Ars atraía não apenas penitentes e peregrinos, mas jovens que chegavam com a intenção de discernir o sacerdócio — ou que chegavam sem essa intenção e saíam com ela. Vianney tinha uma forma específica de lidar com esses jovens que os biógrafos documentaram através dos relatos dos próprios interessados, coletados décadas depois.</p>
       <p>Não os encorajava com facilidade. A primeira coisa que fazia, quando um jovem lhe dizia que queria ser padre, era perguntar por quê. Não retoricamente — genuinamente, com uma atenção ao que a resposta revelava sobre a qualidade da motivação. As respostas que o satisfaziam eram as que revelavam chamado — a sensação de que havia algo que o jovem não conseguia imaginar não fazer, que o sacerdócio não era carreira entre outras mas a única forma de vida que fazia sentido. As respostas que o preocupavam eram as que revelavam ambição social, fuga de outra situação, ou simplesmente admiração pelo Cura d'Ars — que ele considerava razão completamente insuficiente para uma decisão irreversível.</p>
       <p>Para os que reconhecia como autenticamente chamados, o conselho central era simples e repetido: orar antes de tudo. O sacerdote que não ora é um instrumento sem força — pode executar os gestos, proferir as palavras, administrar os sacramentos, e tudo isso terá efeito ex opere operato independentemente da sua santidade pessoal. Mas o instrumento sem força não transforma. E transformar — não apenas administrar sacramentos, mas ser parte do processo pelo qual as pessoas se convertem — era, para Vianney, o que o sacerdócio era.</p>
     </div>
+  </article>
 
-    <div class="sl-citacao">
-      <p>"O sacerdócio é o amor do Coração de Jesus."</p>
-      <span class="sl-fonte">João Vianney — frase preservada em múltiplas versões nos registros de Ars</span>
-    </div>
+  <div class="esp-citacao">
+    <p>"O sacerdócio é o amor do Coração de Jesus."</p>
+    <span class="esp-fonte">João Vianney — frase preservada em múltiplas versões nos registros de Ars</span>
+  </div>
 
-    <div class="sl-bloco">
+  <article class="esp-bloco">
+    <h4 class="esp-bloco-titulo">O que a frase encerra</h4>
+    <div class="esp-bloco-corpo">
       <p>Essa frase — a mais densa, talvez, de todo o corpus de Vianney sobre o sacerdócio — resume o que havia de mais fundamental na sua visão: o sacerdócio não é uma função que um homem exerce em nome de uma instituição. É a expressão concreta do amor de Cristo pela humanidade, dado através de instrumentos humanos que se tornam, pela ordenação, canais específicos desse amor. O padre não representa Cristo — é, nos limites do que a linguagem humana pode dizer, o lugar onde Cristo torna-Se presente e operativo de formas que excederiam qualquer outro meio.</p>
       <p>Que um homem que havia reprovado no seminário, que havia desertado do exército, que havia chegado a Ars sem saber o que encontraria, que havia ficado quarenta anos num lugar que a maioria dos padres teria pedido para deixar — que esse homem tivesse dito essa frase e a tivesse vivido com a consistência que os quarenta anos de Ars demonstraram é, independentemente de como se avalie o resto, algo que a história registra e que os que estudam com atenção não conseguem tratar como dado menor.</p>
     </div>
-  </div>
+  </article>
+</section>
 
-</div><!-- /espiritualidade -->
+<!-- ═══════════════════════════════════════
+     SCRIPT — Destaque automático da aba ativa
+     ═══════════════════════════════════════ -->
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const links = document.querySelectorAll('.sl-lista a');
+        const urlAtual = window.location.pathname;
+
+        links.forEach(link => link.classList.remove('ativo'));
+
+        let melhorMatch = null;
+        let melhorTamanho = 0;
+
+        links.forEach(link => {
+            const href = link.getAttribute('href');
+            const arquivo = href.split('/').pop();
+
+            if (urlAtual.endsWith(arquivo) && arquivo.length > melhorTamanho) {
+                melhorMatch = link;
+                melhorTamanho = arquivo.length;
+            }
+        });
+
+        if (melhorMatch) {
+            melhorMatch.classList.add('ativo');
+        }
+    });
+</script>
+
+</body>
+</html>
