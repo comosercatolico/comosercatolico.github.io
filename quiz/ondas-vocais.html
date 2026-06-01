@@ -1,0 +1,1752 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz - Ondas & Cordas Vocais 🔬</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Orbitron:wght@400;500;600;700;800;900&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6c5ce7;
+            --primary-dark: #5a4bd1;
+            --secondary: #00cec9;
+            --accent: #fd79a8;
+            --gold: #fdcb6e;
+            --dark: #0a0a1a;
+            --darker: #060612;
+            --card-bg: rgba(20, 20, 50, 0.85);
+            --success: #00b894;
+            --danger: #e17055;
+            --warning: #ffeaa7;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--darker);
+            color: #e0e0ff;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* ============ ANIMATED BACKGROUND ============ */
+        .bg-animation {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .bg-animation .wave {
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            opacity: 0.03;
+            border-radius: 40%;
+            animation: waveSpin linear infinite;
+        }
+
+        .bg-animation .wave:nth-child(1) {
+            background: var(--primary);
+            top: -60%; left: -50%;
+            animation-duration: 25s;
+        }
+
+        .bg-animation .wave:nth-child(2) {
+            background: var(--secondary);
+            top: -65%; left: -45%;
+            animation-duration: 30s;
+            animation-direction: reverse;
+        }
+
+        .bg-animation .wave:nth-child(3) {
+            background: var(--accent);
+            top: -70%; left: -55%;
+            animation-duration: 35s;
+        }
+
+        @keyframes waveSpin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Floating particles */
+        .particles {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: var(--secondary);
+            border-radius: 50%;
+            opacity: 0;
+            animation: particleFloat linear infinite;
+        }
+
+        @keyframes particleFloat {
+            0% { opacity: 0; transform: translateY(100vh) scale(0); }
+            10% { opacity: 0.8; }
+            90% { opacity: 0.3; }
+            100% { opacity: 0; transform: translateY(-10vh) scale(1); }
+        }
+
+        /* ============ MAIN CONTAINER ============ */
+        .container {
+            position: relative;
+            z-index: 10;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(108, 92, 231, 0.2);
+            border-radius: 24px;
+            padding: 40px;
+            width: 100%;
+            box-shadow:
+                0 25px 60px rgba(0,0,0,0.5),
+                0 0 120px rgba(108, 92, 231, 0.08),
+                inset 0 1px 0 rgba(255,255,255,0.05);
+            animation: cardEntry 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes cardEntry {
+            from {
+                opacity: 0;
+                transform: translateY(40px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* ============ WELCOME SCREEN ============ */
+        .welcome-icon {
+            font-size: 80px;
+            text-align: center;
+            margin-bottom: 10px;
+            animation: iconPulse 3s ease-in-out infinite;
+        }
+
+        @keyframes iconPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .welcome-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 28px;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 5px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.3;
+        }
+
+        .welcome-subtitle {
+            text-align: center;
+            color: #8888aa;
+            font-size: 14px;
+            margin-bottom: 30px;
+            font-weight: 300;
+        }
+
+        .experiment-info {
+            background: rgba(108, 92, 231, 0.08);
+            border: 1px solid rgba(108, 92, 231, 0.15);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 30px;
+            font-size: 13.5px;
+            line-height: 1.8;
+            color: #aaaacc;
+        }
+
+        .experiment-info h3 {
+            color: var(--secondary);
+            font-size: 15px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .experiment-info ul {
+            list-style: none;
+            padding: 0;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6px;
+        }
+
+        .experiment-info ul li {
+            padding: 4px 0;
+            padding-left: 20px;
+            position: relative;
+            font-size: 12.5px;
+        }
+
+        .experiment-info ul li::before {
+            content: '◈';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+        }
+
+        .rules-box {
+            background: rgba(253, 121, 168, 0.06);
+            border: 1px solid rgba(253, 121, 168, 0.15);
+            border-radius: 12px;
+            padding: 15px 20px;
+            margin-bottom: 25px;
+        }
+
+        .rules-box h4 {
+            color: var(--accent);
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        .rules-box p {
+            font-size: 12.5px;
+            color: #9999bb;
+            line-height: 1.7;
+        }
+
+        .rules-box .rule-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 6px 0;
+        }
+
+        .rules-box .rule-icon {
+            font-size: 16px;
+        }
+
+        .input-group {
+            margin-bottom: 25px;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 10px;
+            color: var(--secondary);
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 16px 20px;
+            background: rgba(255,255,255,0.04);
+            border: 2px solid rgba(108, 92, 231, 0.2);
+            border-radius: 14px;
+            font-size: 16px;
+            font-family: 'Poppins', sans-serif;
+            color: #fff;
+            outline: none;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .input-group input:focus {
+            border-color: var(--primary);
+            background: rgba(108, 92, 231, 0.06);
+            box-shadow: 0 0 30px rgba(108, 92, 231, 0.1);
+        }
+
+        .input-group input::placeholder {
+            color: #555577;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 16px 40px;
+            border: none;
+            border-radius: 14px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: #fff;
+            box-shadow: 0 8px 30px rgba(108, 92, 231, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(108, 92, 231, 0.4);
+        }
+
+        .btn-primary:active {
+            transform: translateY(-1px);
+        }
+
+        .btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        .btn-glow {
+            background: linear-gradient(135deg, var(--secondary), #00b894);
+            color: var(--dark);
+            font-weight: 700;
+            box-shadow: 0 8px 30px rgba(0, 206, 201, 0.3);
+        }
+
+        .btn-glow:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0, 206, 201, 0.4);
+        }
+
+        /* ============ QUIZ SCREEN ============ */
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .quiz-progress-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .question-counter {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 14px;
+            color: var(--secondary);
+            font-weight: 600;
+        }
+
+        .score-display {
+            font-size: 13px;
+            color: var(--gold);
+            font-weight: 500;
+        }
+
+        .timer-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .timer-ring {
+            width: 52px;
+            height: 52px;
+            position: relative;
+        }
+
+        .timer-ring svg {
+            transform: rotate(-90deg);
+            width: 52px;
+            height: 52px;
+        }
+
+        .timer-ring .ring-bg {
+            fill: none;
+            stroke: rgba(255,255,255,0.05);
+            stroke-width: 4;
+        }
+
+        .timer-ring .ring-progress {
+            fill: none;
+            stroke: var(--secondary);
+            stroke-width: 4;
+            stroke-linecap: round;
+            stroke-dasharray: 138.23;
+            stroke-dashoffset: 0;
+            transition: stroke-dashoffset 1s linear, stroke 0.3s;
+        }
+
+        .timer-ring .ring-progress.warning {
+            stroke: var(--gold);
+        }
+
+        .timer-ring .ring-progress.danger {
+            stroke: var(--danger);
+        }
+
+        .timer-text {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .progress-bar-container {
+            width: 100%;
+            height: 6px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 10px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+            border-radius: 10px;
+            transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            background-size: 200% 100%;
+            animation: progressShimmer 2s linear infinite;
+        }
+
+        @keyframes progressShimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+
+        .question-text {
+            font-size: 18px;
+            font-weight: 600;
+            line-height: 1.7;
+            margin-bottom: 25px;
+            color: #e8e8ff;
+        }
+
+        .question-text .q-number {
+            color: var(--accent);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 13px;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .options-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 10px;
+        }
+
+        .option-btn {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            width: 100%;
+            padding: 16px 20px;
+            background: rgba(255,255,255,0.03);
+            border: 2px solid rgba(255,255,255,0.06);
+            border-radius: 14px;
+            cursor: pointer;
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            text-align: left;
+            font-family: 'Poppins', sans-serif;
+            font-size: 14.5px;
+            color: #ccccee;
+        }
+
+        .option-btn:hover:not(.disabled) {
+            border-color: rgba(108, 92, 231, 0.4);
+            background: rgba(108, 92, 231, 0.08);
+            transform: translateX(5px);
+        }
+
+        .option-letter {
+            min-width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            background: rgba(108, 92, 231, 0.15);
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            font-size: 14px;
+            color: var(--primary);
+            transition: all 0.35s;
+        }
+
+        .option-btn.correct {
+            border-color: var(--success) !important;
+            background: rgba(0, 184, 148, 0.12) !important;
+            transform: none !important;
+        }
+
+        .option-btn.correct .option-letter {
+            background: var(--success);
+            color: #fff;
+        }
+
+        .option-btn.wrong {
+            border-color: var(--danger) !important;
+            background: rgba(225, 112, 85, 0.12) !important;
+            transform: none !important;
+            animation: wrongShake 0.5s ease;
+        }
+
+        .option-btn.wrong .option-letter {
+            background: var(--danger);
+            color: #fff;
+        }
+
+        @keyframes wrongShake {
+            0%, 100% { transform: translateX(0); }
+            20% { transform: translateX(-8px); }
+            40% { transform: translateX(8px); }
+            60% { transform: translateX(-5px); }
+            80% { transform: translateX(5px); }
+        }
+
+        .option-btn.disabled {
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+
+        .option-btn.disabled:not(.correct):not(.wrong) {
+            opacity: 0.3;
+        }
+
+        .feedback-bar {
+            margin-top: 20px;
+            padding: 14px 20px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 500;
+            display: none;
+            animation: feedbackSlide 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes feedbackSlide {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .feedback-bar.correct {
+            display: block;
+            background: rgba(0, 184, 148, 0.1);
+            border: 1px solid rgba(0, 184, 148, 0.2);
+            color: #55efc4;
+        }
+
+        .feedback-bar.wrong {
+            display: block;
+            background: rgba(225, 112, 85, 0.1);
+            border: 1px solid rgba(225, 112, 85, 0.2);
+            color: #fab1a0;
+        }
+
+        .feedback-bar.timeout {
+            display: block;
+            background: rgba(253, 203, 110, 0.1);
+            border: 1px solid rgba(253, 203, 110, 0.2);
+            color: var(--gold);
+        }
+
+        /* ============ RESULT SCREEN ============ */
+        .result-icon {
+            text-align: center;
+            font-size: 70px;
+            margin-bottom: 15px;
+        }
+
+        .result-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 26px;
+            text-align: center;
+            font-weight: 800;
+            margin-bottom: 5px;
+        }
+
+        .result-subtitle {
+            text-align: center;
+            font-size: 14px;
+            color: #8888aa;
+            margin-bottom: 30px;
+        }
+
+        .score-circle {
+            width: 160px;
+            height: 160px;
+            margin: 0 auto 30px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .score-circle svg {
+            position: absolute;
+            top: 0; left: 0;
+            width: 160px;
+            height: 160px;
+            transform: rotate(-90deg);
+        }
+
+        .score-circle .circle-bg {
+            fill: none;
+            stroke: rgba(255,255,255,0.05);
+            stroke-width: 8;
+        }
+
+        .score-circle .circle-fill {
+            fill: none;
+            stroke-width: 8;
+            stroke-linecap: round;
+            stroke-dasharray: 440;
+            stroke-dashoffset: 440;
+            transition: stroke-dashoffset 2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .score-value {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 36px;
+            font-weight: 900;
+            z-index: 2;
+        }
+
+        .score-value small {
+            font-size: 14px;
+            font-weight: 400;
+            color: #8888aa;
+            display: block;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 14px;
+            padding: 16px;
+            text-align: center;
+        }
+
+        .stat-card .stat-icon {
+            font-size: 22px;
+            margin-bottom: 6px;
+        }
+
+        .stat-card .stat-value {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .stat-card .stat-label {
+            font-size: 11px;
+            color: #7777aa;
+            margin-top: 2px;
+        }
+
+        .rank-badge {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            border-radius: 16px;
+            background: rgba(253, 203, 110, 0.05);
+            border: 1px solid rgba(253, 203, 110, 0.15);
+        }
+
+        .rank-badge .rank-label {
+            font-size: 12px;
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .rank-badge .rank-name {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 22px;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--gold), #e17055, var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .rank-badge .rank-desc {
+            font-size: 12.5px;
+            color: #8888aa;
+            margin-top: 5px;
+        }
+
+        /* ============ RANKING TABLE ============ */
+        .ranking-section {
+            margin-top: 20px;
+        }
+
+        .ranking-section h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 16px;
+            color: var(--secondary);
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .ranking-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 6px;
+        }
+
+        .ranking-table thead th {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #666688;
+            padding: 8px 12px;
+            text-align: left;
+        }
+
+        .ranking-table thead th:last-child {
+            text-align: right;
+        }
+
+        .ranking-table tbody tr {
+            background: rgba(255,255,255,0.02);
+            transition: all 0.3s;
+        }
+
+        .ranking-table tbody tr:hover {
+            background: rgba(108, 92, 231, 0.06);
+        }
+
+        .ranking-table tbody tr.current-user {
+            background: rgba(108, 92, 231, 0.12);
+            border: 1px solid rgba(108, 92, 231, 0.2);
+        }
+
+        .ranking-table tbody td {
+            padding: 12px;
+            font-size: 14px;
+        }
+
+        .ranking-table tbody td:first-child {
+            border-radius: 10px 0 0 10px;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            width: 40px;
+        }
+
+        .ranking-table tbody td:last-child {
+            border-radius: 0 10px 10px 0;
+            text-align: right;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 600;
+            color: var(--gold);
+        }
+
+        .rank-medal {
+            font-size: 18px;
+        }
+
+        .player-name-cell {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .player-avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        /* ============ COMPLETED SCREEN ============ */
+        .completed-screen {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .completed-screen .lock-icon {
+            font-size: 60px;
+            margin-bottom: 15px;
+        }
+
+        .completed-screen h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 20px;
+            color: var(--accent);
+            margin-bottom: 10px;
+        }
+
+        .completed-screen p {
+            color: #8888aa;
+            font-size: 14px;
+        }
+
+        /* ============ SCREEN MANAGEMENT ============ */
+        .screen {
+            display: none;
+        }
+
+        .screen.active {
+            display: block;
+            animation: cardEntry 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* ============ CONFETTI ============ */
+        .confetti-container {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        .confetti-piece {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            top: -10px;
+            animation: confettiFall linear forwards;
+        }
+
+        @keyframes confettiFall {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+        }
+
+        /* ============ RESPONSIVE ============ */
+        @media (max-width: 600px) {
+            .card {
+                padding: 25px 20px;
+                border-radius: 18px;
+            }
+
+            .welcome-title {
+                font-size: 20px;
+            }
+
+            .question-text {
+                font-size: 15px;
+            }
+
+            .experiment-info ul {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 8px;
+            }
+
+            .stat-card {
+                padding: 10px;
+            }
+
+            .stat-card .stat-value {
+                font-size: 16px;
+            }
+
+            .timer-ring {
+                width: 44px;
+                height: 44px;
+            }
+
+            .timer-ring svg {
+                width: 44px;
+                height: 44px;
+            }
+        }
+
+        /* ============ EXTRAS ============ */
+        .hidden { display: none !important; }
+
+        .text-center { text-align: center; }
+
+        .mt-20 { margin-top: 20px; }
+
+        .lissajous-decoration {
+            position: absolute;
+            top: -30px;
+            right: -30px;
+            width: 120px;
+            height: 120px;
+            opacity: 0.05;
+            pointer-events: none;
+        }
+
+        .quiz-locked-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.9);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Next button */
+        .btn-next {
+            margin-top: 20px;
+            background: linear-gradient(135deg, var(--primary), #8b5cf6);
+            color: #fff;
+            padding: 12px 30px;
+            font-size: 14px;
+            box-shadow: 0 5px 20px rgba(108, 92, 231, 0.3);
+        }
+
+        .answer-explanation {
+            font-size: 12.5px;
+            color: #8888aa;
+            margin-top: 4px;
+            font-style: italic;
+        }
+
+        .streak-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 12px;
+            color: var(--gold);
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Background Animation -->
+<div class="bg-animation">
+    <div class="wave"></div>
+    <div class="wave"></div>
+    <div class="wave"></div>
+</div>
+
+<div class="particles" id="particles"></div>
+
+<div class="container">
+    <div class="card" id="mainCard">
+
+        <!-- ========== WELCOME SCREEN ========== -->
+        <div class="screen active" id="welcomeScreen">
+            <div class="welcome-icon">🔬</div>
+            <h1 class="welcome-title">Ondas & Cordas Vocais</h1>
+            <p class="welcome-subtitle">Quiz Interativo — Experimento de Física</p>
+
+            <div class="experiment-info">
+                <h3>🧪 Sobre o Experimento</h3>
+                <p style="margin-bottom: 12px;">
+                    Visualizamos os modos de vibração de uma membrana fina e elástica provocados pela voz.
+                    Um pedaço de espelho colado na membrana reflete a luz de um laser, projetando figuras
+                    que representam a vibração — incluindo as famosas <strong style="color: var(--accent);">Figuras de Lissajous</strong>.
+                </p>
+                <h3>🛠️ Materiais</h3>
+                <ul>
+                    <li>Lata com tampa plástica</li>
+                    <li>Balão de borracha</li>
+                    <li>Ponteira laser</li>
+                    <li>Fita adesiva</li>
+                    <li>Tesoura e cola</li>
+                    <li>Espelho pequeno</li>
+                    <li>Tubo ou cano PVC</li>
+                    <li>Abridor de lata</li>
+                </ul>
+            </div>
+
+            <div class="rules-box">
+                <h4>📋 Regras do Quiz</h4>
+                <div class="rule-item">
+                    <span class="rule-icon">⏱️</span>
+                    <p>Cada questão tem entre 10 e 15 segundos</p>
+                </div>
+                <div class="rule-item">
+                    <span class="rule-icon">🔒</span>
+                    <p>Você só pode jogar <strong>uma vez</strong></p>
+                </div>
+                <div class="rule-item">
+                    <span class="rule-icon">🏆</span>
+                    <p>Seu resultado entrará no ranking</p>
+                </div>
+                <div class="rule-item">
+                    <span class="rule-icon">🧠</span>
+                    <p>15 questões sobre o experimento e conceitos</p>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="playerName">👤 Digite seu nome para começar</label>
+                <input type="text" id="playerName" placeholder="Seu nome aqui..." maxlength="25" autocomplete="off">
+            </div>
+
+            <button class="btn btn-glow" id="startBtn" disabled onclick="startQuiz()">
+                🚀 Iniciar Quiz
+            </button>
+        </div>
+
+        <!-- ========== QUIZ SCREEN ========== -->
+        <div class="screen" id="quizScreen">
+            <div class="quiz-header">
+                <div class="quiz-progress-info">
+                    <span class="question-counter" id="questionCounter">1 / 15</span>
+                    <span class="score-display" id="scoreDisplay">⭐ 0 pts</span>
+                    <span class="streak-indicator hidden" id="streakIndicator">🔥 x0</span>
+                </div>
+                <div class="timer-container">
+                    <div class="timer-ring">
+                        <svg viewBox="0 0 48 48">
+                            <circle class="ring-bg" cx="24" cy="24" r="22"/>
+                            <circle class="ring-progress" id="timerRing" cx="24" cy="24" r="22"/>
+                        </svg>
+                        <span class="timer-text" id="timerText">15</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="progress-bar-container">
+                <div class="progress-bar" id="progressBar" style="width: 0%"></div>
+            </div>
+
+            <div class="question-text" id="questionText">
+                <span class="q-number" id="qNumber">Questão 1</span>
+                <span id="qText"></span>
+            </div>
+
+            <div class="options-grid" id="optionsGrid"></div>
+
+            <div class="feedback-bar" id="feedbackBar"></div>
+
+            <button class="btn btn-next hidden" id="nextBtn" onclick="nextQuestion()">
+                Próxima Questão →
+            </button>
+        </div>
+
+        <!-- ========== RESULT SCREEN ========== -->
+        <div class="screen" id="resultScreen">
+            <div class="result-icon" id="resultIcon">🏆</div>
+            <h2 class="result-title" id="resultTitle">Incrível!</h2>
+            <p class="result-subtitle" id="resultSubtitle">Você concluiu o quiz</p>
+
+            <div class="score-circle">
+                <svg viewBox="0 0 160 160">
+                    <circle class="circle-bg" cx="80" cy="80" r="70"/>
+                    <circle class="circle-fill" id="scoreFill" cx="80" cy="80" r="70"/>
+                </svg>
+                <div class="score-value">
+                    <span id="finalScore">0</span>
+                    <small>pontos</small>
+                </div>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">✅</div>
+                    <div class="stat-value" id="statCorrect">0</div>
+                    <div class="stat-label">Corretas</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">❌</div>
+                    <div class="stat-value" id="statWrong">0</div>
+                    <div class="stat-label">Erradas</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">🔥</div>
+                    <div class="stat-value" id="statStreak">0</div>
+                    <div class="stat-label">Melhor Sequência</div>
+                </div>
+            </div>
+
+            <div class="rank-badge">
+                <div class="rank-label">🎖️ Sua Classificação</div>
+                <div class="rank-name" id="rankName">—</div>
+                <div class="rank-desc" id="rankDesc"></div>
+            </div>
+
+            <div class="ranking-section">
+                <h3>🏅 Ranking Geral</h3>
+                <table class="ranking-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Jogador</th>
+                            <th>Pontos</th>
+                        </tr>
+                    </thead>
+                    <tbody id="rankingBody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- ========== COMPLETED (ALREADY PLAYED) ========== -->
+        <div class="screen" id="completedScreen">
+            <div class="completed-screen">
+                <div class="lock-icon">🔒</div>
+                <h2>Quiz Já Realizado</h2>
+                <p style="margin-bottom: 20px;">Você já completou este quiz e não pode refazê-lo.</p>
+                <p style="margin-bottom: 30px; color: #aaaacc;">Seu resultado foi registrado no ranking. Boa sorte nos estudos! 🎓</p>
+
+                <div class="rank-badge">
+                    <div class="rank-label">Seu Resultado Registrado</div>
+                    <div class="rank-name" id="completedScore">—</div>
+                    <div class="rank-desc" id="completedRank"></div>
+                </div>
+
+                <div class="ranking-section">
+                    <h3>🏅 Ranking Geral</h3>
+                    <table class="ranking-table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Jogador</th>
+                                <th>Pontos</th>
+                            </tr>
+                        </thead>
+                        <tbody id="completedRankingBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="confetti-container" id="confettiContainer"></div>
+
+<script>
+// =============================================
+//  QUIZ DATA — 15 QUESTÕES
+// =============================================
+const questions = [
+    {
+        question: "Qual é o principal objetivo do experimento de ondas com cordas vocais?",
+        options: [
+            "Medir a velocidade do som no ar",
+            "Visualizar os modos de vibração de uma membrana provocados pela voz",
+            "Calcular a frequência fundamental de um instrumento musical",
+            "Determinar o comprimento de onda da luz do laser"
+        ],
+        correct: 1,
+        time: 12,
+        explanation: "O experimento permite visualizar como a membrana vibra quando estimulada pela voz."
+    },
+    {
+        question: "O que é colado sobre a membrana elástica para que o experimento funcione?",
+        options: [
+            "Um sensor piezoelétrico",
+            "Um pequeno pedaço de espelho",
+            "Um microfone de contato",
+            "Um cristal de quartzo"
+        ],
+        correct: 1,
+        time: 10,
+        explanation: "Um pequeno espelho é colado na membrana para refletir a luz do laser."
+    },
+    {
+        question: "O que são Figuras de Lissajous?",
+        options: [
+            "Figuras formadas pela interferência de ondas sonoras no ar",
+            "Padrões geométricos criados por partículas em suspensão",
+            "Curvas paramétricas geradas pela composição de duas oscilações harmônicas perpendiculares",
+            "Imagens holográficas produzidas por lasers de alta potência"
+        ],
+        correct: 2,
+        time: 15,
+        explanation: "São curvas geradas pela superposição de dois movimentos oscilatórios em direções perpendiculares."
+    },
+    {
+        question: "Qual material pode ser usado como membrana elástica neste experimento?",
+        options: [
+            "Papel alumínio",
+            "Pedaço de balão de borracha ou luva de látex",
+            "Plástico filme de cozinha",
+            "Tecido de algodão fino"
+        ],
+        correct: 1,
+        time: 10,
+        explanation: "Balão de borracha ou luva de látex são ideais por sua elasticidade."
+    },
+    {
+        question: "Qual é a função do laser pointer no experimento?",
+        options: [
+            "Aquecer a membrana para facilitar a vibração",
+            "Emitir um feixe de luz que, refletido no espelho, projeta os padrões de vibração",
+            "Medir a distância entre o tubo e a parede",
+            "Gerar ondas eletromagnéticas que fazem a membrana vibrar"
+        ],
+        correct: 1,
+        time: 13,
+        explanation: "O laser incide no espelho colado na membrana e o reflexo projeta as vibrações na parede."
+    },
+    {
+        question: "O que acontece com a figura projetada na parede quando mudamos a frequência da voz?",
+        options: [
+            "A figura desaparece completamente",
+            "A cor do laser muda",
+            "A figura muda de forma, podendo gerar diferentes padrões",
+            "A figura permanece exatamente igual"
+        ],
+        correct: 2,
+        time: 12,
+        explanation: "Diferentes frequências provocam diferentes modos de vibração, alterando os padrões projetados."
+    },
+    {
+        question: "Qual conceito físico NÃO está diretamente relacionado a este experimento?",
+        options: [
+            "Oscilações de membranas",
+            "Figuras de Lissajous",
+            "Efeito Doppler",
+            "Reflexão da luz"
+        ],
+        correct: 2,
+        time: 12,
+        explanation: "O Efeito Doppler trata da variação de frequência por movimento relativo, não abordado diretamente aqui."
+    },
+    {
+        question: "Por que a membrana deve ser fina e elástica?",
+        options: [
+            "Para ser transparente ao laser",
+            "Para vibrar facilmente com as ondas sonoras da voz",
+            "Para resistir a altas temperaturas",
+            "Para absorver completamente o som"
+        ],
+        correct: 1,
+        time: 12,
+        explanation: "A membrana precisa vibrar facilmente para responder às pequenas variações de pressão do som."
+    },
+    {
+        question: "Em qual superfície a luz refletida pelo espelho é projetada para visualização?",
+        options: [
+            "Um detector digital",
+            "Uma tela de computador",
+            "Uma parede branca",
+            "Um prisma óptico"
+        ],
+        correct: 2,
+        time: 10,
+        explanation: "Uma parede branca funciona como tela de projeção para visualizar as figuras."
+    },
+    {
+        question: "O que são 'modos de vibração' de uma membrana?",
+        options: [
+            "As velocidades com que a membrana pode se mover",
+            "Os padrões específicos de vibração com frequências definidas que a membrana pode assumir",
+            "Os tipos de material que compõem a membrana",
+            "As cores que a membrana pode refletir"
+        ],
+        correct: 1,
+        time: 15,
+        explanation: "Modos de vibração são padrões estacionários com frequências naturais específicas."
+    },
+    {
+        question: "Qual fenômeno ondulátório fundamental permite que o som da voz faça a membrana vibrar?",
+        options: [
+            "Refração",
+            "Transferência de energia por ondas mecânicas (pressão sonora)",
+            "Difração",
+            "Polarização"
+        ],
+        correct: 1,
+        time: 13,
+        explanation: "O som é uma onda mecânica que transfere energia e faz a membrana oscilar."
+    },
+    {
+        question: "Duas oscilações perpendiculares com frequências iguais e defasagem de 90° geram qual Figura de Lissajous?",
+        options: [
+            "Uma linha reta",
+            "Um círculo",
+            "Um número 8",
+            "Uma espiral"
+        ],
+        correct: 1,
+        time: 13,
+        explanation: "Com mesma frequência e defasagem de π/2, obtemos uma elipse que se torna um círculo perfeito."
+    },
+    {
+        question: "Qual destes NÃO é um material listado para a montagem do experimento?",
+        options: [
+            "Ponteira laser",
+            "Osciloscópio digital",
+            "Fita adesiva",
+            "Balão de borracha"
+        ],
+        correct: 1,
+        time: 10,
+        explanation: "O osciloscópio não faz parte dos materiais deste experimento."
+    },
+    {
+        question: "Se duas oscilações perpendiculares têm razão de frequência 1:2, a Figura de Lissajous resultante terá qual formato aproximado?",
+        options: [
+            "Um círculo perfeito",
+            "Uma figura em formato de 8 (laço)",
+            "Um quadrado",
+            "Um triângulo"
+        ],
+        correct: 1,
+        time: 14,
+        explanation: "A razão 1:2 gera uma curva com aparência de 8 ou laço, dependendo da fase."
+    },
+    {
+        question: "Por que o tubo/cano é utilizado no experimento?",
+        options: [
+            "Para amplificar o laser",
+            "Para direcionar e canalizar o som da voz até a membrana",
+            "Para filtrar frequências indesejadas",
+            "Para manter o espelho alinhado mecanicamente"
+        ],
+        correct: 1,
+        time: 12,
+        explanation: "O tubo canaliza as ondas sonoras diretamente para a membrana, melhorando a resposta."
+    }
+];
+
+// =============================================
+//  GAME STATE
+// =============================================
+let currentQuestion = 0;
+let score = 0;
+let correctCount = 0;
+let wrongCount = 0;
+let streak = 0;
+let maxStreak = 0;
+let timerInterval = null;
+let timeLeft = 0;
+let playerName = "";
+let answered = false;
+
+// =============================================
+//  INITIALIZATION
+// =============================================
+window.addEventListener('DOMContentLoaded', () => {
+    createParticles();
+    checkIfAlreadyPlayed();
+
+    const nameInput = document.getElementById('playerName');
+    const startBtn = document.getElementById('startBtn');
+
+    nameInput.addEventListener('input', () => {
+        startBtn.disabled = nameInput.value.trim().length < 2;
+    });
+
+    nameInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' && !startBtn.disabled) {
+            startQuiz();
+        }
+    });
+});
+
+function createParticles() {
+    const container = document.getElementById('particles');
+    for (let i = 0; i < 30; i++) {
+        const p = document.createElement('div');
+        p.className = 'particle';
+        p.style.left = Math.random() * 100 + '%';
+        p.style.animationDuration = (8 + Math.random() * 12) + 's';
+        p.style.animationDelay = Math.random() * 10 + 's';
+        p.style.width = p.style.height = (2 + Math.random() * 3) + 'px';
+        const colors = ['#6c5ce7', '#00cec9', '#fd79a8', '#fdcb6e', '#55efc4'];
+        p.style.background = colors[Math.floor(Math.random() * colors.length)];
+        container.appendChild(p);
+    }
+}
+
+// =============================================
+//  REPLAY PREVENTION
+// =============================================
+function checkIfAlreadyPlayed() {
+    const played = localStorage.getItem('quiz_ondas_played');
+    if (played) {
+        const data = JSON.parse(played);
+        showScreen('completedScreen');
+        document.getElementById('completedScore').textContent = data.score + ' pontos';
+        document.getElementById('completedRank').textContent = getRankInfo(data.score).name;
+        renderRanking('completedRankingBody', data.playerName);
+    }
+}
+
+function markAsPlayed(name, finalScore) {
+    localStorage.setItem('quiz_ondas_played', JSON.stringify({
+        playerName: name,
+        score: finalScore,
+        date: new Date().toISOString()
+    }));
+}
+
+// =============================================
+//  RANKING SYSTEM (localStorage)
+// =============================================
+function saveToRanking(name, finalScore) {
+    let ranking = JSON.parse(localStorage.getItem('quiz_ondas_ranking') || '[]');
+    // Remove entrada antiga do mesmo nome
+    ranking = ranking.filter(r => r.name.toLowerCase() !== name.toLowerCase());
+    ranking.push({ name, score: finalScore, date: new Date().toISOString() });
+    ranking.sort((a, b) => b.score - a.score);
+    ranking = ranking.slice(0, 50); // Top 50
+    localStorage.setItem('quiz_ondas_ranking', JSON.stringify(ranking));
+}
+
+function renderRanking(tbodyId, highlightName) {
+    const ranking = JSON.parse(localStorage.getItem('quiz_ondas_ranking') || '[]');
+    const tbody = document.getElementById(tbodyId);
+    tbody.innerHTML = '';
+
+    if (ranking.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="3" style="text-align:center;color:#666;padding:20px;">Nenhum resultado ainda</td></tr>';
+        return;
+    }
+
+    const medals = ['🥇', '🥈', '🥉'];
+    const avatarColors = ['#6c5ce7', '#00cec9', '#fd79a8', '#e17055', '#00b894', '#fdcb6e', '#a29bfe', '#fab1a0'];
+
+    ranking.forEach((entry, i) => {
+        const tr = document.createElement('tr');
+        if (highlightName && entry.name.toLowerCase() === highlightName.toLowerCase()) {
+            tr.classList.add('current-user');
+        }
+
+        const pos = i < 3 ? `<span class="rank-medal">${medals[i]}</span>` : (i + 1);
+        const colorIdx = entry.name.charCodeAt(0) % avatarColors.length;
+        const initial = entry.name.charAt(0).toUpperCase();
+
+        tr.innerHTML = `
+            <td>${pos}</td>
+            <td>
+                <div class="player-name-cell">
+                    <div class="player-avatar" style="background:${avatarColors[colorIdx]}">${initial}</div>
+                    ${entry.name}
+                </div>
+            </td>
+            <td>${entry.score}</td>
+        `;
+        tbody.appendChild(tr);
+    });
+}
+
+// =============================================
+//  QUIZ FLOW
+// =============================================
+function showScreen(screenId) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById(screenId).classList.add('active');
+}
+
+function startQuiz() {
+    playerName = document.getElementById('playerName').value.trim();
+    if (playerName.length < 2) return;
+
+    // Shuffle options but keep track of correct answer
+    questions.forEach(q => {
+        const correctText = q.options[q.correct];
+        // Fisher-Yates shuffle
+        for (let i = q.options.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [q.options[i], q.options[j]] = [q.options[j], q.options[i]];
+        }
+        q.correct = q.options.indexOf(correctText);
+    });
+
+    currentQuestion = 0;
+    score = 0;
+    correctCount = 0;
+    wrongCount = 0;
+    streak = 0;
+    maxStreak = 0;
+
+    showScreen('quizScreen');
+    loadQuestion();
+}
+
+function loadQuestion() {
+    answered = false;
+    const q = questions[currentQuestion];
+
+    document.getElementById('questionCounter').textContent = `${currentQuestion + 1} / ${questions.length}`;
+    document.getElementById('scoreDisplay').textContent = `⭐ ${score} pts`;
+    document.getElementById('qNumber').textContent = `Questão ${currentQuestion + 1}`;
+    document.getElementById('qText').textContent = q.question;
+    document.getElementById('progressBar').style.width = ((currentQuestion) / questions.length * 100) + '%';
+
+    const streakEl = document.getElementById('streakIndicator');
+    if (streak >= 2) {
+        streakEl.classList.remove('hidden');
+        streakEl.textContent = `🔥 x${streak}`;
+    } else {
+        streakEl.classList.add('hidden');
+    }
+
+    // Reset feedback
+    const fb = document.getElementById('feedbackBar');
+    fb.className = 'feedback-bar';
+    fb.style.display = 'none';
+    document.getElementById('nextBtn').classList.add('hidden');
+
+    // Render options
+    const grid = document.getElementById('optionsGrid');
+    grid.innerHTML = '';
+    const letters = ['A', 'B', 'C', 'D'];
+
+    q.options.forEach((opt, i) => {
+        const btn = document.createElement('button');
+        btn.className = 'option-btn';
+        btn.innerHTML = `<span class="option-letter">${letters[i]}</span><span>${opt}</span>`;
+        btn.addEventListener('click', () => selectAnswer(i));
+        grid.appendChild(btn);
+    });
+
+    // Start timer
+    startTimer(q.time);
+}
+
+function startTimer(seconds) {
+    clearInterval(timerInterval);
+    timeLeft = seconds;
+    const totalTime = seconds;
+    const circumference = 2 * Math.PI * 22; // r=22
+
+    const ring = document.getElementById('timerRing');
+    const text = document.getElementById('timerText');
+
+    ring.style.strokeDasharray = circumference;
+    ring.style.strokeDashoffset = 0;
+    ring.className = 'ring-progress';
+    text.textContent = timeLeft;
+
+    timerInterval = setInterval(() => {
+        timeLeft--;
+        text.textContent = Math.max(timeLeft, 0);
+
+        const progress = 1 - (timeLeft / totalTime);
+        ring.style.strokeDashoffset = circumference * progress;
+
+        if (timeLeft <= 3) {
+            ring.classList.remove('warning');
+            ring.classList.add('danger');
+        } else if (timeLeft <= 5) {
+            ring.classList.add('warning');
+        }
+
+        if (timeLeft <= 0) {
+            clearInterval(timerInterval);
+            handleTimeout();
+        }
+    }, 1000);
+}
+
+function handleTimeout() {
+    if (answered) return;
+    answered = true;
+
+    const q = questions[currentQuestion];
+    const buttons = document.querySelectorAll('.option-btn');
+
+    buttons.forEach((btn, i) => {
+        btn.classList.add('disabled');
+        if (i === q.correct) btn.classList.add('correct');
+    });
+
+    streak = 0;
+    wrongCount++;
+
+    const fb = document.getElementById('feedbackBar');
+    fb.className = 'feedback-bar timeout';
+    fb.innerHTML = `⏰ Tempo esgotado! A resposta era: <strong>${q.options[q.correct]}</strong><div class="answer-explanation">${q.explanation}</div>`;
+    fb.style.display = 'block';
+
+    showNextButton();
+}
+
+function selectAnswer(index) {
+    if (answered) return;
+    answered = true;
+    clearInterval(timerInterval);
+
+    const q = questions[currentQuestion];
+    const buttons = document.querySelectorAll('.option-btn');
+    const fb = document.getElementById('feedbackBar');
+
+    buttons.forEach((btn, i) => {
+        btn.classList.add('disabled');
+        if (i === q.correct) btn.classList.add('correct');
+    });
+
+    if (index === q.correct) {
+        // Correct
+        buttons[index].classList.add('correct');
+        streak++;
+        if (streak > maxStreak) maxStreak = streak;
+        correctCount++;
+
+        // Score: base + time bonus + streak bonus
+        const timeBonus = Math.round(timeLeft * 5);
+        const streakBonus = Math.min(streak - 1, 5) * 10;
+        const questionScore = 100 + timeBonus + streakBonus;
+        score += questionScore;
+
+        fb.className = 'feedback-bar correct';
+        let bonusText = `+${questionScore} pts (${timeBonus > 0 ? '+' + timeBonus + ' tempo' : ''}${streakBonus > 0 ? ' +' + streakBonus + ' sequência' : ''})`;
+        fb.innerHTML = `✅ Correto! ${bonusText}<div class="answer-explanation">${q.explanation}</div>`;
+    } else {
+        // Wrong
+        buttons[index].classList.add('wrong');
+        streak = 0;
+        wrongCount++;
+
+        fb.className = 'feedback-bar wrong';
+        fb.innerHTML = `❌ Errado! A resposta era: <strong>${q.options[q.correct]}</strong><div class="answer-explanation">${q.explanation}</div>`;
+    }
+
+    fb.style.display = 'block';
+    document.getElementById('scoreDisplay').textContent = `⭐ ${score} pts`;
+
+    const streakEl = document.getElementById('streakIndicator');
+    if (streak >= 2) {
+        streakEl.classList.remove('hidden');
+        streakEl.textContent = `🔥 x${streak}`;
+    } else {
+        streakEl.classList.add('hidden');
+    }
+
+    showNextButton();
+}
+
+function showNextButton() {
+    const btn = document.getElementById('nextBtn');
+    btn.classList.remove('hidden');
+
+    if (currentQuestion >= questions.length - 1) {
+        btn.textContent = '🏆 Ver Resultado';
+    } else {
+        btn.textContent = 'Próxima Questão →';
+    }
+}
+
+function nextQuestion() {
+    currentQuestion++;
+    if (currentQuestion >= questions.length) {
+        finishQuiz();
+    } else {
+        loadQuestion();
+    }
+}
+
+// =============================================
+//  FINISH & RESULTS
+// =============================================
+function finishQuiz() {
+    saveToRanking(playerName, score);
+    markAsPlayed(playerName, score);
+
+    showScreen('resultScreen');
+
+    const rank = getRankInfo(score);
+    const maxPossible = questions.length * 175; // rough max
+    const percentage = Math.min(Math.round((score / maxPossible) * 100), 100);
+
+    // Result icon & title
+    document.getElementById('resultIcon').textContent = rank.icon;
+    document.getElementById('resultTitle').textContent = `Parabéns, ${playerName}!`;
+    document.getElementById('resultSubtitle').textContent = `Você completou o quiz sobre Ondas & Cordas Vocais`;
+
+    // Score circle
+    document.getElementById('finalScore').textContent = score;
+    const fill = document.getElementById('scoreFill');
+    fill.style.stroke = rank.color;
+    setTimeout(() => {
+        const circumference = 2 * Math.PI * 70;
+        fill.style.strokeDashoffset = circumference * (1 - percentage / 100);
+    }, 300);
+
+    // Stats
+    document.getElementById('statCorrect').textContent = correctCount;
+    document.getElementById('statWrong').textContent = wrongCount;
+    document.getElementById('statStreak').textContent = maxStreak;
+
+    // Rank badge
+    document.getElementById('rankName').textContent = rank.name;
+    document.getElementById('rankDesc').textContent = rank.desc;
+
+    // Ranking table
+    renderRanking('rankingBody', playerName);
+
+    // Confetti for good scores
+    if (correctCount >= 10) {
+        launchConfetti();
+    }
+}
+
+function getRankInfo(s) {
+    const maxScore = questions.length * 175;
+    const pct = s / maxScore * 100;
+
+    if (pct >= 85) return { name: '🌟 Mestre das Ondas', icon: '👑', color: '#fdcb6e', desc: 'Domínio absoluto! Você é um gênio da Física!' };
+    if (pct >= 70) return { name: '🔬 Cientista Expert', icon: '🏆', color: '#00cec9', desc: 'Excelente! Conhecimento muito sólido!' };
+    if (pct >= 55) return { name: '📡 Físico Promissor', icon: '🥈', color: '#a29bfe', desc: 'Muito bom! Continue estudando!' };
+    if (pct >= 40) return { name: '📚 Estudante Dedicado', icon: '🥉', color: '#fd79a8', desc: 'Bom começo! Revise o conteúdo.' };
+    if (pct >= 25) return { name: '🔍 Aprendiz Curioso', icon: '📖', color: '#e17055', desc: 'Precisa estudar mais, mas não desista!' };
+    return { name: '🌱 Iniciante', icon: '💪', color: '#636e72', desc: 'Hora de abrir os livros! Você consegue!' };
+}
+
+// =============================================
+//  CONFETTI EFFECT
+// =============================================
+function launchConfetti() {
+    const container = document.getElementById('confettiContainer');
+    const colors = ['#6c5ce7', '#00cec9', '#fd79a8', '#fdcb6e', '#55efc4', '#a29bfe', '#fab1a0', '#ff6b6b'];
+
+    for (let i = 0; i < 80; i++) {
+        setTimeout(() => {
+            const piece = document.createElement('div');
+            piece.className = 'confetti-piece';
+            piece.style.left = Math.random() * 100 + '%';
+            piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+            piece.style.width = (6 + Math.random() * 8) + 'px';
+            piece.style.height = (6 + Math.random() * 8) + 'px';
+            piece.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+            piece.style.animationDuration = (2 + Math.random() * 3) + 's';
+            piece.style.animationDelay = '0s';
+            container.appendChild(piece);
+
+            setTimeout(() => piece.remove(), 5000);
+        }, i * 30);
+    }
+}
+
+</script>
+</body>
+</html>
