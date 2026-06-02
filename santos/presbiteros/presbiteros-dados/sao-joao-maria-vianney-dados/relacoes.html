@@ -1,4 +1,195 @@
-<div class="sl-painel" data-nome="relacoes">
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Relações — São João Maria Vianney</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        /* ===== MENU ===== */
+        .sl-wrap { max-width: 1200px; margin: 0 auto; padding: 40px 20px 0; font-family: Georgia, 'Times New Roman', serif; }
+        .sl-cabecalho { text-align: center; margin-bottom: 30px; }
+        .sl-santo-nome { font-family: Georgia, 'Times New Roman', serif; font-size: 42px; font-weight: 400; color: #2f2a22; letter-spacing: 2px; margin: 0 0 14px; line-height: 1.15; }
+        .sl-divisor { display: flex; align-items: center; justify-content: center; gap: 12px; margin: 12px 0; }
+        .sl-divisor-linha { display: inline-block; width: 60px; height: 1px; background: #b08a3c; opacity: 0.5; }
+        .sl-divisor-orn { color: #b08a3c; font-size: 10px; }
+        .sl-santo-titulo { margin: 8px 0 14px; color: #b08a3c; font-family: Georgia, 'Times New Roman', serif; font-size: 12px; letter-spacing: 4px; text-transform: uppercase; font-weight: 600; }
+        .sl-intro-frase { margin: 0; color: #6f6758; font-family: Georgia, 'Times New Roman', serif; font-size: 15px; font-style: italic; letter-spacing: 0.5px; }
+        .sl-nav { border-top: 1px solid #d8d1c2; border-bottom: 1px solid #d8d1c2; background: #faf8f3; padding: 4px 0; }
+        .sl-lista { display: grid; grid-template-columns: repeat(5, 1fr); list-style: none; padding: 0; margin: 0; }
+        .sl-lista li { margin: 0; padding: 0; list-style: none; }
+        .sl-lista li::marker, .sl-lista li::before { content: "" !important; display: none !important; }
+        .sl-lista li a { display: flex; align-items: center; justify-content: center; text-align: center; text-decoration: none; color: #6e6a60; font-family: Georgia, 'Times New Roman', serif; font-size: 12.5px; letter-spacing: 2px; text-transform: uppercase; padding: 18px 12px; position: relative; transition: all 0.3s ease; background: transparent; min-height: 56px; box-sizing: border-box; }
+        .sl-lista li a::before, .sl-lista li a span::before, .sl-lista li a span::after { content: none !important; display: none !important; }
+        .sl-lista .sl-nome { display: inline-block; line-height: 1.3; }
+        .sl-lista li a::after { content: ""; position: absolute; left: 50%; bottom: 8px; width: 0; height: 1px; background-color: #b08a3c; transition: width 0.3s ease; transform: translateX(-50%); }
+        .sl-lista li a:hover { color: #2f2a22; background-color: #f3eee3; }
+        .sl-lista li a:hover::after { width: 50%; }
+        .sl-lista li a.ativo { color: #2f2a22; background-color: #f5f0e5; }
+        .sl-lista li a.ativo::after { width: 50%; }
+        @media (max-width: 900px) { .sl-santo-nome { font-size: 32px; letter-spacing: 1px; } .sl-lista li a { font-size: 11px; letter-spacing: 1.5px; padding: 14px 8px; } }
+        @media (max-width: 600px) { .sl-wrap { padding: 24px 12px 0; } .sl-santo-nome { font-size: 24px; } .sl-santo-titulo { font-size: 10px; letter-spacing: 3px; } .sl-intro-frase { font-size: 13px; padding: 0 10px; } .sl-lista li a { font-size: 9.5px; letter-spacing: 1px; padding: 12px 4px; min-height: 50px; } }
+        @media (max-width: 420px) { .sl-lista li a { font-size: 8.5px; padding: 10px 3px; letter-spacing: 0.5px; } }
+
+        /* ===== CABEÇALHO DA PÁGINA ===== */
+        .sl-pagina-cabecalho { text-align: center; margin: 60px auto 50px; max-width: 800px; padding: 0 20px; }
+        .sl-pagina-numero { font-family: Georgia, 'Times New Roman', serif; font-size: 14px; letter-spacing: 6px; color: #b08a3c; text-transform: uppercase; margin: 0 0 20px; font-weight: 400; }
+        .sl-pagina-titulo { font-family: Georgia, 'Times New Roman', serif; font-size: 64px; font-weight: 400; color: #2f2a22; margin: 0 0 18px; line-height: 1.1; letter-spacing: 1px; }
+        .sl-pagina-subtitulo { font-family: Georgia, 'Times New Roman', serif; font-size: 18px; font-style: italic; color: #6f6758; margin: 0 0 24px; letter-spacing: 0.5px; }
+        .sl-pagina-ornamento { color: #b08a3c; font-size: 14px; letter-spacing: 4px; }
+        @media (max-width: 600px) {
+            .sl-pagina-cabecalho { margin: 40px auto 36px; }
+            .sl-pagina-titulo { font-size: 40px; }
+            .sl-pagina-subtitulo { font-size: 15px; }
+            .sl-pagina-numero { font-size: 12px; letter-spacing: 4px; }
+        }
+
+        /* ===== CONTEÚDO BASE ===== */
+        main { max-width: 800px; margin: 0 auto 40px; padding: 0 20px; }
+        .sl-secao { margin-bottom: 40px; }
+        .sl-secao-header { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; flex-wrap: wrap; }
+        .sl-secao-num { font-family: 'Libre Baskerville', serif; font-size: 24px; color: #b08a3c; font-weight: bold; }
+        .sl-secao-linha { flex-grow: 1; height: 1px; background: #eee; }
+        .sl-secao-titulo { font-family: 'Inter', sans-serif; font-size: 18px; text-transform: uppercase; letter-spacing: 2px; color: #333; }
+        .sl-bloco { margin-bottom: 25px; line-height: 1.8; color: #444; }
+        .sl-bloco h3 { font-family: 'Libre Baskerville', serif; color: #2c3e50; margin-bottom: 15px; }
+        .sl-bloco p { margin-bottom: 12px; }
+        .sl-bloco p:last-child { margin-bottom: 0; }
+        .sl-capitular { float: left; font-size: 60px; line-height: 50px; padding-top: 4px; padding-right: 8px; padding-left: 3px; font-family: 'Libre Baskerville', serif; color: #b08a3c; }
+        .sl-sep { text-align: center; margin: 40px 0; color: #b08a3c; font-size: 24px; }
+        .sl-citacao { margin: 40px auto; max-width: 600px; text-align: center; font-style: italic; background: #fdfaf3; padding: 30px; border-radius: 8px; border: 1px inset #f3eee3; }
+        .sl-citacao p { font-size: 1.2em; color: #2f2a22; margin-bottom: 10px; }
+        .sl-fonte { display: block; font-size: 0.8em; text-transform: uppercase; letter-spacing: 1px; color: #b08a3c; font-style: normal; }
+
+        /* ===== GRIDS ===== */
+        .sl-grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; margin-top: 14px; }
+        .sl-grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin-top: 14px; }
+
+        /* ===== CARDS ===== */
+        .sl-card { border: 1px solid #d9d9d9; border-radius: 12px; padding: 16px 18px; background: #fff; box-shadow: 0 1px 2px rgba(0,0,0,.03); }
+        .sl-card h4 { margin: 0 0 10px; font-size: 15px; font-family: 'Libre Baskerville', serif; color: #2c3e50; }
+        .sl-card p { margin: 0 0 8px; font-size: 14px; line-height: 1.6; color: #555; }
+        .sl-card p:last-child { margin-bottom: 0; }
+
+        .sl-card-destaque { border: 2px solid #b18b57; border-radius: 12px; padding: 18px 20px; background: #fdfaf5; margin-bottom: 14px; }
+        .sl-card-destaque h4 { margin: 0 0 10px; font-size: 16px; font-family: 'Libre Baskerville', serif; color: #2c3e50; }
+        .sl-card-destaque p { margin: 0 0 8px; font-size: 14px; line-height: 1.6; color: #555; }
+
+        /* ===== BADGES ===== */
+        .sl-badges { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+        .sl-badge { display: inline-block; padding: 4px 10px; border-radius: 999px; font-size: 11px; font-weight: 700; letter-spacing: .03em; text-transform: uppercase; font-family: 'Inter', sans-serif; }
+        .sl-badge-mestre   { background: #e8f0fe; color: #2457b8; }
+        .sl-badge-vigario  { background: #e7f7ea; color: #1d6b35; }
+        .sl-badge-mulher   { background: #fce8f3; color: #9d2466; }
+        .sl-badge-peregrino { background: #fff3db; color: #8a5a00; }
+        .sl-badge-paroquia { background: #f0e8fc; color: #5b2db8; }
+        .sl-badge-aliado   { background: #e7f7ea; color: #1d6b35; }
+        .sl-badge-opositor { background: #fde8e8; color: #a32020; }
+
+        /* ===== BLOCO RESUMO ===== */
+        .sl-bloco-resumo { border-left: 4px solid #b18b57; background: #faf7f2; padding: 16px 18px; border-radius: 8px; margin-bottom: 4px; }
+        .sl-bloco-resumo h3 { margin: 0 0 8px; font-family: 'Libre Baskerville', serif; color: #2c3e50; }
+        .sl-bloco-resumo p  { margin: 0 0 6px; font-size: 14px; line-height: 1.6; color: #555; }
+        .sl-bloco-resumo p:last-child { margin-bottom: 0; }
+
+        /* ===== ALERTAS ===== */
+        .sl-alerta { padding: 14px 16px; border-radius: 10px; background: #fff8e8; border: 1px solid #f1d58f; font-size: 14px; line-height: 1.6; margin-top: 12px; color: #444; }
+        .sl-alerta-info { padding: 14px 16px; border-radius: 10px; background: #f0f4ff; border: 1px solid #c5d3f5; font-size: 14px; line-height: 1.6; margin-top: 12px; color: #444; }
+
+        /* ===== FICHA ===== */
+        .sl-ficha { display: grid; gap: 8px; margin-top: 8px; }
+        .sl-ficha-item { padding: 10px 14px; border-radius: 10px; background: #f8f8f8; border: 1px solid #ececec; font-size: 14px; line-height: 1.6; color: #444; }
+        .sl-ficha-item strong { display: block; margin-bottom: 4px; font-size: 12px; text-transform: uppercase; letter-spacing: .03em; color: #888; font-family: 'Inter', sans-serif; }
+
+        /* ===== PERFIL ===== */
+        .sl-perfil { background: linear-gradient(180deg, #fdfaf3 0%, #fff 100%); border: 1px solid #ece4d3; border-radius: 14px; padding: 22px 24px; margin: 16px 0; }
+        .sl-perfil-topo { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; margin-bottom: 14px; padding-bottom: 12px; border-bottom: 1px solid #ece4d3; }
+        .sl-perfil-nome { font-family: 'Libre Baskerville', serif; font-size: 20px; color: #2f2a22; margin: 0; }
+        .sl-perfil-papel { font-family: 'Inter', sans-serif; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: #b08a3c; }
+        .sl-perfil-corpo p { margin: 0 0 10px; font-size: 14.5px; line-height: 1.7; color: #444; }
+        .sl-perfil-corpo p:last-child { margin-bottom: 0; }
+
+        /* ===== TABELA ===== */
+        .sl-mini-tabela { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 14px; }
+        .sl-mini-tabela th, .sl-mini-tabela td { border: 1px solid #e2e2e2; padding: 10px 14px; text-align: left; vertical-align: top; }
+        .sl-mini-tabela th { background: #f7f7f7; font-size: 13px; font-family: 'Inter', sans-serif; }
+
+        /* ===== LISTA ===== */
+        .sl-lista-curta { margin: 8px 0 0; padding-left: 18px; }
+        .sl-lista-curta li { margin: 6px 0; font-size: 14px; line-height: 1.6; color: #444; }
+
+        /* ===== MÉTRICAS ===== */
+        .sl-topo-metrica { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin-top: 14px; }
+        .sl-metrica { border: 1px solid #e3e3e3; border-radius: 12px; padding: 16px; background: #fff; text-align: center; }
+        .sl-metrica-num { font-size: 26px; font-weight: 800; line-height: 1; margin-bottom: 6px; color: #2f2a22; font-family: 'Libre Baskerville', serif; }
+        .sl-metrica-leg { font-size: 13px; color: #555; line-height: 1.5; }
+
+        /* ===== LINHA DO TEMPO ===== */
+        .sl-linha-tempo { display: grid; gap: 10px; margin-top: 14px; }
+        .sl-passo { display: grid; grid-template-columns: 40px 1fr; gap: 12px; align-items: start; }
+        .sl-passo-num { width: 40px; height: 40px; border-radius: 50%; background: #222; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 15px; flex-shrink: 0; font-family: 'Inter', sans-serif; }
+        .sl-passo-corpo { background: #fafafa; border: 1px solid #ececec; border-radius: 10px; padding: 12px 14px; }
+        .sl-passo-corpo strong { display: block; margin-bottom: 4px; color: #2c3e50; font-family: 'Libre Baskerville', serif; }
+        .sl-passo-corpo p { margin: 0; font-size: 14px; line-height: 1.6; color: #555; }
+
+        /* ===== DIVIDER LEVE ===== */
+        .sl-divider-leve { border: none; border-top: 1px solid #ececec; margin: 14px 0; }
+
+        /* ===== RESPONSIVO ===== */
+        @media (max-width: 600px) {
+            .sl-secao-titulo { font-size: 15px; letter-spacing: 1.5px; }
+            .sl-citacao { padding: 20px 16px; }
+            .sl-perfil { padding: 16px 18px; }
+            .sl-perfil-nome { font-size: 18px; }
+            .sl-passo { grid-template-columns: 1fr; }
+            .sl-passo-num { margin-bottom: 6px; }
+            .sl-mini-tabela th, .sl-mini-tabela td { padding: 8px 10px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- O menu é injetado automaticamente pelo JS abaixo -->
+<script src="sao-joao-maria-vianney.js"></script>
+
+<!-- ===== CABEÇALHO DA PÁGINA ===== -->
+<header class="sl-pagina-cabecalho">
+    <p class="sl-pagina-numero">IV</p>
+    <h1 class="sl-pagina-titulo">Relações</h1>
+    <p class="sl-pagina-subtitulo">Mestres, Vigários, Mulheres e Peregrinos</p>
+    <div class="sl-pagina-ornamento">✦</div>
+</header>
+
+<main>
+
+  <!-- ===== INTRODUÇÃO GERAL ===== -->
+  <div class="sl-bloco">
+    <div class="sl-bloco-resumo">
+      <h3>Como ler esta página</h3>
+      <p>A vida de João Vianney não foi vivida em isolamento. Foi atravessada por relações específicas — algumas formadoras, outras dolorosas, todas documentadas em algum grau. Esta página mapeia as cinco categorias principais de pessoas que cruzaram a sua vida: o mestre que o formou, os vigários que o acompanharam em Ars, as mulheres que tornaram a obra possível, os peregrinos célebres que vieram encontrá-lo e os 230 paroquianos que ele transformou ao longo de quarenta anos.</p>
+    </div>
+
+    <div class="sl-topo-metrica">
+      <div class="sl-metrica">
+        <div class="sl-metrica-num">15</div>
+        <div class="sl-metrica-leg">Anos de formação ao lado de Père Balley em Écully</div>
+      </div>
+      <div class="sl-metrica">
+        <div class="sl-metrica-num">40</div>
+        <div class="sl-metrica-leg">Anos de ministério paroquial em Ars (1818–1859)</div>
+      </div>
+      <div class="sl-metrica">
+        <div class="sl-metrica-num">230</div>
+        <div class="sl-metrica-leg">Habitantes de Ars quando Vianney chegou em 1818</div>
+      </div>
+      <div class="sl-metrica">
+        <div class="sl-metrica-num">100k+</div>
+        <div class="sl-metrica-leg">Peregrinos anuais nos anos de auge do confessionário</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sl-sep">· · ·</div>
 
   <!-- 01 · PÈRE BALLEY -->
   <div class="sl-secao">
@@ -6,6 +197,33 @@
       <span class="sl-secao-num">01</span>
       <div class="sl-secao-linha"></div>
       <span class="sl-secao-titulo">Père Balley — O Pai Espiritual</span>
+    </div>
+
+    <div class="sl-bloco">
+      <div class="sl-perfil">
+        <div class="sl-badges">
+          <span class="sl-badge sl-badge-mestre">Mestre</span>
+          <span class="sl-badge sl-badge-aliado">Pai espiritual</span>
+        </div>
+        <div class="sl-perfil-topo">
+          <h4 class="sl-perfil-nome">Charles Balley</h4>
+          <span class="sl-perfil-papel">1751 – 1817 · Pároco de Écully</span>
+        </div>
+        <div class="sl-ficha">
+          <div class="sl-ficha-item">
+            <strong>Período de convivência</strong>
+            1802 – 1817 (15 anos, de aluno a vigário)
+          </div>
+          <div class="sl-ficha-item">
+            <strong>Formação anterior</strong>
+            Sobrevivente da perseguição revolucionária, padre clandestino durante o Terror
+          </div>
+          <div class="sl-ficha-item">
+            <strong>Papel na vida de Vianney</strong>
+            Único responsável pela formação que tornou possível a ordenação — incluindo o latim, a teologia e a vida espiritual
+          </div>
+        </div>
+      </div>
     </div>
 
     <div class="sl-bloco">
@@ -18,20 +236,70 @@
     <div class="sl-bloco">
       <h3>A natureza do vínculo — além do pedagógico</h3>
       <p>A relação entre Balley e João durou quinze anos — da primeira comunhão em 1799 até a morte de Balley em dezembro de 1817. Nesse período, João viveu grande parte do tempo em Écully, primeiro como aluno, depois como vigário. A proximidade era diária, e a observação era mútua.</p>
-      <p>Balley via em João algo que crescia — não linearmente, não sem recuos, mas com a direção constante de quem está sendo formado por uma força maior do que a vontade própria. Via o jovem que chorava de frustração sobre textos em latim que não conseguia processar e que voltava no dia seguinte com a mesma disposição. Via o candidato que havia reprovado no seminário e que não havia revisado a certeza sobre a vocação. Via, nos anos de vigariato em Écully, o padre recém-ordenado que celebrava a missa com uma intensidade que os fiéis notavam sem conseguir nomear.</p>
-      <p>O vínculo tinha, portanto, a estrutura de uma paternidade espiritual no sentido mais completo do termo: não apenas transmissão de conhecimento, mas transmissão de forma de ser. Balley não ensinou João a ser padre da mesma maneira que um professor ensina uma disciplina. Mostrou-lhe, pela observação direta e prolongada, o que um padre é — e essa mostração foi mais formativa do que qualquer currículo seminarístico poderia ter sido.</p>
+
+      <div class="sl-grid-3">
+        <div class="sl-card">
+          <h4>O aluno em frustração</h4>
+          <p>Via o jovem que chorava sobre textos em latim que não conseguia processar — e que voltava no dia seguinte com a mesma disposição. A persistência diante do fracasso era o que Balley observava.</p>
+        </div>
+        <div class="sl-card">
+          <h4>O candidato reprovado</h4>
+          <p>Via o candidato que havia sido reprovado no seminário e que não havia revisado a certeza sobre a vocação. A reprovação não havia produzido dúvida — apenas redobrado o pedido.</p>
+        </div>
+        <div class="sl-card">
+          <h4>O padre recém-ordenado</h4>
+          <p>Via, nos anos de vigariato em Écully, o padre jovem que celebrava a missa com uma intensidade que os fiéis notavam sem conseguir nomear. Era a confirmação do que havia apostado.</p>
+        </div>
+      </div>
+
+      <p style="margin-top: 16px;">O vínculo tinha, portanto, a estrutura de uma paternidade espiritual no sentido mais completo do termo: não apenas transmissão de conhecimento, mas transmissão de forma de ser. Balley não ensinou João a ser padre da mesma maneira que um professor ensina uma disciplina. Mostrou-lhe, pela observação direta e prolongada, o que um padre é — e essa mostração foi mais formativa do que qualquer currículo seminarístico poderia ter sido.</p>
     </div>
 
     <div class="sl-bloco">
       <h3>O luto — o que o silêncio revela</h3>
       <p>Charles Balley morreu em dezembro de 1817, com sessenta e seis anos. João estava ao seu lado nos últimos dias. A morte foi a primeira grande perda da vida adulta de Vianney — e o modo como ele a processou é revelador precisamente porque não há muito a revelar: João Vianney quase não falava sobre Balley depois da morte.</p>
       <p>Não era esquecimento. As referências que sobreviveram nos registros dos vigários e nos relatos dos peregrinos que conversaram com Vianney ao longo dos quarenta anos de Ars são suficientemente consistentes para mostrar que Balley estava presente na memória — invocado às vezes na gratidão, mencionado quando se falava dos que o haviam formado, lembrado quando aparecia alguma situação pastoral que evocava algo que havia visto o velho padre de Écully fazer. Mas a profundidade do vínculo não aparecia nas palavras. Aparecia no silêncio sobre ele.</p>
+
+      <div class="sl-alerta-info">
+        <strong>O detalhe que os biógrafos guardaram:</strong> após a morte de Balley, Vianney conservou consigo o cilício e os instrumentos de penitência do velho pároco — e os usou pelo resto da vida. O silêncio não era distância. Era continuidade.
+      </div>
     </div>
 
     <div class="sl-bloco">
       <h3>O quanto Balley moldou o método pastoral</h3>
       <p>Quando se examina o método pastoral de João Vianney em Ars — a maneira como pregava, como ouvia as confissões, como tratava os pobres, como administrava o tempo e o dinheiro da paróquia — e se compara com o que os relatos preservaram sobre o método de Balley em Écully, as correspondências são numerosas demais para serem coincidência.</p>
-      <p>A celebração da missa com uma lentidão que excedia o rubricismo convencional: Balley celebrava assim, e João observou por anos antes de celebrar ele mesmo. A confissão como serviço de misericórdia e não como tribunal de punição — numa época em que o rigorismo jansenizante ainda influenciava muitos confessores: Balley praticava essa misericórdia, e João a aprendeu antes de ter vocabulário teológico para justificá-la. A austeridade pessoal vivida sem ostentação, sem que o ascetismo do padre fosse usado como instrumento de pressão sobre os fiéis: Balley era assim, e João tornou-se assim.</p>
+
+      <table class="sl-mini-tabela">
+        <thead>
+          <tr>
+            <th>Traço pastoral</th>
+            <th>Em Balley (Écully)</th>
+            <th>Em Vianney (Ars)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Celebração da missa</td>
+            <td>Lentidão e absorção que excediam o rubricismo da época</td>
+            <td>O mesmo padrão — observado por testemunhas em Ars por quarenta anos</td>
+          </tr>
+          <tr>
+            <td>Confissão</td>
+            <td>Misericórdia em contraste com o rigorismo jansenizante</td>
+            <td>Sistematização da mesma misericórdia, com escala muito maior</td>
+          </tr>
+          <tr>
+            <td>Austeridade pessoal</td>
+            <td>Vivida sem ostentação, sem peso sobre os fiéis</td>
+            <td>Intensificada, mas mantendo o mesmo princípio de discrição</td>
+          </tr>
+          <tr>
+            <td>Trato com os pobres</td>
+            <td>Atenção pessoal direta, sem mediação burocrática</td>
+            <td>Princípio central da Providence e do orçamento paroquial</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 
@@ -46,28 +314,79 @@
     </div>
 
     <div class="sl-bloco">
-      <h3>O problema dos vigários — e por que alguns ficavam</h3>
-      <p>À medida que a fama de Ars cresceu ao longo da década de 1820 e se tornou fenômeno nacional na década de 1830, a diocese de Belley — à qual Ars pertencia — designou vigários para auxiliar João Vianney no ministério que havia se expandido muito além das capacidades de um único padre. A designação era necessária. A convivência era, segundo os registros disponíveis, nem sempre simples.</p>
-      <p>Vianney não era fácil de assistir. Não porque fosse áspero ou autoritário — os que o conheceram são unânimes em descrever a gentileza do trato pessoal. Era difícil de assistir porque o ritmo que impunha a si mesmo era humanamente insustentável para quem não compartilhasse da mesma urgência pastoral e da mesma resistência física excepcional.</p>
+      <div class="sl-bloco-resumo">
+        <h3>O problema dos vigários — e por que alguns ficavam</h3>
+        <p>À medida que a fama de Ars cresceu ao longo da década de 1820 e se tornou fenômeno nacional na década de 1830, a diocese de Belley — à qual Ars pertencia — designou vigários para auxiliar João Vianney no ministério que havia se expandido muito além das capacidades de um único padre. A designação era necessária. A convivência era, segundo os registros disponíveis, nem sempre simples.</p>
+        <p>Vianney não era fácil de assistir. Não porque fosse áspero ou autoritário — os que o conheceram são unânimes em descrever a gentileza do trato pessoal. Era difícil de assistir porque o ritmo que impunha a si mesmo era humanamente insustentável para quem não compartilhasse da mesma urgência pastoral e da mesma resistência física excepcional.</p>
+      </div>
     </div>
 
     <div class="sl-bloco">
       <h3>Père Toccanier — o cronista de Ars</h3>
+
+      <div class="sl-perfil">
+        <div class="sl-badges">
+          <span class="sl-badge sl-badge-vigario">Vigário</span>
+          <span class="sl-badge sl-badge-aliado">Cronista</span>
+        </div>
+        <div class="sl-perfil-topo">
+          <h4 class="sl-perfil-nome">Père Toccanier</h4>
+          <span class="sl-perfil-papel">Vigário em Ars · 1855 – 1859</span>
+        </div>
+        <div class="sl-perfil-corpo">
+          <p>Chegou a Ars quando Vianney tinha 69 anos e estava nos últimos quatro anos de vida. Não viu a transformação inicial nem a hostilidade dos primeiros anos — chegou quando a paróquia já era fenômeno nacional. Mas viu o que mais importava para a posteridade: o regime cotidiano de um homem visivelmente exausto que recebia centenas de penitentes por semana e que não cedia.</p>
+        </div>
+      </div>
+
       <p>Entre todos os vigários que passaram por Ars, Père Alfred Monnin e Père Toccanier são os que deixaram registros mais substanciais — e Toccanier, em particular, é a fonte primária para uma parcela significativa do que se sabe sobre os anos finais do ministério de Vianney.</p>
-      <p>Toccanier chegou a Ars em 1855, quando Vianney tinha sessenta e nove anos e estava nos últimos quatro anos de vida. Havia chegado tarde para os episódios mais dramáticos da história da paróquia — a transformação inicial, os primeiros anos de hostilidade, o florescimento da Providence na sua fase mais intensa. Mas chegou no momento em que o Cura, já exausto e visivelmente próximo do fim, ainda recebia centenas de penitentes por semana e ainda celebrava a missa com a mesma intensidade que havia caracterizado toda a vida.</p>
-      <p>O diário que Toccanier manteve durante esses anos é um documento histórico de primeira ordem — não porque seja literatura, mas porque é observação. Toccanier tinha o hábito de registrar o que via com o mínimo de interpretação possível: o que o Cura disse, em que circunstâncias, para quem, com qual efeito visível. Os episódios do combate espiritual que a Aba 4 detalha foram em grande parte registrados por ele. O estado físico de Vianney no confessionário — o calor, os desmaios, as recusas de descanso — está documentado nas suas páginas.</p>
+
+      <p>O diário que Toccanier manteve durante esses anos é um documento histórico de primeira ordem — não porque seja literatura, mas porque é observação. Toccanier tinha o hábito de registrar o que via com o mínimo de interpretação possível: o que o Cura disse, em que circunstâncias, para quem, com qual efeito visível. Os episódios do combate espiritual foram em grande parte registrados por ele. O estado físico de Vianney no confessionário — o calor, os desmaios, as recusas de descanso — está documentado nas suas páginas.</p>
+
+      <div class="sl-grid-2">
+        <div class="sl-card">
+          <h4>O que Toccanier registrou bem</h4>
+          <p>O combate espiritual noturno, os episódios de provisão na Providence, os diálogos do confessionário que penitentes consentiram em compartilhar, o estado físico do Cura nos últimos anos, as últimas semanas antes da morte.</p>
+        </div>
+        <div class="sl-card">
+          <h4>O que o método dele preserva</h4>
+          <p>Não interpretava — descrevia. Datas, horas, presentes, palavras exatas sempre que conseguia. É o oposto da hagiografia edificante: é o registro de um observador que sabia que estava diante de algo que o futuro precisaria reconstruir.</p>
+        </div>
+      </div>
     </div>
 
     <div class="sl-bloco">
       <h3>Père Raymond — o confessor do confessor</h3>
-      <p>Há um detalhe da vida de João Vianney que as hagiografias populares raramente enfatizam com a clareza que merece: ele tinha um confessor. O homem que ouvia as confissões de dezenas de milhares de pessoas ao longo de quarenta anos ia ele mesmo à confissão regularmente — e o padre que o ouvia por décadas foi Père Raymond.</p>
-      <p>A figura de Raymond é elusiva na documentação disponível — menos presente nos registros do que Toccanier, menos citado pelos biógrafos, em grande parte porque a natureza do seu papel exigia discrição que Toccanier, como cronista, não precisava manter. O que se sabe é que a relação durou anos, que Vianney a valorizava de maneira que os vigários observavam, e que havia uma confiança nessa relação que não existia da mesma forma com mais ninguém em Ars.</p>
+
+      <div class="sl-perfil">
+        <div class="sl-badges">
+          <span class="sl-badge sl-badge-vigario">Vigário</span>
+          <span class="sl-badge sl-badge-mestre">Confessor</span>
+        </div>
+        <div class="sl-perfil-topo">
+          <h4 class="sl-perfil-nome">Père Raymond</h4>
+          <span class="sl-perfil-papel">Confessor pessoal de João Vianney</span>
+        </div>
+        <div class="sl-perfil-corpo">
+          <p>O homem que ouvia as confissões de dezenas de milhares de pessoas ia ele mesmo à confissão regularmente — e o padre que o ouvia por décadas foi Père Raymond. A figura é elusiva na documentação justamente porque a natureza do papel exigia discrição que nenhum cronista podia romper.</p>
+        </div>
+      </div>
+
+      <p>Há um detalhe da vida de João Vianney que as hagiografias populares raramente enfatizam com a clareza que merece: ele tinha um confessor. A figura de Raymond é elusiva na documentação disponível — menos presente nos registros do que Toccanier, menos citado pelos biógrafos, em grande parte porque a natureza do seu papel exigia discrição que Toccanier, como cronista, não precisava manter. O que se sabe é que a relação durou anos, que Vianney a valorizava de maneira que os vigários observavam, e que havia uma confiança nessa relação que não existia da mesma forma com mais ninguém em Ars.</p>
+
+      <div class="sl-alerta-info">
+        <strong>O que esse detalhe ensina:</strong> Vianney não vivia a santidade como autossuficiência espiritual. O homem que era buscado por bispos e intelectuais para direção de consciência permanecia, ele próprio, dirigido. A humildade não era encenação — era estrutura.
+      </div>
     </div>
 
     <div class="sl-bloco">
       <h3>O que os vigários transmitiram</h3>
       <p>Os padres que passaram por Ars — como vigários, como visitantes prolongados, como estudantes de teologia que chegavam para observar — saíam com algo que não haviam trazido. Os que deixaram relatos escritos descrevem, com variações de vocabulário mas consistência de substância, a mesma experiência: a sensação de que havia visto, em Ars, o que o sacerdócio parece quando é exercido sem reserva.</p>
       <p>Não saíam com um método que podiam replicar. O regime de Vianney não era replicável — os médicos que o examinaram foram explícitos sobre isso, e os vigários que tentaram aproximar-se do seu ritmo sofreram as consequências físicas previsíveis. O que levavam era uma imagem — a imagem de como é quando o sacerdócio é a vida inteira de um homem, e não uma parte dela.</p>
+
+      <div class="sl-citacao">
+        <p>"Fui a Ars para aprender um método. Saí compreendendo que não havia método. Havia um homem."</p>
+        <span class="sl-fonte">Padre visitante, anos 1850 — registrado por Toccanier</span>
+      </div>
     </div>
   </div>
 
@@ -83,28 +402,91 @@
 
     <div class="sl-bloco">
       <h3>Mademoiselle d'Ars — a nobre que tornou a Providence possível</h3>
-      <p>Catherine Lassagne e as outras mulheres que dirigiram a Providence recebem atenção regular nas biografias de Vianney. A figura que frequentemente recebe menos atenção do que merece é Mademoiselle d'Ars — Marie d'Ars, a nobre proprietária da aldeia cujo sobrenome coincidia com o nome do lugar, e cuja relação com o Cura foi uma das mais determinantes na história material da paróquia.</p>
+
+      <div class="sl-perfil">
+        <div class="sl-badges">
+          <span class="sl-badge sl-badge-mulher">Benfeitora</span>
+          <span class="sl-badge sl-badge-aliado">Aliada inicial</span>
+        </div>
+        <div class="sl-perfil-topo">
+          <h4 class="sl-perfil-nome">Marie d'Ars (Mademoiselle d'Ars)</h4>
+          <span class="sl-perfil-papel">Nobre proprietária · 1818 em diante</span>
+        </div>
+        <div class="sl-perfil-corpo">
+          <p>Pequena nobreza local sobrevivente da Revolução. Possuía os meios materiais e a influência social que tornavam possível, numa aldeia de 230 habitantes, viabilizar uma obra como a Providence. Reconheceu em Vianney, nos primeiros meses, o que a maioria levaria anos para reconhecer.</p>
+        </div>
+      </div>
+
+      <p>Catherine Lassagne e as outras mulheres que dirigiram a Providence recebem atenção regular nas biografias de Vianney. A figura que frequentemente recebe menos atenção do que merece é Mademoiselle d'Ars — a nobre proprietária da aldeia cujo sobrenome coincidia com o nome do lugar, e cuja relação com o Cura foi uma das mais determinantes na história material da paróquia.</p>
+
       <p>Marie d'Ars era uma mulher de posição social elevada para os padrões de uma aldeia rural — pertencia à pequena nobreza local que havia sobrevivido à Revolução com propriedades reduzidas mas intactas. Era instruída, tinha meios e tinha a influência que o nome e a propriedade conferem numa comunidade onde essas coisas ainda importavam muito no início do século XIX.</p>
+
       <p>Quando João Vianney chegou a Ars em 1818, Marie d'Ars era um dos poucos habitantes da aldeia com recursos suficientes para fazer diferença na situação material da paróquia. Reconheceu no novo pároco algo que muitos dos seus contemporâneos levariam anos para reconhecer — e colocou os seus recursos a serviço do que ele estava tentando fazer. O financiamento inicial da Providence, o orfanato fundado em 1824, dependeu em parte significativa dessa disponibilidade.</p>
     </div>
 
     <div class="sl-bloco">
       <h3>Mademoiselle Ricotier — o conflito mais doloroso</h3>
+
+      <div class="sl-perfil">
+        <div class="sl-badges">
+          <span class="sl-badge sl-badge-mulher">Diretora</span>
+          <span class="sl-badge sl-badge-opositor">Conflito teológico</span>
+        </div>
+        <div class="sl-perfil-topo">
+          <h4 class="sl-perfil-nome">Mademoiselle Ricotier</h4>
+          <span class="sl-perfil-papel">Diretora da Providence (período intermediário)</span>
+        </div>
+        <div class="sl-perfil-corpo">
+          <p>Mulher de convicções fortes, métodos próprios e inclinações jansenizantes que a colocavam em desacordo direto com a pastoral de misericórdia praticada por Vianney. O conflito durou anos e atingiu dimensões pedagógica, administrativa, pessoal e teológica.</p>
+        </div>
+      </div>
+
       <p>Se a relação com Marie d'Ars é um exemplo de como as relações de Vianney com mulheres de posição podiam ser construtivas e duradouras, a relação com Mademoiselle Ricotier é o exemplo de como podiam ser o oposto — e de como Vianney se comportava quando o oposto aconteceu.</p>
+
       <p>Ricotier chegou à Providence como diretora — uma mulher de convicções fortes, métodos próprios e disposição limitada para subordinar os seus julgamentos aos do pároco que havia fundado a obra. O conflito que se desenvolveu ao longo dos anos teve múltiplas dimensões: pedagógica, administrativa, pessoal e, eventualmente, teológica — porque Ricotier tinha inclinações jansenistas que a colocavam em desacordo com a pastoral de misericórdia que era o centro de tudo o que Vianney fazia.</p>
-      <p>A Aba 2 detalha os episódios específicos desse conflito no contexto da Providence. O que esta seção adiciona é o ângulo relacional: como Vianney, especificamente, viveu o conflito com Ricotier, e o que esse episódio revela sobre a maneira como ele se relacionava com as pessoas que o contrariavam ativamente.</p>
+
+      <div class="sl-grid-2">
+        <div class="sl-card">
+          <h4>O que estava em jogo</h4>
+          <p>Não era apenas administração. Era a teologia subjacente: tratar as órfãs como pecadoras em formação ou como crianças amadas que precisam de instrução firme mas misericordiosa. As duas posições não podem coexistir num mesmo telhado.</p>
+        </div>
+        <div class="sl-card">
+          <h4>Como Vianney reagiu</h4>
+          <p>Não confrontou publicamente. Não destituiu por decreto. Suportou — e ao mesmo tempo manteve, em sua própria pessoa, a contraprova viva do que pensava ser correto. A erosão venceu pela duração, não pelo embate.</p>
+        </div>
+      </div>
     </div>
 
     <div class="sl-bloco">
       <h3>Catherine Lassagne e as irmãs da Providence</h3>
-      <p>Catherine Lassagne foi a figura feminina mais central e mais duradoura na vida de Vianney em Ars — uma das fundadoras e por décadas a presença mais estável na direção da Providence. Era jovem quando a obra começou in 1824, e sobreviveu ao Cura, deixando memórias escritas que são fontes primárias de primeira importância para os biógrafos.</p>
+
+      <div class="sl-perfil">
+        <div class="sl-badges">
+          <span class="sl-badge sl-badge-mulher">Fundadora</span>
+          <span class="sl-badge sl-badge-aliado">Memorialista</span>
+        </div>
+        <div class="sl-perfil-topo">
+          <h4 class="sl-perfil-nome">Catherine Lassagne</h4>
+          <span class="sl-perfil-papel">Direção da Providence · 1824 em diante</span>
+        </div>
+        <div class="sl-perfil-corpo">
+          <p>Cofundadora da Providence aos vinte e poucos anos, presença mais estável e duradoura na direção da obra. Sobreviveu a Vianney e deixou memórias escritas que são fontes primárias de primeira importância para a reconstrução do cotidiano da paróquia.</p>
+        </div>
+      </div>
+
+      <p>Catherine Lassagne foi a figura feminina mais central e mais duradoura na vida de Vianney em Ars — uma das fundadoras e por décadas a presença mais estável na direção da Providence. Era jovem quando a obra começou em 1824, e sobreviveu ao Cura, deixando memórias escritas que são fontes primárias de primeira importância para os biógrafos.</p>
+
       <p>O que as memórias de Lassagne preservam que outros registros não preservam com a mesma intimidade é a dimensão quotidiana da relação entre Vianney e as mulheres que dirigiam a obra que ele havia fundado. Não os momentos dramáticos — os milagres de provisão, os conflitos, as crises de financiamento — mas o tecido ordinário de uma colaboração que durou décadas.</p>
     </div>
 
     <div class="sl-bloco">
       <h3>A relação de Vianney com mulheres — padrões e limites</h3>
-      <p>Numa época em que as relações entre padres e mulheres eram frequentemente reguladas por uma prudência que beirava a distância obrigatória, a relação de João Vianney com as mulheres de Ars — e com as peregrinaas que chegavam ao confessionário — tinha uma característica que os que o observavam notavam: era pastoral sem ser distante, próxima sem ser indistinta.</p>
+      <p>Numa época em que as relações entre padres e mulheres eram frequentemente reguladas por uma prudência que beirava a distância obrigatória, a relação de João Vianney com as mulheres de Ars — e com as peregrinas que chegavam ao confessionário — tinha uma característica que os que o observavam notavam: era pastoral sem ser distante, próxima sem ser indistinta.</p>
       <p>No confessionário, onde a maioria dos seus penitentes eram mulheres — as estatísticas de frequência à confissão no século XIX mostram esse padrão em toda a França —, Vianney não tratava a penitente com a frieza protetora que alguns confessores adotavam para manter o que consideravam distância prudente. Ouvia com uma atenção que as penitentes descreviam como totalmente presente — como se o que diziam fosse, para ele, a coisa mais importante que estava acontecendo naquele momento, o que era, provavelmente, a descrição mais precisa disponível.</p>
+
+      <div class="sl-alerta">
+        <strong>O padrão consistente:</strong> em quarenta anos de ministério, com dezenas de milhares de mulheres atendidas no confessionário e em direção espiritual, não há nas fontes nenhum episódio de impropriedade, nenhum boato consistente, nenhuma sombra que os processos canônicos — que investigaram tudo — tenham precisado responder. A combinação de proximidade pastoral e clareza de limite era uma prática, não uma teoria.
+      </div>
     </div>
   </div>
 
@@ -120,26 +502,87 @@
 
     <div class="sl-bloco">
       <h3>Frédéric Ozanam — o relato completo</h3>
+
+      <div class="sl-card-destaque">
+        <div class="sl-badges">
+          <span class="sl-badge sl-badge-peregrino">Peregrino</span>
+          <span class="sl-badge sl-badge-mestre">Intelectual</span>
+        </div>
+        <h4>Frédéric Ozanam · visita em torno de 1845</h4>
+        <div class="sl-ficha">
+          <div class="sl-ficha-item">
+            <strong>Quem era</strong>
+            Fundador das Conferências de São Vicente de Paulo, professor da Sorbonne, figura central do catolicismo intelectual francês do século XIX.
+          </div>
+          <div class="sl-ficha-item">
+            <strong>Estado ao chegar</strong>
+            Atravessando fase de incerteza vocacional. Não chegou como devoto em busca de consolo — chegou como intelectual com uma questão concreta que não havia conseguido resolver sozinho.
+          </div>
+          <div class="sl-ficha-item">
+            <strong>O que aconteceu</strong>
+            Encontro no confessionário. Conteúdo protegido pelo sigilo. O que Ozanam preservou em cartas posteriores foi o efeito: saiu de Ars com algo resolvido que havia chegado não resolvido.
+          </div>
+          <div class="sl-ficha-item">
+            <strong>Por que o caso importa</strong>
+            Ozanam não era o tipo de testemunha que exagera. Intelectual rigoroso, com reputação pública verificável, com a contenção literária de quem sabe que está descrevendo algo que excede o vocabulário disponível. A discrição é, ela mesma, o testemunho.
+          </div>
+        </div>
+      </div>
+
       <p>Frédéric Ozanam chegou a Ars provavelmente em torno de 1845 — a data exata é disputada pelos biógrafos, mas o período é consistente com o que se sabe sobre os seus deslocamentos pela região de Lyon, onde havia estudado direito antes de se estabelecer em Paris. Ozanam tinha então na casa dos trinta anos, era já o fundador das Conferências de São Vicente de Paulo e uma figura reconhecida nos círculos intelectuais católicos franceses.</p>
+
       <p>O encontro com Vianney no confessionário é descrito por Ozanam em cartas posteriores com uma contenção que diz tanto quanto diria uma descrição detalhada. Não entra nos detalhes do que foi dito — a discrição sacramental que ele observava mesmo como leigo impedia-o de reproduzir o que havia acontecido dentro do confessionário. Mas descreve o efeito: saiu de Ars com algo resolvido que havia chegado não resolvido.</p>
     </div>
 
     <div class="sl-bloco">
       <h3>Outros intelectuais e figuras públicas</h3>
       <p>Ozanam não foi o único intelectual a fazer a peregrinação a Ars. Ao longo dos anos 1840 e 1850, à medida que a fama do Cura se consolidou como fenômeno nacional, chegaram a Ars figuras de mundos muito diferentes — políticos, escritores, médicos, advogados, universitários — com motivações que iam da curiosidade intelectual à crise espiritual genuína.</p>
-      <p>O barão de Montaigne — não o filósofo, mas o político orléanista do mesmo nome — visitou Ars em 1845 e deixou um relato epistolar que os biógrafos de Vianney citam como exemplo das conversões entre figuras da elite política. O padre Lacordaire — dominicano, pregador de Notre-Dame de Paris, figura central da renovação católica francesa do século XIX — visitou Ars e escreveu sobre a visita com o cuidado de um intelectual que sabe que está descrevendo algo que excede o seu vocabulário habitual.</p>
+
+      <div class="sl-grid-2">
+        <div class="sl-card">
+          <div class="sl-badges">
+            <span class="sl-badge sl-badge-peregrino">Político</span>
+          </div>
+          <h4>Barão de Montaigne</h4>
+          <p>Político orléanista (não confundir com o filósofo do mesmo nome). Visitou Ars em 1845 e deixou um relato epistolar que os biógrafos citam como exemplo das conversões ocorridas entre figuras da elite política do período. A visita não foi anunciada e o relato não foi escrito para publicação — o que aumenta o seu valor documental.</p>
+        </div>
+        <div class="sl-card">
+          <div class="sl-badges">
+            <span class="sl-badge sl-badge-peregrino">Pregador</span>
+          </div>
+          <h4>Padre Lacordaire</h4>
+          <p>Dominicano, pregador de Notre-Dame de Paris, figura central da renovação católica francesa do século XIX. Visitou Ars e escreveu sobre a visita com o cuidado de um intelectual que sabe que está descrevendo algo que excede o seu vocabulário habitual — o que, vindo de um dos maiores pregadores do tempo, é em si mesmo um testemunho.</p>
+        </div>
+      </div>
     </div>
 
     <div class="sl-bloco">
       <h3>Padres e bispos que vieram — e o que escreveram</h3>
       <p>Entre os visitantes mais significativos de Ars estavam os próprios colegas de Vianney — padres de outras paróquias, da mesma diocese ou de dioceses vizinhas, que chegavam às vezes com curiosidade, às vezes com ceticismo, às vezes em crise vocacional. A relação de Vianney com esses visitantes era diferente da relação com os leigos — havia entre sacerdotes uma linguagem comum, uma compreensão partilhada das dificuldades específicas do ministério, que tornava as conversas mais diretas e, por vezes, mais difíceis.</p>
-      <p>Bispos visitaram Ars em número suficiente para que a tradição preserve os relatos de pelo menos meia dúzia de encontros com algum detalhe. O bispo de Belley — a diocese à qual Ars pertencia — veio regularmente, especialmente nos últimos anos, quando a saúde de Vianney era uma preocupação episcopal concreta. O padrão comum nos relatos episcopais é a surpresa — não com os fenômenos extraordinários, mas com o ordinário: a simplicidade do homem, a ausência de autocomplacência, a maneira como tratava um bispo exactamente da mesma forma que tratava um camponês analfabeto.</p>
+
+      <p>Bispos visitaram Ars em número suficiente para que a tradição preserve os relatos de pelo menos meia dúzia de encontros com algum detalhe. O bispo de Belley — a diocese à qual Ars pertencia — veio regularmente, especialmente nos últimos anos, quando a saúde de Vianney era uma preocupação episcopal concreta. O padrão comum nos relatos episcopais é a surpresa — não com os fenômenos extraordinários, mas com o ordinário: a simplicidade do homem, a ausência de autocomplacência, a maneira como tratava um bispo exatamente da mesma forma que tratava um camponês analfabeto.</p>
+
+      <div class="sl-citacao">
+        <p>"Esperava encontrar um santo extraordinário. Encontrei um homem ordinário levado, por uma graça que ele mesmo não reivindicava, a fazer ordinariamente o que outros não conseguem fazer nunca."</p>
+        <span class="sl-fonte">Bispo visitante, anos 1850</span>
+      </div>
     </div>
 
     <div class="sl-bloco">
       <h3>Céticos e anticlericais que visitaram Ars</h3>
+
+      <div class="sl-card-destaque">
+        <div class="sl-badges">
+          <span class="sl-badge sl-badge-peregrino">Jornalista</span>
+          <span class="sl-badge sl-badge-opositor">Cético</span>
+        </div>
+        <h4>O jornalista do <em>Siècle</em> · 1847</h4>
+        <p>Principal órgão da imprensa republicana anticlerical parisiense. O jornalista chegou a Ars com a intenção explícita de escrever uma exposição do fenômeno — uma narrativa de fraude, ilusão coletiva ou superstição rural manipulada por um clero interessado.</p>
+        <p>O artigo que escreveu, publicado semanas depois, <strong>não era o artigo que havia planejado</strong>. Não havia ironia, não havia exposição de fraude, não havia a narrativa de ilusão coletiva que haviam antecipado. Havia um retrato de um homem que o jornalista claramente não havia conseguido reduzir às categorias que havia trazido de Paris.</p>
+        <p><strong>O que isso significa:</strong> o caso é um dos mais úteis para o historiador justamente porque a fonte é hostil. Um devoto pode ser acusado de projetar o que quer ver. Um jornalista do <em>Siècle</em> em 1847 não tem motivo nenhum para edulcorar o relato — e ainda assim o que escreve não consegue ser destrutivo.</p>
+      </div>
+
       <p>A imprensa anticlerical francesa do século XIX descobriu Ars como tema inevitável na década de 1840 — inevitável porque o fenômeno era grande demais para ser ignorado e inconveniente demais, do ponto de vista ideológico, para ser descrito sem distorção. O que chegou a Ars nesses anos incluía não apenas devotos e curiosos, mas também jornalistas e intelectuais cujo projeto era a desmistificação.</p>
-      <p>Um dos casos mais documentados é o de um jornalista do <em>Siècle</em> — o principal órgão da imprensa republicana anticlerical parisiense — que chegou a Ars em 1847 com a intenção explícita de escrever uma exposição do fenômeno. O artigo que escreveu, publicado semanas depois, não era o artigo que havia planejado. Não havia ironia, não havia exposição de fraude, não havia a narrativa de ilusão coletiva que haviam antecipado. Havia um retrato de um homem que o jornalista claramente não havia conseguido reduzir às categorias que havia trazido de Paris.</p>
     </div>
   </div>
 
@@ -154,22 +597,104 @@
     </div>
 
     <div class="sl-bloco">
+      <div class="sl-bloco-resumo">
+        <h3>O cenário em 1818</h3>
+        <p>Ars tinha 230 habitantes quando Vianney chegou. Não era uma comunidade hostil à Igreja por convicção — era uma comunidade que havia perdido o hábito da prática religiosa nos anos da Revolução e que havia se acomodado a uma vida em que a paróquia era ornamento ocasional, não estrutura. A transformação que se seguiu não foi instantânea nem unânime. Teve nomes, episódios e resistências específicas.</p>
+      </div>
+    </div>
+
+    <div class="sl-bloco">
       <h3>Os que resistiram — nomes e episódios</h3>
       <p>A transformação de Ars que as hagiografias descrevem em termos de conversão coletiva foi, na realidade, um processo lento, não linear e marcado por resistências específicas que os documentos preservam com suficiente detalhe para ter nomes e episódios.</p>
-      <p>O taverneiro — identificado nos registros como um homem chamado Mandy — foi um dos primeiros e mais persistentes opositores do novo pároco. Mandy não recebeu bem os sermões, e a resistência durou anos. O processo de conversão de Mandy — que aconteceu, eventualmente, como o processo de conversão de quase todos os opositores iniciais — não foi resultado de confronto direto. Foi resultado de erosão gradual: os anos de observar a aldeia mudar ao redor.</p>
+
+      <div class="sl-perfil">
+        <div class="sl-badges">
+          <span class="sl-badge sl-badge-paroquia">Paroquiano</span>
+          <span class="sl-badge sl-badge-opositor">Opositor inicial</span>
+        </div>
+        <div class="sl-perfil-topo">
+          <h4 class="sl-perfil-nome">Mandy, o taverneiro</h4>
+          <span class="sl-perfil-papel">Resistência ativa nos primeiros anos</span>
+        </div>
+        <div class="sl-perfil-corpo">
+          <p>Identificado nos registros como um dos primeiros e mais persistentes opositores do novo pároco. A taverna era, na Ars de 1818, o centro alternativo da vida social — o lugar onde se reunia o que não se reunia na igreja, especialmente nos domingos. Os sermões de Vianney contra a bebida excessiva e o trabalho dominical eram, para Mandy, ataque direto ao próprio negócio.</p>
+          <p>A resistência durou anos. O processo de conversão de Mandy — que aconteceu, eventualmente, como o processo de conversão de quase todos os opositores iniciais — não foi resultado de confronto direto. Foi resultado de erosão gradual: os anos de observar a aldeia mudar ao redor, a evidência de que a presença do padre não diminuía com o tempo, a constatação de que a hostilidade não estava produzindo o resultado esperado.</p>
+        </div>
+      </div>
     </div>
 
     <div class="sl-bloco">
       <h3>Os que se converteram primeiro — os apoiadores iniciais</h3>
       <p>Antes de Ars se transformar, havia em Ars os que viram algo nos primeiros meses que a maioria ainda não via — e que se tornaram, por isso, os apoiadores que tornaram possível o que veio depois.</p>
-      <p>A família Cinier era uma das famílias mais respeitadas da aldeia — agricultores com propriedade suficiente para ter peso na comunidade e com uma história de fé que os predispunha a receber o novo pároco de forma diferente da média. Antoine Givre — o menino que havia apontado o caminho para Ars quando Vianney chegou pela primeira vez — cresceu em Ars durante todos os quarenta anos do ministério do Cura e tornou-se, na vida adulta, um dos que deixaram testemunhos mais completos sobre os primeiros anos.</p>
+
+      <div class="sl-grid-2">
+        <div class="sl-card">
+          <div class="sl-badges">
+            <span class="sl-badge sl-badge-paroquia">Família</span>
+            <span class="sl-badge sl-badge-aliado">Apoio inicial</span>
+          </div>
+          <h4>A família Cinier</h4>
+          <p>Uma das famílias mais respeitadas da aldeia — agricultores com propriedade suficiente para ter peso na comunidade e com uma história de fé que os predispunha a receber o novo pároco de forma diferente da média. A adesão dos Cinier nos primeiros meses funcionou como sinal social: se eles confiavam no novo padre, outros podiam considerar fazer o mesmo.</p>
+        </div>
+        <div class="sl-card">
+          <div class="sl-badges">
+            <span class="sl-badge sl-badge-paroquia">Testemunha</span>
+            <span class="sl-badge sl-badge-aliado">Memorialista</span>
+          </div>
+          <h4>Antoine Givre</h4>
+          <p>O menino que havia apontado o caminho para Ars quando Vianney chegou pela primeira vez. Cresceu em Ars durante todos os quarenta anos do ministério do Cura e tornou-se, na vida adulta, um dos que deixaram testemunhos mais completos sobre os primeiros anos — incluindo detalhes sobre a hostilidade inicial que só uma testemunha presente desde o começo podia preservar.</p>
+        </div>
+      </div>
     </div>
 
     <div class="sl-bloco">
       <h3>A relação com as crianças da aldeia e da Providence</h3>
       <p>Entre todas as relações de João Vianney em Ars, a relação com as crianças era a que possuía a maior carga de afeto visível e a que menos exigia a mediação do protocolo pastoral. As crianças da aldeia e as órfãs da Providence viam no Cura algo que os adultos frequentemente demoravam anos para ver: uma bondade que não era exigente nem condescendente.</p>
+
       <p>Vianney passava tempo com as crianças quando o fluxo de peregrinos permitia — o que era raro, mas acontecia. As instruções que dava às diretoras da Providence sobre o tratamento das crianças enfatizavam a gentileza e a paciência, numa época em que a pedagogia institucional era frequentemente marcada pelo rigor e pela punição. Essa atenção às crianças não era apenas um traço de temperamento; era, na sua visão, a aplicação direta do que o Evangelho dizia sobre quem é o maior no Reino dos Céus.</p>
+
+      <div class="sl-citacao">
+        <p>"Ele tinha o rosto de um homem cansado durante o dia inteiro. Quando uma criança chegava perto, o rosto mudava — e a criança via primeiro o que os adultos demoravam anos para enxergar."</p>
+        <span class="sl-fonte">Catherine Lassagne — memórias da Providence</span>
+      </div>
+    </div>
+
+    <div class="sl-bloco">
+      <h3>O arco completo da transformação</h3>
+      <div class="sl-linha-tempo">
+        <div class="sl-passo">
+          <div class="sl-passo-num">1</div>
+          <div class="sl-passo-corpo">
+            <strong>1818 — Chegada</strong>
+            <p>Ars com 230 habitantes, prática religiosa irregular, taverna mais frequentada que a igreja aos domingos. Hostilidade inicial liderada por figuras como Mandy.</p>
+          </div>
+        </div>
+        <div class="sl-passo">
+          <div class="sl-passo-num">2</div>
+          <div class="sl-passo-corpo">
+            <strong>1820s — Primeiros aliados</strong>
+            <p>Famílias como os Cinier adotam o novo pároco. Marie d'Ars financia a estrutura material. A Providence é fundada em 1824 como sinal visível da mudança em curso.</p>
+          </div>
+        </div>
+        <div class="sl-passo">
+          <div class="sl-passo-num">3</div>
+          <div class="sl-passo-corpo">
+            <strong>1830s — A erosão da resistência</strong>
+            <p>Os opositores não são vencidos por confronto — são vencidos pela duração. A aldeia muda ao redor deles. A taverna esvazia. A igreja enche. A geração de Antoine Givre cresce já dentro do mundo novo.</p>
+          </div>
+        </div>
+        <div class="sl-passo">
+          <div class="sl-passo-num">4</div>
+          <div class="sl-passo-corpo">
+            <strong>1840s–1850s — A inversão</strong>
+            <p>Ars deixa de ser aldeia transformada e torna-se destino nacional. Os paroquianos passam de objetos da transformação a coadjuvantes de um fenômeno que atrai dezenas de milhares de peregrinos por ano.</p>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
-</div>
+</main>
+
+</body>
+</html>
