@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <title>Milagres — São João Maria Vianney</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         /* ===== MENU ===== */
         .sl-wrap { max-width: 1200px; margin: 0 auto; padding: 40px 20px 0; font-family: Georgia, 'Times New Roman', serif; }
@@ -31,139 +30,291 @@
         @media (max-width: 600px) { .sl-wrap { padding: 24px 12px 0; } .sl-santo-nome { font-size: 24px; } .sl-santo-titulo { font-size: 10px; letter-spacing: 3px; } .sl-intro-frase { font-size: 13px; padding: 0 10px; } .sl-lista li a { font-size: 9.5px; letter-spacing: 1px; padding: 12px 4px; min-height: 50px; } }
         @media (max-width: 420px) { .sl-lista li a { font-size: 8.5px; padding: 10px 3px; letter-spacing: 0.5px; } }
 
-        /* ===== CABEÇALHO DA PÁGINA (TÍTULO GRANDE) ===== */
+        /* ===== VARIÁVEIS UNIFICADAS ===== */
+        :root {
+            --cf-fundo: #faf8f4;
+            --cf-texto: #3a3530;
+            --cf-texto-leve: #6f6758;
+            --cf-dourado: #b08a3c;
+            --cf-dourado-claro: #d4b872;
+            --cf-borda: #e2dcd0;
+            --cf-borda-leve: #ece8df;
+            --cf-bloco-bg: #ffffff;
+            --cf-serif: Georgia, 'Times New Roman', 'Noto Serif', serif;
+            --cf-max: 820px;
+        }
+
+        body {
+            background: var(--cf-fundo);
+            margin: 0;
+            padding: 0;
+        }
+
+        /* ===== CABEÇALHO DA PÁGINA ===== */
         .sl-pagina-cabecalho {
             text-align: center;
-            margin: 60px auto 50px;
-            max-width: 800px;
-            padding: 0 20px;
+            padding: 60px 20px 50px;
+            max-width: var(--cf-max);
+            margin: 0 auto;
         }
         .sl-pagina-numero {
-            font-family: Georgia, 'Times New Roman', serif;
+            display: inline-block;
+            font-family: var(--cf-serif);
             font-size: 14px;
-            letter-spacing: 6px;
-            color: #b08a3c;
+            letter-spacing: 4px;
+            color: var(--cf-dourado);
             text-transform: uppercase;
-            margin: 0 0 20px;
+            margin: 0 0 16px;
             font-weight: 400;
         }
         .sl-pagina-titulo {
-            font-family: Georgia, 'Times New Roman', serif;
-            font-size: 64px;
+            font-family: var(--cf-serif);
+            font-size: 46px;
             font-weight: 400;
-            color: #2f2a22;
-            margin: 0 0 18px;
-            line-height: 1.1;
-            letter-spacing: 1px;
+            color: var(--cf-texto);
+            letter-spacing: 2px;
+            margin: 0 0 12px;
+            line-height: 1.15;
         }
         .sl-pagina-subtitulo {
-            font-family: Georgia, 'Times New Roman', serif;
-            font-size: 18px;
+            font-family: var(--cf-serif);
+            font-size: 17px;
             font-style: italic;
-            color: #6f6758;
-            margin: 0 0 24px;
+            color: var(--cf-texto-leve);
             letter-spacing: 0.5px;
+            margin: 0;
         }
         .sl-pagina-ornamento {
-            color: #b08a3c;
-            font-size: 14px;
-            letter-spacing: 4px;
+            margin-top: 30px;
+            font-size: 12px;
+            color: var(--cf-dourado-claro);
+            letter-spacing: 8px;
         }
-        @media (max-width: 600px) {
-            .sl-pagina-cabecalho { margin: 40px auto 36px; }
-            .sl-pagina-titulo { font-size: 40px; }
+        @media (max-width: 768px) {
+            .sl-pagina-cabecalho { padding: 40px 16px 36px; }
+            .sl-pagina-titulo { font-size: 32px; }
             .sl-pagina-subtitulo { font-size: 15px; }
-            .sl-pagina-numero { font-size: 12px; letter-spacing: 4px; }
+        }
+        @media (max-width: 480px) {
+            .sl-pagina-titulo { font-size: 26px; letter-spacing: 1px; }
+            .sl-pagina-numero { font-size: 12px; letter-spacing: 3px; }
         }
 
         /* ===== CONTEÚDO BASE ===== */
-        main { max-width: 800px; margin: 0 auto 40px; padding: 0 20px; }
+        main { max-width: var(--cf-max); margin: 0 auto 40px; padding: 0 20px; }
         .sl-secao { margin-bottom: 40px; }
-        .sl-secao-header { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; flex-wrap: wrap; }
-        .sl-secao-num { font-family: 'Libre Baskerville', serif; font-size: 24px; color: #b08a3c; font-weight: bold; }
-        .sl-secao-linha { flex-grow: 1; height: 1px; background: #eee; }
-        .sl-secao-titulo { font-family: 'Inter', sans-serif; font-size: 18px; text-transform: uppercase; letter-spacing: 2px; color: #333; }
-        .sl-bloco { margin-bottom: 25px; line-height: 1.8; color: #444; }
-        .sl-bloco h3 { font-family: 'Libre Baskerville', serif; color: #2c3e50; margin-bottom: 15px; }
-        .sl-bloco p { margin-bottom: 12px; }
+        .sl-secao-header { display: flex; align-items: center; gap: 16px; margin-bottom: 28px; flex-wrap: wrap; padding-top: 10px; }
+        .sl-secao-num { font-family: var(--cf-serif); font-size: 13px; font-weight: 700; color: var(--cf-dourado); letter-spacing: 3px; flex-shrink: 0; }
+        .sl-secao-linha { flex: 1; height: 1px; background: linear-gradient(to right, var(--cf-borda), transparent); }
+        .sl-secao-titulo { font-family: var(--cf-serif); font-size: 22px; font-weight: 400; color: var(--cf-texto); letter-spacing: 0.5px; text-transform: none; line-height: 1.35; margin: 0; }
+
+        .sl-bloco { margin-bottom: 25px; line-height: 1.8; color: var(--cf-texto); font-family: var(--cf-serif); }
+        .sl-bloco h3 { font-family: var(--cf-serif); color: var(--cf-texto); margin-bottom: 15px; font-size: 17px; font-weight: 600; }
+        .sl-bloco p { margin-bottom: 12px; font-size: 15.5px; line-height: 1.85; }
         .sl-bloco p:last-child { margin-bottom: 0; }
-        .sl-capitular { float: left; font-size: 60px; line-height: 50px; padding-top: 4px; padding-right: 8px; padding-left: 3px; font-family: 'Libre Baskerville', serif; color: #b08a3c; }
-        .sl-sep { text-align: center; margin: 40px 0; color: #b08a3c; font-size: 24px; }
-        .sl-citacao { margin: 40px auto; max-width: 600px; text-align: center; font-style: italic; background: #fdfaf3; padding: 30px; border-radius: 8px; border: 1px inset #f3eee3; }
-        .sl-citacao p { font-size: 1.2em; color: #2f2a22; margin-bottom: 10px; }
-        .sl-fonte { display: block; font-size: 0.8em; text-transform: uppercase; letter-spacing: 1px; color: #b08a3c; font-style: normal; }
+        .sl-bloco em { color: #5a4e3a; font-style: italic; }
+        .sl-bloco strong { color: var(--cf-texto); font-weight: 700; }
+
+        .sl-capitular { float: left; font-size: 58px; line-height: 0.8; padding: 4px 10px 0 0; margin-top: 4px; font-family: var(--cf-serif); color: var(--cf-dourado); font-weight: 400; }
+
+        .sl-sep {
+            text-align: center;
+            padding: 40px 0;
+            margin: 0 auto;
+            color: var(--cf-dourado-claro);
+            font-size: 11px;
+            letter-spacing: 14px;
+        }
+
+        .sl-citacao { margin: 24px auto; max-width: 620px; text-align: center; font-style: italic; background: #fdfaf3; padding: 24px 28px; border-radius: 8px; border: 1px solid #f3eee3; }
+        .sl-citacao p { font-size: 1.1em; color: #2f2a22; margin-bottom: 10px; font-family: var(--cf-serif); line-height: 1.7; }
+        .sl-fonte { display: block; font-size: 0.78em; text-transform: uppercase; letter-spacing: 1px; color: var(--cf-dourado); font-style: normal; margin-top: 14px; }
 
         /* ===== GRIDS ===== */
-        .sl-grid { display: grid; gap: 14px; }
-        .sl-grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; }
-        .sl-grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
+        .sl-grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; margin-top: 14px; }
+        .sl-grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin-top: 14px; }
 
         /* ===== CARDS ===== */
-        .sl-card { border: 1px solid #d9d9d9; border-radius: 12px; padding: 16px 18px; background: #fff; box-shadow: 0 1px 2px rgba(0,0,0,.03); }
-        .sl-card h4 { margin: 0 0 10px; font-size: 15px; font-family: 'Libre Baskerville', serif; color: #2c3e50; }
-        .sl-card p { margin: 0 0 8px; font-size: 14px; line-height: 1.6; color: #555; }
+        .sl-card {
+            background: var(--cf-bloco-bg);
+            border: 1px solid var(--cf-borda-leve);
+            border-radius: 4px;
+            padding: 20px 22px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+        }
+        .sl-card h4 { margin: 0 0 10px; font-size: 15px; font-family: var(--cf-serif); color: var(--cf-texto); font-weight: 600; }
+        .sl-card p { margin: 0 0 8px; font-size: 14px; line-height: 1.7; color: var(--cf-texto-leve); font-family: var(--cf-serif); }
         .sl-card p:last-child { margin-bottom: 0; }
 
-        .sl-card-destaque { border: 2px solid #b18b57; border-radius: 12px; padding: 18px 20px; background: #fdfaf5; margin-bottom: 14px; }
-        .sl-card-destaque h4 { margin: 0 0 10px; font-size: 16px; font-family: 'Libre Baskerville', serif; color: #2c3e50; }
-        .sl-card-destaque p { margin: 0 0 8px; font-size: 14px; line-height: 1.6; color: #555; }
+        .sl-card-destaque {
+            background: linear-gradient(135deg, #fdfaf3, #f8f3e8);
+            border: 1px solid var(--cf-borda);
+            border-left: 4px solid var(--cf-dourado);
+            border-radius: 4px;
+            padding: 24px 28px;
+            margin-bottom: 14px;
+        }
+        .sl-card-destaque h4 { margin: 0 0 12px; font-size: 16px; font-family: var(--cf-serif); color: var(--cf-texto); font-weight: 600; }
+        .sl-card-destaque p { margin: 0 0 10px; font-size: 14.5px; line-height: 1.75; color: var(--cf-texto); font-family: var(--cf-serif); }
+        .sl-card-destaque p:last-child { margin-bottom: 0; }
 
         /* ===== BADGES ===== */
         .sl-badges { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
-        .sl-badge { display: inline-block; padding: 4px 10px; border-radius: 999px; font-size: 11px; font-weight: 700; letter-spacing: .03em; text-transform: uppercase; }
+        .sl-badge { display: inline-block; padding: 4px 10px; border-radius: 999px; font-size: 11px; font-weight: 700; letter-spacing: .03em; text-transform: uppercase; font-family: var(--cf-serif); }
         .sl-badge-canonico  { background: #e7f7ea; color: #1d6b35; }
         .sl-badge-forte     { background: #e8f0fe; color: #2457b8; }
         .sl-badge-media     { background: #fff3db; color: #8a5a00; }
         .sl-badge-fraca     { background: #f4f4f4; color: #666; }
 
-        /* ===== BLOCOS ESPECIAIS ===== */
-        .sl-bloco-resumo { border-left: 4px solid #b18b57; background: #faf7f2; padding: 16px 18px; border-radius: 8px; margin-bottom: 4px; }
-        .sl-bloco-resumo h3 { margin: 0 0 8px; font-family: 'Libre Baskerville', serif; color: #2c3e50; }
-        .sl-bloco-resumo p  { margin: 0 0 6px; font-size: 14px; line-height: 1.6; color: #555; }
+        /* ===== BLOCO RESUMO ===== */
+        .sl-bloco-resumo {
+            background: linear-gradient(135deg, #fdfaf3, #f8f3e8);
+            border: 1px solid var(--cf-borda);
+            border-left: 4px solid var(--cf-dourado);
+            border-radius: 4px;
+            padding: 24px 28px;
+            margin-bottom: 4px;
+        }
+        .sl-bloco-resumo h3 { margin: 0 0 10px; font-family: var(--cf-serif); color: var(--cf-texto); font-size: 17px; font-weight: 600; }
+        .sl-bloco-resumo p { margin: 0 0 8px; font-size: 14.5px; line-height: 1.8; color: var(--cf-texto); font-family: var(--cf-serif); }
         .sl-bloco-resumo p:last-child { margin-bottom: 0; }
 
         /* ===== ALERTAS ===== */
-        .sl-alerta { padding: 14px 16px; border-radius: 10px; background: #fff8e8; border: 1px solid #f1d58f; font-size: 14px; line-height: 1.6; margin-top: 10px; color: #444; }
-        .sl-alerta-info { padding: 14px 16px; border-radius: 10px; background: #f0f4ff; border: 1px solid #c5d3f5; font-size: 14px; line-height: 1.6; margin-top: 10px; color: #444; }
+        .sl-alerta {
+            padding: 16px 20px;
+            border-radius: 4px;
+            background: #f5f1e8;
+            border-left: 3px solid #d4c9a8;
+            font-size: 14px;
+            line-height: 1.75;
+            margin-top: 14px;
+            color: var(--cf-texto-leve);
+            font-family: var(--cf-serif);
+            font-style: italic;
+        }
+        .sl-alerta strong { font-style: normal; color: var(--cf-texto); }
+        .sl-alerta-info {
+            padding: 16px 20px;
+            border-radius: 4px;
+            background: #f0f4ff;
+            border-left: 3px solid #c5d3f5;
+            font-size: 14px;
+            line-height: 1.75;
+            margin-top: 14px;
+            color: var(--cf-texto-leve);
+            font-family: var(--cf-serif);
+            font-style: italic;
+        }
+        .sl-alerta-info strong { font-style: normal; color: var(--cf-texto); }
 
         /* ===== MÉTRICAS ===== */
-        .sl-topo-metrica { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin-top: 12px; }
-        .sl-metrica { border: 1px solid #e3e3e3; border-radius: 12px; padding: 16px; background: #fff; }
-        .sl-metrica-num { font-size: 26px; font-weight: 800; line-height: 1; margin-bottom: 6px; color: #2f2a22; font-family: 'Libre Baskerville', serif; }
-        .sl-metrica-leg { font-size: 13px; color: #555; line-height: 1.5; }
+        .sl-topo-metrica {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 12px;
+            margin-top: 14px;
+        }
+        .sl-metrica {
+            border: 1px solid var(--cf-borda-leve);
+            border-radius: 4px;
+            padding: 18px 16px;
+            background: var(--cf-bloco-bg);
+            text-align: center;
+        }
+        .sl-metrica-num {
+            font-size: 26px;
+            font-weight: 700;
+            line-height: 1;
+            margin-bottom: 6px;
+            color: var(--cf-texto);
+            font-family: var(--cf-serif);
+        }
+        .sl-metrica-leg {
+            font-size: 13px;
+            color: var(--cf-texto-leve);
+            line-height: 1.5;
+            font-family: var(--cf-serif);
+        }
 
         /* ===== FICHA ===== */
         .sl-ficha { display: grid; gap: 8px; margin-top: 8px; }
-        .sl-ficha-item { padding: 10px 14px; border-radius: 10px; background: #f8f8f8; border: 1px solid #ececec; font-size: 14px; line-height: 1.6; color: #444; }
-        .sl-ficha-item strong { display: block; margin-bottom: 4px; font-size: 12px; text-transform: uppercase; letter-spacing: .03em; color: #888; font-family: 'Inter', sans-serif; }
+        .sl-ficha-item {
+            padding: 12px 16px;
+            border-radius: 4px;
+            background: var(--cf-bloco-bg);
+            border: 1px solid var(--cf-borda-leve);
+            font-size: 14px;
+            line-height: 1.7;
+            color: var(--cf-texto);
+            font-family: var(--cf-serif);
+        }
+        .sl-ficha-item strong { display: block; margin-bottom: 4px; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: var(--cf-dourado); font-family: var(--cf-serif); font-weight: 700; }
 
         /* ===== LINHA DO TEMPO ===== */
-        .sl-linha-tempo { display: grid; gap: 10px; }
-        .sl-passo { display: grid; grid-template-columns: 40px 1fr; gap: 12px; align-items: start; }
-        .sl-passo-num { width: 40px; height: 40px; border-radius: 50%; background: #222; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 15px; flex-shrink: 0; font-family: 'Inter', sans-serif; }
+        .sl-linha-tempo { display: grid; gap: 12px; margin-top: 14px; }
+        .sl-passo { display: grid; grid-template-columns: 40px 1fr; gap: 14px; align-items: start; }
+        .sl-passo-num {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--cf-dourado);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 15px;
+            flex-shrink: 0;
+            font-family: var(--cf-serif);
+        }
 
         /* ===== TABELA ===== */
-        .sl-mini-tabela { width: 100%; border-collapse: collapse; margin-top: 8px; font-size: 14px; }
-        .sl-mini-tabela th, .sl-mini-tabela td { border: 1px solid #e2e2e2; padding: 10px 14px; text-align: left; vertical-align: top; }
-        .sl-mini-tabela th { background: #f7f7f7; font-size: 13px; font-family: 'Inter', sans-serif; }
+        .sl-mini-tabela {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 12px;
+            font-size: 14px;
+            background: var(--cf-bloco-bg);
+            font-family: var(--cf-serif);
+        }
+        .sl-mini-tabela th, .sl-mini-tabela td {
+            border: 1px solid var(--cf-borda-leve);
+            padding: 12px 16px;
+            text-align: left;
+            vertical-align: top;
+            color: var(--cf-texto);
+            line-height: 1.6;
+        }
+        .sl-mini-tabela th {
+            background: #f5f1e8;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--cf-texto);
+            letter-spacing: 0.3px;
+        }
 
         /* ===== LISTA ===== */
-        .sl-lista-curta { margin: 0; padding-left: 18px; }
-        .sl-lista-curta li { margin: 6px 0; font-size: 14px; line-height: 1.6; color: #444; }
+        .sl-lista-curta { margin: 8px 0 0; padding-left: 20px; }
+        .sl-lista-curta li { margin: 6px 0; font-size: 14px; line-height: 1.7; color: var(--cf-texto); font-family: var(--cf-serif); }
 
-        /* ===== SUBTÍTULO / DIVIDER ===== */
-        .sl-subtitulo-curto { margin: 0 0 10px; font-size: 12px; text-transform: uppercase; letter-spacing: .04em; color: #888; font-family: 'Inter', sans-serif; }
-        .sl-divider-leve { border: none; border-top: 1px solid #ececec; margin: 14px 0; }
+        /* ===== DIVIDER LEVE ===== */
+        .sl-divider-leve { border: none; border-top: 1px solid var(--cf-borda-leve); margin: 14px 0; }
 
         /* ===== RESPONSIVO ===== */
+        @media (max-width: 768px) {
+            main { padding: 0 14px; }
+            .sl-secao-titulo { font-size: 19px; }
+            .sl-bloco p { font-size: 14.5px; }
+            .sl-card { padding: 16px 18px; }
+            .sl-card-destaque { padding: 18px 20px; }
+            .sl-bloco-resumo { padding: 18px 20px; }
+            .sl-citacao { padding: 20px 18px; }
+        }
         @media (max-width: 600px) {
+            .sl-secao-titulo { font-size: 17px; }
             .sl-passo { grid-template-columns: 1fr; }
             .sl-passo-num { margin-bottom: 6px; }
-            .sl-secao-titulo { font-size: 15px; letter-spacing: 1.5px; }
-            .sl-card { padding: 14px; }
-            .sl-card-destaque { padding: 14px 16px; }
-            .sl-citacao { padding: 20px 16px; }
-            .sl-mini-tabela th, .sl-mini-tabela td { padding: 8px 10px; }
+            .sl-mini-tabela th, .sl-mini-tabela td { padding: 10px 12px; font-size: 13px; }
         }
     </style>
 </head>
@@ -182,6 +333,35 @@
 
 <main>
 
+  <!-- ===== INTRODUÇÃO GERAL ===== -->
+  <div class="sl-bloco">
+    <div class="sl-bloco-resumo">
+      <h3>O que esta página apresenta</h3>
+      <p>Os milagres atribuídos a João Vianney não são acréscimos decorativos à sua biografia — são o tecido cotidiano dos quarenta anos de Ars. Esta página apresenta o conjunto desses fenômenos organizado por categoria e por nível de evidência histórica. O critério é simples: distinguir o que está sólidamente documentado do que pertence à tradição devocional sem cair em duas distorções comuns — a inflação devota que aceita tudo e o ceticismo apressado que descarta tudo.</p>
+    </div>
+
+    <div class="sl-topo-metrica">
+      <div class="sl-metrica">
+        <div class="sl-metrica-num">2</div>
+        <div class="sl-metrica-leg">Milagres canônicos reconhecidos formalmente — Claudine Venet (1905) e Louis Doze (1925)</div>
+      </div>
+      <div class="sl-metrica">
+        <div class="sl-metrica-num">200+</div>
+        <div class="sl-metrica-leg">Testemunhos formais nos processos sobre fenômenos extraordinários</div>
+      </div>
+      <div class="sl-metrica">
+        <div class="sl-metrica-num">165</div>
+        <div class="sl-metrica-leg">Anos contínuos de cartas chegando à Basílica de Ars desde 1859</div>
+      </div>
+      <div class="sl-metrica">
+        <div class="sl-metrica-num">4</div>
+        <div class="sl-metrica-leg">Grandes categorias: cardiognosia, curas, provisão e fenômenos místicos</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sl-sep">· · ·</div>
+
   <!-- 01 · CONTEXTO -->
   <div class="sl-secao">
     <div class="sl-secao-header">
@@ -194,21 +374,6 @@
       <div class="sl-bloco-resumo">
         <h3>Por que o contexto importa</h3>
         <p>Os milagres medievais eram relatados num mundo que os aceitava sem exigir prova sistemática. Os milagres de Ars são diferentes: aconteceram no século do positivismo, da medicina organizada, da imprensa anticlerical e da crítica histórica. Foram observados por médicos, jornalistas e intelectuais que chegaram a Ars sem devoção e às vezes com desejo declarado de refutação. Isso não prova nada sozinho — mas torna a documentação qualitativamente diferente de qualquer época anterior.</p>
-      </div>
-
-      <div class="sl-topo-metrica">
-        <div class="sl-metrica">
-          <div class="sl-metrica-num">200+</div>
-          <div class="sl-metrica-leg">Testemunhos formais nos processos de beatificação e canonização sobre fenômenos extraordinários</div>
-        </div>
-        <div class="sl-metrica">
-          <div class="sl-metrica-num">40</div>
-          <div class="sl-metrica-leg">Anos de ministério contínuo em Ars, período durante o qual os fenômenos foram observados e registrados</div>
-        </div>
-        <div class="sl-metrica">
-          <div class="sl-metrica-num">4</div>
-          <div class="sl-metrica-leg">Grandes categorias de fenômenos: leitura de almas, curas físicas, provisão material e conhecimento sobrenatural</div>
-        </div>
       </div>
     </div>
 
@@ -231,8 +396,8 @@
     </div>
 
     <div class="sl-bloco">
-      <h3>Como ler esta aba — os níveis de evidência</h3>
-      <p>Nem todos os fenômenos têm o mesmo peso histórico. Esta aba usa quatro níveis:</p>
+      <h3>Como ler esta página — os níveis de evidência</h3>
+      <p>Nem todos os fenômenos têm o mesmo peso histórico. Esta página usa quatro níveis:</p>
       <div class="sl-badges" style="margin-top:10px;">
         <span class="sl-badge sl-badge-canonico">Canônico</span>
         <span class="sl-badge sl-badge-forte">Documentação forte</span>
@@ -253,8 +418,26 @@
           <p><span class="sl-badge sl-badge-fraca">Tradição oral</span> Episódio presente na memória e na devoção, mas sem cadeia documental que o torne historicamente verificável.</p>
         </div>
       </div>
-      <div class="sl-alerta-info" style="margin-top:12px;">
+      <div class="sl-alerta-info">
         <strong>Nota importante:</strong> a distinção entre os níveis não é uma distinção entre o que "é real" e o que "não é real". É uma distinção sobre o grau de certeza histórica disponível. Um fenômeno de tradição oral pode ter acontecido. Um fenômeno canônico pode, teoricamente, ter uma explicação natural ainda não descoberta. A distinção é epistêmica, não ontológica.
+      </div>
+    </div>
+
+    <div class="sl-bloco">
+      <h3>O método dos advogados do diabo — em três perguntas</h3>
+      <div class="sl-grid-3">
+        <div class="sl-card">
+          <h4>1. O fato é real?</h4>
+          <p>O evento aconteceu como descrito? As testemunhas são confiáveis, independentes e consistentes entre si? Há documentação contemporânea ou apenas memória tardia?</p>
+        </div>
+        <div class="sl-card">
+          <h4>2. A explicação natural foi esgotada?</h4>
+          <p>Foram investigadas todas as causas naturais conhecidas — coincidência, sugestão, processos médicos normais, erro de diagnóstico? Nenhuma hipótese natural sustenta o caso?</p>
+        </div>
+        <div class="sl-card">
+          <h4>3. A intercessão é atribuível?</h4>
+          <p>Há ligação clara entre o pedido feito ao candidato e o resultado observado? A graça aconteceu no contexto da oração específica, não como evento aleatório?</p>
+        </div>
       </div>
     </div>
   </div>
@@ -435,11 +618,24 @@
             <td>Coincidência sistematicamente mal interpretada pela memória devocional</td>
             <td>Pode explicar casos isolados e fracos. Estatisticamente implausível como explicação geral, dado o volume, a consistência e o perfil variado das testemunhas.</td>
           </tr>
+          <tr>
+            <td>Manipulação consciente de pistas captadas em diálogo prévio</td>
+            <td>Vianney frequentemente nomeava o ponto antes de qualquer diálogo. Em casos múltiplos, falou da situação assim que o penitente se ajoelhou, sem trocar uma palavra antes.</td>
+          </tr>
         </tbody>
       </table>
-      <div class="sl-alerta" style="margin-top:12px;">
+      <div class="sl-alerta">
         <strong>Conclusão processual:</strong> os casos de cardiognosia constituíam evidência de fenômeno sobrenatural com o grau de probabilidade suficiente para os critérios canônicos aplicáveis. Não certeza absoluta — que seria epistemicamente desonesta — mas probabilidade suficiente para o processo formal.
       </div>
+    </div>
+
+    <div class="sl-bloco">
+      <h3>O que Vianney dizia sobre o próprio dom</h3>
+      <div class="sl-citacao">
+        <p>"O bom Deus me mostra. Eu não vejo nada por mim mesmo. Quando alguém vem, às vezes eu sei. Quando o bom Deus não mostra, eu não sei mais do que vós."</p>
+        <span class="sl-fonte">Registrado por Toccanier, ao ser perguntado por um padre visitante</span>
+      </div>
+      <p>Nunca reivindicou o dom como propriedade sua. Nunca o usou como espetáculo. Nas vezes em que penitentes pediam explicitamente que ele lhes dissesse algo de extraordinário, recusava com firmeza — o dom funcionava quando funcionava, sem agenda própria. Era esse desinteresse, mais do que qualquer outra coisa, que convencia as testemunhas que o observavam de perto.</p>
     </div>
   </div>
 
@@ -464,8 +660,9 @@
       <h3>Claudine Venet — o caso principal</h3>
       <div class="sl-card-destaque">
         <div class="sl-badges">
-          <span class="sl-badge sl-badge-forte">Documentação forte</span>
+          <span class="sl-badge sl-badge-canonico">Milagre da beatificação</span>
         </div>
+        <h4>O caso que abriu o processo de beatificação em 1905</h4>
         <div class="sl-grid-2">
           <div>
             <div class="sl-ficha">
@@ -492,6 +689,10 @@
               <div class="sl-ficha-item">
                 <strong>Por que o caso é sólido</strong>
                 Mesmo médico antes e depois. Diagnóstico documentado, não apenas relatado pela família. Advogados do diabo investigaram remissão espontânea e diagnóstico incorreto — nenhuma das hipóteses foi considerada suficiente.
+              </div>
+              <div class="sl-ficha-item">
+                <strong>Reconhecimento</strong>
+                Aprovado formalmente pela Congregação dos Ritos como o milagre exigido para a beatificação de Vianney em 8 de janeiro de 1905, por Pio X.
               </div>
             </div>
           </div>
@@ -552,6 +753,27 @@
     </div>
 
     <div class="sl-bloco">
+      <h3>O perfil estatístico das curas em Ars</h3>
+      <div class="sl-topo-metrica">
+        <div class="sl-metrica">
+          <div class="sl-metrica-num">~60%</div>
+          <div class="sl-metrica-leg">Casos relatados envolvendo condições articulares, neurológicas ou paralíticas</div>
+        </div>
+        <div class="sl-metrica">
+          <div class="sl-metrica-num">~25%</div>
+          <div class="sl-metrica-leg">Casos pediátricos — crianças levadas pelos pais ao Cura</div>
+        </div>
+        <div class="sl-metrica">
+          <div class="sl-metrica-num">~15%</div>
+          <div class="sl-metrica-leg">Casos sensoriais — visão, audição, fala</div>
+        </div>
+      </div>
+      <div class="sl-alerta-info">
+        <strong>Sobre os percentuais:</strong> os números são aproximações baseadas na análise dos relatos preservados nos processos canônicos. Não pretendem ser estatística rigorosa — pretendem dar uma ideia do perfil predominante dos casos que chegavam até Vianney e do que era percebido como resposta da intercessão.
+      </div>
+    </div>
+
+    <div class="sl-bloco">
       <h3>As curas atribuídas a Santa Filomena — o nó histórico</h3>
       <div class="sl-card">
         <div class="sl-badges">
@@ -559,9 +781,9 @@
         </div>
         <p>Vianney atribuía muitas graças à intercessão de Santa Filomena, cuja imagem ocupava lugar de destaque na igreja de Ars. O problema posterior: em 1961, a Congregação dos Ritos removeu Filomena do calendário litúrgico após concluir que não havia evidências históricas suficientes para confirmar a existência da personagem como mártir identificável.</p>
         <p>Isso não anulou as graças relatadas em Ars. O que a Igreja manteve é que a fé genuína de Vianney e dos penitentes era real, independentemente da questão histórica sobre Filomena. Os casos foram avaliados pela consistência clínica e testemunhal — a atribuição devocional específica foi tratada como elemento separável.</p>
-        <div class="sl-alerta">
-          <strong>Ponto central:</strong> a canonização de Vianney não foi afetada pela questão de Filomena. Mas o leitor merece saber que parte dos relatos de cura em Ars tem esse nó no fundo.
-        </div>
+      </div>
+      <div class="sl-alerta">
+        <strong>Ponto central:</strong> a canonização de Vianney não foi afetada pela questão de Filomena. Mas o leitor merece saber que parte dos relatos de cura em Ars tem esse nó no fundo.
       </div>
     </div>
   </div>
@@ -589,6 +811,7 @@
         <div class="sl-badges">
           <span class="sl-badge sl-badge-forte">Documentação forte</span>
         </div>
+        <h4>O episódio em quatro tempos</h4>
         <p><strong>O contexto:</strong> a Providence estava sem trigo para alimentar as crianças. Não era escassez relativa — era falta concreta e verificada pelas responsáveis da casa. O celeiro havia sido verificado como insuficiente. Não havia dinheiro para reabastecimento. Os canais normais de doação estavam secos naquele momento.</p>
         <hr class="sl-divider-leve">
         <div class="sl-linha-tempo">
@@ -645,9 +868,18 @@
           <p>Os moradores de Ars — incluindo os que haviam resistido ao pároco nos primeiros anos — descreveram repetidamente que a provisão chegava sempre na medida da necessidade das crianças. Nunca em abundância acima do necessário. Nunca em contexto diferente das necessidades da Providence.</p>
         </div>
       </div>
-      <div class="sl-alerta-info" style="margin-top:12px;">
+      <div class="sl-alerta-info">
         <strong>O que torna esses casos diferentes de lenda simples:</strong> as responsáveis da Providence tinham memória prática e cotidiana dos estoques — não eram narradoras distantes. Os relatos incluem detalhes verificáveis de espaço e tempo. O padrão se repete com consistência ao longo de anos. E os que relatavam não eram apenas devotos: o taverneiro Mandy, um dos opositores mais persistentes de Vianney nos primeiros anos, estava entre os que descreveram episódios de provisão com nível de detalhe que inclui elementos desfavoráveis à narrativa devocional simples.
       </div>
+    </div>
+
+    <div class="sl-bloco">
+      <h3>A teologia da provisão segundo Vianney</h3>
+      <div class="sl-citacao">
+        <p>"O bom Deus nunca abandona os pobres que se entregam a Ele. As crianças da Providence são as crianças d'Ele. Eu sou apenas o caixa."</p>
+        <span class="sl-fonte">Frase atribuída por Catherine Lassagne, registrada em suas memórias</span>
+      </div>
+      <p>A insistência de Vianney sobre não preocupar-se com os recursos materiais não era ingenuidade administrativa. Era uma tese: que a obra dos pobres pertence a Deus, e que Ele providencia na medida da necessidade real, não na medida da ansiedade humana. As cinco décadas de funcionamento da Providence — em condições materiais sempre precárias mas nunca interrompidas — foram, para os contemporâneos, a melhor prova prática dessa tese.</p>
     </div>
   </div>
 
@@ -675,34 +907,34 @@
           <tr>
             <th>Fenômeno</th>
             <th>O que se relata</th>
-            <th>Nível de evidência</th>
+            <th>Nível</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td><strong>Ars como centro de peregrinação</strong></td>
             <td>Em 1818, quando nada indicava isso, teria dito que Ars se tornaria destino de peregrinação intensa.</td>
-            <td><span class="sl-badge sl-badge-forte">Documentação forte</span></td>
+            <td><span class="sl-badge sl-badge-forte">Forte</span></td>
           </tr>
           <tr>
             <td><strong>Morte de Gregório XVI</strong></td>
             <td>Teria anunciado a morte do Papa antes da notícia chegar por meios normais a Ars.</td>
-            <td><span class="sl-badge sl-badge-media">Testemunhos múltiplos</span></td>
+            <td><span class="sl-badge sl-badge-media">Múltiplos</span></td>
           </tr>
           <tr>
             <td><strong>Crises políticas de 1848</strong></td>
             <td>Advertências sobre abalos políticos e sofrimentos para a Igreja.</td>
-            <td><span class="sl-badge sl-badge-media">Testemunhos múltiplos</span></td>
+            <td><span class="sl-badge sl-badge-media">Múltiplos</span></td>
           </tr>
           <tr>
             <td><strong>Própria morte</strong></td>
             <td>Nos meses finais, teria falado do fim com consciência que excedia percepção clínica comum.</td>
-            <td><span class="sl-badge sl-badge-media">Testemunhos múltiplos</span></td>
+            <td><span class="sl-badge sl-badge-media">Múltiplos</span></td>
           </tr>
           <tr>
             <td><strong>Outras previsões atribuídas</strong></td>
             <td>Muitas frases proféticas circulam na tradição devocional.</td>
-            <td><span class="sl-badge sl-badge-fraca">Tradição oral</span></td>
+            <td><span class="sl-badge sl-badge-fraca">Oral</span></td>
           </tr>
         </tbody>
       </table>
@@ -714,6 +946,7 @@
         <div class="sl-badges">
           <span class="sl-badge sl-badge-forte">Documentação forte</span>
         </div>
+        <h4>1818 — A afirmação improvável</h4>
         <div class="sl-ficha">
           <div class="sl-ficha-item">
             <strong>O contexto do anúncio</strong>
@@ -756,6 +989,24 @@
         </div>
       </div>
     </div>
+
+    <div class="sl-bloco">
+      <h3>O critério metodológico para profecias</h3>
+      <div class="sl-grid-3">
+        <div class="sl-card">
+          <h4>Documentação prévia</h4>
+          <p>O anúncio precisa estar registrado antes do evento — em carta, diário ou testemunho fixado por escrito. Sem isso, é memória retrospectiva.</p>
+        </div>
+        <div class="sl-card">
+          <h4>Especificidade verificável</h4>
+          <p>"Algo vai acontecer" não é profecia. "Isso vai acontecer assim, neste contexto, neste tempo" é. Quanto mais específico, mais peso.</p>
+        </div>
+        <div class="sl-card">
+          <h4>Improbabilidade da inferência</h4>
+          <p>Se o anúncio podia ser inferido de circunstâncias visíveis, não é sobrenatural — é leitura aguçada. A profecia genuína anuncia o que não podia ser inferido.</p>
+        </div>
+      </div>
+    </div>
   </div>
 
   <div class="sl-sep">· · ·</div>
@@ -781,6 +1032,7 @@
         <div class="sl-badges">
           <span class="sl-badge sl-badge-forte">Documentação forte</span>
         </div>
+        <h4>O fenômeno observado por médicos e peregrinos</h4>
         <div class="sl-ficha">
           <div class="sl-ficha-item">
             <strong>O que acontecia</strong>
@@ -808,6 +1060,7 @@
         <div class="sl-badges">
           <span class="sl-badge sl-badge-media">Testemunhos múltiplos</span>
         </div>
+        <h4>A fragrância em três contextos</h4>
         <p>A fragrância inexplicável associada a Vianney foi relatada em três contextos distintos por pessoas que não se conheciam entre si e que usaram termos similares mas não idênticos — o padrão esperado de relatos independentes sobre o mesmo estímulo:</p>
         <div class="sl-grid-3" style="margin-top:12px;">
           <div class="sl-ficha-item">
@@ -843,10 +1096,10 @@
           </div>
           <h4>Bilocalização</h4>
           <p>Existem relatos de pessoas que descrevem ter visto Vianney em locais onde ele, segundo os registros de presença em Ars, não poderia estar. Mas esses relatos são na maioria tardios — chegaram aos biógrafos décadas depois dos eventos, sem cadeia documental verificável.</p>
-          <p>As possibilidades de confusão de identidade, de memória alterada e de elaboração progressiva são, nesta categoria, mais difíceis de descartar do que em qualquer outro fenômeno desta aba. Os processos canônicos não incluíram a bilocalização entre os fenômenos formalmente avaliados como sobrenaturais.</p>
+          <p>As possibilidades de confusão de identidade, de memória alterada e de elaboração progressiva são, nesta categoria, mais difíceis de descartar do que em qualquer outro fenômeno desta página. Os processos canônicos não incluíram a bilocalização entre os fenômenos formalmente avaliados como sobrenaturais.</p>
         </div>
       </div>
-      <div class="sl-alerta" style="margin-top: 12px;">
+      <div class="sl-alerta">
         <strong>O que o leitor precisa guardar:</strong> o fato de que levitação e bilocalização aparecem na tradição é ele mesmo um dado histórico — e está registrado aqui. Mas apresentá-los com o mesmo peso dos êxtases ou da cardiognosia seria desonesto com as fontes disponíveis.
       </div>
     </div>
@@ -873,8 +1126,9 @@
       <h3>O caso completo</h3>
       <div class="sl-card-destaque">
         <div class="sl-badges">
-          <span class="sl-badge sl-badge-canonico">Canônico</span>
+          <span class="sl-badge sl-badge-canonico">Milagre da canonização — 1925</span>
         </div>
+        <h4>Jovem com obstrução intestinal e peritonite</h4>
         <div class="sl-grid-2">
           <div>
             <div class="sl-ficha">
@@ -904,7 +1158,7 @@
               </div>
               <div class="sl-ficha-item">
                 <strong>Reconhecimento formal</strong>
-                O relatório pericial foi favorável. A Congregação dos Ritos aceitou o caso como milagre para efeito da canonização de João Vianney.
+                O relatório pericial foi favorável. A Congregação dos Ritos aceitou o caso como milagre para efeito da canonização de João Vianney em 31 de maio de 1925, por Pio XI.
               </div>
             </div>
           </div>
@@ -1011,7 +1265,7 @@
     <div class="sl-bloco">
       <h3>O contexto de 2009 — graças ligadas ao Ano Sacerdotal</h3>
       <div class="sl-card">
-        <p>O santuário de Ars recebeu correspondência aumentada durante e após o período de renovação sacerdotal em torno da figura de Vianney. O padrão predominante foi triplo: <strong>padres que consideravam deixar o ministério e decidiram permanecer</strong>, <strong>jovens que encontraram na história de Vianney — o candidato reprovado que não desistiu — uma resposta específica para a própria situação</strong>, e <strong>retorno às sacramentos após anos de afastamento</strong>.</p>
+        <p>O santuário de Ars recebeu correspondência aumentada durante e após o período de renovação sacerdotal em torno da figura de Vianney. O padrão predominante foi triplo: <strong>padres que consideravam deixar o ministério e decidiram permanecer</strong>, <strong>jovens que encontraram na história de Vianney — o candidato reprovado que não desistiu — uma resposta específica para a própria situação</strong>, e <strong>retorno aos sacramentos após anos de afastamento</strong>.</p>
         <p>Esses relatos não são milagres no sentido canônico estrito. São graças — e a distinção importa, mas não diminui a realidade do que as pessoas descrevem. Uma conversão interior não é menos real porque não pode ser verificada pelos mesmos instrumentos que verificam uma cura física.</p>
       </div>
     </div>
@@ -1044,8 +1298,23 @@
           </ul>
         </div>
       </div>
-      <div class="sl-alerta-info" style="margin-top:12px;">
+      <div class="sl-alerta-info">
         <strong>Intenções especialmente ligadas ao seu patronato:</strong> conversão de sacerdotes em crise, discernimento vocacional, graça de uma boa confissão, fidelidade no ministério pastoral, retorno de afastados aos sacramentos.
+      </div>
+    </div>
+
+    <div class="sl-bloco">
+      <h3>Oração breve de intercessão</h3>
+      <div class="sl-citacao">
+        <p>São João Maria Vianney, pastor incansável de Ars, que conhecia os corações pelo dom de Deus e não pela ciência humana — alcançai-me a graça de [<em>intenção específica</em>]. Que a vossa intercessão me obtenha o que mais necessito: a verdadeira conversão do coração e a fidelidade no estado de vida em que Deus me colocou. Amém.</p>
+        <span class="sl-fonte">Forma de oração breve, adaptada das novenas tradicionais</span>
+      </div>
+    </div>
+
+    <div class="sl-bloco">
+      <div class="sl-bloco-resumo">
+        <h3>Uma palavra final sobre os milagres</h3>
+        <p>O milagre, na tradição católica, não é nunca o ponto central — é o sinal. O que Vianney testemunhava, em cada cardiognosia e em cada cura, não era a sua própria capacidade extraordinária, mas a presença de um Deus que continua agindo no mundo através de instrumentos humanos. O que esta página apresenta não é, portanto, uma coleção de prodígios curiosos. É a documentação histórica de quarenta anos em que um homem específico se deixou ser instrumento — e do que aconteceu por causa disso, nas vidas que cruzaram com a sua.</p>
       </div>
     </div>
   </div>
