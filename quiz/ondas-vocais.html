@@ -949,6 +949,58 @@
             color: var(--gold);
             font-weight: 600;
         }
+        /* ============ PRÊMIO ============ */
+.premio-container {
+    margin: 25px 0;
+    text-align: center;
+    animation: premioEntry 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes premioEntry {
+    from {
+        opacity: 0;
+        transform: scale(0.7) rotate(-5deg);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) rotate(0deg);
+    }
+}
+
+.premio-titulo {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 14px;
+    color: var(--gold);
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    margin-bottom: 15px;
+    font-weight: 700;
+}
+
+.premio-img {
+    max-width: 100%;
+    max-height: 400px;
+    width: auto;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    border: none;
+    outline: none;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+    transition: transform 0.4s ease;
+}
+
+.premio-img:hover {
+    transform: scale(1.03);
+}
+
+.premio-legenda {
+    margin-top: 12px;
+    font-size: 16px;
+    color: #ccccee;
+    font-style: italic;
+    font-weight: 500;
+}
     </style>
 </head>
 <body>
@@ -1698,7 +1750,23 @@ function finishQuiz() {
     // Rank badge
     document.getElementById('rankName').textContent = rank.name;
     document.getElementById('rankDesc').textContent = rank.desc;
+// Mostra o prêmio se houver
+const rankBadge = document.querySelector('#resultScreen .rank-badge');
+// Remove prêmio anterior se existir
+const premioAntigo = document.getElementById('premioContainer');
+if (premioAntigo) premioAntigo.remove();
 
+if (rank.premio) {
+    const premioDiv = document.createElement('div');
+    premioDiv.id = 'premioContainer';
+    premioDiv.className = 'premio-container';
+    premioDiv.innerHTML = `
+        <div class="premio-titulo">🎁 Seu Prêmio</div>
+        <img src="${rank.premio}" alt="Prêmio" class="premio-img" onerror="this.parentElement.style.display='none'">
+        <div class="premio-legenda">"${rank.premioLegenda}"</div>
+    `;
+    rankBadge.insertAdjacentElement('afterend', premioDiv);
+}
     // Ranking table
     renderRanking('rankingBody', playerName);
 
@@ -1712,14 +1780,14 @@ function getRankInfo(s) {
     const maxScore = questions.length * 175;
     const pct = s / maxScore * 100;
 
-    if (pct >= 95) return { name: '🏆 PARABENS FELIPE LINDÃO', icon: '⚡', color: '#ffd700', desc: 'EINSTEIN TÁ CHORANDO NO CANTO COM INVEJA DE VOCÊ' };
-    if (pct >= 85) return { name: '🌟 NERDÃO', icon: '👑', color: '#fdcb6e', desc: 'Parabéms dominou um experimento inutil KAKAKAKAKAK' };
-    if (pct >= 70) return { name: '🔬 COMO SE SENTE SENDO MAIS BURRO QUE EU?', icon: '🏆', color: '#00cec9', desc: 'SEGUNDO LUGAR É PROS FRACOS' };
-    if (pct >= 55) return { name: '📡 SÓ A METADE FI?', icon: '🥈', color: '#a29bfe', desc: 'LIXO' };
-    if (pct >= 40) return { name: '📚 A SABEDORIA VAI ATRAS DE VOCÊ MAS TU É MUITO RAPIDO', icon: '🥉', color: '#fd79a8', desc: 'VAI ESTUDAR AGORA' };
-    if (pct >= 25) return { name: '🔍 MAIS UM POUCO DE BURRICE VIRA O BRYAN KAKAAKAK', icon: '📖', color: '#e17055', desc: 'PRA LER O LIVRO TEM QUE ABRIR ELE SABIA?' };
-    if (pct >= 10) return { name: '🌱 FRACASSADO AKKAKAKAKAKA', icon: '💪', color: '#636e72', desc: 'SE EU PERDER PONTOS POR TUA CAUSA EU VOU DESENHAR PIKAS NO TEU CADERNO' };
-    return { name: '💀 NEM O CHATGPT TE SALVA', icon: '🤡', color: '#2d3436', desc: 'EU TENHO CERTEZA QUE TU CHUTOU TUDO E AINDA ASSIM FOI MAL, VAI PRA ESCOLA PELO AMOR DE DEUS' };
+    if (pct >= 95) return { name: '🏆 PARABENS FELIPE LINDÃO', icon: '⚡', color: '#ffd700', desc: 'EINSTEIN TÁ CHORANDO NO CANTO COM INVEJA DE VOCÊ', premio: 'premios/premio-1.jpg', premioLegenda: 'adimitire' };
+    if (pct >= 85) return { name: '🌟 NERDÃO', icon: '👑', color: '#fdcb6e', desc: 'Parabéms dominou um experimento inutil KAKAKAKAKAK', premio: 'premios/premio-2.jpg', premioLegenda: 'obra de arte' };
+    if (pct >= 70) return { name: '🔬 COMO SE SENTE SENDO MAIS BURRO QUE EU?', icon: '🏆', color: '#00cec9', desc: 'SEGUNDO LUGAR É PROS FRACOS', premio: 'premios/premio-3.jpg', premioLegenda: 'senhora desobediente' };
+    if (pct >= 55) return { name: '📡 SÓ A METADE FI?', icon: '🥈', color: '#a29bfe', desc: 'LIXO', premio: 'premios/premio-4.jpg', premioLegenda: 'A ex que cornou o bryan pro c' };
+    if (pct >= 40) return { name: '📚 A SABEDORIA VAI ATRAS DE VOCÊ MAS TU É MUITO RAPIDO', icon: '🥉', color: '#fd79a8', desc: 'VAI ESTUDAR AGORA', premio: 'premios/premio-5.jpg', premioLegenda: 'como deveria ser' };
+    if (pct >= 25) return { name: '🔍 MAIS UM POUCO DE BURRICE VIRA O BRYAN KAKAAKAK', icon: '📖', color: '#e17055', desc: 'PRA LER O LIVRO TEM QUE ABRIR ELE SABIA?', premio: 'premios/premio-6.jpg', premioLegenda: 'é a foto original?' };
+    if (pct >= 10) return { name: '🌱 FRACASSADO AKKAKAKAKAKA', icon: '💪', color: '#636e72', desc: 'SE EU PERDER PONTOS POR TUA CAUSA EU VOU DESENHAR PIKAS NO TEU CADERNO', premio: 'premios/premio-7.jpg', premioLegenda: 'gatito cristão' };
+    return { name: '💀 NEM O CHATGPT TE SALVA', icon: '🤡', color: '#2d3436', desc: 'EU TENHO CERTEZA QUE TU CHUTOU TUDO E AINDA ASSIM FOI MAL, VAI PRA ESCOLA PELO AMOR DE DEUS', premio: null, premioLegenda: null };
 }
 
 // =============================================
