@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quiz - Ondas & Cordas Vocais 🔬</title>
+     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Orbitron:wght@400;500;600;700;800;900&display=swap');
 
@@ -1201,6 +1203,20 @@
 <div class="confetti-container" id="confettiContainer"></div>
 
 <script>
+    // ==================== FIREBASE CONFIG ====================
+const firebaseConfig = {
+    apiKey: "AIzaSyD0EhYgo_Ge5d4qMcJOQeMVJm_ufxwM35w",
+    authDomain: "quiz-ondas.firebaseapp.com",
+    databaseURL: "https://quiz-ondas-default-rtdb.firebaseio.com",
+    projectId: "quiz-ondas",
+    storageBucket: "quiz-ondas.firebasestorage.app",
+    messagingSenderId: "19772145832",
+    appId: "1:19772145832:web:3233e4c76b3ab90fc2029d"
+};
+
+// Inicializa Firebase
+firebase.initializeApp(firebaseConfig);
+const database = firebase.database();
 // =============================================
 //  QUIZ DATA — 15 QUESTÕES
 // =============================================
@@ -1463,49 +1479,79 @@ function markAsPlayed(name, finalScore) {
 //  RANKING SYSTEM (localStorage)
 // =============================================
 function saveToRanking(name, finalScore) {
-    let ranking = JSON.parse(localStorage.getItem('quiz_ondas_ranking') || '[]');
-    // Remove entrada antiga do mesmo nome
-    ranking = ranking.filter(r => r.name.toLowerCase() !== name.toLowerCase());
-    ranking.push({ name, score: finalScore, date: new Date().toISOString() });
-    ranking.sort((a, b) => b.score - a.score);
-    ranking = ranking.slice(0, 50); // Top 50
-    localStorage.setItem('quiz_ondas_ranking', JSON.stringify(ranking));
+    const rankingRef = database.ref('ranking');
+    
+    // Primeiro busca todas as entradas para remover duplicatas do mesmo nome
+    rankingRef.once('value', (snapshot) => {
+        const promises = [];
+        
+        snapshot.forEach((child) => {
+            const entry = child.val();
+            if (entry.name.toLowerCase() === name.toLowerCase()) {
+                // Remove a entrada antiga do mesmo nome
+                promises.push(rankingRef.child(child.key).remove());
+            }
+        });
+        
+        // Após remover as duplicatas, adiciona a nova pontuação
+        Promise.all(promises).then(() => {
+            rankingRef.push({
+                name: name,
+                score: finalScore,
+                date: new Date().toISOString()
+            });
+        });
+    });
 }
 
 function renderRanking(tbodyId, highlightName) {
-    const ranking = JSON.parse(localStorage.getItem('quiz_ondas_ranking') || '[]');
     const tbody = document.getElementById(tbodyId);
-    tbody.innerHTML = '';
-
-    if (ranking.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="3" style="text-align:center;color:#666;padding:20px;">Nenhum resultado ainda</td></tr>';
-        return;
-    }
-
-    const medals = ['🥇', '🥈', '🥉'];
-    const avatarColors = ['#6c5ce7', '#00cec9', '#fd79a8', '#e17055', '#00b894', '#fdcb6e', '#a29bfe', '#fab1a0'];
-
-    ranking.forEach((entry, i) => {
-        const tr = document.createElement('tr');
-        if (highlightName && entry.name.toLowerCase() === highlightName.toLowerCase()) {
-            tr.classList.add('current-user');
+    tbody.innerHTML = '<tr><td colspan="3" style="text-align:center;color:#666;padding:20px;">Carregando ranking...</td></tr>';
+    
+    const rankingRef = database.ref('ranking');
+    
+    rankingRef.once('value', (snapshot) => {
+        let ranking = [];
+        snapshot.forEach((child) => {
+            ranking.push(child.val());
+        });
+        
+        // Ordena do maior para o menor
+        ranking.sort((a, b) => b.score - a.score);
+        ranking = ranking.slice(0, 50); // Top 50
+        
+        tbody.innerHTML = '';
+        
+        if (ranking.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="3" style="text-align:center;color:#666;padding:20px;">Nenhum resultado ainda</td></tr>';
+            return;
         }
 
-        const pos = i < 3 ? `<span class="rank-medal">${medals[i]}</span>` : (i + 1);
-        const colorIdx = entry.name.charCodeAt(0) % avatarColors.length;
-        const initial = entry.name.charAt(0).toUpperCase();
+        const medals = ['🥇', '🥈', '🥉'];
+        const avatarColors = ['#6c5ce7', '#00cec9', '#fd79a8', '#e17055', '#00b894', '#fdcb6e', '#a29bfe', '#fab1a0'];
 
-        tr.innerHTML = `
-            <td>${pos}</td>
-            <td>
-                <div class="player-name-cell">
-                    <div class="player-avatar" style="background:${avatarColors[colorIdx]}">${initial}</div>
-                    ${entry.name}
-                </div>
-            </td>
-            <td>${entry.score}</td>
-        `;
-        tbody.appendChild(tr);
+        ranking.forEach((entry, i) => {
+            const tr = document.createElement('tr');
+            if (highlightName && entry.name.toLowerCase() === highlightName.toLowerCase()) {
+                tr.classList.add('current-user');
+            }
+
+            const pos = i < 3 ? `<span class="rank-medal">${medals[i]}</span>` : (i + 1);
+            const colorIdx = entry.name.charCodeAt(0) % avatarColors.length;
+            const initial = entry.name.charAt(0).toUpperCase();
+
+            tr.innerHTML = `
+                <td>${pos}</td>
+                <td>
+                    <div class="player-name-cell">
+                        <div class="player-avatar" style="background:${avatarColors[colorIdx]}">${initial}</div>
+                        ${entry.name}
+                    </div>
+                </td>
+                <td>${entry.score}</td>
+            `;
+            tbody.appendChild(tr);
+        });
     });
 }
 
