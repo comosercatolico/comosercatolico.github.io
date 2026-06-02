@@ -1,4 +1,157 @@
-<div class="sl-painel ativo" data-nome="referencias">
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Referências — São João Maria Vianney</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        /* ===== MENU ===== */
+        .sl-wrap { max-width: 1200px; margin: 0 auto; padding: 40px 20px 0; font-family: Georgia, 'Times New Roman', serif; }
+        .sl-cabecalho { text-align: center; margin-bottom: 30px; }
+        .sl-santo-nome { font-family: Georgia, 'Times New Roman', serif; font-size: 42px; font-weight: 400; color: #2f2a22; letter-spacing: 2px; margin: 0 0 14px; line-height: 1.15; }
+        .sl-divisor { display: flex; align-items: center; justify-content: center; gap: 12px; margin: 12px 0; }
+        .sl-divisor-linha { display: inline-block; width: 60px; height: 1px; background: #b08a3c; opacity: 0.5; }
+        .sl-divisor-orn { color: #b08a3c; font-size: 10px; }
+        .sl-santo-titulo { margin: 8px 0 14px; color: #b08a3c; font-family: Georgia, 'Times New Roman', serif; font-size: 12px; letter-spacing: 4px; text-transform: uppercase; font-weight: 600; }
+        .sl-intro-frase { margin: 0; color: #6f6758; font-family: Georgia, 'Times New Roman', serif; font-size: 15px; font-style: italic; letter-spacing: 0.5px; }
+        .sl-nav { border-top: 1px solid #d8d1c2; border-bottom: 1px solid #d8d1c2; background: #faf8f3; padding: 4px 0; }
+        .sl-lista { display: grid; grid-template-columns: repeat(5, 1fr); list-style: none; padding: 0; margin: 0; }
+        .sl-lista li { margin: 0; padding: 0; list-style: none; }
+        .sl-lista li::marker, .sl-lista li::before { content: "" !important; display: none !important; }
+        .sl-lista li a { display: flex; align-items: center; justify-content: center; text-align: center; text-decoration: none; color: #6e6a60; font-family: Georgia, 'Times New Roman', serif; font-size: 12.5px; letter-spacing: 2px; text-transform: uppercase; padding: 18px 12px; position: relative; transition: all 0.3s ease; background: transparent; min-height: 56px; box-sizing: border-box; }
+        .sl-lista li a::before, .sl-lista li a span::before, .sl-lista li a span::after { content: none !important; display: none !important; }
+        .sl-lista .sl-nome { display: inline-block; line-height: 1.3; }
+        .sl-lista li a::after { content: ""; position: absolute; left: 50%; bottom: 8px; width: 0; height: 1px; background-color: #b08a3c; transition: width 0.3s ease; transform: translateX(-50%); }
+        .sl-lista li a:hover { color: #2f2a22; background-color: #f3eee3; }
+        .sl-lista li a:hover::after { width: 50%; }
+        .sl-lista li a.ativo { color: #2f2a22; background-color: #f5f0e5; }
+        .sl-lista li a.ativo::after { width: 50%; }
+        @media (max-width: 900px) { .sl-santo-nome { font-size: 32px; letter-spacing: 1px; } .sl-lista li a { font-size: 11px; letter-spacing: 1.5px; padding: 14px 8px; } }
+        @media (max-width: 600px) { .sl-wrap { padding: 24px 12px 0; } .sl-santo-nome { font-size: 24px; } .sl-santo-titulo { font-size: 10px; letter-spacing: 3px; } .sl-intro-frase { font-size: 13px; padding: 0 10px; } .sl-lista li a { font-size: 9.5px; letter-spacing: 1px; padding: 12px 4px; min-height: 50px; } }
+        @media (max-width: 420px) { .sl-lista li a { font-size: 8.5px; padding: 10px 3px; letter-spacing: 0.5px; } }
+
+        /* ===== CABEÇALHO DA PÁGINA ===== */
+        .sl-pagina-cabecalho { text-align: center; margin: 60px auto 50px; max-width: 800px; padding: 0 20px; }
+        .sl-pagina-numero { font-family: Georgia, 'Times New Roman', serif; font-size: 14px; letter-spacing: 6px; color: #b08a3c; text-transform: uppercase; margin: 0 0 20px; font-weight: 400; }
+        .sl-pagina-titulo { font-family: Georgia, 'Times New Roman', serif; font-size: 64px; font-weight: 400; color: #2f2a22; margin: 0 0 18px; line-height: 1.1; letter-spacing: 1px; }
+        .sl-pagina-subtitulo { font-family: Georgia, 'Times New Roman', serif; font-size: 18px; font-style: italic; color: #6f6758; margin: 0 0 24px; letter-spacing: 0.5px; }
+        .sl-pagina-ornamento { color: #b08a3c; font-size: 14px; letter-spacing: 4px; }
+        @media (max-width: 600px) {
+            .sl-pagina-cabecalho { margin: 40px auto 36px; }
+            .sl-pagina-titulo { font-size: 40px; }
+            .sl-pagina-subtitulo { font-size: 15px; }
+            .sl-pagina-numero { font-size: 12px; letter-spacing: 4px; }
+        }
+
+        /* ===== CONTEÚDO BASE ===== */
+        main { max-width: 800px; margin: 0 auto 40px; padding: 0 20px; }
+        .sl-secao { margin-bottom: 40px; }
+        .sl-secao-header { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; flex-wrap: wrap; }
+        .sl-secao-num { font-family: 'Libre Baskerville', serif; font-size: 24px; color: #b08a3c; font-weight: bold; }
+        .sl-secao-linha { flex-grow: 1; height: 1px; background: #eee; }
+        .sl-secao-titulo { font-family: 'Inter', sans-serif; font-size: 18px; text-transform: uppercase; letter-spacing: 2px; color: #333; }
+        .sl-bloco { margin-bottom: 25px; line-height: 1.8; color: #444; }
+        .sl-bloco h3 { font-family: 'Libre Baskerville', serif; color: #2c3e50; margin-bottom: 15px; }
+        .sl-bloco p { margin-bottom: 12px; }
+        .sl-bloco p:last-child { margin-bottom: 0; }
+        .sl-capitular { float: left; font-size: 60px; line-height: 50px; padding-top: 4px; padding-right: 8px; padding-left: 3px; font-family: 'Libre Baskerville', serif; color: #b08a3c; }
+        .sl-sep { text-align: center; margin: 40px 0; color: #b08a3c; font-size: 24px; }
+        .sl-citacao { margin: 24px auto; max-width: 640px; text-align: center; font-style: italic; background: #fdfaf3; padding: 24px 28px; border-radius: 8px; border: 1px inset #f3eee3; }
+        .sl-citacao p { font-size: 1.1em; color: #2f2a22; margin-bottom: 10px; }
+        .sl-fonte { display: block; font-size: 0.78em; text-transform: uppercase; letter-spacing: 1px; color: #b08a3c; font-style: normal; }
+
+        /* ===== GRIDS ===== */
+        .sl-grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; margin-top: 14px; }
+        .sl-grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin-top: 14px; }
+
+        /* ===== CARDS ===== */
+        .sl-card { border: 1px solid #d9d9d9; border-radius: 12px; padding: 16px 18px; background: #fff; box-shadow: 0 1px 2px rgba(0,0,0,.03); }
+        .sl-card h4 { margin: 0 0 10px; font-size: 15px; font-family: 'Libre Baskerville', serif; color: #2c3e50; }
+        .sl-card p { margin: 0 0 8px; font-size: 14px; line-height: 1.6; color: #555; }
+        .sl-card p:last-child { margin-bottom: 0; }
+
+        .sl-card-destaque { border: 2px solid #b18b57; border-radius: 12px; padding: 18px 20px; background: #fdfaf5; margin-bottom: 14px; }
+        .sl-card-destaque h4 { margin: 0 0 10px; font-size: 16px; font-family: 'Libre Baskerville', serif; color: #2c3e50; }
+        .sl-card-destaque p { margin: 0 0 8px; font-size: 14px; line-height: 1.6; color: #555; }
+
+        /* ===== BADGES ===== */
+        .sl-badges { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+        .sl-badge { display: inline-block; padding: 4px 10px; border-radius: 999px; font-size: 11px; font-weight: 700; letter-spacing: .03em; text-transform: uppercase; font-family: 'Inter', sans-serif; }
+        .sl-badge-data { background: #f0e8fc; color: #5b2db8; }
+        .sl-badge-canonico { background: #e7f7ea; color: #1d6b35; }
+        .sl-badge-iconografia { background: #fff3db; color: #8a5a00; }
+        .sl-badge-instituicao { background: #e8f0fe; color: #2457b8; }
+        .sl-badge-bibliografia { background: #fce8f3; color: #9d2466; }
+        .sl-badge-pt { background: #e7f7ea; color: #1d6b35; }
+        .sl-badge-fr { background: #e8f0fe; color: #2457b8; }
+        .sl-badge-en { background: #fff3db; color: #8a5a00; }
+
+        /* ===== BLOCO RESUMO ===== */
+        .sl-bloco-resumo { border-left: 4px solid #b18b57; background: #faf7f2; padding: 16px 18px; border-radius: 8px; margin-bottom: 4px; }
+        .sl-bloco-resumo h3 { margin: 0 0 8px; font-family: 'Libre Baskerville', serif; color: #2c3e50; }
+        .sl-bloco-resumo p  { margin: 0 0 6px; font-size: 14px; line-height: 1.6; color: #555; }
+        .sl-bloco-resumo p:last-child { margin-bottom: 0; }
+
+        /* ===== ALERTAS ===== */
+        .sl-alerta { padding: 14px 16px; border-radius: 10px; background: #fff8e8; border: 1px solid #f1d58f; font-size: 14px; line-height: 1.6; margin-top: 12px; color: #444; }
+        .sl-alerta-info { padding: 14px 16px; border-radius: 10px; background: #f0f4ff; border: 1px solid #c5d3f5; font-size: 14px; line-height: 1.6; margin-top: 12px; color: #444; }
+
+        /* ===== FICHA ===== */
+        .sl-ficha { display: grid; gap: 8px; margin-top: 8px; }
+        .sl-ficha-item { padding: 10px 14px; border-radius: 10px; background: #f8f8f8; border: 1px solid #ececec; font-size: 14px; line-height: 1.6; color: #444; }
+        .sl-ficha-item strong { display: block; margin-bottom: 4px; font-size: 12px; text-transform: uppercase; letter-spacing: .03em; color: #888; font-family: 'Inter', sans-serif; }
+
+        /* ===== TABELA ===== */
+        .sl-mini-tabela { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 14px; }
+        .sl-mini-tabela th, .sl-mini-tabela td { border: 1px solid #e2e2e2; padding: 10px 14px; text-align: left; vertical-align: top; }
+        .sl-mini-tabela th { background: #f7f7f7; font-size: 13px; font-family: 'Inter', sans-serif; }
+
+        /* ===== LINHA DO TEMPO ===== */
+        .sl-linha-tempo { display: grid; gap: 10px; margin-top: 14px; }
+        .sl-passo { display: grid; grid-template-columns: 40px 1fr; gap: 12px; align-items: start; }
+        .sl-passo-num { width: 40px; height: 40px; border-radius: 50%; background: #222; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 15px; flex-shrink: 0; font-family: 'Inter', sans-serif; }
+
+        /* ===== AGRUPADOR DE CITAÇÕES POR TEMA ===== */
+        .sl-tema-citacoes { background: #faf8f3; border: 1px solid #ece4d3; border-radius: 14px; padding: 18px 20px; margin-top: 14px; }
+        .sl-tema-citacoes h4 { font-family: 'Libre Baskerville', serif; color: #2c3e50; margin: 0 0 4px; font-size: 16px; text-align: center; }
+        .sl-tema-citacoes .sl-tema-sub { text-align: center; font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: #b08a3c; font-family: 'Inter', sans-serif; margin-bottom: 14px; }
+        .sl-tema-citacoes .sl-citacao { margin: 12px auto; background: #fff; }
+
+        /* ===== RESPONSIVO ===== */
+        @media (max-width: 600px) {
+            .sl-secao-titulo { font-size: 15px; letter-spacing: 1.5px; }
+            .sl-citacao { padding: 18px 16px; }
+            .sl-passo { grid-template-columns: 1fr; }
+            .sl-passo-num { margin-bottom: 6px; }
+            .sl-mini-tabela th, .sl-mini-tabela td { padding: 8px 10px; font-size: 13px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- O menu é injetado automaticamente pelo JS abaixo -->
+<script src="sao-joao-maria-vianney.js"></script>
+
+<!-- ===== CABEÇALHO DA PÁGINA ===== -->
+<header class="sl-pagina-cabecalho">
+    <p class="sl-pagina-numero">X</p>
+    <h1 class="sl-pagina-titulo">Referências</h1>
+    <p class="sl-pagina-subtitulo">Ficha, Iconografia, Bibliografia e Visitação</p>
+    <div class="sl-pagina-ornamento">✦</div>
+</header>
+
+<main>
+
+  <!-- ===== INTRODUÇÃO ===== -->
+  <div class="sl-bloco">
+    <div class="sl-bloco-resumo">
+      <h3>O que esta página reúne</h3>
+      <p>Esta página funciona como referência rápida e definitiva sobre João Vianney: ficha biográfica completa, datas canônicas, cronologia consolidada, iconografia, instituições com seu nome, bibliografia comentada, ditos e citações organizadas por tema, e informações práticas para quem deseja visitar Ars hoje. Tudo o que aparece dispersa nas outras páginas está aqui em forma de consulta.</p>
+    </div>
+  </div>
+
+  <div class="sl-sep">· · ·</div>
 
   <!-- 01 · FICHA COMPLETA -->
   <div class="sl-secao">
@@ -91,18 +244,27 @@
       <h3>Titulações e patronatos oficiais</h3>
       <div class="sl-grid-3">
         <div class="sl-card">
+          <div class="sl-badges">
+            <span class="sl-badge sl-badge-canonico">Canônico</span>
+          </div>
           <h4>Beatificação</h4>
           <p><strong>Data:</strong> 8 de janeiro de 1905</p>
           <p><strong>Papa:</strong> Pio X</p>
           <p><strong>Milagre aprovado:</strong> cura de Claudine Venet</p>
         </div>
         <div class="sl-card">
+          <div class="sl-badges">
+            <span class="sl-badge sl-badge-canonico">Canônico</span>
+          </div>
           <h4>Canonização</h4>
           <p><strong>Data:</strong> 31 de maio de 1925</p>
           <p><strong>Papa:</strong> Pio XI</p>
           <p><strong>Milagre aprovado:</strong> cura de Louis Doze</p>
         </div>
         <div class="sl-card">
+          <div class="sl-badges">
+            <span class="sl-badge sl-badge-canonico">Canônico</span>
+          </div>
           <h4>Patronato universal</h4>
           <p><strong>Data:</strong> 23 de abril de 1929</p>
           <p><strong>Declarado por:</strong> Pio XI</p>
@@ -129,135 +291,42 @@
       <table class="sl-mini-tabela">
         <thead>
           <tr>
-            <th>Ano</th>
+            <th style="width: 80px;">Ano</th>
             <th>Evento</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>1786</td>
-            <td>Nascimento em Dardilly, 8 de maio</td>
-          </tr>
-          <tr>
-            <td>1789</td>
-            <td>Início da Revolução Francesa — João tem 3 anos</td>
-          </tr>
-          <tr>
-            <td>1793–1801</td>
-            <td>O Terror e a perseguição à Igreja. Missas clandestinas na infância de João</td>
-          </tr>
-          <tr>
-            <td>1799</td>
-            <td>Primeira Comunhão clandestina em Écully — João tem 13 anos</td>
-          </tr>
-          <tr>
-            <td>1802</td>
-            <td>Encontro com Père Balley em Écully. Início da formação com o mestre</td>
-          </tr>
-          <tr>
-            <td>1809</td>
-            <td>Convocação militar napoleônica. Deserção e dois anos em Les Noes sob nome falso</td>
-          </tr>
-          <tr>
-            <td>1810</td>
-            <td>Anistia napoleônica. Regularização da situação. Retorno a Dardilly</td>
-          </tr>
-          <tr>
-            <td>1813</td>
-            <td>Entrada no seminário menor de Verrières. Dificuldades graves com o latim</td>
-          </tr>
-          <tr>
-            <td>1813</td>
-            <td>Reprovação no seminário maior de Lyon</td>
-          </tr>
-          <tr>
-            <td>1815</td>
-            <td>Intervenção de Père Balley e avaliação de Courbon. Ordenação diaconal em junho. Ordenação presbiteral em 13 de agosto, Grenoble</td>
-          </tr>
-          <tr>
-            <td>1815–1817</td>
-            <td>Vigário de Père Balley em Écully</td>
-          </tr>
-          <tr>
-            <td>1817</td>
-            <td>Morte de Père Balley em dezembro. Primeiro grande luto sacerdotal</td>
-          </tr>
-          <tr>
-            <td>1818</td>
-            <td>Chegada a Ars em fevereiro. Encontro com o menino Antoine Givre</td>
-          </tr>
-          <tr>
-            <td>1818–1824</td>
-            <td>Primeiros anos de ministério em Ars. Resistência dos paroquianos. Início da transformação</td>
-          </tr>
-          <tr>
-            <td>1824</td>
-            <td>Fundação da Providence — o orfanato para meninas pobres</td>
-          </tr>
-          <tr>
-            <td>1824</td>
-            <td>Início das perturbações do Grappin — os ataques demoníacos documentados</td>
-          </tr>
-          <tr>
-            <td>1827–1830</td>
-            <td>Chegada dos primeiros peregrinos externos. Início da fama além de Ars</td>
-          </tr>
-          <tr>
-            <td>1843</td>
-            <td>Primeira tentativa de fuga de Ars. Retorno no mesmo dia</td>
-          </tr>
-          <tr>
-            <td>1853</td>
-            <td>Última tentativa de fuga — a mais documentada. Retorno definitivo</td>
-          </tr>
-          <tr>
-            <td>1855–1859</td>
-            <td>Declínio físico progressivo. Últimos anos de ministério</td>
-          </tr>
-          <tr>
-            <td>1858</td>
-            <td>Cessação definitiva das perturbações do Grappin</td>
-          </tr>
-          <tr>
-            <td>1859</td>
-            <td>Última missa em 29 de julho. Morte em 4 de agosto. Funeral em 6 de agosto</td>
-          </tr>
-          <tr>
-            <td>1874</td>
-            <td>Abertura do processo de beatificação</td>
-          </tr>
-          <tr>
-            <td>1904</td>
-            <td>Exumação do corpo. Separação do coração como relíquia independente</td>
-          </tr>
-          <tr>
-            <td>1905</td>
-            <td>Beatificação por Pio X, 8 de janeiro</td>
-          </tr>
-          <tr>
-            <td>1925</td>
-            <td>Canonização por Pio XI, 31 de maio. Máscara de cera colocada no rosto</td>
-          </tr>
-          <tr>
-            <td>1929</td>
-            <td>Declaração do patronato universal dos párocos por Pio XI</td>
-          </tr>
-          <tr>
-            <td>1959</td>
-            <td>Encíclica <em>Sacerdotii Nostri Primordia</em> de João XXIII, no centenário da morte</td>
-          </tr>
-          <tr>
-            <td>1986</td>
-            <td>Visita de João Paulo II a Ars, 6 de outubro</td>
-          </tr>
-          <tr>
-            <td>2009–2010</td>
-            <td>Ano Sacerdotal proclamado por Bento XVI, com Vianney como figura central</td>
-          </tr>
-          <tr>
-            <td>2019</td>
-            <td>Carta de Francisco aos sacerdotes, publicada em 4 de agosto — 160º aniversário da morte</td>
-          </tr>
+          <tr><td>1786</td><td>Nascimento em Dardilly, 8 de maio</td></tr>
+          <tr><td>1789</td><td>Início da Revolução Francesa — João tem 3 anos</td></tr>
+          <tr><td>1793–1801</td><td>O Terror e a perseguição à Igreja. Missas clandestinas na infância de João</td></tr>
+          <tr><td>1799</td><td>Primeira Comunhão clandestina em Écully — João tem 13 anos</td></tr>
+          <tr><td>1802</td><td>Encontro com Père Balley em Écully. Início da formação com o mestre</td></tr>
+          <tr><td>1809</td><td>Convocação militar napoleônica. Deserção e dois anos em Les Noes sob nome falso</td></tr>
+          <tr><td>1810</td><td>Anistia napoleônica. Regularização da situação. Retorno a Dardilly</td></tr>
+          <tr><td>1813</td><td>Entrada no seminário menor de Verrières. Dificuldades graves com o latim</td></tr>
+          <tr><td>1813</td><td>Reprovação no seminário maior de Lyon</td></tr>
+          <tr><td>1815</td><td>Intervenção de Père Balley. Ordenação presbiteral em 13 de agosto, Grenoble</td></tr>
+          <tr><td>1815–1817</td><td>Vigário de Père Balley em Écully</td></tr>
+          <tr><td>1817</td><td>Morte de Père Balley em dezembro. Primeiro grande luto sacerdotal</td></tr>
+          <tr><td>1818</td><td>Chegada a Ars em fevereiro. Encontro com o menino Antoine Givre</td></tr>
+          <tr><td>1818–1824</td><td>Primeiros anos de ministério em Ars. Resistência dos paroquianos</td></tr>
+          <tr><td>1824</td><td>Fundação da Providence — o orfanato para meninas pobres</td></tr>
+          <tr><td>1824</td><td>Início das perturbações do Grappin — os ataques demoníacos documentados</td></tr>
+          <tr><td>1827–1830</td><td>Chegada dos primeiros peregrinos externos. Início da fama além de Ars</td></tr>
+          <tr><td>1843</td><td>Primeira tentativa de fuga de Ars. Retorno no mesmo dia</td></tr>
+          <tr><td>1853</td><td>Última tentativa de fuga — a mais documentada. Retorno definitivo</td></tr>
+          <tr><td>1855–1859</td><td>Declínio físico progressivo. Últimos anos de ministério</td></tr>
+          <tr><td>1858</td><td>Cessação definitiva das perturbações do Grappin</td></tr>
+          <tr><td>1859</td><td>Última missa em 29 de julho. Morte em 4 de agosto. Funeral em 6 de agosto</td></tr>
+          <tr><td>1874</td><td>Abertura do processo de beatificação</td></tr>
+          <tr><td>1904</td><td>Exumação do corpo. Separação do coração como relíquia independente</td></tr>
+          <tr><td>1905</td><td>Beatificação por Pio X, 8 de janeiro</td></tr>
+          <tr><td>1925</td><td>Canonização por Pio XI, 31 de maio. Máscara de cera colocada no rosto</td></tr>
+          <tr><td>1929</td><td>Declaração do patronato universal dos párocos por Pio XI</td></tr>
+          <tr><td>1959</td><td>Encíclica <em>Sacerdotii Nostri Primordia</em> de João XXIII, no centenário da morte</td></tr>
+          <tr><td>1986</td><td>Visita de João Paulo II a Ars, 6 de outubro</td></tr>
+          <tr><td>2009–2010</td><td>Ano Sacerdotal proclamado por Bento XVI, com Vianney como figura central</td></tr>
+          <tr><td>2019</td><td>Carta de Francisco aos sacerdotes, em 4 de agosto — 160º aniversário da morte</td></tr>
         </tbody>
       </table>
     </div>
@@ -278,13 +347,21 @@
       <p>João Vianney é um dos poucos santos canonizados para os quais existem fotografias autênticas — resultado do fato de que a fotografia foi inventada em 1839 e que Vianney viveu até 1859, período suficiente para que o novo meio chegasse a Ars. As fotografias existentes foram tiradas nos últimos anos de vida, quando Vianney já tinha entre sessenta e cinco e setenta anos.</p>
 
       <div class="sl-grid-2">
-        <div class="sl-card">
+        <div class="sl-card-destaque">
+          <div class="sl-badges">
+            <span class="sl-badge sl-badge-iconografia">Fonte primária</span>
+            <span class="sl-badge sl-badge-data">1853</span>
+          </div>
           <h4>O daguerreótipo de 1853</h4>
           <p>A imagem mais famosa e mais reproduzida de Vianney. Mostra um homem de rosto marcado, com o olhar dirigido para fora do quadro, usando as vestes sacerdotais. O rosto é mais jovem do que as representações hagiográficas convencionais costumam mostrar — há uma tensão visível nos traços que a iconografia devocional posterior frequentemente suavizou.</p>
           <p><strong>Localização do original:</strong> Basílica de Ars — reprodução disponível nos arquivos do santuário.</p>
         </div>
-        <div class="sl-card">
-          <h4>As fotografias de 1858–1859</h4>
+        <div class="sl-card-destaque">
+          <div class="sl-badges">
+            <span class="sl-badge sl-badge-iconografia">Fonte primária</span>
+            <span class="sl-badge sl-badge-data">1858–1859</span>
+          </div>
+          <h4>As fotografias dos últimos anos</h4>
           <p>Um conjunto menor de imagens dos últimos anos mostra um homem visivelmente mais velho e envelhecido do que o daguerreótipo de 1853. O contraste entre as imagens de seis anos de diferença é suficientemente marcado para confirmar o que os registros médicos descreviam: o declínio físico dos últimos anos foi rápido e visível.</p>
           <p><strong>Nota:</strong> algumas imagens circulantes na internet atribuídas a Vianney são reproduções de pinturas posteriores, não fotografias autênticas. O daguerreótipo de 1853 é a referência segura.</p>
         </div>
@@ -307,32 +384,32 @@
           <tr>
             <td><strong>Estola sacerdotal</strong></td>
             <td>A estola usada no confessionário — símbolo do poder de absolver</td>
-            <td>Sólida — a estola era o atributo mais visível do ministério de Vianney</td>
+            <td>Sólida — atributo mais visível do ministério</td>
           </tr>
           <tr>
             <td><strong>O confessionário</strong></td>
-            <td>Frequentemente representado sentado ou ajoelhado junto ao confessionário</td>
+            <td>Representado sentado ou ajoelhado junto ao confessionário</td>
             <td>Sólida — o confessionário era o centro do ministério</td>
           </tr>
           <tr>
             <td><strong>O cálice eucarístico</strong></td>
-            <td>Referência à centralidade da Eucaristia na sua espiritualidade</td>
+            <td>Referência à centralidade da Eucaristia na espiritualidade</td>
             <td>Sólida — mas atributo comum a muitos santos sacerdotes</td>
           </tr>
           <tr>
             <td><strong>O Sagrado Coração</strong></td>
             <td>Devoção que promoveu ativamente em Ars</td>
-            <td>Sólida — a devoção ao Sagrado Coração era central na sua espiritualidade</td>
+            <td>Sólida — central na sua espiritualidade</td>
           </tr>
           <tr>
-            <td><strong>A auréola sobre a cabeça calva</strong></td>
-            <td>Representação padrão de santidade, sobre o crânio característico das fotografias</td>
-            <td>Convencional — a calvície é historicamente precisa, a auréola é atributo genérico</td>
+            <td><strong>Auréola sobre a calva</strong></td>
+            <td>Santidade sobre o crânio característico das fotografias</td>
+            <td>A calvície é histórica; a auréola é atributo genérico</td>
           </tr>
           <tr>
             <td><strong>O rosário nas mãos</strong></td>
-            <td>Referência à devoção mariana constante</td>
-            <td>Sólida — o rosário era presença diária na vida de Vianney</td>
+            <td>Devoção mariana constante</td>
+            <td>Sólida — presença diária na vida de Vianney</td>
           </tr>
         </tbody>
       </table>
@@ -342,21 +419,37 @@
       <h3>As obras de arte mais significativas</h3>
       <div class="sl-grid-2">
         <div class="sl-card">
-          <h4>O busto de Cabuchet — 1853</h4>
+          <div class="sl-badges">
+            <span class="sl-badge sl-badge-iconografia">Escultura</span>
+            <span class="sl-badge sl-badge-data">1853</span>
+          </div>
+          <h4>O busto de Cabuchet</h4>
           <p>Émilien Cabuchet, escultor lionês, fez em 1853 um busto de Vianney que permanece uma das representações mais fidedignas disponíveis — feita em vida, baseada na observação direta do sujeito. O busto é a referência que os iconógrafos posteriores usaram como base para as representações do rosto do Cura d'Ars.</p>
           <p><strong>Localização:</strong> Museu de Belas Artes de Lyon — reproduções no santuário de Ars.</p>
         </div>
         <div class="sl-card">
+          <div class="sl-badges">
+            <span class="sl-badge sl-badge-iconografia">Escultura</span>
+            <span class="sl-badge sl-badge-data">Séc. XIX/XX</span>
+          </div>
           <h4>A estátua da Basílica</h4>
           <p>A estátua principal que representa Vianney na Basílica de Ars — em tamanho maior que o natural, posicionada em local de destaque — é obra do final do século XIX, posterior à morte. Segue os atributos iconográficos convencionais com adições específicas ao contexto de Ars: o confessionário e a estola.</p>
-          <p><strong>Estilo:</strong> escultura religiosa francesa do período de restauração católica — expressivo sem ser dramático, convencional sem ser genérico.</p>
+          <p><strong>Estilo:</strong> escultura religiosa francesa do período de restauração católica.</p>
         </div>
         <div class="sl-card">
+          <div class="sl-badges">
+            <span class="sl-badge sl-badge-iconografia">Pintura</span>
+            <span class="sl-badge sl-badge-data">Séc. XX</span>
+          </div>
           <h4>As pinturas do século XX</h4>
           <p>Vários artistas católicos do século XX produziram representações de Vianney que se afastam da iconografia convencional em favor de uma abordagem mais psicologicamente carregada — influenciados pelas fotografias autênticas, que mostram um rosto mais complexo do que a hagiografia devocional costuma representar.</p>
-          <p>Entre as mais conhecidas estão as pinturas encomendadas para seminários franceses nas décadas de 1930 e 1940, que usam a imagem do confessionário como contexto central.</p>
+          <p>Entre as mais conhecidas estão as pinturas encomendadas para seminários franceses nas décadas de 1930 e 1940.</p>
         </div>
         <div class="sl-card">
+          <div class="sl-badges">
+            <span class="sl-badge sl-badge-iconografia">Restauração</span>
+            <span class="sl-badge sl-badge-data">1925</span>
+          </div>
           <h4>A máscara de cera de 1925</h4>
           <p>Tecnicamente não é uma obra de arte autônoma, mas uma intervenção de conservação sobre o corpo real. Foi confeccionada por artistas especializados em restauração e conservação de relíquias, com base no busto de Cabuchet de 1853 e nas fotografias disponíveis. É o que os peregrinos veem quando passam diante da urna na Basílica.</p>
         </div>
@@ -385,18 +478,34 @@
       <h3>Seminários notáveis</h3>
       <div class="sl-grid-2">
         <div class="sl-card">
+          <div class="sl-badges">
+            <span class="sl-badge sl-badge-instituicao">Seminário</span>
+            <span class="sl-badge sl-badge-pt">Brasil</span>
+          </div>
           <h4>Seminário São João Maria Vianney — Campos dos Goytacazes, RJ</h4>
           <p>Um dos seminários brasileiros mais conhecidos ligados ao nome de Vianney. Vinculado à Diocese de Campos, tem história específica no contexto da questão litúrgica pós-conciliar — foi o seminário formador do clero da diocese durante o período do bispo Dom António de Castro Mayer, figura central nos debates sobre a recepção do Vaticano II no Brasil.</p>
         </div>
         <div class="sl-card">
+          <div class="sl-badges">
+            <span class="sl-badge sl-badge-instituicao">Seminário</span>
+            <span class="sl-badge sl-badge-fr">França</span>
+          </div>
           <h4>Séminaire Saint-Jean-Marie Vianney — França</h4>
           <p>Seminários com o nome de Vianney existem em várias dioceses francesas, especialmente as do sul e do leste do país. A proximidade geográfica de Ars com a região de Lyon e com o departamento de Ain faz com que a presença do Cura d'Ars seja especialmente intensa nos seminários dessa área.</p>
         </div>
         <div class="sl-card">
+          <div class="sl-badges">
+            <span class="sl-badge sl-badge-instituicao">Seminário</span>
+            <span class="sl-badge sl-badge-en">EUA</span>
+          </div>
           <h4>Saint John Vianney Seminary — Estados Unidos</h4>
           <p>Vários seminários norte-americanos levam o nome de Vianney — especialmente nas dioceses com forte tradição de imigração católica irlandesa, italiana e polonesa. O Saint John Vianney Theological Seminary de Denver, Colorado, é um dos mais conhecidos no contexto americano de renovação vocacional das últimas décadas.</p>
         </div>
         <div class="sl-card">
+          <div class="sl-badges">
+            <span class="sl-badge sl-badge-instituicao">Seminários</span>
+            <span class="sl-badge sl-badge-iconografia">Global</span>
+          </div>
           <h4>Presença global</h4>
           <p>Seminários com o nome de Vianney existem na Irlanda, na Polônia, nas Filipinas, em vários países africanos de tradição católica francesa e em outras regiões onde a devoção ao Cura d'Ars chegou através das congregações missionárias. O mapeamento completo excede o escopo desta seção.</p>
         </div>
@@ -425,7 +534,15 @@
 
     <div class="sl-bloco">
       <h3>A Fraternidade Sacerdotal São João Maria Vianney — Brasil</h3>
-      <p>A Fraternidade Sacerdotal São João Maria Vianney é uma sociedade de vida apostólica fundada no Brasil, com sede canônica na Diocese de Campos dos Goytacazes, Rio de Janeiro. É uma das instituições eclesiásticas brasileiras mais conhecidas internacionalmente no contexto dos debates sobre o sacerdócio e sobre a liturgia.</p>
+
+      <div class="sl-card-destaque">
+        <div class="sl-badges">
+          <span class="sl-badge sl-badge-instituicao">Sociedade apostólica</span>
+          <span class="sl-badge sl-badge-pt">Campos, RJ</span>
+        </div>
+        <h4>A Fraternidade</h4>
+        <p>A Fraternidade Sacerdotal São João Maria Vianney é uma sociedade de vida apostólica fundada no Brasil, com sede canônica na Diocese de Campos dos Goytacazes, Rio de Janeiro. É uma das instituições eclesiásticas brasileiras mais conhecidas internacionalmente no contexto dos debates sobre o sacerdócio e sobre a liturgia.</p>
+      </div>
 
       <div class="sl-grid-2">
         <div class="sl-card">
@@ -438,7 +555,7 @@
         </div>
       </div>
 
-      <div class="sl-alerta-info" style="margin-top: 14px;">
+      <div class="sl-alerta-info">
         <strong>Contexto canônico:</strong> a regularização de 2002 foi um processo que envolveu negociações entre a Santa Sé e a Fraternidade, resultando na plena integração na estrutura hierárquica da Igreja. Os pormenores do processo estão documentados nos arquivos da Congregação para a Doutrina da Fé e são objeto de estudo nos trabalhos sobre a história do movimento de preservação da liturgia tradicional no século XX.
       </div>
     </div>
@@ -457,22 +574,49 @@
     <div class="sl-bloco">
       <h3>Biografias clássicas</h3>
 
-      <div class="sl-ficha">
-        <div class="sl-ficha-item">
-          <strong>Francis Trochu — Le Curé d'Ars (1925)</strong>
-          A referência acadêmica mais sólida disponível. Trochu trabalhou diretamente com as fontes primárias — os diários dos vigários, os processos canônicos, a correspondência da época — com um rigor que a maioria dos hagiógrafos do período não demonstrava. O resultado é uma obra que pode ser lida como história com as qualificações que a história exige: tem perspectiva claramente devota, mas não sacrifica a precisão factual à edificação. Disponível em francês; traduzida parcialmente em inglês. Tradução integral em português não disponível, mas edições resumidas circulam no Brasil.
+      <div class="sl-card-destaque">
+        <div class="sl-badges">
+          <span class="sl-badge sl-badge-bibliografia">Biografia</span>
+          <span class="sl-badge sl-badge-fr">Francês</span>
+          <span class="sl-badge sl-badge-data">1925</span>
         </div>
-        <div class="sl-ficha-item">
-          <strong>Alfred Monnin — Le Curé d'Ars: Vie de M. Jean-Baptiste Marie Vianney (1861)</strong>
-          A primeira grande biografia, publicada dois anos após a morte, por um dos vigários que conviveu com Vianney. Monnin tinha acesso direto a Toccanier e a outros que haviam estado perto do Cura. O valor histórico é alto — é fonte primária de primeira ordem, não apenas hagiografia. A limitação: foi escrito com a urgência devocional do imediato pós-morte, e alguns episódios recebem tratamento menos crítico do que a distância temporal posterior permitiria. Disponível em francês; tradução inglesa histórica disponível.
+        <h4>Francis Trochu — Le Curé d'Ars</h4>
+        <p>A referência acadêmica mais sólida disponível. Trochu trabalhou diretamente com as fontes primárias — os diários dos vigários, os processos canônicos, a correspondência da época — com um rigor que a maioria dos hagiógrafos do período não demonstrava. O resultado é uma obra que pode ser lida como história com as qualificações que a história exige: tem perspectiva claramente devota, mas não sacrifica a precisão factual à edificação.</p>
+        <p><strong>Disponibilidade:</strong> em francês integral; traduzida parcialmente em inglês. Tradução integral em português não disponível, mas edições resumidas circulam no Brasil.</p>
+      </div>
+
+      <div class="sl-card-destaque">
+        <div class="sl-badges">
+          <span class="sl-badge sl-badge-bibliografia">Biografia</span>
+          <span class="sl-badge sl-badge-fr">Francês</span>
+          <span class="sl-badge sl-badge-data">1861</span>
         </div>
-        <div class="sl-ficha-item">
-          <strong>Abbé Bernard Nodet — Jean-Marie Vianney, Curé d'Ars: Sa Pensée, Son Cœur (1958)</strong>
-          Uma das melhores compilações do pensamento espiritual de Vianney, organizada tematicamente a partir dos seus sermões e dos registros dos vigários. Menos narrativo do que Trochu, mais analítico. Útil para quem quer entender o que Vianney pensava e ensinava, mais do que o que fez. Disponível em francês; tradução inglesa disponível.
+        <h4>Alfred Monnin — Le Curé d'Ars: Vie de M. Jean-Baptiste Marie Vianney</h4>
+        <p>A primeira grande biografia, publicada dois anos após a morte, por um dos vigários que conviveu com Vianney. Monnin tinha acesso direto a Toccanier e a outros que haviam estado perto do Cura. O valor histórico é alto — é fonte primária de primeira ordem, não apenas hagiografia.</p>
+        <p><strong>Limitação:</strong> foi escrito com a urgência devocional do imediato pós-morte, e alguns episódios recebem tratamento menos crítico do que a distância temporal posterior permitiria.</p>
+        <p><strong>Disponibilidade:</strong> em francês; tradução inglesa histórica disponível.</p>
+      </div>
+
+      <div class="sl-grid-2">
+        <div class="sl-card">
+          <div class="sl-badges">
+            <span class="sl-badge sl-badge-bibliografia">Espiritualidade</span>
+            <span class="sl-badge sl-badge-fr">Francês</span>
+            <span class="sl-badge sl-badge-data">1958</span>
+          </div>
+          <h4>Abbé Bernard Nodet — Jean-Marie Vianney, Curé d'Ars: Sa Pensée, Son Cœur</h4>
+          <p>Uma das melhores compilações do pensamento espiritual de Vianney, organizada tematicamente a partir dos seus sermões e dos registros dos vigários. Menos narrativo do que Trochu, mais analítico. Útil para quem quer entender o que Vianney pensava e ensinava, mais do que o que fez.</p>
+          <p><strong>Disponibilidade:</strong> em francês; tradução inglesa disponível.</p>
         </div>
-        <div class="sl-ficha-item">
-          <strong>Lancelot Sheppard — Portrait of a Parish Priest (1958)</strong>
-          Biografia em inglês que combina rigor histórico com acessibilidade literária. Baseada nas fontes clássicas, mas escrita para um público anglófono sem acesso ao francês. Avaliação crítica: menos detalhada do que Trochu, mas mais legível para o leitor não especializado. Não traduzida para o português.
+        <div class="sl-card">
+          <div class="sl-badges">
+            <span class="sl-badge sl-badge-bibliografia">Biografia</span>
+            <span class="sl-badge sl-badge-en">Inglês</span>
+            <span class="sl-badge sl-badge-data">1958</span>
+          </div>
+          <h4>Lancelot Sheppard — Portrait of a Parish Priest</h4>
+          <p>Biografia em inglês que combina rigor histórico com acessibilidade literária. Baseada nas fontes clássicas, mas escrita para um público anglófono sem acesso ao francês.</p>
+          <p><strong>Avaliação crítica:</strong> menos detalhada do que Trochu, mas mais legível para o leitor não especializado. Não traduzida para o português.</p>
         </div>
       </div>
     </div>
@@ -559,11 +703,17 @@
       <h3>Obras em português disponíveis no Brasil</h3>
       <div class="sl-grid-2">
         <div class="sl-card">
+          <div class="sl-badges">
+            <span class="sl-badge sl-badge-pt">Português</span>
+          </div>
           <h4>Biografias e perfis espirituais</h4>
           <p><strong>O Santo Cura d'Ars</strong> — várias edições de diferentes casas editoriais brasileiras, com qualidade variável. As melhores são adaptações de Trochu ou de Monnin com aparato crítico preservado. As piores são simplificações devocionais que omitem os episódios inconvenientes.</p>
           <p><strong>Cura d'Ars: O Poder da Confissão</strong> — título de circulação recente, centrado especificamente no ministério confessional. Qualidade devocional adequada; profundidade histórica limitada.</p>
         </div>
         <div class="sl-card">
+          <div class="sl-badges">
+            <span class="sl-badge sl-badge-pt">Português</span>
+          </div>
           <h4>Documentos e espiritualidade</h4>
           <p><strong>Sacerdotii Nostri Primordia</strong> — disponível em português no site Vatican.va e em edições impressas de editoras católicas brasileiras.</p>
           <p><strong>Carta de Francisco aos Sacerdotes (2019)</strong> — disponível em português no Vatican.va e amplamente reproduzida em publicações do clero brasileiro.</p>
@@ -591,169 +741,174 @@
     </div>
 
     <div class="sl-bloco">
-      <h3>Sobre o sacerdócio</h3>
+      <div class="sl-tema-citacoes">
+        <h4>Sobre o sacerdócio</h4>
+        <div class="sl-tema-sub">· · ·</div>
 
-      <div class="sl-citacao">
-        <p>"O sacerdócio é o amor do Coração de Jesus."</p>
-        <span class="sl-fonte">Registrado por Monnin nos cadernos de Ars</span>
-      </div>
-
-      <div class="sl-citacao">
-        <p>"O padre não é padre para si mesmo. Ele é padre para vós."</p>
-        <span class="sl-fonte">Sermão em Ars — data aproximada: década de 1830</span>
-      </div>
-
-      <div class="sl-citacao">
-        <p>"Se eu soubesse que um padre estava para celebrar missa, iria a pé de Paris para assistir."</p>
-        <span class="sl-fonte">Registrado por Toccanier</span>
-      </div>
-
-      <div class="sl-citacao">
-        <p>"Um bom pastor, um pastor segundo o Coração de Deus, é o maior tesouro que o bom Deus pode dar a uma paróquia."</p>
-        <span class="sl-fonte">Sermão em Ars — registrado por Monnin</span>
-      </div>
-    </div>
-
-    <div class="sl-bloco">
-      <h3>Sobre a Eucaristia</h3>
-
-      <div class="sl-citacao">
-        <p>"Todos os bens do mundo não valem nada comparados ao Santíssimo Sacramento. Deus na Eucaristia — que riqueza!"</p>
-        <span class="sl-fonte">Registrado por Toccanier</span>
-      </div>
-
-      <div class="sl-citacao">
-        <p>"Se compreendêssemos o que é a missa, morreríamos de amor antes que ela terminasse."</p>
-        <span class="sl-fonte">Sermão em Ars — registrado em várias versões pelos vigários</span>
-      </div>
-
-      <div class="sl-citacao">
-        <p>"A missa é a oração de Jesus Cristo. É o mesmo sacrifício do Calvário — oferecido de outra forma."</p>
-        <span class="sl-fonte">Instrução catequética em Ars</span>
+        <div class="sl-citacao">
+          <p>"O sacerdócio é o amor do Coração de Jesus."</p>
+          <span class="sl-fonte">Registrado por Monnin nos cadernos de Ars</span>
+        </div>
+        <div class="sl-citacao">
+          <p>"O padre não é padre para si mesmo. Ele é padre para vós."</p>
+          <span class="sl-fonte">Sermão em Ars — década de 1830</span>
+        </div>
+        <div class="sl-citacao">
+          <p>"Se eu soubesse que um padre estava para celebrar missa, iria a pé de Paris para assistir."</p>
+          <span class="sl-fonte">Registrado por Toccanier</span>
+        </div>
+        <div class="sl-citacao">
+          <p>"Um bom pastor, um pastor segundo o Coração de Deus, é o maior tesouro que o bom Deus pode dar a uma paróquia."</p>
+          <span class="sl-fonte">Sermão em Ars — registrado por Monnin</span>
+        </div>
       </div>
     </div>
 
     <div class="sl-bloco">
-      <h3>Sobre a confissão e a misericórdia</h3>
+      <div class="sl-tema-citacoes">
+        <h4>Sobre a Eucaristia</h4>
+        <div class="sl-tema-sub">· · ·</div>
 
-      <div class="sl-citacao">
-        <p>"Deus prefere ver um pecador arrependido do que um justo que se vangloria."</p>
-        <span class="sl-fonte">Registrado por Monnin</span>
-      </div>
-
-      <div class="sl-citacao">
-        <p>"Se não houvesse confissão, teríamos que inventá-la. É a mais bela das invenções do amor de Deus."</p>
-        <span class="sl-fonte">Instrução sobre os sacramentos — Ars, data aproximada: 1840</span>
-      </div>
-
-      <div class="sl-citacao">
-        <p>"Nossos pecados são como grãos de areia comparados à montanha grande da misericórdia de Deus."</p>
-        <span class="sl-fonte">Registrado por Toccanier nos cadernos de Ars</span>
-      </div>
-
-      <div class="sl-citacao">
-        <p>"O bom Deus não pune duas vezes a mesma falta. Se o pecado foi confessado e perdoado, está apagado — mais completamente do que se nunca houvesse existido."</p>
-        <span class="sl-fonte">Instrução catequética em Ars</span>
+        <div class="sl-citacao">
+          <p>"Todos os bens do mundo não valem nada comparados ao Santíssimo Sacramento. Deus na Eucaristia — que riqueza!"</p>
+          <span class="sl-fonte">Registrado por Toccanier</span>
+        </div>
+        <div class="sl-citacao">
+          <p>"Se compreendêssemos o que é a missa, morreríamos de amor antes que ela terminasse."</p>
+          <span class="sl-fonte">Sermão em Ars — registrado em várias versões pelos vigários</span>
+        </div>
+        <div class="sl-citacao">
+          <p>"A missa é a oração de Jesus Cristo. É o mesmo sacrifício do Calvário — oferecido de outra forma."</p>
+          <span class="sl-fonte">Instrução catequética em Ars</span>
+        </div>
       </div>
     </div>
 
     <div class="sl-bloco">
-      <h3>Sobre a oração</h3>
+      <div class="sl-tema-citacoes">
+        <h4>Sobre a confissão e a misericórdia</h4>
+        <div class="sl-tema-sub">· · ·</div>
 
-      <div class="sl-citacao">
-        <p>"A oração é a chave que abre o coração de Deus."</p>
-        <span class="sl-fonte">Sermão em Ars — registrado por Monnin</span>
-      </div>
-
-      <div class="sl-citacao">
-        <p>"Quando não temos tempo para orar, é porque não percebemos o que é a oração."</p>
-        <span class="sl-fonte">Registrado por Toccanier</span>
-      </div>
-
-      <div class="sl-citacao">
-        <p>"Ele me olha e eu o olho."</p>
-        <span class="sl-fonte">O camponês de Ars, ao ser perguntado por Vianney o que fazia diante do tabernáculo — registrado por Monnin e repetido por Vianney ao longo dos anos como modelo de oração contemplativa</span>
-      </div>
-
-      <div class="sl-citacao">
-        <p>"Meditação é como guardar na boca um pedaço de açúcar — o doce se dissolve lentamente e impregna tudo."</p>
-        <span class="sl-fonte">Instrução espiritual em Ars — registrada por Toccanier</span>
-      </div>
-    </div>
-
-    <div class="sl-bloco">
-      <h3>Sobre o sofrimento e a cruz</h3>
-
-      <div class="sl-citacao">
-        <p>"A cruz é o presente que Deus faz aos seus amigos."</p>
-        <span class="sl-fonte">Registrado em múltiplas versões pelos vigários de Ars</span>
-      </div>
-
-      <div class="sl-citacao">
-        <p>"Quando queremos ir a Deus, o diabo nos coloca obstáculos. Mas os obstáculos são a prova de que estamos no caminho certo."</p>
-        <span class="sl-fonte">Registrado por Monnin</span>
-      </div>
-
-      <div class="sl-citacao">
-        <p>"Se soubéssemos o valor do sofrimento, pediríamos mais."</p>
-        <span class="sl-fonte">Registrado por Toccanier — frase citada com frequência nos retiros espirituais, com variações de formulação</span>
+        <div class="sl-citacao">
+          <p>"Deus prefere ver um pecador arrependido do que um justo que se vangloria."</p>
+          <span class="sl-fonte">Registrado por Monnin</span>
+        </div>
+        <div class="sl-citacao">
+          <p>"Se não houvesse confissão, teríamos que inventá-la. É a mais bela das invenções do amor de Deus."</p>
+          <span class="sl-fonte">Instrução sobre os sacramentos — Ars, c. 1840</span>
+        </div>
+        <div class="sl-citacao">
+          <p>"Nossos pecados são como grãos de areia comparados à montanha grande da misericórdia de Deus."</p>
+          <span class="sl-fonte">Registrado por Toccanier</span>
+        </div>
+        <div class="sl-citacao">
+          <p>"O bom Deus não pune duas vezes a mesma falta. Se o pecado foi confessado e perdoado, está apagado — mais completamente do que se nunca houvesse existido."</p>
+          <span class="sl-fonte">Instrução catequética em Ars</span>
+        </div>
       </div>
     </div>
 
     <div class="sl-bloco">
-      <h3>Sobre Maria</h3>
+      <div class="sl-tema-citacoes">
+        <h4>Sobre a oração</h4>
+        <div class="sl-tema-sub">· · ·</div>
 
-      <div class="sl-citacao">
-        <p>"Maria é a mãe de todos os pecadores que querem se converter."</p>
-        <span class="sl-fonte">Instrução mariana em Ars</span>
-      </div>
-
-      <div class="sl-citacao">
-        <p>"Depois de Jesus, é a ela que devemos tudo."</p>
-        <span class="sl-fonte">Registrado por Monnin</span>
-      </div>
-
-      <div class="sl-citacao">
-        <p>"O Rosário rezado com fé pode converter os pecadores mais endurecidos."</p>
-        <span class="sl-fonte">Instrução sobre o Rosário — Ars, registrado por Toccanier</span>
-      </div>
-    </div>
-
-    <div class="sl-bloco">
-      <h3>Sobre os fins últimos</h3>
-
-      <div class="sl-citacao">
-        <p>"A morte é terrível apenas para os que não pensaram nela. Para quem pensa, é o começo do que importa."</p>
-        <span class="sl-fonte">Sermão sobre a morte — Ars</span>
-      </div>
-
-      <div class="sl-citacao">
-        <p>"Os que estão no inferno estão lá porque quiseram. Ninguém vai ao inferno sem saber o que está fazendo."</p>
-        <span class="sl-fonte">Instrução sobre os fins últimos — registrada por Monnin</span>
-      </div>
-
-      <div class="sl-citacao">
-        <p>"O paraíso é ser amado por Deus e amar a Deus para sempre. Não consigo dizer mais do que isso — é demais para a língua humana."</p>
-        <span class="sl-fonte">Instrução catequética em Ars</span>
+        <div class="sl-citacao">
+          <p>"A oração é a chave que abre o coração de Deus."</p>
+          <span class="sl-fonte">Sermão em Ars — registrado por Monnin</span>
+        </div>
+        <div class="sl-citacao">
+          <p>"Quando não temos tempo para orar, é porque não percebemos o que é a oração."</p>
+          <span class="sl-fonte">Registrado por Toccanier</span>
+        </div>
+        <div class="sl-citacao">
+          <p>"Ele me olha e eu o olho."</p>
+          <span class="sl-fonte">O camponês de Ars, diante do tabernáculo — registrado por Monnin e repetido por Vianney ao longo dos anos como modelo de oração contemplativa</span>
+        </div>
+        <div class="sl-citacao">
+          <p>"Meditação é como guardar na boca um pedaço de açúcar — o doce se dissolve lentamente e impregna tudo."</p>
+          <span class="sl-fonte">Instrução espiritual em Ars — registrada por Toccanier</span>
+        </div>
       </div>
     </div>
 
     <div class="sl-bloco">
-      <h3>Sobre a humildade</h3>
+      <div class="sl-tema-citacoes">
+        <h4>Sobre o sofrimento e a cruz</h4>
+        <div class="sl-tema-sub">· · ·</div>
 
-      <div class="sl-citacao">
-        <p>"Sou apenas um pobre ignorante que, por misericórdia de Deus, foi posto num lugar que não merecia."</p>
-        <span class="sl-fonte">Dito em múltiplos contextos — registrado por Toccanier e Monnin</span>
+        <div class="sl-citacao">
+          <p>"A cruz é o presente que Deus faz aos seus amigos."</p>
+          <span class="sl-fonte">Registrado em múltiplas versões pelos vigários de Ars</span>
+        </div>
+        <div class="sl-citacao">
+          <p>"Quando queremos ir a Deus, o diabo nos coloca obstáculos. Mas os obstáculos são a prova de que estamos no caminho certo."</p>
+          <span class="sl-fonte">Registrado por Monnin</span>
+        </div>
+        <div class="sl-citacao">
+          <p>"Se soubéssemos o valor do sofrimento, pediríamos mais."</p>
+          <span class="sl-fonte">Registrado por Toccanier — frase citada com frequência nos retiros espirituais</span>
+        </div>
       </div>
+    </div>
 
-      <div class="sl-citacao">
-        <p>"Se quiserdes humilhar-vos, pensai no que sois e no que seríeis sem a graça de Deus."</p>
-        <span class="sl-fonte">Instrução espiritual em Ars</span>
+    <div class="sl-bloco">
+      <div class="sl-tema-citacoes">
+        <h4>Sobre Maria</h4>
+        <div class="sl-tema-sub">· · ·</div>
+
+        <div class="sl-citacao">
+          <p>"Maria é a mãe de todos os pecadores que querem se converter."</p>
+          <span class="sl-fonte">Instrução mariana em Ars</span>
+        </div>
+        <div class="sl-citacao">
+          <p>"Depois de Jesus, é a ela que devemos tudo."</p>
+          <span class="sl-fonte">Registrado por Monnin</span>
+        </div>
+        <div class="sl-citacao">
+          <p>"O Rosário rezado com fé pode converter os pecadores mais endurecidos."</p>
+          <span class="sl-fonte">Instrução sobre o Rosário — Ars, registrado por Toccanier</span>
+        </div>
       </div>
+    </div>
 
-      <div class="sl-citacao">
-        <p>"A humildade é para as virtudes o que a fundação é para uma casa: é o que sustenta tudo o mais."</p>
-        <span class="sl-fonte">Registrado por Monnin</span>
+    <div class="sl-bloco">
+      <div class="sl-tema-citacoes">
+        <h4>Sobre os fins últimos</h4>
+        <div class="sl-tema-sub">· · ·</div>
+
+        <div class="sl-citacao">
+          <p>"A morte é terrível apenas para os que não pensaram nela. Para quem pensa, é o começo do que importa."</p>
+          <span class="sl-fonte">Sermão sobre a morte — Ars</span>
+        </div>
+        <div class="sl-citacao">
+          <p>"Os que estão no inferno estão lá porque quiseram. Ninguém vai ao inferno sem saber o que está fazendo."</p>
+          <span class="sl-fonte">Instrução sobre os fins últimos — registrada por Monnin</span>
+        </div>
+        <div class="sl-citacao">
+          <p>"O paraíso é ser amado por Deus e amar a Deus para sempre. Não consigo dizer mais do que isso — é demais para a língua humana."</p>
+          <span class="sl-fonte">Instrução catequética em Ars</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="sl-bloco">
+      <div class="sl-tema-citacoes">
+        <h4>Sobre a humildade</h4>
+        <div class="sl-tema-sub">· · ·</div>
+
+        <div class="sl-citacao">
+          <p>"Sou apenas um pobre ignorante que, por misericórdia de Deus, foi posto num lugar que não merecia."</p>
+          <span class="sl-fonte">Dito em múltiplos contextos — registrado por Toccanier e Monnin</span>
+        </div>
+        <div class="sl-citacao">
+          <p>"Se quiserdes humilhar-vos, pensai no que sois e no que seríeis sem a graça de Deus."</p>
+          <span class="sl-fonte">Instrução espiritual em Ars</span>
+        </div>
+        <div class="sl-citacao">
+          <p>"A humildade é para as virtudes o que a fundação é para uma casa: é o que sustenta tudo o mais."</p>
+          <span class="sl-fonte">Registrado por Monnin</span>
+        </div>
       </div>
     </div>
   </div>
@@ -791,14 +946,14 @@
           <div class="sl-passo-num">1</div>
           <div class="sl-card">
             <h4>A Basílica</h4>
-            <p>O ponto central de qualquer visita a Ars. A urna com o corpo de Vianney está no altar principal. O coração em relicário separado fica exposto nas proximidades, quando não está em peregrinação. O confessionário original está preservado dentro da Basílica. Tempo recomendado: pelo menos 45 minutos, para quem quer mais do que uma passagem rápida.</p>
+            <p>O ponto central de qualquer visita a Ars. A urna com o corpo de Vianney está no altar principal. O coração em relicário separado fica exposto nas proximidades, quando não está em peregrinação. O confessionário original está preservado dentro da Basílica. <strong>Tempo recomendado:</strong> pelo menos 45 minutos, para quem quer mais do que uma passagem rápida.</p>
           </div>
         </div>
         <div class="sl-passo">
           <div class="sl-passo-num">2</div>
           <div class="sl-card">
             <h4>A reitoria — museu</h4>
-            <p>A reitoria onde Vianney viveu por 41 anos está ao lado da Basílica e é acessível como museu. Os ambientes estão preservados com os móveis e objetos da época. O quarto onde morreu, a cozinha, a sala de visitas — tudo visitável. Tempo recomendado: 30 a 45 minutos.</p>
+            <p>A reitoria onde Vianney viveu por 41 anos está ao lado da Basílica e é acessível como museu. Os ambientes estão preservados com os móveis e objetos da época. O quarto onde morreu, a cozinha, a sala de visitas — tudo visitável. <strong>Tempo recomendado:</strong> 30 a 45 minutos.</p>
           </div>
         </div>
         <div class="sl-passo">
@@ -824,7 +979,7 @@
         <div class="sl-card">
           <h4>Basílica</h4>
           <p>Aberta todos os dias do ano, com horários estendidos nos períodos de maior afluência — verão e festas litúrgicas do santo. Missas diárias em múltiplos horários. Confissões disponíveis em vários idiomas nos períodos de maior afluência de peregrinos internacionais.</p>
-          <p><strong>Verificar horários atualizados:</strong> saintjeanmarievianney.fr</p>
+          <p><strong>Site oficial:</strong> saintjeanmarievianney.fr</p>
         </div>
         <div class="sl-card">
           <h4>O confessionário</h4>
@@ -854,11 +1009,14 @@
         </div>
       </div>
 
-      <div class="sl-bloco-resumo" style="margin-top: 16px;">
+      <div class="sl-bloco-resumo" style="margin-top: 20px;">
         <h3>Uma nota final sobre a visita</h3>
         <p>Ars não é um museu. É um santuário — um lugar onde algo aconteceu e onde esse algo ainda é sentido pelos que chegam com disposição para percebê-lo. Os peregrinos que chegam com pressa e saem em 20 minutos levam uma impressão superficial. Os que chegam com tempo — para sentar em silêncio diante do tabernáculo onde Vianney orava nas madrugadas, para ficar alguns minutos junto ao confessionário de madeira escura, para caminhar até a ermida de Nossa Senhora além da aldeia — esses levam outra coisa. O que levam não é facilmente descrito. Mas é o que faz as pessoas voltarem.</p>
       </div>
     </div>
   </div>
 
-</div><!-- /referencias -->
+</main>
+
+</body>
+</html>
