@@ -5,132 +5,159 @@
     <title>Morte — São João Maria Vianney</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-    <style>
-        /* ===== MENU ===== */
-        .sl-wrap { max-width: 1200px; margin: 0 auto; padding: 40px 20px 0; font-family: Georgia, 'Times New Roman', serif; }
-        .sl-cabecalho { text-align: center; margin-bottom: 30px; }
-        .sl-santo-nome { font-family: Georgia, 'Times New Roman', serif; font-size: 42px; font-weight: 400; color: #2f2a22; letter-spacing: 2px; margin: 0 0 14px; line-height: 1.15; }
-        .sl-divisor { display: flex; align-items: center; justify-content: center; gap: 12px; margin: 12px 0; }
-        .sl-divisor-linha { display: inline-block; width: 60px; height: 1px; background: #b08a3c; opacity: 0.5; }
-        .sl-divisor-orn { color: #b08a3c; font-size: 10px; }
-        .sl-santo-titulo { margin: 8px 0 14px; color: #b08a3c; font-family: Georgia, 'Times New Roman', serif; font-size: 12px; letter-spacing: 4px; text-transform: uppercase; font-weight: 600; }
-        .sl-intro-frase { margin: 0; color: #6f6758; font-family: Georgia, 'Times New Roman', serif; font-size: 15px; font-style: italic; letter-spacing: 0.5px; }
-        .sl-nav { border-top: 1px solid #d8d1c2; border-bottom: 1px solid #d8d1c2; background: #faf8f3; padding: 4px 0; }
-        .sl-lista { display: grid; grid-template-columns: repeat(5, 1fr); list-style: none; padding: 0; margin: 0; }
-        .sl-lista li { margin: 0; padding: 0; list-style: none; }
-        .sl-lista li::marker, .sl-lista li::before { content: "" !important; display: none !important; }
-        .sl-lista li a { display: flex; align-items: center; justify-content: center; text-align: center; text-decoration: none; color: #6e6a60; font-family: Georgia, 'Times New Roman', serif; font-size: 12.5px; letter-spacing: 2px; text-transform: uppercase; padding: 18px 12px; position: relative; transition: all 0.3s ease; background: transparent; min-height: 56px; box-sizing: border-box; }
-        .sl-lista li a::before, .sl-lista li a span::before, .sl-lista li a span::after { content: none !important; display: none !important; }
-        .sl-lista .sl-nome { display: inline-block; line-height: 1.3; }
-        .sl-lista li a::after { content: ""; position: absolute; left: 50%; bottom: 8px; width: 0; height: 1px; background-color: #b08a3c; transition: width 0.3s ease; transform: translateX(-50%); }
-        .sl-lista li a:hover { color: #2f2a22; background-color: #f3eee3; }
-        .sl-lista li a:hover::after { width: 50%; }
-        .sl-lista li a.ativo { color: #2f2a22; background-color: #f5f0e5; }
-        .sl-lista li a.ativo::after { width: 50%; }
-        @media (max-width: 900px) { .sl-santo-nome { font-size: 32px; letter-spacing: 1px; } .sl-lista li a { font-size: 11px; letter-spacing: 1.5px; padding: 14px 8px; } }
-        @media (max-width: 600px) { .sl-wrap { padding: 24px 12px 0; } .sl-santo-nome { font-size: 24px; } .sl-santo-titulo { font-size: 10px; letter-spacing: 3px; } .sl-intro-frase { font-size: 13px; padding: 0 10px; } .sl-lista li a { font-size: 9.5px; letter-spacing: 1px; padding: 12px 4px; min-height: 50px; } }
-        @media (max-width: 420px) { .sl-lista li a { font-size: 8.5px; padding: 10px 3px; letter-spacing: 0.5px; } }
+<style>
+    /* ===== MENU ===== */
+    .sl-wrap { max-width: 1200px; margin: 0 auto; padding: 40px 20px 0; font-family: Georgia, 'Times New Roman', serif; }
+    .sl-cabecalho { text-align: center; margin-bottom: 30px; }
+    .sl-santo-nome { font-family: Georgia, 'Times New Roman', serif; font-size: 42px; font-weight: 400; color: #2f2a22; letter-spacing: 2px; margin: 0 0 14px; line-height: 1.15; }
+    .sl-divisor { display: flex; align-items: center; justify-content: center; gap: 12px; margin: 12px 0; }
+    .sl-divisor-linha { display: inline-block; width: 60px; height: 1px; background: #b08a3c; opacity: 0.5; }
+    .sl-divisor-orn { color: #b08a3c; font-size: 10px; }
+    .sl-santo-titulo { margin: 8px 0 14px; color: #b08a3c; font-family: Georgia, 'Times New Roman', serif; font-size: 12px; letter-spacing: 4px; text-transform: uppercase; font-weight: 600; }
+    .sl-intro-frase { margin: 0; color: #6f6758; font-family: Georgia, 'Times New Roman', serif; font-size: 15px; font-style: italic; letter-spacing: 0.5px; }
+    .sl-nav { border-top: 1px solid #d8d1c2; border-bottom: 1px solid #d8d1c2; background: #faf8f3; padding: 4px 0; }
+    .sl-lista { display: grid; grid-template-columns: repeat(5, 1fr); list-style: none; padding: 0; margin: 0; }
+    .sl-lista li { margin: 0; padding: 0; list-style: none; }
+    .sl-lista li::marker, .sl-lista li::before { content: "" !important; display: none !important; }
+    .sl-lista li a { display: flex; align-items: center; justify-content: center; text-align: center; text-decoration: none; color: #6e6a60; font-family: Georgia, 'Times New Roman', serif; font-size: 12.5px; letter-spacing: 2px; text-transform: uppercase; padding: 18px 12px; position: relative; transition: all 0.3s ease; background: transparent; min-height: 56px; box-sizing: border-box; }
+    .sl-lista li a::before, .sl-lista li a span::before, .sl-lista li a span::after { content: none !important; display: none !important; }
+    .sl-lista .sl-nome { display: inline-block; line-height: 1.3; }
+    .sl-lista li a::after { content: ""; position: absolute; left: 50%; bottom: 8px; width: 0; height: 1px; background-color: #b08a3c; transition: width 0.3s ease; transform: translateX(-50%); }
+    .sl-lista li a:hover { color: #2f2a22; background-color: #f3eee3; }
+    .sl-lista li a:hover::after { width: 50%; }
+    .sl-lista li a.ativo { color: #2f2a22; background-color: #f5f0e5; }
+    .sl-lista li a.ativo::after { width: 50%; }
+    @media (max-width: 900px) { .sl-santo-nome { font-size: 32px; letter-spacing: 1px; } .sl-lista li a { font-size: 11px; letter-spacing: 1.5px; padding: 14px 8px; } }
+    @media (max-width: 600px) { .sl-wrap { padding: 24px 12px 0; } .sl-santo-nome { font-size: 24px; } .sl-santo-titulo { font-size: 10px; letter-spacing: 3px; } .sl-intro-frase { font-size: 13px; padding: 0 10px; } .sl-lista li a { font-size: 9.5px; letter-spacing: 1px; padding: 12px 4px; min-height: 50px; } }
+    @media (max-width: 420px) { .sl-lista li a { font-size: 8.5px; padding: 10px 3px; letter-spacing: 0.5px; } }
 
-        /* ===== CABEÇALHO DA PÁGINA ===== */
-        .sl-pagina-cabecalho { text-align: center; margin: 60px auto 50px; max-width: 800px; padding: 0 20px; }
-        .sl-pagina-numero { font-family: Georgia, 'Times New Roman', serif; font-size: 14px; letter-spacing: 6px; color: #b08a3c; text-transform: uppercase; margin: 0 0 20px; font-weight: 400; }
-        .sl-pagina-titulo { font-family: Georgia, 'Times New Roman', serif; font-size: 64px; font-weight: 400; color: #2f2a22; margin: 0 0 18px; line-height: 1.1; letter-spacing: 1px; }
-        .sl-pagina-subtitulo { font-family: Georgia, 'Times New Roman', serif; font-size: 18px; font-style: italic; color: #6f6758; margin: 0 0 24px; letter-spacing: 0.5px; }
-        .sl-pagina-ornamento { color: #b08a3c; font-size: 14px; letter-spacing: 4px; }
-        @media (max-width: 600px) {
-            .sl-pagina-cabecalho { margin: 40px auto 36px; }
-            .sl-pagina-titulo { font-size: 40px; }
-            .sl-pagina-subtitulo { font-size: 15px; }
-            .sl-pagina-numero { font-size: 12px; letter-spacing: 4px; }
-        }
+    /* ===== VARIÁVEIS UNIFICADAS ===== */
+    :root {
+        --cf-fundo: #faf8f4;
+        --cf-texto: #3a3530;
+        --cf-texto-leve: #6f6758;
+        --cf-dourado: #b08a3c;
+        --cf-dourado-claro: #d4b872;
+        --cf-borda: #e2dcd0;
+        --cf-borda-leve: #ece8df;
+        --cf-bloco-bg: #ffffff;
+        --cf-serif: Georgia, 'Times New Roman', 'Noto Serif', serif;
+        --cf-max: 820px;
+    }
 
-        /* ===== CONTEÚDO BASE ===== */
-        main { max-width: 800px; margin: 0 auto 40px; padding: 0 20px; }
-        .sl-secao { margin-bottom: 40px; }
-        .sl-secao-header { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; flex-wrap: wrap; }
-        .sl-secao-num { font-family: 'Libre Baskerville', serif; font-size: 24px; color: #b08a3c; font-weight: bold; }
-        .sl-secao-linha { flex-grow: 1; height: 1px; background: #eee; }
-        .sl-secao-titulo { font-family: 'Inter', sans-serif; font-size: 18px; text-transform: uppercase; letter-spacing: 2px; color: #333; }
-        .sl-bloco { margin-bottom: 25px; line-height: 1.8; color: #444; }
-        .sl-bloco h3 { font-family: 'Libre Baskerville', serif; color: #2c3e50; margin-bottom: 15px; }
-        .sl-bloco p { margin-bottom: 12px; }
-        .sl-bloco p:last-child { margin-bottom: 0; }
-        .sl-capitular { float: left; font-size: 60px; line-height: 50px; padding-top: 4px; padding-right: 8px; padding-left: 3px; font-family: 'Libre Baskerville', serif; color: #b08a3c; }
-        .sl-sep { text-align: center; margin: 40px 0; color: #b08a3c; font-size: 24px; }
-        .sl-citacao { margin: 40px auto; max-width: 600px; text-align: center; font-style: italic; background: #fdfaf3; padding: 30px; border-radius: 8px; border: 1px inset #f3eee3; }
-        .sl-citacao p { font-size: 1.2em; color: #2f2a22; margin-bottom: 10px; }
-        .sl-fonte { display: block; font-size: 0.8em; text-transform: uppercase; letter-spacing: 1px; color: #b08a3c; font-style: normal; }
+    body { background: var(--cf-fundo); margin: 0; padding: 0; }
 
-        /* ===== GRIDS ===== */
-        .sl-grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; margin-top: 14px; }
-        .sl-grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin-top: 14px; }
+    /* ===== CABEÇALHO DA PÁGINA ===== */
+    .sl-pagina-cabecalho { text-align: center; padding: 60px 20px 50px; max-width: var(--cf-max); margin: 0 auto; }
+    .sl-pagina-numero { display: inline-block; font-family: var(--cf-serif); font-size: 14px; letter-spacing: 4px; color: var(--cf-dourado); text-transform: uppercase; margin: 0 0 16px; font-weight: 400; }
+    .sl-pagina-titulo { font-family: var(--cf-serif); font-size: 46px; font-weight: 400; color: var(--cf-texto); letter-spacing: 2px; margin: 0 0 12px; line-height: 1.15; }
+    .sl-pagina-subtitulo { font-family: var(--cf-serif); font-size: 17px; font-style: italic; color: var(--cf-texto-leve); letter-spacing: 0.5px; margin: 0; }
+    .sl-pagina-ornamento { margin-top: 30px; font-size: 12px; color: var(--cf-dourado-claro); letter-spacing: 8px; }
+    @media (max-width: 768px) { .sl-pagina-cabecalho { padding: 40px 16px 36px; } .sl-pagina-titulo { font-size: 32px; } .sl-pagina-subtitulo { font-size: 15px; } }
+    @media (max-width: 480px) { .sl-pagina-titulo { font-size: 26px; letter-spacing: 1px; } .sl-pagina-numero { font-size: 12px; letter-spacing: 3px; } }
 
-        /* ===== CARDS ===== */
-        .sl-card { border: 1px solid #d9d9d9; border-radius: 12px; padding: 16px 18px; background: #fff; box-shadow: 0 1px 2px rgba(0,0,0,.03); }
-        .sl-card h4 { margin: 0 0 10px; font-size: 15px; font-family: 'Libre Baskerville', serif; color: #2c3e50; }
-        .sl-card p { margin: 0 0 8px; font-size: 14px; line-height: 1.6; color: #555; }
-        .sl-card p:last-child { margin-bottom: 0; }
+    /* ===== CONTEÚDO BASE ===== */
+    main { max-width: var(--cf-max); margin: 0 auto 40px; padding: 0 20px; }
+    .sl-secao { margin-bottom: 40px; }
+    .sl-secao-header { display: flex; align-items: center; gap: 16px; margin-bottom: 28px; flex-wrap: wrap; padding-top: 10px; }
+    .sl-secao-num { font-family: var(--cf-serif); font-size: 13px; font-weight: 700; color: var(--cf-dourado); letter-spacing: 3px; flex-shrink: 0; }
+    .sl-secao-linha { flex: 1; height: 1px; background: linear-gradient(to right, var(--cf-borda), transparent); }
+    .sl-secao-titulo { font-family: var(--cf-serif); font-size: 22px; font-weight: 400; color: var(--cf-texto); letter-spacing: 0.5px; text-transform: none; line-height: 1.35; margin: 0; }
 
-        .sl-card-destaque { border: 2px solid #b18b57; border-radius: 12px; padding: 18px 20px; background: #fdfaf5; margin-bottom: 14px; }
-        .sl-card-destaque h4 { margin: 0 0 10px; font-size: 16px; font-family: 'Libre Baskerville', serif; color: #2c3e50; }
-        .sl-card-destaque p { margin: 0 0 8px; font-size: 14px; line-height: 1.6; color: #555; }
+    .sl-bloco { margin-bottom: 25px; line-height: 1.8; color: var(--cf-texto); font-family: var(--cf-serif); }
+    .sl-bloco h3 { font-family: var(--cf-serif); color: var(--cf-texto); margin-bottom: 15px; font-size: 17px; font-weight: 600; }
+    .sl-bloco p { margin-bottom: 12px; font-size: 15.5px; line-height: 1.85; }
+    .sl-bloco p:last-child { margin-bottom: 0; }
+    .sl-bloco em { color: #5a4e3a; font-style: italic; }
+    .sl-bloco strong { color: var(--cf-texto); font-weight: 700; }
 
-        /* ===== BADGES ===== */
-        .sl-badges { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
-        .sl-badge { display: inline-block; padding: 4px 10px; border-radius: 999px; font-size: 11px; font-weight: 700; letter-spacing: .03em; text-transform: uppercase; font-family: 'Inter', sans-serif; }
-        .sl-badge-data    { background: #f0e8fc; color: #5b2db8; }
-        .sl-badge-local   { background: #e8f0fe; color: #2457b8; }
-        .sl-badge-reliquia { background: #fde8e8; color: #a32020; }
-        .sl-badge-canonico { background: #e7f7ea; color: #1d6b35; }
-        .sl-badge-historico { background: #fff3db; color: #8a5a00; }
+    .sl-capitular { float: left; font-size: 58px; line-height: 0.8; padding: 4px 10px 0 0; margin-top: 4px; font-family: var(--cf-serif); color: var(--cf-dourado); font-weight: 400; }
+    .sl-sep { text-align: center; padding: 40px 0; margin: 0 auto; color: var(--cf-dourado-claro); font-size: 11px; letter-spacing: 14px; }
+    .sl-citacao { margin: 24px auto; max-width: 620px; text-align: center; font-style: italic; background: #fdfaf3; padding: 24px 28px; border-radius: 8px; border: 1px solid #f3eee3; }
+    .sl-citacao p { font-size: 1.1em; color: #2f2a22; margin-bottom: 10px; font-family: var(--cf-serif); line-height: 1.7; }
+    .sl-fonte { display: block; font-size: 0.78em; text-transform: uppercase; letter-spacing: 1px; color: var(--cf-dourado); font-style: normal; margin-top: 14px; }
 
-        /* ===== BLOCO RESUMO ===== */
-        .sl-bloco-resumo { border-left: 4px solid #b18b57; background: #faf7f2; padding: 16px 18px; border-radius: 8px; margin-bottom: 4px; }
-        .sl-bloco-resumo h3 { margin: 0 0 8px; font-family: 'Libre Baskerville', serif; color: #2c3e50; }
-        .sl-bloco-resumo p  { margin: 0 0 6px; font-size: 14px; line-height: 1.6; color: #555; }
-        .sl-bloco-resumo p:last-child { margin-bottom: 0; }
+    /* ===== GRIDS ===== */
+    .sl-grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; margin-top: 14px; }
+    .sl-grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin-top: 14px; }
 
-        /* ===== ALERTAS ===== */
-        .sl-alerta { padding: 14px 16px; border-radius: 10px; background: #fff8e8; border: 1px solid #f1d58f; font-size: 14px; line-height: 1.6; margin-top: 12px; color: #444; }
-        .sl-alerta-info { padding: 14px 16px; border-radius: 10px; background: #f0f4ff; border: 1px solid #c5d3f5; font-size: 14px; line-height: 1.6; margin-top: 12px; color: #444; }
+    /* ===== CARDS ===== */
+    .sl-card { background: var(--cf-bloco-bg); border: 1px solid var(--cf-borda-leve); border-radius: 4px; padding: 20px 22px; box-shadow: 0 1px 3px rgba(0,0,0,.03); }
+    .sl-card h4 { margin: 0 0 10px; font-size: 15px; font-family: var(--cf-serif); color: var(--cf-texto); font-weight: 600; }
+    .sl-card p { margin: 0 0 8px; font-size: 14px; line-height: 1.7; color: var(--cf-texto-leve); font-family: var(--cf-serif); }
+    .sl-card p:last-child { margin-bottom: 0; }
 
-        /* ===== FICHA ===== */
-        .sl-ficha { display: grid; gap: 8px; margin-top: 8px; }
-        .sl-ficha-item { padding: 10px 14px; border-radius: 10px; background: #f8f8f8; border: 1px solid #ececec; font-size: 14px; line-height: 1.6; color: #444; }
-        .sl-ficha-item strong { display: block; margin-bottom: 4px; font-size: 12px; text-transform: uppercase; letter-spacing: .03em; color: #888; font-family: 'Inter', sans-serif; }
+    .sl-card-destaque { background: linear-gradient(135deg, #fdfaf3, #f8f3e8); border: 1px solid var(--cf-borda); border-left: 4px solid var(--cf-dourado); border-radius: 4px; padding: 24px 28px; margin-bottom: 14px; }
+    .sl-card-destaque h4 { margin: 0 0 12px; font-size: 16px; font-family: var(--cf-serif); color: var(--cf-texto); font-weight: 600; }
+    .sl-card-destaque p { margin: 0 0 10px; font-size: 14.5px; line-height: 1.75; color: var(--cf-texto); font-family: var(--cf-serif); }
+    .sl-card-destaque p:last-child { margin-bottom: 0; }
 
-        /* ===== MÉTRICAS ===== */
-        .sl-topo-metrica { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin-top: 14px; }
-        .sl-metrica { border: 1px solid #e3e3e3; border-radius: 12px; padding: 16px; background: #fff; text-align: center; }
-        .sl-metrica-num { font-size: 26px; font-weight: 800; line-height: 1; margin-bottom: 6px; color: #2f2a22; font-family: 'Libre Baskerville', serif; }
-        .sl-metrica-leg { font-size: 13px; color: #555; line-height: 1.5; }
+    /* ===== BADGES ===== */
+    .sl-badges { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+    .sl-badge { display: inline-block; padding: 4px 10px; border-radius: 999px; font-size: 11px; font-weight: 700; letter-spacing: .03em; text-transform: uppercase; font-family: var(--cf-serif); }
+    .sl-badge-data     { background: #f0e8fc; color: #5b2db8; }
+    .sl-badge-local    { background: #e8f0fe; color: #2457b8; }
+    .sl-badge-reliquia { background: #fde8e8; color: #a32020; }
+    .sl-badge-canonico { background: #e7f7ea; color: #1d6b35; }
+    .sl-badge-historico { background: #fff3db; color: #8a5a00; }
 
-        /* ===== LINHA DO TEMPO ===== */
-        .sl-linha-tempo { display: grid; gap: 10px; margin-top: 14px; }
-        .sl-passo { display: grid; grid-template-columns: 50px 1fr; gap: 12px; align-items: start; }
-        .sl-passo-num { width: 50px; height: 50px; border-radius: 50%; background: #222; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 13px; flex-shrink: 0; font-family: 'Inter', sans-serif; text-align: center; line-height: 1.1; padding: 4px; }
-        .sl-passo-corpo { background: #fafafa; border: 1px solid #ececec; border-radius: 10px; padding: 12px 14px; }
-        .sl-passo-corpo strong { display: block; margin-bottom: 4px; color: #2c3e50; font-family: 'Libre Baskerville', serif; }
-        .sl-passo-corpo p { margin: 0 0 8px; font-size: 14px; line-height: 1.6; color: #555; }
-        .sl-passo-corpo p:last-child { margin: 0; }
+    /* ===== BLOCO RESUMO ===== */
+    .sl-bloco-resumo { background: linear-gradient(135deg, #fdfaf3, #f8f3e8); border: 1px solid var(--cf-borda); border-left: 4px solid var(--cf-dourado); border-radius: 4px; padding: 24px 28px; margin-bottom: 4px; }
+    .sl-bloco-resumo h3 { margin: 0 0 10px; font-family: var(--cf-serif); color: var(--cf-texto); font-size: 17px; font-weight: 600; }
+    .sl-bloco-resumo p { margin: 0 0 8px; font-size: 14.5px; line-height: 1.8; color: var(--cf-texto); font-family: var(--cf-serif); }
+    .sl-bloco-resumo p:last-child { margin-bottom: 0; }
 
-        /* ===== TABELA ===== */
-        .sl-mini-tabela { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 14px; }
-        .sl-mini-tabela th, .sl-mini-tabela td { border: 1px solid #e2e2e2; padding: 10px 14px; text-align: left; vertical-align: top; }
-        .sl-mini-tabela th { background: #f7f7f7; font-size: 13px; font-family: 'Inter', sans-serif; }
+    /* ===== ALERTAS ===== */
+    .sl-alerta { padding: 16px 20px; border-radius: 4px; background: #f5f1e8; border-left: 3px solid #d4c9a8; font-size: 14px; line-height: 1.75; margin-top: 14px; color: var(--cf-texto-leve); font-family: var(--cf-serif); font-style: italic; }
+    .sl-alerta strong { font-style: normal; color: var(--cf-texto); }
+    .sl-alerta-info { padding: 16px 20px; border-radius: 4px; background: #f0f4ff; border-left: 3px solid #c5d3f5; font-size: 14px; line-height: 1.75; margin-top: 14px; color: var(--cf-texto-leve); font-family: var(--cf-serif); font-style: italic; }
+    .sl-alerta-info strong { font-style: normal; color: var(--cf-texto); }
 
-        /* ===== DIVIDER LEVE ===== */
-        .sl-divider-leve { border: none; border-top: 1px solid #ececec; margin: 14px 0; }
+    /* ===== FICHA ===== */
+    .sl-ficha { display: grid; gap: 8px; margin-top: 8px; }
+    .sl-ficha-item { padding: 12px 16px; border-radius: 4px; background: var(--cf-bloco-bg); border: 1px solid var(--cf-borda-leve); font-size: 14px; line-height: 1.7; color: var(--cf-texto); font-family: var(--cf-serif); }
+    .sl-ficha-item strong { display: block; margin-bottom: 4px; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: var(--cf-dourado); font-family: var(--cf-serif); font-weight: 700; }
 
-        /* ===== RESPONSIVO ===== */
-        @media (max-width: 600px) {
-            .sl-secao-titulo { font-size: 15px; letter-spacing: 1.5px; }
-            .sl-citacao { padding: 20px 16px; }
-            .sl-passo { grid-template-columns: 1fr; }
-            .sl-passo-num { margin-bottom: 6px; }
-            .sl-mini-tabela th, .sl-mini-tabela td { padding: 8px 10px; }
-        }
-    </style>
+    /* ===== MÉTRICAS ===== */
+    .sl-topo-metrica { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin-top: 14px; }
+    .sl-metrica { border: 1px solid var(--cf-borda-leve); border-radius: 4px; padding: 18px 16px; background: var(--cf-bloco-bg); text-align: center; }
+    .sl-metrica-num { font-size: 26px; font-weight: 700; line-height: 1; margin-bottom: 6px; color: var(--cf-texto); font-family: var(--cf-serif); }
+    .sl-metrica-leg { font-size: 13px; color: var(--cf-texto-leve); line-height: 1.5; font-family: var(--cf-serif); }
+
+    /* ===== LINHA DO TEMPO ===== */
+    .sl-linha-tempo { display: grid; gap: 12px; margin-top: 14px; }
+    .sl-passo { display: grid; grid-template-columns: 50px 1fr; gap: 14px; align-items: start; }
+    .sl-passo-num { width: 50px; height: 50px; border-radius: 50%; background: var(--cf-dourado); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 13px; flex-shrink: 0; font-family: var(--cf-serif); text-align: center; line-height: 1.1; padding: 4px; }
+    .sl-passo-corpo { background: var(--cf-bloco-bg); border: 1px solid var(--cf-borda-leve); border-radius: 4px; padding: 14px 18px; }
+    .sl-passo-corpo strong { display: block; margin-bottom: 4px; color: var(--cf-texto); font-family: var(--cf-serif); font-weight: 700; }
+    .sl-passo-corpo p { margin: 0 0 8px; font-size: 14px; line-height: 1.7; color: var(--cf-texto-leve); font-family: var(--cf-serif); }
+    .sl-passo-corpo p:last-child { margin: 0; }
+
+    /* ===== TABELA ===== */
+    .sl-mini-tabela { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 14px; background: var(--cf-bloco-bg); font-family: var(--cf-serif); }
+    .sl-mini-tabela th, .sl-mini-tabela td { border: 1px solid var(--cf-borda-leve); padding: 12px 16px; text-align: left; vertical-align: top; color: var(--cf-texto); line-height: 1.6; }
+    .sl-mini-tabela th { background: #f5f1e8; font-size: 13px; font-weight: 700; color: var(--cf-texto); letter-spacing: 0.3px; }
+
+    /* ===== DIVIDER LEVE ===== */
+    .sl-divider-leve { border: none; border-top: 1px solid var(--cf-borda-leve); margin: 14px 0; }
+
+    /* ===== RESPONSIVO ===== */
+    @media (max-width: 768px) {
+        main { padding: 0 14px; }
+        .sl-secao-titulo { font-size: 19px; }
+        .sl-bloco p { font-size: 14.5px; }
+        .sl-card { padding: 16px 18px; }
+        .sl-card-destaque { padding: 18px 20px; }
+        .sl-bloco-resumo { padding: 18px 20px; }
+        .sl-citacao { padding: 20px 18px; }
+    }
+    @media (max-width: 600px) {
+        .sl-secao-titulo { font-size: 17px; }
+        .sl-passo { grid-template-columns: 1fr; }
+        .sl-passo-num { margin-bottom: 6px; }
+        .sl-mini-tabela th, .sl-mini-tabela td { padding: 10px 12px; font-size: 13px; }
+    }
+</style>
 </head>
 <body>
 
@@ -250,7 +277,27 @@
       <h3>Os últimos sacramentos e as últimas palavras</h3>
       <p>João Vianney recebeu a unção dos enfermos em 1 de agosto de 1859, dois dias antes da morte. O bispo de Belley, Mgr. Devie, havia enviado representação — a diocese acompanhava o processo com a atenção que a situação exigia. Os vigários estavam presentes. Alguns paroquianos de Ars que haviam estado ao lado do Cura ao longo dos anos foram admitidos ao quarto.</p>
       <p>O que foi dito nos últimos dias chegou aos biógrafos através dos relatos dos vigários — Toccanier em particular, que estava presente e que registrou o que ouviu com a precisão que havia cultivado ao longo de anos de diário. As palavras que os relatos preservam com mais consistência não são palavras dramáticas. São palavras simples — a gratidão pela vida sacerdotal, a menção a Nossa Senhora, a afirmação de que estava pronto. O tipo de palavras que um homem diz quando não tem nada a acrescentar ao que já disse ao longo de quarenta anos de confessionário.</p>
+        
+    <div class="sl-bloco">
+      <h3>O que os vigários registraram nos últimos dias</h3>
+      <div class="sl-grid-2">
+        <div class="sl-card">
+          <h4>O pedido de Vianney</h4>
+          <p>Nos últimos dias conscientes, pediu aos vigários que continuassem recebendo os penitentes que ainda chegavam — a fila não havia cessado, mesmo com a notícia do agravamento. A preocupação não era consigo. Era com as pessoas que haviam viajado para se confessar e que ficariam sem confissão se ele morresse antes de chegarem ao confessionário.</p>
+          <p><strong>Toccanier registrou:</strong> "Disse-me que não se importava de morrer, mas que sentia pena dos que não seriam ouvidos."</p>
+        </div>
+        <div class="sl-card">
+          <h4>A lucidez até o fim</h4>
+          <p>Os relatos médicos e dos vigários concordam: Vianney manteve lucidez até poucas horas antes da morte. Reconhecia as pessoas que entravam no quarto. Respondia a perguntas com frases curtas mas coerentes. A deterioração era física — a mente permanecia nítida.</p>
+          <p>Essa lucidez foi tratada nos processos canônicos como dado relevante: as últimas palavras foram proferidas por alguém que sabia o que estava dizendo e para quem estava dizendo.</p>
+        </div>
+      </div>
 
+      <div class="sl-citacao">
+        <p>"Que infelicidade, um padre que morre sem ter dado tudo. Eu dei tudo o que tinha. E mesmo assim não sei se dei o suficiente."</p>
+        <span class="sl-fonte">Últimas palavras registradas por Toccanier — dias antes da morte</span>
+      </div>
+    </div>
       <div class="sl-alerta-info">
         <strong>Na madrugada de 4 de agosto de 1859</strong>, às duas da manhã, João Maria Batista Vianney morreu no quarto simples da reitoria de Ars que havia ocupado por quarenta e um anos.
       </div>
@@ -339,7 +386,37 @@
     <div class="sl-bloco">
       <h3>A cobertura jornalística — incluindo a imprensa anticlerical</h3>
       <p>A imprensa católica francesa cobriu o funeral com o espaço que havia reservado para eventos de primeira magnitude. Alguns jornais anticlericais — que haviam coberto Ars ao longo dos anos com o ceticismo que a sua orientação exigia — publicaram notas que os leitores de hoje encontrariam surpreendentes: respeitosas, contidas, sem a ironia que havia caracterizado a cobertura anterior. Como se o homem morto fosse mais difícil de caricaturar do que o homem vivo havia sido.</p>
+        
+    <div class="sl-bloco">
+      <h3>O corpo antes do sepultamento — o que os médicos notaram</h3>
+      <p>Nos dois dias entre a morte e o funeral, o corpo de Vianney ficou exposto para velamento na reitoria e depois na igreja. Era pleno verão — 4 a 6 de agosto — com temperaturas que os registros meteorológicos da região descrevem como anormalmente altas para aquele ano.</p>
+      <p>Os médicos presentes — que haviam acompanhado o declínio de Vianney nos meses anteriores e que estavam familiarizados com o processo normal de decomposição num corpo de 73 anos em condições de calor extremo — registraram o que observaram com vocabulário cauteloso mas inequívoco: o estado do corpo não correspondia ao que esperavam encontrar dadas as condições.</p>
 
+      <div class="sl-grid-3">
+        <div class="sl-card">
+          <h4>A ausência de rigidez esperada</h4>
+          <p>O padrão de rigidez cadavérica não seguiu a cronologia habitual. Os médicos notaram flexibilidade prolongada nos membros que a morte por exaustão e desidratação normalmente não produziria.</p>
+        </div>
+        <div class="sl-card">
+          <h4>A expressão facial</h4>
+          <p>Múltiplas testemunhas — incluindo os médicos — descreveram que o rosto de Vianney morto tinha uma expressão diferente da que havia tido vivo nos últimos meses. O cansaço que havia marcado os traços nos anos finais havia desaparecido. O que havia era serenidade — a palavra é usada em fontes independentes com uma frequência que excede o devocional genérico.</p>
+        </div>
+        <div class="sl-card">
+          <h4>O registro formal</h4>
+          <p>Os médicos registraram as observações para inclusão futura nos processos canônicos — eram profissionais que sabiam que o que observavam teria consequências documentais. A precisão dos registros reflete essa consciência.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="sl-bloco">
+      <h3>As reações que surpreenderam</h3>
+      <div class="sl-card-destaque">
+        <h4>O prefeito republicano de Ars</h4>
+        <p>O prefeito de Ars na época da morte era um republicano que não havia sido devoto de Vianney durante a vida e que representava o tipo de autoridade civil que os sermões do Cura sobre o trabalho dominical haviam incomodado durante décadas. O discurso que fez por ocasião do funeral — preservado nos arquivos municipais — reconhecia algo que transcendia as divergências que havia tido com o pároco: que Vianney havia transformado a aldeia de uma forma que nenhuma política pública havia conseguido igualar, e que a França perdia nele algo que seria difícil de substituir.</p>
+        <p><strong>O dado é historicamente significativo:</strong> quando um representante da autoridade civil laica reconhece publicamente o que um padre fez, sem as concessões retóricas que a cortesia exige, o reconhecimento tem peso que o elogio eclesiástico — por mais sincero — não pode ter.</p>
+      </div>
+    </div>
+        
       <table class="sl-mini-tabela">
         <thead>
           <tr>
@@ -538,7 +615,34 @@
       </div>
     </div>
   </div>
+    <div class="sl-bloco">
+      <h3>As outras relíquias menores</h3>
+      <p>Além do corpo na Basílica e do coração em relicário independente, existem relíquias menores de Vianney distribuídas por igrejas, seminários e comunidades religiosas em vários países. A prática de distribuir relíquias menores — fragmentos de roupa, objetos de uso pessoal, pequenas porções de tecido que estiveram em contato com o corpo — é parte da tradição católica de veneração e está sujeita a autenticação pela diocese de origem.</p>
 
+      <div class="sl-grid-3">
+        <div class="sl-card">
+          <h4>A estola do confessionário</h4>
+          <p>A estola que Vianney usava no confessionário — a peça mais simbolicamente carregada entre os seus objetos pessoais — está preservada em Ars. É a estola que esteve sobre os ombros de um homem durante dezenas de milhares de absolvições ao longo de quarenta anos.</p>
+        </div>
+        <div class="sl-card">
+          <h4>Os cilícios de Balley</h4>
+          <p>Os instrumentos de penitência que haviam pertencido a Père Balley e que Vianney conservou após a morte do mestre estão preservados na reitoria-museu de Ars. São testemunho físico da continuidade entre mestre e discípulo que esta narrativa documenta desde a página de História.</p>
+        </div>
+        <div class="sl-card">
+          <h4>Relíquias em seminários brasileiros</h4>
+          <p>Vários seminários brasileiros — especialmente os que levam o nome de Vianney — possuem relíquias menores autenticadas pela diocese de Belley-Ars. São objetos de veneração local que conectam a formação sacerdotal brasileira ao lugar e à pessoa que a tradição propõe como modelo.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="sl-bloco">
+      <h3>O significado das peregrinações do coração</h3>
+      <div class="sl-citacao">
+        <p>"Não estamos levando um objeto. Estamos levando um coração que amou até se consumir — e que continua amando de outra forma."</p>
+        <span class="sl-fonte">Bispo que recebeu o relicário durante a peregrinação de 2019 no Brasil</span>
+      </div>
+      <p>O que as peregrinações do coração demonstram, independentemente de qualquer questão sobre a natureza da intercessão dos santos, é um dado sociológico: que a presença física de uma relíquia de Vianney produz, nas pessoas que a encontram, uma resposta que a leitura de um livro ou a visita a um museu não produz. A resposta é variada — silêncio, choro, confissão, decisão de permanecer num ministério que estava sendo abandonado — mas é consistente o suficiente, através de culturas e décadas, para constituir um fenômeno que merece registro.</p>
+    </div>
   <div class="sl-sep">· · ·</div>
 
   <!-- 05 · OS LOCAIS SAGRADOS -->
@@ -724,7 +828,17 @@
       </div>
     </div>
   </div>
+  <div class="sl-sep">· · ·</div>
 
+  <!-- BLOCO FINAL REFLEXIVO -->
+  <div class="sl-bloco">
+    <div class="sl-bloco-resumo">
+      <h3>O que permanece</h3>
+      <p>João Maria Batista Vianney morreu às duas da manhã de 4 de agosto de 1859, no quarto que havia ocupado por quarenta e um anos, com a mesma simplicidade que havia caracterizado cada dia daquelas quatro décadas. Não deixou obra escrita. Não fundou congregação religiosa. Não produziu sistema teológico. Deixou uma aldeia transformada, um confessionário de madeira escura, um corpo que resiste parcialmente à decomposição e um coração que peregrina por dioceses do mundo inteiro mais de um século e meio depois.</p>
+      <p>E deixou uma pergunta — a pergunta que o patronato dos párocos formulou oficialmente e que a vida de Vianney havia formulado silenciosamente durante quarenta anos: <em>o que é um padre quando é totalmente o que é chamado a ser?</em></p>
+      <p>A resposta de Ars não é uma teoria. É uma vida. E a vida continua disponível — no corpo que está na Basílica, no coração que peregrina, no confessionário que espera, na memória de um lugar que ainda recebe os que chegam com disposição para ouvir o que o silêncio tem para dizer.</p>
+    </div>
+  </div>
 </main>
 
 </body>
