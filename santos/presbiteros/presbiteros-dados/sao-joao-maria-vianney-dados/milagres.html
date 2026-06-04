@@ -99,7 +99,72 @@
             .sl-pagina-titulo { font-size: 26px; letter-spacing: 1px; }
             .sl-pagina-numero { font-size: 12px; letter-spacing: 3px; }
         }
+    /* ═══════════════════════════════════════
+       ABA FRASES — Botão extra (igual às outras abas)
+       ═══════════════════════════════════════ */
+    .sl-frases-destaque {
+        background: #faf8f3;
+        padding: 0;
+    }
+    .sl-frases-destaque-inner {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: center;
+    }
+    .sl-frases-destaque a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        text-decoration: none;
+        color: #6e6a60;
+        font-family: Georgia, 'Times New Roman', serif;
+        font-size: 12.5px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        padding: 18px 40px;
+        position: relative;
+        transition: all 0.3s ease;
+        background: transparent;
+        min-height: 56px;
+        box-sizing: border-box;
+    }
+    .sl-frases-destaque a::after {
+        content: "";
+        position: absolute;
+        left: 50%;
+        bottom: 8px;
+        width: 0;
+        height: 1px;
+        background-color: #b08a3c;
+        transition: width 0.3s ease;
+        transform: translateX(-50%);
+    }
+    .sl-frases-destaque a:hover {
+        color: #2f2a22;
+        background-color: #f3eee3;
+    }
+    .sl-frases-destaque a:hover::after {
+        width: 50%;
+    }
+    .sl-frases-destaque a.ativo {
+        color: #2f2a22;
+        background-color: #f5f0e5;
+    }
+    .sl-frases-destaque a.ativo::after {
+        width: 50%;
+    }
 
+    @media (max-width: 900px) {
+        .sl-frases-destaque a { font-size: 11px; letter-spacing: 1.5px; padding: 14px 30px; }
+    }
+    @media (max-width: 600px) {
+        .sl-frases-destaque a { font-size: 9.5px; letter-spacing: 1px; padding: 12px 20px; min-height: 50px; }
+    }
+    @media (max-width: 420px) {
+        .sl-frases-destaque a { font-size: 8.5px; padding: 10px 14px; letter-spacing: 0.5px; }
+    }
         /* ===== CONTEÚDO BASE ===== */
         main { max-width: var(--cf-max); margin: 0 auto 40px; padding: 0 20px; }
         .sl-secao { margin-bottom: 40px; }
