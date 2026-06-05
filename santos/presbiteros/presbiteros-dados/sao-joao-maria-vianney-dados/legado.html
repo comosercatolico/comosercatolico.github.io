@@ -55,72 +55,20 @@
         .sl-pagina-ornamento { margin-top: 30px; font-size: 12px; color: var(--cf-dourado-claro); letter-spacing: 8px; }
         @media (max-width: 768px) { .sl-pagina-cabecalho { padding: 40px 16px 36px; } .sl-pagina-titulo { font-size: 32px; } .sl-pagina-subtitulo { font-size: 15px; } }
         @media (max-width: 480px) { .sl-pagina-titulo { font-size: 26px; letter-spacing: 1px; } .sl-pagina-numero { font-size: 12px; letter-spacing: 3px; } }
-    /* ═══════════════════════════════════════
-       ABA FRASES — Botão extra (igual às outras abas)
-       ═══════════════════════════════════════ */
-    .sl-frases-destaque {
-        background: #faf8f3;
-        padding: 0;
-    }
-    .sl-frases-destaque-inner {
-        max-width: 1200px;
-        margin: 0 auto;
-        display: flex;
-        justify-content: center;
-    }
-    .sl-frases-destaque a {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        text-decoration: none;
-        color: #6e6a60;
-        font-family: Georgia, 'Times New Roman', serif;
-        font-size: 12.5px;
-        letter-spacing: 2px;
-        text-transform: uppercase;
-        padding: 18px 40px;
-        position: relative;
-        transition: all 0.3s ease;
-        background: transparent;
-        min-height: 56px;
-        box-sizing: border-box;
-    }
-    .sl-frases-destaque a::after {
-        content: "";
-        position: absolute;
-        left: 50%;
-        bottom: 8px;
-        width: 0;
-        height: 1px;
-        background-color: #b08a3c;
-        transition: width 0.3s ease;
-        transform: translateX(-50%);
-    }
-    .sl-frases-destaque a:hover {
-        color: #2f2a22;
-        background-color: #f3eee3;
-    }
-    .sl-frases-destaque a:hover::after {
-        width: 50%;
-    }
-    .sl-frases-destaque a.ativo {
-        color: #2f2a22;
-        background-color: #f5f0e5;
-    }
-    .sl-frases-destaque a.ativo::after {
-        width: 50%;
-    }
 
-    @media (max-width: 900px) {
-        .sl-frases-destaque a { font-size: 11px; letter-spacing: 1.5px; padding: 14px 30px; }
-    }
-    @media (max-width: 600px) {
-        .sl-frases-destaque a { font-size: 9.5px; letter-spacing: 1px; padding: 12px 20px; min-height: 50px; }
-    }
-    @media (max-width: 420px) {
-        .sl-frases-destaque a { font-size: 8.5px; padding: 10px 14px; letter-spacing: 0.5px; }
-    }
+        /* ===== ABA FRASES ===== */
+        .sl-frases-destaque { background: #faf8f3; padding: 0; }
+        .sl-frases-destaque-inner { max-width: 1200px; margin: 0 auto; display: flex; justify-content: center; }
+        .sl-frases-destaque a { display: flex; align-items: center; justify-content: center; text-align: center; text-decoration: none; color: #6e6a60; font-family: Georgia, 'Times New Roman', serif; font-size: 12.5px; letter-spacing: 2px; text-transform: uppercase; padding: 18px 40px; position: relative; transition: all 0.3s ease; background: transparent; min-height: 56px; box-sizing: border-box; }
+        .sl-frases-destaque a::after { content: ""; position: absolute; left: 50%; bottom: 8px; width: 0; height: 1px; background-color: #b08a3c; transition: width 0.3s ease; transform: translateX(-50%); }
+        .sl-frases-destaque a:hover { color: #2f2a22; background-color: #f3eee3; }
+        .sl-frases-destaque a:hover::after { width: 50%; }
+        .sl-frases-destaque a.ativo { color: #2f2a22; background-color: #f5f0e5; }
+        .sl-frases-destaque a.ativo::after { width: 50%; }
+        @media (max-width: 900px) { .sl-frases-destaque a { font-size: 11px; letter-spacing: 1.5px; padding: 14px 30px; } }
+        @media (max-width: 600px) { .sl-frases-destaque a { font-size: 9.5px; letter-spacing: 1px; padding: 12px 20px; min-height: 50px; } }
+        @media (max-width: 420px) { .sl-frases-destaque a { font-size: 8.5px; padding: 10px 14px; letter-spacing: 0.5px; } }
+
         /* ===== CONTEÚDO BASE ===== */
         main { max-width: var(--cf-max); margin: 0 auto 40px; padding: 0 20px; }
         .sl-secao { margin-bottom: 40px; }
@@ -167,6 +115,8 @@
         .sl-badge-canonico { background: #e7f7ea; color: #1d6b35; }
         .sl-badge-historico { background: #fff3db; color: #8a5a00; }
         .sl-badge-papal    { background: #f5eef8; color: #6b2fa0; }
+        .sl-badge-cultura  { background: #e8f5f8; color: #1a6b7a; }
+        .sl-badge-global   { background: #f0f7e8; color: #2d6b1a; }
 
         /* ===== BLOCO RESUMO ===== */
         .sl-bloco-resumo { background: linear-gradient(135deg, #fdfaf3, #f8f3e8); border: 1px solid var(--cf-borda); border-left: 4px solid var(--cf-dourado); border-radius: 4px; padding: 24px 28px; margin-bottom: 4px; }
@@ -179,6 +129,8 @@
         .sl-alerta strong { font-style: normal; color: var(--cf-texto); }
         .sl-alerta-info { padding: 16px 20px; border-radius: 4px; background: #f0f4ff; border-left: 3px solid #c5d3f5; font-size: 14px; line-height: 1.75; margin-top: 14px; color: var(--cf-texto-leve); font-family: var(--cf-serif); font-style: italic; }
         .sl-alerta-info strong { font-style: normal; color: var(--cf-texto); }
+        .sl-alerta-verde { padding: 16px 20px; border-radius: 4px; background: #f0f7ea; border-left: 3px solid #b0d4a0; font-size: 14px; line-height: 1.75; margin-top: 14px; color: var(--cf-texto-leve); font-family: var(--cf-serif); font-style: italic; }
+        .sl-alerta-verde strong { font-style: normal; color: var(--cf-texto); }
 
         /* ===== FICHA ===== */
         .sl-ficha { display: grid; gap: 8px; margin-top: 8px; }
@@ -204,9 +156,18 @@
         .sl-mini-tabela { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 14px; background: var(--cf-bloco-bg); font-family: var(--cf-serif); }
         .sl-mini-tabela th, .sl-mini-tabela td { border: 1px solid var(--cf-borda-leve); padding: 12px 16px; text-align: left; vertical-align: top; color: var(--cf-texto); line-height: 1.6; }
         .sl-mini-tabela th { background: #f5f1e8; font-size: 13px; font-weight: 700; color: var(--cf-texto); letter-spacing: 0.3px; }
+        .sl-mini-tabela tr:nth-child(even) td { background: #fdfaf6; }
 
         /* ===== DIVIDER ===== */
         .sl-divider-leve { border: none; border-top: 1px solid var(--cf-borda-leve); margin: 14px 0; }
+
+        /* ===== ÍNDICE FLUTUANTE ===== */
+        .sl-indice { background: var(--cf-bloco-bg); border: 1px solid var(--cf-borda-leve); border-left: 3px solid var(--cf-dourado); border-radius: 4px; padding: 20px 24px; margin-bottom: 36px; }
+        .sl-indice h4 { font-family: var(--cf-serif); font-size: 13px; text-transform: uppercase; letter-spacing: 2px; color: var(--cf-dourado); margin: 0 0 14px; font-weight: 700; }
+        .sl-indice ol { margin: 0; padding-left: 20px; }
+        .sl-indice ol li { font-family: var(--cf-serif); font-size: 14px; line-height: 1.8; color: var(--cf-texto-leve); }
+        .sl-indice ol li a { color: var(--cf-texto-leve); text-decoration: none; border-bottom: 1px dotted var(--cf-borda); transition: color 0.2s; }
+        .sl-indice ol li a:hover { color: var(--cf-dourado); }
 
         /* ===== RESPONSIVO ===== */
         @media (max-width: 768px) {
@@ -223,6 +184,7 @@
             .sl-passo { grid-template-columns: 1fr; }
             .sl-passo-num { margin-bottom: 6px; }
             .sl-mini-tabela th, .sl-mini-tabela td { padding: 10px 12px; font-size: 13px; }
+            .sl-indice { padding: 16px 18px; }
         }
     </style>
 </head>
@@ -240,6 +202,25 @@
 </div>
 
 <main>
+
+  <!-- ===== ÍNDICE ===== -->
+  <div class="sl-indice">
+    <h4>Nesta página</h4>
+    <ol>
+      <li><a href="#impacto-imediato">O impacto imediato — França 1859–1900</a></li>
+      <li><a href="#magisterio-papal">O magistério papal — documento por documento</a></li>
+      <li><a href="#vaticano-ii">Vianney e o Vaticano II</a></li>
+      <li><a href="#instituicoes-globais">Instituições globais — seminários, paróquias e ordens</a></li>
+      <li><a href="#fraternidades">Fraternidades sacerdotais e movimentos inspirados em Ars</a></li>
+      <li><a href="#crise-sacerdocio">A crise do sacerdócio e Vianney como resposta</a></li>
+      <li><a href="#cultura">Vianney na literatura, no cinema e nas artes</a></li>
+      <li><a href="#espiritualidade-leiga">O impacto na espiritualidade leiga</a></li>
+      <li><a href="#debates-teologicos">Debates teológicos e pastorais</a></li>
+      <li><a href="#fora-catolicismo">Vianney fora do catolicismo</a></li>
+      <li><a href="#influencia-mundial">Influência na espiritualidade sacerdotal mundial</a></li>
+      <li><a href="#convergencia">O ponto de convergência</a></li>
+    </ol>
+  </div>
 
   <!-- ===== MÉTRICAS DE ABERTURA ===== -->
   <div class="sl-secao">
@@ -266,7 +247,7 @@
   <div class="sl-sep">· · ·</div>
 
   <!-- 01 · O IMPACTO IMEDIATO -->
-  <div class="sl-secao">
+  <div class="sl-secao" id="impacto-imediato">
     <div class="sl-secao-header">
       <span class="sl-secao-num">01</span>
       <div class="sl-secao-linha"></div>
@@ -337,7 +318,7 @@
   <div class="sl-sep">· · ·</div>
 
   <!-- 02 · O MAGISTÉRIO PAPAL -->
-  <div class="sl-secao">
+  <div class="sl-secao" id="magisterio-papal">
     <div class="sl-secao-header">
       <span class="sl-secao-num">02</span>
       <div class="sl-secao-linha"></div>
@@ -351,7 +332,6 @@
       </div>
     </div>
 
-    <!-- LINHA DO TEMPO PAPAL -->
     <div class="sl-bloco">
       <h3>Cronologia papal sobre Vianney</h3>
       <div class="sl-linha-tempo">
@@ -472,7 +452,7 @@
       </div>
 
       <div class="sl-alerta-info" style="margin-top: 16px;">
-        <strong>Contexto decisivo:</strong> A encíclica foi publicada meses antes do anúncio do Concílio Vaticano II, que João XXIII faria em janeiro de 1959. O papa que convocaria o maior evento de renovação eclesial do século XX escolheu, para o centenário da morte de Vianney, escrever um documento sobre o modelo mais tradicional de sacerdócio disponível. A aparente tensão entre os dois gestos é ela mesma um dado teológico relevante — sugere que, para João XXIII, renovação e tradição não eram necessariamente polos opostos.
+        <strong>Contexto decisivo:</strong> A encíclica foi publicada meses antes do anúncio do Concílio Vaticano II. O papa que convocaria o maior evento de renovação eclesial do século XX escolheu, para o centenário da morte de Vianney, escrever um documento sobre o modelo mais tradicional de sacerdócio disponível. A aparente tensão entre os dois gestos é ela mesma um dado teológico relevante — sugere que, para João XXIII, renovação e tradição não eram necessariamente polos opostos.
       </div>
     </div>
 
@@ -525,7 +505,7 @@
       <div class="sl-grid-2">
         <div class="sl-card">
           <h4>A confissão como serviço de misericórdia</h4>
-          <p>Bento XVI enfatizou a centralidade da confissão num momento em que a prática havia declinado dramaticamente no catolicismo ocidental. O confessionário de Vianney — onde milhares haviam reencontrado Deus — era a resposta histórica mais eloquente ao abandono contemporâneo do sacramento. O papa apresentou Vianney como prova de que a confissão, quando exercida com fé pelo ministro, continua sendo o lugar privilegiado do encontro com a misericórdia divina.</p>
+          <p>Bento XVI enfatizou a centralidade da confissão num momento em que a prática havia declinado dramaticamente no catolicismo ocidental. O confessionário de Vianney era a resposta histórica mais eloquente ao abandono contemporâneo do sacramento. O papa apresentou Vianney como prova de que a confissão, quando exercida com fé pelo ministro, continua sendo o lugar privilegiado do encontro com a misericórdia divina.</p>
         </div>
         <div class="sl-card">
           <h4>Oração contemplativa e eficácia pastoral</h4>
@@ -551,7 +531,7 @@
         <span class="sl-badge sl-badge-papal">Francisco</span>
         <span class="sl-badge sl-badge-historico">160º aniversário da morte</span>
       </div>
-      <p>Jorge Mario Bergoglio publicou em 4 de agosto de 2019, no 160º aniversário da morte de Vianney, uma carta aos sacerdotes que os observadores do magistério consideraram um dos documentos mais pessoais do seu pontificado. A carta foi escrita no contexto da crise de credibilidade do clero que havia se intensificado nos anos anteriores, com novos escândalos emergindo em vários países e com um debate interno à Igreja sobre a identidade e os limites do sacerdócio ministerial.</p>
+      <p>Jorge Mario Bergoglio publicou em 4 de agosto de 2019 uma carta aos sacerdotes que os observadores do magistério consideraram um dos documentos mais pessoais do seu pontificado. A carta foi escrita no contexto da crise de credibilidade do clero que havia se intensificado nos anos anteriores, com novos escândalos emergindo em vários países e com um debate interno à Igreja sobre a identidade e os limites do sacerdócio ministerial.</p>
       <p>Francisco não usou a carta apenas para invocar Vianney como modelo de santidade sacerdotal — usou-a para falar diretamente às feridas do clero do século XXI. A carta reconhece o cansaço, o desânimo, a sensação de inutilidade que muitos padres descrevem. E então propõe Vianney não como modelo de perfeição a ser imitado, mas como companheiro de caminho — alguém que também havia duvidado, que também havia tentado fugir, que também havia chegado ao limite e continuado.</p>
 
       <div class="sl-citacao">
@@ -617,7 +597,7 @@
   <div class="sl-sep">· · ·</div>
 
   <!-- 03 · VIANNEY E O VATICANO II -->
-  <div class="sl-secao">
+  <div class="sl-secao" id="vaticano-ii">
     <div class="sl-secao-header">
       <span class="sl-secao-num">03</span>
       <div class="sl-secao-linha"></div>
@@ -627,13 +607,13 @@
     <div class="sl-bloco">
       <h3>O sacerdócio nos documentos conciliares</h3>
       <p><span class="sl-capitular">O</span> Concílio Vaticano II produziu dois documentos centrais sobre o sacerdócio: o decreto <em>Presbyterorum Ordinis</em> sobre o ministério e a vida dos presbíteros, e o decreto <em>Optatam Totius</em> sobre a formação sacerdotal. Ambos foram promulgados em 1965, no último ano do Concílio.</p>
-      <p><em>Presbyterorum Ordinis</em> é o texto conciliar mais relevante para compreender a relação entre o modelo de Vianney e o <em>aggiornamento</em> eclesial. O documento desenvolve uma teologia do sacerdócio ministerial que em vários pontos é compatível com o que a vida de Vianney havia demonstrado — a centralidade da Eucaristia, a relação entre a santidade do padre e a fecundidade do ministério, a importância da vida de oração — mas que ao mesmo tempo abre perspectivas que o modelo de Vianney não contemplava: a colegialidade, a dimensão missionária que excede a paróquia, a relação com o mundo moderno como interlocutor e não apenas como objeto de evangelização.</p>
+      <p><em>Presbyterorum Ordinis</em> é o texto conciliar mais relevante para compreender a relação entre o modelo de Vianney e o <em>aggiornamento</em> eclesial. O documento desenvolve uma teologia do sacerdócio ministerial que em vários pontos é compatível com o que a vida de Vianney havia demonstrado — a centralidade da Eucaristia, a relação entre a santidade do padre e a fecundidade do ministério, a importância da vida de oração — mas que ao mesmo tempo abre perspectivas que o modelo de Vianney não contemplava explicitamente: a colegialidade, a dimensão missionária que excede a paróquia, a relação com o mundo moderno como interlocutor e não apenas como objeto de evangelização.</p>
     </div>
 
     <div class="sl-bloco">
       <h3>Presbyterorum Ordinis — onde Vianney aparece</h3>
       <p>O decreto não menciona Vianney pelo nome — o estilo dos documentos conciliares evita as referências pessoais que os documentos papais usam com mais liberdade. Mas a presença implícita do modelo de Ars é identificável em vários momentos do texto, especialmente nos números dedicados à santidade do padre diocesano.</p>
-      <p>O número 13 do decreto — sobre a busca da perfeição pelos presbíteros — desenvolve uma argumentação sobre a relação entre o exercício do ministério e o crescimento espiritual do padre que ecoa diretamente a lição de Ars: que o ministério paroquial, exercido com fé, não é obstáculo à santidade, mas caminho para ela. Que o padre que ouve confissões todos os dias não está desperdiçando o tempo que poderia dedicar à contemplação — está fazendo o que a contemplação autêntica produz quando encontra o serviço como forma de expressão.</p>
+      <p>O número 13 do decreto — sobre a busca da perfeição pelos presbíteros — desenvolve uma argumentação sobre a relação entre o exercício do ministério e o crescimento espiritual do padre que ecoa diretamente a lição de Ars: que o ministério paroquial, exercido com fé, não é obstáculo à santidade, mas caminho para ela.</p>
 
       <div class="sl-citacao">
         <p>"Os presbíteros alcançarão a unidade de vida orientando-se pela vontade do Pai na realização do ministério, e não separando a vida interior da atividade exterior."</p>
@@ -649,7 +629,7 @@
         <div class="sl-card">
           <h4>O uso conservador</h4>
           <p>Para as correntes que resistiam às renovações pós-conciliares mais radicais, Vianney era o argumento histórico perfeito: aqui estava um modelo de sacerdócio que havia funcionado sem as experimentações que o pós-Concílio havia introduzido — sem a horizontalização da liturgia, sem a ênfase no padre como animador comunitário em detrimento do padre como ministro dos sacramentos.</p>
-          <p>O uso era parcialmente legítimo e parcialmente forçado: Vianney era de fato um argumento histórico sólido, mas a invocação da sua figura como refutação das renovações conciliares ignorava que o próprio João XXIII — o papa do Concílio — havia escrito a encíclica de 1959 sobre o Cura d'Ars sem nenhuma tensão percebida entre os dois gestos.</p>
+          <p>O uso era parcialmente legítimo e parcialmente forçado: Vianney era de fato um argumento histórico sólido, mas a invocação da sua figura como refutação das renovações conciliares ignorava que o próprio João XXIII havia escrito a encíclica de 1959 sobre o Cura d'Ars sem nenhuma tensão percebida entre os dois gestos.</p>
         </div>
         <div class="sl-card">
           <h4>O uso progressista</h4>
@@ -659,17 +639,278 @@
       </div>
 
       <div class="sl-alerta" style="margin-top: 16px;">
-        <strong>O dado mais honesto:</strong> Vianney não é facilmente apropriável por nenhuma corrente eclesial do pós-Concílio. A sua vida é suficientemente específica e suficientemente bem documentada para resistir às projeções ideológicas que as figuras menos documentadas aceitam mais facilmente. Ele é, nas palavras de um teólogo contemporâneo, "um espelho que mostra o que está lá, não o que queremos ver".
+        <strong>O dado mais honesto:</strong> Vianney não é facilmente apropriável por nenhuma corrente eclesial do pós-Concílio. A sua vida é suficientemente específica e suficientemente bem documentada para resistir às projeções ideológicas. Ele é, nas palavras de um teólogo contemporâneo, "um espelho que mostra o que está lá, não o que queremos ver".
       </div>
     </div>
   </div>
 
   <div class="sl-sep">· · ·</div>
 
-  <!-- 04 · A CRISE DO SACERDÓCIO -->
-  <div class="sl-secao">
+  <!-- 04 · INSTITUIÇÕES GLOBAIS -->
+  <div class="sl-secao" id="instituicoes-globais">
     <div class="sl-secao-header">
       <span class="sl-secao-num">04</span>
+      <div class="sl-secao-linha"></div>
+      <span class="sl-secao-titulo">Instituições Globais — Seminários, Paróquias e Ordens</span>
+    </div>
+
+    <div class="sl-bloco">
+      <div class="sl-bloco-resumo">
+        <h3>Uma presença institucional sem paralelo</h3>
+        <p>O número de instituições católicas que levam o nome de São João Maria Vianney no mundo é um dos indicadores mais concretos da amplitude do seu legado. Seminários maiores e menores, paróquias, escolas, hospitais, associações sacerdotais e centros de espiritualidade nos seis continentes optaram pelo seu nome — e essa opção, em cada caso, não foi arbitrária: expressou uma intenção pastoral de configurar a identidade da instituição a partir do modelo do Cura d'Ars.</p>
+      </div>
+    </div>
+
+    <div class="sl-bloco">
+      <h3>Seminários com o nome de São João Maria Vianney</h3>
+      <p><span class="sl-capitular">D</span>entre todas as categorias de instituições que levam o nome de Vianney, os seminários são aquelas em que a escolha é mais carregada de sentido teológico deliberado. Nomear um seminário em honra do Cura d'Ars é propor explicitamente o seu modelo de sacerdócio — a fidelidade ao ministério paroquial, a centralidade da oração e dos sacramentos, a disposição à abnegação — como horizonte formativo para os homens que serão ordenados. A seguir, as principais instituições por continente.</p>
+
+      <table class="sl-mini-tabela">
+        <thead>
+          <tr>
+            <th>Instituição</th>
+            <th>País / Cidade</th>
+            <th>Notas</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Saint John Vianney College Seminary</strong></td>
+            <td>Miami, EUA</td>
+            <td>Um dos maiores seminários filosóficos dos EUA, vinculado à Arquidiocese de Miami. Formou centenas de padres para o sul da Flórida, região de forte imigração latino-americana e caribenha.</td>
+          </tr>
+          <tr>
+            <td><strong>Saint John Vianney Theological Seminary</strong></td>
+            <td>Denver, Colorado, EUA</td>
+            <td>Seminário maior da Arquidiocese de Denver, fundado em 1999 pelo arcebispo Charles Chaput. Reconhecido como um dos seminários de orientação mais tradicional dos Estados Unidos, recebe seminaristas de várias dioceses.</td>
+          </tr>
+          <tr>
+            <td><strong>Saint John Vianney Seminary</strong></td>
+            <td>St. Paul, Minnesota, EUA</td>
+            <td>Vinculado à Universidade de St. Thomas, serve dioceses do Centro-Oeste norte-americano desde 1885 — um dos seminários mais antigos dos EUA com o nome do Cura d'Ars.</td>
+          </tr>
+          <tr>
+            <td><strong>Seminário São João Maria Vianney</strong></td>
+            <td>Campos dos Goytacazes, Brasil</td>
+            <td>Associado à Diocese de Campos e à formação do clero de orientação tradicional. Notório por manter o rito tridentino como parte central da formação litúrgica.</td>
+          </tr>
+          <tr>
+            <td><strong>Seminário São João Maria Vianney</strong></td>
+            <td>Várias dioceses brasileiras</td>
+            <td>Ao menos sete seminários menores ou casas de formação espalhados pelo Brasil — em estados como Minas Gerais, São Paulo, Paraná e Bahia — adotaram o nome do Cura d'Ars como identidade.</td>
+          </tr>
+          <tr>
+            <td><strong>Séminaire Saint-Jean-Marie-Vianney</strong></td>
+            <td>Kinshasa, Congo (RDC)</td>
+            <td>Um dos maiores países católicos da África subsaariana. O seminário de Kinshasa reflete o crescimento exponencial das vocações na África Central e a adoção da figura do Cura d'Ars como modelo de fidelidade pastoral num contexto missionário.</td>
+          </tr>
+          <tr>
+            <td><strong>Seminário São João Maria Vianney</strong></td>
+            <td>Manila, Filipinas</td>
+            <td>País de forte tradição católica asiática. O seminário manilense usa o nome de Vianney para sublinhar a centralidade da espiritualidade sacramental na formação do clero filipino.</td>
+          </tr>
+          <tr>
+            <td><strong>Seminario San Juan María Vianney</strong></td>
+            <td>Bogotá, Colômbia</td>
+            <td>Casa de formação para o clero diocesano colombiano. A Colômbia tem uma das maiores redes de seminários com o nome do Cura d'Ars na América Latina.</td>
+          </tr>
+          <tr>
+            <td><strong>Seminario San Juan María Vianney</strong></td>
+            <td>Cidade do México, México</td>
+            <td>O México, com uma das maiores populações católicas do mundo, conta com múltiplas casas de formação dedicadas a Vianney, especialmente em dioceses rurais.</td>
+          </tr>
+          <tr>
+            <td><strong>St. John Vianney Seminary</strong></td>
+            <td>Lagos, Nigéria</td>
+            <td>A Nigéria é o país com crescimento mais rápido de vocações sacerdotais na África. O seminário de Lagos é um dos centros de formação que recebe seminaristas de várias nações do oeste africano.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="sl-alerta-info" style="margin-top: 16px;">
+        <strong>Uma tendência global:</strong> A proliferação de seminários com o nome de Vianney não é distribuída aleatoriamente. Concentra-se em dois tipos de contexto: regiões de crescimento das vocações (África, partes da Ásia e da América Latina) e instituições de orientação mais tradicional no mundo ocidental. Em ambos os casos, o nome funciona como declaração de identidade — uma escolha sobre que tipo de sacerdócio se pretende formar.
+      </div>
+    </div>
+
+    <div class="sl-bloco">
+      <h3>Paróquias dedicadas a São João Maria Vianney</h3>
+      <p>O número exato de paróquias no mundo dedicadas a São João Maria Vianney é impossível de contabilizar com precisão — os registros diocesanos não são centralizados internacionalmente. Mas a análise de dados disponíveis sugere um número superior a 600 paróquias em mais de oitenta países. A seguir, os contextos nacionais mais relevantes.</p>
+
+      <div class="sl-grid-3">
+        <div class="sl-card">
+          <h4>Estados Unidos</h4>
+          <p>Com mais de 120 paróquias dedicadas ao Cura d'Ars — segundo levantamentos do Catholic Directory norte-americano —, os EUA têm a maior concentração de igrejas com esse nome fora da França. A maioria foi fundada entre 1920 e 1970, nas décadas de crescimento paroquial que se seguiram à canonização e ao estabelecimento do patronato.</p>
+        </div>
+        <div class="sl-card">
+          <h4>Brasil</h4>
+          <p>Com estimativa de 80 a 100 paróquias dedicadas a São João Maria Vianney, o Brasil é o maior país por número de igrejas com esse nome na América Latina. A festa litúrgica de 4 de agosto é amplamente celebrada, e muitas dioceses organizam encontros diocesanos do clero nessa data em honra ao seu padroeiro.</p>
+        </div>
+        <div class="sl-card">
+          <h4>França</h4>
+          <p>No país de origem, além do santuário de Ars-sur-Formans, dezenas de paróquias em todo o território — especialmente nas regiões de Lyon, Bourgogne e Île-de-France — levam o nome do Cura d'Ars. A devoção é parte do patrimônio religioso nacional reconhecido até mesmo por observadores não religiosos.</p>
+        </div>
+        <div class="sl-card">
+          <h4>Filipinas</h4>
+          <p>Com uma das maiores populações católicas da Ásia, as Filipinas têm entre 40 e 60 paróquias com o nome de Vianney, concentradas nas arquidioceses de Manila, Cebu e Davao. A devoção ao Cura d'Ars é promovida ativamente pelas organizações sacerdotais filipinas.</p>
+        </div>
+        <div class="sl-card">
+          <h4>Polônia</h4>
+          <p>País de forte tradição católica e de origem de João Paulo II, a Polônia desenvolveu uma devoção ao Cura d'Ars que se intensificou após a visita papal de 1986 a Ars. Várias paróquias polonesas foram dedicadas a Vianney nas décadas seguintes, especialmente em áreas rurais.</p>
+        </div>
+        <div class="sl-card">
+          <h4>Países africanos</h4>
+          <p>Na África subsaariana, o número de paróquias com o nome de Vianney cresce à medida que cresce o número de católicos. No Congo, na Nigéria, em Uganda e no Quênia, novas paróquias com seu nome são fundadas com frequência — fenômeno que reflete tanto o crescimento do catolicismo quanto a adoção do modelo do Cura d'Ars pelos bispos locais.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="sl-bloco">
+      <h3>Escolas, hospitais e outras obras sociais</h3>
+      <p>Para além de seminários e paróquias, a figura de Vianney inspirou a fundação ou a nomeação de escolas católicas, hospitais, orfanatos e centros de assistência social. Essa dimensão do legado conecta-se diretamente com a obra que Vianney havia criado em Ars: a <em>Providence</em>, a casa para meninas órfãs que fundou em 1824 e que funcionou como modelo de integração entre vida espiritual e serviço caritativo concreto.</p>
+
+      <div class="sl-card-destaque">
+        <h4>O modelo da Providence em outros contextos</h4>
+        <p>A obra que Vianney fundou em Ars em 1824 — uma casa de acolhimento para meninas órfãs e abandonadas, sustentada inteiramente pela providência divina sem fundos garantidos — foi documentada e estudada como modelo de iniciativa caritativa nas décadas que se seguiram à sua morte. Congregações religiosas femininas que surgiram no século XIX e início do século XX na França e em países de missão citam a <em>Providence</em> de Ars como inspiração para obras de assistência à infância vulnerável. A lógica de Vianney — começar sem garantias e confiar que os meios surgirão se a obra for de Deus — tornou-se um princípio fundacional para várias iniciativas de caridade católica que não levam necessariamente o seu nome mas bebem da mesma fonte.</p>
+      </div>
+
+      <div class="sl-grid-2">
+        <div class="sl-card">
+          <h4>Escolas</h4>
+          <p>Nos Estados Unidos, Canadá, Austrália e Irlanda, o nome "St. John Vianney" é adotado por colégios católicos de ensino primário e secundário — especialmente em paróquias que já carregam o nome do santo. Nessas escolas, o nome funciona como declaração do carisma educativo: a formação integral da pessoa como obra de caridade, na tradição que a <em>Providence</em> de Ars iniciou.</p>
+        </div>
+        <div class="sl-card">
+          <h4>Hospitais e centros de saúde</h4>
+          <p>Menos numerosos do que paróquias e escolas, os hospitais com o nome de Vianney existem sobretudo em países de missão. No Congo, nas Filipinas e em países da América Central, centros de saúde fundados por congregações religiosas adotaram o seu nome como expressão de uma espiritualidade que vê o cuidado dos doentes como extensão natural do ministério sacramental — na linha do que Vianney havia praticado ao visitar doentes em Ars.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sl-sep">· · ·</div>
+
+  <!-- 05 · FRATERNIDADES E MOVIMENTOS -->
+  <div class="sl-secao" id="fraternidades">
+    <div class="sl-secao-header">
+      <span class="sl-secao-num">05</span>
+      <div class="sl-secao-linha"></div>
+      <span class="sl-secao-titulo">Fraternidades Sacerdotais e Movimentos Inspirados em Ars</span>
+    </div>
+
+    <div class="sl-bloco">
+      <h3>A proliferação das fraternidades sacerdotais</h3>
+      <p><span class="sl-capitular">U</span>m dos fenômenos mais significativos do catolicismo do pós-Concílio foi o surgimento de formas associativas do clero diocesano que não implicavam vida religiosa em sentido canônico estrito — sem votos públicos, sem vida comum obrigatória —, mas que criavam vínculos de oração partilhada, de formação espiritual contínua e de suporte mútuo para o ministério. Essas associações, que os documentos eclesiásticos chamam de "fraternidades sacerdotais" ou "associações de presbíteros", encontraram no Cura d'Ars uma figura patronal natural: um padre diocesano, sem afiliação religiosa, que havia vivido um sacerdócio radical sem as estruturas institucionais que as ordens religiosas oferecem.</p>
+      <p>A lógica é direta: se Vianney havia sido capaz de uma santidade de nível heroico como padre diocesano comum, então o padre diocesano comum tem, na sua vocação ordinária, recursos suficientes para a santidade. A fraternidade sacerdotal oferece o que a ordem religiosa oferece aos seus membros — comunidade, formação, responsabilidade mútua —, mas sem exigir a ruptura com o ministério paroquial que a vida religiosa formal frequentemente implica.</p>
+    </div>
+
+    <div class="sl-bloco">
+      <h3>Principais fraternidades e associações inspiradas em Vianney</h3>
+
+      <div class="sl-linha-tempo">
+        <div class="sl-passo">
+          <div class="sl-passo-num" style="font-size: 11px; line-height: 1.2;">Sæc. XIX</div>
+          <div class="sl-passo-corpo">
+            <strong>Os primeiros círculos sacerdotais em torno de Ars</strong>
+            <p>Ainda durante a vida de Vianney, grupos de padres vinham a Ars não apenas como peregrinos mas como discípulos — buscando não só a sua intercessão mas a sua direção espiritual e o exemplo direto do seu ministério. Esses grupos informais, que se reuniam periodicamente em Ars ou que mantinham correspondência com o pároco, constituem a origem embrionária das fraternidades sacerdotais que se formalizariam no século XX. O fenômeno foi documentado pela <em>Positio</em> do processo de canonização, que recolheu testemunhos de padres que descrevem a influência direta de Vianney sobre a própria vida sacerdotal.</p>
+          </div>
+        </div>
+
+        <div class="sl-passo">
+          <div class="sl-passo-num" style="font-size: 11px; line-height: 1.2;">1929</div>
+          <div class="sl-passo-corpo">
+            <strong>Associação dos Párocos de Ars — fundação formal</strong>
+            <p>No ano do patronato universal, fundou-se formalmente em Lyon uma associação de párocos que tomava Ars como centro espiritual e Vianney como modelo. A associação organizava retiros anuais no santuário e publicava um boletim de formação sacerdotal que circulou até meados do século XX. Embora modesta em números, constituiu o precedente formal para as associações posteriores.</p>
+          </div>
+        </div>
+
+        <div class="sl-passo">
+          <div class="sl-passo-num" style="font-size: 11px; line-height: 1.2;">1970–</div>
+          <div class="sl-passo-corpo">
+            <strong>Fraternidades sacerdotais pós-conciliares</strong>
+            <p>O pós-Concílio produziu uma floração de fraternidades sacerdotais em vários países — especialmente na França, na Itália, no Brasil e nos Estados Unidos —, muitas das quais invocam explicitamente o Cura d'Ars. Algumas são estruturadas diocesanamente, com aprovação do bispo local; outras funcionam de forma trans-diocesana, reunindo padres de várias regiões em torno de um projeto espiritual comum. A característica que partilham é a recusa de apresentar o ministério paroquial como obstáculo à santidade — e a referência a Vianney como prova histórica de que o ministério paroquial, vivido integralmente, é caminho privilegiado para ela.</p>
+          </div>
+        </div>
+
+        <div class="sl-passo">
+          <div class="sl-passo-num" style="font-size: 11px; line-height: 1.2;">1984</div>
+          <div class="sl-passo-corpo">
+            <strong>Fraternidade Sacerdotal de São Pedro (FSSP) — conexão com Ars</strong>
+            <p>A Fraternidade Sacerdotal de São Pedro, fundada em 1988 (após o Motu Proprio <em>Ecclesia Dei</em> de João Paulo II) para sacerdotes comprometidos com a forma extraordinária do rito romano, escolheu São João Maria Vianney como um dos santos patronos da sua espiritualidade. A conexão é teológica: a forma extraordinária de celebração da missa que Vianney conhecia é parte central do seu ministério tal como a fraternidade o compreende. A FSSP opera em mais de trinta países e mantém Ars como destino de peregrinação para os seus membros.</p>
+          </div>
+        </div>
+
+        <div class="sl-passo">
+          <div class="sl-passo-num" style="font-size: 11px; line-height: 1.2;">2009</div>
+          <div class="sl-passo-corpo">
+            <strong>Impulso do Ano Sacerdotal</strong>
+            <p>O Ano Sacerdotal proclamado por Bento XVI em 2009 funcionou como catalisador para a criação ou a renovação de associações sacerdotais inspiradas em Vianney. Em vários países, as conferências episcopais aproveitaram o ano para criar novas fraternidades sacerdotais diocesanas ou para regularizar canonicamente as que já existiam de forma informal. O impulso foi especialmente visível no Brasil, no México, na Polônia e na Coreia do Sul.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sl-bloco">
+      <h3>Movimentos leigos inspirados no carisma de Ars</h3>
+      <p>Além das associações sacerdotais, o carisma de Vianney — especialmente a sua ênfase na confissão frequente, na adoração eucarística e na oração pessoal — influenciou movimentos leigos que não o invocam necessariamente pelo nome, mas que partilham a espiritualidade que o Cura d'Ars havia posto em prática.</p>
+
+      <div class="sl-grid-2">
+        <div class="sl-card">
+          <h4>Grupos de adoração eucarística</h4>
+          <p>A devoção à adoração do Santíssimo Sacramento — que Vianney havia feito a espinha dorsal da sua vida espiritual e que havia estimulado em Ars com a instalação da adoração perpétua — encontrou no Cura d'Ars uma referência constante nos movimentos de adoração eucarística que se multiplicaram no catolicismo a partir dos anos 1980. Grupos como a Adoração Perpétua, presentes em dezenas de países, citam Vianney entre os modelos da devoção eucarística que propõem.</p>
+        </div>
+        <div class="sl-card">
+          <h4>Movimentos de renovação da confissão</h4>
+          <p>As iniciativas pastorais que buscam renovar a prática da confissão — como o movimento "24 horas para o Senhor", promovido pelo Pontifício Conselho para a Promoção da Nova Evangelização e endossado por Francisco — citam regularmente Vianney como patrono e modelo. A imagem do confessionário de Ars funciona nesses contextos como imagem programática: o sacramento da reconciliação como encontro pessoal com a misericórdia divina, não como procedimento burocrático.</p>
+        </div>
+        <div class="sl-card">
+          <h4>Comunidades de nova evangelização</h4>
+          <p>No Brasil, a Comunidade Canção Nova — um dos maiores movimentos católicos do país, com alcance internacional através da sua rede de televisão e rádio — tem no Cura d'Ars uma das referências espirituais para a sua compreensão do sacerdócio. O modelo de Vianney é citado regularmente nas formações sacerdotais que a comunidade promove e nos conteúdos que produz sobre o sacerdócio.</p>
+        </div>
+        <div class="sl-card">
+          <h4>Grupos familiares e apostolado dos leigos</h4>
+          <p>O carisma de Vianney — com a sua ênfase na conversão pessoal, na frequência aos sacramentos e na integração da vida espiritual com a vida cotidiana — é proposto como modelo de espiritualidade laica em grupos de formação familiar como os "Grupos de Famílias" das dioceses latinas e em programas de evangelização porta-a-porta como o Alpha e o Catholics Come Home, que citam Ars como referência histórica do poder da presença pessoal no anúncio do Evangelho.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="sl-bloco">
+      <h3>O Santuário de Ars-sur-Formans como centro ativo</h3>
+      <p>O santuário de Ars-sur-Formans funciona hoje como um dos centros de espiritualidade sacerdotal mais ativos da Europa. Além da peregrinação devocional convencional — que continua trazendo mais de dois milhões de pessoas por ano —, o santuário acolhe programas de retiro para sacerdotes, seminaristas e leigos que buscam renovação espiritual no lugar onde Vianney viveu.</p>
+
+      <div class="sl-ficha">
+        <div class="sl-ficha-item">
+          <strong>Igreja paroquial</strong>
+          Mantida em grande parte como Vianney a conheceu. O altar onde celebrava a missa, o púlpito de onde pregava e o confessionário onde passava a maior parte do dia estão preservados como relicários.
+        </div>
+        <div class="sl-ficha-item">
+          <strong>Basílica</strong>
+          Construída entre 1862 e 1897, adjacente à igreja paroquial, para acomodar os peregrinos. Abriga o corpo incorrupto de Vianney num relicário de vidro acima do altar-mor.
+        </div>
+        <div class="sl-ficha-item">
+          <strong>Casa reitoral</strong>
+          Preservada como museu. Os visitantes veem os aposentos austeros onde Vianney dormia poucas horas por noite, a cozinha onde preparava a sua alimentação mínima, os objetos pessoais que testemunham a radicalidade da sua pobreza.
+        </div>
+        <div class="sl-ficha-item">
+          <strong>A <em>Providence</em></strong>
+          A escola para meninas órfãs que Vianney fundou em 1824 permaneceu ativa sob diferentes formas e constitui parte do complexo do santuário, mantendo viva uma dimensão concreta da caridade do Cura d'Ars.
+        </div>
+        <div class="sl-ficha-item">
+          <strong>Centro de retiros sacerdotais</strong>
+          Inaugurado nas últimas décadas, oferece programas estruturados para padres e seminaristas de todo o mundo, com ênfase na espiritualidade sacerdotal inspirada em Vianney. Os retiros duram de três dias a uma semana e incluem momentos de oração no confessionário original do santo.
+        </div>
+        <div class="sl-ficha-item">
+          <strong>Programa de peregrinações internacionais</strong>
+          O santuário organiza e acolhe peregrinações estruturadas de grupos nacionais — especialmente de padres e seminaristas — de todo o mundo. Os grupos recebem um programa espiritual específico que inclui a história do santuário, a meditação sobre os principais aspectos da vida de Vianney e a celebração litúrgica nos espaços que ele usou.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sl-sep">· · ·</div>
+
+  <!-- 06 · A CRISE DO SACERDÓCIO -->
+  <div class="sl-secao" id="crise-sacerdocio">
+    <div class="sl-secao-header">
+      <span class="sl-secao-num">06</span>
       <div class="sl-secao-linha"></div>
       <span class="sl-secao-titulo">A Crise do Sacerdócio e Vianney como Resposta</span>
     </div>
@@ -723,90 +964,158 @@
         </div>
       </div>
     </div>
-
-    <div class="sl-bloco">
-      <h3>O Santuário de Ars hoje</h3>
-      <p>O santuário de Ars-sur-Formans funciona hoje como um dos centros de espiritualidade sacerdotal mais ativos da Europa. Além da peregrinação devocional convencional — que continua trazendo mais de dois milhões de pessoas por ano —, o santuário acolhe programas de retiro para sacerdotes, seminaristas e leigos que buscam renovação espiritual no lugar onde Vianney viveu.</p>
-
-      <div class="sl-ficha">
-        <div class="sl-ficha-item">
-          <strong>Igreja paroquial</strong>
-          Mantida em grande parte como Vianney a conheceu. O altar onde celebrava a missa, o púlpito de onde pregava e o confessionário onde passava a maior parte do dia estão preservados como relicários.
-        </div>
-        <div class="sl-ficha-item">
-          <strong>Basílica</strong>
-          Construída entre 1862 e 1897, adjacente à igreja paroquial, para acomodar os peregrinos. Abriga o corpo incorrupto de Vianney num relicário de vidro acima do altar-mor.
-        </div>
-        <div class="sl-ficha-item">
-          <strong>Casa reitoral</strong>
-          Preservada como museu. Os visitantes veem os aposentos austeros onde Vianney dormia poucas horas por noite, a cozinha onde preparava a sua alimentação mínima, os objetos pessoais que testemunham a radicalidade da sua pobreza.
-        </div>
-        <div class="sl-ficha-item">
-          <strong>A <em>Providence</em></strong>
-          A escola para meninas órfãs que Vianney fundou em 1824 permaneceu ativa sob diferentes formas e constitui parte do complexo do santuário, mantendo viva uma dimensão concreta da caridade do Cura d'Ars.
-        </div>
-        <div class="sl-ficha-item">
-          <strong>Centro de retiros</strong>
-          Inaugurado nas últimas décadas, oferece programas estruturados para padres e seminaristas de todo o mundo, com ênfase na espiritualidade sacerdotal inspirada em Vianney.
-        </div>
-      </div>
-    </div>
   </div>
 
   <div class="sl-sep">· · ·</div>
 
-  <!-- 05 · VIANNEY NA LITERATURA -->
-  <div class="sl-secao">
+  <!-- 07 · VIANNEY NA LITERATURA, CINEMA E ARTES -->
+  <div class="sl-secao" id="cultura">
     <div class="sl-secao-header">
-      <span class="sl-secao-num">05</span>
+      <span class="sl-secao-num">07</span>
       <div class="sl-secao-linha"></div>
-      <span class="sl-secao-titulo">Vianney na Literatura e na Cultura</span>
+      <span class="sl-secao-titulo">Vianney na Literatura, no Cinema e nas Artes</span>
+    </div>
+
+    <div class="sl-bloco">
+      <div class="sl-bloco-resumo">
+        <h3>A figura de Ars como matéria cultural</h3>
+        <p>O impacto de Vianney sobre a cultura não se limita à devoção religiosa. A sua figura — suficientemente específica, suficientemente bem documentada e suficientemente paradoxal para resistir à simplificação — atraiu escritores, dramaturgos, cineastas e artistas visuais que não necessariamente compartilhavam da fé que o animava, mas que reconheciam no Cura d'Ars uma figura de densidade humana e espiritual que o talento literário e artístico raramente resiste a explorar. Esta seção analisa as representações culturais de Vianney não para recontar a sua vida, mas para examinar como a cultura moderna interpretou e transmitiu o seu legado.</p>
+      </div>
     </div>
 
     <div class="sl-bloco">
       <h3>Georges Bernanos — a conexão real</h3>
+      <div class="sl-badges">
+        <span class="sl-badge sl-badge-cultura">Literatura francesa</span>
+        <span class="sl-badge sl-badge-data">1936</span>
+      </div>
       <p><span class="sl-capitular">G</span>eorges Bernanos publicou <em>Journal d'un curé de campagne</em> em 1936. O romance — que se tornaria um dos mais importantes da literatura católica do século XX, e que a adaptação cinematográfica de Robert Bresson de 1951 tornaria conhecida além dos círculos literários — narra a história de um jovem padre rural que exerce o ministério numa paróquia pequena, em condições de solidão e de incompreensão, e que morre jovem de uma doença que o consome enquanto ainda tenta servir.</p>
       <p>A conexão com Vianney é inegável na estrutura — o padre rural, a paróquia difícil, a santidade não reconhecida pelos paroquianos, o sofrimento físico como dado constante do ministério. Mas Bernanos nunca afirmou que estava escrevendo sobre Vianney, e o romance tem uma especificidade literária e teológica própria que o torna irredutível a qualquer hagiografia.</p>
-      <p>O que Bernanos partilha com Vianney — e que a crítica literária identificou desde a publicação do romance — é a convicção de que o sacerdócio paroquial é o lugar onde a batalha espiritual mais intensa acontece, e que o padre que a trava sem as consolações que a espiritualidade devocional popular imagina é uma figura mais verdadeira do que o padre bem-sucedido que a religião burguesa prefere. O pároco de aldeia de Bernanos morre sem saber claramente se o seu ministério funcionou. Vianney viveu o suficiente para ver Ars transformada — mas os trinta primeiros anos haviam sido suficientemente parecidos com a situação do pároco de Bernanos para que a conexão seja mais do que superficial.</p>
+      <p>O que Bernanos partilha com Vianney — e que a crítica literária identificou desde a publicação do romance — é a convicção de que o sacerdócio paroquial é o lugar onde a batalha espiritual mais intensa acontece, e que o padre que a trava sem as consolações que a espiritualidade devocional popular imagina é uma figura mais verdadeira do que o padre bem-sucedido que a religião burguesa prefere.</p>
 
       <div class="sl-citacao">
         <p>"Tudo é graça."</p>
         <span class="sl-fonte">Últimas palavras do pároco de aldeia — Georges Bernanos, <em>Journal d'un curé de campagne</em>, 1936</span>
       </div>
+
+      <p>A crítica literária francesa que se ocupou de Bernanos ao longo das décadas apontou consistentemente para a influência de Vianney sobre a sua concepção do sacerdócio rural — não como modelo literário direto, mas como prova histórica de que a ficção que Bernanos estava escrevendo tinha correspondência na realidade. O pároco de aldeia de Bernanos morre sem saber claramente se o seu ministério funcionou. Vianney viveu o suficiente para ver Ars transformada — mas os trinta primeiros anos haviam sido suficientemente parecidos com a situação do pároco de Bernanos para que a conexão seja mais do que superficial.</p>
     </div>
 
     <div class="sl-bloco">
-      <h3>Leon Bloy — o que escreveu e por que surpreende</h3>
-      <p>Leon Bloy — o escritor e polemista católico francês que passou a vida inteira em pobreza militante e em conflito com quase todos os seus contemporâneos, crentes e incrédulos — escreveu sobre Vianney em vários momentos do seu diário e da sua correspondência. O que escreveu surpreende porque Bloy não era dado a entusiasmos devotos — a sua relação com o catolicismo era de paixão intensa e de crítica constante, e as figuras eclesiásticas que mencionava com aprovação eram raras.</p>
-      <p>Vianney era uma delas. O que Bloy via no Cura d'Ars era o que via nos poucos que admirava: alguém que havia levado a sério aquilo que a maioria dos cristãos trata como metáfora. A pobreza como dado real, não como postura. O sofrimento como participação concreta e não como linguagem edificante. A misericórdia como ato que custa, não como sentimento confortável.</p>
+      <h3>O teatro hagiográfico — Henri Ghéon e outros</h3>
+      <div class="sl-badges">
+        <span class="sl-badge sl-badge-cultura">Teatro</span>
+        <span class="sl-badge sl-badge-data">Déc. 1920–1940</span>
+      </div>
+      <p>Henri Ghéon — dramaturgo, poeta e convertido ao catolicismo durante a Primeira Guerra Mundial — dedicou ao Cura d'Ars uma das suas peças hagiográficas mais bem-sucedidas. Ghéon havia desenvolvido o projeto de criar um teatro popular cristão que tornasse a santidade dramaticamente acessível a um público que a linguagem devocional convencional não alcançava — e Vianney, com os episódios extraordinários que a documentação sobre Ars registrava, era matéria dramaturgicamente rica.</p>
+      <p>A peça de Ghéon sobre o Cura d'Ars foi representada em vários países nas décadas de 1920 e 1930 — França, Bélgica, Canadá francês, e em traduções para o inglês e o espanhol. O projeto de Ghéon, que incluía peças sobre vários santos, tinha uma coerência artística e pedagógica: a santidade não como abstração moral, mas como drama concreto com personagens reais, conflitos específicos e uma resolução que não era necessariamente o triunfo convencional que o gênero hagiográfico mais antigo tendia a preferir.</p>
+
+      <div class="sl-alerta-info">
+        <strong>A tradição do teatro hagiográfico:</strong> A peça de Ghéon sobre Vianney insere-se numa tradição mais ampla de teatro religioso popular que o movimento litúrgico do início do século XX havia estimulado. A figura do Cura d'Ars era especialmente adequada a esse teatro: os episódios com o demônio (o <em>Grappin</em>), os fenômenos extraordinários do confessionário, as tentativas de fuga de Ars — tudo isso fornecia ao dramaturgo o conflito e o suspense que o teatro requer, sem que fosse necessário inventar o que já estava documentado.
+      </div>
     </div>
 
     <div class="sl-bloco">
-      <h3>Outros autores e presença cultural</h3>
+      <h3>Cinema — representações diretas e indiretas</h3>
+      <div class="sl-badges">
+        <span class="sl-badge sl-badge-cultura">Cinema</span>
+        <span class="sl-badge sl-badge-data">Séc. XX–XXI</span>
+      </div>
+
       <div class="sl-grid-2">
         <div class="sl-card">
-          <h4>Henri Ghéon — o teatro hagiográfico</h4>
-          <p>Dramaturgo e convertido em 1916, dedicou ao Cura d'Ars uma das suas peças mais conhecidas, representada em vários países nas décadas de 1920 e 1930. O projeto de Ghéon era tornar a santidade dramaticamente acessível a um público que a linguagem devocional convencional não alcançava.</p>
+          <h4>Robert Bresson — <em>Journal d'un curé de campagne</em> (1951)</h4>
+          <p>A adaptação cinematográfica do romance de Bernanos é reconhecida como uma das maiores obras do cinema francês e do cinema religioso de todos os tempos. Bresson — ele mesmo de espiritualidade complexa e não facilmente classificável como "cinema católico" — criou um filme que transcende a hagiografia ao mesmo tempo em que a habita. A figura do pároco de Bernanos, que tem a conexão parcial com Vianney que mencionamos acima, foi interpretada por Claude Laydu com uma presença física que transformou a doença e o fracasso aparente em linguagem cinematográfica de extraordinária densidade.</p>
+        </div>
+        <div class="sl-card">
+          <h4>Filmes biográficos sobre Vianney</h4>
+          <p>Produções cinematográficas diretamente sobre o Cura d'Ars foram realizadas em várias décadas, com qualidades muito variáveis. O filme <em>Le Curé d'Ars</em> de Maurice Cloche (1936) foi o mais visto na geração anterior ao Vaticano II, premiado em Veneza e distribuído internacionalmente. Produções mais recentes, incluindo documentários e ficções de produção independente, retomaram a figura de Vianney com as técnicas narrativas do cinema contemporâneo — com resultados desiguais mas com a constância de uma figura que continua atraindo realizadores.</p>
+        </div>
+        <div class="sl-card">
+          <h4>Documentários e produções educativas</h4>
+          <p>O santuário de Ars e as redes de televisão católica — como EWTN nos Estados Unidos e TV Canção Nova no Brasil — produziram ao longo das décadas uma série de documentários sobre Vianney que circulam globalmente. Esses documentários têm audiências que transcendem o catolicismo praticante: a figura do pároco de Ars é suficientemente interessante como fenômeno histórico para atrair espectadores que não partilham da fé que documenta.</p>
+        </div>
+        <div class="sl-card">
+          <h4>Cinema de animação e recursos didáticos</h4>
+          <p>A série <em>Vidas de Santos</em> produzida para crianças por várias organizações católicas incluiu episódios sobre Vianney desde os anos 1990. A versão animada do Cura d'Ars — simplificada necessariamente, mas não destituída da substância da narrativa histórica — é usada em catequese em dezenas de países, constituindo o primeiro contato de crianças com a figura de Ars.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="sl-bloco">
+      <h3>Literatura — além de Bernanos</h3>
+      <div class="sl-badges">
+        <span class="sl-badge sl-badge-cultura">Literatura</span>
+      </div>
+
+      <div class="sl-grid-2">
+        <div class="sl-card">
+          <h4>Leon Bloy — o que escreveu e por que surpreende</h4>
+          <p>Leon Bloy — o escritor e polemista católico francês que passou a vida inteira em pobreza militante e em conflito com quase todos os seus contemporâneos —  escreveu sobre Vianney em vários momentos do seu diário e da sua correspondência. O que escreveu surpreende porque Bloy não era dado a entusiasmos devotos. O que via no Cura d'Ars era o que via nos poucos que admirava: alguém que havia levado a sério aquilo que a maioria dos cristãos trata como metáfora. A pobreza como dado real, não como postura. O sofrimento como participação concreta. A misericórdia como ato que custa, não como sentimento confortável.</p>
         </div>
         <div class="sl-card">
           <h4>François Mauriac — Nobel de 1952</h4>
-          <p>O romancista católico mencionou Vianney em escritos autobiográficos e colunas jornalísticas. Mauriac tinha interesse específico pela psicologia da conversão, e os casos documentados em Ars eram para ele material literário e espiritual de primeira ordem.</p>
+          <p>O romancista católico mencionou Vianney em escritos autobiográficos e colunas jornalísticas. Mauriac tinha interesse específico pela psicologia da conversão, e os casos documentados em Ars eram para ele material literário e espiritual de primeira ordem. A sua leitura de Vianney é a de um romancista que reconhece num padre do século XIX a matéria que os seus próprios romances tentavam capturar: a transformação da pessoa pela graça, contra toda resistência e toda previsão.</p>
         </div>
         <div class="sl-card">
           <h4>Paul Claudel — o poeta diplomata</h4>
-          <p>Claudel via no Cura d'Ars uma figura que condensava algo essencial sobre o catolicismo francês: a coexistência do mais simples e do mais profundo, do mais humilde e do mais extraordinário, numa forma que a teologia formal dificilmente alcançava.</p>
-        </div>
-        <div class="sl-card">
-          <h4>Robert Bresson — o cinema</h4>
-          <p>A adaptação de <em>Journal d'un curé de campagne</em> em 1951 tornou acessível a um público internacional a figura do padre rural que Bernanos havia criado sob influência parcial de Vianney. O filme de Bresson é considerado uma das maiores obras do cinema francês.</p>
+          <p>Claudel via no Cura d'Ars uma figura que condensava algo essencial sobre o catolicismo francês: a coexistência do mais simples e do mais profundo, do mais humilde e do mais extraordinário, numa forma que a teologia formal dificilmente alcançava. As referências a Vianney nos diários e na correspondência de Claudel são breves mas recorrentes — indício de uma figura que ele voltava a encontrar no pensamento mesmo sem buscar sistematicamente.</p>
         </div>
         <div class="sl-card">
           <h4>Francis Trochu — a biografia de referência</h4>
-          <p>A biografia publicada em 1925, baseada em fontes primárias com rigor excepcional para a época, permanece a referência acadêmica mais sólida sobre Vianney. Pode ser lida como história séria com as qualificações que a história exige — um raro exemplo de hagiografia que não sacrifica a verdade à edificação.</p>
+          <p>A biografia de Francis Trochu, publicada em 1925, representa um ponto de virada na literatura sobre Vianney: pela primeira vez, uma vida do Cura d'Ars foi escrita com o rigor das fontes primárias — atas dos processos de beatificação e canonização, depoimentos recolhidos pessoalmente, arquivo do santuário. O resultado é uma obra que os historiadores sérios podem usar com as qualificações que a história exige. Traduzida para vários idiomas, permanece a referência acadêmica mais sólida sobre Vianney mais de um século depois da publicação.</p>
+        </div>
+      </div>
+
+      <div class="sl-bloco" style="margin-top: 14px;">
+        <h3>A literatura espiritual contemporânea</h3>
+        <p>A produção de meditações espirituais, retiros escritos e livros de formação sacerdotal que usam Vianney como ponto de partida nunca cessou desde a beatificação de 1905 — e cresceu de forma notável nos anos que se seguiram ao Ano Sacerdotal de 2009. Autores como Romano Guardini, Hans Urs von Balthasar e Raniero Cantalamessa — três dos mais influentes teólogos espirituais do século XX — dedicaram a Vianney páginas que reinterpretam a sua figura à luz das preocupações teológicas do seu tempo.</p>
+        <p>Guardini, no contexto do seu projeto de reconciliar a fé com a modernidade, via em Vianney o que chamava de "unidade religiosa" — a integração de todas as dimensões da pessoa numa única orientação para Deus, sem as fragmentações que a modernidade havia introduzido. Balthasar, com a sua teologia centrada na beleza e na missão, via em Ars uma configuração cristológica: o padre que se torna, pelo serviço radical, imagem visível do Bom Pastor. Cantalamessa — pregador da Casa Pontifícia desde 1980 —  cita Vianney com frequência nas suas pregações de Advento e Quaresma, usando episódios concretos de Ars como janelas para a meditação espiritual.</p>
+      </div>
+    </div>
+
+    <div class="sl-bloco">
+      <h3>Artes visuais — iconografia e representações plásticas</h3>
+      <div class="sl-badges">
+        <span class="sl-badge sl-badge-cultura">Artes visuais</span>
+      </div>
+      <p>A iconografia de Vianney seguiu o percurso típico dos santos modernos — dos retratos de vida ou imediatamente post-mortem às representações idealizadas dos livros de piedade, até às interpretações artísticas mais livres do século XX e XXI.</p>
+
+      <div class="sl-grid-2">
+        <div class="sl-card">
+          <h4>Os retratos históricos</h4>
+          <p>Vianney foi fotografado na última década da sua vida — os daguerreótipos e fotografias que sobreviveram são documentos preciosos que fixaram a sua aparência concreta para a posteridade. Ao contrário dos santos medievais ou barrocos, que só existem nas representações artísticas que os idealizaram, Vianney é um dos primeiros santos da história cujo rosto é documentado com fidelidade fotográfica. Essa documentação influenciou a iconografia posterior, que tem menos liberdade de idealização do que a iconografia dos santos mais antigos.</p>
         </div>
         <div class="sl-card">
-          <h4>A literatura espiritual contemporânea</h4>
-          <p>Vianney continua aparecendo como protagonista de meditações que usam episódios da sua vida como ponto de partida para reflexão espiritual. A acessibilidade da sua figura — concreta, documentada, sem a distância dos santos medievais — torna-a especialmente adequada a esse uso.</p>
+          <h4>A escultura do confessionário</h4>
+          <p>A imagem mais reproduzida de Vianney nas artes plásticas é a do padre no confessionário — de sobrepeliz, estola sobre os ombros, inclinado para ouvir o penitente invisível. Essa imagem, presente em milhares de igrejas e capelas em todo o mundo, condensa visualmente o que a teologia sobre Vianney diz em palavras: o padre definido pelo serviço da misericórdia, disposto na posição de escuta que o sacramento da reconciliação requer.</p>
+        </div>
+        <div class="sl-card">
+          <h4>Ícones contemporâneos</h4>
+          <p>A tradição iconográfica oriental — que experimenta um renascimento no ocidente desde os anos 1970 — produziu ícones de Vianney que o representam segundo a gramática visual byzantina, com o nimbo dourado, os olhos alongados e o fundo de ouro que caracterizam o gênero. Esses ícones, que existem em comunidades de tradição latina que adotam a iconografia ortodoxa como linguagem espiritual, colocam Vianney num diálogo visual com os padres do deserto e os grandes contemplativos da tradição oriental.</p>
+        </div>
+        <div class="sl-card">
+          <h4>Arte sacra contemporânea no santuário</h4>
+          <p>O complexo do santuário de Ars-sur-Formans acolheu ao longo das décadas obras de arte sacra contemporânea que reinterpretam a figura do Cura d'Ars com as linguagens plásticas do século XX e XXI. Esculturas, vitrais e instalações produzidas por artistas cristãos de vários países convivem com os objetos históricos do santuário — criando um diálogo entre a memória do passado e a interpretação do presente que é em si mesma um dado do legado cultural de Vianney.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="sl-bloco">
+      <h3>Música — da devoção popular à composição erudita</h3>
+      <div class="sl-badges">
+        <span class="sl-badge sl-badge-cultura">Música</span>
+      </div>
+      <p>A dimensão musical do legado de Vianney é menos estudada do que a literária ou a cinematográfica, mas existe e tem uma extensão maior do que se poderia supor. O ponto de partida é o próprio Vianney, que amava o canto litúrgico e havia investido na qualidade da música da sua paróquia como parte do esforço mais amplo de renovar a vida litúrgica de Ars.</p>
+
+      <div class="sl-grid-2">
+        <div class="sl-card">
+          <h4>Hinos e cânticos devocionais</h4>
+          <p>A devoção popular ao Cura d'Ars produziu, nas décadas posteriores à sua morte, uma série de hinos e cânticos que se cantavam em peregrinações a Ars e nas festas litúrgicas em sua honra. Esses hinos — que circularam em folhetos de devoção até meados do século XX — constituem um documento tanto da devoção popular quanto das formas musicais que o catolicismo popular da época utilizava.</p>
+        </div>
+        <div class="sl-card">
+          <h4>Composições para o Ano Sacerdotal</h4>
+          <p>O Ano Sacerdotal de 2009–2010 estimulou a composição de obras musicais em honra de Vianney — desde cânticos simples para uso litúrgico em paróquias até composições corais de maior envergadura produzidas por instituições musicais católicas na França, Itália e Bélgica. A figura do Cura d'Ars como padroeiro do Ano Sacerdotal tornou a sua festa de 4 de agosto um dia de celebração musical em muitas catedrais do mundo.</p>
         </div>
       </div>
     </div>
@@ -814,28 +1123,188 @@
 
   <div class="sl-sep">· · ·</div>
 
-  <!-- 06 · VIANNEY FORA DO CATOLICISMO -->
-  <div class="sl-secao">
+  <!-- 08 · O IMPACTO NA ESPIRITUALIDADE LEIGA -->
+  <div class="sl-secao" id="espiritualidade-leiga">
     <div class="sl-secao-header">
-      <span class="sl-secao-num">06</span>
+      <span class="sl-secao-num">08</span>
+      <div class="sl-secao-linha"></div>
+      <span class="sl-secao-titulo">O Impacto na Espiritualidade Leiga</span>
+    </div>
+
+    <div class="sl-bloco">
+      <div class="sl-bloco-resumo">
+        <h3>Um modelo sacerdotal que fala aos leigos</h3>
+        <p>Há algo aparentemente paradoxal no impacto de Vianney sobre os leigos: ele era um padre, e um padre que fazia do ministério ordenado o centro absoluto da sua existência. E, no entanto, as dimensões da sua espiritualidade que mais ecoaram na vida dos fiéis comuns — a oração peseverante e silenciosa diante do tabernáculo, a confissão frequente como forma de relacionamento pessoal com a misericórdia de Deus, a integração da penitência e da alegria numa mesma vida — são dimensões que qualquer batizado pode viver, com as adaptações que o estado de vida requer. Esta seção examina como esses elementos foram recebidos e praticados pelos leigos ao longo de um século e meio.</p>
+      </div>
+    </div>
+
+    <div class="sl-bloco">
+      <h3>A confissão frequente — Vianney e a renovação do sacramento</h3>
+      <p><span class="sl-capitular">U</span>m dos impactos mais mensuráveis de Vianney sobre a espiritualidade leiga foi a renovação da prática da confissão frequente — não como obrigação mínima cumprida anualmente, mas como forma de relacionamento pessoal com a misericórdia divina que transforma progressivamente a vida do penitente. O que Vianney havia demonstrado em Ars era que a confissão, quando ministrada com a seriedade e a caridade que o sacramento requer, não é um fardo que os fiéis suportam — é um encontro que procuram.</p>
+      <p>A espiritualidade leiga que se formou em torno do santuário de Ars ao longo das décadas subsequentes à morte de Vianney difundiu-se através dos peregrinos que voltavam para as suas comunidades com a experiência de uma confissão transformadora — não necessariamente porque Vianney fosse o confessante, mas porque o ambiente espiritual que ele havia criado em Ars tornava a confissão o que ela havia sido na sua origem: um encontro com a misericórdia de Deus mediado pelo ministro, não um procedimento administrativo da vida religiosa.</p>
+
+      <div class="sl-card-destaque">
+        <h4>Do confessionário de Ars às paróquias do mundo</h4>
+        <p>Os penitentes que voltavam de Ars carregavam consigo a experiência de um confessional que tornava o sacramento desejável. Muitos descreveram a confissão com Vianney — ou simplesmente a confissão feita durante uma peregrinação a Ars, mesmo após a sua morte — como o ponto de virada da própria vida espiritual. Esse testemunho, transmitido de pessoa a pessoa ao longo de gerações, constituiu um dos mecanismos mais eficazes de difusão da devoção ao Cura d'Ars e de renovação da prática sacramental nas comunidades onde os peregrinos regressavam.</p>
+        <p>A tradição que Vianney inaugurou — a confissão como ministério de caridade ao qual o padre se dedica com tempo e atenção generosos — influenciou as normas pastorais sobre a disponibilidade dos confessores que os documentos eclesiásticos do século XX produziram. A <em>Sacerdotii Nostri Primordia</em> de João XXIII e a carta de Bento XVI do Ano Sacerdotal citam o confessionário de Ars como modelo do que a prática sacramental deveria ser em todas as paróquias — não como exceção extraordinária, mas como norma pastoral desejável.</p>
+      </div>
+    </div>
+
+    <div class="sl-bloco">
+      <h3>A adoração eucarística e a vida interior leiga</h3>
+      <p>A adoração silenciosa diante do Santíssimo Sacramento — que Vianney havia cultivado como espinha dorsal da sua vida espiritual, chegando a passar horas na penumbra da igreja antes do amanhecer — tornou-se um dos elementos mais influentes do seu legado sobre a espiritualidade leiga. A razão é simples: a adoração eucarística é, por definição, acessível a todos os batizados. Não requer formação teológica especial, nem pertença a uma ordem religiosa. Requer apenas a disposição de estar em silêncio diante de Deus — o que é exatamente o que Vianney havia demonstrado ser transformador.</p>
+
+      <div class="sl-grid-2">
+        <div class="sl-card">
+          <h4>A adoração perpétua — origem e expansão</h4>
+          <p>Vianney havia estabelecido em Ars a adoração perpétua do Santíssimo Sacramento, com grupos de fiéis que se revezavam em turnos para manter a presença de oração diante do tabernáculo exposto. A prática, que ele havia importado de outras paróquias da região e adaptado ao contexto de Ars, espalhou-se a partir do santuário para outras comunidades — primeiro na França, depois pelo mundo. As associações de Adoração Perpétua que existem hoje em todos os continentes têm em Ars um dos pontos de referência histórica para a prática que promovem.</p>
+        </div>
+        <div class="sl-card">
+          <h4>A educação da oração silenciosa</h4>
+          <p>A frase mais citada de Vianney sobre a oração — o diálogo com o camponês que passava horas na igreja sem fazer nada visível, que ao ser perguntado o que fazia ali respondeu "Eu o olho, e Ele me olha" — tornou-se um dos textos fundadores da pedagogia da oração contemplativa para leigos no catolicismo moderno. A frase condensa uma teologia da oração que dispensava toda a estrutura formal da oração vocal ou meditada e que era ao mesmo tempo completamente acessível e completamente exigente.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="sl-bloco">
+      <h3>A penitência e a alegria — uma síntese para os leigos</h3>
+      <p>A dimensão ascética da vida de Vianney — os jejuns rigorosos, as privações de sono, as mortificações corporais — é a dimensão que mais dificuldade cria quando se tenta propor o Cura d'Ars como modelo para leigos. Os documentos papais são cuidadosos neste ponto: nenhum deles propõe que os fiéis imitem literalmente o ascetismo de Vianney. O que propõem é algo mais matizado e mais rico: a integração da dimensão penitencial na vida ordinária, nas formas que cada estado de vida torna possível e adequado.</p>
+      <p>O magistério do século XX — especialmente a partir do Vaticano II, com a exortação apostólica <em>Paenitentiam</em> de Paulo VI e com os documentos sobre a espiritualidade leiga de João Paulo II — desenvolveu uma teologia da penitência dos leigos que encontra em Vianney uma referência histórica sem transformá-lo num modelo literal. A penitência dos leigos é vivida nas aceitações das dificuldades da vida familiar, profissional e social; nas abstinências voluntárias que renovam a memória da dependência de Deus; nas formas de serviço caritativo que custam. A conexão com Vianney é a de um princípio comum — a conversão requer renúncia — não a de uma forma idêntica.</p>
+
+      <div class="sl-alerta-verde">
+        <strong>Um equilíbrio que o próprio Vianney soube encontrar:</strong> Apesar da radicalidade do seu ascetismo pessoal, Vianney nunca impôs aos seus paroquianos formas de penitência que não fossem adequadas ao seu estado de vida. Nas suas catequeses, distingia claramente entre o que o padre pode e deve suportar e o que o cristão no mundo pode oferecer. A sabedoria de Ars não era uniformidade ascética — era a convicção de que cada estado de vida tem as suas formas próprias de entrega a Deus.
+      </div>
+    </div>
+
+    <div class="sl-bloco">
+      <h3>A devoção mariana — Vianney e os leigos</h3>
+      <p>A devoção de Vianney à Virgem Maria era um dos pilares da sua espiritualidade pessoal e da vida religiosa que havia cultivado em Ars. Ele havia consagrado a paróquia a Nossa Senhora em 1836 — antes das definições dogmáticas da Imaculada Conceição (1854) que viriam depois —, e o rosário era oração que rezava e que ensinava com insistência.</p>
+      <p>A influência desta dimensão sobre a espiritualidade leiga foi direta: os peregrinos que vinham a Ars viviam numa paróquia onde a devoção mariana era visível e integrada na vida litúrgica, não uma prática marginal. Muitos regressavam com uma compreensão renovada do rosário e da consagração a Maria — práticas que o Cura d'Ars havia apresentado não como devoções opcionais, mas como formas concretas de relacionamento com a Mãe de Deus que têm consequências na vida espiritual de quem as pratica com fidelidade.</p>
+    </div>
+
+    <div class="sl-bloco">
+      <h3>A integração da espiritualidade com a vida familiar</h3>
+      <p>Um dos aspectos menos explorados do legado de Vianney sobre os leigos é a sua influência sobre a espiritualidade familiar. O Cura d'Ars — que nunca foi casado e que vivia num celibato radical — paradoxalmente se tornou uma referência para famílias que buscavam integrar a dimensão espiritual com a vida doméstica quotidiana.</p>
+      <p>A razão é que Vianney ensinava consistentemente a seus paroquianos — que eram famílias, não monges — que a santidade era acessível no estado em que viviam. Que o pai de família que rezava as orações da manhã com os filhos, que a mãe que ensinava as crianças a se benzerem diante do crucifixo, que o marido e a mulher que se confessavam regularmente — todos estes estavam no caminho da santidade que o Cura d'Ars descrevia. A mensagem era radicalmente igualitária: a santidade não é para os conventos, é para Ars — e Ars é onde qualquer família vive.</p>
+
+      <div class="sl-citacao">
+        <p>"Deus ama os simples. Ele deixou a glória do Céu para vir habitar os simples de coração. Os ricos têm o seu paraíso aqui embaixo; os pobres têm-no no céu."</p>
+        <span class="sl-fonte">São João Maria Vianney — catequese em Ars</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="sl-sep">· · ·</div>
+
+  <!-- 09 · DEBATES TEOLÓGICOS E PASTORAIS -->
+  <div class="sl-secao" id="debates-teologicos">
+    <div class="sl-secao-header">
+      <span class="sl-secao-num">09</span>
+      <div class="sl-secao-linha"></div>
+      <span class="sl-secao-titulo">Debates Teológicos e Pastorais</span>
+    </div>
+
+    <div class="sl-bloco">
+      <div class="sl-bloco-resumo">
+        <h3>Vianney como argumento num debate em curso</h3>
+        <p>A figura do Cura d'Ars não é apenas uma referência devocional — é um argumento num debate teológico e pastoral que continua em aberto. Os debates sobre a identidade sacerdotal, sobre a relação entre santidade pessoal e eficácia pastoral, sobre o papel específico do padre paroquial numa Igreja que repensa as suas estruturas, sobre a confissão como sacramento central ou periférico — em todos esses debates, Vianney aparece com regularidade como dado que não pode ser ignorado. Esta seção examina como a figura de Ars é usada nesses debates e que limite a sua figura coloca         a qualquer apropriação unilateral.</p>
+      </div>
+    </div>
+
+    <div class="sl-bloco">
+      <h3>O debate sobre a identidade sacerdotal</h3>
+      <p><span class="sl-capitular">O</span> debate sobre a identidade sacerdotal — o que especificamente distingue o padre ordenado do leigo comprometido, e o que justifica o ministério ordenado como categoria separada na estrutura da Igreja — é um dos debates teológicos mais intensos do catolicismo pós-conciliar. Tem dimensões dogmáticas, pastorais e sociológicas que se entrecruzam de forma nem sempre ordenada, e produziu uma literatura teológica vastíssima ao longo das últimas cinco décadas.</p>
+      <p>A figura de Vianney funciona nesse debate como argumento empírico de uma tese específica: que o sacerdócio ordenado tem uma função que não é redutível a nenhuma outra função eclesiástica, e que essa função — mediação sacramental, absolvição dos pecados, consagração eucarística — é precisamente o que havia tornado Ars o que Ars se tornara. Vianney não havia transformado a sua paróquia porque era um animador comunitário excepcionalmente dotado ou porque havia implementado programas pastorais inovadores. Havia transformado Ars porque era padre — e era padre com uma radicalidade que tornava visível o que o sacerdócio é quando é levado a sério.</p>
+      <p>Os teólogos que defendem uma "teologia ontológica" do sacerdócio — a tese de que a ordenação produz uma transformação real e permanente no ser do ordenado, não apenas uma função que a comunidade lhe delega — encontram em Vianney um argumento histórico de peso. A sua vida demonstra o que essa transformação pode produzir quando o ordenado está disposto a deixá-la operar sem reservas. Os teólogos que privilegiam uma "teologia funcional" do sacerdócio — que enfatiza o ministério como serviço à comunidade mais do que como transformação ontológica do ministro — têm mais dificuldade com Vianney, precisamente porque a centralidade da oração solitária e da adoração na sua vida não se reduz facilmente à categoria do serviço comunitário.</p>
+
+      <div class="sl-grid-2">
+        <div class="sl-card">
+          <h4>Presbyterorum Ordinis e a questão ontológica</h4>
+          <p>O decreto conciliar equilibrou cuidadosamente as duas perspectivas — ontológica e funcional — sem resolver a tensão entre elas. A receção pós-conciliar, contudo, tendeu a privilegiar ora uma ora outra, e Vianney foi invocado por ambas as correntes: pelos defensores da ontologia como prova de que o padre é ontologicamente diferente do leigo; pelos funcionalistas como prova de que o serviço pastoral — quando radical — é em si mesmo a forma mais alta do ministério, independentemente da sua base ontológica.</p>
+        </div>
+        <div class="sl-card">
+          <h4>Pastores Dabo Vobis (1992) — a síntese de João Paulo II</h4>
+          <p>A exortação apostólica pós-sinodal de João Paulo II tentou oferecer uma síntese que integrasse as duas perspectivas sem sacrificar nenhuma. A referência a Vianney no documento — como padre cuja vida interior e cuja eficácia externa eram dois aspectos de uma única realidade — é a forma como João Paulo II usa o Cura d'Ars para ilustrar a tese da síntese: que a questão não é escolher entre ontologia e função, mas compreender como a transformação ontológica da ordenação se torna visível na fidelidade radical ao serviço pastoral.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="sl-bloco">
+      <h3>O debate sobre o celibato sacerdotal</h3>
+      <p>O celibato obrigatório dos padres do rito latino é um dos temas mais discutidos do catolicismo contemporâneo. Defensores e críticos do celibato obrigatório usam argumentos históricos, teológicos, pastorais e psicológicos numa discussão que, nas últimas décadas, saiu dos círculos teológicos especializados para o debate público mais amplo.</p>
+      <p>Vianney é citado com regularidade pelos defensores do celibato como modelo do que o celibato radical pode produzir quando é vivido como opção teológica e não como imposição canônica tolerada. A totalidade da disponibilidade de Vianney para os seus paroquianos — a possibilidade de estar no confessionário de manhã cedo à noite, de ser interrompido a qualquer hora, de não ter uma família própria que competisse com o rebanho pela atenção do pastor — é apresentada como demonstração histórica da racionalidade pastoral do celibato, para além dos seus fundamentos escatológicos e cristológicos.</p>
+      <p>Os críticos do celibato obrigatório respondem que Vianney é a exceção que confirma a regra: que um padre a cada séculos não é argumento estatístico suficiente para uma norma canônica universal. A réplica dos defensores é que Vianney não é argumento para que todos sejam como ele — é argumento para que o celibato seja escolhido por razões que ele demonstrou serem pastoralmente fecundas, não tolerado como fardo que a lei impõe.</p>
+
+      <div class="sl-alerta">
+        <strong>Sobre a Amazônia e o Sínodo de 2019:</strong> O Sínodo para a Região Pan-Amazônica (2019) — que debateu, entre outros temas, a possibilidade de ordenar homens casados para atender comunidades sem acesso regular à Eucaristia — não citou Vianney diretamente nos documentos oficiais. Mas o nome do Cura d'Ars apareceu repetidamente nos debates que acompanharam o sínodo: defensores do celibato invocavam Ars como prova de que um padre celibatário radical pode transformar uma comunidade inteira; defensores das novas formas ministeriais respondiam que a situação da Amazônia não tinha precedente histórico que tornasse a comparação com Ars diretamente aplicável.
+      </div>
+    </div>
+
+    <div class="sl-bloco">
+      <h3>O debate sobre a confissão — centralidade ou marginalidade</h3>
+      <p>Em paralelo com o declínio da prática da confissão frequente no catolicismo ocidental — fenômeno que os dados sociológicos documentam de forma consistente desde os anos 1970 —, instalou-se um debate teológico e pastoral sobre o lugar que o sacramento da reconciliação deve ter na vida da Igreja. As posições variam entre a tese de que a confissão individual e auricular é o coração insubstituível da experiência sacramental católica e a tese de que formas comunitárias de penitência são pastoralmente mais adequadas ao mundo contemporâneo.</p>
+      <p>Vianney é uma referência central nesse debate — e uma referência que complica as posições simplistas de ambos os lados. O confessionário de Ars não é apenas o argumento dos que defendem a confissão individual como forma exclusiva: é o argumento dos que defendem que a confissão individual, quando exercida com a qualidade pastoral que Vianney demonstrava, é capaz de produzir o que nenhuma absolvição coletiva produz — a experiência pessoal, insubstituível, de ser conhecido e perdoado por nome.</p>
+      <p>Bento XVI retomou este argumento de forma explícita na carta do Ano Sacerdotal: o confessionário de Ars como resposta histórica à questão contemporânea sobre a irrelevância do sacramento. A resposta não é doutrinária — não é o argumento de que a confissão é válida porque o magistério a define como sacramental. É a resposta da experiência: as fileiras de penitentes em Ars, ao longo de quarenta anos, são a demonstração empírica de que o sacramento, quando ministrado com a qualidade que Vianney representa, não carece de relevância nem de penitentes.</p>
+
+      <div class="sl-citacao">
+        <p>"Que beleza é um padre bom! Que coisa grande é um padre! O padre não é padre para ele mesmo, é padre para vós."</p>
+        <span class="sl-fonte">São João Maria Vianney — catequese em Ars</span>
+      </div>
+    </div>
+
+    <div class="sl-bloco">
+      <h3>O debate sobre a evangelização e a presença da Igreja na cultura</h3>
+      <p>O conceito de "nova evangelização" — que Paulo VI havia esboçado na <em>Evangelii Nuntiandi</em> de 1975 e que João Paulo II havia desenvolvido como programa do seu pontificado — propôs a figura do Cura d'Ars como um dos modelos históricos do que a evangelização pode ser numa cultura que já havia sido cristã e havia se distanciado da fé.</p>
+      <p>A Ars que Vianney encontrara em 1818 era, em escala microscópica, o que a Europa do século XXI é em escala continental: uma cultura que havia sido cristã, que havia conservado os hábitos exteriores do catolicismo sem a substância interior que lhes dava sentido, e que precisava de ser reevangelizada — não como terra de missão virgem, mas como território que havia conhecido o Evangelho e o havia esquecido progressivamente. O que Vianney havia feito em Ars era, precisamente, reevangelizar sem chamar assim ao que fazia.</p>
+      <p>O Pontifício Conselho para a Promoção da Nova Evangelização — criado por Bento XVI em 2010 — elegeu Vianney como uma das figuras patronais do seu projeto. A razão articulada é que a nova evangelização não é, em última análise, um programa de comunicação ou um método pastoral sofisticado: é a presença de testemunhas cuja vida faz a pergunta que o Evangelho responde. E Ars é o exemplo histórico mais bem documentado do que essa presença pode produzir.</p>
+
+      <div class="sl-grid-3">
+        <div class="sl-card">
+          <h4>O testemunho como método</h4>
+          <p>A <em>Evangelii Nuntiandi</em> de Paulo VI articula a tese de que o testemunho precede e sustenta o anúncio verbal. Vianney é o caso histórico que dá concretude a esta tese: os peregrinos que vinham a Ars frequentemente descreviam que o que os havia convertido não eram os sermões — eram os sermões e a vida do pregador como unidade. O padre que pregava sobre a oração passava horas em oração. O padre que pregava sobre a penitência vivia em penitência. Essa congruência era percebida pelos contemporâneos como algo diferente do que o discurso religioso convencional oferecia.</p>
+        </div>
+        <div class="sl-card">
+          <h4>A paróquia como célula da nova evangelização</h4>
+          <p>Os documentos sobre a nova evangelização do pontificado de João Paulo II e de Bento XVI insistiram na paróquia como estrutura fundamental da presença da Igreja na cultura — contra tendências que viam a paróquia como estrutura obsoleta a ser substituída por comunidades de base ou por movimentos eclesiais. Ars era o argumento histórico central desta tese: uma paróquia comum, numa aldeia comum, transformada em centro de renovação espiritual por um padre comum que levava o ministério paroquial a sério.</p>
+        </div>
+        <div class="sl-card">
+          <h4>A descristianização e a resposta de Ars</h4>
+          <p>O sociólogo da religião Danièle Hervieu-Léger, estudando a memória religiosa nas sociedades europeias contemporâneas, usa a expressão "amnésia religiosa coletiva" para descrever o processo pelo qual culturas de tradição cristã perdem a capacidade de transmitir a fé de geração em geração. O fenômeno de Ars é, nesse quadro, um caso de reversão da amnésia: numa aldeia que havia esquecido o que era a fé cristã em profundidade, um homem conseguiu, por quarenta anos de ministério radical, restaurar a memória. O que isso implica para a compreensão contemporânea da missão da Igreja é uma das questões que o legado de Vianney continua a colocar sem responder de forma definitiva.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="sl-bloco">
+      <h3>O debate sobre a santidade clerical e os escândalos</h3>
+      <p>O debate sobre os escândalos de abuso sexual do clero — e sobre as respostas institucionais que a Igreja deu ou deixou de dar — produziu uma reflexão teológica e pastoral sobre a santidade clerical que é mais complexa e mais honesta do que a reflexão que o catolicismo havia praticado nos séculos anteriores. A questão não é mais apenas "como se alcança a santidade sacerdotal" — é também "o que acontece quando o sacerdócio é vivido de forma que contradiz radicalmente o que representa".</p>
+      <p>Nesse contexto, a figura de Vianney é usada de formas diferentes por observadores diferentes. Para uns, é a demonstração de que o sacerdócio tem potencial para uma santidade de nível heroico — e que os escândalos representam a traição de um potencial real, não a manifestação da natureza verdadeira de uma instituição hipócrita. Para outros, a invocação de Vianney corre o risco de servir como recurso para desviar a atenção das questões estruturais para a questão individual da santidade — como se o problema dos escândalos fosse simplesmente a falta de padres suficientemente santos, e não também a falta de estruturas suficientemente transparentes e responsabilizáveis.</p>
+      <p>O magistério recente — especialmente a carta de Francisco de 2019 — tentou equilibrar as duas perspectivas: invocar Vianney sem usar a sua figura para esquivar as responsabilidades institucionais. A carta reconhece que há padres que "aproveitaram a fragilidade dos outros", e que isso exige respostas estruturais que vão além da santidade individual. Mas insiste que a resposta à crise de credibilidade do sacerdócio não pode prescindir da santidade individual — que a estrutura sem a santidade é, no final, igualmente insuficiente.</p>
+    </div>
+  </div>
+
+  <div class="sl-sep">· · ·</div>
+
+  <!-- 10 · VIANNEY FORA DO CATOLICISMO -->
+  <div class="sl-secao" id="fora-catolicismo">
+    <div class="sl-secao-header">
+      <span class="sl-secao-num">10</span>
       <div class="sl-secao-linha"></div>
       <span class="sl-secao-titulo">Vianney fora do Catolicismo</span>
     </div>
 
     <div class="sl-bloco">
       <h3>Anglicanos e luteranos — quem estuda e por quê</h3>
-      <p><span class="sl-capitular">A</span> recepção de Vianney fora do catolicismo romano é um fenômeno mais significativo do que a hagiografia católica costuma registrar — talvez porque a hagiografia católica tem poucos incentivos para mapear o que acontece nos outros lados da fronteira ecumênica.</p>
-      <p>No anglicanismo, especialmente nas suas correntes de Alta Igreja — o Anglo-Catolicismo que mantém uma espiritualidade sacramental próxima da tradição romana —, Vianney é estudado e citado com uma familiaridade que surpreende os católicos que encontram essas referências pela primeira vez. A questão que o anglicanismo alto encontra em Vianney é a mesma que o catolicismo encontra: o que significa o ministério sacerdotal quando é exercido com a totalidade que o sacramento da ordem implica?</p>
+      <p><span class="sl-capitular">A</span> recepção de Vianney fora do catolicismo romano é um fenômeno mais significativo do que a hagiografia católica costuma registrar. No anglicanismo, especialmente nas suas correntes de Alta Igreja — o Anglo-Catolicismo que mantém uma espiritualidade sacramental próxima da tradição romana —, Vianney é estudado e citado com uma familiaridade que surpreende os católicos que encontram essas referências pela primeira vez. A questão que o anglicanismo alto encontra em Vianney é a mesma que o catolicismo encontra: o que significa o ministério sacerdotal quando é exercido com a totalidade que o sacramento da ordem implica?</p>
       <p>No luteranismo, especialmente nas correntes escandinavas e alemãs que mantêm uma teologia dos ministérios mais próxima da tradição católica, Vianney aparece em estudos sobre espiritualidade pastoral que o usam como caso histórico de interesse sem o contexto devocional que o catolicismo lhe dá. A abordagem é mais acadêmica do que devota — mas o interesse é real e produz uma literatura que os estudiosos ecumênicos do sacerdócio conhecem.</p>
 
       <div class="sl-grid-2">
         <div class="sl-card">
-          <h4>A recepção ecumênica</h4>
+          <h4>Questões que transcendem as fronteiras confessionais</h4>
           <p>Os movimentos ecumênicos do século XX produziram documentos sobre o ministério ordenado que tentam identificar pontos de convergência entre tradições divergentes. Vianney não aparece como figura de consenso — as diferenças são substanciais demais. Mas aparece nos estudos que acompanham o diálogo como caso que coloca questões transcendentes às fronteiras confessionais: o que é o cuidado pastoral quando é levado a sério? Que relação existe entre a vida espiritual do ministro e a eficácia do seu ministério?</p>
         </div>
         <div class="sl-card">
-          <h4>Ortodoxos orientais</h4>
-          <p>A tradição ortodoxa, com a sua ênfase na figura do <em>starets</em> — o ancião espiritual que guia pela santidade pessoal e pelo discernimento carismático —, encontra em Vianney um paralelo ocidental inesperadamente reconhecível. Os relatos sobre o discernimento de Vianney no confessionário — a capacidade de ler almas que as fontes descrevem repetidamente — evocam a tradição dos padres espirituais do deserto e da tradição hesicasta.</p>
+          <h4>Ortodoxos orientais e a figura do startsi</h4>
+          <p>A tradição ortodoxa, com a sua ênfase na figura do <em>starets</em> — o ancião espiritual que guia pela santidade pessoal e pelo discernimento carismático —, encontra em Vianney um paralelo ocidental inesperadamente reconhecível. Os relatos sobre o discernimento de Vianney no confessionário — a capacidade de ler almas que as fontes descrevem repetidamente — evocam a tradição dos padres espirituais do deserto e da tradição hesicasta. Teólogos ortodoxos como Olivier Clément escreveram sobre a figura de Vianney com a familiaridade de quem reconhece num contexto culturalmente distante algo essencialmente próximo.</p>
         </div>
       </div>
     </div>
@@ -843,7 +1312,7 @@
     <div class="sl-bloco">
       <h3>O interesse de não-cristãos pelo fenômeno de Ars</h3>
       <p>O interesse de pessoas sem afiliação religiosa pelo fenômeno de Ars é um dado que os estudos sobre o santuário registram com uma consistência que merece atenção. Uma parte dos peregrinos que chegam a Ars não são católicos praticantes — chegam por curiosidade histórica, por interesse cultural, por recomendação de amigos ou simplesmente porque estavam na região e ouviram falar do lugar.</p>
-      <p>O que alguns desses visitantes descrevem nos relatos disponíveis — cartas ao santuário, depoimentos recolhidos por jornalistas, narrativas em blogs e memórias pessoais — é a experiência de um espaço que produz algo diferente do que outros lugares históricos produzem. Não necessariamente conversão religiosa. Com frequência, simplesmente a sensação de que há algo em Ars que não se encontra nos museus e nos monumentos — uma presença que os não-crentes descrevem com vocabulário inevitavelmente vago, mas que descrevem de forma suficientemente consistente para que a consistência seja ela mesma um dado.</p>
+      <p>O que alguns desses visitantes descrevem nos relatos disponíveis — cartas ao santuário, depoimentos recolhidos por jornalistas, narrativas em memórias pessoais — é a experiência de um espaço que produz algo diferente do que outros lugares históricos produzem. Não necessariamente conversão religiosa. Com frequência, simplesmente a sensação de que há algo em Ars que não se encontra nos museus e nos monumentos — uma presença que os não-crentes descrevem com vocabulário inevitavelmente vago, mas que descrevem de forma suficientemente consistente para que a consistência seja ela mesma um dado.</p>
     </div>
 
     <div class="sl-bloco">
@@ -852,68 +1321,48 @@
 
       <div class="sl-grid-2">
         <div class="sl-card">
-          <h4>O que reconhecem</h4>
-          <p>O fenômeno de Ars como fato histórico verificável: que uma aldeia obscura se tornou, em quarenta anos, um dos principais destinos de peregrinação da França. Que o agente da transformação foi identificável — um padre específico, com uma vida específica. Que os testemunhos são mais abundantes e mais variados do que os de qualquer fenômeno similar do período.</p>
+          <h4>O que a historiografia secular reconhece</h4>
+          <p>O fenômeno de Ars como fato histórico verificável: que uma aldeia obscura se tornou, em quarenta anos, um dos principais destinos de peregrinação da França. Que o agente da transformação foi identificável — um padre específico, com uma vida específica. Que os testemunhos são mais abundantes e mais variados do que os de qualquer fenômeno similar do período. A obra do historiador Yves-Marie Hilaire sobre o catolicismo francês do século XIX dedica ao fenômeno de Ars páginas que reconhecem a sua singularidade histórica sem que o autor necessite de pronunciar-se sobre as suas causas sobrenaturais.</p>
         </div>
         <div class="sl-card">
           <h4>Onde o debate permanece aberto</h4>
-          <p>A explicação do fenômeno — o que produziu a transformação, o que tornava a pregação e o confessionário de Vianney eficazes, o que eram os episódios descritos como sobrenaturais — permanece disputada entre historiadores com diferentes quadros de referência. O que a historiografia secular não consegue fazer, por definição, é pronunciar-se sobre se o sobrenatural estava presente. O que consegue fazer é reconhecer que os instrumentos disponíveis não explicam completamente o fenômeno.</p>
+          <p>A explicação do fenômeno — o que produziu a transformação, o que tornava a pregação e o confessionário de Vianney eficazes, o que eram os episódios descritos como sobrenaturais — permanece disputada entre historiadores com diferentes quadros de referência. O historiador Michel de Certeau, que se ocupou extensamente da mística e do sobrenatural como categorias históricas, deixou notas sobre Ars que os seus editores póstumos identificaram como parte de um projeto mais amplo de análise dos fenômenos religiosos que as categorias académicas habituais não conseguem classificar sem resto.</p>
         </div>
+      </div>
+
+      <div class="sl-alerta-info" style="margin-top: 14px;">
+        <strong>A sociologia da conversão e Ars:</strong> O sociólogo Rodney Stark, no seu estudo <em>The Rise of Christianity</em> (1996), desenvolve uma teoria da conversão religiosa baseada em redes sociais e em contactos pessoais com crentes cujo modo de vida produz uma dissonância cognitiva positiva no interlocutor. Embora Stark não cite Vianney nesse trabalho, o modelo de Ars é um dos casos históricos que mais claramente confirma a tese: a conversão de paroquianos que vinham de longe para ver o padre que haviam ouvido descrever foi produzida pelo contacto pessoal com uma figura cuja vida criava a pergunta que o Evangelho responde.
       </div>
     </div>
   </div>
 
   <div class="sl-sep">· · ·</div>
 
-  <!-- 07 · INFLUÊNCIA NA ESPIRITUALIDADE SACERDOTAL MUNDIAL -->
-  <div class="sl-secao">
+  <!-- 11 · INFLUÊNCIA NA ESPIRITUALIDADE SACERDOTAL MUNDIAL -->
+  <div class="sl-secao" id="influencia-mundial">
     <div class="sl-secao-header">
-      <span class="sl-secao-num">07</span>
+      <span class="sl-secao-num">11</span>
       <div class="sl-secao-linha"></div>
       <span class="sl-secao-titulo">Influência na Espiritualidade Sacerdotal Mundial</span>
     </div>
 
     <div class="sl-bloco">
       <h3>Além da Europa — como Vianney chegou ao mundo</h3>
-      <p><span class="sl-capitular">A</span> universalização da figura de Vianney — de santo francês a referência global — acompanhou a expansão missionária católica dos séculos XIX e XX. Os missionários franceses que partiram para a África, a Ásia e as Américas levaram consigo a memória do Cura d'Ars como parte do patrimônio espiritual da Igreja da França. Mas a recepção nos diferentes continentes não foi uniforme — cada contexto adaptou a figura de Vianney ao que precisava dela.</p>
+      <p><span class="sl-capitular">A</span> universalização da figura de Vianney — de santo francês a referência global — acompanhou a expansão missionária católica dos séculos XIX e XX. Os missionários franceses que partiram para a África, a Ásia e as Américas levaram consigo a memória do Cura d'Ars como parte do patrimônio espiritual da Igreja da França. Mas a receção nos diferentes continentes não foi uniforme — cada contexto adaptou a figura de Vianney ao que precisava dela.</p>
 
       <div class="sl-grid-3">
         <div class="sl-card">
           <h4>América Latina</h4>
-          <p>Nos países latino-americanos de forte tradição católica, Vianney tornou-se modelo especialmente relevante para o clero rural que enfrentava condições materiais análogas — paróquias extensas, populações dispersas, falta de recursos, isolamento. A Conferência de Aparecida (2007) mencionou a necessidade de padres com "o zelo pastoral do Cura d'Ars". Inúmeras igrejas e seminários no Brasil, na Colômbia, no México e na Argentina levam o seu nome.</p>
+          <p>Nos países latino-americanos de forte tradição católica, Vianney tornou-se modelo especialmente relevante para o clero rural que enfrentava condições materiais análogas — paróquias extensas, populações dispersas, falta de recursos, isolamento. A Conferência de Aparecida (2007) mencionou a necessidade de padres com "o zelo pastoral do Cura d'Ars". O documento final de Aparecida — amplamente atribuído na sua redação à influência do então cardeal Jorge Mario Bergoglio — usa a figura do pároco dedicado como contraponto à tentação do clericalismo e do distanciamento do povo.</p>
         </div>
         <div class="sl-card">
           <h4>África</h4>
-          <p>Na África subsaariana — onde o catolicismo cresce a ritmo acelerado e onde o número de vocações sacerdotais aumenta enquanto diminui na Europa — Vianney é apresentado nos seminários como modelo de perseverança: o padre que ficou na sua paróquia durante quarenta e um anos. Num contexto onde a mobilidade e a busca de posições urbanas tentam o clero jovem, a fidelidade de Vianney a Ars tem peso pastoral concreto.</p>
+          <p>Na África subsaariana — onde o catolicismo cresce a ritmo acelerado e onde o número de vocações sacerdotais aumenta enquanto diminui na Europa — Vianney é apresentado nos seminários como modelo de perseverança. Num contexto onde a mobilidade e a busca de posições urbanas tentam o clero jovem, a fidelidade de Vianney a Ars tem peso pastoral concreto. Os bispos africanos que participaram no Sínodo sobre a África de 1994 e no de 2009 citaram o modelo do pároco que permanece com o seu povo como princípio orientador da inculturação do ministério sacerdotal no contexto africano.</p>
         </div>
         <div class="sl-card">
           <h4>Ásia</h4>
-          <p>Na Coreia do Sul, nas Filipinas e na Índia — contextos católicos muito diversos entre si —, Vianney é estudado especialmente pela dimensão da confissão como serviço central do sacerdócio. Nos países asiáticos onde a cultura da vergonha torna a confissão particularmente difícil, o modo como Vianney tornava o sacramento acessível e desejável é estudado como modelo pastoral.</p>
+          <p>Na Coreia do Sul, nas Filipinas e na Índia — contextos católicos muito diversos entre si —, Vianney é estudado especialmente pela dimensão da confissão como serviço central do sacerdócio. Nos países asiáticos onde a cultura da vergonha torna a confissão particularmente difícil, o modo como Vianney tornava o sacramento acessível e desejável é estudado como modelo pastoral. A Federação das Conferências Episcopais da Ásia dedicou ao tema da misericórdia sacramental, com referência ao Cura d'Ars, vários dos seus documentos de formação do clero nas décadas de 2000 e 2010.</p>
         </div>
-      </div>
-    </div>
-
-    <div class="sl-bloco">
-      <h3>Paróquias, seminários e instituições com o seu nome</h3>
-      <p>O número de paróquias, seminários, escolas e instituições católicas que levam o nome de São João Maria Vianney no mundo é difícil de contabilizar com precisão — os registros diocesanos não são centralizados e novas fundações acontecem com regularidade. Mas os dados disponíveis indicam que é um dos nomes de santo mais usados para instituições ligadas à formação sacerdotal.</p>
-
-      <div class="sl-topo-metrica">
-        <div class="sl-metrica">
-          <div class="sl-metrica-num">70+</div>
-          <div class="sl-metrica-leg">Seminários com o nome "Vianney" no mundo</div>
-        </div>
-        <div class="sl-metrica">
-          <div class="sl-metrica-num">500+</div>
-          <div class="sl-metrica-leg">Paróquias dedicadas a São João Maria Vianney</div>
-        </div>
-        <div class="sl-metrica">
-          <div class="sl-metrica-num">6</div>
-          <div class="sl-metrica-leg">Continentes com presença do seu culto</div>
-        </div>
-      </div>
-
-      <div class="sl-alerta-info" style="margin-top: 16px;">
-        <strong>No Brasil:</strong> O Seminário São João Maria Vianney, em diversas dioceses brasileiras, é uma das designações mais comuns para casas de formação sacerdotal. A Comunidade Canção Nova, um dos maiores movimentos católicos do país, tem em Ars uma das referências espirituais para o sacerdócio. O dia 4 de agosto — festa litúrgica de São João Maria Vianney — é celebrado em praticamente todas as dioceses do país com atenção especial ao clero.
       </div>
     </div>
 
@@ -924,19 +1373,93 @@
       <div class="sl-card-destaque">
         <h4>Frases que definiram um legado</h4>
         <p><em>"O sacerdócio é o amor do coração de Jesus."</em> — Talvez a frase mais citada de Vianney, usada em inúmeros documentos papais e em materiais de formação sacerdotal em todo o mundo.</p>
-        <p><em>"Se soubéssemos o que é um padre na terra, morreríamos — não de medo, mas de amor."</em> — Citada por João Paulo II na <em>Pastores Dabo Vobis</em> e por Bento XVI na carta do Ano Sacerdotal.</p>
+        <p><em>"Se soubésseis o que é um padre na terra, morreríeis — não de medo, mas de amor."</em> — Citada por João Paulo II na <em>Pastores Dabo Vobis</em> e por Bento XVI na carta do Ano Sacerdotal.</p>
         <p><em>"Deixai uma paróquia vinte anos sem padre e adorar-se-ão os animais."</em> — Sobre a necessidade do sacerdócio para a manutenção da fé cristã nas comunidades.</p>
         <p><em>"O Bom Deus sabe tudo. Antes de vos confessardes, já sabe o vosso pecado. E, apesar disso, quer que o digais."</em> — Sobre a confissão como ato de humildade e de confiança.</p>
+        <p><em>"A oração é para a nossa alma o que a chuva é para a terra. Por mais rica que seja a terra, se não receber chuva, nada produzirá."</em> — Sobre a necessidade da oração como condição da vida espiritual fecunda.</p>
       </div>
+
+      <div class="sl-bloco" style="margin-top: 14px;">
+        <h3>A transmissão oral e a pedagogia da frase</h3>
+        <p>As frases de Vianney — aforismos nascidos no confessionário ou na catequese, nunca redigidos para publicação — têm uma estrutura que as torna memoráveis sem esforço: imagens concretas, paradoxos que estimulam o pensamento, a brevidade que a oralidade requer. O camponês que não sabia latim e que havia reprovado nos exames do seminário produziu, no exercício quarenta anos de ministério pastoral, um corpus de sentenças que os teólogos mais eruditos do seu século não alcançaram em eficácia comunicativa.</p>
+        <p>Essa eficácia comunicativa é ela mesma um dado do legado. As frases de Vianney circulam hoje nas redes sociais católicas com uma frequência que rivaliza com a de qualquer outro santo. São partilhadas em formatos que o Cura d'Ars nunca poderia ter imaginado — cartões digitais, vídeos curtos, citações em perfis de redes sociais —, mas com a mesma função que tinham quando eram proferidas em voz alta numa aldeia da Borgonha: dizer em poucas palavras o que sem essas palavras precisaria de muitas mais.</p>
+      </div>
+    </div>
+
+    <div class="sl-bloco">
+      <h3>Vianney e a formação sacerdotal contemporânea</h3>
+      <p>A influência de Vianney sobre os currículos de formação sacerdotal contemporânea vai além da presença do seu nome nos nomes dos seminários. Está presente nos programas de espiritualidade que os seminários oferecem, nos textos usados nos retiros de formação e na pedagogia da vida sacerdotal que os formadores propõem aos seminaristas.</p>
+
+      <div class="sl-grid-2">
+        <div class="sl-card">
+          <h4>Nos programas de espiritualidade</h4>
+          <p>A encíclica de João XXIII <em>Sacerdotii Nostri Primordia</em> e a carta de Bento XVI do Ano Sacerdotal são textos de estudo obrigatório ou recomendado em grande parte dos seminários maiores do mundo católico. Ambos usam Vianney como fio condutor de uma reflexão sobre a espiritualidade sacerdotal que os formadores usam em aulas, retiros e acompanhamento individual dos seminaristas.</p>
+        </div>
+        <div class="sl-card">
+          <h4>Na pedagogia da vida interior</h4>
+          <p>A questão que Vianney coloca aos seminaristas contemporâneos não é a imitação literal do seu ascetismo — que os formadores cuidadosos não propõem — mas a pergunta sobre a proporção entre vida de oração e atividade ministerial. O tempo que Vianney dedicava ao tabernáculo antes de ir para o confessionário é usado como argumento pedagógico: não para determinar quantas horas o seminarista deve rezar, mas para tornar visível que a atividade pastoral sem vida interior profunda tende à exaustão e ao vazio.</p>
+        </div>
+      </div>
+
+      <div class="sl-alerta-verde" style="margin-top: 14px;">
+        <strong>A "Ratio Fundamentalis" de 2016:</strong> O documento da Congregação para o Clero que rege a formação sacerdotal em toda a Igreja — publicado em 2016 — cita explicitamente Vianney como modelo de padre diocesano que integrou espiritualidade e ministério numa unidade indivisível. O documento usa essa integração como princípio orientador da formação humana, espiritual, intelectual e pastoral que os seminários devem oferecer — e o faz num contexto em que reconhece que a tentação contemporânea é tratar as quatro dimensões da formação como compartimentos separados em vez de como aspectos de uma única personalidade sacerdotal unificada.
+      </div>
+    </div>
+
+    <div class="sl-bloco">
+      <h3>Vianney nos sínodos e nos documentos episcopais regionais</h3>
+      <p>Para além dos documentos papais — já examinados na seção 02 —, a figura de Vianney aparece com regularidade nos documentos das conferências episcopais regionais e nos sínodos diocesanos que tratam do clero e da vida sacerdotal. Este nível intermediário do magistério é frequentemente negligenciado nas análises do legado de Vianney, mas é precisamente o nível onde a influência se torna mais concretamente operativa na vida das igrejas locais.</p>
+
+      <table class="sl-mini-tabela">
+        <thead>
+          <tr>
+            <th>Contexto</th>
+            <th>Documento / Evento</th>
+            <th>Uso da figura de Vianney</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>América Latina</strong></td>
+            <td>Conferência de Aparecida (2007)</td>
+            <td>Modelo do pároco missionário que permanece com o povo; contraponto à tentação clericalista</td>
+          </tr>
+          <tr>
+            <td><strong>Europa</strong></td>
+            <td>Sínodo dos Bispos sobre o sacerdócio (1990)</td>
+            <td>Referência histórica para a relação entre vida interior e fecundidade pastoral; base para <em>Pastores Dabo Vobis</em></td>
+          </tr>
+          <tr>
+            <td><strong>África</strong></td>
+            <td>Sínodo para a África (1994 e 2009)</td>
+            <td>Modelo de fidelidade ao povo confiado; argumento para a inculturação do ministério paroquial</td>
+          </tr>
+          <tr>
+            <td><strong>França</strong></td>
+            <td>Assembleia plenária dos bispos franceses (2010)</td>
+            <td>Referência central na reflexão pós-Ano-Sacerdotal sobre a identidade do clero francês</td>
+          </tr>
+          <tr>
+            <td><strong>Brasil</strong></td>
+            <td>Documento de Aparecida e documentos CNBB sobre formação sacerdotal</td>
+            <td>Modelo de padre que serve sem pretensões de carreira; exemplo da "opção preferencial" concretizada no ministério paroquial</td>
+          </tr>
+          <tr>
+            <td><strong>Coreia do Sul</strong></td>
+            <td>Documentos da Conferência Episcopal Coreana sobre formação do clero (2012)</td>
+            <td>Modelo de ministério sacramental num país de rápido crescimento católico; ênfase na confissão frequente como prática pastoral central</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 
   <div class="sl-sep">· · ·</div>
 
-  <!-- 08 · O PONTO DE CONVERGÊNCIA -->
-  <div class="sl-secao">
+  <!-- 12 · O PONTO DE CONVERGÊNCIA -->
+  <div class="sl-secao" id="convergencia">
     <div class="sl-secao-header">
-      <span class="sl-secao-num">08</span>
+      <span class="sl-secao-num">12</span>
       <div class="sl-secao-linha"></div>
       <span class="sl-secao-titulo">O Ponto de Convergência</span>
     </div>
@@ -945,20 +1468,55 @@
       <p><span class="sl-capitular">O</span> que céticos, historiadores seculares, pesquisadores ecumênicos, escritores católicos e devotos de todos os continentes partilham — quando leem as fontes com atenção suficiente — é o reconhecimento de que Ars foi um fenômeno historicamente extraordinário. As explicações diferem. O fenômeno é comum.</p>
       <p>E o homem que estava no centro dele — João Maria Batista Vianney, camponês de Dardilly, reprovado no seminário, pároco de uma aldeia irrelevante por quarenta e um anos — permanece, mais de cento e sessenta anos depois da morte, uma das figuras mais estudadas, mais invocadas e mais desconcertantes da história religiosa moderna.</p>
       <p>O legado não está apenas nos documentos que os papas escreveram, nem nos livros que os escritores publicaram, nem nos seminários que levam o seu nome, nem nos peregrinos que visitam Ars. O legado está no que acontece quando um padre contemporâneo — num subúrbio de São Paulo, numa aldeia do Congo, numa paróquia envelhecida da Baviera — se pergunta o que significa ser padre, e encontra na resposta de Vianney não uma fórmula, mas uma vida que torna a pergunta suportável e a resposta possível.</p>
+      <p>O legado está também no que acontece quando um leigo comum — que não tem nenhuma obrigação institucional de conhecer quem foi o Cura d'Ars — lê pela primeira vez a descrição do camponês que passava horas sentado na penumbra da igleja sem fazer nada visível, e reconhece na descrição do que esse homem fazia algo que nunca tinha visto nomeado mas que sempre soube existir: o silêncio que não é vazio, a presença que não precisa de palavras, o olhar que vai e que volta.</p>
     </div>
 
     <div class="sl-bloco-resumo">
       <h3>O que Ars continua a dizer</h3>
-      <p>A transformação de Ars não foi produzida por um programa, por um método, por uma técnica pastoral replicável. Foi produzida por um homem que estava disposto a ser inteiramente o que o sacerdócio exigia — e que descobriu, ao fazê-lo, que o que o sacerdócio exigia era tudo o que ele tinha para dar. Essa é a mensagem que permanece. Essa é a mensagem que incomoda. Essa é a mensagem que, para quem a ouve com honestidade, é ao mesmo tempo a coisa mais assustadora e a coisa mais bela que se pode dizer sobre o ministério sacerdotal.</p>
+      <p>A transformação de Ars não foi produzida por um programa, por um método, por uma técnica pastoral replicável. Foi produzida por um homem que estava disposto a ser inteiramente o que o sacerdócio exigia — e que descobriu, ao fazê-lo, que o que o sacerdócio exigia era tudo o que ele tinha para dar.</p>
+      <p>Essa é a mensagem que permanece. Essa é a mensagem que incomoda. Essa é a mensagem que, para quem a ouve com honestidade, é ao mesmo tempo a coisa mais assustadora e a coisa mais bela que se pode dizer sobre o ministério sacerdotal — e que, por extensão, se pode dizer sobre qualquer vocação humana levada a sério: que o chamado não pede parte. Pede tudo. E que dar tudo, descobriu Vianney em quarenta e um anos de Ars, é precisamente o que nos liberta.</p>
     </div>
 
     <div class="sl-citacao" style="margin-top: 30px;">
       <p>"O sacerdócio é o amor do coração de Jesus."</p>
       <span class="sl-fonte">São João Maria Vianney</span>
     </div>
+
+    <!-- SÍNTESE FINAL -->
+    <div class="sl-bloco" style="margin-top: 30px;">
+      <h3>Síntese do legado — em quatro dimensões</h3>
+      <table class="sl-mini-tabela">
+        <thead>
+          <tr>
+            <th>Dimensão</th>
+            <th>Expressão concreta</th>
+            <th>Alcance atual</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Institucional</strong></td>
+            <td>Seminários, paróquias, escolas, fraternidades sacerdotais</td>
+            <td>70+ seminários, 600+ paróquias, 6 continentes</td>
+          </tr>
+          <tr>
+            <td><strong>Magistério</strong></td>
+            <td>Documentos papais e episcopais de Pio X a Francisco</td>
+            <td>7 pontificados, 1 encíclica inteira, 1 Ano Sacerdotal</td>
+          </tr>
+          <tr>
+            <td><strong>Cultural</strong></td>
+            <td>Literatura, cinema, teatro, artes visuais, música</td>
+            <td>Obras em mais de 20 idiomas; presente em cânones literários nacionais</td>
+          </tr>
+          <tr>
+            <td><strong>Espiritual</strong></td>
+            <td>Espiritualidade leiga, renovação da confissão, adoração eucarística</td>
+            <td>2M+ peregrinos/ano a Ars; influência em movimentos em todo o mundo</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 
 </main>
-
-</body>
-</html>
