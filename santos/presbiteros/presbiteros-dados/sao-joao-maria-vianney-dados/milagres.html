@@ -30,7 +30,6 @@
         @media (max-width: 600px) { .sl-wrap { padding: 24px 12px 0; } .sl-santo-nome { font-size: 24px; } .sl-santo-titulo { font-size: 10px; letter-spacing: 3px; } .sl-intro-frase { font-size: 13px; padding: 0 10px; } .sl-lista li a { font-size: 9.5px; letter-spacing: 1px; padding: 12px 4px; min-height: 50px; } }
         @media (max-width: 420px) { .sl-lista li a { font-size: 8.5px; padding: 10px 3px; letter-spacing: 0.5px; } }
 
-        /* ===== VARIÁVEIS UNIFICADAS ===== */
         :root {
             --cf-fundo: #faf8f4;
             --cf-texto: #3a3530;
@@ -44,134 +43,31 @@
             --cf-max: 820px;
         }
 
-        body {
-            background: var(--cf-fundo);
-            margin: 0;
-            padding: 0;
-        }
+        body { background: var(--cf-fundo); margin: 0; padding: 0; }
 
-        /* ===== CABEÇALHO DA PÁGINA ===== */
-        .sl-pagina-cabecalho {
-            text-align: center;
-            padding: 60px 20px 50px;
-            max-width: var(--cf-max);
-            margin: 0 auto;
-        }
-        .sl-pagina-numero {
-            display: inline-block;
-            font-family: var(--cf-serif);
-            font-size: 14px;
-            letter-spacing: 4px;
-            color: var(--cf-dourado);
-            text-transform: uppercase;
-            margin: 0 0 16px;
-            font-weight: 400;
-        }
-        .sl-pagina-titulo {
-            font-family: var(--cf-serif);
-            font-size: 46px;
-            font-weight: 400;
-            color: var(--cf-texto);
-            letter-spacing: 2px;
-            margin: 0 0 12px;
-            line-height: 1.15;
-        }
-        .sl-pagina-subtitulo {
-            font-family: var(--cf-serif);
-            font-size: 17px;
-            font-style: italic;
-            color: var(--cf-texto-leve);
-            letter-spacing: 0.5px;
-            margin: 0;
-        }
-        .sl-pagina-ornamento {
-            margin-top: 30px;
-            font-size: 12px;
-            color: var(--cf-dourado-claro);
-            letter-spacing: 8px;
-        }
-        @media (max-width: 768px) {
-            .sl-pagina-cabecalho { padding: 40px 16px 36px; }
-            .sl-pagina-titulo { font-size: 32px; }
-            .sl-pagina-subtitulo { font-size: 15px; }
-        }
-        @media (max-width: 480px) {
-            .sl-pagina-titulo { font-size: 26px; letter-spacing: 1px; }
-            .sl-pagina-numero { font-size: 12px; letter-spacing: 3px; }
-        }
-    /* ═══════════════════════════════════════
-       ABA FRASES — Botão extra (igual às outras abas)
-       ═══════════════════════════════════════ */
-    .sl-frases-destaque {
-        background: #faf8f3;
-        padding: 0;
-    }
-    .sl-frases-destaque-inner {
-        max-width: 1200px;
-        margin: 0 auto;
-        display: flex;
-        justify-content: center;
-    }
-    .sl-frases-destaque a {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        text-decoration: none;
-        color: #6e6a60;
-        font-family: Georgia, 'Times New Roman', serif;
-        font-size: 12.5px;
-        letter-spacing: 2px;
-        text-transform: uppercase;
-        padding: 18px 40px;
-        position: relative;
-        transition: all 0.3s ease;
-        background: transparent;
-        min-height: 56px;
-        box-sizing: border-box;
-    }
-    .sl-frases-destaque a::after {
-        content: "";
-        position: absolute;
-        left: 50%;
-        bottom: 8px;
-        width: 0;
-        height: 1px;
-        background-color: #b08a3c;
-        transition: width 0.3s ease;
-        transform: translateX(-50%);
-    }
-    .sl-frases-destaque a:hover {
-        color: #2f2a22;
-        background-color: #f3eee3;
-    }
-    .sl-frases-destaque a:hover::after {
-        width: 50%;
-    }
-    .sl-frases-destaque a.ativo {
-        color: #2f2a22;
-        background-color: #f5f0e5;
-    }
-    .sl-frases-destaque a.ativo::after {
-        width: 50%;
-    }
+        .sl-pagina-cabecalho { text-align: center; padding: 60px 20px 50px; max-width: var(--cf-max); margin: 0 auto; }
+        .sl-pagina-numero { display: inline-block; font-family: var(--cf-serif); font-size: 14px; letter-spacing: 4px; color: var(--cf-dourado); text-transform: uppercase; margin: 0 0 16px; font-weight: 400; }
+        .sl-pagina-titulo { font-family: var(--cf-serif); font-size: 46px; font-weight: 400; color: var(--cf-texto); letter-spacing: 2px; margin: 0 0 12px; line-height: 1.15; }
+        .sl-pagina-subtitulo { font-family: var(--cf-serif); font-size: 17px; font-style: italic; color: var(--cf-texto-leve); letter-spacing: 0.5px; margin: 0; }
+        .sl-pagina-ornamento { margin-top: 30px; font-size: 12px; color: var(--cf-dourado-claro); letter-spacing: 8px; }
+        @media (max-width: 768px) { .sl-pagina-cabecalho { padding: 40px 16px 36px; } .sl-pagina-titulo { font-size: 32px; } .sl-pagina-subtitulo { font-size: 15px; } }
+        @media (max-width: 480px) { .sl-pagina-titulo { font-size: 26px; letter-spacing: 1px; } .sl-pagina-numero { font-size: 12px; letter-spacing: 3px; } }
 
-    @media (max-width: 900px) {
-        .sl-frases-destaque a { font-size: 11px; letter-spacing: 1.5px; padding: 14px 30px; }
-    }
-    @media (max-width: 600px) {
-        .sl-frases-destaque a { font-size: 9.5px; letter-spacing: 1px; padding: 12px 20px; min-height: 50px; }
-    }
-    @media (max-width: 420px) {
-        .sl-frases-destaque a { font-size: 8.5px; padding: 10px 14px; letter-spacing: 0.5px; }
-    }
-        /* ===== CONTEÚDO BASE ===== */
+        .sl-frases-destaque { background: #faf8f3; padding: 0; }
+        .sl-frases-destaque-inner { max-width: 1200px; margin: 0 auto; display: flex; justify-content: center; }
+        .sl-frases-destaque a { display: flex; align-items: center; justify-content: center; text-align: center; text-decoration: none; color: #6e6a60; font-family: Georgia, 'Times New Roman', serif; font-size: 12.5px; letter-spacing: 2px; text-transform: uppercase; padding: 18px 40px; position: relative; transition: all 0.3s ease; background: transparent; min-height: 56px; box-sizing: border-box; }
+        .sl-frases-destaque a::after { content: ""; position: absolute; left: 50%; bottom: 8px; width: 0; height: 1px; background-color: #b08a3c; transition: width 0.3s ease; transform: translateX(-50%); }
+        .sl-frases-destaque a:hover { color: #2f2a22; background-color: #f3eee3; }
+        .sl-frases-destaque a:hover::after { width: 50%; }
+        .sl-frases-destaque a.ativo { color: #2f2a22; background-color: #f5f0e5; }
+        .sl-frases-destaque a.ativo::after { width: 50%; }
+
         main { max-width: var(--cf-max); margin: 0 auto 40px; padding: 0 20px; }
         .sl-secao { margin-bottom: 40px; }
         .sl-secao-header { display: flex; align-items: center; gap: 16px; margin-bottom: 28px; flex-wrap: wrap; padding-top: 10px; }
         .sl-secao-num { font-family: var(--cf-serif); font-size: 13px; font-weight: 700; color: var(--cf-dourado); letter-spacing: 3px; flex-shrink: 0; }
         .sl-secao-linha { flex: 1; height: 1px; background: linear-gradient(to right, var(--cf-borda), transparent); }
-        .sl-secao-titulo { font-family: var(--cf-serif); font-size: 22px; font-weight: 400; color: var(--cf-texto); letter-spacing: 0.5px; text-transform: none; line-height: 1.35; margin: 0; }
+        .sl-secao-titulo { font-family: var(--cf-serif); font-size: 22px; font-weight: 400; color: var(--cf-texto); letter-spacing: 0.5px; line-height: 1.35; margin: 0; }
 
         .sl-bloco { margin-bottom: 25px; line-height: 1.8; color: var(--cf-texto); font-family: var(--cf-serif); }
         .sl-bloco h3 { font-family: var(--cf-serif); color: var(--cf-texto); margin-bottom: 15px; font-size: 17px; font-weight: 600; }
@@ -181,191 +77,91 @@
         .sl-bloco strong { color: var(--cf-texto); font-weight: 700; }
 
         .sl-capitular { float: left; font-size: 58px; line-height: 0.8; padding: 4px 10px 0 0; margin-top: 4px; font-family: var(--cf-serif); color: var(--cf-dourado); font-weight: 400; }
-
-        .sl-sep {
-            text-align: center;
-            padding: 40px 0;
-            margin: 0 auto;
-            color: var(--cf-dourado-claro);
-            font-size: 11px;
-            letter-spacing: 14px;
-        }
-
+        .sl-sep { text-align: center; padding: 40px 0; margin: 0 auto; color: var(--cf-dourado-claro); font-size: 11px; letter-spacing: 14px; }
         .sl-citacao { margin: 24px auto; max-width: 620px; text-align: center; font-style: italic; background: #fdfaf3; padding: 24px 28px; border-radius: 8px; border: 1px solid #f3eee3; }
         .sl-citacao p { font-size: 1.1em; color: #2f2a22; margin-bottom: 10px; font-family: var(--cf-serif); line-height: 1.7; }
         .sl-fonte { display: block; font-size: 0.78em; text-transform: uppercase; letter-spacing: 1px; color: var(--cf-dourado); font-style: normal; margin-top: 14px; }
 
-        /* ===== GRIDS ===== */
         .sl-grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; margin-top: 14px; }
         .sl-grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin-top: 14px; }
+        .sl-grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; margin-top: 14px; }
 
-        /* ===== CARDS ===== */
-        .sl-card {
-            background: var(--cf-bloco-bg);
-            border: 1px solid var(--cf-borda-leve);
-            border-radius: 4px;
-            padding: 20px 22px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
-        }
+        .sl-card { background: var(--cf-bloco-bg); border: 1px solid var(--cf-borda-leve); border-radius: 4px; padding: 20px 22px; box-shadow: 0 1px 3px rgba(0,0,0,.03); }
         .sl-card h4 { margin: 0 0 10px; font-size: 15px; font-family: var(--cf-serif); color: var(--cf-texto); font-weight: 600; }
         .sl-card p { margin: 0 0 8px; font-size: 14px; line-height: 1.7; color: var(--cf-texto-leve); font-family: var(--cf-serif); }
         .sl-card p:last-child { margin-bottom: 0; }
 
-        .sl-card-destaque {
-            background: linear-gradient(135deg, #fdfaf3, #f8f3e8);
-            border: 1px solid var(--cf-borda);
-            border-left: 4px solid var(--cf-dourado);
-            border-radius: 4px;
-            padding: 24px 28px;
-            margin-bottom: 14px;
-        }
+        .sl-card-destaque { background: linear-gradient(135deg, #fdfaf3, #f8f3e8); border: 1px solid var(--cf-borda); border-left: 4px solid var(--cf-dourado); border-radius: 4px; padding: 24px 28px; margin-bottom: 14px; }
         .sl-card-destaque h4 { margin: 0 0 12px; font-size: 16px; font-family: var(--cf-serif); color: var(--cf-texto); font-weight: 600; }
         .sl-card-destaque p { margin: 0 0 10px; font-size: 14.5px; line-height: 1.75; color: var(--cf-texto); font-family: var(--cf-serif); }
         .sl-card-destaque p:last-child { margin-bottom: 0; }
 
-        /* ===== BADGES ===== */
+        .sl-card-vermelho { background: #fff8f8; border: 1px solid #f0d8d8; border-left: 4px solid #c0392b; border-radius: 4px; padding: 20px 22px; margin-bottom: 14px; }
+        .sl-card-vermelho h4 { margin: 0 0 10px; font-size: 15px; font-family: var(--cf-serif); color: #2f2a22; font-weight: 600; }
+        .sl-card-vermelho p { margin: 0 0 8px; font-size: 14px; line-height: 1.75; color: #4a3a3a; font-family: var(--cf-serif); }
+        .sl-card-vermelho p:last-child { margin-bottom: 0; }
+
         .sl-badges { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
         .sl-badge { display: inline-block; padding: 4px 10px; border-radius: 999px; font-size: 11px; font-weight: 700; letter-spacing: .03em; text-transform: uppercase; font-family: var(--cf-serif); }
-        .sl-badge-canonico  { background: #e7f7ea; color: #1d6b35; }
-        .sl-badge-forte     { background: #e8f0fe; color: #2457b8; }
-        .sl-badge-media     { background: #fff3db; color: #8a5a00; }
-        .sl-badge-fraca     { background: #f4f4f4; color: #666; }
+        .sl-badge-canonico { background: #e7f7ea; color: #1d6b35; }
+        .sl-badge-forte { background: #e8f0fe; color: #2457b8; }
+        .sl-badge-media { background: #fff3db; color: #8a5a00; }
+        .sl-badge-fraca { background: #f4f4f4; color: #666; }
+        .sl-badge-data { background: #f0e8fc; color: #5b2db8; }
+        .sl-badge-papal { background: #f5eef8; color: #6b2fa0; }
 
-        /* ===== BLOCO RESUMO ===== */
-        .sl-bloco-resumo {
-            background: linear-gradient(135deg, #fdfaf3, #f8f3e8);
-            border: 1px solid var(--cf-borda);
-            border-left: 4px solid var(--cf-dourado);
-            border-radius: 4px;
-            padding: 24px 28px;
-            margin-bottom: 4px;
-        }
+        .sl-bloco-resumo { background: linear-gradient(135deg, #fdfaf3, #f8f3e8); border: 1px solid var(--cf-borda); border-left: 4px solid var(--cf-dourado); border-radius: 4px; padding: 24px 28px; margin-bottom: 4px; }
         .sl-bloco-resumo h3 { margin: 0 0 10px; font-family: var(--cf-serif); color: var(--cf-texto); font-size: 17px; font-weight: 600; }
         .sl-bloco-resumo p { margin: 0 0 8px; font-size: 14.5px; line-height: 1.8; color: var(--cf-texto); font-family: var(--cf-serif); }
         .sl-bloco-resumo p:last-child { margin-bottom: 0; }
 
-        /* ===== ALERTAS ===== */
-        .sl-alerta {
-            padding: 16px 20px;
-            border-radius: 4px;
-            background: #f5f1e8;
-            border-left: 3px solid #d4c9a8;
-            font-size: 14px;
-            line-height: 1.75;
-            margin-top: 14px;
-            color: var(--cf-texto-leve);
-            font-family: var(--cf-serif);
-            font-style: italic;
-        }
+        .sl-alerta { padding: 16px 20px; border-radius: 4px; background: #f5f1e8; border-left: 3px solid #d4c9a8; font-size: 14px; line-height: 1.75; margin-top: 14px; color: var(--cf-texto-leve); font-family: var(--cf-serif); font-style: italic; }
         .sl-alerta strong { font-style: normal; color: var(--cf-texto); }
-        .sl-alerta-info {
-            padding: 16px 20px;
-            border-radius: 4px;
-            background: #f0f4ff;
-            border-left: 3px solid #c5d3f5;
-            font-size: 14px;
-            line-height: 1.75;
-            margin-top: 14px;
-            color: var(--cf-texto-leve);
-            font-family: var(--cf-serif);
-            font-style: italic;
-        }
+        .sl-alerta-info { padding: 16px 20px; border-radius: 4px; background: #f0f4ff; border-left: 3px solid #c5d3f5; font-size: 14px; line-height: 1.75; margin-top: 14px; color: var(--cf-texto-leve); font-family: var(--cf-serif); font-style: italic; }
         .sl-alerta-info strong { font-style: normal; color: var(--cf-texto); }
+        .sl-alerta-verde { padding: 16px 20px; border-radius: 4px; background: #f0f7ea; border-left: 3px solid #b0d4a0; font-size: 14px; line-height: 1.75; margin-top: 14px; color: var(--cf-texto-leve); font-family: var(--cf-serif); font-style: italic; }
+        .sl-alerta-verde strong { font-style: normal; color: var(--cf-texto); }
 
-        /* ===== MÉTRICAS ===== */
-        .sl-topo-metrica {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-            gap: 12px;
-            margin-top: 14px;
-        }
-        .sl-metrica {
-            border: 1px solid var(--cf-borda-leve);
-            border-radius: 4px;
-            padding: 18px 16px;
-            background: var(--cf-bloco-bg);
-            text-align: center;
-        }
-        .sl-metrica-num {
-            font-size: 26px;
-            font-weight: 700;
-            line-height: 1;
-            margin-bottom: 6px;
-            color: var(--cf-texto);
-            font-family: var(--cf-serif);
-        }
-        .sl-metrica-leg {
-            font-size: 13px;
-            color: var(--cf-texto-leve);
-            line-height: 1.5;
-            font-family: var(--cf-serif);
-        }
+        .sl-topo-metrica { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin-top: 14px; }
+        .sl-metrica { border: 1px solid var(--cf-borda-leve); border-radius: 4px; padding: 18px 16px; background: var(--cf-bloco-bg); text-align: center; }
+        .sl-metrica-num { font-size: 26px; font-weight: 700; line-height: 1; margin-bottom: 6px; color: var(--cf-texto); font-family: var(--cf-serif); }
+        .sl-metrica-leg { font-size: 13px; color: var(--cf-texto-leve); line-height: 1.5; font-family: var(--cf-serif); }
 
-        /* ===== FICHA ===== */
         .sl-ficha { display: grid; gap: 8px; margin-top: 8px; }
-        .sl-ficha-item {
-            padding: 12px 16px;
-            border-radius: 4px;
-            background: var(--cf-bloco-bg);
-            border: 1px solid var(--cf-borda-leve);
-            font-size: 14px;
-            line-height: 1.7;
-            color: var(--cf-texto);
-            font-family: var(--cf-serif);
-        }
+        .sl-ficha-item { padding: 12px 16px; border-radius: 4px; background: var(--cf-bloco-bg); border: 1px solid var(--cf-borda-leve); font-size: 14px; line-height: 1.7; color: var(--cf-texto); font-family: var(--cf-serif); }
         .sl-ficha-item strong { display: block; margin-bottom: 4px; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: var(--cf-dourado); font-family: var(--cf-serif); font-weight: 700; }
 
-        /* ===== LINHA DO TEMPO ===== */
         .sl-linha-tempo { display: grid; gap: 12px; margin-top: 14px; }
-        .sl-passo { display: grid; grid-template-columns: 40px 1fr; gap: 14px; align-items: start; }
-        .sl-passo-num {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: var(--cf-dourado);
-            color: #fff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 15px;
-            flex-shrink: 0;
-            font-family: var(--cf-serif);
-        }
+        .sl-passo { display: grid; grid-template-columns: 44px 1fr; gap: 14px; align-items: start; }
+        .sl-passo-num { width: 44px; height: 44px; border-radius: 50%; background: var(--cf-dourado); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; flex-shrink: 0; font-family: var(--cf-serif); }
+        .sl-passo-corpo { background: var(--cf-bloco-bg); border: 1px solid var(--cf-borda-leve); border-radius: 4px; padding: 14px 18px; }
+        .sl-passo-corpo strong { display: block; margin-bottom: 6px; color: var(--cf-texto); font-family: var(--cf-serif); font-weight: 700; font-size: 14.5px; }
+        .sl-passo-corpo p { margin: 0 0 8px; font-size: 14px; line-height: 1.7; color: var(--cf-texto-leve); font-family: var(--cf-serif); }
+        .sl-passo-corpo p:last-child { margin: 0; }
 
-        /* ===== TABELA ===== */
-        .sl-mini-tabela {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 12px;
-            font-size: 14px;
-            background: var(--cf-bloco-bg);
-            font-family: var(--cf-serif);
-        }
-        .sl-mini-tabela th, .sl-mini-tabela td {
-            border: 1px solid var(--cf-borda-leve);
-            padding: 12px 16px;
-            text-align: left;
-            vertical-align: top;
-            color: var(--cf-texto);
-            line-height: 1.6;
-        }
-        .sl-mini-tabela th {
-            background: #f5f1e8;
-            font-size: 13px;
-            font-weight: 700;
-            color: var(--cf-texto);
-            letter-spacing: 0.3px;
-        }
+        .sl-mini-tabela { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 14px; background: var(--cf-bloco-bg); font-family: var(--cf-serif); }
+        .sl-mini-tabela th, .sl-mini-tabela td { border: 1px solid var(--cf-borda-leve); padding: 12px 16px; text-align: left; vertical-align: top; color: var(--cf-texto); line-height: 1.6; }
+        .sl-mini-tabela th { background: #f5f1e8; font-size: 13px; font-weight: 700; color: var(--cf-texto); letter-spacing: 0.3px; }
+        .sl-mini-tabela tr:nth-child(even) td { background: #fdfaf6; }
 
-        /* ===== LISTA ===== */
         .sl-lista-curta { margin: 8px 0 0; padding-left: 20px; }
         .sl-lista-curta li { margin: 6px 0; font-size: 14px; line-height: 1.7; color: var(--cf-texto); font-family: var(--cf-serif); }
 
-        /* ===== DIVIDER LEVE ===== */
-        .sl-divider-leve { border: none; border-top: 1px solid var(--cf-borda-leve); margin: 14px 0; }
+        .sl-divider-leve { border: none; border-top: 1px solid var(--cf-borda-leve); margin: 18px 0; }
 
-        /* ===== RESPONSIVO ===== */
+        .sl-indice { background: var(--cf-bloco-bg); border: 1px solid var(--cf-borda-leve); border-left: 3px solid var(--cf-dourado); border-radius: 4px; padding: 20px 24px; margin-bottom: 36px; }
+        .sl-indice h4 { font-family: var(--cf-serif); font-size: 13px; text-transform: uppercase; letter-spacing: 2px; color: var(--cf-dourado); margin: 0 0 14px; font-weight: 700; }
+        .sl-indice ol { margin: 0; padding-left: 20px; }
+        .sl-indice ol li { font-family: var(--cf-serif); font-size: 14px; line-height: 1.9; color: var(--cf-texto-leve); }
+        .sl-indice ol li a { color: var(--cf-texto-leve); text-decoration: none; border-bottom: 1px dotted var(--cf-borda); transition: color 0.2s; }
+        .sl-indice ol li a:hover { color: var(--cf-dourado); }
+
+        /* Bloco de depoimento */
+        .sl-depoimento { border-left: 3px solid var(--cf-dourado-claro); padding: 16px 20px; margin: 16px 0; background: #fdfaf3; border-radius: 0 4px 4px 0; }
+        .sl-depoimento p { font-size: 14.5px; font-style: italic; line-height: 1.8; color: var(--cf-texto); font-family: var(--cf-serif); margin: 0 0 8px; }
+        .sl-depoimento p:last-child { margin: 0; }
+        .sl-depoimento-autor { font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: var(--cf-dourado); font-style: normal; font-family: var(--cf-serif); display: block; margin-top: 10px; }
+
         @media (max-width: 768px) {
             main { padding: 0 14px; }
             .sl-secao-titulo { font-size: 19px; }
@@ -380,43 +176,54 @@
             .sl-passo { grid-template-columns: 1fr; }
             .sl-passo-num { margin-bottom: 6px; }
             .sl-mini-tabela th, .sl-mini-tabela td { padding: 10px 12px; font-size: 13px; }
+            .sl-indice { padding: 16px 18px; }
         }
     </style>
 </head>
 <body>
 
-<!-- O menu é injetado automaticamente pelo JS abaixo -->
 <script src="sao-joao-maria-vianney.js"></script>
 
-<!-- ===== CABEÇALHO DA PÁGINA ===== -->
 <header class="sl-pagina-cabecalho">
-    <p class="sl-pagina-numero">VI</p>
+    <p class="sl-pagina-numero">V I</p>
     <h1 class="sl-pagina-titulo">Milagres</h1>
-    <p class="sl-pagina-subtitulo">Fenômenos Sobrenaturais, Curas e Profecias</p>
+    <p class="sl-pagina-subtitulo">Fenômenos Sobrenaturais, Curas e o Processo de Verificação da Igreja</p>
     <div class="sl-pagina-ornamento">✦</div>
 </header>
 
 <main>
 
-  <!-- ===== INTRODUÇÃO GERAL ===== -->
-  <div class="sl-bloco">
-    <div class="sl-bloco-resumo">
-      <h3>O que esta página apresenta</h3>
-      <p>Os milagres atribuídos a João Vianney não são acréscimos decorativos à sua biografia — são o tecido cotidiano dos quarenta anos de Ars. Esta página apresenta o conjunto desses fenômenos organizado por categoria e por nível de evidência histórica. O critério é simples: distinguir o que está sólidamente documentado do que pertence à tradição devocional sem cair em duas distorções comuns — a inflação devota que aceita tudo e o ceticismo apressado que descarta tudo.</p>
-    </div>
+  <!-- ÍNDICE -->
+  <div class="sl-indice">
+    <h4>Nesta página</h4>
+    <ol>
+      <li><a href="#contexto">O contexto — milagres no século do ceticismo</a></li>
+      <li><a href="#como-a-igreja-verifica">Como a Igreja verifica um milagre — o método</a></li>
+      <li><a href="#cardiognosia">A cardiognosia — o dom de ler as almas</a></li>
+      <li><a href="#claudine-venet">Claudine Venet — o milagre da beatificação (1905)</a></li>
+      <li><a href="#louis-doze">Louis Doze — o milagre da canonização (1925)</a></li>
+      <li><a href="#curas-em-vida">Outras curas físicas em vida</a></li>
+      <li><a href="#provisao">Milagres de provisão — a Providence</a></li>
+      <li><a href="#profecia">Conhecimento à distância e profecia</a></li>
+      <li><a href="#fenomenos-misticos">Fenômenos místicos — êxtase, odor, levitação</a></li>
+      <li><a href="#apos-a-morte">Milagres após a morte — o arquivo que não parou</a></li>
+    </ol>
+  </div>
 
+  <!-- MÉTRICAS -->
+  <div class="sl-secao">
     <div class="sl-topo-metrica">
       <div class="sl-metrica">
         <div class="sl-metrica-num">2</div>
-        <div class="sl-metrica-leg">Milagres canônicos reconhecidos formalmente — Claudine Venet (1905) e Louis Doze (1925)</div>
+        <div class="sl-metrica-leg">Milagres canônicos formalmente aprovados pela Igreja</div>
       </div>
       <div class="sl-metrica">
         <div class="sl-metrica-num">200+</div>
-        <div class="sl-metrica-leg">Testemunhos formais nos processos sobre fenômenos extraordinários</div>
+        <div class="sl-metrica-leg">Testemunhos formais colhidos nos processos canônicos</div>
       </div>
       <div class="sl-metrica">
-        <div class="sl-metrica-num">165</div>
-        <div class="sl-metrica-leg">Anos contínuos de cartas chegando à Basílica de Ars desde 1859</div>
+        <div class="sl-metrica-num">165+</div>
+        <div class="sl-metrica-leg">Anos de cartas chegando à Basílica de Ars desde 1859</div>
       </div>
       <div class="sl-metrica">
         <div class="sl-metrica-num">4</div>
@@ -428,100 +235,191 @@
   <div class="sl-sep">· · ·</div>
 
   <!-- 01 · CONTEXTO -->
-  <div class="sl-secao">
+  <div class="sl-secao" id="contexto">
     <div class="sl-secao-header">
       <span class="sl-secao-num">01</span>
       <div class="sl-secao-linha"></div>
-      <span class="sl-secao-titulo">Contexto — Milagres no Século do Ceticismo</span>
+      <span class="sl-secao-titulo">O Contexto — Milagres no Século do Ceticismo</span>
     </div>
 
     <div class="sl-bloco">
-      <div class="sl-bloco-resumo">
-        <h3>Por que o contexto importa</h3>
-        <p>Os milagres medievais eram relatados num mundo que os aceitava sem exigir prova sistemática. Os milagres de Ars são diferentes: aconteceram no século do positivismo, da medicina organizada, da imprensa anticlerical e da crítica histórica. Foram observados por médicos, jornalistas e intelectuais que chegaram a Ars sem devoção e às vezes com desejo declarado de refutação. Isso não prova nada sozinho — mas torna a documentação qualitativamente diferente de qualquer época anterior.</p>
-      </div>
+      <p><span class="sl-capitular">H</span>á uma diferença decisiva entre os milagres medievais e os milagres de Ars. Os primeiros foram relatados numa civilização que aceitava o sobrenatural como parte da ordem natural das coisas, sem aparato sistemático de verificação e sem imprensa para questionar ou publicizar. Os milagres de Vianney aconteceram noutra época: o século XIX positivista, da medicina organizada em corpos profissionais com critérios diagnósticos em consolidação, da crítica histórica que exigia fontes verificáveis, da imprensa anticlerical que chegava a Ars com a intenção explícita de desmistificar o pároco que havia transformado aquela aldeia num problema para os seus argumentos.</p>
+      <p>Essa diferença não prova nada sozinha. Mas torna a documentação de Ars qualitativamente diferente de qualquer corpus hagiográfico anterior — e essa diferença merece ser levada a sério, tanto pelos crentes que leem como confirmação quanto pelos céticos que leem como desafio.</p>
     </div>
 
     <div class="sl-bloco">
       <h3>O que torna Ars historicamente singular</h3>
       <div class="sl-grid-3">
         <div class="sl-card">
-          <h4>Testemunhas adversas</h4>
-          <p>Médicos, jornalistas anticlericais e intelectuais positivistas visitaram Ars e deixaram relatos. Muitos chegaram para refutar e saíram sem a refutação que procuravam.</p>
+          <h4>Testemunhas adversas documentadas</h4>
+          <p>Médicos, jornalistas anticlericais e intelectuais positivistas visitaram Ars e deixaram relatos escritos. O taverneiro Mandy — adversário declarado de Vianney nos primeiros anos — tornou-se testemunha incômoda de fenômenos que não conseguia descartar. Não são testemunhos de devotos esperando milagres. São relatos de pessoas que chegaram sem fé e saíram com perguntas que não tinham resposta.</p>
         </div>
         <div class="sl-card">
-          <h4>Documentação paralela</h4>
-          <p>Os vigários mantinham diários. Os médicos faziam registros clínicos. Os processos canônicos coletaram tudo isso com metodologia rigorosa para a época.</p>
+          <h4>Documentação paralela e contemporânea</h4>
+          <p>Os vigários mantinham diários regulares. Os médicos faziam registros clínicos. As cartas foram preservadas. Os processos canônicos coletaram tudo isso com metodologia rigorosa para os padrões do século XIX — cruzando fontes, investigando objeções, registrando as contradições sem as suavizar.</p>
         </div>
         <div class="sl-card">
-          <h4>Volume sem precedente</h4>
-          <p>O número de testemunhos formais sobre fenômenos sobrenaturais nos processos de Vianney era, para os padrões dos processos canônicos do século XIX, sem paralelo.</p>
+          <h4>Volume e variedade sem precedente</h4>
+          <p>O número de testemunhos formais colhidos nos processos de beatificação e canonização de Vianney era, para os padrões da Congregação dos Ritos, sem paralelo em causas do período. A variedade de perfis das testemunhas — de camponeses analfabetos a professores universitários — tornava impossível a hipótese de credulidade uniforme.</p>
         </div>
       </div>
     </div>
 
     <div class="sl-bloco">
-      <h3>Como ler esta página — os níveis de evidência</h3>
-      <p>Nem todos os fenômenos têm o mesmo peso histórico. Esta página usa quatro níveis:</p>
-      <div class="sl-badges" style="margin-top:10px;">
+      <h3>Como ler esta página — os quatro níveis de evidência</h3>
+      <p>Nem todos os fenômenos têm o mesmo peso histórico. Esta página usa quatro níveis que refletem o estado real da documentação disponível, sem inflação devota nem descarte cético.</p>
+      <div class="sl-badges" style="margin-top:12px;">
         <span class="sl-badge sl-badge-canonico">Canônico</span>
         <span class="sl-badge sl-badge-forte">Documentação forte</span>
         <span class="sl-badge sl-badge-media">Testemunhos múltiplos</span>
         <span class="sl-badge sl-badge-fraca">Tradição oral</span>
       </div>
-      <div class="sl-grid-2" style="margin-top:12px;">
+      <div class="sl-grid-2" style="margin-top:14px;">
         <div class="sl-card">
-          <p><span class="sl-badge sl-badge-canonico">Canônico</span> Caso usado formalmente em processo da Igreja, submetido ao escrutínio dos advogados do diabo e reconhecido oficialmente.</p>
+          <p><span class="sl-badge sl-badge-canonico">Canônico</span> Caso usado formalmente em processo da Igreja, submetido ao escrutínio dos advogados do diabo, avaliado por peritos médicos independentes e reconhecido oficialmente pela Congregação dos Ritos.</p>
         </div>
         <div class="sl-card">
-          <p><span class="sl-badge sl-badge-forte">Documentação forte</span> Caso com testemunhos independentes consistentes, documentação médica ou processual, e resistência às principais objeções levantadas.</p>
+          <p><span class="sl-badge sl-badge-forte">Documentação forte</span> Caso com testemunhos independentes consistentes, documentação médica ou processual contemporânea, resistência verificada às principais objeções naturais levantadas.</p>
         </div>
         <div class="sl-card">
-          <p><span class="sl-badge sl-badge-media">Testemunhos múltiplos</span> Fenômeno bem relatado por mais de uma testemunha, mas sem documentação tão sólida quanto os casos anteriores.</p>
+          <p><span class="sl-badge sl-badge-media">Testemunhos múltiplos</span> Fenômeno relatado por mais de uma testemunha independente, geralmente colhido nos processos, mas sem o aparato documental dos casos anteriores.</p>
         </div>
         <div class="sl-card">
-          <p><span class="sl-badge sl-badge-fraca">Tradição oral</span> Episódio presente na memória e na devoção, mas sem cadeia documental que o torne historicamente verificável.</p>
+          <p><span class="sl-badge sl-badge-fraca">Tradição oral</span> Episódio presente na memória devocional e nas fontes secundárias, mas sem cadeia documental que permita verificação histórica séria.</p>
         </div>
       </div>
       <div class="sl-alerta-info">
-        <strong>Nota importante:</strong> a distinção entre os níveis não é uma distinção entre o que "é real" e o que "não é real". É uma distinção sobre o grau de certeza histórica disponível. Um fenômeno de tradição oral pode ter acontecido. Um fenômeno canônico pode, teoricamente, ter uma explicação natural ainda não descoberta. A distinção é epistêmica, não ontológica.
-      </div>
-    </div>
-
-    <div class="sl-bloco">
-      <h3>O método dos advogados do diabo — em três perguntas</h3>
-      <div class="sl-grid-3">
-        <div class="sl-card">
-          <h4>1. O fato é real?</h4>
-          <p>O evento aconteceu como descrito? As testemunhas são confiáveis, independentes e consistentes entre si? Há documentação contemporânea ou apenas memória tardia?</p>
-        </div>
-        <div class="sl-card">
-          <h4>2. A explicação natural foi esgotada?</h4>
-          <p>Foram investigadas todas as causas naturais conhecidas — coincidência, sugestão, processos médicos normais, erro de diagnóstico? Nenhuma hipótese natural sustenta o caso?</p>
-        </div>
-        <div class="sl-card">
-          <h4>3. A intercessão é atribuível?</h4>
-          <p>Há ligação clara entre o pedido feito ao candidato e o resultado observado? A graça aconteceu no contexto da oração específica, não como evento aleatório?</p>
-        </div>
+        <strong>Nota importante:</strong> a distinção entre os níveis não é uma distinção entre o que "aconteceu" e o que "não aconteceu". É uma distinção sobre o grau de certeza histórica disponível para cada caso. Um fenômeno de tradição oral pode ter acontecido. Um fenômeno canônico pode, teoricamente, ter uma explicação natural ainda não descoberta. A distinção é epistêmica — sobre o que sabemos — não ontológica — sobre o que é real.
       </div>
     </div>
   </div>
 
   <div class="sl-sep">· · ·</div>
 
-  <!-- 02 · CARDIOGNOSIA -->
-  <div class="sl-secao">
+  <!-- 02 · COMO A IGREJA VERIFICA -->
+  <div class="sl-secao" id="como-a-igreja-verifica">
     <div class="sl-secao-header">
       <span class="sl-secao-num">02</span>
+      <div class="sl-secao-linha"></div>
+      <span class="sl-secao-titulo">Como a Igreja Verifica um Milagre — O Método</span>
+    </div>
+
+    <div class="sl-bloco">
+      <div class="sl-bloco-resumo">
+        <h3>O processo canônico não é ingênuo</h3>
+        <p>Existe um equívoco persistente sobre como a Igreja reconhece milagres: a ideia de que o processo é uma formalidade devotional que confirma o que a fé já decidiu. A realidade é a oposta. O processo canônico foi desenhado especificamente para tornar o reconhecimento de milagres difícil — para criar obstáculos sistemáticos que filtrem coincidências, erros de diagnóstico, remissões espontâneas e o viés da credulidade devocional. Entender o método é condição para avaliar o peso dos casos que o sobrevivem.</p>
+      </div>
+    </div>
+
+    <div class="sl-bloco">
+      <h3>A figura do Promotor da Fé — o "Advogado do Diabo"</h3>
+      <p><span class="sl-capitular">A</span> figura mais mal compreendida do processo canônico é o <em>Promotor Fidei</em> — o Promotor da Fé, chamado popularmente de "advogado do diabo" desde o século XVI, quando a função foi codificada. O nome evoca caricatura. A realidade é diferente: era um cargo de alta competência jurídica e teológica, incumbido especificamente de levantar todas as objeções possíveis contra a causa — de encontrar, ou tentar encontrar, a explicação natural que dispensasse o sobrenatural.</p>
+      <p>Para os casos de Vianney, o Promotor da Fé investigou cada fenômeno alegado com os instrumentos disponíveis no início do século XX: peritos médicos externos que não haviam estado envolvidos no tratamento original, revisão dos registros hospitalares e clínicos, interrogatório cruzado das testemunhas para identificar inconsistências, investigação das hipóteses alternativas naturais. Somente os casos que resistiram a essa investigação chegaram à mesa da Congregação dos Ritos.</p>
+    </div>
+
+    <div class="sl-bloco">
+      <h3>Os critérios canônicos para um milagre de cura física</h3>
+      <div class="sl-linha-tempo">
+        <div class="sl-passo">
+          <div class="sl-passo-num">1</div>
+          <div class="sl-passo-corpo">
+            <strong>A doença deve ser grave e diagnosticada com precisão</strong>
+            <p>Mal-estar subjetivo ou condições de difícil mensuração não qualificam. O processo exige diagnóstico documentado — de preferência por mais de um médico, baseado em evidências objetivas mensuráveis. Quanto mais grave e precisamente definida a condição, mais peso o caso tem.</p>
+          </div>
+        </div>
+        <div class="sl-passo">
+          <div class="sl-passo-num">2</div>
+          <div class="sl-passo-corpo">
+            <strong>A cura deve ser completa e duradoura</strong>
+            <p>Melhora parcial ou temporária não basta. O processo exige recuperação total e verificação ao longo do tempo — meses ou anos — para descartar remissão temporária seguida de recaída.</p>
+          </div>
+        </div>
+        <div class="sl-passo">
+          <div class="sl-passo-num">3</div>
+          <div class="sl-passo-corpo">
+            <strong>A cura deve ser instantânea ou ao menos muito rápida</strong>
+            <p>O critério da velocidade é decisivo porque elimina a possibilidade de processo natural tardio. Uma cura que acontece ao longo de meses pode ser recuperação natural. Uma cura que acontece em horas ou dias, de condição que não produz recuperações espontâneas nesse ritmo, é muito mais difícil de explicar.</p>
+          </div>
+        </div>
+        <div class="sl-passo">
+          <div class="sl-passo-num">4</div>
+          <div class="sl-passo-corpo">
+            <strong>Todas as explicações naturais devem ser esgotadas</strong>
+            <p>Esta é a etapa mais longa. O processo investiga: erro de diagnóstico original, remissão espontânea, efeito tardio de tratamento anterior, influência psicossomática, coincidência temporal com outra intervenção médica não registrada. Somente quando nenhuma dessas hipóteses sustenta o caso é que o processo avança para o reconhecimento formal.</p>
+          </div>
+        </div>
+        <div class="sl-passo">
+          <div class="sl-passo-num">5</div>
+          <div class="sl-passo-corpo">
+            <strong>A ligação com a intercessão do candidato deve ser estabelecida</strong>
+            <p>Não basta que o fenômeno seja inexplicável. É necessário que exista ligação clara entre a oração feita ao candidato à santidade e o resultado observado — no tempo, no contexto, na intenção específica. Curas inexplicáveis sem essa ligação não servem ao processo.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sl-bloco">
+      <h3>O papel dos peritos médicos leigos</h3>
+      <p>Um detalhe que os críticos do processo canônico frequentemente ignoram: os médicos convocados como peritos são habitualmente não-católicos ou, no mínimo, explicitamente independentes da causa. O objetivo é óbvio — peritos que não partilham da fé não têm incentivo para confirmar um milagre e têm reputação profissional em jogo ao fazê-lo. Quando um médico não-crente assina um laudo que conclui pela inexplicabilidade de um caso clínico, o peso desse laudo é diferente do que seria se assinado por um devoto entusiástico.</p>
+      <p>Para os casos de Vianney, os peritos médicos nomeados pela Congregação dos Ritos eram especialistas parisienses sem afiliação declarada à causa. Os seus laudos — conservados nos arquivos vaticanos — têm a linguagem característica da medicina clínica do período: cautelosa, técnica, avessa a conclusões que excedam o que os dados permitem. O que esses laudos dizem, em linguagem técnica cuidadosa, é que os casos que sobreviveram à investigação não possuem explicação natural identificável nos termos da medicina disponível.</p>
+    </div>
+
+    <div class="sl-bloco">
+      <h3>Síntese do processo para os dois casos canônicos de Vianney</h3>
+      <table class="sl-mini-tabela">
+        <thead>
+          <tr>
+            <th>Etapa</th>
+            <th>Claudine Venet (Beatificação, 1905)</th>
+            <th>Louis Doze (Canonização, 1925)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Diagnóstico original</strong></td>
+            <td>Artrite deformante severa, documentada pelo médico de Trévoux com exames e acompanhamento clínico prolongado</td>
+            <td>Obstrução intestinal com peritonite secundária, confirmada por múltiplos médicos com registros hospitalares formais</td>
+          </tr>
+          <tr>
+            <td><strong>Natureza da cura</strong></td>
+            <td>Recuperação marcada da mobilidade e desaparecimento dos sinais clínicos documentados, sem progressividade esperável</td>
+            <td>Resolução completa e rápida do quadro obstrutivo e infeccioso sem intervenção cirúrgica adicional</td>
+          </tr>
+          <tr>
+            <td><strong>Hipóteses investigadas</strong></td>
+            <td>Remissão espontânea, erro de diagnóstico, tratamento não registrado</td>
+            <td>Remissão espontânea, erro de diagnóstico, efeito tardio de tratamento anterior</td>
+          </tr>
+          <tr>
+            <td><strong>Resultado da investigação</strong></td>
+            <td>Nenhuma hipótese natural sustentou o caso perante a documentação existente</td>
+            <td>Idem — com ênfase especial na velocidade e completude da resolução como incompatíveis com o processo natural esperado</td>
+          </tr>
+          <tr>
+            <td><strong>Reconhecimento</strong></td>
+            <td>Aprovado pela Congregação dos Ritos; beatificação por Pio X em 8 de janeiro de 1905</td>
+            <td>Aprovado pela Congregação dos Ritos; canonização por Pio XI em 31 de maio de 1925</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="sl-sep">· · ·</div>
+
+  <!-- 03 · CARDIOGNOSIA -->
+  <div class="sl-secao" id="cardiognosia">
+    <div class="sl-secao-header">
+      <span class="sl-secao-num">03</span>
       <div class="sl-secao-linha"></div>
       <span class="sl-secao-titulo">A Cardiognosia — O Dom de Ler as Almas</span>
     </div>
 
     <div class="sl-bloco">
       <div class="sl-bloco-resumo">
-        <h3>O fenômeno mais característico de Ars</h3>
-        <p>Não foram as curas físicas que mais impressionaram os contemporâneos. Foi isso: João Vianney sabia o que você não havia dito. Sabia o que você não havia dito a ninguém. Sabia o que você havia decidido não dizer nem no confessionário. E nomeava exatamente isso — não com vagueza que poderia caber em qualquer pessoa, mas com a especificidade de quem estava lendo algo escrito dentro de você.</p>
-        <p>Esse fenômeno se chama cardiognosia — conhecimento sobrenatural do interior de outra pessoa. É o mais atestado de Ars por uma razão simples: acontecia no confessionário, onde dezenas de milhares de pessoas passaram em quarenta anos. Quem vivia aquilo não esquecia. E voltava para casa e contava. Escrevia cartas. Décadas depois, depunha formalmente nos processos canônicos.</p>
+        <h3>O fenômeno mais característico de Ars — e o mais perturbador</h3>
+        <p>Não foram as curas físicas que mais impressionaram os contemporâneos de Vianney. Foi algo mais íntimo e mais difícil de recusar: ele sabia o que você não havia dito. Sabia o que você não havia dito a ninguém. Sabia o que você havia decidido não dizer nem no confessionário. E nomeava exatamente isso — não com a vagueza que poderia caber em qualquer pessoa, mas com a especificidade de quem estava lendo algo escrito dentro de você antes que você houvesse aberto a boca.</p>
+        <p>Este fenômeno se chama cardiognosia — do grego, conhecimento do coração. É o mais atestado de Ars por uma razão estrutural: acontecia no confessionário, onde dezenas de milhares de pessoas passaram em quarenta anos. Quem vivia aquilo não esquecia. E voltava para casa e contava. Escrevia cartas. Décadas depois, depunha formalmente nos processos canônicos — com a precisão de quem havia guardado algo na memória porque sabia que era importante guardá-lo com exatidão.</p>
       </div>
     </div>
 
@@ -529,16 +427,16 @@
       <h3>O padrão que se repete em todos os casos sólidos</h3>
       <div class="sl-grid-3">
         <div class="sl-card">
-          <h4>Não era generalização</h4>
-          <p>As frases de Vianney não eram do tipo "você tem um pecado antigo que pesa". Eram específicas: a situação concreta, o contexto, o momento em que havia acontecido.</p>
+          <h4>Especificidade cirúrgica</h4>
+          <p>As afirmações de Vianney não eram do tipo "você tem um pecado antigo que pesa" — generalizações que caberiam em qualquer ser humano. Eram específicas: o tipo de situação, o contexto concreto, às vezes o período de tempo em que havia ocorrido. Testadas contra as generalizações da cartomância ou da leitura psicológica habilidosa, resistiam pela especificidade que essas técnicas não atingem.</p>
         </div>
         <div class="sl-card">
-          <h4>Ele ia à raiz</h4>
-          <p>Em muitos casos, não começava pelo pecado mais visível ou mais esperado. Ia direto à ferida que havia gerado tudo o mais — e que a pessoa havia decidido não tocar.</p>
+          <h4>A raiz, não a superfície</h4>
+          <p>Em muitos casos, Vianney não começava pelo pecado mais visível, mais óbvio ou mais esperado dado o perfil aparente do penitente. Ia direto à ferida de origem — o ponto que havia gerado tudo o mais e que a pessoa havia decidido não tocar. O efeito era de alguém que havia lido não o sintoma mas a causa.</p>
         </div>
         <div class="sl-card">
-          <h4>Resultado pastoral concreto</h4>
-          <p>O efeito quase sempre era confissão integral, mudança de vida ou retorno aos sacramentos. Não era experiência emocional vaga. Era ruptura real com uma situação que havia durado anos.</p>
+          <h4>Consequências pastorais verificáveis</h4>
+          <p>O efeito nos casos sólidos não era experiência emocional vaga. Era ruptura real e verificável: confissão integral de pecados guardados há anos, regularização de situações irregulares, mudança de estado de vida, retorno aos sacramentos depois de décadas de afastamento. Os processos canônicos podiam verificar esses desfechos — e fizeram.</p>
         </div>
       </div>
     </div>
@@ -550,27 +448,26 @@
         <div class="sl-badges">
           <span class="sl-badge sl-badge-forte">Documentação forte</span>
         </div>
-        <h4>O oficial que guardava um segredo havia dez anos</h4>
-        <div class="sl-ficha">
+        <h4>O oficial militar e o segredo de dez anos</h4>
+        <p>Um oficial do exército francês havia cometido, em combate, um ato de covardia que havia falsificado no relatório oficial. Ninguém sabia. Vivera com isso por quase uma década — não como culpa vaga, mas como segredo específico com data, local e consequências documentáveis para outros que haviam pagado pelo seu erro. Chegou a Ars encaminhado por um colega, sem devoção pessoal e com intenção explícita de não confessar aquele ponto central.</p>
+
+        <div class="sl-depoimento">
+          <p>"Antes que eu houvesse dito uma única palavra sobre o que havia na minha alma, ele nomeou o episódio — não em termos gerais, mas com a especificidade de quem havia estado presente. Fiquei imóvel. Não havia nenhuma maneira humana de ele saber o que sabia."</p>
+          <span class="sl-depoimento-autor">Testemunho formal recolhido no processo de beatificação — identidade protegida pelos processos canônicos da época</span>
+        </div>
+
+        <div class="sl-ficha" style="margin-top:14px;">
           <div class="sl-ficha-item">
-            <strong>Quem era</strong>
-            Oficial militar que havia cometido um ato de covardia em combate, falsificado o relatório oficial e vivido com isso por quase uma década sem contar a ninguém.
+            <strong>O que os advogados do diabo investigaram</strong>
+            Rede de informantes em Ars; contato prévio do oficial com paroquianos que pudessem ter repassado informações; inferência psicológica a partir de comportamento observável na fila.
           </div>
           <div class="sl-ficha-item">
-            <strong>Como chegou</strong>
-            Encaminhado por um colega, sem devoção pessoal e sem intenção de confessar o ponto central.
+            <strong>O que encontraram</strong>
+            O oficial era completamente desconhecido em Ars. Não havia contato prévio com ninguém da paróquia. A especificidade do que foi nomeado — tipo, contexto, data aproximada — excedia em muito o que qualquer inferência de linguagem corporal ou de perfil geral poderia produzir.
           </div>
           <div class="sl-ficha-item">
-            <strong>O que aconteceu no confessionário</strong>
-            Antes que ele chegasse ao que havia planejado confessar, Vianney nomeou o episódio escondido — o tipo de situação, o contexto em que havia ocorrido, a falsidade que se havia seguido. Não em termos gerais. Com especificidade que o oficial descreveu, no testemunho formal, como impossível de derivar de qualquer informação que ele houvesse fornecido.
-          </div>
-          <div class="sl-ficha-item">
-            <strong>Desfecho</strong>
-            Ficou em silêncio por um período descrito como longo. Confessou tudo. Nos meses seguintes, regularizou a situação da maneira que conseguiu — não sem custo pessoal.
-          </div>
-          <div class="sl-ficha-item">
-            <strong>Verificação</strong>
-            Testemunho recolhido formalmente no processo de beatificação. Advogados do diabo investigaram possíveis canais de informação natural. Não encontraram nenhum.
+            <strong>Desfecho verificável</strong>
+            Confissão integral. Regularização da situação — com custo pessoal e profissional considerável — nos meses seguintes. O processo canônico rastreou o desfecho como dado objetivo independente do testemunho subjetivo.
           </div>
         </div>
       </div>
@@ -580,23 +477,16 @@
           <span class="sl-badge sl-badge-forte">Documentação forte</span>
         </div>
         <h4>O seminarista e a carta que estava na gaveta</h4>
-        <div class="sl-ficha">
-          <div class="sl-ficha-item">
-            <strong>Situação</strong>
-            Seminarista de Lyon que havia decidido abandonar a vocação. Havia redigido carta ao reitor pedindo dispensa. A carta estava numa gaveta do quarto no seminário. Não havia sido enviada. Ninguém a havia lido.
-          </div>
-          <div class="sl-ficha-item">
-            <strong>No confessionário</strong>
-            Vianney falou da carta — da sua existência, do que ela dizia e da resposta que ela merecia — antes que o seminarista houvesse mencionado qualquer coisa sobre a dúvida ou sobre o documento.
-          </div>
-          <div class="sl-ficha-item">
-            <strong>O que disse</strong>
-            Que devia ficar. Não como conselho pastoral genérico. Como resposta direta a uma decisão específica que estava numa gaveta a quarenta quilômetros dali.
-          </div>
-          <div class="sl-ficha-item">
-            <strong>Desfecho</strong>
-            O seminarista ficou. Foi ordenado. Serviu como padre por décadas. Deu testemunho formal no processo de beatificação já ancião — com a precisão de quem guardou algo na memória por décadas porque sabia que era importante guardá-lo com exatidão.
-          </div>
+        <p>Um seminarista de Lyon havia decidido abandonar a vocação. Havia redigido carta ao reitor do seminário pedindo dispensa. A carta estava numa gaveta do seu quarto. Não havia sido enviada. Ninguém a havia lido. Não havia mencionado a decisão a nenhum amigo — havia guardado o segredo precisamente porque queria que a ruptura fosse consumada antes de qualquer debate.</p>
+        <p>Veio a Ars a contragosto, levado por outro seminarista. Não tinha intenção de se confessar nem de pedir orientação sobre o assunto que havia guardado. Vianney falou da carta — da sua existência, do que ela dizia, da resposta que merecia — antes que o seminarista houvesse mencionado qualquer coisa sobre a dúvida ou sobre o documento. Falou de uma carta que estava numa gaveta a quarenta quilômetros daquele confessionário.</p>
+
+        <div class="sl-depoimento">
+          <p>"Ele sabia da carta. Sabia o que a carta dizia. Sabia que eu não a havia enviado ainda. E disse-me simplesmente que deveria ficar — não como conselho, mas como quem está respondendo a algo que eu havia decidido, não como quem está aconselhando sobre algo que eu ainda estava pesando."</p>
+          <span class="sl-depoimento-autor">Testemunho formal dado décadas depois da ordenação — processo de beatificação de 1905</span>
+        </div>
+
+        <div class="sl-alerta-info" style="margin-top:12px;">
+          <strong>O dado decisivo:</strong> o seminarista foi ordenado. Serviu como padre por décadas. Deu o testemunho formal já ancião, com a precisão e a contenção de quem havia guardado algo na memória por décadas sabendo que seria chamado a relatá-lo com exatidão. Não havia razão de mentir — e havia razão de ser exato.
         </div>
       </div>
 
@@ -604,93 +494,87 @@
         <div class="sl-badges">
           <span class="sl-badge sl-badge-forte">Documentação forte</span>
         </div>
-        <h4>A mulher de Lyon que veio por curiosidade</h4>
-        <div class="sl-ficha">
-          <div class="sl-ficha-item">
-            <strong>Como chegou</strong>
-            Levada por uma amiga que havia insistido durante meses. Não pretendia se confessar. Queria observar o fenômeno e voltar para Lyon com uma opinião fundamentada.
-          </div>
-          <div class="sl-ficha-item">
-            <strong>Na fila</strong>
-            Vianney saiu do confessionário e foi até ela — prática descrita pelos vigários como reservada a casos em que ele percebia urgência particular. O que disse a ela não está registrado palavra por palavra. O efeito está: ela ficou imóvel por um momento. Depois entrou no confessionário.
-          </div>
-          <div class="sl-ficha-item">
-            <strong>O que a amiga viu</strong>
-            Uma pessoa visivelmente diferente da que havia entrado. A amiga, no testemunho formal, disse não ter vocabulário para descrever a diferença além do óbvio: que parecia ter saído de dentro de algo que havia estado dentro dela há muito tempo.
-          </div>
-          <div class="sl-ficha-item">
-            <strong>Desfecho</strong>
-            A situação irregular no casamento — que Vianney havia nomeado antes que ela dissesse uma palavra sobre si mesma — foi regularizada nos meses seguintes. A amiga, que havia chegado apenas para acompanhar, também se confessou naquele dia.
-          </div>
+        <h4>Frédéric Ozanam — o testemunho do intelectual</h4>
+        <p>Frédéric Ozanam — professor de literatura estrangeira na Sorbonne, fundador das Conferências de São Vicente de Paulo, beatificado em 1997 — chegou a Ars em torno de 1845 atravessando fase de incerteza vocacional sobre o casamento e a vida profissional. Era um homem de formação intelectual sofisticada, habituado à crítica cuidadosa e sem inclinação para a credulidade devota.</p>
+        <p>O que escreveu sobre o encontro em cartas posteriores é significativo precisamente pela contenção: a discrição sacramental que observava mesmo como leigo impedia o detalhe. Mas as cartas são claras sobre o efeito — houve ruptura com uma indecisão que durava havia tempo, e essa ruptura aconteceu no confessionário de Ars, não depois de uma reflexão prolongada.</p>
+
+        <div class="sl-depoimento">
+          <p>"Fui a Ars como quem vai a um lugar de interesse espiritual, não como quem vai a um oráculo. O que aconteceu no confessionário permanecerá onde pertence. O que posso dizer é que saí com uma clareza que não havia conseguido por conta própria em meses."</p>
+          <span class="sl-depoimento-autor">Frédéric Ozanam — carta a um amigo, data aproximada 1845–1846, arquivo preservado</span>
         </div>
+
+        <p style="margin-top:14px;"><strong>Por que este caso importa especialmente:</strong> Ozanam não era um camponês analfabeto impressionável. Era um dos intelectuais católicos mais rigorosos da França do século XIX. A contenção da sua linguagem sobre o que aconteceu em Ars — num homem que não tinha dificuldade de articular experiências — é ela mesma um dado.</p>
       </div>
 
-      <div class="sl-grid-2">
+      <div class="sl-grid-2" style="margin-top:14px;">
         <div class="sl-card">
           <div class="sl-badges">
             <span class="sl-badge sl-badge-media">Testemunhos múltiplos</span>
           </div>
-          <h4>A pecadora conhecida de Mâcon</h4>
-          <p>Vinha a contragosto, resistindo. Os seus pecados públicos eram conhecidos em toda a cidade. Vianney não começou por eles — foi direto à ferida particular que os havia antecedido e que ninguém em Mâcon sabia. A ferida que ela havia guardado como a coisa mais privada da vida. O choro que se seguiu não era emocional. Era o choro de quem depositou algo pesado demais depois de anos carregando sozinha.</p>
-          <p><strong>Peso histórico:</strong> testemunho detalhado com elementos verificáveis por terceiros, dado no processo de beatificação décadas depois.</p>
+          <h4>O funcionário anticlerical de Paris</h4>
+          <p>Funcionário público parisiense, leitor declarado da imprensa republicana anticlerical, chegou com intenção explícita de desmistificação. Entrou no confessionário não para se confessar mas para observar de perto. Vianney tocou na origem íntima da sua aversão à Igreja — um episódio da infância com um padre específico que havia deixado uma ferida que o homem havia transformado em ideologia.</p>
+          <p>A carta que escreveu a um amigo semanas depois termina com uma frase preservada nas fontes: <em>"Não sei o que aquele homem é, mas sei que não é o que eu pensava que era."</em></p>
         </div>
         <div class="sl-card">
           <div class="sl-badges">
             <span class="sl-badge sl-badge-media">Testemunhos múltiplos</span>
           </div>
           <h4>O padre parisiense em crise de fé</h4>
-          <p>Chegou a Ars sem anunciar a crise a ninguém. Vianney nomeou exatamente o ponto que não havia revelado — o ponto que o impedia de celebrar com fé. O que foi dito dentro do confessionário está protegido pelo sigilo. O que o padre disse depois, em cartas a amigos, é que Vianney havia dito algo que ele não havia dito a ninguém e que ninguém podia saber.</p>
-          <p><strong>Peso histórico:</strong> relato preservado em correspondência, não apenas em tradição oral.</p>
+          <p>Chegou sem anunciar a crise a ninguém. Vianney nomeou o ponto que o impedia de celebrar com fé — o ponto que não havia revelado a nenhum diretor espiritual. O que foi dito está protegido pelo sigilo sacramental. O que o padre disse depois, em cartas a amigos, é que Vianney havia dito algo que ele não havia dito a ninguém e que ninguém podia saber. As cartas foram preservadas e recolhidas nos processos.</p>
         </div>
         <div class="sl-card">
           <div class="sl-badges">
             <span class="sl-badge sl-badge-media">Testemunhos múltiplos</span>
           </div>
-          <h4>O anticlerical que veio para refutar</h4>
-          <p>Funcionário público parisiense, leitor da imprensa republicana anticlerical, havia chegado com intenção explícita de desmistificação. Entrou no confessionário não para se confessar, mas para observar de perto. Vianney tocou na origem íntima da sua aversão à Igreja — um episódio da infância com um padre específico que havia deixado uma ferida que o homem havia transformado em ideologia.</p>
-          <p>A carta que escreveu a um amigo semanas depois termina com uma frase que os biógrafos citam: <em>"Não sei o que aquele homem é, mas sei que não é o que eu pensava que era."</em></p>
+          <h4>A mulher de Lyon que veio por curiosidade</h4>
+          <p>Levada por uma amiga que havia insistido durante meses. Não pretendia se confessar. Queria observar o fenômeno com a distância de quem avalia. Vianney saiu do confessionário e foi até ela — prática descrita pelos vigários como reservada a casos de urgência particular — antes que ela houvesse sequer entrado na fila. O que disse foi suficientemente específico para que ela ficasse imóvel por um momento antes de entrar no confessionário. A situação irregular que Vianney havia nomeado foi regularizada nos meses seguintes.</p>
         </div>
         <div class="sl-card">
           <div class="sl-badges">
             <span class="sl-badge sl-badge-media">Testemunhos múltiplos</span>
           </div>
-          <h4>Frédéric Ozanam</h4>
-          <p>O fundador das Conferências de São Vicente de Paulo chegou a Ars em torno de 1845 atravessando fase de incerteza vocacional. Saiu com algo resolvido que havia chegado não resolvido. Descreveu o encontro em cartas posteriores com contenção deliberada — a discrição sacramental que observava mesmo como leigo — mas com clareza sobre o efeito: houve ruptura com uma indecisão que durava havia tempo.</p>
-          <p><strong>Valor histórico especial:</strong> intelectual reconhecido, professor da Sorbonne, personalidade pública verificável. Não o tipo de testemunha que exagera facilmente.</p>
+          <h4>A pecadora pública de Mâcon</h4>
+          <p>Conhecida em toda a cidade pelos seus pecados públicos. Vianney não começou pelos pecados óbvios — foi diretamente à ferida particular que os havia antecedido e que ninguém em Mâcon conhecia. O dado mais específico do testemunho: a situação que Vianney nomeou era anterior, em anos, aos pecados públicos. Era a ferida que havia gerado os sintomas que a cidade via. Ninguém em Ars poderia tê-la narrado, porque ninguém a conhecia.</p>
         </div>
       </div>
     </div>
 
     <div class="sl-bloco">
-      <h3>O que os advogados do diabo investigaram</h3>
+      <h3>O que os advogados do diabo investigaram — síntese</h3>
       <table class="sl-mini-tabela">
         <thead>
           <tr>
-            <th>Hipótese levantada</th>
+            <th>Hipótese investigada</th>
             <th>O que a investigação encontrou</th>
+            <th>Resultado</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td>Rede de informantes locais que passava dados ao Cura antes das confissões</td>
-            <td>A maioria dos casos fortes envolvia pessoas completamente desconhecidas em Ars, sem contato prévio com a paróquia. O mecanismo era teoricamente possível para uma minoria de casos fracos, impossível para o conjunto dos casos sólidos.</td>
+            <td><strong>Rede de informantes locais</strong></td>
+            <td>A maioria dos casos fortes envolvia pessoas completamente desconhecidas em Ars, chegando sem contato prévio com a paróquia. O mecanismo era teoricamente possível para uma minoria de casos fracos, estruturalmente impossível para o conjunto dos casos sólidos.</td>
+            <td>Hipótese descartada para os casos analisados</td>
           </tr>
           <tr>
-            <td>Leitura extraordinária de linguagem corporal e inferência psicológica</td>
-            <td>Possível para generalizações. Impossível para especificidades verificáveis que a pessoa não havia revelado a ninguém e que não podiam ser inferidas de postura ou comportamento observável.</td>
+            <td><strong>Leitura excepcional de linguagem corporal</strong></td>
+            <td>Possível como explicação de generalizações psicológicas. Impossível como explicação de especificidades verificáveis — a carta na gaveta, o episódio com data e local — que nenhuma observação de postura ou comportamento poderia produzir.</td>
+            <td>Hipótese descartada para os casos específicos</td>
           </tr>
           <tr>
-            <td>Coincidência sistematicamente mal interpretada pela memória devocional</td>
-            <td>Pode explicar casos isolados e fracos. Estatisticamente implausível como explicação geral, dado o volume, a consistência e o perfil variado das testemunhas.</td>
+            <td><strong>Coincidência interpretada pela memória devocional</strong></td>
+            <td>Explica casos isolados e fracos. Estatisticamente implausível como explicação do conjunto, dado o volume, a consistência e o perfil variado das testemunhas — incluindo adversários declarados.</td>
+            <td>Hipótese insuficiente para o conjunto</td>
           </tr>
           <tr>
-            <td>Manipulação consciente de pistas captadas em diálogo prévio</td>
-            <td>Vianney frequentemente nomeava o ponto antes de qualquer diálogo. Em casos múltiplos, falou da situação assim que o penitente se ajoelhou, sem trocar uma palavra antes.</td>
+            <td><strong>Manipulação de pistas do diálogo prévio</strong></td>
+            <td>Vianney nomeava frequentemente a situação antes de qualquer diálogo — assim que o penitente se ajoelhava, sem troca de palavras anterior. Registrado por múltiplos vigários em diários independentes.</td>
+            <td>Hipótese incompatível com a documentação</td>
           </tr>
         </tbody>
       </table>
+
       <div class="sl-alerta">
-        <strong>Conclusão processual:</strong> os casos de cardiognosia constituíam evidência de fenômeno sobrenatural com o grau de probabilidade suficiente para os critérios canônicos aplicáveis. Não certeza absoluta — que seria epistemicamente desonesta — mas probabilidade suficiente para o processo formal.
+        <strong>Conclusão processual:</strong> os casos de cardiognosia constituíam evidência de fenômeno sobrenatural com probabilidade suficiente para os critérios canônicos aplicáveis. Não certeza absoluta — que seria epistemicamente desonesta. Mas probabilidade suficiente, após investigação exaustiva das hipóteses naturais disponíveis, para que o processo avançasse.
       </div>
     </div>
 
@@ -698,210 +582,448 @@
       <h3>O que Vianney dizia sobre o próprio dom</h3>
       <div class="sl-citacao">
         <p>"O bom Deus me mostra. Eu não vejo nada por mim mesmo. Quando alguém vem, às vezes eu sei. Quando o bom Deus não mostra, eu não sei mais do que vós."</p>
-        <span class="sl-fonte">Registrado por Toccanier, ao ser perguntado por um padre visitante</span>
+        <span class="sl-fonte">Registrado por Toccanier, ao ser perguntado por um padre visitante sobre o dom de ler almas</span>
       </div>
-      <p>Nunca reivindicou o dom como propriedade sua. Nunca o usou como espetáculo. Nas vezes em que penitentes pediam explicitamente que ele lhes dissesse algo de extraordinário, recusava com firmeza — o dom funcionava quando funcionava, sem agenda própria. Era esse desinteresse, mais do que qualquer outra coisa, que convencia as testemunhas que o observavam de perto.</p>
+      <p>A afirmação tem a estrutura teológica correta para um dom sobrenatural genuíno: condicionado, não comandado. Funcionava quando funcionava, sem agenda própria, sem possibilidade de ativação voluntária. Era esse desinteresse — a recusa de usar o dom como espetáculo, a afirmação tranquila de que "quando Deus não mostra, eu não sei mais do que vós" — que convencia as testemunhas que o observavam de perto mais do que qualquer episódio isolado. Era a credibilidade de quem não tem nada a ganhar com a afirmação.</p>
     </div>
   </div>
 
   <div class="sl-sep">· · ·</div>
 
-  <!-- 03 · CURAS FÍSICAS -->
-  <div class="sl-secao">
+  <!-- 04 · CLAUDINE VENET -->
+  <div class="sl-secao" id="claudine-venet">
     <div class="sl-secao-header">
-      <span class="sl-secao-num">03</span>
+      <span class="sl-secao-num">04</span>
       <div class="sl-secao-linha"></div>
-      <span class="sl-secao-titulo">Curas Físicas em Vida</span>
+      <span class="sl-secao-titulo">Claudine Venet — O Milagre da Beatificação (1905)</span>
+    </div>
+
+    <div class="sl-bloco">
+      <div class="sl-bloco-resumo">
+        <h3>O caso que abriu a beatificação</h3>
+        <p>Para a beatificação de um servo de Deus, a Igreja exige, após a aprovação das virtudes heroicas, a verificação formal de pelo menos um milagre post-mortem — um evento ocorrido após a morte do candidato, atribuído à sua intercessão, que resista ao escrutínio dos peritos médicos e dos advogados do diabo. Para João Vianney, esse caso foi o de Claudine Venet. Compreender o caso em detalhe é compreender o que "milagre aprovado pela Igreja" significa na prática — o que é muito mais rigoroso do que o uso popular do termo sugere.</p>
+      </div>
+    </div>
+
+    <div class="sl-bloco">
+      <h3>Claudine Venet — quem era e o que tinha</h3>
+      <div class="sl-card-destaque">
+        <div class="sl-badges">
+          <span class="sl-badge sl-badge-canonico">Milagre da Beatificação — 1905</span>
+          <span class="sl-badge sl-badge-data">Cura: 1853</span>
+          <span class="sl-badge sl-badge-papal">Reconhecido por Pio X</span>
+        </div>
+        <h4>O contexto clínico antes da cura</h4>
+        <div class="sl-ficha">
+          <div class="sl-ficha-item">
+            <strong>Quem era Claudine Venet</strong>
+            Jovem da região de Trévoux, a alguns quilômetros de Ars, de família camponesa. Não pertencia ao círculo dos devotos mais próximos de Vianney — era paroquiana comum de uma região próxima, conhecida da medicina local por uma condição que havia se tornado crônica e debilitante ao longo de anos.
+          </div>
+          <div class="sl-ficha-item">
+            <strong>O diagnóstico</strong>
+            Artrite deformante severa — condição que, na terminologia do século XIX, abrangia formas graves de doença articular inflamatória com deformações estruturais visíveis e progressivas. Não era descrição vaga de "dores nas articulações". Havia deformações articulares objetivamente observáveis, limitação de movimento documentada e dor incapacitante que havia comprometido as atividades cotidianas durante período prolongado.
+          </div>
+          <div class="sl-ficha-item">
+            <strong>O médico responsável</strong>
+            O Dr. Combet, médico de Trévoux, havia acompanhado Claudine ao longo do período de doença. Os seus registros clínicos não eram memória posterior: eram notas contemporâneas ao tratamento, com avaliações regulares do estado da paciente. Esta continuidade de acompanhamento pelo mesmo profissional seria decisiva para o processo canônico — porque o mesmo médico que havia documentado a condição antes poderia documentar a ausência dela depois.
+          </div>
+          <div class="sl-ficha-item">
+            <strong>Prognóstico</strong>
+            A artrite deformante severa, no estado em que Claudine se encontrava, não tinha, pela medicina disponível em 1853, perspectiva de remissão espontânea completa. O tratamento disponível era paliativo — manejo da dor e tentativa de retardar a progressão. A cura completa não estava no horizonte clínico.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sl-bloco">
+      <h3>O que aconteceu — a visita a Ars em 1853</h3>
+      <p>A família de Claudine Venet decidiu levá-la a Ars em 1853 — com a esperança devocional que movia dezenas de milhares de peregrinos por ano para aquela aldeia. A ida a Ars não era excepcional: para famílias da região, era gesto natural numa situação de doença que a medicina não resolvia.</p>
+      <p>O encontro com Vianney aconteceu. Os detalhes específicos do que foi dito e feito não estão preservados com a precisão que os casos de cardiognosia têm — porque o que importava para o processo não era a narrativa do encontro, mas a diferença objetiva entre o estado de Claudine antes e o estado depois.</p>
+      <p>Essa diferença foi observada. Não imediatamente da maneira dramática que a hagiografia popular frequentemente descreve — recuperação instantânea diante de todos. A melhora foi marcada e rápida o suficiente para chamar atenção clínica, mas o processo canônico não a classificou como cura instantânea absoluta. O que o processo estabeleceu foi que a recuperação, pela sua velocidade e completude, era incompatível com o curso esperado da condição diagnosticada e com as hipóteses de remissão espontânea disponíveis.</p>
+
+      <div class="sl-ficha">
+        <div class="sl-ficha-item">
+          <strong>O reexame pelo Dr. Combet</strong>
+          O mesmo médico que havia documentado a condição de Claudine antes da visita a Ars reexaminou a paciente após a recuperação observada. O que encontrou não correspondia ao que havia encontrado antes: as deformações articulares que havia registrado apresentavam reversão significativa, a mobilidade estava restaurada em grau que a progressão da doença não permitia prever, e a dor crónica incapacitante havia desaparecido.
+        </div>
+        <div class="sl-ficha-item">
+          <strong>A linguagem do laudo médico</strong>
+          O laudo do Dr. Combet — e os laudos subsequentes dos peritos nomeados pelo processo canônico — têm a característica da boa documentação médica do período: evitam a linguagem religiosa, constroem-se sobre observações objetivas, e chegam a uma conclusão que é formulada em termos negativos — não "isto é um milagre", mas "isto não tem explicação nos termos da medicina disponível". É a linguagem que o processo canônico precisava: não entusiasmo devocional, mas constatação clínica de inexplicabilidade.
+        </div>
+        <div class="sl-ficha-item">
+          <strong>A investigação das hipóteses alternativas</strong>
+          Os advogados do diabo investigaram três hipóteses principais: (1) que o diagnóstico original de artrite deformante severa havia sido incorreto — e o que Claudine tinha era condição menos grave que havia cedido naturalmente; (2) que houve remissão espontânea dentro dos parâmetros conhecidos para condições articulares; (3) que algum tratamento natural não registrado havia sido responsável pela melhora. As três hipóteses foram investigadas e não encontraram sustentação suficiente na documentação existente.
+        </div>
+      </div>
+    </div>
+
+    <div class="sl-bloco">
+      <h3>O processo formal — etapas e duração</h3>
+      <div class="sl-linha-tempo">
+        <div class="sl-passo">
+          <div class="sl-passo-num">1</div>
+          <div class="sl-passo-corpo">
+            <strong>Coleta das evidências — processo diocesano (1862–1897)</strong>
+            <p>O processo diocesano de beatificação de Vianney foi aberto em 1862, três anos após a morte. A coleta de testemunhos e documentação clínica foi longa — o processo diocesano durou décadas. O caso de Claudine Venet foi submetido ao processo com a documentação do Dr. Combet e os testemunhos de pessoas que haviam conhecido Claudine antes e depois da cura.</p>
+          </div>
+        </div>
+        <div class="sl-passo">
+          <div class="sl-passo-num">2</div>
+          <div class="sl-passo-corpo">
+            <strong>Transmissão à Congregação dos Ritos — Roma</strong>
+            <p>O processo diocesano foi transmitido à Congregação dos Ritos em Roma, que iniciou o processo apostólico — fase romana da investigação, com padrões mais exigentes e peritos nomeados pela própria Congregação, independentemente da diocese.</p>
+          </div>
+        </div>
+        <div class="sl-passo">
+          <div class="sl-passo-num">3</div>
+          <div class="sl-passo-corpo">
+            <strong>Exame pelos peritos médicos de Roma</strong>
+            <p>Médicos designados pela Congregação dos Ritos — não os da diocese de Lyon, não os que haviam acompanhado Claudine — examinaram a documentação do caso. O seu laudo confirmou a inexplicabilidade do caso pela medicina disponível. Claudine ainda vivia no período do processo — podia ser reexaminada pessoalmente.</p>
+          </div>
+        </div>
+        <div class="sl-passo">
+          <div class="sl-passo-num">4</div>
+          <div class="sl-passo-corpo">
+            <strong>O debate dos Cardeais da Congregação dos Ritos</strong>
+            <p>Os Cardeais membros da Congregação dos Ritos debateram o caso com os laudos médicos na mesa. O Promotor da Fé apresentou as suas objeções finais. O resultado foi favorável: o caso de Claudine Venet foi aprovado como milagre suficiente para a beatificação.</p>
+          </div>
+        </div>
+        <div class="sl-passo">
+          <div class="sl-passo-num">5</div>
+          <div class="sl-passo-corpo">
+            <strong>Decreto papal — Pio X, 8 de janeiro de 1905</strong>
+            <p>Pio X assinou o decreto de beatificação. Giovanni Sarto — filho de um carteiro do Vêneto, ex-pároco, homem que havia conhecido o ministério paroquial por dentro — presidiu a cerimônia na Basílica de São Pedro. Nas suas palavras sobre Vianney, o milagre de Claudine era a confirmação do que o Cura d'Ars havia sempre afirmado: que a santidade, não a sofisticação, é o instrumento da graça.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sl-bloco">
+      <h3>Por que este caso e não outro — a lógica da seleção</h3>
+      <p>O processo canônico não escolhe o caso mais dramático ou o mais emocionalmente impressionante. Escolhe o mais documentado — o que sobrevive ao escrutínio com menos resíduos de dúvida razoável. O caso de Claudine Venet foi escolhido por razões específicas que merecem ser explicitadas:</p>
+      <div class="sl-grid-3">
+        <div class="sl-card">
+          <h4>Mesmo médico antes e depois</h4>
+          <p>O Dr. Combet havia acompanhado Claudine durante a doença e a reexaminou após a recuperação. Isso eliminava a possibilidade de diferença metodológica entre os dois exames — a comparação era feita pelo mesmo profissional, com os mesmos critérios.</p>
+        </div>
+        <div class="sl-card">
+          <h4>Condição objetivamente verificável</h4>
+          <p>Artrite deformante severa produz sinais físicos objetivos — deformações articulares, limitação de movimento — que podem ser observados e registrados independentemente do relato subjetivo da paciente. Isso reduzia o espaço para a hipótese de exagero ou de condição psicossomática.</p>
+        </div>
+        <div class="sl-card">
+          <h4>Paciente viva durante o processo</h4>
+          <p>Claudine Venet sobreviveu ao processo de beatificação — podia ser reexaminada pelos peritos romanos. Esse dado é valioso: casos em que o paciente morreu antes do processo dependem inteiramente de registros históricos. Casos em que o paciente pode ser examinado diretamente têm uma dimensão de verificação adicional.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="sl-citacao">
+      <p>"A cura de Claudine Venet não é apresentada como prova da santidade de Vianney — a santidade é estabelecida pelas virtudes heroicas. É apresentada como sinal de que a sua intercessão é eficaz diante de Deus. O milagre não canoniza o santo; confirma que a canonização, em termos católicos, já havia sido feita pela vida."</p>
+      <span class="sl-fonte">Paráfrase da teologia canônica dos milagres — baseada nos documentos da Congregação dos Ritos</span>
+    </div>
+  </div>
+
+  <div class="sl-sep">· · ·</div>
+
+  <!-- 05 · LOUIS DOZE -->
+  <div class="sl-secao" id="louis-doze">
+    <div class="sl-secao-header">
+      <span class="sl-secao-num">05</span>
+      <div class="sl-secao-linha"></div>
+      <span class="sl-secao-titulo">Louis Doze — O Milagre da Canonização (1925)</span>
+    </div>
+
+    <div class="sl-bloco">
+      <div class="sl-bloco-resumo">
+        <h3>A canonização exige mais — e obteve mais</h3>
+        <p>A canonização é o ato pelo qual a Igreja define solenemente que uma pessoa está na glória divina e propõe a sua vida como modelo universal de santidade. Para esse ato mais definitivo, a Igreja exige um segundo milagre — ocorrido após a beatificação, portanto com o padrão cronológico mais exigente. Para Vianney, esse segundo milagre foi o caso de Louis Doze: um jovem do sul da França com obstrução intestinal grave e peritonite secundária, condição que, sem intervenção cirúrgica eficaz, tendia a ser fatal no prazo de dias a semanas.</p>
+      </div>
+    </div>
+
+    <div class="sl-bloco">
+      <h3>Louis Doze — o diagnóstico e o prognóstico</h3>
+      <div class="sl-card-destaque">
+        <div class="sl-badges">
+          <span class="sl-badge sl-badge-canonico">Milagre da Canonização — 1925</span>
+          <span class="sl-badge sl-badge-data">Cura: após 1905</span>
+          <span class="sl-badge sl-badge-papal">Reconhecido por Pio XI</span>
+        </div>
+        <h4>A condição clínica em detalhe</h4>
+        <div class="sl-ficha">
+          <div class="sl-ficha-item">
+            <strong>Quem era Louis Doze</strong>
+            Jovem de família católica do sul da França, sem afiliação especial a causas eclesiásticas ou conexão com o santuário de Ars antes da doença. A família era devota do Beato João Vianney — beatificado em 1905 — mas Louis não era figura de devoção extraordinária. Era um jovem comum com uma doença grave.
+          </div>
+          <div class="sl-ficha-item">
+            <strong>O diagnóstico — obstrução intestinal com peritonite</strong>
+            A obstrução intestinal grave produz, se não tratada eficazmente, peritonite — infecção da cavidade abdominal pela translocação de bactérias intestinais. No início do século XX, antes dos antibióticos modernos, a peritonite estabelecida era condição com mortalidade muito alta, mesmo com intervenção cirúrgica. O diagnóstico de Louis foi feito por múltiplos médicos e confirmado por exames físicos objetivos — distensão abdominal, dor localizada, febre, sinais de infecção sistêmica.
+          </div>
+          <div class="sl-ficha-item">
+            <strong>A gravidade do quadro</strong>
+            O processo canônico estabeleceu que o estado de Louis no período crítico era de prognóstico reservado a grave — linguagem médica que significa: a morte dentro de dias a semanas era cenário plausível, e a recuperação sem sequelas não era o curso esperado pela medicina disponível.
+          </div>
+          <div class="sl-ficha-item">
+            <strong>Documentação hospitalar</strong>
+            Ao contrário de casos menos documentados, o caso de Louis Doze possuía registros hospitalares formais — não apenas laudos de médico de família, mas documentação de ambiente médico estruturado com anotações de evolução e tratamento. Esta característica foi decisiva para o processo: a documentação era robusta o suficiente para resistir à hipótese de exagero retrospectivo.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sl-bloco">
+      <h3>A novena e o pedido de intercessão</h3>
+      <p>A família de Louis Doze, diante da gravidade do quadro e sem perspectiva de melhora pelos meios médicos disponíveis, recorreu à intercessão do Beato João Vianney — o pároco de Ars havia sido beatificado em 1905, e a devoção ao Cura d'Ars estava bem estabelecida em toda a França católica.</p>
+      <p>Iniciaram uma novena — oração de nove dias — pedindo especificamente a cura de Louis pela intercessão do Beato. É esse elemento de intencionalidade específica que o processo canônico exige para estabelecer a ligação entre o fenômeno e a intercessão: não basta que algo inexplicável aconteça a uma pessoa de fé. É necessário que o pedido específico e o resultado específico estejam ligados no tempo e na intenção.</p>
+
+      <div class="sl-depoimento">
+        <p>"A família rezava com a fé de quem não tem mais nada a que recorrer pelos meios humanos. Não era fé de consolação — era fé de petição concreta: que Louis fosse curado, pela intercessão do Beato João Vianney, quando nenhum dos meios naturais disponíveis produzia resultado."</p>
+        <span class="sl-depoimento-autor">Paráfrase da narração do processo canônico, baseada nos documentos da Congregação dos Ritos</span>
+      </div>
+    </div>
+
+    <div class="sl-bloco">
+      <h3>O que aconteceu — a cura</h3>
+      <p>No período da novena, ocorreu recuperação que os médicos envolvidos descreveram como inexplicável pelos termos da medicina disponível. A velocidade e a completude da resolução — do quadro obstrutivo e do quadro infeccioso — eram incompatíveis com o curso esperado da condição diagnosticada, com e sem intervenção médica.</p>
+      <p>O que tornava o caso especialmente forte para o processo canônico era a combinação de dois elementos: a gravidade objetiva da condição antes, documentada por múltiplos médicos; e a resolução completa e rápida depois, sem resíduo clínico que indicasse processo natural de recuperação ainda em curso. Louis não melhorou progressivamente — como seria esperado de recuperação natural de peritonite, que quando acontece é lenta e frequentemente incompleta. A resolução foi de tipo e velocidade que os peritos médicos consultados descreveram como fora dos parâmetros clínicos conhecidos.</p>
+
+      <div class="sl-ficha">
+        <div class="sl-ficha-item">
+          <strong>O exame posterior</strong>
+          Os médicos que reavaliaram Louis após a cura encontraram organismo sem vestígio clínico da condição que havia sido documentada claramente antes — não sinais de processo em resolução, mas ausência dos sinais que haviam sido objetivamente constatados. Esta distinção é clinicamente importante: a ausência de sinais residuais indicava que o processo havia cessado de forma diferente do que a resolução natural produziria.
+        </div>
+        <div class="sl-ficha-item">
+          <strong>A documentação comparada</strong>
+          Os peritos médicos designados pela Congregação dos Ritos compararam a documentação anterior à cura com a documentação posterior. A diferença era objetiva e quantificável nos termos clínicos disponíveis. O laudo pericial final usou a linguagem característica dos casos aprovados: os dados existentes não permitem identificar causa natural suficiente para o resultado observado.
+        </div>
+      </div>
+    </div>
+
+    <div class="sl-bloco">
+      <h3>O processo de verificação em detalhe</h3>
+      <div class="sl-linha-tempo">
+        <div class="sl-passo">
+          <div class="sl-passo-num">1</div>
+          <div class="sl-passo-corpo">
+            <strong>Verificação da realidade e gravidade do diagnóstico</strong>
+            <p>Os peritos confirmaram que o diagnóstico de obstrução intestinal com peritonite era correto e grave. A multiplicidade de médicos que haviam feito diagnóstico convergente, com registros hospitalares, tornava a hipótese de erro de diagnóstico muito improvável. Esta etapa é crucial: se o diagnóstico era incorreto, a "cura" é de algo que não existia — e o caso colapsa.</p>
+          </div>
+        </div>
+        <div class="sl-passo">
+          <div class="sl-passo-num">2</div>
+          <div class="sl-passo-corpo">
+            <strong>Investigação de remissão espontânea</strong>
+            <p>A remissão espontânea de peritonite estabelecida, com a velocidade e completude observadas, não era compatível com os padrões clínicos documentados na literatura médica do período. Os advogados do diabo investigaram casos de remissão espontânea conhecidos e não encontraram nenhum com perfil suficientemente similar para constituir precedente explicativo.</p>
+          </div>
+        </div>
+        <div class="sl-passo">
+          <div class="sl-passo-num">3</div>
+          <div class="sl-passo-corpo">
+            <strong>Investigação de efeito tardio de tratamento</strong>
+            <p>A hipótese de que algum tratamento aplicado antes havia produzido resultado tardio — e que a novena havia coincidido com esse resultado tardio — foi investigada. O histórico de tratamento foi analisado pelos peritos. A conclusão foi que nenhum dos tratamentos aplicados tinha mecanismo biológico compatível com o resultado observado naquela velocidade.</p>
+          </div>
+        </div>
+        <div class="sl-passo">
+          <div class="sl-passo-num">4</div>
+          <div class="sl-passo-corpo">
+            <strong>Investigação de intervenção médica não registrada</strong>
+            <p>Se alguma intervenção eficaz havia sido feita sem ser registrada — hipótese que os advogados do diabo sempre investigam —, isso explicaria a cura sem necessidade de sobrenatural. A investigação dos registros hospitalares e dos médicos envolvidos não encontrou nenhuma intervenção não registrada que pudesse ter produzido o resultado.</p>
+          </div>
+        </div>
+        <div class="sl-passo">
+          <div class="sl-passo-num">5</div>
+          <div class="sl-passo-corpo">
+            <strong>Laudo pericial final e votação da Congregação dos Ritos</strong>
+            <p>O laudo pericial foi favorável. Os Cardeais da Congregação dos Ritos votaram. O resultado foi aprovação do caso como milagre suficiente para a canonização de João Vianney.</p>
+          </div>
+        </div>
+        <div class="sl-passo">
+          <div class="sl-passo-num">6</div>
+          <div class="sl-passo-corpo">
+            <strong>Canonização por Pio XI — 31 de maio de 1925</strong>
+            <p>Achille Ratti — Pio XI — proclamou João Maria Vianney santo numa cerimônia na Basílica de São Pedro. Era o ano do Jubileu — Pio XI havia declarado 1925 Ano Santo — e a canonização de Vianney foi um dos eventos centrais do ano litúrgico. Quatro anos depois, em 1929, o mesmo Pio XI declararia Vianney padroeiro universal dos párocos de todo o mundo.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sl-bloco">
+      <h3>Comparando os dois milagres canônicos</h3>
+      <div class="sl-grid-2">
+        <div class="sl-card">
+          <h4>O que os dois casos têm em comum</h4>
+          <ul class="sl-lista-curta">
+            <li>Diagnóstico documentado antes da cura, por mais de um médico</li>
+            <li>Condição objetivamente verificável — não subjetiva ou psicossomática</li>
+            <li>Recuperação completa, não parcial</li>
+            <li>Velocidade incompatível com o curso natural esperado</li>
+            <li>Hipóteses naturais investigadas e não sustentadas pela documentação</li>
+            <li>Petição específica de intercessão estabelecida no tempo</li>
+          </ul>
+        </div>
+        <div class="sl-card">
+          <h4>O que os distingue</h4>
+          <ul class="sl-lista-curta">
+            <li>Claudine Venet sobrevivia ao processo — podia ser reexaminada pessoalmente</li>
+            <li>Louis Doze tem documentação hospitalar formal de maior volume</li>
+            <li>O caso de Claudine é de condição crônica; o de Louis, de condição aguda grave</li>
+            <li>A peritonite de Louis tinha mortalidade mais imediatamente previsível — tornando a cura mais urgente e o resultado mais dramaticamente incompatível com o prognóstico</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="sl-bloco">
+      <h3>O que os dois milagres dizem juntos</h3>
+      <p>A Igreja não exige dois milagres semelhantes. O que exige é dois milagres verificados — dois casos que resistam ao escrutínio com a robustez necessária. Claudine Venet e Louis Doze são casos de categorias clínicas diferentes, em contextos temporais diferentes, com tipos de documentação diferentes. O que os une não é o tipo de cura mas a qualidade da evidência: ambos sobreviveram ao processo de investigação que foi desenhado para eliminá-los.</p>
+      <p>Essa sobrevivência dupla tem um peso cumulativo que vai além de cada caso individual. Não é uma coincidência que se repete — é um padrão que o processo verificou em dois momentos independentes. Para a teologia canônica, isso é suficiente para o ato mais definitivo que a Igreja pratica: a declaração de que João Maria Vianney está na glória de Deus e que a Igreja pode invocá-lo com confiança.</p>
+    </div>
+  </div>
+
+  <div class="sl-sep">· · ·</div>
+
+  <!-- 06 · OUTRAS CURAS EM VIDA -->
+  <div class="sl-secao" id="curas-em-vida">
+    <div class="sl-secao-header">
+      <span class="sl-secao-num">06</span>
+      <div class="sl-secao-linha"></div>
+      <span class="sl-secao-titulo">Outras Curas Físicas em Vida</span>
     </div>
 
     <div class="sl-bloco">
       <div class="sl-bloco-resumo">
         <h3>O que esta seção apresenta</h3>
-        <p>As curas físicas em Ars foram numerosas nos relatos — mas o número bruto não é o dado mais relevante. O dado relevante é a qualidade da documentação disponível em cada caso. Os casos apresentados aqui vão do mais documentado ao mais fraco, com clareza sobre o que cada um tem e o que lhe falta.</p>
+        <p>Além dos dois milagres canônicos, houve em Ars, durante os quarenta e um anos do ministério de Vianney, numerosos outros casos de cura relatados pelos peregrinos. Não são todos iguais — e apresentá-los como se fossem seria desonesto. O que segue organiza os casos por nível de evidência, com clareza sobre o que cada um tem e o que lhe falta. A intenção não é reduzir a lista ao que é verificável, mas distinguir o verificável do não-verificável sem eliminar nenhum dos dois da narrativa.</p>
       </div>
     </div>
 
     <div class="sl-bloco">
-      <h3>Claudine Venet — o caso principal</h3>
+      <h3>Casos com documentação relevante</h3>
+
       <div class="sl-card-destaque">
         <div class="sl-badges">
-          <span class="sl-badge sl-badge-canonico">Milagre da beatificação</span>
+          <span class="sl-badge sl-badge-forte">Documentação forte</span>
         </div>
-        <h4>O caso que abriu o processo de beatificação em 1905</h4>
-        <div class="sl-grid-2">
-          <div>
-            <div class="sl-ficha">
-              <div class="sl-ficha-item">
-                <strong>Quem era</strong>
-                Jovem da região de Ars com artrite deformante severa — dor intensa, limitação real de movimentos, deformações articulares visíveis.
-              </div>
-              <div class="sl-ficha-item">
-                <strong>Documentação antes</strong>
-                Condição acompanhada e registrada por médico de Trévoux. Não era mal-estar subjetivo. Havia exames e observação clínica contínua.
-              </div>
-              <div class="sl-ficha-item">
-                <strong>O que aconteceu</strong>
-                A família levou Claudine a Ars em 1853. Após o encontro com Vianney, houve recuperação marcada — mobilidade restaurada, desaparecimento dos sinais que haviam sido constatados antes.
-              </div>
-            </div>
-          </div>
-          <div>
-            <div class="sl-ficha">
-              <div class="sl-ficha-item">
-                <strong>Documentação depois</strong>
-                O mesmo médico que havia feito os exames anteriores reexaminou Claudine. O que encontrou não correspondia ao que havia encontrado antes. O relatório é cauteloso no vocabulário — evita a palavra milagre — mas inequívoco na substância: não havia explicação médica para a diferença.
-              </div>
-              <div class="sl-ficha-item">
-                <strong>Por que o caso é sólido</strong>
-                Mesmo médico antes e depois. Diagnóstico documentado, não apenas relatado pela família. Advogados do diabo investigaram remissão espontânea e diagnóstico incorreto — nenhuma das hipóteses foi considerada suficiente.
-              </div>
-              <div class="sl-ficha-item">
-                <strong>Reconhecimento</strong>
-                Aprovado formalmente pela Congregação dos Ritos como o milagre exigido para a beatificação de Vianney em 8 de janeiro de 1905, por Pio X.
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+        <h4>O estado físico do próprio Vianney — o caso mais próximo</h4>
+        <p>O dado mais perturbador registrado pelo Dr. Saunier, médico de Trévoux que visitou Ars regularmente na década de 1840, não era nenhuma cura específica dos peregrinos. Era o estado físico do próprio Cura d'Ars. Um homem que dormia entre duas e quatro horas por noite durante décadas, que se alimentava de quantidades que o médico descreveu como incompatíveis com o nível de atividade que sustentava, que passava doze a dezesseis horas por dia no confessionário sem pausa significativa — e que, apesar disso, mantinha capacidade de atenção, memória e presença que o Dr. Saunier registrou como clinicamente inexplicável dado o regime físico observado.</p>
 
-    <div class="sl-bloco">
-      <h3>Outros casos com documentação relevante</h3>
-      <div class="sl-grid-2">
+        <div class="sl-depoimento">
+          <p>"Examinei-o várias vezes ao longo dos anos. O que ele come não sustenta o que ele faz. O que ele dorme não restaura o que ele gasta. Pela medicina que pratico, este homem não deveria funcionar como funciona. Não tenho explicação para isso e não vou inventar uma."</p>
+          <span class="sl-depoimento-autor">Dr. Saunier, médico de Trévoux — relato preservado nos processos canônicos, aproximadamente 1845</span>
+        </div>
+
+        <p>O testemunho de Saunier tem peso específico porque ele não era devoto — era um profissional que registrava o que observava com a linguagem da sua formação. A honestidade do "não tenho explicação" é o que torna o relato confiável.</p>
+      </div>
+
+      <div class="sl-grid-2" style="margin-top:14px;">
         <div class="sl-card">
           <div class="sl-badges">
             <span class="sl-badge sl-badge-media">Testemunhos múltiplos</span>
           </div>
           <h4>O menino epiléptico de Fareins</h4>
-          <p>Crises severas acompanhadas por médico local durante anos. Após ida a Ars, as crises cessaram. O acompanhamento posterior — anos, não semanas — foi feito pelo mesmo médico, descartando remissão temporária como explicação suficiente.</p>
-          <p>É um dos casos mais repetidos nas fontes quando se trata de curas ligadas à infância. A documentação do acompanhamento prolongado é o que o distingue de relatos mais vagos.</p>
+          <p>Crises epilépticas severas acompanhadas por médico local durante anos — não episódios isolados, mas quadro documentado de longa data. Após ida a Ars, as crises cessaram. O acompanhamento posterior — anos, não semanas — foi feito pelo mesmo médico, descartando remissão temporária como explicação suficiente. É um dos casos mais repetidos nas fontes quando se trata de curas ligadas à infância em Ars.</p>
+          <p><strong>O que distingue este caso:</strong> a duração do acompanhamento pós-cura. Curas que duram semanas podem ter explicações naturais diferentes de curas que permanecem estáveis por anos.</p>
         </div>
         <div class="sl-card">
           <div class="sl-badges">
             <span class="sl-badge sl-badge-media">Testemunhos múltiplos</span>
           </div>
           <h4>O homem com paralisia parcial de Lyon</h4>
-          <p>Limitação motora diagnosticada como duradoura por especialistas de Lyon. Após visita a Ars em 1848, melhora acentuada e progressiva nas semanas seguintes. O médico que havia acompanhado o caso em Lyon registrou a recuperação com a mesma combinação característica: precisão clínica e ausência de explicação disponível.</p>
-          <p>Os advogados do diabo tentaram usar a progressividade da cura para argumentar processo natural tardio. A tentativa foi respondida pela documentação: o tipo de lesão registrada não produzia recuperações espontâneas daquele tipo.</p>
+          <p>Limitação motora diagnosticada como duradoura por especialistas de Lyon. Após visita a Ars em 1848, melhora acentuada e progressiva nas semanas seguintes. O médico que havia acompanhado o caso em Lyon registrou a recuperação com a combinação característica dos melhores relatos de cura de Ars: precisão clínica e ausência declarada de explicação disponível.</p>
+          <p>Os advogados do diabo tentaram usar a progressividade da cura para argumentar processo natural tardio. A tentativa foi respondida pela documentação do tipo específico de lesão registrada, incompatível com recuperações espontâneas daquele ritmo.</p>
         </div>
         <div class="sl-card">
           <div class="sl-badges">
             <span class="sl-badge sl-badge-media">Testemunhos múltiplos</span>
           </div>
-          <h4>A jovem com problema de visão</h4>
-          <p>Perda progressiva de visão num dos olhos, com diagnóstico oftalmológico anterior documentado. Melhora súbita relatada durante ou logo após bênção recebida em Ars. O mesmo oftalmologista que havia feito o exame anterior realizou o posterior — detalhe importante porque elimina diferença de metodologia ou critério entre as duas avaliações.</p>
-          <p>É um caso bem relatado mas menos citado do que Claudine Venet — provavelmente porque a instantaneidade da melhora soa, para o leitor moderno, menos credível do que recuperações progressivas. A documentação, porém, é comparável.</p>
+          <h4>A jovem com deterioração visual</h4>
+          <p>Perda progressiva de visão num olho, com diagnóstico oftalmológico anterior documentado. Melhora súbita relatada durante ou logo após bênção recebida em Ars. O mesmo oftalmologista realizou o exame anterior e o posterior — eliminando a diferença de metodologia entre as duas avaliações, que é um dos pontos que os advogados do diabo sempre investigam. O caso é menos citado na literatura devocional do que outros, provavelmente porque a instantaneidade soa menos credível ao leitor moderno — mas a documentação é comparável a casos mais conhecidos.</p>
         </div>
         <div class="sl-card">
           <div class="sl-badges">
             <span class="sl-badge sl-badge-media">Testemunhos múltiplos</span>
           </div>
-          <h4>Criança de Ars com febre altíssima</h4>
-          <p>Caso de uma criança local com febre alta e quadro grave que havia preocupado os pais a ponto de ser levada ao Cura. A recuperação foi rápida o suficiente para ser registrada pelos vigários como episódio notável. É um dos casos mais próximos geograficamente e mais rapidamente relatado — sem o tempo que a memória tem para embelezar.</p>
-        </div>
-        <div class="sl-card">
-          <div class="sl-badges">
-            <span class="sl-badge sl-badge-forte">Documentação forte</span>
-          </div>
-          <h4>O estado físico do próprio Vianney</h4>
-          <p>O Dr. Saunier, médico de Trévoux que visitou Ars regularmente na década de 1840, registrou que o dado mais desconcertante em Ars não era nenhuma cura específica dos peregrinos. Era o estado físico do próprio Cura: um homem cujo regime de sono e alimentação não deveria, clinicamente, sustentar o nível de atividade pastoral contínua que ele demonstrava.</p>
-          <p>Saunier não era devoto. Era um profissional que registrava o que observava. E o que observava não cabia nas categorias que a medicina da época lhe oferecia.</p>
-        </div>
-        <div class="sl-card">
-          <div class="sl-badges">
-            <span class="sl-badge sl-badge-fraca">Tradição oral</span>
-          </div>
-          <h4>Outros casos relatados sem documentação médica</h4>
-          <p>Há dezenas de relatos de cura em Ars sem o suporte de registros médicos anteriores. Esses casos fazem parte da memória do santuário — e podem ser reais — mas não possuem o aparato documental necessário para verificação formal. São apresentados aqui com honestidade sobre o que são: testemunhos sinceros, não casos verificados.</p>
+          <h4>Criança de Ars com febre alta e quadro grave</h4>
+          <p>Caso de uma criança local — não peregrino de longe, mas paroquiano da própria aldeia — com quadro febril grave que havia preocupado os pais. Levada ao Cura. Recuperação que os vigários registraram nos diários como episódio notável pela rapidez. É um dos casos mais próximos geograficamente e temporalmente registrado — sem o tempo que a memória tem para embelezar, sem a distância que poderia introduzir distorção. O facto de ser registrado nos diários dos vigários na data aproximada do evento é o elemento de maior valor documental.</p>
         </div>
       </div>
     </div>
 
     <div class="sl-bloco">
-      <h3>O perfil estatístico das curas em Ars</h3>
-      <div class="sl-topo-metrica">
-        <div class="sl-metrica">
-          <div class="sl-metrica-num">~60%</div>
-          <div class="sl-metrica-leg">Casos relatados envolvendo condições articulares, neurológicas ou paralíticas</div>
-        </div>
-        <div class="sl-metrica">
-          <div class="sl-metrica-num">~25%</div>
-          <div class="sl-metrica-leg">Casos pediátricos — crianças levadas pelos pais ao Cura</div>
-        </div>
-        <div class="sl-metrica">
-          <div class="sl-metrica-num">~15%</div>
-          <div class="sl-metrica-leg">Casos sensoriais — visão, audição, fala</div>
-        </div>
-      </div>
-      <div class="sl-alerta-info">
-        <strong>Sobre os percentuais:</strong> os números são aproximações baseadas na análise dos relatos preservados nos processos canônicos. Não pretendem ser estatística rigorosa — pretendem dar uma ideia do perfil predominante dos casos que chegavam até Vianney e do que era percebido como resposta da intercessão.
+      <h3>As curas atribuídas a Santa Filomena — o nó histórico que o leitor merece conhecer</h3>
+      <div class="sl-card-vermelho">
+        <h4>O problema de Santa Filomena</h4>
+        <p>Vianney atribuía muitas graças à intercessão de Santa Filomena, cuja imagem ocupava lugar de destaque na igreja de Ars. Ele a chamava de "a minha querida Filomena" com a afetividade que reservava a poucos. O problema posterior é factual e não pode ser ignorado numa apresentação honesta: em 1961, a Congregação dos Ritos removeu Filomena do calendário litúrgico universal após concluir que não havia evidências históricas suficientes para confirmar a existência da personagem como mártir identificável. O processo arqueológico que havia gerado a sua devoção no século XIX havia sido baseado em interpretação de catacumba que estudos posteriores mostraram ser incorreta.</p>
+        <p>Isso não anulou as graças relatadas em Ars. A posição teológica mantida pela Igreja é que a fé genuína de Vianney e dos penitentes era real e efficaz, independentemente da questão histórica sobre Filomena. As graças são avaliadas pela consistência clínica e testemunhal dos casos individuais — a atribuição devocional específica é tratada como elemento separável da realidade do fenômeno.</p>
+        <p><strong>O que este dado implica para a leitura dos casos:</strong> os relatos de cura em Ars que mencionam Filomena especificamente devem ser lidos com consciência deste contexto. O fenômeno pode ser real; a atribuição específica pode estar errada. As duas coisas são logicamente independentes.</p>
       </div>
     </div>
 
     <div class="sl-bloco">
-      <h3>As curas atribuídas a Santa Filomena — o nó histórico</h3>
+      <h3>Casos com apenas tradição oral</h3>
       <div class="sl-card">
         <div class="sl-badges">
-          <span class="sl-badge sl-badge-media">Testemunhos múltiplos</span>
+          <span class="sl-badge sl-badge-fraca">Tradição oral</span>
         </div>
-        <p>Vianney atribuía muitas graças à intercessão de Santa Filomena, cuja imagem ocupava lugar de destaque na igreja de Ars. O problema posterior: em 1961, a Congregação dos Ritos removeu Filomena do calendário litúrgico após concluir que não havia evidências históricas suficientes para confirmar a existência da personagem como mártir identificável.</p>
-        <p>Isso não anulou as graças relatadas em Ars. O que a Igreja manteve é que a fé genuína de Vianney e dos penitentes era real, independentemente da questão histórica sobre Filomena. Os casos foram avaliados pela consistência clínica e testemunhal — a atribuição devocional específica foi tratada como elemento separável.</p>
-      </div>
-      <div class="sl-alerta">
-        <strong>Ponto central:</strong> a canonização de Vianney não foi afetada pela questão de Filomena. Mas o leitor merece saber que parte dos relatos de cura em Ars tem esse nó no fundo.
+        <p>Há dezenas de relatos de cura em Ars sem suporte de registros médicos anteriores — casos nos quais o que existe é apenas o relato da família, sem documentação clínica independente. Esses casos fazem parte da memória do santuário e podem ser reais — mas não possuem o aparato documental necessário para verificação histórica séria.</p>
+        <p>São apresentados aqui com honestidade sobre o que são: testemunhos sinceros preservados pela memória devocional, não casos verificados pelos padrões que os casos acima satisfazem. A distinção não é sobre a realidade do que aconteceu — é sobre o grau de certeza disponível para quem lê o relato séculos depois.</p>
       </div>
     </div>
   </div>
 
   <div class="sl-sep">· · ·</div>
 
-  <!-- 04 · PROVISÃO -->
-  <div class="sl-secao">
+  <!-- 07 · PROVISÃO -->
+  <div class="sl-secao" id="provisao">
     <div class="sl-secao-header">
-      <span class="sl-secao-num">04</span>
+      <span class="sl-secao-num">07</span>
       <div class="sl-secao-linha"></div>
-      <span class="sl-secao-titulo">Milagres de Provisão — A Providence</span>
+      <span class="sl-secao-titulo">Milagres de Provisão — A Providence de Ars</span>
     </div>
 
     <div class="sl-bloco">
       <div class="sl-bloco-resumo">
         <h3>Por que esses milagres têm um sabor diferente</h3>
-        <p>Os milagres de provisão em Ars não são curas dramáticas nem conhecimento sobrenatural de pecados escondidos. São, em termos de impacto visual, o mais simples de tudo: comida que aparece onde não havia. Mas têm um peso específico: aconteceram repetidamente, em contexto verificável, no cotidiano de uma obra que dependia deles para funcionar. E foram registrados pelas pessoas que viviam dentro da obra — não por visitantes que podiam distorcer a memória.</p>
+        <p>Os milagres de provisão em Ars não são curas dramáticas nem conhecimento sobrenatural de pecados escondidos. São, em termos de impacto visual, o mais simples de tudo: alimento que aparece onde não havia, depósitos encontrados cheios quando haviam sido verificados como vazios. Mas têm um peso específico que os distingue de lenda devocional comum: aconteceram repetidamente, em contexto cotidiano e verificável, testemunhados pelas pessoas que viviam dentro da obra — as responsáveis da Providence, com memória prática dos estoques — e não apenas por visitantes ocasionais com motivos para fantasiar.</p>
       </div>
     </div>
 
     <div class="sl-bloco">
-      <h3>O celeiro de trigo — o caso mais famoso</h3>
+      <h3>O celeiro de trigo — o caso mais documentado</h3>
       <div class="sl-card-destaque">
         <div class="sl-badges">
           <span class="sl-badge sl-badge-forte">Documentação forte</span>
         </div>
-        <h4>O episódio em quatro tempos</h4>
-        <p><strong>O contexto:</strong> a Providence estava sem trigo para alimentar as crianças. Não era escassez relativa — era falta concreta e verificada pelas responsáveis da casa. O celeiro havia sido verificado como insuficiente. Não havia dinheiro para reabastecimento. Os canais normais de doação estavam secos naquele momento.</p>
-        <hr class="sl-divider-leve">
+        <h4>Contexto, evento e investigação em detalhe</h4>
+        <p><strong>A situação da Providence:</strong> fundada em 1824, a casa para meninas órfãs e abandonadas que Vianney havia criado dependia inteiramente de doações — sem dotação fixa, sem patrimônio acumulado, sem garantia de continuidade. Vianney havia fundado a obra deliberadamente sem base material garantida, com a convicção de que o que pertence aos pobres é sustentado pela providência divina quando os meios humanos falham. Essa convicção foi testada repetidamente ao longo das décadas.</p>
+        <p><strong>O episódio específico:</strong> num período não preciso dos anos 1830, a Providence ficou sem trigo suficiente para as semanas à frente. A situação havia sido verificada pelas responsáveis da casa — não era percepção subjetiva de escassez iminente, mas constatação objetiva da insuficiência dos estoques disponíveis.</p>
+
         <div class="sl-linha-tempo">
           <div class="sl-passo">
             <div class="sl-passo-num">1</div>
-            <div>
-              <p><strong>Verificação da falta</strong><br>As irmãs responsáveis pela Providence constataram o estado do celeiro. Não havia interpretação possível: era insuficiente para as semanas à frente.</p>
+            <div class="sl-passo-corpo">
+              <strong>A verificação da falta</strong>
+              <p>As irmãs responsáveis pelo celeiro constataram o estado dos estoques. Não havia interpretação possível: eram insuficientes para o número de crianças e o período à frente. Os canais normais de doação estavam secos naquele momento.</p>
             </div>
           </div>
           <div class="sl-passo">
             <div class="sl-passo-num">2</div>
-            <div>
-              <p><strong>A resposta de Vianney</strong><br>Em vez de pânico administrativo ou apelos de emergência, pediu que se fizesse oração de abandono à providência. A forma concreta: uma novena a São João Francisco de Régis.</p>
+            <div class="sl-passo-corpo">
+              <strong>A resposta de Vianney</strong>
+              <p>Em vez de pânico administrativo ou apelos de emergência — que seriam respostas humanamente razoáveis —, Vianney pediu que se fizesse novena a São João Francisco de Régis, a quem tinha devoção especial. Depositou o problema na providência com a literalidade de quem realmente acredita que a obra pertence a Deus.</p>
             </div>
           </div>
           <div class="sl-passo">
             <div class="sl-passo-num">3</div>
-            <div>
-              <p><strong>A provisão encontrada</strong><br>Ao final da novena, o celeiro foi encontrado com trigo suficiente para o período de necessidade. Múltiplas testemunhas verificaram o estado antes e o estado depois.</p>
+            <div class="sl-passo-corpo">
+              <strong>O celeiro encontrado provido</strong>
+              <p>Ao final da novena, o celeiro foi encontrado com trigo suficiente para o período de necessidade. Múltiplas testemunhas que haviam verificado o estado antes constataram o estado depois. Não havia explicação registrada de entrega, de doador identificado, de movimento de mercadoria rastreável no período.</p>
             </div>
           </div>
           <div class="sl-passo">
             <div class="sl-passo-num">4</div>
-            <div>
-              <p><strong>A investigação processual</strong><br>Os advogados do diabo investigaram exaustivamente a hipótese de doação anônima não registrada. Não encontraram doador, não encontraram testemunho de entrega, não encontraram registro de movimento de mercadoria no período. O episódio permaneceu sem explicação natural identificável.</p>
+            <div class="sl-passo-corpo">
+              <strong>A investigação processual</strong>
+              <p>Os advogados do diabo investigaram exaustivamente a hipótese de doação anônima não registrada — que seria a explicação natural mais direta. Não encontraram doador, não encontraram testemunho de entrega, não encontraram registro de transporte de mercadoria compatível com o volume encontrado. O episódio permaneceu sem explicação natural identificável após a investigação.</p>
             </div>
           </div>
         </div>
@@ -909,166 +1031,129 @@
     </div>
 
     <div class="sl-bloco">
-      <h3>Os outros episódios de provisão</h3>
+      <h3>O padrão que se repetia — e por que importa</h3>
+      <p>O episódio do celeiro de trigo não foi único. Os vigários e as responsáveis da Providence registraram ao longo das décadas múltiplos episódios de provisão inesperada — farinha, azeite, dinheiro para despesas urgentes — com o mesmo padrão: necessidade verificada, ausência de solução pelos meios normais disponíveis, provisão que chegava na medida do necessário.</p>
+
       <div class="sl-grid-3">
         <div class="sl-card">
           <div class="sl-badges">
             <span class="sl-badge sl-badge-media">Testemunhos múltiplos</span>
           </div>
-          <h4>A farinha que reaparecia</h4>
-          <p>Relatos registrados por Toccanier de depósitos de farinha que haviam sido verificados como praticamente vazios e foram encontrados suficientes para o pão das meninas. O padrão é o mesmo: necessidade concreta, verificação da falta, provisão inesperada sem fonte identificável.</p>
+          <h4>A farinha reaparecia</h4>
+          <p>Depósitos de farinha verificados como praticamente vazios pelas responsáveis da Providence, encontrados suficientes para o pão das meninas. O padrão é o mesmo do celeiro: constatação da falta, provisão inesperada sem fonte identificável. Registrado por Toccanier com especificidade de contexto e data que distingue o relato de generalização piedosa.</p>
         </div>
         <div class="sl-card">
           <div class="sl-badges">
             <span class="sl-badge sl-badge-media">Testemunhos múltiplos</span>
           </div>
           <h4>O azeite para as lâmpadas</h4>
-          <p>Recipiente verificado como vazio, encontrado abastecido sem que ninguém houvesse feito a reposição. Documentado por Toccanier com data e circunstância específicas — detalhe de especificidade que distingue um relato confiável de uma generalização piedosa.</p>
+          <p>Recipiente verificado como vazio, encontrado abastecido sem que ninguém houvesse feito a reposição. Documentado por Toccanier — o vigário mais próximo de Vianney nos últimos anos — com a especificidade de um observador que estava ali, não de um biógrafo reconstruindo décadas depois.</p>
         </div>
         <div class="sl-card">
           <div class="sl-badges">
             <span class="sl-badge sl-badge-media">Testemunhos múltiplos</span>
           </div>
-          <h4>O padrão que os contemporâneos notavam</h4>
-          <p>Os moradores de Ars — incluindo os que haviam resistido ao pároco nos primeiros anos — descreveram repetidamente que a provisão chegava sempre na medida da necessidade das crianças. Nunca em abundância acima do necessário. Nunca em contexto diferente das necessidades da Providence.</p>
+          <h4>A medida da necessidade</h4>
+          <p>Os moradores de Ars — incluindo os que haviam resistido ao pároco nos primeiros anos — descreveram que a provisão chegava sempre na medida da necessidade das crianças. Nunca em abundância acima do necessário. Nunca em contexto diferente das necessidades da Providence. Este padrão de "suficiência exata" foi registrado independentemente por múltiplas testemunhas.</p>
         </div>
       </div>
+
       <div class="sl-alerta-info">
-        <strong>O que torna esses casos diferentes de lenda simples:</strong> as responsáveis da Providence tinham memória prática e cotidiana dos estoques — não eram narradoras distantes. Os relatos incluem detalhes verificáveis de espaço e tempo. O padrão se repete com consistência ao longo de anos. E os que relatavam não eram apenas devotos: o taverneiro Mandy, um dos opositores mais persistentes de Vianney nos primeiros anos, estava entre os que descreveram episódios de provisão com nível de detalhe que inclui elementos desfavoráveis à narrativa devocional simples.
+        <strong>O que distingue esses relatos de lenda simples:</strong> as responsáveis da Providence tinham memória prática e cotidiana dos estoques — não eram narradoras distantes relatando algo que haviam ouvido. Os relatos incluem detalhes verificáveis de contexto e tempo. O padrão repete-se com consistência ao longo de anos, por testemunhas que não partilhavam da mesma devoção nem da mesma inclinação à credulidade. E o taverneiro Mandy — um dos adversários mais persistentes de Vianney nos primeiros anos — estava entre os que descreveram episódios de provisão com nível de detalhe que inclui elementos desfavoráveis à narrativa devocional simples. Uma testemunha que tem razão para não querer confirmar é qualitativamente diferente de uma testemunha devota.
       </div>
     </div>
 
     <div class="sl-bloco">
       <h3>A teologia da provisão segundo Vianney</h3>
       <div class="sl-citacao">
-        <p>"O bom Deus nunca abandona os pobres que se entregam a Ele. As crianças da Providence são as crianças d'Ele. Eu sou apenas o caixa."</p>
-        <span class="sl-fonte">Frase atribuída por Catherine Lassagne, registrada em suas memórias</span>
+        <p>"O bom Deus nunca abandona os pobres que se entregam a Ele. As crianças da Providence são as crianças d'Ele. Eu sou apenas o caixa — e um caixa que não guarda nada."</p>
+        <span class="sl-fonte">Frase atribuída por Catherine Lassagne, co-fundadora da Providence de Ars, registrada em suas memórias</span>
       </div>
-      <p>A insistência de Vianney sobre não preocupar-se com os recursos materiais não era ingenuidade administrativa. Era uma tese: que a obra dos pobres pertence a Deus, e que Ele providencia na medida da necessidade real, não na medida da ansiedade humana. As cinco décadas de funcionamento da Providence — em condições materiais sempre precárias mas nunca interrompidas — foram, para os contemporâneos, a melhor prova prática dessa tese.</p>
+      <p>A insistência de Vianney sobre não preocupar-se com os recursos materiais não era ingenuidade administrativa. Era uma tese vivida: que a obra dos pobres pertence a Deus, e que Ele providencia na medida da necessidade real, não na medida da ansiedade humana. As décadas de funcionamento da Providence — em condições materiais sempre precárias mas nunca interrompidas —  foram, para os contemporâneos que observavam de perto, a melhor prova prática dessa tese.</p>
     </div>
   </div>
 
   <div class="sl-sep">· · ·</div>
 
-  <!-- 05 · PROFECIA -->
-  <div class="sl-secao">
+  <!-- 08 · PROFECIA -->
+  <div class="sl-secao" id="profecia">
     <div class="sl-secao-header">
-      <span class="sl-secao-num">05</span>
+      <span class="sl-secao-num">08</span>
       <div class="sl-secao-linha"></div>
       <span class="sl-secao-titulo">Conhecimento à Distância e Profecia</span>
     </div>
 
     <div class="sl-bloco">
       <div class="sl-bloco-resumo">
-        <h3>A categoria que exige mais cautela</h3>
-        <p>Profecia é o tipo de fenômeno em que a distinção entre documentado e tradição oral é mais crítica — e mais frequentemente ignorada. Profecia verificada exige documentação do anúncio anterior ao evento. Sem essa documentação, qualquer frase pode ser apresentada retrospectivamente como profecia cumprida. O que segue separa rigorosamente os dois casos.</p>
+        <h3>A categoria que exige mais cautela metodológica</h3>
+        <p>Profecia é o tipo de fenômeno em que a distinção entre documentado e tradição oral é mais crítica — e mais frequentemente ignorada nas fontes devocionais. Uma profecia verificada exige documentação do anúncio antes do evento: carta, diário, testemunho fixado por escrito antes que o resultado fosse conhecido. Sem essa documentação anterior, qualquer frase pode ser apresentada retrospectivamente como profecia cumprida — e a memória humana tem demonstrada tendência a reorganizar o passado à luz do presente. O que segue separa rigorosamente os dois casos.</p>
       </div>
     </div>
 
     <div class="sl-bloco">
-      <h3>Visão geral dos casos</h3>
-      <table class="sl-mini-tabela">
-        <thead>
-          <tr>
-            <th>Fenômeno</th>
-            <th>O que se relata</th>
-            <th>Nível</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><strong>Ars como centro de peregrinação</strong></td>
-            <td>Em 1818, quando nada indicava isso, teria dito que Ars se tornaria destino de peregrinação intensa.</td>
-            <td><span class="sl-badge sl-badge-forte">Forte</span></td>
-          </tr>
-          <tr>
-            <td><strong>Morte de Gregório XVI</strong></td>
-            <td>Teria anunciado a morte do Papa antes da notícia chegar por meios normais a Ars.</td>
-            <td><span class="sl-badge sl-badge-media">Múltiplos</span></td>
-          </tr>
-          <tr>
-            <td><strong>Crises políticas de 1848</strong></td>
-            <td>Advertências sobre abalos políticos e sofrimentos para a Igreja.</td>
-            <td><span class="sl-badge sl-badge-media">Múltiplos</span></td>
-          </tr>
-          <tr>
-            <td><strong>Própria morte</strong></td>
-            <td>Nos meses finais, teria falado do fim com consciência que excedia percepção clínica comum.</td>
-            <td><span class="sl-badge sl-badge-media">Múltiplos</span></td>
-          </tr>
-          <tr>
-            <td><strong>Outras previsões atribuídas</strong></td>
-            <td>Muitas frases proféticas circulam na tradição devocional.</td>
-            <td><span class="sl-badge sl-badge-fraca">Oral</span></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="sl-bloco">
-      <h3>O caso mais forte — a profecia sobre Ars</h3>
+      <h3>A profecia sobre Ars — o caso mais forte</h3>
       <div class="sl-card-destaque">
         <div class="sl-badges">
           <span class="sl-badge sl-badge-forte">Documentação forte</span>
         </div>
-        <h4>1818 — A afirmação improvável</h4>
+        <h4>1818 — A afirmação improvável num lugar improvável</h4>
         <div class="sl-ficha">
           <div class="sl-ficha-item">
             <strong>O contexto do anúncio</strong>
-            1818. Vianney acabara de chegar. Ars tinha 230 habitantes, nenhuma importância estratégica, nenhuma razão humana identificável para se tornar destino de peregrinação.
+            1818. Vianney acabara de chegar a Ars depois de uma caminhada em que havia se perdido na neblina e sido guiado por um menino de quatorze anos chamado Antoine Givre. Ars tinha 230 habitantes, nenhuma importância geográfica ou espiritual particular, nenhum santuário anterior, nenhuma razão humana identificável para se tornar destino de peregrinação nacional.
           </div>
           <div class="sl-ficha-item">
             <strong>O que foi dito</strong>
-            Que Ars se tornaria centro de peregrinação de grande afluência. A tradição é referenciada por Trochu, Monnin e Lassagne, com variações de detalhe mas consistência de substância.
+            Que Ars se tornaria centro de peregrinação de grande afluência — que viria muita gente de longe. A afirmação é referenciada por Trochu, Monnin e Lassagne, com variações de detalhe mas consistência de substância. O contexto é a conversa com o menino Antoine Givre na chegada, o que dá ao anúncio uma proximidade temporal e uma testemunha específica.
           </div>
           <div class="sl-ficha-item">
-            <strong>Por que o caso tem peso</strong>
-            A afirmação não era probabilística em 1818. Um pároco desconhecido, reprovado no seminário, numa aldeia irrelevante, anunciando que ela se tornaria destino nacional — não era uma aposta razoável. Era uma afirmação que qualquer análise das circunstâncias disponíveis rejeitaria.
+            <strong>Por que o caso tem peso histórico</strong>
+            Em 1818, a afirmação não era probabilística. Um pároco desconhecido, de formação precária, numa aldeia sem importância, anunciando que ela se tornaria destino espiritual nacional — não era uma aposta razoável. Era uma afirmação que qualquer análise de circunstâncias disponíveis em 1818 rejeitaria como fantasia. O resultado verificável — Ars recebendo 80.000 peregrinos por ano já na década de 1850 — é objetivo. A correspondência entre o anúncio de 1818 e o resultado de quatro décadas depois é o que torna o caso significativo.
           </div>
           <div class="sl-ficha-item">
-            <strong>O resultado verificável</strong>
-            Ars realmente se tornou polo espiritual. Esse resultado é objetivo. A questão é se a correspondência entre anúncio e resultado constitui profecia sobrenatural — e essa questão, dada a natureza dos dados, não admite resposta definitiva. Mas o caso é o mais próximo de uma profecia verificável em toda a hagiografia de Vianney.
+            <strong>O limite honesto do caso</strong>
+            Para que seja certamente profecia sobrenatural, precisaria de documentação escrita do anúncio datada de 1818 — carta, diário do bispo, registro paroquial. O que existe são testemunhos colhidos décadas depois. A probabilidade de que o anúncio foi feito é alta, dado o número e a consistência das testemunhas. A certeza absoluta não está disponível.
           </div>
         </div>
       </div>
     </div>
 
     <div class="sl-bloco">
-      <h3>Os demais casos com mais detalhe</h3>
+      <h3>Outros casos de conhecimento à distância</h3>
       <div class="sl-grid-2">
         <div class="sl-card">
           <div class="sl-badges">
             <span class="sl-badge sl-badge-media">Testemunhos múltiplos</span>
           </div>
-          <h4>A morte do Papa Gregório XVI</h4>
-          <p>Gregório XVI morreu em Roma em 1 de junho de 1846. A notícia levava dias para chegar a uma aldeia rural do interior francês pelos meios normais. Múltiplas testemunhas — vigários e paroquianos — registraram que Vianney anunciou a morte antes da chegada da notícia pelos correios.</p>
-          <p><strong>Limite honesto:</strong> para que o caso seja conclusivo, é necessário estabelecer com precisão a data do anúncio versus a data de chegada da notícia por canais normais. A documentação disponível permite estabelecer isso com verossimilhança — não com a precisão absoluta que tornaria o caso incontestável.</p>
+          <h4>A morte de Gregório XVI antes da notícia chegar</h4>
+          <p>Gregório XVI morreu em Roma em 1 de junho de 1846. A notícia levava dias para chegar a uma aldeia rural do interior francês pelos meios normais disponíveis — correio, jornais, mensageiros. Múltiplas testemunhas — vigários e paroquianos — registraram que Vianney anunciou a morte antes da chegada da notícia pelos canais normais.</p>
+          <p><strong>Limite honesto:</strong> para que o caso seja conclusivo, é necessário estabelecer com precisão a data do anúncio versus a data de chegada da notícia por canais normais a Ars. A documentação permite estabelecer isso com verossimilhança — não com a precisão absoluta que tornaria o caso incontestável.</p>
         </div>
         <div class="sl-card">
           <div class="sl-badges">
             <span class="sl-badge sl-badge-media">Testemunhos múltiplos</span>
           </div>
           <h4>O anúncio da própria morte</h4>
-          <p>Nos meses anteriores a agosto de 1859, Vianney fez afirmações sobre a proximidade do fim que as testemunhas descreveram como mais específicas do que a percepção clínica normal de um homem de 73 anos muito doente explicaria.</p>
-          <p><strong>O problema desta categoria:</strong> após um evento, a memória filtra seletivamente o que foi dito antes. Afirmações vagas tornam-se proféticas à luz do resultado. O que os processos registraram sem classificar definitivamente: houve afirmações com especificidade que excede o esperado — mas a fronteira entre isso e percepção natural aguçada não é traçável com certeza.</p>
+          <p>Nos meses anteriores a agosto de 1859, Vianney fez afirmações sobre a proximidade do fim que as testemunhas descreveram como mais específicas do que a percepção clínica normal de um homem de 73 anos muito doente explicaria. O abade Raymond registrou conversas em que Vianney falava do fim com a precisão de quem conhecia o calendário que a medicina não havia estabelecido.</p>
+          <p><strong>O problema desta categoria:</strong> após um evento, a memória filtra seletivamente o que foi dito antes. Afirmações vagas tornam-se proféticas à luz do resultado. Os processos registraram os testemunhos sem concluir definitivamente sobre a natureza do conhecimento — reconhecendo a especificidade mas também o limite do que a documentação disponível permite afirmar.</p>
         </div>
       </div>
     </div>
 
     <div class="sl-bloco">
-      <h3>O critério metodológico para profecias</h3>
+      <h3>O critério metodológico — o que separa profecia verificada de memória retrospectiva</h3>
       <div class="sl-grid-3">
         <div class="sl-card">
-          <h4>Documentação prévia</h4>
-          <p>O anúncio precisa estar registrado antes do evento — em carta, diário ou testemunho fixado por escrito. Sem isso, é memória retrospectiva.</p>
+          <h4>Documentação prévia ao evento</h4>
+          <p>O anúncio precisa estar registrado antes do resultado ser conhecido — em carta, diário, notícia fixada por escrito. Sem isso, é memória retrospectiva — que pode ser sincera e pode corresponder ao que aconteceu, mas não é verificável da mesma forma.</p>
         </div>
         <div class="sl-card">
-          <h4>Especificidade verificável</h4>
-          <p>"Algo vai acontecer" não é profecia. "Isso vai acontecer assim, neste contexto, neste tempo" é. Quanto mais específico, mais peso.</p>
+          <h4>Especificidade não inferível</h4>
+          <p>"Algo vai mudar" não é profecia — é generosidade com a ambiguidade. "Isto vai acontecer, neste contexto, neste período" é. E a improbabilidade da inferência a partir das circunstâncias disponíveis é o que dá ao caso o peso sobrenatural: o que foi anunciado não podia ser previsto pelos meios naturais normais.</p>
         </div>
         <div class="sl-card">
-          <h4>Improbabilidade da inferência</h4>
-          <p>Se o anúncio podia ser inferido de circunstâncias visíveis, não é sobrenatural — é leitura aguçada. A profecia genuína anuncia o que não podia ser inferido.</p>
+          <h4>Testemunha independente e confiável</h4>
+          <p>O valor de um testemunho de profecia depende do perfil da testemunha: alguém que não tinha razão para inventar, com memória demonstrável de outros assuntos, que relatou o que ouviu antes que o resultado fosse conhecido por ela. Esses são critérios raramente todos satisfeitos — e raramente todas as fontes são honestas sobre isso.</p>
         </div>
       </div>
     </div>
@@ -1076,69 +1161,69 @@
 
   <div class="sl-sep">· · ·</div>
 
-  <!-- 06 · FENÔMENOS MÍSTICOS -->
-  <div class="sl-secao">
+  <!-- 09 · FENÔMENOS MÍSTICOS -->
+  <div class="sl-secao" id="fenomenos-misticos">
     <div class="sl-secao-header">
-      <span class="sl-secao-num">06</span>
+      <span class="sl-secao-num">09</span>
       <div class="sl-secao-linha"></div>
       <span class="sl-secao-titulo">Fenômenos Místicos — Êxtase, Odor, Levitação</span>
     </div>
 
     <div class="sl-bloco">
       <div class="sl-bloco-resumo">
-        <h3>Hierarquia desta seção</h3>
-        <p>Os fenômenos místicos atribuídos a Vianney não têm todos o mesmo peso histórico. Os êxtases são os mais sólidos — observados repetidamente, por testemunhas de perfis variados, incluindo médicos. O odor de santidade é recorrente mas secundário. A levitação e a bilocalização existem na tradição mas com documentação muito mais fraca. Apresentar todos no mesmo nível prejudica os que têm evidência real.</p>
+        <h3>Hierarquia interna desta categoria</h3>
+        <p>Os fenômenos místicos atribuídos a Vianney não têm todos o mesmo peso histórico — e apresentá-los uniformemente, como a hagiografia devocional frequentemente faz, prejudica os que têm evidência real ao colocá-los em companhia dos que têm apenas tradição oral. Os êxtases durante a missa são os mais sólidos, com testemunhos de médicos e de observadores adversos. O odor de santidade é recorrente e consistente. A levitação e a bilocalização existem na tradição mas com documentação muito mais fraca. Esta seção apresenta cada categoria com o peso que lhe corresponde.</p>
       </div>
     </div>
 
     <div class="sl-bloco">
-      <h3>Os êxtases durante a missa — o mais documentado</h3>
+      <h3>Os êxtases durante a missa — o mais documentado dos fenômenos místicos</h3>
       <div class="sl-card-destaque">
         <div class="sl-badges">
           <span class="sl-badge sl-badge-forte">Documentação forte</span>
         </div>
-        <h4>O fenômeno observado por médicos e peregrinos</h4>
+        <h4>O que era observado — com precisão clínica</h4>
         <div class="sl-ficha">
           <div class="sl-ficha-item">
-            <strong>O que acontecia</strong>
-            Especialmente no momento da consagração, Vianney entrava em estado de imobilidade completa — diferente da concentração intensa, que responde a estímulos periféricos. Era imobilidade de alguém que parecia não estar mais inteiramente presente no espaço físico.
+            <strong>O fenômeno</strong>
+            Especialmente no momento da consagração, Vianney entrava em estado de imobilidade completa — não a concentração intensa que responde a estímulos periféricos, mas imobilidade de alguém aparentemente ausente do espaço físico sem perda de consciência no sentido médico. Os vigários que o serviam na missa regularmente aprenderam a reconhecer o início do estado e sabiam que a missa daquele dia duraria além do normal.
           </div>
           <div class="sl-ficha-item">
-            <strong>Frequência</strong>
-            Não acontecia em todas as missas. Acontecia com frequência suficiente para que os vigários que serviam regularmente reconhecessem quando se iniciava e soubessem que a missa duraria além do previsto naquele dia.
+            <strong>Testemunho do Dr. Saunier — aproximadamente 1845</strong>
+            O médico de Trévoux assistiu à missa de Vianney em várias ocasiões e descreveu um episódio específico com vocabulário explicitamente clínico: imobilidade completa, ausência de resposta a estímulos que ele testou discretamente, retorno gradual ao estado normal sem confusão ou desorientação que seria esperada após perda de consciência. O padrão era inconsistente com as condições neurológicas disponíveis como explicação — ele investigou as hipóteses de catalepsia e de crise convulsiva atípica, e nenhuma correspondia ao que observava.
           </div>
           <div class="sl-ficha-item">
-            <strong>Testemunho do Dr. Saunier — 1845</strong>
-            Médico de Trévoux, cético declarado, que assistiu à missa de Vianney em várias ocasiões e descreveu um episódio específico com vocabulário clínico: imobilidade completa, ausência de resposta a estímulos que ele testou discretamente, retorno gradual ao estado normal sem confusão ou desorientação. Registrou que o padrão era inconsistente com as condições neurológicas disponíveis como explicação.
+            <strong>A expressão do rosto</strong>
+            Múltiplas testemunhas independentes descreveram a mesma coisa com variações de vocabulário: durante o êxtase, o rosto de Vianney era diferente — a expressão habitual de esforço e cansaço havia desaparecido. Era o rosto de alguém que não estava mais carregando o peso que carregava habitualmente. Esta consistência de descrição entre testemunhas que não se conheciam entre si é o elemento mais significativo do ponto de vista da evidência.
           </div>
           <div class="sl-ficha-item">
-            <strong>Testemunho de peregrina de Lyon — 1848</strong>
-            Descreveu que durante a imobilidade de Vianney, o rosto do padre parecia diferente — não em feições, mas na qualidade de presença. A expressão habitual de esforço e cansaço havia desaparecido completamente. Era o rosto de alguém que não estava mais carregando o peso que carregava habitualmente.
+            <strong>Frequência e variabilidade</strong>
+            O êxtase não acontecia em todas as missas — o que é ele mesmo um dado relevante. Fenômenos que acontecem sempre podem ser comportamento habitual. Fenômenos que acontecem às vezes, de forma não previsível, com características consistentes mas não idênticas, têm perfil diferente de simulação ou de automatismo psicológico.
           </div>
         </div>
       </div>
     </div>
 
     <div class="sl-bloco">
-      <h3>O odor de santidade — recorrente e consistente</h3>
+      <h3>O odor de santidade — recorrente e consistente, se bem que secundário</h3>
       <div class="sl-card">
         <div class="sl-badges">
           <span class="sl-badge sl-badge-media">Testemunhos múltiplos</span>
         </div>
-        <h4>A fragrância em três contextos</h4>
-        <p>A fragrância inexplicável associada a Vianney foi relatada em três contextos distintos por pessoas que não se conheciam entre si e que usaram termos similares mas não idênticos — o padrão esperado de relatos independentes sobre o mesmo estímulo:</p>
+        <h4>A fragrância em três contextos distintos</h4>
+        <p>A fragrância inexplicável associada a Vianney foi relatada em três contextos distintos por pessoas que não se conheciam entre si e que usaram termos similares mas não idênticos — o padrão esperado de relatos independentes sobre o mesmo estímulo sensorial, em oposição ao padrão de relatos copiados uns dos outros:</p>
         <div class="sl-grid-3" style="margin-top:12px;">
           <div class="sl-ficha-item">
             <strong>No confessionário</strong>
-            Peregrinos que percebiam uma fragrância ao sentar-se, antes de qualquer contato com o Cura — em contraste marcado com o ambiente fechado e quente do espaço.
+            Peregrinos que descreviam uma fragrância ao sentar-se no confessionário antes de qualquer contato com o Cura — em contraste marcado com o ambiente fechado, quente e sem ventilação do espaço, que por razões físicas deveria produzir odor diferente. A especificidade da localização é relevante: não era fragrância difusa do ambiente geral da igreja.
           </div>
           <div class="sl-ficha-item">
             <strong>Durante a missa</strong>
-            Associada especificamente ao momento da elevação, nos episódios de êxtase. A associação temporal — fragrância que aparece e desaparece com o estado místico — é o elemento mais característico.
+            Associada especificamente ao momento da elevação, nos episódios em que o êxtase era mais marcado. A correspondência temporal entre o estado místico e a percepção da fragrância — notada por testemunhas em posições diferentes na igreja, em momentos diferentes — é o elemento mais característico desta categoria.
           </div>
           <div class="sl-ficha-item">
             <strong>Nos espaços após a passagem</strong>
-            Pessoas que entravam em salas onde ele havia estado e descreviam fragrância residual sem fonte identificável. Toccanier registrou múltiplos episódios desta categoria com datas específicas.
+            Pessoas que entravam em salas onde Vianney havia estado e descreviam fragrância residual sem fonte identificável. Toccanier registrou múltiplos episódios desta categoria com datas específicas — o detalhe da data é o que distingue o relato de generalização devocional posterior.
           </div>
         </div>
       </div>
@@ -1152,197 +1237,92 @@
             <span class="sl-badge sl-badge-fraca">Tradição oral</span>
           </div>
           <h4>Levitação</h4>
-          <p>Existem relatos — em geral associados a momentos de oração privada intensa, não à missa pública. Mas o número é pequeno e a qualidade documental é significativamente inferior à dos êxtases: a maioria são testemunhos de observador único, sem corroboração. Os processos canônicos registraram os testemunhos sem concluir sobre a sua natureza.</p>
-          <p>O padre Trochu — biógrafo que trabalhou extensamente com as fontes primárias — menciona a levitação com qualificação explícita: que os relatos existem e que são insuficientemente documentados para afirmação definitiva.</p>
+          <p>Existem relatos — em geral associados a momentos de oração privada intensa, não à missa pública onde os êxtases eram mais documentados. Mas o número é pequeno e a qualidade documental é significativamente inferior à dos êxtases: a maioria são testemunhos de observador único, sem corroboração independente, colhidos décadas após os eventos.</p>
+          <p>O padre Trochu — biógrafo que trabalhou extensamente com as fontes primárias — menciona a levitação com qualificação explícita: que os relatos existem e que são insuficientemente documentados para afirmação definitiva. Esta contenção é ela mesma um dado: um biógrafo hagiográfico sem escrúpulos de rigor não faria essa qualificação.</p>
         </div>
         <div class="sl-card">
           <div class="sl-badges">
             <span class="sl-badge sl-badge-fraca">Tradição oral</span>
           </div>
           <h4>Bilocalização</h4>
-          <p>Existem relatos de pessoas que descrevem ter visto Vianney em locais onde ele, segundo os registros de presença em Ars, não poderia estar. Mas esses relatos são na maioria tardios — chegaram aos biógrafos décadas depois dos eventos, sem cadeia documental verificável.</p>
-          <p>As possibilidades de confusão de identidade, de memória alterada e de elaboração progressiva são, nesta categoria, mais difíceis de descartar do que em qualquer outro fenômeno desta página. Os processos canônicos não incluíram a bilocalização entre os fenômenos formalmente avaliados como sobrenaturais.</p>
+          <p>Existem relatos de pessoas que descrevem ter visto Vianney em locais onde ele, segundo os registros de presença em Ars, não poderia estar. Mas esses relatos são na maioria tardios — chegaram aos biógrafos décadas depois dos eventos, sem cadeia documental verificável. As possibilidades de confusão de identidade, de memória alterada e de elaboração progressiva são, nesta categoria, mais difíceis de descartar do que em qualquer outro fenômeno desta página.</p>
+          <p>Os processos canônicos não incluíram a bilocalização entre os fenômenos formalmente avaliados como sobrenaturais — o que é dado relevante: o processo tinha acesso às testemunhas e às fontes, e optou por não usar esses relatos como evidência de peso.</p>
         </div>
       </div>
       <div class="sl-alerta">
-        <strong>O que o leitor precisa guardar:</strong> o fato de que levitação e bilocalização aparecem na tradição é ele mesmo um dado histórico — e está registrado aqui. Mas apresentá-los com o mesmo peso dos êxtases ou da cardiognosia seria desonesto com as fontes disponíveis.
-      </div>
-    </div>
-  </div>
-
-  <div class="sl-sep">· · ·</div>
-
-  <!-- 07 · LOUIS DOZE -->
-  <div class="sl-secao">
-    <div class="sl-secao-header">
-      <span class="sl-secao-num">07</span>
-      <div class="sl-secao-linha"></div>
-      <span class="sl-secao-titulo">O Milagre da Canonização — Louis Doze</span>
-    </div>
-
-    <div class="sl-bloco">
-      <div class="sl-bloco-resumo">
-        <h3>O que este milagre representa</h3>
-        <p>Para a canonização de um beato, a Igreja exige verificação de um milagre adicional — caso que resista ao escrutínio dos advogados do diabo e seja reconhecido formalmente. O processo não escolhe o mais dramático. Escolhe o mais documentado. Para a canonização de João Vianney em 1925, esse caso foi Louis Doze.</p>
+        <strong>O que o leitor precisa guardar desta seção:</strong> o facto de que levitação e bilocalização aparecem na tradição é ele mesmo um dado histórico — e está registrado aqui. Mas apresentá-los com o mesmo peso dos êxtases documentados pelo Dr. Saunier ou da cardiognosia verificada nos processos canônicos seria desonesto com as fontes disponíveis. A distinção não minimiza Vianney — o protege de objeções que pode e deve resistir, separando o que tem evidência real do que é acréscimo devocional.
       </div>
     </div>
 
     <div class="sl-bloco">
-      <h3>O caso completo</h3>
-      <div class="sl-card-destaque">
-        <div class="sl-badges">
-          <span class="sl-badge sl-badge-canonico">Milagre da canonização — 1925</span>
-        </div>
-        <h4>Jovem com obstrução intestinal e peritonite</h4>
-        <div class="sl-grid-2">
-          <div>
-            <div class="sl-ficha">
-              <div class="sl-ficha-item">
-                <strong>Quem era Louis Doze</strong>
-                Jovem do sul da França com obstrução intestinal grave e peritonite secundária — condição diagnosticada por múltiplos médicos independentes como de prognóstico muito ruim a curto prazo.
-              </div>
-              <div class="sl-ficha-item">
-                <strong>A documentação anterior</strong>
-                Registros hospitalares formais, exames objetivos, laudos de múltiplos médicos convergentes. Não era diagnóstico de um único profissional. Era quadro confirmado por vários.
-              </div>
-              <div class="sl-ficha-item">
-                <strong>O pedido feito</strong>
-                A família era devota do Beato João Vianney. Iniciaram novena pedindo sua intercessão enquanto o estado de Louis piorava.
-              </div>
-            </div>
-          </div>
-          <div>
-            <div class="sl-ficha">
-              <div class="sl-ficha-item">
-                <strong>O que aconteceu</strong>
-                No período da novena, ocorreu recuperação que os médicos chamados a avaliar descreveram como inexplicável: rápida, completa, sem intervenção cirúrgica adicional, sem explicação pelo estado da medicina disponível.
-              </div>
-              <div class="sl-ficha-item">
-                <strong>A documentação posterior</strong>
-                O exame posterior revelou organismo sem vestígio da condição que havia sido documentada claramente antes. Não havia sinais de que o processo grave havia simplesmente desacelerado — havia desaparecido.
-              </div>
-              <div class="sl-ficha-item">
-                <strong>Reconhecimento formal</strong>
-                O relatório pericial foi favorável. A Congregação dos Ritos aceitou o caso como milagre para efeito da canonização de João Vianney em 31 de maio de 1925, por Pio XI.
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="sl-bloco">
-      <h3>Como o processo testou o caso — passo a passo</h3>
-      <div class="sl-linha-tempo">
-        <div class="sl-passo">
-          <div class="sl-passo-num">1</div>
-          <div class="sl-card">
-            <h4>Verificação do diagnóstico anterior</h4>
-            <p>Os peritos precisavam confirmar que a doença era real, grave e bem documentada. A multiplicidade de laudos médicos independentes convergentes foi o elemento decisivo aqui.</p>
-          </div>
-        </div>
-        <div class="sl-passo">
-          <div class="sl-passo-num">2</div>
-          <div class="sl-card">
-            <h4>Investigação de remissão espontânea</h4>
-            <p>Para o tipo e o estágio de condição diagnosticada em Louis, a remissão espontânea com a velocidade e completude observadas não era compatível com os padrões clínicos disponíveis. Os advogados do diabo investigaram essa hipótese e não conseguiram sustentá-la com a documentação existente.</p>
-          </div>
-        </div>
-        <div class="sl-passo">
-          <div class="sl-passo-num">3</div>
-          <div class="sl-card">
-            <h4>Investigação de erro de diagnóstico</h4>
-            <p>Se o diagnóstico inicial estava errado, não haveria milagre — apenas cura de algo menos grave do que pareceu. A multiplicidade de médicos com diagnóstico convergente tornou essa hipótese implausível. O processo descartou-a formalmente.</p>
-          </div>
-        </div>
-        <div class="sl-passo">
-          <div class="sl-passo-num">4</div>
-          <div class="sl-card">
-            <h4>Investigação de efeito tardio de tratamento</h4>
-            <p>Se algum tratamento anterior poderia ter produzido o resultado semanas depois, o milagre seria descartável. A análise do histórico de tratamento não encontrou mecanismo compatível com o que foi observado.</p>
-          </div>
-        </div>
-        <div class="sl-passo">
-          <div class="sl-passo-num">5</div>
-          <div class="sl-card">
-            <h4>Laudo pericial final</h4>
-            <p>Inexplicável pelos meios naturais considerados. A Congregação dos Ritos aceitou o laudo e reconheceu o caso formalmente.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="sl-bloco">
-      <h3>Por que esse caso e não outro</h3>
-      <div class="sl-grid-3">
-        <div class="sl-card">
-          <h4>Documentação hospitalar robusta</h4>
-          <p>Registros formais, múltiplos médicos, exames objetivos. Não apenas relatos familiares ou memória de vizinhos.</p>
-        </div>
-        <div class="sl-card">
-          <h4>Condição orgânica grave</h4>
-          <p>Não era condição psicossomática onde a componente emocional poderia ter papel na melhora. Era patologia orgânica documentada.</p>
-        </div>
-        <div class="sl-card">
-          <h4>Resistência máxima às objeções</h4>
-          <p>As três grandes hipóteses alternativas — erro de diagnóstico, remissão espontânea, efeito tardio de tratamento — foram investigadas e não sustentaram o caso contrário.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="sl-sep">· · ·</div>
-
-  <!-- 08 · APÓS A MORTE -->
-  <div class="sl-secao">
-    <div class="sl-secao-header">
-      <span class="sl-secao-num">08</span>
-      <div class="sl-secao-linha"></div>
-      <span class="sl-secao-titulo">Milagres Após a Morte</span>
-    </div>
-
-    <div class="sl-bloco">
-      <div class="sl-bloco-resumo">
-        <h3>O arquivo que não parou de crescer</h3>
-        <p>Desde agosto de 1859 — desde a semana da morte de Vianney — chegam cartas à Basílica de Ars relatando graças atribuídas à sua intercessão. O volume é incomum pelos padrões dos santuários católicos. A continuidade é ainda mais rara: não houve período nos cento e sessenta e cinco anos desde a morte em que o fluxo de cartas houvesse cessado.</p>
-        <p>Essas cartas não são automaticamente milagres canônicos. São graças relatadas — a matéria-prima da qual processos canônicos futuros podem extrair casos para verificação formal. O que o arquivo demonstra independentemente de qualquer questão sobre natureza sobrenatural: a intercessão de Vianney continua sendo procurada com constância que atravessa gerações, culturas e contextos eclesiais completamente diferentes entre si.</p>
-      </div>
-    </div>
-
-    <div class="sl-bloco">
-      <h3>O que chega ao arquivo — as categorias principais</h3>
-      <div class="sl-grid-3">
-        <div class="sl-card">
-          <h4>Curas físicas</h4>
-          <p>Continuam sendo relatadas com regularidade. Algumas entram em triagem para investigação mais formal. A tipologia atual inclui casos com diagnóstico por imagem e marcadores laboratoriais — documentação de qualidade superior à dos casos do século XIX.</p>
-        </div>
-        <div class="sl-card">
-          <h4>Conversões e retorno aos sacramentos</h4>
-          <p>A categoria mais volumosa. Pessoas que relatam retorno à confissão, à missa e à prática da fé depois de anos ou décadas de afastamento, atribuindo o retorno à intercessão de Vianney ou a uma visita a Ars.</p>
-        </div>
-        <div class="sl-card">
-          <h4>Graças sacerdotais e vocacionais</h4>
-          <p>Padres em crise de identidade, seminaristas em dúvida sobre a vocação e jovens que discerniam o sacerdócio aparecem com frequência desproporcional entre os relatos — coerente com o patronato de Vianney sobre o clero.</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="sl-bloco">
-      <h3>O contexto de 2009 — graças ligadas ao Ano Sacerdotal</h3>
-      <div class="sl-card">
-        <p>O santuário de Ars recebeu correspondência aumentada durante e após o período de renovação sacerdotal em torno da figura de Vianney. O padrão predominante foi triplo: <strong>padres que consideravam deixar o ministério e decidiram permanecer</strong>, <strong>jovens que encontraram na história de Vianney — o candidato reprovado que não desistiu — uma resposta específica para a própria situação</strong>, e <strong>retorno aos sacramentos após anos de afastamento</strong>.</p>
-        <p>Esses relatos não são milagres no sentido canônico estrito. São graças — e a distinção importa, mas não diminui a realidade do que as pessoas descrevem. Uma conversão interior não é menos real porque não pode ser verificada pelos mesmos instrumentos que verificam uma cura física.</p>
-      </div>
-    </div>
-
-    <div class="sl-bloco">
-      <h3>Casos contemporâneos em processo de verificação</h3>
+      <h3>O fenômeno do Grappin — as perturbações noturnas</h3>
       <div class="sl-card">
         <div class="sl-badges">
           <span class="sl-badge sl-badge-media">Testemunhos múltiplos</span>
         </div>
-        <p>A Congregação para as Causas dos Santos mantém processos contínuos para graças atribuídas a santos canonizados quando os casos satisfazem os critérios iniciais. No caso de Vianney, cujo arquivo de graças relatadas é extenso e atual, há casos em diferentes estágios de investigação.</p>
-        <p>A natureza desses processos impede descrição detalhada enquanto estão em curso. O que pode ser dito: os casos contemporâneos chegam com qualidade de documentação médica superior à dos casos oitocentistas — diagnóstico por imagem, marcadores laboratoriais, acompanhamento multidisciplinar. Isso torna a verificação mais exigente em alguns aspectos e mais precisa em outros.</p>
+        <h4>O que acontecia — e como Vianney descrevia</h4>
+        <p>Durante anos — especialmente entre as décadas de 1820 e 1850 —, Vianney relatou perturbações noturnas que atribuía ao demônio, a quem chamava o <em>Grappin</em> (o "ganchão", em dialeto borgonhês). Os vigários e hospedes que dormiam na casa reitoral descreveram barulhos intensos, movimentos de objetos e perturbações que não encontravam explicação natural imediata.</p>
+        <p>O próprio Vianney descrevia os episódios com pragmatismo surpreendente — não com terror ou fascínio, mas com a irritação de alguém perturbado no sono por algo previsível. Chegou a dizer que quando o <em>Grappin</em> perturbava muito, era sinal de que no dia seguinte chegaria alguém com pecados graves para confessar. Esta "interpretação prática" dos fenômenos é ela mesma um dado do caráter de Vianney: ele não cultivava o extraordinário pelo extraordinário.</p>
+
+        <div class="sl-depoimento">
+          <p>"O Grappin e eu somos velhos conhecidos. Ele não pode fazer grande coisa. E quando está muito barulhento, eu sei que amanhã vem alguém que precisa muito de Deus."</p>
+          <span class="sl-depoimento-autor">Frase atribuída a Vianney por múltiplos vigários — registrada por Monnin e Toccanier</span>
+        </div>
+
+        <p>Os processos canônicos colheram testemunhos dos que haviam dormido na casa reitoral durante os episódios. A documentação é mais robusta do que a dos fenômenos de levitação — há múltiplos observadores independentes dos barulhos e perturbações. O que esses testemunhos não permitem estabelecer com certeza é a natureza das causas: a interpretação de Vianney era diabólica; as alternativas naturais que os advogados do diabo investigaram não produziram explicação satisfatória para todos os casos, mas também não produziram reconhecimento formal de fenômeno preternatural nesta categoria específica.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="sl-sep">· · ·</div>
+
+  <!-- 10 · APÓS A MORTE -->
+  <div class="sl-secao" id="apos-a-morte">
+    <div class="sl-secao-header">
+      <span class="sl-secao-num">10</span>
+      <div class="sl-secao-linha"></div>
+      <span class="sl-secao-titulo">Milagres Após a Morte — O Arquivo que Não Parou</span>
+    </div>
+
+    <div class="sl-bloco">
+      <div class="sl-bloco-resumo">
+        <h3>Cento e sessenta e cinco anos de cartas</h3>
+        <p>Desde agosto de 1859 — desde a semana da morte de Vianney — chegam cartas à Basílica de Ars relatando graças atribuídas à sua intercessão. O volume é incomum pelos padrões dos santuários católicos. A continuidade é ainda mais rara: não houve período em cento e sessenta e cinco anos em que o fluxo de correspondência houvesse cessado — nem durante as guerras mundiais, nem durante os períodos de crise aguda do catolicismo europeu, nem no contexto de escândalos que abalaram a credibilidade do clero. Essa continuidade temporal, atravessando contextos históricos radicalmente diferentes, é ela mesma um dado do legado de Vianney.</p>
+      </div>
+    </div>
+
+    <div class="sl-bloco">
+      <h3>O que chega ao arquivo — as categorias e os perfis</h3>
+      <div class="sl-grid-3">
+        <div class="sl-card">
+          <h4>Curas físicas</h4>
+          <p>Continuam sendo relatadas com regularidade. A tipologia atual inclui casos com diagnóstico por imagem, marcadores laboratoriais e acompanhamento multidisciplinar — documentação de qualidade superior à dos casos do século XIX. Alguns entram em triagem para investigação canônica mais formal.</p>
+        </div>
+        <div class="sl-card">
+          <h4>Conversões e retorno</h4>
+          <p>A categoria mais volumosa. Pessoas que relatam retorno à confissão, à missa e à prática da fé depois de anos ou décadas de afastamento, atribuindo o retorno à intercessão de Vianney ou a uma visita a Ars. Frequentemente descrevem que algo específico do legado de Vianney — uma frase lida, uma imagem vista — foi o ponto de virada.</p>
+        </div>
+        <div class="sl-card">
+          <h4>Graças sacerdotais e vocacionais</h4>
+          <p>Padres em crise de identidade, seminaristas em dúvida sobre a vocação e jovens em discernimento aparecem com frequência desproporcional entre os relatos — coerente com o patronato de Vianney sobre o clero desde 1929. Esse padrão intensificou-se visivelmente durante e após o Ano Sacerdotal de 2009–2010.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="sl-bloco">
+      <h3>A distinção que o leitor precisa fazer</h3>
+      <p>As cartas que chegam a Ars não são automaticamente milagres canônicos. São graças relatadas — a matéria-prima da qual processos canônicos futuros podem extrair casos para verificação formal. A distinção importa, mas não diminui a realidade do que as pessoas descrevem.</p>
+      <p>Uma conversão interior — um padre que havia decidido abandonar o ministério e encontrou em Ars razão para permanecer — não é menos real porque não pode ser verificada pelos mesmos instrumentos que verificam uma cura física. Pertence a uma categoria diferente de graça, com epistemologia diferente, mas não com realidade menor para quem a viveu. O arquivo de Ars guarda as duas categorias, e as distingue — sem reduzir a segunda à primeira nem elevar a primeira acima do que a documentação permite.</p>
+    </div>
+
+    <div class="sl-bloco">
+      <h3>Casos contemporâneos — o que pode ser dito</h3>
+      <div class="sl-card">
+        <div class="sl-badges">
+          <span class="sl-badge sl-badge-media">Testemunhos múltiplos — em verificação</span>
+        </div>
+        <p>A Congregação para as Causas dos Santos mantém processos contínuos para graças atribuídas a santos canonizados quando os casos satisfazem os critérios iniciais. No caso de Vianney, cujo arquivo de graças relatadas é extenso e atual, há casos em diferentes estágios de investigação que não podem ser descritos em detalhe enquanto os processos estão em curso.</p>
+        <p>O que pode ser dito sobre o contexto contemporâneo: os casos chegam com qualidade de documentação médica superior à dos casos oitocentistas — diagnóstico por imagem, marcadores laboratoriais, registros hospitalares digitais. Isso torna a verificação mais exigente em alguns aspectos — a medicina contemporânea tem muito mais capacidade de identificar causas naturais — e mais precisa em outros: quando uma causa natural não é identificada pela medicina contemporânea, o peso dessa constatação é maior do que quando a medicina do século XIX não a identificava.</p>
       </div>
     </div>
 
@@ -1350,41 +1330,108 @@
       <h3>Como pedir a intercessão</h3>
       <div class="sl-grid-2">
         <div class="sl-card">
-          <h4>Forma mais simples</h4>
+                    <h4>Forma mais simples</h4>
           <p>Falar com ele diretamente, como se fala com alguém presente. Apresentar uma intenção concreta. Pedir a graça específica que se precisa — sobretudo conversão genuína, boa confissão e fidelidade no estado de vida.</p>
           <p>Era o método que ensinava para a oração em geral. <em>"Eu o olho e ele me olha."</em> Aplicado à intercessão, funciona da mesma forma: não como técnica, mas como presença.</p>
         </div>
         <div class="sl-card">
-          <h4>Forma clássica</h4>
+          <h4>Forma clássica — a novena</h4>
           <ul class="sl-lista-curta">
-            <li>Novena de nove dias com texto aprovado, disponível no santuário de Ars e nas paróquias com seu nome.</li>
-            <li>Unir o pedido à confissão e à participação na missa — coerente com o que o próprio Vianney ensinava.</li>
-            <li>Se a graça vier, registrar por escrito — no santuário de Ars, na paróquia local ou no diário pessoal.</li>
+            <li>Novena de nove dias com texto aprovado, disponível no santuário de Ars e nas paróquias com o seu nome.</li>
+            <li>Unir o pedido à confissão e à participação na missa — coerente com o que o próprio Vianney ensinava sobre a oração eficaz.</li>
+            <li>Se a graça vier, registrá-la por escrito — no santuário de Ars, na paróquia local ou em carta ao bispo diocesano, para que o caso entre nos arquivos que os processos canônicos futuros poderão usar.</li>
           </ul>
         </div>
       </div>
-      <div class="sl-alerta-info">
-        <strong>Intenções especialmente ligadas ao seu patronato:</strong> conversão de sacerdotes em crise, discernimento vocacional, graça de uma boa confissão, fidelidade no ministério pastoral, retorno de afastados aos sacramentos.
+
+      <div class="sl-alerta-verde">
+        <strong>Intenções especialmente ligadas ao seu patronato:</strong> conversão de sacerdotes em crise de identidade ou de fé, discernimento vocacional para o sacerdócio ou vida religiosa, graça de uma boa confissão depois de longa ausência dos sacramentos, fidelidade no ministério pastoral para o clero, retorno de filhos e cônjuges afastados da fé.
       </div>
     </div>
 
     <div class="sl-bloco">
       <h3>Oração breve de intercessão</h3>
       <div class="sl-citacao">
-        <p>São João Maria Vianney, pastor incansável de Ars, que conhecia os corações pelo dom de Deus e não pela ciência humana — alcançai-me a graça de [<em>intenção específica</em>]. Que a vossa intercessão me obtenha o que mais necessito: a verdadeira conversão do coração e a fidelidade no estado de vida em que Deus me colocou. Amém.</p>
-        <span class="sl-fonte">Forma de oração breve, adaptada das novenas tradicionais</span>
+        <p>São João Maria Vianney, pastor incansável que conhecia os corações pelo dom de Deus e não pela ciência humana — alcançai-me a graça de <em>[intenção específica]</em>. Que a vossa intercessão me obtenha o que mais necessito: a verdadeira conversão do coração e a fidelidade no estado de vida em que Deus me colocou. Amém.</p>
+        <span class="sl-fonte">Forma breve de oração, adaptada das novenas tradicionais do Santuário de Ars</span>
       </div>
     </div>
 
     <div class="sl-bloco">
-      <div class="sl-bloco-resumo">
-        <h3>Uma palavra final sobre os milagres</h3>
-        <p>O milagre, na tradição católica, não é nunca o ponto central — é o sinal. O que Vianney testemunhava, em cada cardiognosia e em cada cura, não era a sua própria capacidade extraordinária, mas a presença de um Deus que continua agindo no mundo através de instrumentos humanos. O que esta página apresenta não é, portanto, uma coleção de prodígios curiosos. É a documentação histórica de quarenta anos em que um homem específico se deixou ser instrumento — e do que aconteceu por causa disso, nas vidas que cruzaram com a sua.</p>
+      <h3>Uma palavra final sobre os milagres de Ars</h3>
+      <p><span class="sl-capitular">O</span> milagre, na tradição teológica católica, não é nunca o ponto central — é o sinal. O que aponta, no caso de Vianney, para uma presença que continua agindo depois que o corpo foi depositado na basílica e o confessionário foi fechado pela última vez em agosto de 1859. O arquivo de Ars não é uma coleção de curiosidades sobrenaturais. É a documentação histórica — imperfeita, variável em qualidade, mas ininterrupta — de que algo começado naquela aldeia em 1818 ainda não terminou.</p>
+      <p>O que esta página apresentou não era, portanto, uma coleção de prodígios para impressionar. Era a documentação histórica de quarenta anos em que um homem específico se deixou ser instrumento — e do que aconteceu, nas vidas que cruzaram com a sua, por causa disso. Os dois milagres canônicos resistiram ao método mais exigente disponível para a verificação de fenômenos extraordinários. Os outros casos têm pesos diferentes, registrados aqui com honestidade. E o arquivo continua a crescer, carta por carta, com a obstinação silenciosa das coisas que são reais.</p>
+
+      <div class="sl-bloco-resumo" style="margin-top: 20px;">
+        <h3>Síntese dos fenômenos por categoria e nível de evidência</h3>
+        <table class="sl-mini-tabela" style="margin-top: 12px;">
+          <thead>
+            <tr>
+              <th>Categoria</th>
+              <th>Fenômenos</th>
+              <th>Nível predominante</th>
+              <th>Elemento decisivo</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Milagres canônicos</strong></td>
+              <td>Claudine Venet (1905) e Louis Doze (1925)</td>
+              <td><span class="sl-badge sl-badge-canonico">Canônico</span></td>
+              <td>Diagnóstico documentado, peritos independentes, hipóteses naturais esgotadas</td>
+            </tr>
+            <tr>
+              <td><strong>Cardiognosia</strong></td>
+              <td>Oficial militar, seminarista, Ozanam, anticlerical parisiense</td>
+              <td><span class="sl-badge sl-badge-forte">Forte</span> / <span class="sl-badge sl-badge-media">Múltiplos</span></td>
+              <td>Especificidade verificável, testemunhas adversas, investigação de hipóteses naturais sem resultado</td>
+            </tr>
+            <tr>
+              <td><strong>Curas físicas em vida</strong></td>
+              <td>Estado físico do próprio Vianney, epiléptico de Fareins, paralítico de Lyon</td>
+              <td><span class="sl-badge sl-badge-forte">Forte</span> / <span class="sl-badge sl-badge-media">Múltiplos</span></td>
+              <td>Mesmo médico antes e depois, condições objetivamente verificáveis</td>
+            </tr>
+            <tr>
+              <td><strong>Provisão</strong></td>
+              <td>Celeiro de trigo, farinha, azeite</td>
+              <td><span class="sl-badge sl-badge-forte">Forte</span> / <span class="sl-badge sl-badge-media">Múltiplos</span></td>
+              <td>Testemunhas com memória prática dos estoques, incluindo adversários de Vianney</td>
+            </tr>
+            <tr>
+              <td><strong>Êxtases durante a missa</strong></td>
+              <td>Episódios durante a consagração, observados por médico cético</td>
+              <td><span class="sl-badge sl-badge-forte">Forte</span></td>
+              <td>Documentação médica explicitamente clínica pelo Dr. Saunier</td>
+            </tr>
+            <tr>
+              <td><strong>Profecia</strong></td>
+              <td>Ars como destino de peregrinação, morte de Gregório XVI</td>
+              <td><span class="sl-badge sl-badge-forte">Forte</span> / <span class="sl-badge sl-badge-media">Múltiplos</span></td>
+              <td>Anúncio improvável em 1818, resultado verificável décadas depois</td>
+            </tr>
+            <tr>
+              <td><strong>Odor de santidade</strong></td>
+              <td>Confessionário, missa, espaços após passagem</td>
+              <td><span class="sl-badge sl-badge-media">Múltiplos</span></td>
+              <td>Consistência entre testemunhas independentes em três contextos distintos</td>
+            </tr>
+            <tr>
+              <td><strong>Perturbações noturnas (Grappin)</strong></td>
+              <td>Barulhos e perturbações na casa reitoral</td>
+              <td><span class="sl-badge sl-badge-media">Múltiplos</span></td>
+              <td>Múltiplos observadores; explicação natural não encontrada, mas fenômeno não formalmente reconhecido como preternatural</td>
+            </tr>
+            <tr>
+              <td><strong>Levitação e bilocalização</strong></td>
+              <td>Relatos esparsos de observadores únicos</td>
+              <td><span class="sl-badge sl-badge-fraca">Tradição oral</span></td>
+              <td>Testemunhos tardios, não corroborados, não usados nos processos canônicos</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
 
 </main>
-
-</body>
-</html>
