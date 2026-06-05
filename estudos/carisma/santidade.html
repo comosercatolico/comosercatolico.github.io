@@ -1,0 +1,4456 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Santidade — Compêndio Teológico Completo</title>
+
+    <!-- Fontes -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700&family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Inter:wght@300;400;500;600;700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
+
+    <!-- Ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <!-- COLOQUE O STYLE AQUI -->
+<style>
+    /* ============================= */
+    /* RESET E BASE */
+    /* ============================= */
+    *,
+    *::before,
+    *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    :root {
+        /* Paleta principal — tons solenes e sagrados */
+        --cor-primaria: #1a1a2e;
+        --cor-primaria-clara: #16213e;
+        --cor-secundaria: #0f3460;
+        --cor-accent: #c9a84c;
+        --cor-accent-clara: #dfc06f;
+        --cor-accent-escura: #a8872e;
+        --cor-accent-suave: rgba(201, 168, 76, 0.12);
+
+        --cor-texto: #2c2c2c;
+        --cor-texto-claro: #f0e6d3;
+        --cor-texto-suave: #6b6b6b;
+        --cor-texto-sobre-escuro: #d4cfc7;
+
+        --cor-fundo-claro: #faf8f4;
+        --cor-fundo-creme: #f5f0e8;
+        --cor-fundo-escuro: #121220;
+        --cor-fundo-escuro-alt: #1a1a30;
+        --cor-fundo-card-escuro: rgba(255, 255, 255, 0.04);
+        --cor-fundo-card-claro: #ffffff;
+
+        --cor-borda: rgba(201, 168, 76, 0.2);
+        --cor-borda-clara: rgba(201, 168, 76, 0.35);
+        --cor-borda-escura: rgba(201, 168, 76, 0.12);
+
+        --cor-sombra: rgba(0, 0, 0, 0.08);
+        --cor-sombra-forte: rgba(0, 0, 0, 0.15);
+
+        /* Tipografia */
+        --font-titulo: 'Playfair Display', Georgia, 'Times New Roman', serif;
+        --font-corpo: 'Crimson Text', Georgia, 'Times New Roman', serif;
+        --font-ui: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        --font-classica: 'EB Garamond', 'Crimson Text', Georgia, serif;
+
+        /* Tamanhos */
+        --tamanho-base: 18px;
+        --linha-base: 1.85;
+
+        /* Espaçamentos */
+        --espaco-xs: 0.35rem;
+        --espaco-sm: 0.75rem;
+        --espaco-md: 1.5rem;
+        --espaco-lg: 2.5rem;
+        --espaco-xl: 4rem;
+        --espaco-2xl: 6rem;
+        --espaco-3xl: 8rem;
+
+        /* Largura */
+        --largura-max: 1200px;
+        --largura-texto: 820px;
+
+        /* Transições */
+        --transicao: 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        --transicao-lenta: 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+        /* Bordas */
+        --raio-sm: 4px;
+        --raio-md: 8px;
+        --raio-lg: 12px;
+        --raio-xl: 16px;
+    }
+
+    html {
+        scroll-behavior: smooth;
+        font-size: var(--tamanho-base);
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+        font-family: var(--font-corpo);
+        color: var(--cor-texto);
+        background-color: var(--cor-fundo-claro);
+        line-height: var(--linha-base);
+        overflow-x: hidden;
+    }
+
+    ::selection {
+        background-color: var(--cor-accent);
+        color: var(--cor-primaria);
+    }
+
+    /* ============================= */
+    /* CONTAINER */
+    /* ============================= */
+    .container {
+        max-width: var(--largura-max);
+        margin: 0 auto;
+        padding: 0 2rem;
+    }
+
+    /* ============================= */
+    /* NAVEGAÇÃO */
+    /* ============================= */
+    #nav-principal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1000;
+        background: transparent;
+        transition: var(--transicao);
+        padding: 1rem 0;
+    }
+
+    #nav-principal.nav-scrolled {
+        background: rgba(18, 18, 32, 0.97);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        padding: 0.6rem 0;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+        border-bottom: 1px solid var(--cor-borda-escura);
+    }
+
+    .nav-container {
+        max-width: var(--largura-max);
+        margin: 0 auto;
+        padding: 0 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .nav-logo {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        font-family: var(--font-titulo);
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: var(--cor-accent);
+        letter-spacing: 0.05em;
+        text-decoration: none;
+    }
+
+    .nav-logo i {
+        font-size: 1.1rem;
+        opacity: 0.9;
+    }
+
+    .nav-links {
+        display: flex;
+        list-style: none;
+        gap: 0.15rem;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .nav-links a {
+        font-family: var(--font-ui);
+        font-size: 0.72rem;
+        font-weight: 500;
+        color: var(--cor-texto-sobre-escuro);
+        text-decoration: none;
+        padding: 0.4rem 0.65rem;
+        border-radius: var(--raio-sm);
+        transition: var(--transicao);
+        letter-spacing: 0.03em;
+        text-transform: uppercase;
+        white-space: nowrap;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.nav-ativo {
+        color: var(--cor-accent);
+        background: var(--cor-accent-suave);
+    }
+
+    .nav-toggle {
+        display: none;
+        background: none;
+        border: none;
+        color: var(--cor-accent);
+        font-size: 1.4rem;
+        cursor: pointer;
+        padding: 0.5rem;
+        transition: var(--transicao);
+    }
+
+    .nav-toggle:hover {
+        transform: scale(1.1);
+    }
+
+    /* ============================= */
+    /* HERO */
+    /* ============================= */
+    #hero {
+        position: relative;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        background:
+            linear-gradient(180deg,
+                rgba(18, 18, 32, 0.92) 0%,
+                rgba(26, 26, 46, 0.88) 40%,
+                rgba(15, 52, 96, 0.85) 100%),
+            url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400"><defs><pattern id="p" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M20 0L40 20L20 40L0 20Z" fill="none" stroke="rgba(201,168,76,0.06)" stroke-width="0.5"/></pattern></defs><rect width="400" height="400" fill="url(%23p)"/></svg>');
+        background-size: cover;
+        overflow: hidden;
+    }
+
+    #hero::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 500px;
+        height: 500px;
+        background: radial-gradient(circle, rgba(201, 168, 76, 0.06) 0%, transparent 70%);
+        border-radius: 50%;
+        pointer-events: none;
+    }
+
+    .hero-overlay {
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(ellipse at center bottom,
+                rgba(201, 168, 76, 0.05) 0%,
+                transparent 60%);
+        pointer-events: none;
+    }
+
+    .hero-content {
+        position: relative;
+        z-index: 2;
+        max-width: 850px;
+        padding: 2rem;
+    }
+
+    .hero-supratitulo {
+        font-family: var(--font-ui);
+        font-size: 0.8rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.35em;
+        color: var(--cor-accent);
+        margin-bottom: 1.5rem;
+        opacity: 0.9;
+    }
+
+    .hero-titulo {
+        font-family: var(--font-titulo);
+        font-size: clamp(3rem, 8vw, 5.5rem);
+        font-weight: 900;
+        color: var(--cor-texto-claro);
+        letter-spacing: 0.12em;
+        line-height: 1.05;
+        margin-bottom: 1.5rem;
+        text-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .hero-separador {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+        margin-bottom: 2rem;
+    }
+
+    .separador-linha {
+        display: block;
+        width: 60px;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, var(--cor-accent), transparent);
+    }
+
+    .hero-separador i {
+        color: var(--cor-accent);
+        font-size: 0.9rem;
+        opacity: 0.8;
+    }
+
+    .hero-subtitulo {
+        font-family: var(--font-classica);
+        font-size: clamp(1.15rem, 2.5vw, 1.5rem);
+        font-style: italic;
+        color: var(--cor-texto-sobre-escuro);
+        line-height: 1.6;
+        margin-bottom: 0.5rem;
+        max-width: 700px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .hero-referencia {
+        font-family: var(--font-ui);
+        font-size: 0.78rem;
+        color: var(--cor-accent);
+        text-transform: uppercase;
+        letter-spacing: 0.15em;
+        margin-bottom: 2rem;
+        font-weight: 500;
+    }
+
+    .hero-descricao {
+        font-family: var(--font-corpo);
+        font-size: 1rem;
+        color: var(--cor-texto-sobre-escuro);
+        line-height: 1.8;
+        max-width: 650px;
+        margin: 0 auto 2.5rem;
+        opacity: 0.85;
+    }
+
+    .hero-acoes {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .btn-hero-primario,
+    .btn-hero-secundario {
+        font-family: var(--font-ui);
+        font-size: 0.82rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.15em;
+        padding: 0.9rem 2.2rem;
+        border-radius: var(--raio-sm);
+        text-decoration: none;
+        transition: var(--transicao);
+        cursor: pointer;
+    }
+
+    .btn-hero-primario {
+        background: var(--cor-accent);
+        color: var(--cor-primaria);
+        border: 2px solid var(--cor-accent);
+    }
+
+    .btn-hero-primario:hover {
+        background: var(--cor-accent-clara);
+        border-color: var(--cor-accent-clara);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(201, 168, 76, 0.3);
+    }
+
+    .btn-hero-secundario {
+        background: transparent;
+        color: var(--cor-accent);
+        border: 2px solid rgba(201, 168, 76, 0.4);
+    }
+
+    .btn-hero-secundario:hover {
+        border-color: var(--cor-accent);
+        background: rgba(201, 168, 76, 0.08);
+        transform: translateY(-2px);
+    }
+
+    /* ============================= */
+    /* SEÇÕES */
+    /* ============================= */
+    .secao {
+        padding: var(--espaco-3xl) 0;
+    }
+
+    .secao-clara {
+        background-color: var(--cor-fundo-claro);
+        color: var(--cor-texto);
+    }
+
+    .secao-escura {
+        background-color: var(--cor-fundo-escuro);
+        color: var(--cor-texto-sobre-escuro);
+    }
+
+    .secao-cabecalho {
+        text-align: center;
+        margin-bottom: var(--espaco-xl);
+    }
+
+    .secao-supratitulo {
+        font-family: var(--font-ui);
+        font-size: 0.72rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.4em;
+        color: var(--cor-accent);
+        margin-bottom: 0.8rem;
+    }
+
+    .secao-titulo {
+        font-family: var(--font-titulo);
+        font-size: clamp(1.8rem, 4vw, 2.8rem);
+        font-weight: 800;
+        line-height: 1.2;
+        margin-bottom: 1rem;
+    }
+
+    .secao-clara .secao-titulo {
+        color: var(--cor-primaria);
+    }
+
+    .secao-escura .secao-titulo {
+        color: var(--cor-texto-claro);
+    }
+
+    .secao-separador {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.8rem;
+        margin-bottom: 1rem;
+    }
+
+    .secao-separador .separador-linha {
+        width: 50px;
+    }
+
+    .secao-separador i {
+        color: var(--cor-accent);
+        font-size: 0.85rem;
+        opacity: 0.7;
+    }
+
+    .secao-descricao {
+        font-family: var(--font-corpo);
+        font-size: 1.05rem;
+        font-style: italic;
+        max-width: 600px;
+        margin: 0 auto;
+        opacity: 0.75;
+    }
+
+    /* ============================= */
+    /* CONTEÚDO TEXTO */
+    /* ============================= */
+    .conteudo-texto {
+        max-width: var(--largura-texto);
+        margin: 0 auto;
+    }
+
+    .conteudo-texto h3 {
+        font-family: var(--font-titulo);
+        font-size: 1.55rem;
+        font-weight: 700;
+        margin-top: var(--espaco-xl);
+        margin-bottom: var(--espaco-md);
+        padding-bottom: 0.6rem;
+        border-bottom: 2px solid var(--cor-borda);
+    }
+
+    .secao-clara .conteudo-texto h3 {
+        color: var(--cor-primaria);
+    }
+
+    .secao-escura .conteudo-texto h3 {
+        color: var(--cor-accent-clara);
+    }
+
+    .conteudo-texto h3:first-child {
+        margin-top: 0;
+    }
+
+    .subtitulo-grande {
+        font-size: 1.75rem !important;
+        letter-spacing: 0.02em;
+    }
+
+    .conteudo-texto h4 {
+        font-family: var(--font-titulo);
+        font-size: 1.2rem;
+        font-weight: 600;
+        margin-top: var(--espaco-lg);
+        margin-bottom: var(--espaco-sm);
+    }
+
+    .secao-clara .conteudo-texto h4 {
+        color: var(--cor-secundaria);
+    }
+
+    .secao-escura .conteudo-texto h4 {
+        color: var(--cor-accent);
+    }
+
+    .conteudo-texto h5 {
+        font-family: var(--font-titulo);
+        font-size: 1.05rem;
+        font-weight: 600;
+        margin-bottom: 0.4rem;
+    }
+
+    .conteudo-texto p {
+        font-size: 1.05rem;
+        line-height: 1.9;
+        margin-bottom: var(--espaco-md);
+        text-align: justify;
+        hyphens: auto;
+    }
+
+    .conteudo-texto strong {
+        font-weight: 700;
+    }
+
+    .secao-clara .conteudo-texto strong {
+        color: var(--cor-primaria);
+    }
+
+    .secao-escura .conteudo-texto strong {
+        color: var(--cor-accent-clara);
+    }
+
+    .conteudo-texto em {
+        font-style: italic;
+    }
+
+    /* ============================= */
+    /* CITAÇÕES */
+    /* ============================= */
+    .citacao-bloco {
+        position: relative;
+        margin: var(--espaco-lg) 0;
+        padding: 1.8rem 2rem 1.8rem 2.5rem;
+        border-radius: var(--raio-md);
+        border-left: 4px solid var(--cor-accent);
+    }
+
+    .secao-clara .citacao-bloco {
+        background: var(--cor-fundo-creme);
+    }
+
+    .secao-escura .citacao-bloco {
+        background: var(--cor-fundo-card-escuro);
+        border-left-color: var(--cor-accent);
+    }
+
+    .citacao-icone {
+        position: absolute;
+        top: 1.2rem;
+        left: -0.7rem;
+        width: 1.4rem;
+        height: 1.4rem;
+        background: var(--cor-accent);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .citacao-icone i {
+        font-size: 0.55rem;
+        color: var(--cor-primaria);
+    }
+
+    .citacao-bloco blockquote {
+        font-family: var(--font-classica);
+        font-size: 1.15rem;
+        font-style: italic;
+        line-height: 1.8;
+        margin-bottom: 0.8rem;
+    }
+
+    .secao-clara .citacao-bloco blockquote {
+        color: var(--cor-primaria);
+    }
+
+    .secao-escura .citacao-bloco blockquote {
+        color: var(--cor-texto-claro);
+    }
+
+    .citacao-bloco cite {
+        font-family: var(--font-ui);
+        font-size: 0.78rem;
+        font-style: normal;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--cor-accent);
+        display: block;
+    }
+
+    /* ============================= */
+    /* LISTAS */
+    /* ============================= */
+    .lista-teologica {
+        margin: var(--espaco-md) 0;
+        padding-left: 1.5rem;
+    }
+
+    .lista-teologica li {
+        font-size: 1.02rem;
+        line-height: 1.8;
+        margin-bottom: 0.65rem;
+        padding-left: 0.3rem;
+    }
+
+    .lista-teologica li::marker {
+        color: var(--cor-accent);
+    }
+
+    .lista-teologica ul {
+        margin-top: 0.4rem;
+        padding-left: 1.2rem;
+    }
+
+    /* ============================= */
+    /* ÍNDICE COMPLETO */
+    /* ============================= */
+    #indice-completo {
+        background: var(--cor-fundo-escuro);
+        color: var(--cor-texto-sobre-escuro);
+        padding: var(--espaco-2xl) 0;
+    }
+
+    .indice-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2.5rem;
+    }
+
+    .indice-grupo-titulo {
+        font-family: var(--font-titulo);
+        font-size: 1.15rem;
+        font-weight: 700;
+        color: var(--cor-accent);
+        margin-bottom: 1.2rem;
+        padding-bottom: 0.6rem;
+        border-bottom: 1px solid var(--cor-borda-escura);
+    }
+
+    .indice-lista {
+        list-style: none;
+        counter-reset: none;
+    }
+
+    .indice-lista>li {
+        font-family: var(--font-corpo);
+        font-size: 0.95rem;
+        margin-bottom: 0.5rem;
+        padding: 0.3rem 0;
+    }
+
+    .indice-lista>li>a {
+        color: var(--cor-texto-sobre-escuro);
+        text-decoration: none;
+        transition: var(--transicao);
+        border-bottom: 1px solid transparent;
+    }
+
+    .indice-lista>li>a:hover {
+        color: var(--cor-accent);
+        border-bottom-color: var(--cor-accent);
+    }
+
+    .indice-lista ul {
+        list-style: none;
+        margin-top: 0.3rem;
+        padding-left: 1rem;
+    }
+
+    .indice-lista ul li {
+        font-size: 0.85rem;
+        margin-bottom: 0.25rem;
+    }
+
+    .indice-lista ul li a {
+        color: rgba(212, 207, 199, 0.65);
+        text-decoration: none;
+        transition: var(--transicao);
+    }
+
+    .indice-lista ul li a:hover {
+        color: var(--cor-accent);
+    }
+
+    /* ============================= */
+    /* DIMENSÕES (intro) */
+    /* ============================= */
+    .lista-dimensoes {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: 1.2rem;
+        margin: var(--espaco-lg) 0;
+    }
+
+    .dimensao-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 1rem;
+        padding: 1.3rem;
+        border-radius: var(--raio-md);
+        border: 1px solid var(--cor-borda);
+        transition: var(--transicao);
+    }
+
+    .secao-clara .dimensao-item {
+        background: var(--cor-fundo-card-claro);
+        box-shadow: 0 2px 8px var(--cor-sombra);
+    }
+
+    .secao-clara .dimensao-item:hover {
+        border-color: var(--cor-accent);
+        box-shadow: 0 4px 20px var(--cor-sombra-forte);
+        transform: translateY(-2px);
+    }
+
+    .dimensao-icone {
+        flex-shrink: 0;
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        background: var(--cor-accent-suave);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--cor-accent);
+        font-size: 1rem;
+    }
+
+    .dimensao-texto h4 {
+        font-family: var(--font-titulo);
+        font-size: 1rem;
+        font-weight: 700;
+        color: var(--cor-primaria);
+        margin-bottom: 0.25rem;
+    }
+
+    .dimensao-texto p {
+        font-size: 0.9rem;
+        line-height: 1.6;
+        color: var(--cor-texto-suave);
+        margin-bottom: 0;
+        text-align: left;
+    }
+
+    /* ============================= */
+    /* TABELA ETIMOLOGIA */
+    /* ============================= */
+    .tabela-etimologia {
+        overflow-x: auto;
+        margin: var(--espaco-lg) 0;
+        border-radius: var(--raio-md);
+        border: 1px solid var(--cor-borda-escura);
+    }
+
+    .tabela-etimologia table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .tabela-etimologia th,
+    .tabela-etimologia td {
+        padding: 0.85rem 1rem;
+        font-size: 0.92rem;
+        text-align: left;
+        border-bottom: 1px solid var(--cor-borda-escura);
+    }
+
+    .tabela-etimologia thead th {
+        font-family: var(--font-ui);
+        font-weight: 700;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--cor-accent);
+        background: rgba(201, 168, 76, 0.06);
+    }
+
+    .tabela-etimologia td {
+        font-family: var(--font-corpo);
+        color: var(--cor-texto-sobre-escuro);
+    }
+
+    .tabela-etimologia tr:hover td {
+        background: rgba(201, 168, 76, 0.04);
+    }
+
+    .tabela-etimologia td strong {
+        color: var(--cor-accent-clara);
+    }
+
+    /* ============================= */
+    /* DUPLA DIMENSÃO */
+    /* ============================= */
+    .dupla-dimensao {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+        margin: var(--espaco-lg) 0;
+    }
+
+    .dimensao-card {
+        padding: 1.8rem;
+        border-radius: var(--raio-md);
+        border: 1px solid var(--cor-borda-escura);
+        background: var(--cor-fundo-card-escuro);
+    }
+
+    .dimensao-card h4 {
+        font-family: var(--font-titulo);
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: var(--cor-accent);
+        margin-bottom: 0.8rem;
+    }
+
+    .dimensao-card h4 i {
+        margin-right: 0.4rem;
+        font-size: 0.85rem;
+    }
+
+    .dimensao-card p {
+        font-size: 0.95rem;
+        line-height: 1.75;
+        color: var(--cor-texto-sobre-escuro);
+        margin-bottom: 0;
+        text-align: left;
+    }
+
+    /* ============================= */
+    /* DISTINÇÕES */
+    /* ============================= */
+    .distincoes-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.2rem;
+        margin: var(--espaco-lg) 0;
+    }
+
+    .distincao-item {
+        padding: 1.5rem;
+        border-radius: var(--raio-md);
+        border: 1px solid var(--cor-borda-escura);
+        background: var(--cor-fundo-card-escuro);
+    }
+
+    .distincao-item h4 {
+        font-family: var(--font-titulo);
+        font-size: 1rem;
+        font-weight: 700;
+        color: var(--cor-accent);
+        margin-bottom: 0.6rem;
+    }
+
+    .distincao-item p {
+        font-size: 0.92rem;
+        line-height: 1.7;
+        margin-bottom: 0;
+        text-align: left;
+    }
+
+    /* ============================= */
+    /* PROFETAS */
+    /* ============================= */
+    .profetas-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.2rem;
+        margin: var(--espaco-lg) 0;
+    }
+
+    .profeta-card {
+        padding: 1.5rem;
+        border-radius: var(--raio-md);
+        border: 1px solid var(--cor-borda);
+        background: var(--cor-fundo-card-claro);
+        box-shadow: 0 2px 8px var(--cor-sombra);
+        transition: var(--transicao);
+    }
+
+    .profeta-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 16px var(--cor-sombra-forte);
+        border-color: var(--cor-accent);
+    }
+
+    .profeta-card h5 {
+        font-family: var(--font-titulo);
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: var(--cor-secundaria);
+        margin-bottom: 0.6rem;
+    }
+
+    .profeta-card p {
+        font-size: 0.92rem;
+        line-height: 1.7;
+        margin-bottom: 0;
+        text-align: left;
+    }
+
+    /* ============================= */
+    /* CONCEITOS PAULINOS */
+    /* ============================= */
+    .paulino-conceitos {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.2rem;
+        margin: var(--espaco-lg) 0;
+    }
+
+    .conceito-card {
+        padding: 1.4rem;
+        border-radius: var(--raio-md);
+        border: 1px solid var(--cor-borda);
+        background: var(--cor-fundo-card-claro);
+        box-shadow: 0 2px 8px var(--cor-sombra);
+        transition: var(--transicao);
+    }
+
+    .conceito-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 16px var(--cor-sombra-forte);
+    }
+
+    .conceito-card h5 {
+        font-family: var(--font-titulo);
+        font-size: 1rem;
+        font-weight: 700;
+        color: var(--cor-secundaria);
+        margin-bottom: 0.5rem;
+    }
+
+    .conceito-card p {
+        font-size: 0.9rem;
+        line-height: 1.7;
+        margin-bottom: 0;
+        text-align: left;
+    }
+
+    /* ============================= */
+    /* CARACTERÍSTICAS DA SANTIDADE DIVINA */
+    /* ============================= */
+    .caracteristicas-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1.2rem;
+        margin: var(--espaco-lg) 0;
+    }
+
+    .caract-card {
+        text-align: center;
+        padding: 1.8rem 1.2rem;
+        border-radius: var(--raio-md);
+        border: 1px solid var(--cor-borda-escura);
+        background: var(--cor-fundo-card-escuro);
+        transition: var(--transicao);
+    }
+
+    .caract-card:hover {
+        transform: translateY(-3px);
+        border-color: var(--cor-accent);
+        background: rgba(201, 168, 76, 0.04);
+    }
+
+    .caract-icone {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: var(--cor-accent-suave);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1rem;
+        color: var(--cor-accent);
+        font-size: 1.1rem;
+    }
+
+    .caract-card h5 {
+        font-family: var(--font-titulo);
+        font-size: 1rem;
+        font-weight: 700;
+        color: var(--cor-accent-clara);
+        margin-bottom: 0.5rem;
+    }
+
+    .caract-card p {
+        font-size: 0.88rem;
+        line-height: 1.65;
+        margin-bottom: 0;
+        text-align: center;
+    }
+
+    /* ============================= */
+    /* TRINDADE */
+    /* ============================= */
+    .trindade-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.5rem;
+        margin: var(--espaco-lg) 0;
+    }
+
+    .trindade-card {
+        text-align: center;
+        padding: 2rem 1.5rem;
+        border-radius: var(--raio-lg);
+        border: 1px solid var(--cor-borda-escura);
+        background: var(--cor-fundo-card-escuro);
+        transition: var(--transicao);
+    }
+
+    .trindade-card:hover {
+        transform: translateY(-3px);
+        border-color: var(--cor-accent);
+    }
+
+    .trindade-icone {
+        width: 55px;
+        height: 55px;
+        border-radius: 50%;
+        background: var(--cor-accent-suave);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1.2rem;
+        color: var(--cor-accent);
+        font-size: 1.2rem;
+    }
+
+    .trindade-card h4 {
+        font-family: var(--font-titulo);
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: var(--cor-accent-clara);
+        margin-bottom: 0.8rem;
+    }
+
+    .trindade-card p {
+        font-size: 0.92rem;
+        line-height: 1.75;
+        margin-bottom: 0;
+        text-align: center;
+    }
+
+    /* ============================= */
+    /* SACRAMENTOS */
+    /* ============================= */
+    .sacramentos-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 1.2rem;
+        margin: var(--espaco-lg) 0;
+    }
+
+    .sacramento-card {
+        padding: 1.5rem;
+        border-radius: var(--raio-md);
+        border: 1px solid var(--cor-borda-escura);
+        background: var(--cor-fundo-card-escuro);
+        transition: var(--transicao);
+    }
+
+    .sacramento-card:hover {
+        border-color: var(--cor-accent);
+        transform: translateY(-2px);
+    }
+
+    .sacramento-card h5 {
+        font-family: var(--font-titulo);
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: var(--cor-accent);
+        margin-bottom: 0.6rem;
+    }
+
+    .sacramento-card h5 i {
+        margin-right: 0.4rem;
+        font-size: 0.9rem;
+        opacity: 0.8;
+    }
+
+    .sacramento-card p {
+        font-size: 0.9rem;
+        line-height: 1.7;
+        margin-bottom: 0;
+        text-align: left;
+    }
+
+    /* ============================= */
+    /* TIMELINE MAGISTÉRIO */
+    /* ============================= */
+    .magisterio-timeline {
+        position: relative;
+        margin: var(--espaco-lg) 0;
+        padding-left: 2.5rem;
+    }
+
+    .magisterio-timeline::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        background: linear-gradient(180deg, var(--cor-accent), rgba(201, 168, 76, 0.2));
+    }
+
+    .timeline-item {
+        position: relative;
+        margin-bottom: 2rem;
+        padding-left: 1rem;
+    }
+
+    .timeline-marcador {
+        position: absolute;
+        left: -2.85rem;
+        top: 0;
+    }
+
+    .timeline-ano {
+        display: inline-block;
+        font-family: var(--font-ui);
+        font-size: 0.68rem;
+        font-weight: 700;
+        color: var(--cor-primaria);
+        background: var(--cor-accent);
+        padding: 0.2rem 0.55rem;
+        border-radius: var(--raio-sm);
+        letter-spacing: 0.05em;
+        white-space: nowrap;
+    }
+
+    .timeline-conteudo {
+        padding: 1.3rem 1.5rem;
+        border-radius: var(--raio-md);
+        border: 1px solid var(--cor-borda);
+        background: var(--cor-fundo-card-claro);
+        box-shadow: 0 2px 8px var(--cor-sombra);
+        transition: var(--transicao);
+    }
+
+    .timeline-conteudo:hover {
+        box-shadow: 0 4px 16px var(--cor-sombra-forte);
+        border-color: var(--cor-accent);
+    }
+
+    .timeline-conteudo h4 {
+        font-family: var(--font-titulo);
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: var(--cor-secundaria);
+        margin-bottom: 0.5rem;
+    }
+
+    .timeline-conteudo p {
+        font-size: 0.93rem;
+        line-height: 1.7;
+        margin-bottom: 0;
+        text-align: left;
+    }
+
+    /* ============================= */
+    /* PADRES DA IGREJA */
+    /* ============================= */
+    .padres-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        margin: var(--espaco-lg) 0;
+    }
+
+    .padre-card {
+        padding: 1.8rem;
+        border-radius: var(--raio-md);
+        border: 1px solid var(--cor-borda-escura);
+        background: var(--cor-fundo-card-escuro);
+        transition: var(--transicao);
+    }
+
+    .padre-card:hover {
+        border-color: var(--cor-accent);
+        transform: translateY(-2px);
+    }
+
+    .padre-card h4 {
+        font-family: var(--font-titulo);
+        font-size: 1.15rem;
+        font-weight: 700;
+        color: var(--cor-accent);
+        margin-bottom: 0.4rem;
+    }
+
+    .padre-frase {
+        font-family: var(--font-classica);
+        font-style: italic;
+        font-size: 1.05rem;
+        color: var(--cor-accent-clara);
+        margin-bottom: 0.8rem !important;
+        padding-left: 1rem;
+        border-left: 2px solid var(--cor-accent);
+    }
+
+    .padre-card p {
+        font-size: 0.93rem;
+        line-height: 1.75;
+        text-align: left;
+    }
+
+    /* ============================= */
+    /* DOUTORES */
+    /* ============================= */
+    .doutores-lista {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        margin: var(--espaco-lg) 0;
+    }
+
+    .doutor-card {
+        border-radius: var(--raio-lg);
+        border: 1px solid var(--cor-borda);
+        overflow: hidden;
+        background: var(--cor-fundo-card-claro);
+        box-shadow: 0 2px 8px var(--cor-sombra);
+        transition: var(--transicao);
+    }
+
+    .doutor-card:hover {
+        box-shadow: 0 6px 24px var(--cor-sombra-forte);
+        transform: translateY(-2px);
+    }
+
+    .doutor-header {
+        background: linear-gradient(135deg, var(--cor-primaria), var(--cor-secundaria));
+        padding: 1.3rem 1.8rem;
+    }
+
+    .doutor-header h4 {
+        font-family: var(--font-titulo);
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: var(--cor-texto-claro);
+        margin-bottom: 0.2rem;
+    }
+
+    .doutor-titulo {
+        font-family: var(--font-ui);
+        font-size: 0.72rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        color: var(--cor-accent);
+    }
+
+    .doutor-body {
+        padding: 1.8rem;
+    }
+
+    .doutor-body p {
+        font-size: 0.95rem;
+        line-height: 1.8;
+        text-align: left;
+    }
+
+    .doutor-body ul {
+        margin: 0.8rem 0;
+        padding-left: 1.2rem;
+    }
+
+    .doutor-body ul li {
+        font-size: 0.93rem;
+        line-height: 1.7;
+        margin-bottom: 0.4rem;
+    }
+
+    .doutor-body ul li::marker {
+        color: var(--cor-accent);
+    }
+
+    .doutor-body .citacao-bloco {
+        margin: 1.2rem 0 0;
+    }
+
+    /* ============================= */
+    /* FILÓSOFOS */
+    /* ============================= */
+    .filosofos-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.2rem;
+        margin: var(--espaco-lg) 0;
+    }
+
+    .filosofo-card {
+        padding: 1.5rem;
+        border-radius: var(--raio-md);
+        border: 1px solid var(--cor-borda-escura);
+        background: var(--cor-fundo-card-escuro);
+        transition: var(--transicao);
+    }
+
+    .filosofo-card:hover {
+        border-color: var(--cor-accent);
+        transform: translateY(-2px);
+    }
+
+    .filosofo-card h4 {
+        font-family: var(--font-titulo);
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: var(--cor-accent);
+        margin-bottom: 0.6rem;
+    }
+
+    .filosofo-card p {
+        font-size: 0.9rem;
+        line-height: 1.7;
+        margin-bottom: 0;
+        text-align: left;
+    }
+
+    /* ============================= */
+    /* VIAS (MÍSTICA) */
+    /* ============================= */
+    .via-card {
+        margin: var(--espaco-lg) 0;
+        border-radius: var(--raio-lg);
+        overflow: hidden;
+        border: 1px solid var(--cor-borda);
+        background: var(--cor-fundo-card-claro);
+        box-shadow: 0 2px 12px var(--cor-sombra);
+        transition: var(--transicao);
+    }
+
+    .via-card:hover {
+        box-shadow: 0 6px 24px var(--cor-sombra-forte);
+    }
+
+    .via-header {
+        padding: 1.8rem 2rem;
+        display: flex;
+        align-items: center;
+        gap: 1.2rem;
+    }
+
+    .via-purgativa-header {
+        background: linear-gradient(135deg, #2d1b4e, #4a2d7a);
+    }
+
+    .via-iluminativa-header {
+        background: linear-gradient(135deg, #1a3a5c, #2d5f8a);
+    }
+
+    .via-unitiva-header {
+        background: linear-gradient(135deg, #5c3a1a, var(--cor-accent-escura));
+    }
+
+    .via-numero {
+        flex-shrink: 0;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: var(--font-titulo);
+        font-size: 1.4rem;
+        font-weight: 800;
+        color: var(--cor-texto-claro);
+    }
+
+    .via-header h3 {
+        font-family: var(--font-titulo);
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: var(--cor-texto-claro);
+        margin: 0;
+        border: none;
+        padding: 0;
+    }
+
+    .via-subtitulo {
+        font-family: var(--font-ui);
+        font-size: 0.72rem;
+        text-transform: uppercase;
+        letter-spacing: 0.15em;
+        color: rgba(255, 255, 255, 0.6);
+        margin-top: 0.2rem;
+    }
+
+    .via-body {
+        padding: 2rem;
+    }
+
+    .via-body h4 {
+        color: var(--cor-secundaria);
+    }
+
+    .via-body p,
+    .via-body li {
+        font-size: 0.95rem;
+    }
+
+    /* ============================= */
+    /* VIRTUDES */
+    /* ============================= */
+    .virtudes-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 1.2rem;
+        margin: var(--espaco-lg) 0;
+    }
+
+    .virtude-card {
+        padding: 1.5rem;
+        border-radius: var(--raio-md);
+        border: 1px solid var(--cor-borda-escura);
+        background: var(--cor-fundo-card-escuro);
+        transition: var(--transicao);
+    }
+
+    .virtude-card:hover {
+        border-color: var(--cor-accent);
+        transform: translateY(-2px);
+    }
+
+    .virtude-card h5 {
+        font-family: var(--font-titulo);
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: var(--cor-accent);
+        margin-bottom: 0.5rem;
+    }
+
+    .virtude-card h5 i {
+        margin-right: 0.3rem;
+        font-size: 0.85rem;
+    }
+
+    .virtude-card p {
+        font-size: 0.9rem;
+        line-height: 1.7;
+        margin-bottom: 0;
+        text-align: left;
+    }
+
+    /* ============================= */
+    /* ESTADOS DE VIDA */
+    /* ============================= */
+    .estados-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: 1.2rem;
+        margin: var(--espaco-lg) 0;
+    }
+
+    .estado-card {
+        padding: 1.5rem;
+        border-radius: var(--raio-md);
+        border: 1px solid var(--cor-borda);
+        background: var(--cor-fundo-card-claro);
+        box-shadow: 0 2px 8px var(--cor-sombra);
+        transition: var(--transicao);
+    }
+
+    .estado-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 20px var(--cor-sombra-forte);
+        border-color: var(--cor-accent);
+    }
+
+    .estado-icone {
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        background: var(--cor-accent-suave);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--cor-accent);
+        font-size: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .estado-card h4 {
+        font-family: var(--font-titulo);
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: var(--cor-primaria);
+        margin-bottom: 0.5rem;
+    }
+
+    .estado-card p {
+        font-size: 0.9rem;
+        line-height: 1.7;
+        margin-bottom: 0;
+        text-align: left;
+        color: var(--cor-texto-suave);
+    }
+
+    /* ============================= */
+    /* CANONIZAÇÃO ETAPAS */
+    /* ============================= */
+    .etapas-canonizacao {
+        margin: var(--espaco-lg) 0;
+    }
+
+    .etapa-card {
+        display: flex;
+        align-items: flex-start;
+        gap: 1.5rem;
+        margin-bottom: 1.5rem;
+        padding: 1.8rem;
+        border-radius: var(--raio-md);
+        border: 1px solid var(--cor-borda-escura);
+        background: var(--cor-fundo-card-escuro);
+        transition: var(--transicao);
+    }
+
+    .etapa-card:hover {
+        border-color: var(--cor-accent);
+        transform: translateX(5px);
+    }
+
+    .etapa-numero {
+        flex-shrink: 0;
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--cor-accent), var(--cor-accent-escura));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: var(--font-titulo);
+        font-size: 1.3rem;
+        font-weight: 800;
+        color: var(--cor-primaria);
+    }
+
+    .etapa-conteudo h4 {
+        font-family: var(--font-titulo);
+        font-size: 1.15rem;
+        font-weight: 700;
+        color: var(--cor-accent-clara);
+        margin-bottom: 0.5rem;
+    }
+
+    .etapa-conteudo p {
+        font-size: 0.93rem;
+        line-height: 1.75;
+        text-align: left;
+    }
+
+    .nota-especial {
+        font-size: 0.85rem !important;
+        color: var(--cor-accent) !important;
+        margin-top: 0.5rem;
+    }
+
+    /* ============================= */
+    /* SANTOS */
+    /* ============================= */
+    .santos-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+        gap: 1.2rem;
+        margin: var(--espaco-lg) 0;
+    }
+
+    .santo-card {
+        padding: 1.5rem;
+        border-radius: var(--raio-md);
+        border: 1px solid var(--cor-borda);
+        background: var(--cor-fundo-card-claro);
+        box-shadow: 0 2px 8px var(--cor-sombra);
+        transition: var(--transicao);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .santo-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 4px;
+        height: 100%;
+        background: linear-gradient(180deg, var(--cor-accent), var(--cor-accent-escura));
+    }
+
+    .santo-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 20px var(--cor-sombra-forte);
+    }
+
+    .santo-aspecto {
+        font-family: var(--font-ui);
+        font-size: 0.68rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        color: var(--cor-accent);
+        margin-bottom: 0.4rem;
+    }
+
+    .santo-card h4 {
+        font-family: var(--font-titulo);
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: var(--cor-primaria);
+        margin-bottom: 0.5rem;
+    }
+
+    .santo-card p {
+        font-size: 0.9rem;
+        line-height: 1.7;
+        margin-bottom: 0;
+        text-align: left;
+        color: var(--cor-texto-suave);
+    }
+
+    /* ============================= */
+    /* MARIA SANTÍSSIMA */
+    /* ============================= */
+    .maria-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1.2rem;
+        margin: var(--espaco-lg) 0;
+    }
+
+    .maria-card {
+        padding: 1.5rem 1.8rem;
+        border-radius: var(--raio-md);
+        border: 1px solid var(--cor-borda-escura);
+        background: var(--cor-fundo-card-escuro);
+        transition: var(--transicao);
+    }
+
+    .maria-card:hover {
+        border-color: var(--cor-accent);
+        transform: translateX(5px);
+    }
+
+    .maria-card h4 {
+        font-family: var(--font-titulo);
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: var(--cor-accent);
+        margin-bottom: 0.6rem;
+    }
+
+    .maria-card h4 i {
+        margin-right: 0.4rem;
+        font-size: 0.9rem;
+    }
+
+    .maria-card p {
+        font-size: 0.93rem;
+        line-height: 1.75;
+        margin-bottom: 0;
+        text-align: left;
+    }
+
+    /* ============================= */
+    /* OBJEÇÕES */
+    /* ============================= */
+    .objecoes-lista {
+        margin: var(--espaco-lg) 0;
+    }
+
+    .objecao-card {
+        margin-bottom: 1.5rem;
+        border-radius: var(--raio-lg);
+        border: 1px solid var(--cor-borda);
+        overflow: hidden;
+        background: var(--cor-fundo-card-claro);
+        box-shadow: 0 2px 8px var(--cor-sombra);
+        transition: var(--transicao);
+    }
+
+    .objecao-card:hover {
+        box-shadow: 0 6px 20px var(--cor-sombra-forte);
+    }
+
+    .objecao-header {
+        padding: 1.2rem 1.5rem;
+        background: linear-gradient(135deg, var(--cor-primaria), var(--cor-primaria-clara));
+        cursor: default;
+    }
+
+    .objecao-header h4 {
+        font-family: var(--font-titulo);
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: var(--cor-texto-claro);
+        margin: 0;
+    }
+
+    .objecao-header h4 i {
+        color: var(--cor-accent);
+        margin-right: 0.5rem;
+    }
+
+    .objecao-resposta {
+        padding: 1.5rem;
+    }
+
+    .objecao-resposta h5 {
+        font-family: var(--font-ui);
+        font-size: 0.78rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        color: #2a7d4f;
+        margin-bottom: 0.8rem;
+    }
+
+    .objecao-resposta h5 i {
+        color: #2a7d4f;
+        margin-right: 0.4rem;
+    }
+
+    .objecao-resposta p {
+        font-size: 0.95rem;
+        line-height: 1.8;
+        margin-bottom: 0;
+        text-align: left;
+    }
+
+    /* ============================= */
+    /* TESES FINAIS */
+    /* ============================= */
+    .teses-lista {
+        margin: var(--espaco-lg) 0;
+        counter-reset: tese;
+    }
+
+    .tese-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 1.2rem;
+        padding: 1.2rem 1.5rem;
+        margin-bottom: 0.5rem;
+        border-radius: var(--raio-md);
+        border: 1px solid var(--cor-borda-escura);
+        background: var(--cor-fundo-card-escuro);
+        transition: var(--transicao);
+    }
+
+    .tese-item:hover {
+        border-color: var(--cor-accent);
+        transform: translateX(4px);
+    }
+
+    .tese-numero {
+        flex-shrink: 0;
+        font-family: var(--font-titulo);
+        font-size: 1rem;
+        font-weight: 800;
+        color: var(--cor-accent);
+        min-width: 30px;
+        text-align: center;
+        padding-top: 0.1rem;
+    }
+
+    .tese-item p {
+        font-size: 0.95rem;
+        line-height: 1.7;
+        margin-bottom: 0;
+        text-align: left;
+    }
+
+    .citacao-final {
+        margin-top: var(--espaco-xl);
+        padding: 2.5rem;
+        border: 2px solid var(--cor-accent);
+        background: rgba(201, 168, 76, 0.04);
+    }
+
+    .citacao-final blockquote {
+        font-size: 1.2rem;
+    }
+
+    /* ============================= */
+    /* BIBLIOGRAFIA */
+    /* ============================= */
+    .biblio-lista {
+        margin: var(--espaco-md) 0;
+    }
+
+    .biblio-categoria {
+        margin-bottom: var(--espaco-md);
+    }
+
+    .biblio-categoria h4 {
+        font-family: var(--font-ui);
+        font-size: 0.82rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        color: var(--cor-accent);
+        margin-bottom: 0.6rem;
+        padding-bottom: 0.4rem;
+        border-bottom: 1px solid var(--cor-borda);
+    }
+
+    .biblio-lista ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    .biblio-lista ul li {
+        font-family: var(--font-corpo);
+        font-size: 0.92rem;
+        line-height: 1.7;
+        padding: 0.4rem 0 0.4rem 1.2rem;
+        position: relative;
+        color: var(--cor-texto-suave);
+    }
+
+    .biblio-lista ul li::before {
+        content: '—';
+        position: absolute;
+        left: 0;
+        color: var(--cor-accent);
+        font-weight: 700;
+    }
+
+    .biblio-lista ul li em {
+        color: var(--cor-primaria);
+    }
+
+    /* ============================= */
+    /* RODAPÉ */
+    /* ============================= */
+    #rodape {
+        background: var(--cor-primaria);
+        color: var(--cor-texto-sobre-escuro);
+        padding: var(--espaco-2xl) 0 var(--espaco-lg);
+        border-top: 3px solid var(--cor-accent);
+    }
+
+    .rodape-conteudo {
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr;
+        gap: 3rem;
+        margin-bottom: var(--espaco-xl);
+        padding-bottom: var(--espaco-lg);
+        border-bottom: 1px solid rgba(201, 168, 76, 0.15);
+    }
+
+    .rodape-logo {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        font-family: var(--font-titulo);
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: var(--cor-accent);
+        margin-bottom: 1rem;
+    }
+
+    .rodape-logo i {
+        font-size: 1.1rem;
+    }
+
+    .rodape-descricao {
+        font-size: 0.9rem;
+        line-height: 1.7;
+        opacity: 0.7;
+    }
+
+    .rodape-coluna h4 {
+        font-family: var(--font-ui);
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.15em;
+        color: var(--cor-accent);
+        margin-bottom: 1rem;
+    }
+
+    .rodape-coluna ul {
+        list-style: none;
+    }
+
+    .rodape-coluna ul li {
+        margin-bottom: 0.4rem;
+    }
+
+    .rodape-coluna ul li a {
+        font-size: 0.88rem;
+        color: var(--cor-texto-sobre-escuro);
+        text-decoration: none;
+        opacity: 0.7;
+        transition: var(--transicao);
+    }
+
+    .rodape-coluna ul li a:hover {
+        color: var(--cor-accent);
+        opacity: 1;
+    }
+
+    .rodape-inferior {
+        text-align: center;
+    }
+
+    .rodape-inferior p {
+        font-size: 0.88rem;
+        line-height: 1.8;
+        opacity: 0.65;
+        margin-bottom: 0.5rem;
+    }
+
+    .rodape-inferior em {
+        font-family: var(--font-classica);
+        font-size: 0.95rem;
+    }
+
+    .rodape-aviso {
+        font-family: var(--font-ui);
+        font-size: 0.72rem !important;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+    }
+
+    .rodape-inferior i {
+        color: var(--cor-accent);
+        margin-left: 0.3rem;
+        font-size: 0.7rem;
+    }
+
+    /* ============================= */
+    /* BOTÃO VOLTAR AO TOPO */
+    /* ============================= */
+    #btnTopo {
+        position: fixed;
+        bottom: 2rem;
+        right: 2rem;
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background: var(--cor-accent);
+        color: var(--cor-primaria);
+        border: none;
+        cursor: pointer;
+        font-size: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(20px);
+        transition: var(--transicao);
+        box-shadow: 0 4px 15px rgba(201, 168, 76, 0.3);
+        z-index: 999;
+    }
+
+    #btnTopo.btn-topo-visivel {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+    }
+
+    #btnTopo:hover {
+        background: var(--cor-accent-clara);
+        transform: translateY(-3px);
+        box-shadow: 0 6px 25px rgba(201, 168, 76, 0.4);
+    }
+
+    /* ============================= */
+    /* ANIMAÇÕES DE ENTRADA */
+    /* ============================= */
+    .animavel {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .animavel.visivel {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    /* Delays escalonados para grids */
+    .santos-grid .santo-card.animavel:nth-child(1) { transition-delay: 0s; }
+    .santos-grid .santo-card.animavel:nth-child(2) { transition-delay: 0.08s; }
+    .santos-grid .santo-card.animavel:nth-child(3) { transition-delay: 0.16s; }
+    .santos-grid .santo-card.animavel:nth-child(4) { transition-delay: 0.24s; }
+    .santos-grid .santo-card.animavel:nth-child(5) { transition-delay: 0.32s; }
+    .santos-grid .santo-card.animavel:nth-child(6) { transition-delay: 0.4s; }
+
+    .teses-lista .tese-item.animavel:nth-child(odd) { transform: translateX(-20px); }
+    .teses-lista .tese-item.animavel:nth-child(even) { transform: translateX(20px); }
+    .teses-lista .tese-item.animavel.visivel { transform: translateX(0); }
+
+    /* ============================= */
+    /* RESPONSIVIDADE */
+    /* ============================= */
+    @media (max-width: 1024px) {
+        .indice-grid {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .caracteristicas-grid {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .trindade-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .filosofos-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .rodape-conteudo {
+            grid-template-columns: 1fr 1fr;
+        }
+    }
+
+    @media (max-width: 768px) {
+        :root {
+            --tamanho-base: 16px;
+        }
+
+        .nav-toggle {
+            display: flex;
+        }
+
+        .nav-links {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background: rgba(18, 18, 32, 0.98);
+            backdrop-filter: blur(20px);
+            flex-direction: column;
+            padding: 1rem 2rem 1.5rem;
+            border-top: 1px solid var(--cor-borda-escura);
+            gap: 0;
+        }
+
+        .nav-links.nav-aberto {
+            display: flex;
+        }
+
+        .nav-links a {
+            padding: 0.65rem 0;
+            font-size: 0.82rem;
+        }
+
+        .secao {
+            padding: var(--espaco-2xl) 0;
+        }
+
+        .container {
+            padding: 0 1.2rem;
+        }
+
+        .hero-content {
+            padding: 6rem 1.5rem 2rem;
+        }
+
+        .hero-titulo {
+            letter-spacing: 0.06em;
+        }
+
+        .indice-grid {
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
+        .lista-dimensoes {
+            grid-template-columns: 1fr;
+        }
+
+        .dupla-dimensao {
+            grid-template-columns: 1fr;
+        }
+
+        .distincoes-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .profetas-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .paulino-conceitos {
+            grid-template-columns: 1fr;
+        }
+
+        .caracteristicas-grid {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .sacramentos-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .magisterio-timeline {
+            padding-left: 1.5rem;
+        }
+
+        .timeline-marcador {
+            left: -1.85rem;
+        }
+
+        .timeline-ano {
+            font-size: 0.6rem;
+            padding: 0.15rem 0.4rem;
+        }
+
+        .santos-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .estados-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .virtudes-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .filosofos-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .etapa-card {
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .via-header {
+            flex-direction: column;
+            text-align: center;
+            gap: 0.8rem;
+        }
+
+        .rodape-conteudo {
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+
+        .hero-acoes {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .btn-hero-primario,
+        .btn-hero-secundario {
+            width: 100%;
+            max-width: 280px;
+            text-align: center;
+        }
+
+        .citacao-bloco {
+            padding: 1.4rem 1.2rem 1.4rem 1.8rem;
+        }
+
+        .conteudo-texto p {
+            text-align: left;
+        }
+
+        .tese-item {
+            gap: 0.8rem;
+            padding: 1rem;
+        }
+
+        .objecao-header h4 {
+            font-size: 0.95rem;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .caracteristicas-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .hero-titulo {
+            font-size: 2.5rem;
+        }
+
+        .secao-titulo {
+            font-size: 1.6rem;
+        }
+
+        .citacao-bloco blockquote {
+            font-size: 1rem;
+        }
+
+        .doutor-header {
+            padding: 1rem 1.2rem;
+        }
+
+        .doutor-body {
+            padding: 1.2rem;
+        }
+
+        .via-body {
+            padding: 1.3rem;
+        }
+
+        #btnTopo {
+            width: 42px;
+            height: 42px;
+            bottom: 1.2rem;
+            right: 1.2rem;
+            font-size: 0.85rem;
+        }
+    }
+
+    /* ============================= */
+    /* IMPRESSÃO */
+    /* ============================= */
+    @media print {
+        #nav-principal,
+        #btnTopo,
+        .hero-acoes,
+        .nav-toggle {
+            display: none !important;
+        }
+
+        body {
+            font-size: 11pt;
+            color: #000;
+            background: #fff;
+        }
+
+        .secao-escura {
+            background: #fff;
+            color: #000;
+        }
+
+        .secao-escura .secao-titulo,
+        .secao-escura .conteudo-texto h3,
+        .secao-escura .conteudo-texto h4,
+        .secao-escura .conteudo-texto strong {
+            color: #000;
+        }
+
+        .secao-escura .conteudo-texto p,
+        .secao-escura .conteudo-texto li {
+            color: #333;
+        }
+
+        .citacao-bloco {
+            background: #f5f5f5;
+            border-left-color: #999;
+        }
+
+        .citacao-bloco blockquote {
+            color: #333;
+        }
+
+        .secao {
+            padding: 1.5rem 0;
+            page-break-inside: avoid;
+        }
+
+        #hero {
+            min-height: auto;
+            padding: 2rem;
+            background: #fff;
+        }
+
+        .hero-titulo {
+            color: #000;
+            font-size: 2rem;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .animavel {
+            opacity: 1 !important;
+            transform: none !important;
+        }
+    }
+
+    /* ============================= */
+    /* SCROLLBAR PERSONALIZADA */
+    /* ============================= */
+    ::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+        background: var(--cor-primaria);
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: var(--cor-accent-escura);
+        border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        background: var(--cor-accent);
+    }
+
+    /* Firefox */
+    * {
+        scrollbar-width: thin;
+        scrollbar-color: var(--cor-accent-escura) var(--cor-primaria);
+    }
+</style>
+</head>
+<body>
+
+    <!-- ============================= -->
+    <!-- NAVEGAÇÃO SUPERIOR -->
+    <!-- ============================= -->
+    <nav id="nav-principal">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-cross"></i>
+                <span>Santidade</span>
+            </div>
+            <button class="nav-toggle" id="navToggle" aria-label="Abrir menu">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#introducao">Introdução</a></li>
+                <li><a href="#etimologia">Etimologia</a></li>
+                <li><a href="#escrituras">Escrituras</a></li>
+                <li><a href="#teologia">Teologia</a></li>
+                <li><a href="#magistério">Magistério</a></li>
+                <li><a href="#doutores">Doutores</a></li>
+                <li><a href="#filosofia">Filosofia</a></li>
+                <li><a href="#mistica">Mística</a></li>
+                <li><a href="#moral">Moral</a></li>
+                <li><a href="#canonizacao">Canonização</a></li>
+                <li><a href="#santos-modelos">Santos</a></li>
+                <li><a href="#vocacao-universal">Vocação Universal</a></li>
+                <li><a href="#objecoes">Objeções</a></li>
+                <li><a href="#bibliografia">Bibliografia</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- ============================= -->
+    <!-- CABEÇALHO HERO -->
+    <!-- ============================= -->
+    <header id="hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <p class="hero-supratitulo">Compêndio Teológico Completo</p>
+            <h1 class="hero-titulo">SANTIDADE</h1>
+            <div class="hero-separador">
+                <span class="separador-linha"></span>
+                <i class="fas fa-cross"></i>
+                <span class="separador-linha"></span>
+            </div>
+            <p class="hero-subtitulo">
+                «Sede santos, porque Eu, o Senhor vosso Deus, sou Santo»
+            </p>
+            <p class="hero-referencia">— Levítico 19,2</p>
+            <p class="hero-descricao">
+                Um estudo exaustivo sobre a santidade em todas as suas dimensões: bíblica, dogmática, moral, mística, filosófica, patrística, magisterial e hagiográfica. Destinado a teólogos, seminaristas, padres, filósofos e a todo fiel que deseja compreender em profundidade o chamado supremo do cristão.
+            </p>
+            <div class="hero-acoes">
+                <a href="#introducao" class="btn-hero-primario">Iniciar Estudo</a>
+                <a href="#indice-completo" class="btn-hero-secundario">Índice Completo</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- ============================= -->
+    <!-- ÍNDICE COMPLETO -->
+    <!-- ============================= -->
+    <section id="indice-completo" class="secao">
+        <div class="container">
+            <div class="secao-cabecalho">
+                <p class="secao-supratitulo">Navegação</p>
+                <h2 class="secao-titulo">Índice Completo</h2>
+                <div class="secao-separador">
+                    <span class="separador-linha"></span>
+                    <i class="fas fa-book-open"></i>
+                    <span class="separador-linha"></span>
+                </div>
+            </div>
+
+            <div class="indice-grid">
+                <div class="indice-coluna">
+                    <h3 class="indice-grupo-titulo">Parte I — Fundamentos</h3>
+                    <ol class="indice-lista">
+                        <li><a href="#introducao">Introdução Geral</a></li>
+                        <li><a href="#etimologia">Etimologia e Semântica</a></li>
+                        <li><a href="#escrituras">Santidade nas Sagradas Escrituras</a>
+                            <ul>
+                                <li><a href="#at-santidade">Antigo Testamento</a></li>
+                                <li><a href="#nt-santidade">Novo Testamento</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#teologia">Teologia Dogmática da Santidade</a>
+                            <ul>
+                                <li><a href="#santidade-divina">Santidade de Deus</a></li>
+                                <li><a href="#santidade-trinitaria">Santidade Trinitária</a></li>
+                                <li><a href="#santidade-cristo">Santidade de Cristo</a></li>
+                                <li><a href="#santidade-igreja">Santidade da Igreja</a></li>
+                                <li><a href="#santidade-graca">Santidade e Graça</a></li>
+                                <li><a href="#santidade-sacramentos">Santidade e Sacramentos</a></li>
+                            </ul>
+                        </li>
+                    </ol>
+                </div>
+
+                <div class="indice-coluna">
+                    <h3 class="indice-grupo-titulo">Parte II — Desenvolvimento</h3>
+                    <ol class="indice-lista" start="5">
+                        <li><a href="#magistério">Magistério da Igreja</a></li>
+                        <li><a href="#patristica">Patrística</a></li>
+                        <li><a href="#doutores">Doutores da Igreja</a></li>
+                        <li><a href="#filosofia">Filosofia da Santidade</a></li>
+                        <li><a href="#mistica">Teologia Mística e Santidade</a>
+                            <ul>
+                                <li><a href="#via-purgativa">Via Purgativa</a></li>
+                                <li><a href="#via-iluminativa">Via Iluminativa</a></li>
+                                <li><a href="#via-unitiva">Via Unitiva</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#moral">Teologia Moral e Santidade</a></li>
+                    </ol>
+                </div>
+
+                <div class="indice-coluna">
+                    <h3 class="indice-grupo-titulo">Parte III — Aplicação</h3>
+                    <ol class="indice-lista" start="11">
+                        <li><a href="#vocacao-universal">Vocação Universal à Santidade</a></li>
+                        <li><a href="#estados-vida">Santidade nos Estados de Vida</a></li>
+                        <li><a href="#canonizacao">Processo de Canonização</a></li>
+                        <li><a href="#santos-modelos">Santos como Modelos</a></li>
+                        <li><a href="#maria-santidade">Maria Santíssima e a Santidade</a></li>
+                        <li><a href="#objecoes">Objeções e Respostas</a></li>
+                        <li><a href="#sintese">Síntese Final</a></li>
+                        <li><a href="#bibliografia">Bibliografia</a></li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================= -->
+    <!-- PARTE I — INTRODUÇÃO GERAL -->
+    <!-- ============================= -->
+    <section id="introducao" class="secao secao-clara">
+        <div class="container">
+            <div class="secao-cabecalho">
+                <p class="secao-supratitulo">Capítulo I</p>
+                <h2 class="secao-titulo">Introdução Geral</h2>
+                <div class="secao-separador">
+                    <span class="separador-linha"></span>
+                    <i class="fas fa-feather-alt"></i>
+                    <span class="separador-linha"></span>
+                </div>
+            </div>
+
+            <div class="conteudo-texto">
+                <h3>O que é santidade?</h3>
+                <p>
+                    A santidade, no sentido católico mais pleno, não é simplesmente uma qualidade moral, um estado psicológico ou uma conquista humana. Ela é, antes de tudo, um <strong>atributo essencial de Deus</strong> e, derivadamente, a <strong>participação da criatura na vida divina</strong> pela graça santificante. Dizer que alguém é santo significa dizer que essa pessoa foi separada do profano, consagrada a Deus e, sobretudo, que <strong>a vida de Deus habita nela</strong>.
+                </p>
+                <p>
+                    A santidade não é reservada a uma elite espiritual; é o <strong>chamado fundamental de todo batizado</strong>. O Concílio Vaticano II, na Constituição Dogmática <em>Lumen Gentium</em>, dedicou todo o capítulo V a esta verdade: <em>«Todos os fiéis de qualquer estado ou ordem são chamados à plenitude da vida cristã e à perfeição da caridade»</em> (LG 40).
+                </p>
+
+                <h3>Por que estudar santidade?</h3>
+                <p>
+                    O estudo da santidade não é um exercício acadêmico estéril. Ele é, como afirmou o Papa Bento XVI, <em>«a chave hermenêutica mais profunda para compreender a própria Revelação»</em>. Toda a Sagrada Escritura, toda a Tradição, todo o Magistério, toda a Liturgia, todos os sacramentos e toda a vida da Igreja convergem para um único fim: <strong>tornar o homem santo</strong>, isto é, <strong>fazê-lo participar da santidade de Deus</strong>.
+                </p>
+
+                <div class="citacao-bloco">
+                    <div class="citacao-icone"><i class="fas fa-quote-left"></i></div>
+                    <blockquote>
+                        «Deus não nos chamou para a impureza, mas para a santificação.»
+                    </blockquote>
+                    <cite>— 1 Tessalonicenses 4,7</cite>
+                </div>
+
+                <h3>A santidade como fim último da economia salvífica</h3>
+                <p>
+                    No plano da economia da salvação, a santidade é simultaneamente <strong>ponto de partida e ponto de chegada</strong>. Ponto de partida, porque Deus, que é Santo, cria o homem para a comunhão consigo. Ponto de chegada, porque toda a obra redentora de Cristo — Encarnação, Paixão, Morte, Ressurreição, envio do Espírito Santo, fundação da Igreja, instituição dos sacramentos — tem como finalidade última <strong>restaurar no homem a santidade perdida pelo pecado original</strong> e conduzi-lo à santidade consumada na glória.
+                </p>
+
+                <h3>Dimensões do estudo</h3>
+                <p>
+                    Este compêndio aborda a santidade nas seguintes dimensões:
+                </p>
+                <div class="lista-dimensoes">
+                    <div class="dimensao-item">
+                        <div class="dimensao-icone"><i class="fas fa-scroll"></i></div>
+                        <div class="dimensao-texto">
+                            <h4>Bíblica</h4>
+                            <p>O fundamento escriturístico no Antigo e Novo Testamento.</p>
+                        </div>
+                    </div>
+                    <div class="dimensao-item">
+                        <div class="dimensao-icone"><i class="fas fa-church"></i></div>
+                        <div class="dimensao-texto">
+                            <h4>Dogmática</h4>
+                            <p>A santidade como atributo divino, propriedade da Igreja e vocação do batizado.</p>
+                        </div>
+                    </div>
+                    <div class="dimensao-item">
+                        <div class="dimensao-icone"><i class="fas fa-balance-scale"></i></div>
+                        <div class="dimensao-texto">
+                            <h4>Moral</h4>
+                            <p>A santidade como vida virtuosa e luta contra o pecado.</p>
+                        </div>
+                    </div>
+                    <div class="dimensao-item">
+                        <div class="dimensao-icone"><i class="fas fa-fire"></i></div>
+                        <div class="dimensao-texto">
+                            <h4>Mística</h4>
+                            <p>As três vias da vida espiritual rumo à união com Deus.</p>
+                        </div>
+                    </div>
+                    <div class="dimensao-item">
+                        <div class="dimensao-icone"><i class="fas fa-lightbulb"></i></div>
+                        <div class="dimensao-texto">
+                            <h4>Filosófica</h4>
+                            <p>A santidade à luz da razão natural, da metafísica e da ética.</p>
+                        </div>
+                    </div>
+                    <div class="dimensao-item">
+                        <div class="dimensao-icone"><i class="fas fa-users"></i></div>
+                        <div class="dimensao-texto">
+                            <h4>Patrística e Magisterial</h4>
+                            <p>O testemunho dos Padres da Igreja e o ensinamento dos Papas e Concílios.</p>
+                        </div>
+                    </div>
+                    <div class="dimensao-item">
+                        <div class="dimensao-icone"><i class="fas fa-star"></i></div>
+                        <div class="dimensao-texto">
+                            <h4>Hagiográfica</h4>
+                            <p>Os santos como realização concreta e visível da santidade.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================= -->
+    <!-- ETIMOLOGIA E SEMÂNTICA -->
+    <!-- ============================= -->
+    <section id="etimologia" class="secao secao-escura">
+        <div class="container">
+            <div class="secao-cabecalho">
+                <p class="secao-supratitulo">Capítulo II</p>
+                <h2 class="secao-titulo">Etimologia e Semântica</h2>
+                <div class="secao-separador">
+                    <span class="separador-linha"></span>
+                    <i class="fas fa-language"></i>
+                    <span class="separador-linha"></span>
+                </div>
+            </div>
+
+            <div class="conteudo-texto">
+                <h3>Raízes hebraicas</h3>
+                <p>
+                    O conceito bíblico de santidade tem raiz no hebraico <strong>קָדוֹשׁ (qadosh)</strong>, cuja ideia fundamental é a de <strong>separação</strong>, <strong>transcendência</strong>, <strong>alteridade</strong>. Dizer que Deus é <em>qadosh</em> significa afirmar que Ele é <strong>absolutamente outro</strong>, radicalmente distinto de tudo o que é criado, profano ou impuro. O verbo <strong>קָדַשׁ (qadash)</strong> significa «separar», «consagrar», «santificar».
+                </p>
+
+                <div class="tabela-etimologia">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Língua</th>
+                                <th>Termo</th>
+                                <th>Significado nuclear</th>
+                                <th>Observação</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Hebraico</td>
+                                <td><strong>קָדוֹשׁ</strong> (qadosh)</td>
+                                <td>Separado, transcendente, outro</td>
+                                <td>Raiz primária bíblica</td>
+                            </tr>
+                            <tr>
+                                <td>Hebraico</td>
+                                <td><strong>קָדַשׁ</strong> (qadash)</td>
+                                <td>Separar, consagrar, santificar</td>
+                                <td>Forma verbal</td>
+                            </tr>
+                            <tr>
+                                <td>Grego (LXX)</td>
+                                <td><strong>ἅγιος</strong> (hágios)</td>
+                                <td>Santo, consagrado, dedicado a Deus</td>
+                                <td>Tradução da Septuaginta</td>
+                            </tr>
+                            <tr>
+                                <td>Grego</td>
+                                <td><strong>ἁγιασμός</strong> (hagiasmós)</td>
+                                <td>Santificação, processo de tornar-se santo</td>
+                                <td>Usado por São Paulo</td>
+                            </tr>
+                            <tr>
+                                <td>Grego</td>
+                                <td><strong>ὅσιος</strong> (hósios)</td>
+                                <td>Piedoso, devoto, justo diante de Deus</td>
+                                <td>Nuance de piedade interior</td>
+                            </tr>
+                            <tr>
+                                <td>Latim</td>
+                                <td><strong>sanctus</strong></td>
+                                <td>Inviolável, consagrado, sagrado</td>
+                                <td>De <em>sancire</em> (tornar inviolável)</td>
+                            </tr>
+                            <tr>
+                                <td>Latim</td>
+                                <td><strong>sanctitas</strong></td>
+                                <td>Santidade, qualidade do que é santo</td>
+                                <td>Substantivo abstrato</td>
+                            </tr>
+                            <tr>
+                                <td>Latim</td>
+                                <td><strong>sanctificatio</strong></td>
+                                <td>Ato de santificar, santificação</td>
+                                <td>Processo ativo</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3>Dupla dimensão do conceito</h3>
+                <p>
+                    A análise filológica revela que «santidade» comporta sempre uma <strong>dupla dimensão</strong>:
+                </p>
+                <div class="dupla-dimensao">
+                    <div class="dimensao-card">
+                        <h4><i class="fas fa-arrow-up"></i> Dimensão negativa (separação)</h4>
+                        <p>Ser santo implica <strong>separar-se</strong> do que é impuro, profano, pecaminoso. É o aspecto de <strong>ruptura</strong> com o mundo decaído.</p>
+                    </div>
+                    <div class="dimensao-card">
+                        <h4><i class="fas fa-arrow-down"></i> Dimensão positiva (consagração)</h4>
+                        <p>Ser santo implica <strong>ser consagrado a Deus</strong>, pertencer-Lhe, estar imerso na Sua vida. É o aspecto de <strong>comunhão</strong> com o Divino.</p>
+                    </div>
+                </div>
+
+                <h3>Evolução semântica</h3>
+                <p>
+                    No Antigo Testamento, a santidade começa muito ligada ao <strong>culto</strong> (lugares santos, objetos santos, tempos santos), mas evolui progressivamente para uma dimensão <strong>ética e interior</strong> (especialmente nos profetas). No Novo Testamento, com Cristo e São Paulo, a santidade se torna plenamente <strong>pessoal, interior, cristológica e pneumatológica</strong>: é a vida do Espírito Santo no batizado que o torna realmente santo.
+                </p>
+
+                <h3>Distinção terminológica importante</h3>
+                <div class="distincoes-grid">
+                    <div class="distincao-item">
+                        <h4>Santidade ontológica</h4>
+                        <p>A santidade que pertence a Deus por natureza. Ele <em>é</em> Santo. Não se torna santo, não cresce em santidade: Ele é a própria Santidade subsistente.</p>
+                    </div>
+                    <div class="distincao-item">
+                        <h4>Santidade participada</h4>
+                        <p>A santidade que a criatura recebe de Deus por graça. O homem não é santo por natureza, mas torna-se santo ao participar da vida divina.</p>
+                    </div>
+                    <div class="distincao-item">
+                        <h4>Santidade objetiva</h4>
+                        <p>A santidade de coisas, lugares, tempos e instituições enquanto consagrados a Deus (ex.: a Igreja é objetivamente santa).</p>
+                    </div>
+                    <div class="distincao-item">
+                        <h4>Santidade subjetiva</h4>
+                        <p>A santidade pessoal do indivíduo, que depende da sua cooperação com a graça.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================= -->
+    <!-- SANTIDADE NAS SAGRADAS ESCRITURAS -->
+    <!-- ============================= -->
+    <section id="escrituras" class="secao secao-clara">
+        <div class="container">
+            <div class="secao-cabecalho">
+                <p class="secao-supratitulo">Capítulo III</p>
+                <h2 class="secao-titulo">Santidade nas Sagradas Escrituras</h2>
+                <div class="secao-separador">
+                    <span class="separador-linha"></span>
+                    <i class="fas fa-bible"></i>
+                    <span class="separador-linha"></span>
+                </div>
+            </div>
+
+            <!-- ANTIGO TESTAMENTO -->
+            <div id="at-santidade" class="conteudo-texto">
+                <h3 class="subtitulo-grande">A. Antigo Testamento</h3>
+
+                <h4>1. A santidade de Deus como fundamento</h4>
+                <p>
+                    O Antigo Testamento apresenta a santidade como <strong>o atributo divino por excelência</strong>. Mais do que onipotência, mais do que onisciência, é a santidade que define quem Deus é na Sua essência mais íntima. A grande teofania de Isaías revela isso de modo insuperável:
+                </p>
+
+                <div class="citacao-bloco citacao-escritura">
+                    <div class="citacao-icone"><i class="fas fa-quote-left"></i></div>
+                    <blockquote>
+                        «Santo, Santo, Santo é o Senhor dos Exércitos! Toda a terra está cheia da Sua glória!»
+                    </blockquote>
+                    <cite>— Isaías 6,3</cite>
+                </div>
+
+                <p>
+                    A tríplice repetição (<em>Trisagion</em>) não é mero recurso literário: é o <strong>superlativo absoluto hebraico</strong>, indicando que a santidade de Deus é infinita, insuperável, incomensurável. Santo Tomás de Aquino comenta que esta tripla invocação corresponde às três Pessoas divinas e à perfeição absoluta da santidade de Deus (cf. <em>In Isaiam</em>, cap. 6).
+                </p>
+
+                <h4>2. A santidade e a Lei de Santidade (Levítico 17-26)</h4>
+                <p>
+                    O chamado «Código de Santidade» do Levítico constitui o coração legislativo do Pentateuco sobre a santidade. Seu princípio fundamental é:
+                </p>
+
+                <div class="citacao-bloco citacao-escritura">
+                    <div class="citacao-icone"><i class="fas fa-quote-left"></i></div>
+                    <blockquote>
+                        «Sede santos, porque Eu, o Senhor vosso Deus, sou Santo.»
+                    </blockquote>
+                    <cite>— Levítico 19,2</cite>
+                </div>
+
+                <p>
+                    Este imperativo revela três verdades capitais:
+                </p>
+                <ol class="lista-teologica">
+                    <li><strong>A santidade humana tem fundamento na santidade divina.</strong> O homem deve ser santo <em>porque</em> Deus é santo. A santidade do homem é imitação e participação, não invenção autônoma.</li>
+                    <li><strong>A santidade é um mandamento, não uma sugestão.</strong> Deus ordena a santidade. Ela não é opcional para o crente.</li>
+                    <li><strong>A santidade abrange toda a vida.</strong> O Código de Santidade regula culto, relações sociais, sexualidade, justiça, alimentação — mostrando que nada está fora do alcance da santidade.</li>
+                </ol>
+
+                <h4>3. Santidade cúltica e ritual</h4>
+                <p>
+                    No Antigo Testamento, há uma forte ligação entre santidade e <strong>culto</strong>. São declarados santos:
+                </p>
+                <ul class="lista-teologica">
+                    <li>O <strong>Templo</strong> e o Santo dos Santos (1Rs 8,10-11)</li>
+                    <li>O <strong>sábado</strong> (Gn 2,3; Ex 20,8)</li>
+                    <li>Os <strong>sacerdotes levíticos</strong> (Lv 21,6-8)</li>
+                    <li>Os <strong>objetos do culto</strong> (Ex 30,29)</li>
+                    <li>As <strong>ofertas</strong> e os <strong>sacrifícios</strong> (Lv 2,3)</li>
+                    <li>O <strong>Nome de Deus</strong> (Lv 22,32)</li>
+                </ul>
+                <p>
+                    Esta santidade cúltica, porém, nunca foi um fim em si mesma. Os profetas denunciaram veementemente a separação entre culto externo e santidade interior:
+                </p>
+
+                <div class="citacao-bloco citacao-escritura">
+                    <div class="citacao-icone"><i class="fas fa-quote-left"></i></div>
+                    <blockquote>
+                        «Que me importa a multidão dos vossos sacrifícios? — diz o Senhor. [...] Lavai-vos, purificai-vos! Tirai da Minha vista as vossas más ações! Cessai de fazer o mal, aprendei a fazer o bem!»
+                    </blockquote>
+                    <cite>— Isaías 1,11.16-17</cite>
+                </div>
+
+                <h4>4. Santidade nos Profetas: a interiorização</h4>
+                <p>
+                    Os profetas representam um <strong>avanço decisivo</strong> na compreensão da santidade. Não negam o culto, mas insistem que a santidade verdadeira é <strong>interior</strong>, <strong>ética</strong> e <strong>relacional</strong>. Destaques:
+                </p>
+
+                <div class="profetas-grid">
+                    <div class="profeta-card">
+                        <h5>Isaías</h5>
+                        <p>Chama Deus de «o Santo de Israel» (mais de 25 vezes). Enfatiza que a santidade de Deus exige <strong>justiça</strong> e <strong>pureza</strong> no povo (Is 5,16).</p>
+                    </div>
+                    <div class="profeta-card">
+                        <h5>Ezequiel</h5>
+                        <p>Anuncia a <strong>renovação interior</strong> como obra de Deus: «Dar-vos-ei um coração novo e porei em vós um espírito novo» (Ez 36,26-27). A santidade será fruto do Espírito de Deus.</p>
+                    </div>
+                    <div class="profeta-card">
+                        <h5>Oseias</h5>
+                        <p>Revela a santidade divina como <strong>amor fiel</strong> mesmo diante da infidelidade humana (Os 11,9). A santidade de Deus não é fria distância, mas amor ardente.</p>
+                    </div>
+                    <div class="profeta-card">
+                        <h5>Jeremias</h5>
+                        <p>Promete a «nova aliança» escrita no coração (Jr 31,33), antecipando a santificação interior pelo Espírito.</p>
+                    </div>
+                </div>
+
+                <h4>5. Santidade nos Salmos e livros sapienciais</h4>
+                <p>
+                    Os Salmos expressam tanto o <strong>temor</strong> diante da santidade de Deus quanto o <strong>desejo</strong> de participar dela:
+                </p>
+
+                <div class="citacao-bloco citacao-escritura">
+                    <div class="citacao-icone"><i class="fas fa-quote-left"></i></div>
+                    <blockquote>
+                        «Quem subirá ao monte do Senhor? Quem permanecerá no Seu lugar santo? Aquele que tem as mãos inocentes e o coração puro.»
+                    </blockquote>
+                    <cite>— Salmo 24 (23), 3-4</cite>
+                </div>
+
+                <div class="citacao-bloco citacao-escritura">
+                    <div class="citacao-icone"><i class="fas fa-quote-left"></i></div>
+                    <blockquote>
+                        «Criai em mim, ó Deus, um coração puro, e renovai em mim um espírito firme.»
+                    </blockquote>
+                    <cite>— Salmo 51 (50), 12</cite>
+                </div>
+            </div>
+
+            <!-- NOVO TESTAMENTO -->
+            <div id="nt-santidade" class="conteudo-texto">
+                <h3 class="subtitulo-grande">B. Novo Testamento</h3>
+
+                <h4>1. Jesus Cristo: a Santidade encarnada</h4>
+                <p>
+                    No Novo Testamento, a santidade deixa de ser apenas um atributo divino contemplado à distância e <strong>torna-se uma Pessoa</strong>: Jesus Cristo. Ele é «o Santo de Deus» (Mc 1,24; Lc 4,34; Jo 6,69). Nele, a santidade divina se faz acessível, visível, imitável. A Encarnação é o evento supremo da santidade: o Santo faz-se homem para que o homem possa participar da Sua santidade.
+                </p>
+
+                <div class="citacao-bloco citacao-escritura">
+                    <div class="citacao-icone"><i class="fas fa-quote-left"></i></div>
+                    <blockquote>
+                        «Por eles Eu me santifico a Mim mesmo, para que também eles sejam santificados na verdade.»
+                    </blockquote>
+                    <cite>— João 17,19</cite>
+                </div>
+
+                <p>
+                    Cristo se «santifica» não no sentido de que precisasse tornar-se mais santo, mas no sentido de que <strong>se consagra totalmente ao Pai</strong> para que a Sua santidade seja comunicada aos discípulos. Toda a missão de Cristo é santificadora.
+                </p>
+
+                <h4>2. O ensinamento de Jesus sobre a santidade</h4>
+                <p>
+                    Jesus não usa frequentemente a palavra «santo», mas todo o Seu ensinamento é sobre santidade sob outros nomes:
+                </p>
+                <ul class="lista-teologica">
+                    <li><strong>As Bem-aventuranças</strong> (Mt 5,1-12) — o «programa de santidade» do cristão.</li>
+                    <li><strong>«Sede perfeitos como vosso Pai celeste é perfeito»</strong> (Mt 5,48) — equivalente neotestamentário de Lv 19,2.</li>
+                    <li><strong>Pureza de coração</strong> — «Bem-aventurados os puros de coração, porque verão a Deus» (Mt 5,8).</li>
+                    <li><strong>Interioridade contra exteriorismo</strong> — toda a polêmica contra o farisaísmo (Mt 23).</li>
+                    <li><strong>Amor como essência</strong> — o mandamento do amor (Mt 22,37-40) revela que a santidade se consuma na caridade.</li>
+                </ul>
+
+                <h4>3. São Paulo: a santificação em Cristo</h4>
+                <p>
+                    São Paulo é o teólogo neotestamentário que mais desenvolveu a doutrina da santificação. Para ele, os cristãos já são chamados <strong>«santos»</strong> (<em>hágioi</em>) em virtude do Batismo (Rm 1,7; 1Cor 1,2; Ef 1,1), mas devem <strong>tornar-se efetivamente</strong> o que já são ontologicamente:
+                </p>
+
+                <div class="citacao-bloco citacao-escritura">
+                    <div class="citacao-icone"><i class="fas fa-quote-left"></i></div>
+                    <blockquote>
+                        «Esta é a vontade de Deus: a vossa santificação.»
+                    </blockquote>
+                    <cite>— 1 Tessalonicenses 4,3</cite>
+                </div>
+
+                <div class="paulino-conceitos">
+                    <div class="conceito-card">
+                        <h5>Justificação e santificação</h5>
+                        <p>A justificação (ser declarado justo) e a santificação (tornar-se santo) estão intimamente ligadas. Cristo «tornou-se para nós sabedoria, justiça, santificação e redenção» (1Cor 1,30).</p>
+                    </div>
+                    <div class="conceito-card">
+                        <h5>Templo do Espírito Santo</h5>
+                        <p>«Não sabeis que o vosso corpo é templo do Espírito Santo?» (1Cor 6,19). A santidade atinge o corpo, não apenas a alma.</p>
+                    </div>
+                    <div class="conceito-card">
+                        <h5>Vida no Espírito</h5>
+                        <p>A santificação é obra do Espírito Santo no cristão: «O fruto do Espírito é amor, alegria, paz, paciência, bondade...» (Gl 5,22-23).</p>
+                    </div>
+                    <div class="conceito-card">
+                        <h5>Configuração a Cristo</h5>
+                        <p>«Já não sou eu que vivo, mas é Cristo que vive em mim» (Gl 2,20). A santidade paulina é cristiforme.</p>
+                    </div>
+                </div>
+
+                <h4>4. Carta aos Hebreus</h4>
+                <div class="citacao-bloco citacao-escritura">
+                    <div class="citacao-icone"><i class="fas fa-quote-left"></i></div>
+                    <blockquote>
+                        «Procurai a paz com todos e a santificação, sem a qual ninguém verá o Senhor.»
+                    </blockquote>
+                    <cite>— Hebreus 12,14</cite>
+                </div>
+                <p>
+                    Este versículo é capital: a santidade não é ornamento, é <strong>condição para ver a Deus</strong>. Sem ela, o homem permanece incapaz de entrar na presença divina.
+                </p>
+
+                <h4>5. São Pedro</h4>
+                <div class="citacao-bloco citacao-escritura">
+                    <div class="citacao-icone"><i class="fas fa-quote-left"></i></div>
+                    <blockquote>
+                        «Assim como é santo aquele que vos chamou, sede também vós santos em todo o vosso comportamento, porque está escrito: Sede santos, porque Eu sou Santo.»
+                    </blockquote>
+                    <cite>— 1 Pedro 1,15-16</cite>
+                </div>
+                <p>
+                    São Pedro retoma Levítico 19,2, confirmando a <strong>continuidade entre Antigo e Novo Testamento</strong> quanto ao chamado à santidade, mas agora com uma diferença decisiva: a santidade é possível porque Cristo nos redimiu e o Espírito Santo nos habita.
+                </p>
+
+                <h4>6. São João: a santidade como comunhão</h4>
+                <p>
+                    Para São João, a santidade é essencialmente <strong>permanecer em Deus</strong>: «Deus é luz e nele não há trevas. Se dizemos que temos comunhão com Ele e andamos nas trevas, mentimos» (1Jo 1,5-6). A santidade joanina é comunhão luminosa com Deus-Luz e Deus-Amor.
+                </p>
+
+                <h4>7. Apocalipse: a santidade escatológica</h4>
+                <div class="citacao-bloco citacao-escritura">
+                    <div class="citacao-icone"><i class="fas fa-quote-left"></i></div>
+                    <blockquote>
+                        «O que é santo, que se santifique ainda mais.»
+                    </blockquote>
+                    <cite>— Apocalipse 22,11</cite>
+                </div>
+                <p>
+                    O Apocalipse apresenta a santidade consumada: os santos «lavaram as suas vestes no sangue do Cordeiro» (Ap 7,14) e estão diante do trono de Deus por toda a eternidade. A santidade, que na terra é combate, no céu é glória definitiva.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================= -->
+    <!-- TEOLOGIA DOGMÁTICA DA SANTIDADE -->
+    <!-- ============================= -->
+    <section id="teologia" class="secao secao-escura">
+        <div class="container">
+            <div class="secao-cabecalho">
+                <p class="secao-supratitulo">Capítulo IV</p>
+                <h2 class="secao-titulo">Teologia Dogmática da Santidade</h2>
+                <div class="secao-separador">
+                    <span class="separador-linha"></span>
+                    <i class="fas fa-landmark"></i>
+                    <span class="separador-linha"></span>
+                </div>
+            </div>
+
+            <div class="conteudo-texto">
+
+                <!-- Santidade de Deus -->
+                <div id="santidade-divina">
+                    <h3 class="subtitulo-grande">A. A Santidade de Deus</h3>
+                    <p>
+                        A santidade é um <strong>atributo divino essencial</strong>. Não é algo que Deus possui, mas algo que Deus <em>é</em>. Santo Tomás de Aquino ensina que a santidade de Deus consiste na Sua <strong>absoluta pureza</strong> (isenção de todo defeito) e na Sua <strong>perfeita firmeza no bem</strong> (cf. <em>Summa Theologiae</em>, I, q. 3, a. 1; II-II, q. 81, a. 8).
+                    </p>
+                    <p>
+                        O Catecismo da Igreja Católica afirma: <em>«Deus, infinitamente perfeito e bem-aventurado em Si mesmo, num desígnio de pura bondade, criou livremente o homem para o tornar participante da Sua vida bem-aventurada»</em> (CIC 1). A santidade de Deus é, portanto, o fundamento de toda a economia da salvação.
+                    </p>
+
+                    <h4>Características da santidade divina</h4>
+                    <div class="caracteristicas-grid">
+                        <div class="caract-card">
+                            <div class="caract-icone"><i class="fas fa-infinity"></i></div>
+                            <h5>Infinita</h5>
+                            <p>Não tem graus, não cresce, não diminui. É absoluta.</p>
+                        </div>
+                        <div class="caract-card">
+                            <div class="caract-icone"><i class="fas fa-sun"></i></div>
+                            <h5>Comunicável</h5>
+                            <p>Embora infinita, pode ser participada pela criatura pela graça.</p>
+                        </div>
+                        <div class="caract-card">
+                            <div class="caract-icone"><i class="fas fa-shield-alt"></i></div>
+                            <h5>Incompatível com o pecado</h5>
+                            <p>A santidade divina é a razão pela qual o pecado é tão grave: ofende o Infinitamente Santo.</p>
+                        </div>
+                        <div class="caract-card">
+                            <div class="caract-icone"><i class="fas fa-heart"></i></div>
+                            <h5>Amorosa</h5>
+                            <p>A santidade de Deus não é distância fria, mas amor purificador e transformador.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Santidade Trinitária -->
+                <div id="santidade-trinitaria">
+                    <h3 class="subtitulo-grande">B. Santidade Trinitária</h3>
+                    <p>
+                        A santidade pertence a cada Pessoa da Santíssima Trindade de modo próprio:
+                    </p>
+                    <div class="trindade-grid">
+                        <div class="trindade-card">
+                            <div class="trindade-icone"><i class="fas fa-hand-holding"></i></div>
+                            <h4>O Pai</h4>
+                            <p>É a <strong>fonte originária</strong> de toda santidade. Jesus dirige-se a Ele como «Pai Santo» (Jo 17,11). Toda santidade procede do Pai.</p>
+                        </div>
+                        <div class="trindade-card">
+                            <div class="trindade-icone"><i class="fas fa-cross"></i></div>
+                            <h4>O Filho</h4>
+                            <p>É a <strong>santidade encarnada e comunicada</strong>. «O Santo de Deus» (Mc 1,24). Por Sua Paixão e Morte, Ele nos santifica. Ele é o modelo e o caminho da santidade.</p>
+                        </div>
+                        <div class="trindade-card">
+                            <div class="trindade-icone"><i class="fas fa-dove"></i></div>
+                            <h4>O Espírito Santo</h4>
+                            <p>É o <strong>Santificador por excelência</strong>. Seu próprio nome é «Santo». É Ele quem aplica aos homens a santidade conquistada por Cristo. A santificação é Sua obra própria.</p>
+                        </div>
+                    </div>
+
+                    <div class="citacao-bloco">
+                        <div class="citacao-icone"><i class="fas fa-quote-left"></i></div>
+                        <blockquote>
+                            «A santidade é a grande empresa da Trindade no mundo: o Pai a quer, o Filho a mereceu, o Espírito Santo a realiza.»
+                        </blockquote>
+                        <cite>— Pe. Réginald Garrigou-Lagrange, O.P.</cite>
+                    </div>
+                </div>
+
+                <!-- Santidade de Cristo -->
+                <div id="santidade-cristo">
+                    <h3 class="subtitulo-grande">C. A Santidade de Cristo</h3>
+                    <p>
+                        A santidade de Cristo é absolutamente única e irrepetível. Nele confluem:
+                    </p>
+                    <ul class="lista-teologica">
+                        <li><strong>Santidade divina</strong>: enquanto Deus, Ele é infinitamente santo por natureza.</li>
+                        <li><strong>Santidade da graça de união</strong>: a união hipostática (a natureza humana unida à Pessoa divina do Verbo) confere à humanidade de Cristo uma santidade absolutamente singular, chamada «graça de união» (<em>gratia unionis</em>).</li>
+                        <li><strong>Plenitude de graça habitual</strong>: a alma humana de Cristo possui a graça santificante em grau infinito (Jo 1,14: «cheio de graça e de verdade»).</li>
+                        <li><strong>Impecabilidade</strong>: Cristo não podia pecar — não por falta de liberdade, mas pela perfeição absoluta da Sua santidade.</li>
+                        <li><strong>Santidade moral perfeita</strong>: todas as Suas ações humanas foram perfeitamente virtuosas e meritórias.</li>
+                    </ul>
+                    <p>
+                        Cristo é, portanto, a <strong>medida absoluta</strong> de toda santidade. Todo santo é santo na medida em que se conforma a Cristo. <em>«A santidade cristã é essencialmente configuração a Cristo»</em> (São João Paulo II, <em>Novo Millennio Ineunte</em>, 31).
+                    </p>
+                </div>
+
+                <!-- Santidade da Igreja -->
+                <div id="santidade-igreja">
+                    <h3 class="subtitulo-grande">D. A Santidade da Igreja</h3>
+                    <p>
+                        A Igreja é <strong>santa</strong> — é uma das quatro notas essenciais do Credo Niceno-Constantinopolitano: <em>«Creio na Igreja una, santa, católica e apostólica»</em>. Mas em que sentido ela é santa?
+                    </p>
+
+                    <h4>Fundamentos da santidade da Igreja</h4>
+                    <ol class="lista-teologica">
+                        <li><strong>Seu Fundador é Santo</strong>: a Igreja foi fundada por Jesus Cristo, o Santo de Deus.</li>
+                        <li><strong>Seu Espírito vivificador é Santo</strong>: o Espírito Santo é a alma da Igreja.</li>
+                        <li><strong>Sua doutrina é santa</strong>: ensina a verdade revelada por Deus.</li>
+                        <li><strong>Seus meios são santos</strong>: os sacramentos, a Palavra de Deus, a Liturgia.</li>
+                        <li><strong>Seus frutos são santos</strong>: os santos canonizados são prova viva da santidade da Igreja.</li>
+                    </ol>
+
+                    <h4>A questão dos pecadores na Igreja</h4>
+                    <p>
+                        Se a Igreja é santa, como pode haver pecadores nela? O Catecismo responde com precisão: <em>«A Igreja, que compreende em seu seio os pecadores, ao mesmo tempo santa e sempre necessitada de purificação, busca sem cessar a penitência e a renovação»</em> (CIC 827). A Igreja é santa nos seus meios e na sua essência, mas <strong>os seus membros são peregrinos em processo de santificação</strong>, podendo cair e levantar-se.
+                    </p>
+                    <p>
+                        Santo Agostinho usou a imagem da <strong>rede de pescador</strong> (Mt 13,47-50): a Igreja contém peixes bons e maus, mas isso não anula a santidade da rede, que é de Cristo.
+                    </p>
+                </div>
+
+                <!-- Santidade e Graça -->
+                <div id="santidade-graca">
+                    <h3 class="subtitulo-grande">E. Santidade e Graça</h3>
+                    <p>
+                        A relação entre santidade e graça é <strong>absolutamente intrínseca</strong>: não há santidade sem graça, e a graça tem como finalidade a santidade.
+                    </p>
+
+                    <h4>Graça santificante</h4>
+                    <p>
+                        A <strong>graça santificante</strong> (<em>gratia sanctificans</em> ou <em>gratia habitualis</em>) é a <strong>participação real na natureza divina</strong> (cf. 2Pd 1,4) infundida na alma pelo Batismo. Ela:
+                    </p>
+                    <ul class="lista-teologica">
+                        <li>Torna a alma <strong>agradável a Deus</strong>.</li>
+                        <li>Constitui o homem em <strong>estado de graça</strong> (= estado de santidade).</li>
+                        <li>Eleva a alma à <strong>ordem sobrenatural</strong>.</li>
+                        <li>Torna o homem <strong>filho adotivo de Deus</strong> e <strong>herdeiro do Céu</strong>.</li>
+                        <li>Infunde as <strong>virtudes teologais</strong> (fé, esperança, caridade) e os <strong>dons do Espírito Santo</strong>.</li>
+                    </ul>
+
+                    <h4>Graça atual</h4>
+                    <p>
+                        A <strong>graça atual</strong> é a ajuda sobrenatural transitória que Deus concede para iluminar a inteligência e fortalecer a vontade em vista de atos concretos de santidade. Sem ela, o homem não pode sequer começar a querer a santidade.
+                    </p>
+
+                    <h4>O debate teológico: graça e cooperação humana</h4>
+                    <p>
+                        A santidade é obra da graça, mas <strong>não sem a cooperação livre do homem</strong>. O Concílio de Trento definiu solenemente contra o protestantismo que o homem <strong>pode e deve cooperar</strong> com a graça (DS 1554-1555). A santidade não é passividade, mas <strong>sinergia</strong> entre Deus e o homem — onde Deus tem sempre a iniciativa e a primazia.
+                    </p>
+
+                    <div class="citacao-bloco">
+                        <div class="citacao-icone"><i class="fas fa-quote-left"></i></div>
+                        <blockquote>
+                            «Deus que te criou sem ti, não te salvará sem ti.»
+                        </blockquote>
+                        <cite>— Santo Agostinho, Sermão 169, 11, 13</cite>
+                    </div>
+                </div>
+
+                <!-- Santidade e Sacramentos -->
+                <div id="santidade-sacramentos">
+                    <h3 class="subtitulo-grande">F. Santidade e Sacramentos</h3>
+                    <p>
+                        Os sacramentos são os <strong>canais ordinários da graça santificante</strong>. Cada sacramento tem relação com a santidade:
+                    </p>
+
+                    <div class="sacramentos-grid">
+                        <div class="sacramento-card">
+                            <h5><i class="fas fa-water"></i> Batismo</h5>
+                            <p>Infunde a graça santificante, apaga o pecado original, incorpora a Cristo e à Igreja. É a <strong>porta da santidade</strong>.</p>
+                        </div>
+                        <div class="sacramento-card">
+                            <h5><i class="fas fa-fire"></i> Confirmação</h5>
+                            <p>Fortalece a graça batismal e concede os dons do Espírito Santo em plenitude para o <strong>testemunho corajoso da santidade</strong>.</p>
+                        </div>
+                        <div class="sacramento-card">
+                            <h5><i class="fas fa-bread-slice"></i> Eucaristia</h5>
+                            <p>É o <strong>alimento supremo</strong> da santidade: «Quem come a Minha carne e bebe o Meu sangue permanece em Mim e Eu nele» (Jo 6,56). A comunhão eucarística aumenta a graça e une a Cristo.</p>
+                        </div>
+                        <div class="sacramento-card">
+                            <h5><i class="fas fa-hands-praying"></i> Penitência</h5>
+                            <p><strong>Restaura a santidade perdida</strong> pelo pecado mortal. É o sacramento da «segunda tábua de salvação» (Concílio de Trento).</p>
+                        </div>
+                        <div class="sacramento-card">
+                            <h5><i class="fas fa-hand-holding-medical"></i> Unção dos Enfermos</h5>
+                            <p>Confere graça para a santificação no sofrimento e prepara a alma para a santidade definitiva.</p>
+                        </div>
+                        <div class="sacramento-card">
+                            <h5><i class="fas fa-book-bible"></i> Ordem</h5>
+                            <p>Consagra homens para o serviço da santificação do Povo de Deus através do ministério sacerdotal.</p>
+                        </div>
+                        <div class="sacramento-card">
+                            <h5><i class="fas fa-ring"></i> Matrimônio</h5>
+                            <p>Santifica o amor conjugal e a família, tornando o lar <strong>«igreja doméstica»</strong> e caminho de santidade.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================= -->
+    <!-- MAGISTÉRIO DA IGREJA -->
+    <!-- ============================= -->
+    <section id="magistério" class="secao secao-clara">
+        <div class="container">
+            <div class="secao-cabecalho">
+                <p class="secao-supratitulo">Capítulo V</p>
+                <h2 class="secao-titulo">Magistério da Igreja sobre a Santidade</h2>
+                <div class="secao-separador">
+                    <span class="separador-linha"></span>
+                    <i class="fas fa-scroll"></i>
+                    <span class="separador-linha"></span>
+                </div>
+            </div>
+
+            <div class="conteudo-texto">
+                <p>
+                    O Magistério da Igreja, ao longo dos séculos, pronunciou-se repetidamente sobre a santidade. Apresentamos os documentos mais relevantes:
+                </p>
+
+                <div class="magisterio-timeline">
+
+                    <div class="timeline-item">
+                        <div class="timeline-marcador">
+                            <span class="timeline-ano">1545-1563</span>
+                        </div>
+                        <div class="timeline-conteudo">
+                            <h4>Concílio de Trento</h4>
+                            <p>Definiu solenemente a doutrina da <strong>justificação</strong>, distinguindo-a do erro protestante. Ensinou que a justificação é verdadeira <strong>santificação interior</strong> (não mera imputação externa), que a graça pode ser perdida pelo pecado mortal e recuperada pela Penitência, e que o homem deve cooperar com a graça para crescer em santidade (Decreto sobre a Justificação, sessão VI).</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-marcador">
+                            <span class="timeline-ano">1869-1870</span>
+                        </div>
+                        <div class="timeline-conteudo">
+                            <h4>Concílio Vaticano I</h4>
+                            <p>Embora focado na fé e na razão, reafirmou a santidade de Deus e a capacidade da razão de conhecer a existência de Deus, fundamento da busca da santidade.</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-marcador">
+                            <span class="timeline-ano">1962-1965</span>
+                        </div>
+                        <div class="timeline-conteudo">
+                            <h4>Concílio Vaticano II — <em>Lumen Gentium</em>, cap. V</h4>
+                            <p>O documento mais importante do Magistério sobre a <strong>vocação universal à santidade</strong>. Declarou solenemente que <em>«todos os fiéis de qualquer estado ou ordem são chamados à plenitude da vida cristã e à perfeição da caridade»</em> (LG 40). A santidade não é privilégio de religiosos e clérigos, mas chamado de <strong>todo batizado</strong>.</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-marcador">
+                            <span class="timeline-ano">2001</span>
+                        </div>
+                        <div class="timeline-conteudo">
+                            <h4>São João Paulo II — <em>Novo Millennio Ineunte</em></h4>
+                            <p>No limiar do terceiro milênio, João Paulo II declarou que <em>«não hesito em dizer que a perspectiva em que deve colocar-se todo o caminho pastoral é a da santidade»</em> (NMI 30). Definiu a santidade como <em>«alto grau da vida cristã ordinária»</em> e insistiu que ela deve ser proposta a todos.</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-marcador">
+                            <span class="timeline-ano">2018</span>
+                        </div>
+                        <div class="timeline-conteudo">
+                            <h4>Papa Francisco — <em>Gaudete et Exsultate</em></h4>
+                            <p>Exortação apostólica inteiramente dedicada ao <strong>chamado à santidade no mundo atual</strong>. Francisco insiste na santidade «da porta ao lado», nas «pequenas santidades» do cotidiano, e adverte contra duas tentações contemporâneas: o <strong>gnosticismo</strong> (santidade como conhecimento elitista) e o <strong>pelagianismo</strong> (santidade como conquista humana sem graça).</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-marcador">
+                            <span class="timeline-ano">1992</span>
+                        </div>
+                        <div class="timeline-conteudo">
+                            <h4>Catecismo da Igreja Católica</h4>
+                            <p>O CIC trata da santidade em múltiplas passagens. Destaque para: CIC 2013 (<em>«Todos os fiéis são chamados à santidade cristã»</em>), CIC 2015 (<em>«O caminho da perfeição passa pela cruz»</em>), CIC 828 (<em>«Canonizando alguns fiéis, a Igreja proclama o exercício heroico das virtudes»</em>).</p>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>Outros documentos relevantes</h3>
+                <ul class="lista-teologica">
+                    <li><strong>Pio XI</strong>, <em>Rerum Omnium Perturbationem</em> (1923) — sobre São Francisco de Sales e a santidade acessível.</li>
+                    <li><strong>Pio XII</strong>, <em>Mystici Corporis</em> (1943) — a santidade da Igreja enquanto Corpo Místico de Cristo.</li>
+                    <li><strong>Paulo VI</strong>, <em>Evangelii Nuntiandi</em> (1975) — a santidade como condição para a evangelização autêntica.</li>
+                    <li><strong>Bento XVI</strong>, catequeses sobre os santos (2006-2012) — apresentou dezenas de santos como modelos concretos.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================= -->
+    <!-- PATRÍSTICA -->
+    <!-- ============================= -->
+    <section id="patristica" class="secao secao-escura">
+        <div class="container">
+            <div class="secao-cabecalho">
+                <p class="secao-supratitulo">Capítulo VI</p>
+                <h2 class="secao-titulo">A Santidade na Patrística</h2>
+                <div class="secao-separador">
+                    <span class="separador-linha"></span>
+                    <i class="fas fa-book"></i>
+                    <span class="separador-linha"></span>
+                </div>
+            </div>
+
+            <div class="conteudo-texto">
+                <p>
+                    Os Padres da Igreja desenvolveram e transmitiram a doutrina da santidade nos primeiros séculos do cristianismo. Cada um acentuou aspectos complementares:
+                </p>
+
+                <div class="padres-grid">
+                    <div class="padre-card">
+                        <h4>Santo Ireneu de Lyon (†202)</h4>
+                        <p class="padre-frase"><em>«A glória de Deus é o homem vivo; e a vida do homem é a visão de Deus.»</em></p>
+                        <p>Para Ireneu, a santidade é a <strong>plenitude da vida humana</strong>. O homem foi criado para crescer até a plena semelhança com Deus. A santidade é <strong>divinização</strong> (<em>theosis</em>).</p>
+                    </div>
+
+                    <div class="padre-card">
+                        <h4>Santo Atanásio de Alexandria (†373)</h4>
+                        <p class="padre-frase"><em>«Deus se fez homem para que o homem se fizesse Deus.»</em></p>
+                        <p>Formulação clássica da doutrina da <strong>divinização</strong>. A santidade é a <strong>deificação da criatura pela graça</strong>.</p>
+                    </div>
+
+                    <div class="padre-card">
+                        <h4>São Basílio Magno (†379)</h4>
+                        <p>Desenvolveu a <strong>espiritualidade do Espírito Santo</strong> como Santificador. Em <em>De Spiritu Sancto</em>, mostra que é o Espírito quem torna a alma santa, iluminando-a e purificando-a.</p>
+                    </div>
+
+                    <div class="padre-card">
+                        <h4>São Gregório de Nissa (†394)</h4>
+                        <p>Autor de <em>A Vida de Moisés</em>, onde apresenta a santidade como <strong>epectase</strong>: progresso infinito na participação em Deus. O santo nunca «chega», mas avança eternamente para Deus, de glória em glória.</p>
+                    </div>
+
+                    <div class="padre-card">
+                        <h4>Santo Agostinho de Hipona (†430)</h4>
+                        <p class="padre-frase"><em>«Fizeste-nos para Ti, Senhor, e o nosso coração está inquieto enquanto não repousar em Ti.»</em></p>
+                        <p>Agostinho é o grande doutor da <strong>graça e da interioridade</strong>. Para ele, a santidade é a vitória da graça no coração humano, a ordenação de todos os amores sob o amor de Deus (<em>ordo amoris</em>). Distinguiu entre <em>uti</em> (usar) e <em>frui</em> (fruir): o santo é aquele que frui de Deus e usa as criaturas, nunca o contrário.</p>
+                    </div>
+
+                    <div class="padre-card">
+                        <h4>São João Crisóstomo (†407)</h4>
+                        <p>O «boca de ouro» insistiu na <strong>santidade prática e social</strong>. A santidade não é fuga do mundo, mas transformação do mundo pela caridade, pela justiça e pela coerência de vida.</p>
+                    </div>
+
+                    <div class="padre-card">
+                        <h4>São Gregório Magno (†604)</h4>
+                        <p>Papa e Padre da Igreja, escreveu extensamente sobre a <strong>vida contemplativa como cume da santidade</strong> e sobre a responsabilidade dos pastores na santificação do rebanho (<em>Regra Pastoral</em>).</p>
+                    </div>
+                </div>
+
+                <h3>A doutrina patrística da divinização (<em>theosis</em>)</h3>
+                <p>
+                    Um dos contributos mais profundos da Patrística ao tema da santidade é a doutrina da <strong>theosis</strong> (divinização). Presente tanto nos Padres gregos quanto nos latinos, esta doutrina afirma que a santidade não é mero aperfeiçoamento moral, mas <strong>participação real na natureza divina</strong>. O homem, pela graça, é elevado acima da sua condição natural e tornado <strong>consorte da natureza divina</strong> (2Pd 1,4).
+                </p>
+                <p>
+                    A theosis não significa que o homem se torna Deus por natureza (isso seria panteísmo), mas que ele participa <strong>por graça</strong> no que Deus é <strong>por natureza</strong>. É uma participação analógica, real mas não igualitária.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================= -->
+    <!-- DOUTORES DA IGREJA -->
+    <!-- ============================= -->
+    <section id="doutores" class="secao secao-clara">
+        <div class="container">
+            <div class="secao-cabecalho">
+                <p class="secao-supratitulo">Capítulo VII</p>
+                <h2 class="secao-titulo">Doutores da Igreja e a Santidade</h2>
+                <div class="secao-separador">
+                    <span class="separador-linha"></span>
+                    <i class="fas fa-graduation-cap"></i>
+                    <span class="separador-linha"></span>
+                </div>
+            </div>
+
+            <div class="conteudo-texto">
+                <p>
+                    Os Doutores da Igreja são aqueles santos cujo ensinamento foi reconhecido como particularmente iluminador para toda a Igreja. Vários deles contribuíram decisivamente para a compreensão da santidade:
+                </p>
+
+                <div class="doutores-lista">
+                    <div class="doutor-card">
+                        <div class="doutor-header">
+                            <h4>Santo Tomás de Aquino (†1274)</h4>
+                            <p class="doutor-titulo">Doctor Angelicus — Doctor Communis</p>
+                        </div>
+                        <div class="doutor-body">
+                            <p>Na <em>Summa Theologiae</em>, Tomás apresenta a santidade como:</p>
+                            <ul>
+                                <li>Atributo divino essencial: Deus é a <strong>Santidade subsistente</strong> (I, q. 6).</li>
+                                <li><strong>Perfeição da caridade</strong>: a santidade do homem consiste na perfeição da caridade, que ordena todas as virtudes ao amor de Deus (II-II, q. 184, a. 1).</li>
+                                <li><strong>Estado de graça</strong>: o homem é santo enquanto possui a graça santificante que o torna agradável a Deus (I-II, q. 110).</li>
+                                <li>O <strong>fim último</strong> do homem é a visão beatífica — a contemplação face a face da santidade de Deus (I-II, q. 3, a. 8).</li>
+                            </ul>
+                            <div class="citacao-bloco">
+                                <blockquote>
+                                    «A santidade consiste principalmente na caridade, porque é a caridade que nos une a Deus, fim último da vida humana.»
+                                </blockquote>
+                                <cite>— STh II-II, q. 184, a. 1</cite>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="doutor-card">
+                        <div class="doutor-header">
+                            <h4>São Boaventura (†1274)</h4>
+                            <p class="doutor-titulo">Doctor Seraphicus</p>
+                        </div>
+                        <div class="doutor-body">
+                            <p>
+                                Na tradição franciscana, São Boaventura apresenta a santidade como <strong>itinerário da mente para Deus</strong> (<em>Itinerarium mentis in Deum</em>). O caminho da santidade passa por três etapas: purificação, iluminação e união. A santidade é, em última instância, a <strong>sabedoria do amor</strong> que conduz à união extática com Deus.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="doutor-card">
+                        <div class="doutor-header">
+                            <h4>Santa Teresa de Jesus (†1582)</h4>
+                            <p class="doutor-titulo">Doutora da Igreja</p>
+                        </div>
+                        <div class="doutor-body">
+                            <p>
+                                Em <em>O Castelo Interior</em>, Santa Teresa descreve o caminho da santidade como a travessia de <strong>sete moradas</strong> da alma até a morada mais interior, onde habita Deus. A santidade é <strong>intimidade com Deus</strong>, matrimônio espiritual, união transformante. Teresa insiste que a santidade autêntica se verifica pelas <strong>obras</strong> e pela <strong>humildade</strong>, não pelos fenômenos extraordinários.
+                            </p>
+                            <div class="citacao-bloco">
+                                <blockquote>
+                                    «Deus não olha tanto a grandeza das obras, mas o amor com que são feitas.»
+                                </blockquote>
+                                <cite>— Santa Teresa de Jesus</cite>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="doutor-card">
+                        <div class="doutor-header">
+                            <h4>São João da Cruz (†1591)</h4>
+                            <p class="doutor-titulo">Doctor Mysticus</p>
+                        </div>
+                        <div class="doutor-body">
+                            <p>
+                                O doutor da «noite escura» ensina que a santidade exige <strong>purificação radical</strong>. A alma deve passar pela noite dos sentidos e pela noite do espírito para ser purificada de todo apego desordenado e alcançar a <strong>união transformante com Deus</strong>. O caminho é doloroso, mas o fruto é a santidade consumada.
+                            </p>
+                            <div class="citacao-bloco">
+                                <blockquote>
+                                    «Para chegar ao que não sabes, deves ir por onde não sabes. Para chegar ao que não possuis, deves ir por onde não possuis. Para chegar ao que não és, deves ir por onde não és.»
+                                </blockquote>
+                                <cite>— São João da Cruz, <em>Subida do Monte Carmelo</em></cite>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="doutor-card">
+                        <div class="doutor-header">
+                            <h4>São Francisco de Sales (†1622)</h4>
+                            <p class="doutor-titulo">Doutor do Amor de Deus</p>
+                        </div>
+                        <div class="doutor-body">
+                            <p>
+                                Na <em>Introdução à Vida Devota</em>, São Francisco de Sales revolucionou a espiritualidade ao ensinar que a <strong>santidade é para todos</strong>, inclusive leigos vivendo no mundo. Cada pessoa pode e deve ser santa <strong>no seu estado de vida</strong>: o militar, a mãe de família, o comerciante, o cortesão. A santidade não exige clausura, mas <strong>devoção</strong> (= prontidão no amor de Deus) em tudo o que se faz.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="doutor-card">
+                        <div class="doutor-header">
+                            <h4>Santo Afonso Maria de Ligório (†1787)</h4>
+                            <p class="doutor-titulo">Doctor Zelantissimus</p>
+                        </div>
+                        <div class="doutor-body">
+                            <p>
+                                Fundador dos Redentoristas, Santo Afonso escreveu extensamente sobre a <strong>santidade prática</strong>. Sua obra <em>Prática do Amor a Jesus Cristo</em> é um tratado sobre como viver a santidade no cotidiano. Insistiu que a santidade consiste na <strong>conformidade com a vontade de Deus</strong> em todas as circunstâncias.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="doutor-card">
+                        <div class="doutor-header">
+                            <h4>Santa Teresa de Lisieux (†1897)</h4>
+                            <p class="doutor-titulo">Doutora da Igreja — A Pequena Via</p>
+                        </div>
+                        <div class="doutor-body">
+                            <p>
+                                Santa Teresinha do Menino Jesus descobriu a <strong>«pequena via»</strong> da santidade: fazer com grande amor as coisas pequenas. A santidade não consiste em grandes penitências ou obras extraordinárias, mas na <strong>confiança total em Deus</strong> e na <strong>oferta de cada gesto cotidiano</strong> com amor. Esta doutrina influenciou profundamente o magistério posterior sobre a vocação universal à santidade.
+                            </p>
+                            <div class="citacao-bloco">
+                                <blockquote>
+                                    «A santidade não consiste nesta ou naquela prática, mas numa disposição do coração que nos torna humildes e pequenos nos braços de Deus, conscientes da nossa fraqueza e confiantes até à audácia na Sua bondade de Pai.»
+                                </blockquote>
+                                <cite>— Santa Teresa de Lisieux</cite>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================= -->
+    <!-- FILOSOFIA DA SANTIDADE -->
+    <!-- ============================= -->
+    <section id="filosofia" class="secao secao-escura">
+        <div class="container">
+            <div class="secao-cabecalho">
+                <p class="secao-supratitulo">Capítulo VIII</p>
+                <h2 class="secao-titulo">Filosofia da Santidade</h2>
+                <div class="secao-separador">
+                    <span class="separador-linha"></span>
+                    <i class="fas fa-lightbulb"></i>
+                    <span class="separador-linha"></span>
+                </div>
+            </div>
+
+            <div class="conteudo-texto">
+                <h3>Santidade e metafísica</h3>
+                <p>
+                    Do ponto de vista metafísico, a santidade de Deus está ligada à Sua <strong>simplicidade absoluta</strong> e à Sua <strong>perfeição pura</strong>. Deus é <em>Ipsum Esse Subsistens</em> (o Próprio Ser Subsistente), e como tal é absolutamente isento de qualquer composição, potencialidade, defeito ou limitação. Sua santidade é a expressão da Sua <strong>pureza ontológica</strong>: Ele é puro Ato, puro Bem, pura Verdade.
+                </p>
+                <p>
+                    A santidade participada da criatura é, metafisicamente, uma <strong>elevação ontológica</strong>: pela graça, o ser humano recebe uma <strong>nova forma sobrenatural</strong> que o eleva acima da sua natureza e o torna proporcionado à visão de Deus.
+                </p>
+
+                <h3>Santidade e ética filosófica</h3>
+                <p>
+                    Na tradição aristotélico-tomista, a vida virtuosa é a realização da <strong>eudaimonia</strong> (felicidade/beatitude). A santidade cristã leva este ideal ao seu cumprimento sobrenatural: a <strong>beatitude perfeita</strong> não está na virtude natural, mas na visão de Deus, que só a graça pode proporcionar.
+                </p>
+                <p>
+                    A santidade, portanto, não contradiz a ética natural, mas a <strong>completa, eleva e transfigura</strong>. O santo não é menos virtuoso que o filósofo estoico ou aristotélico; é <strong>infinitamente mais</strong>, porque suas virtudes são informadas pela caridade sobrenatural e ordenadas a um fim que transcende toda capacidade natural.
+                </p>
+
+                <h3>A noção do Sagrado: Rudolf Otto e a perspectiva católica</h3>
+                <p>
+                    O filósofo e teólogo luterano <strong>Rudolf Otto</strong>, na obra <em>O Sagrado</em> (1917), descreveu a experiência do santo como o <strong><em>mysterium tremendum et fascinans</em></strong>: um mistério que simultaneamente aterroriza (pela transcendência absoluta) e fascina (pela beleza irresistível). Embora vindo de fora da tradição católica, esta análise fenomenológica é valiosa:
+                </p>
+                <ul class="lista-teologica">
+                    <li><strong><em>Tremendum</em></strong>: o aspecto terrível da santidade divina. Isaías cai prostrado (Is 6,5), Pedro diz «Afasta-te de mim, Senhor, porque sou um homem pecador» (Lc 5,8).</li>
+                    <li><strong><em>Fascinans</em></strong>: o aspecto atraente da santidade divina. Os santos são irresistivelmente atraídos por Deus; a santidade é bela.</li>
+                </ul>
+                <p>
+                    A perspectiva católica aceita e completa Otto: o «numinoso» não é apenas uma categoria religiosa genérica, mas a experiência do Deus vivo e pessoal que se revelou em Cristo.
+                </p>
+
+                <h3>Filósofos católicos sobre a santidade</h3>
+                <div class="filosofos-grid">
+                    <div class="filosofo-card">
+                        <h4>Jacques Maritain (†1973)</h4>
+                        <p>Distinguiu entre <strong>santidade e perfeição moral natural</strong>. O santo não é simplesmente um homem bom; é um homem transformado pela graça. A santidade é um fenômeno sobrenatural irredutível à ética filosófica.</p>
+                    </div>
+                    <div class="filosofo-card">
+                        <h4>Dietrich von Hildebrand (†1977)</h4>
+                        <p>Em <em>Santidade e Transformação em Cristo</em>, Hildebrand analisa as <strong>atitudes fundamentais</strong> que constituem a santidade: reverência, fidelidade, consciência de responsabilidade, veracidade e, acima de tudo, o <strong>«valor-resposta» ao amor de Deus</strong>.</p>
+                    </div>
+                    <div class="filosofo-card">
+                        <h4>Edith Stein / Santa Teresa Benedita da Cruz (†1942)</h4>
+                        <p>Filósofa fenomenóloga convertida e mártir, Edith Stein viu na santidade a <strong>realização plena da pessoa humana</strong>. A abertura a Deus é o ato mais autenticamente humano, e a santidade é a plenitude da verdade pessoal.</p>
+                    </div>
+                    <div class="filosofo-card">
+                        <h4>Blaise Pascal (†1662)</h4>
+                        <p>Embora não formalmente católico em sentido estrito da ortodoxia (jansenismo), Pascal intuiu genialmente que o homem tem três ordens: <strong>corpo, espírito e caridade</strong>. A santidade pertence à ordem da caridade, que é infinitamente superior às ordens da inteligência e da matéria.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================= -->
+    <!-- TEOLOGIA MÍSTICA -->
+    <!-- ============================= -->
+    <section id="mistica" class="secao secao-clara">
+        <div class="container">
+            <div class="secao-cabecalho">
+                <p class="secao-supratitulo">Capítulo IX</p>
+                <h2 class="secao-titulo">Teologia Mística e Santidade</h2>
+                <div class="secao-separador">
+                    <span class="separador-linha"></span>
+                    <i class="fas fa-fire"></i>
+                    <span class="separador-linha"></span>
+                </div>
+                <p class="secao-descricao">As Três Vias da Vida Espiritual rumo à Santidade Plena</p>
+            </div>
+
+            <div class="conteudo-texto">
+                <p>
+                    A tradição católica, desde os Padres da Igreja até os grandes mestres espirituais, descreve o caminho da santidade como um <strong>itinerário em três etapas</strong> (ou «vias»), que correspondem ao crescimento progressivo da alma na graça:
+                </p>
+
+                <!-- VIA PURGATIVA -->
+                <div id="via-purgativa" class="via-card">
+                    <div class="via-header via-purgativa-header">
+                        <div class="via-numero">I</div>
+                        <h3>Via Purgativa</h3>
+                        <p class="via-subtitulo">Dos principiantes</p>
+                    </div>
+                    <div class="via-body">
+                        <h4>Descrição</h4>
+                        <p>
+                            É a etapa inicial da santidade. Corresponde à <strong>purificação da alma dos pecados e dos vícios</strong>. O principiante luta contra o pecado mortal, depois contra o pecado venial deliberado, e começa a praticar as virtudes com esforço.
+                        </p>
+                        <h4>Elementos característicos</h4>
+                        <ul class="lista-teologica">
+                            <li><strong>Exame de consciência</strong> sério e regular.</li>
+                            <li><strong>Combate aos pecados capitais</strong> (soberba, avareza, luxúria, ira, gula, inveja, preguiça).</li>
+                            <li><strong>Mortificação</strong> dos sentidos e das paixões desordenadas.</li>
+                            <li><strong>Arrependimento</strong> sincero e confissão frequente.</li>
+                            <li><strong>Desapego</strong> progressivo das criaturas.</li>
+                        </ul>
+                        <h4>Iluminação de São João da Cruz</h4>
+                        <p>
+                            São João da Cruz descreve a transição da via purgativa para a iluminativa como a <strong>«noite dos sentidos»</strong>: Deus retira as consolações sensíveis para purificar o amor da alma, que deve aprender a amar a Deus não pelos seus dons, mas por Ele mesmo.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- VIA ILUMINATIVA -->
+                <div id="via-iluminativa" class="via-card">
+                    <div class="via-header via-iluminativa-header">
+                        <div class="via-numero">II</div>
+                        <h3>Via Iluminativa</h3>
+                        <p class="via-subtitulo">Dos proficientes</p>
+                    </div>
+                    <div class="via-body">
+                        <h4>Descrição</h4>
+                        <p>
+                            Purificada dos vícios mais grosseiros, a alma entra na etapa da <strong>iluminação</strong>. É o tempo de crescimento positivo nas virtudes, de aprofundamento na contemplação e de imitação mais intensa de Cristo.
+                        </p>
+                        <h4>Elementos característicos</h4>
+                        <ul class="lista-teologica">
+                            <li><strong>Prática habitual das virtudes</strong> com mais facilidade e gosto.</li>
+                            <li><strong>Crescimento nos dons do Espírito Santo</strong>.</li>
+                            <li><strong>Contemplação adquirida</strong>: a oração torna-se mais simples, mais silenciosa, mais amorosa.</li>
+                            <li><strong>Imitação de Cristo</strong> mais consciente e configuração aos Seus mistérios.</li>
+                            <li><strong>Pureza de intenção</strong> cada vez mais profunda.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- VIA UNITIVA -->
+                <div id="via-unitiva" class="via-card">
+                    <div class="via-header via-unitiva-header">
+                        <div class="via-numero">III</div>
+                        <h3>Via Unitiva</h3>
+                        <p class="via-subtitulo">Dos perfeitos</p>
+                    </div>
+                    <div class="via-body">
+                        <h4>Descrição</h4>
+                        <p>
+                            É o cume da santidade nesta vida. A alma atinge a <strong>união habitual com Deus</strong>. Não se trata de mera perfeição moral, mas de uma <strong>transformação profunda do ser</strong> pela caridade consumada. Santa Teresa chama-a de «matrimônio espiritual»; São João da Cruz, de «união transformante».
+                        </p>
+                        <h4>Elementos característicos</h4>
+                        <ul class="lista-teologica">
+                            <li><strong>Contemplação infusa</strong>: Deus toma a iniciativa na oração; a alma é mais passiva e receptiva.</li>
+                            <li><strong>Caridade heroica</strong>: o amor a Deus e ao próximo atinge um grau extraordinário.</li>
+                            <li><strong>Paz profunda</strong> mesmo no meio das tribulações.</li>
+                            <li><strong>Conformidade total com a vontade de Deus</strong>.</li>
+                            <li><strong>Frutos abundantes</strong> de apostolado e santificação dos outros.</li>
+                        </ul>
+                        <h4>A «noite do espírito»</h4>
+                        <p>
+                            São João da Cruz ensina que antes de entrar plenamente na via unitiva, a alma passa pela terrível <strong>«noite do espírito»</strong>: uma purificação profundíssima onde Deus parece ausente, a fé é posta à prova, e a alma sente-se abandonada. É a purificação final que remove os últimos vestígios de imperfeição e prepara a alma para a união plena.
+                        </p>
+                    </div>
+                </div>
+
+                <h3>Fenômenos místicos e santidade</h3>
+                <p>
+                    É importante notar que os <strong>fenômenos místicos extraordinários</strong> (êxtases, visões, locuções, estigmas, levitação, etc.) <strong>não são essenciais à santidade</strong> nem a constituem. A santidade consiste na <strong>caridade heroica</strong>, não nos carismas extraordinários. Muitos santos não tiveram fenômenos místicos; e nem tudo o que parece místico é necessariamente de Deus.
+                </p>
+                <p>
+                    O Magistério e os grandes mestres são unânimes: <strong>a santidade está na caridade, não nos prodígios</strong>.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================= -->
+    <!-- TEOLOGIA MORAL E SANTIDADE -->
+    <!-- ============================= -->
+    <section id="moral" class="secao secao-escura">
+        <div class="container">
+            <div class="secao-cabecalho">
+                <p class="secao-supratitulo">Capítulo X</p>
+                <h2 class="secao-titulo">Teologia Moral e Santidade</h2>
+                <div class="secao-separador">
+                    <span class="separador-linha"></span>
+                    <i class="fas fa-balance-scale"></i>
+                    <span class="separador-linha"></span>
+                </div>
+            </div>
+
+            <div class="conteudo-texto">
+                <h3>Santidade como vida virtuosa heroica</h3>
+                <p>
+                    Do ponto de vista da teologia moral, a santidade é a <strong>prática heroica das virtudes</strong>. O Código de Direito Canônico e as normas para as causas dos santos estabelecem que, para ser declarado santo, é necessário provar o <strong>exercício heroico das virtudes teologais</strong> (fé, esperança e caridade), das <strong>virtudes cardeais</strong> (prudência, justiça, fortaleza e temperança) e das <strong>virtudes conexas</strong>.
+                </p>
+
+                <h4>As virtudes teologais e a santidade</h4>
+                <div class="virtudes-grid">
+                    <div class="virtude-card">
+                        <h5><i class="fas fa-cross"></i> Fé</h5>
+                        <p>O santo crê com firmeza inabalável, mesmo na obscuridade. A fé heroica resiste a todas as tentações contra a fé e ilumina toda a vida.</p>
+                    </div>
+                    <div class="virtude-card">
+                        <h5><i class="fas fa-anchor"></i> Esperança</h5>
+                        <p>O santo espera firmemente em Deus, sem presunção nem desespero. Confia na misericórdia divina mesmo nos momentos mais sombrios.</p>
+                    </div>
+                    <div class="virtude-card">
+                        <h5><i class="fas fa-heart"></i> Caridade</h5>
+                        <p>É a <strong>«forma de todas as virtudes»</strong> (STh II-II, q. 23, a. 8). A caridade heroica ama a Deus sobre todas as coisas e ao próximo como a si mesmo, até o sacrifício total. <strong>A santidade é essencialmente a perfeição da caridade.</strong></p>
+                    </div>
+                </div>
+
+                <h4>As virtudes cardeais e a santidade</h4>
+                <div class="virtudes-grid">
+                    <div class="virtude-card">
+                        <h5><i class="fas fa-eye"></i> Prudência</h5>
+                        <p>O santo discerne com retidão o que Deus quer em cada situação concreta. A prudência sobrenatural é iluminada pelos dons do Espírito Santo.</p>
+                    </div>
+                    <div class="virtude-card">
+                        <h5><i class="fas fa-gavel"></i> Justiça</h5>
+                        <p>O santo dá a cada um o que lhe é devido: a Deus, o culto; ao próximo, o respeito e o direito; a si mesmo, a dignidade de filho de Deus.</p>
+                    </div>
+                    <div class="virtude-card">
+                        <h5><i class="fas fa-shield-alt"></i> Fortaleza</h5>
+                        <p>O santo enfrenta dificuldades, perseguições e sofrimentos com firmeza e constância, sem fugir nem desanimar.</p>
+                    </div>
+                    <div class="virtude-card">
+                        <h5><i class="fas fa-balance-scale-left"></i> Temperança</h5>
+                        <p>O santo modera os prazeres sensíveis e ordena os apetites sob o governo da razão iluminada pela fé.</p>
+                    </div>
+                </div>
+
+                <h3>Santidade e pecado</h3>
+                <p>
+                    A santidade é <strong>incompatível com o pecado mortal</strong>. O pecado mortal destrói a graça santificante e rompe a amizade com Deus. Porém, a santidade <strong>convive com imperfeições e pecados veniais</strong> — todo santo, exceto Nossa Senhora, teve imperfeições. A diferença é que o santo <strong>luta contra elas</strong>, arrepende-se e busca a purificação constante.
+                </p>
+                <p>
+                    O pecado é o <strong>anti-santidade</strong>, a <strong>desordem</strong> que se opõe à ordem divina. A santidade, portanto, implica sempre <strong>conversão contínua</strong>: afastar-se do pecado e voltar-se para Deus.
+                </p>
+
+                <h3>Santidade e consciência moral</h3>
+                <p>
+                    O santo é alguém com uma <strong>consciência moral reta e delicada</strong>. Não é escrupuloso (o que é uma patologia espiritual), mas é profundamente sensível ao que agrada ou desagrada a Deus. A santidade implica a <strong>formação contínua da consciência</strong> à luz da Revelação e do Magistério.
+                </p>
+
+                <h3>Heroicidade das virtudes</h3>
+                <p>
+                    O conceito de <strong>«heroicidade das virtudes»</strong> é central no processo de canonização. Não basta praticar as virtudes de modo comum; é necessário praticá-las de modo <strong>constante, pronto, com alegria e acima do nível ordinário</strong>. O Papa Bento XIV (Próspero Lambertini), em <em>De Servorum Dei Beatificatione</em>, definiu que as virtudes heroicas são praticadas <em>«com prontidão, facilidade e gosto, de modo superior ao comum, para um fim sobrenatural, sem raciocínio humano»</em>.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================= -->
+    <!-- VOCAÇÃO UNIVERSAL À SANTIDADE -->
+    <!-- ============================= -->
+    <section id="vocacao-universal" class="secao secao-clara">
+        <div class="container">
+            <div class="secao-cabecalho">
+                <p class="secao-supratitulo">Capítulo XI</p>
+                <h2 class="secao-titulo">Vocação Universal à Santidade</h2>
+                <div class="secao-separador">
+                    <span class="separador-linha"></span>
+                    <i class="fas fa-users"></i>
+                    <span class="separador-linha"></span>
+                </div>
+            </div>
+
+            <div class="conteudo-texto">
+                <p>
+                    A doutrina da <strong>vocação universal à santidade</strong> é uma das afirmações mais importantes do Concílio Vaticano II. Embora sempre presente implicitamente na Tradição, foi solenemente proclamada na <em>Lumen Gentium</em>, capítulo V:
+                </p>
+
+                <div class="citacao-bloco citacao-magisterio">
+                    <div class="citacao-icone"><i class="fas fa-quote-left"></i></div>
+                    <blockquote>
+                        «Todos os fiéis de qualquer estado ou ordem são chamados à plenitude da vida cristã e à perfeição da caridade; santidade esta que promove, mesmo na sociedade terrena, um modo de vida mais humano.»
+                    </blockquote>
+                    <cite>— Lumen Gentium, 40</cite>
+                </div>
+
+                <h3>Implicações desta doutrina</h3>
+                <ol class="lista-teologica">
+                    <li><strong>A santidade não é reservada a religiosos e clérigos.</strong> Todo batizado — leigo, consagrado, ordenado — é chamado à mesma plenitude de santidade.</li>
+                    <li><strong>Cada estado de vida tem seu caminho próprio de santidade.</strong> O leigo santifica-se no matrimônio, no trabalho, na vida social; o religioso, na vida consagrada; o sacerdote, no ministério.</li>
+                    <li><strong>A santidade é possível em todas as circunstâncias.</strong> Não depende de condições externas favoráveis, mas da cooperação com a graça.</li>
+                    <li><strong>A santidade é obrigação, não opção.</strong> Não é um «extra» para os mais fervorosos, mas o dever fundamental de todo cristão.</li>
+                </ol>
+
+                <!-- ESTADOS DE VIDA -->
+                <div id="estados-vida">
+                    <h3>Santidade nos diversos estados de vida</h3>
+
+                    <div class="estados-grid">
+                        <div class="estado-card">
+                            <div class="estado-icone"><i class="fas fa-ring"></i></div>
+                            <h4>Santidade no matrimônio</h4>
+                            <p>Os esposos santificam-se pelo amor fiel, fecundo e indissolúvel; pela educação cristã dos filhos; pela vivência do lar como «igreja doméstica». Santos modelos: São Luís e Santa Zélia Martin, Santa Gianna Beretta Molla.</p>
+                        </div>
+                        <div class="estado-card">
+                            <div class="estado-icone"><i class="fas fa-briefcase"></i></div>
+                            <h4>Santidade no trabalho</h4>
+                            <p>O trabalho feito com competência, honestidade e oferecido a Deus é caminho de santificação. São Josemaria Escrivá ensinou: <em>«Santificar o trabalho, santificar-se no trabalho, santificar os outros com o trabalho»</em>.</p>
+                        </div>
+                        <div class="estado-card">
+                            <div class="estado-icone"><i class="fas fa-pray"></i></div>
+                            <h4>Santidade na vida consagrada</h4>
+                            <p>Os consagrados vivem os conselhos evangélicos (pobreza, castidade, obediência) como caminhos radicais de santidade, testemunhando a primazia de Deus.</p>
+                        </div>
+                        <div class="estado-card">
+                            <div class="estado-icone"><i class="fas fa-hands"></i></div>
+                            <h4>Santidade no sacerdócio</h4>
+                            <p>O sacerdote santifica-se pela celebração dos sacramentos, pela pregação fiel, pela caridade pastoral e pela identificação com Cristo Sacerdote.</p>
+                        </div>
+                        <div class="estado-card">
+                            <div class="estado-icone"><i class="fas fa-user-graduate"></i></div>
+                            <h4>Santidade na juventude</h4>
+                            <p>Os jovens são chamados à santidade já agora, não «depois de velhos». Santos jovens: São Domingos Sávio, Beato Carlo Acutis, Santa Maria Goretti.</p>
+                        </div>
+                        <div class="estado-card">
+                            <div class="estado-icone"><i class="fas fa-heartbeat"></i></div>
+                            <h4>Santidade no sofrimento</h4>
+                            <p>O sofrimento aceito e unido à Cruz de Cristo é caminho privilegiado de santificação. São João Paulo II escreveu sobre o «Evangelho do sofrimento» em <em>Salvifici Doloris</em>.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================= -->
+    <!-- PROCESSO DE CANONIZAÇÃO -->
+    <!-- ============================= -->
+    <section id="canonizacao" class="secao secao-escura">
+        <div class="container">
+            <div class="secao-cabecalho">
+                <p class="secao-supratitulo">Capítulo XII</p>
+                <h2 class="secao-titulo">Processo de Canonização</h2>
+                <div class="secao-separador">
+                    <span class="separador-linha"></span>
+                    <i class="fas fa-gavel"></i>
+                    <span class="separador-linha"></span>
+                </div>
+                <p class="secao-descricao">Como a Igreja reconhece oficialmente a santidade</p>
+            </div>
+
+            <div class="conteudo-texto">
+                <p>
+                    A canonização é o ato solene pelo qual o Papa declara que um fiel falecido <strong>está certamente no Céu</strong> e o propõe como <strong>modelo e intercessor</strong> para toda a Igreja. É considerada um ato do <strong>Magistério infalível</strong> do Papa.
+                </p>
+
+                <h3>Etapas do processo</h3>
+                <div class="etapas-canonizacao">
+                    <div class="etapa-card">
+                        <div class="etapa-numero">1</div>
+                        <div class="etapa-conteudo">
+                            <h4>Servo de Deus</h4>
+                            <p>O bispo diocesano abre o <strong>inquérito diocesano</strong> sobre a vida, virtudes e fama de santidade do candidato. Recolhem-se testemunhos, escritos e documentos. A causa é enviada à Congregação (agora Dicastério) para as Causas dos Santos em Roma.</p>
+                        </div>
+                    </div>
+                    <div class="etapa-card">
+                        <div class="etapa-numero">2</div>
+                        <div class="etapa-conteudo">
+                            <h4>Venerável</h4>
+                            <p>Após estudo aprofundado, o Papa reconhece que o Servo de Deus praticou as <strong>virtudes em grau heroico</strong>. Recebe o título de «Venerável». Ainda não é culto público.</p>
+                        </div>
+                    </div>
+                    <div class="etapa-card">
+                        <div class="etapa-numero">3</div>
+                        <div class="etapa-conteudo">
+                            <h4>Beato</h4>
+                            <p>É necessário um <strong>milagre</strong> (geralmente uma cura inexplicável pela ciência) atribuído à intercessão do Venerável. O Papa o declara «Beato» e autoriza o culto público <strong>local ou particular</strong>.</p>
+                            <p class="nota-especial"><em>No caso de mártires, o milagre não é necessário para a beatificação.</em></p>
+                        </div>
+                    </div>
+                    <div class="etapa-card">
+                        <div class="etapa-numero">4</div>
+                        <div class="etapa-conteudo">
+                            <h4>Santo</h4>
+                            <p>É necessário um <strong>segundo milagre</strong> ocorrido após a beatificação. O Papa o declara «Santo» e o inscreve no catálogo dos santos, estabelecendo o culto <strong>universal</strong> em toda a Igreja.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>Critérios teológicos</h3>
+                <ul class="lista-teologica">
+                    <li><strong>Heroicidade das virtudes teologais e cardeais</strong>: verificada por uma comissão de teólogos.</li>
+                    <li><strong>Fama de santidade</strong>: reconhecimento espontâneo do povo de Deus.</li>
+                    <li><strong>Ortodoxia doutrinal</strong>: os escritos do candidato são examinados para verificar conformidade com a fé católica.</li>
+                    <li><strong>Milagres</strong>: confirmação divina da santidade do candidato, verificada por comissão médica e teológica.</li>
+                </ul>
+
+                <h3>Significado teológico da canonização</h3>
+                <p>
+                    A canonização não «torna» alguém santo — a pessoa já é santa no Céu. A canonização é o <strong>reconhecimento oficial da Igreja</strong> de que aquela pessoa está glorificada e pode ser venerada com segurança. É, portanto, um ato de <strong>discernimento eclesial assistido pelo Espírito Santo</strong>.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================= -->
+    <!-- SANTOS COMO MODELOS -->
+    <!-- ============================= -->
+    <section id="santos-modelos" class="secao secao-clara">
+        <div class="container">
+            <div class="secao-cabecalho">
+                <p class="secao-supratitulo">Capítulo XIII</p>
+                <h2 class="secao-titulo">Santos como Modelos de Santidade</h2>
+                <div class="secao-separador">
+                    <span class="separador-linha"></span>
+                    <i class="fas fa-star"></i>
+                    <span class="separador-linha"></span>
+                </div>
+            </div>
+
+            <div class="conteudo-texto">
+                <p>
+                    Os santos não são meros exemplos morais; são <strong>provas vivas</strong> de que a santidade é possível em qualquer época, cultura, estado de vida e circunstância. São a «exegese viva do Evangelho» (Bento XVI). Cada santo ilumina um <strong>aspecto particular</strong> da santidade:
+                </p>
+
+                <div class="santos-categorias">
+
+                    <h3>Santos que iluminam aspectos da santidade</h3>
+
+                    <div class="santos-grid">
+                        <div class="santo-card">
+                            <div class="santo-aspecto">Santidade da humildade</div>
+                            <h4>Nossa Senhora</h4>
+                            <p>«Eis a serva do Senhor» (Lc 1,38). Maria é o modelo supremo de santidade: cheia de graça desde a concepção, perfeitamente dócil à vontade de Deus, unida a Cristo de modo único e irrepetível.</p>
+                        </div>
+
+                        <div class="santo-card">
+                            <div class="santo-aspecto">Santidade do silêncio obediente</div>
+                            <h4>São José</h4>
+                            <p>Nenhuma palavra sua é registrada nas Escrituras. Sua santidade é toda de obediência silenciosa, trabalho fiel e proteção amorosa. Patrono da Igreja Universal.</p>
+                        </div>
+
+                        <div class="santo-card">
+                            <div class="santo-aspecto">Santidade da pequena via</div>
+                            <h4>Santa Teresinha do Menino Jesus</h4>
+                            <p>Morreu aos 24 anos no anonimato do Carmelo. Descobriu que a santidade está em fazer com grande amor as coisas pequenas. Doutora da Igreja e Padroeira das Missões.</p>
+                        </div>
+
+                        <div class="santo-card">
+                            <div class="santo-aspecto">Santidade do desapego radical</div>
+                            <h4>São Francisco de Assis</h4>
+                            <p>Despojou-se de tudo para seguir Cristo pobre e crucificado. Recebeu os estigmas. Renovou a Igreja pelo testemunho da pobreza evangélica.</p>
+                        </div>
+
+                        <div class="santo-card">
+                            <div class="santo-aspecto">Santidade da vida interior</div>
+                            <h4>Santa Teresa d'Ávila</h4>
+                            <p>Mestra da oração e reformadora do Carmelo. Ensinou que a santidade é intimidade com Deus e se verifica pelas obras e pela humildade.</p>
+                        </div>
+
+                        <div class="santo-card">
+                            <div class="santo-aspecto">Santidade crucificada</div>
+                            <h4>São Padre Pio</h4>
+                            <p>Estigmatizado durante 50 anos, viveu uma santidade marcada pelo sofrimento redentor, pela confissão incansável e pela intercessão poderosa.</p>
+                        </div>
+
+                        <div class="santo-card">
+                            <div class="santo-aspecto">Santidade no cotidiano</div>
+                            <h4>São Josemaria Escrivá</h4>
+                            <p>Fundador do Opus Dei. Ensinou que o trabalho profissional, as relações familiares e as atividades ordinárias são matéria de santificação.</p>
+                        </div>
+
+                        <div class="santo-card">
+                            <div class="santo-aspecto">Santidade da confiança</div>
+                            <h4>Santa Faustina Kowalska</h4>
+                            <p>Apóstola da Divina Misericórdia. Sua santidade baseou-se na confiança ilimitada em Deus e na entrega total à Sua misericórdia.</p>
+                        </div>
+
+                        <div class="santo-card">
+                            <div class="santo-aspecto">Santidade da pureza</div>
+                            <h4>Santa Maria Goretti</h4>
+                            <p>Mártir da pureza aos 11 anos. Preferiu a morte ao pecado e perdoou o assassino no leito de morte.</p>
+                        </div>
+
+                        <div class="santo-card">
+                            <div class="santo-aspecto">Santidade do amor concreto</div>
+                            <h4>Santa Teresa de Calcutá</h4>
+                            <p>Serviu os mais pobres dos pobres nas ruas de Calcutá. Viveu a santidade da caridade concreta, mesmo durante décadas de «noite escura» interior.</p>
+                        </div>
+
+                        <div class="santo-card">
+                            <div class="santo-aspecto">Santidade da entrega total</div>
+                            <h4>São Maximiliano Kolbe</h4>
+                            <p>Ofereceu a vida no lugar de um pai de família em Auschwitz. «Mártir da caridade» — a santidade levada até o dom supremo de si.</p>
+                        </div>
+
+                        <div class="santo-card">
+                            <div class="santo-aspecto">Santidade juvenil contemporânea</div>
+                            <h4>Beato Carlo Acutis</h4>
+                            <p>Adolescente italiano falecido em 2006. Usou a tecnologia para evangelizar e viveu uma santidade feita de Eucaristia, simplicidade e alegria.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================= -->
+    <!-- MARIA SANTÍSSIMA E A SANTIDADE -->
+    <!-- ============================= -->
+    <section id="maria-santidade" class="secao secao-escura">
+        <div class="container">
+            <div class="secao-cabecalho">
+                <p class="secao-supratitulo">Capítulo XIV</p>
+                <h2 class="secao-titulo">Maria Santíssima e a Santidade</h2>
+                <div class="secao-separador">
+                    <span class="separador-linha"></span>
+                    <i class="fas fa-star-of-life"></i>
+                    <span class="separador-linha"></span>
+                </div>
+            </div>
+
+            <div class="conteudo-texto">
+                <p>
+                    Maria ocupa um lugar <strong>absolutamente singular</strong> na teologia da santidade. Ela é:
+                </p>
+
+                <div class="maria-grid">
+                    <div class="maria-card">
+                        <h4><i class="fas fa-gem"></i> A Imaculada Conceição</h4>
+                        <p>Maria foi preservada do pecado original desde o primeiro instante da sua concepção, por singular graça de Deus em vista dos méritos de Cristo (dogma definido por Pio IX em 1854). Ela é a <strong>única criatura que nunca conheceu a menor mancha de pecado</strong>. Sua santidade é absolutamente perfeita desde o início.</p>
+                    </div>
+                    <div class="maria-card">
+                        <h4><i class="fas fa-dove"></i> Cheia de Graça</h4>
+                        <p>O anjo a saúda como <em>«Kecharitomene»</em> — «cheia de graça» (Lc 1,28). Esta plenitude de graça significa que Maria possui a <strong>santidade em grau supremo entre todas as criaturas</strong>. Sua graça é superior à de todos os anjos e santos juntos.</p>
+                    </div>
+                    <div class="maria-card">
+                        <h4><i class="fas fa-hand-holding-heart"></i> Modelo perfeito de resposta</h4>
+                        <p>O <em>«Fiat»</em> de Maria (Lc 1,38) é o ato humano mais perfeito de cooperação com a graça. Ela é o modelo de como a criatura deve acolher a santidade de Deus: com humildade, disponibilidade e amor total.</p>
+                    </div>
+                    <div class="maria-card">
+                        <h4><i class="fas fa-crown"></i> Mãe da Igreja e dos santos</h4>
+                        <p>Maria é Mãe da Igreja (LG 53) e, portanto, Mãe de todos os santos. Sua intercessão maternal acompanha cada alma no caminho da santidade.</p>
+                    </div>
+                    <div class="maria-card">
+                        <h4><i class="fas fa-cloud"></i> A Assunta</h4>
+                        <p>Elevada ao Céu em corpo e alma (dogma de 1950), Maria é o <strong>ícone escatológico da santidade consumada</strong>: o que ela já é, a Igreja inteira espera ser.</p>
+                    </div>
+                </div>
+
+                <div class="citacao-bloco citacao-magisterio">
+                    <div class="citacao-icone"><i class="fas fa-quote-left"></i></div>
+                    <blockquote>
+                        «A Bem-aventurada Virgem, predestinada desde toda a eternidade, juntamente com a Encarnação do Verbo, para Mãe de Deus, foi na terra, por disposição da Providência divina, a Mãe excelsa do divino Redentor, de modo singular a generosa cooperadora entre todas as criaturas e a humilde serva do Senhor.»
+                    </blockquote>
+                    <cite>— Lumen Gentium, 61</cite>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================= -->
+    <!-- OBJEÇÕES E RESPOSTAS -->
+    <!-- ============================= -->
+    <section id="objecoes" class="secao secao-clara">
+        <div class="container">
+            <div class="secao-cabecalho">
+                <p class="secao-supratitulo">Capítulo XV</p>
+                <h2 class="secao-titulo">Objeções e Respostas</h2>
+                <div class="secao-separador">
+                    <span class="separador-linha"></span>
+                    <i class="fas fa-comments"></i>
+                    <span class="separador-linha"></span>
+                </div>
+                <p class="secao-descricao">Questões disputadas sobre a santidade</p>
+            </div>
+
+            <div class="conteudo-texto">
+                <div class="objecoes-lista">
+
+                    <div class="objecao-card">
+                        <div class="objecao-header">
+                            <h4><i class="fas fa-question-circle"></i> Objeção 1: «A santidade é impossível para o homem comum»</h4>
+                        </div>
+                        <div class="objecao-resposta">
+                            <h5><i class="fas fa-check-circle"></i> Resposta:</h5>
+                            <p>A santidade seria impossível se dependesse apenas das forças humanas. Mas ela é obra da <strong>graça de Deus</strong>, que é oferecida a todos. «O que é impossível aos homens é possível a Deus» (Lc 18,27). Os santos não foram super-homens; foram homens e mulheres fracos que se deixaram transformar pela graça. Santa Teresinha, São Francisco, o Beato Carlo Acutis — todos eram pessoas comuns que cooperaram com uma graça extraordinária.</p>
+                        </div>
+                    </div>
+
+                    <div class="objecao-card">
+                        <div class="objecao-header">
+                            <h4><i class="fas fa-question-circle"></i> Objeção 2: «Se todos são chamados à santidade, por que tão poucos são santos?»</h4>
+                        </div>
+                        <div class="objecao-resposta">
+                            <h5><i class="fas fa-check-circle"></i> Resposta:</h5>
+                            <p>Porque a santidade exige <strong>cooperação livre</strong> com a graça. Deus oferece a graça a todos, mas não a impõe. A liberdade humana pode resistir, negligenciar ou recusar. A pouca santidade no mundo não se deve à falta de graça, mas à <strong>falta de correspondência</strong>. Além disso, é possível que haja muito mais santos ocultos do que imaginamos — santos sem canonização, santos do anonimato.</p>
+                        </div>
+                    </div>
+
+                    <div class="objecao-card">
+                        <div class="objecao-header">
+                            <h4><i class="fas fa-question-circle"></i> Objeção 3: «A santidade é incompatível com a vida moderna»</h4>
+                        </div>
+                        <div class="objecao-resposta">
+                            <h5><i class="fas fa-check-circle"></i> Resposta:</h5>
+                            <p>O Papa Francisco, em <em>Gaudete et Exsultate</em>, responde diretamente: a santidade é possível «aqui e agora», nas circunstâncias concretas de cada pessoa. Beato Carlo Acutis usava a internet; Santa Gianna era médica; São Josemaria vivia no meio da cidade. A santidade não exige fuga do mundo, mas <strong>transformação do mundo de dentro</strong>, pela graça.</p>
+                        </div>
+                    </div>
+
+                    <div class="objecao-card">
+                        <div class="objecao-header">
+                            <h4><i class="fas fa-question-circle"></i> Objeção 4: «Se Deus é santo, por que permite o mal?»</h4>
+                        </div>
+                        <div class="objecao-resposta">
+                            <h5><i class="fas fa-check-circle"></i> Resposta:</h5>
+                            <p>A santidade de Deus não é negada pelo mal, mas <strong>manifestada na Sua resposta ao mal</strong>: a Redenção. Deus permite o mal porque respeita a liberdade que criou, mas tira dele um bem maior. A Cruz é a prova suprema: do maior mal (o assassinato do Filho de Deus) veio o maior bem (a salvação da humanidade). A santidade de Deus é compatível com a permissão do mal porque Deus é suficientemente poderoso e sábio para ordenar tudo ao bem (cf. Santo Agostinho, <em>Enchiridion</em>, 11).</p>
+                        </div>
+                    </div>
+
+                    <div class="objecao-card">
+                        <div class="objecao-header">
+                            <h4><i class="fas fa-question-circle"></i> Objeção 5: «A Igreja canoniza santos, mas não é ela mesma pecadora?»</h4>
+                        </div>
+                        <div class="objecao-resposta">
+                            <h5><i class="fas fa-check-circle"></i> Resposta:</h5>
+                            <p>A Igreja é <strong>santa nos seus meios</strong> (sacramentos, doutrina, Escritura) e <strong>pecadora nos seus membros</strong>. Mas a presença de membros pecadores não anula a santidade essencial da Igreja, assim como a presença de doentes num hospital não anula a sua finalidade curativa. Aliás, o fato de a Igreja produzir santos em todas as épocas — mesmo em épocas de grave crise interna — é precisamente a <strong>prova da sua santidade essencial</strong>.</p>
+                        </div>
+                    </div>
+
+                    <div class="objecao-card">
+                        <div class="objecao-header">
+                            <h4><i class="fas fa-question-circle"></i> Objeção 6 (protestante): «A santidade é imputada, não infusa»</h4>
+                        </div>
+                        <div class="objecao-resposta">
+                            <h5><i class="fas fa-check-circle"></i> Resposta:</h5>
+                            <p>Lutero ensinou que a justificação é meramente forense: Deus declara o pecador justo sem o transformar interiormente (<em>simul iustus et peccator</em>). A Igreja Católica, no Concílio de Trento, definiu solenemente que a justificação é uma <strong>verdadeira santificação interior</strong>: a graça não cobre o pecado como neve cobre o esterco (imagem de Lutero), mas <strong>realmente transforma a alma</strong>, infundindo nela a vida divina (DS 1528-1531). A santidade católica é <strong>real, ontológica e transformadora</strong>, não mera declaração jurídica.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================= -->
+    <!-- SÍNTESE FINAL -->
+    <!-- ============================= -->
+    <section id="sintese" class="secao secao-escura">
+        <div class="container">
+            <div class="secao-cabecalho">
+                <p class="secao-supratitulo">Capítulo XVI</p>
+                <h2 class="secao-titulo">Síntese Final</h2>
+                <div class="secao-separador">
+                    <span class="separador-linha"></span>
+                    <i class="fas fa-bookmark"></i>
+                    <span class="separador-linha"></span>
+                </div>
+            </div>
+
+            <div class="conteudo-texto">
+                <h3>Vinte teses sobre a santidade</h3>
+                <p>
+                    À guisa de síntese, apresentamos vinte teses que resumem toda a doutrina católica sobre a santidade:
+                </p>
+
+                <div class="teses-lista">
+                    <div class="tese-item">
+                        <div class="tese-numero">I</div>
+                        <p><strong>Deus é Santo por essência.</strong> A santidade não é um atributo acidental de Deus, mas o que Ele é na Sua identidade mais profunda.</p>
+                    </div>
+                    <div class="tese-item">
+                        <div class="tese-numero">II</div>
+                        <p><strong>A santidade de Deus é trinitária.</strong> O Pai é a fonte, o Filho é a revelação encarnada, o Espírito Santo é o agente da santificação.</p>
+                    </div>
+                    <div class="tese-item">
+                        <div class="tese-numero">III</div>
+                        <p><strong>A santidade humana é participação na santidade divina.</strong> O homem não é santo por natureza, mas por graça.</p>
+                    </div>
+                    <div class="tese-item">
+                        <div class="tese-numero">IV</div>
+                        <p><strong>A graça santificante é o princípio formal da santidade no homem.</strong> Sem ela, não há santidade verdadeira.</p>
+                    </div>
+                    <div class="tese-item">
+                        <div class="tese-numero">V</div>
+                        <p><strong>A santidade consiste essencialmente na perfeição da caridade.</strong> É a caridade que une o homem a Deus e ordena todas as demais virtudes.</p>
+                    </div>
+                    <div class="tese-item">
+                        <div class="tese-numero">VI</div>
+                        <p><strong>Todos os batizados são chamados à santidade.</strong> Não há exceção de estado, condição, época ou cultura.</p>
+                    </div>
+                    <div class="tese-item">
+                        <div class="tese-numero">VII</div>
+                        <p><strong>A santidade é dom de Deus e tarefa do homem.</strong> A graça tem a primazia absoluta, mas exige a cooperação livre.</p>
+                    </div>
+                    <div class="tese-item">
+                        <div class="tese-numero">VIII</div>
+                        <p><strong>A santidade é progressiva.</strong> Cresce pelo exercício das virtudes, pela recepção dos sacramentos e pela docilidade ao Espírito Santo.</p>
+                    </div>
+                    <div class="tese-item">
+                        <div class="tese-numero">IX</div>
+                        <p><strong>A santidade exige purificação.</strong> O combate contra o pecado, a mortificação e a conversão contínua são indispensáveis.</p>
+                    </div>
+                    <div class="tese-item">
+                        <div class="tese-numero">X</div>
+                        <p><strong>A santidade é inseparável da humildade.</strong> Sem humildade, toda aparente santidade é ilusão ou soberba espiritual.</p>
+                    </div>
+                    <div class="tese-item">
+                        <div class="tese-numero">XI</div>
+                        <p><strong>A santidade é verificada pelas obras.</strong> Não basta o sentimento; a santidade produz frutos visíveis de virtude.</p>
+                    </div>
+                    <div class="tese-item">
+                        <div class="tese-numero">XII</div>
+                        <p><strong>Os sacramentos são os meios ordinários de santificação.</strong> Especialmente a Eucaristia e a Penitência.</p>
+                    </div>
+                    <div class="tese-item">
+                        <div class="tese-numero">XIII</div>
+                        <p><strong>A Igreja é santa nos seus meios, embora tenha membros pecadores.</strong> A santidade da Igreja é essencial e indestrutível.</p>
+                    </div>
+                    <div class="tese-item">
+                        <div class="tese-numero">XIV</div>
+                        <p><strong>Os santos canonizados são modelos e intercessores.</strong> Não são adorados, mas venerados; e sua intercessão é eficaz.</p>
+                    </div>
+                    <div class="tese-item">
+                        <div class="tese-numero">XV</div>
+                        <p><strong>Maria Santíssima é o modelo supremo de santidade entre as criaturas.</strong> Imaculada, cheia de graça, perfeitamente conformada a Cristo.</p>
+                    </div>
+                    <div class="tese-item">
+                        <div class="tese-numero">XVI</div>
+                        <p><strong>A santidade não consiste em fenômenos extraordinários.</strong> Consiste na caridade heroica vivida nas circunstâncias ordinárias.</p>
+                    </div>
+                    <div class="tese-item">
+                        <div class="tese-numero">XVII</div>
+                        <p><strong>A santidade tem dimensão comunitária e eclesial.</strong> Ninguém se santifica sozinho; a santidade é vivida na comunhão da Igreja.</p>
+                    </div>
+                    <div class="tese-item">
+                        <div class="tese-numero">XVIII</div>
+                        <p><strong>A santidade é o fim de toda a economia da salvação.</strong> Tudo o que Deus fez e faz na história visa tornar o homem santo.</p>
+                    </div>
+                    <div class="tese-item">
+                        <div class="tese-numero">XIX</div>
+                        <p><strong>A santidade terrena é caminho; a celeste é pátria.</strong> A santidade consumada é a visão beatífica, para a qual a santidade terrestre é preparação.</p>
+                    </div>
+                    <div class="tese-item">
+                        <div class="tese-numero">XX</div>
+                        <p><strong>A santidade é a maior necessidade da Igreja e do mundo.</strong> Como disse São João Paulo II: <em>«O mundo precisa de santos»</em>.</p>
+                    </div>
+                </div>
+
+                <div class="citacao-bloco citacao-final">
+                    <div class="citacao-icone"><i class="fas fa-quote-left"></i></div>
+                    <blockquote>
+                        «Não hesito em dizer que a perspectiva em que deve colocar-se todo o caminho pastoral é a da santidade. [...] É preciso redescobrir o pleno sentido prático desta grande ideia: a santidade não é um caminho extraordinário para poucos, mas é a alta medida da vida cristã ordinária.»
+                    </blockquote>
+                    <cite>— São João Paulo II, <em>Novo Millennio Ineunte</em>, 30-31</cite>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================= -->
+    <!-- BIBLIOGRAFIA -->
+    <!-- ============================= -->
+    <section id="bibliografia" class="secao secao-clara">
+        <div class="container">
+            <div class="secao-cabecalho">
+                <p class="secao-supratitulo">Referências</p>
+                <h2 class="secao-titulo">Bibliografia</h2>
+                <div class="secao-separador">
+                    <span class="separador-linha"></span>
+                    <i class="fas fa-book"></i>
+                    <span class="separador-linha"></span>
+                </div>
+            </div>
+
+            <div class="conteudo-texto">
+
+                <h3>Fontes primárias</h3>
+                <div class="biblio-lista">
+                    <div class="biblio-categoria">
+                        <h4>Sagrada Escritura</h4>
+                        <ul>
+                            <li>Bíblia Sagrada — edição da CNBB ou edição de Jerusalém.</li>
+                        </ul>
+                    </div>
+                    <div class="biblio-categoria">
+                        <h4>Magistério</h4>
+                        <ul>
+                            <li>CONCÍLIO VATICANO II. <em>Lumen Gentium</em>, especialmente cap. V. 1964.</li>
+                            <li>CONCÍLIO DE TRENTO. Decreto sobre a Justificação, sessão VI. 1547.</li>
+                            <li>CATECISMO DA IGREJA CATÓLICA. Especialmente nn. 2012-2016, 823-829.</li>
+                            <li>JOÃO PAULO II. Exortação apostólica <em>Novo Millennio Ineunte</em>. 2001.</li>
+                            <li>FRANCISCO. Exortação apostólica <em>Gaudete et Exsultate</em>. 2018.</li>
+                            <li>JOÃO PAULO II. Carta apostólica <em>Salvifici Doloris</em>. 1984.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3>Patrística</h3>
+                <div class="biblio-lista">
+                    <ul>
+                        <li>IRENEU DE LYON. <em>Adversus Haereses</em>.</li>
+                        <li>ATANÁSIO DE ALEXANDRIA. <em>De Incarnatione Verbi Dei</em>.</li>
+                        <li>BASÍLIO MAGNO. <em>De Spiritu Sancto</em>.</li>
+                        <li>GREGÓRIO DE NISSA. <em>A Vida de Moisés</em>.</li>
+                        <li>AGOSTINHO DE HIPONA. <em>Confissões</em>; <em>A Cidade de Deus</em>; <em>Enchiridion</em>.</li>
+                        <li>JOÃO CRISÓSTOMO. <em>Homilias sobre Mateus</em>.</li>
+                        <li>GREGÓRIO MAGNO. <em>Regra Pastoral</em>.</li>
+                    </ul>
+                </div>
+
+                <h3>Doutores da Igreja e Clássicos espirituais</h3>
+                <div class="biblio-lista">
+                    <ul>
+                        <li>TOMÁS DE AQUINO. <em>Summa Theologiae</em>, especialmente I-II, qq. 109-114; II-II, qq. 23-24, 81, 184.</li>
+                        <li>BOAVENTURA. <em>Itinerarium mentis in Deum</em>.</li>
+                        <li>TERESA DE JESUS. <em>O Castelo Interior</em>; <em>Vida</em>.</li>
+                        <li>JOÃO DA CRUZ. <em>Subida do Monte Carmelo</em>; <em>Noite Escura</em>; <em>Cântico Espiritual</em>; <em>Chama Viva de Amor</em>.</li>
+                        <li>FRANCISCO DE SALES. <em>Introdução à Vida Devota</em>; <em>Tratado do Amor de Deus</em>.</li>
+                        <li>AFONSO MARIA DE LIGÓRIO. <em>Prática do Amor a Jesus Cristo</em>.</li>
+                        <li>TERESA DE LISIEUX. <em>História de uma Alma</em>.</li>
+                    </ul>
+                </div>
+
+                <h3>Teologia sistemática e espiritual</h3>
+                <div class="biblio-lista">
+                    <ul>
+                        <li>GARRIGOU-LAGRANGE, Réginald. <em>As Três Idades da Vida Interior</em>. 2 vols.</li>
+                        <li>GARRIGOU-LAGRANGE, Réginald. <em>Perfeição Cristã e Contemplação</em>. 2 vols.</li>
+                        <li>TANQUEREY, Adolphe. <em>Compêndio de Teologia Ascética e Mística</em>.</li>
+                        <li>ROYO MARÍN, Antonio. <em>Teologia da Perfeição Cristã</em>.</li>
+                        <li>AUMANN, Jordan. <em>Spiritual Theology</em>.</li>
+                        <li>PHILIPPE, Jacques. <em>Chamados à Vida</em>; <em>A Liberdade Interior</em>.</li>
+                    </ul>
+                </div>
+
+                <h3>Filosofia</h3>
+                <div class="biblio-lista">
+                    <ul>
+                        <li>OTTO, Rudolf. <em>O Sagrado</em> (<em>Das Heilige</em>). 1917.</li>
+                        <li>MARITAIN, Jacques. <em>Os Graus do Saber</em>.</li>
+                        <li>VON HILDEBRAND, Dietrich. <em>Santidade e Transformação em Cristo</em> (<em>Transformation in Christ</em>).</li>
+                        <li>STEIN, Edith. <em>A Ciência da Cruz</em>.</li>
+                        <li>PASCAL, Blaise. <em>Pensamentos</em>.</li>
+                    </ul>
+                </div>
+
+                <h3>Hagiografia e estudos sobre os santos</h3>
+                <div class="biblio-lista">
+                    <ul>
+                        <li>BENTO XIV (Próspero Lambertini). <em>De Servorum Dei Beatificatione et Beatorum Canonizatione</em>.</li>
+                        <li>BUTLER, Alban. <em>Vidas dos Santos</em>.</li>
+                        <li>RATZINGER, Joseph (BENTO XVI). Catequeses sobre os santos (Audiências gerais 2006-2012).</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================= -->
+    <!-- RODAPÉ -->
+    <!-- ============================= -->
+    <footer id="rodape">
+        <div class="container">
+            <div class="rodape-conteudo">
+                <div class="rodape-coluna">
+                    <div class="rodape-logo">
+                        <i class="fas fa-cross"></i>
+                        <span>Santidade</span>
+                    </div>
+                    <p class="rodape-descricao">
+                        Compêndio teológico completo sobre a santidade na tradição católica. Destinado ao estudo sério e aprofundado.
+                    </p>
+                </div>
+                <div class="rodape-coluna">
+                    <h4>Navegação</h4>
+                    <ul>
+                        <li><a href="#introducao">Introdução</a></li>
+                        <li><a href="#escrituras">Escrituras</a></li>
+                        <li><a href="#teologia">Teologia</a></li>
+                        <li><a href="#magistério">Magistério</a></li>
+                        <li><a href="#mistica">Mística</a></li>
+                    </ul>
+                </div>
+                <div class="rodape-coluna">
+                    <h4>Mais</h4>
+                    <ul>
+                        <li><a href="#doutores">Doutores</a></li>
+                        <li><a href="#filosofia">Filosofia</a></li>
+                        <li><a href="#santos-modelos">Santos</a></li>
+                        <li><a href="#objecoes">Objeções</a></li>
+                        <li><a href="#bibliografia">Bibliografia</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="rodape-inferior">
+                <p>
+                    <em>«Sede santos, porque Eu, o Senhor vosso Deus, sou Santo»</em> — Lv 19,2
+                </p>
+                <p class="rodape-aviso">
+                    Este compêndio foi elaborado para fins de estudo teológico. Todo o conteúdo está em conformidade com a doutrina católica.
+                </p>
+                <p>
+                    Ad Maiorem Dei Gloriam <i class="fas fa-cross"></i>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ============================= -->
+    <!-- BOTÃO VOLTAR AO TOPO -->
+    <!-- ============================= -->
+    <button id="btnTopo" aria-label="Voltar ao topo">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <!-- ============================= -->
+    <!-- SCRIPTS -->
+    <!-- ============================= -->
+    <script>
+        // Menu mobile toggle
+        const navToggle = document.getElementById('navToggle');
+        const navLinks = document.getElementById('navLinks');
+
+        navToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('nav-aberto');
+            const icon = navToggle.querySelector('i');
+            if (navLinks.classList.contains('nav-aberto')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        });
+
+        // Fechar menu ao clicar em link
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('nav-aberto');
+                const icon = navToggle.querySelector('i');
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            });
+        });
+
+        // Navegação ativa ao rolar
+        const sections = document.querySelectorAll('section[id]');
+        const navItems = document.querySelectorAll('.nav-links a');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 120;
+                if (pageYOffset >= sectionTop) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navItems.forEach(item => {
+                item.classList.remove('nav-ativo');
+                if (item.getAttribute('href') === '#' + current) {
+                    item.classList.add('nav-ativo');
+                }
+            });
+
+            // Navbar com fundo ao rolar
+            const nav = document.getElementById('nav-principal');
+            if (window.scrollY > 100) {
+                nav.classList.add('nav-scrolled');
+            } else {
+                nav.classList.remove('nav-scrolled');
+            }
+
+            // Botão voltar ao topo
+            const btnTopo = document.getElementById('btnTopo');
+            if (window.scrollY > 600) {
+                btnTopo.classList.add('btn-topo-visivel');
+            } else {
+                btnTopo.classList.remove('btn-topo-visivel');
+            }
+        });
+
+        // Botão voltar ao topo
+        document.getElementById('btnTopo').addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Scroll suave
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const offsetTop = target.offsetTop - 80;
+                    window.scrollTo({
+                        top: offsetTop,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Animação de entrada ao rolar
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visivel');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.conteudo-texto, .dimensao-item, .profeta-card, .padre-card, .doutor-card, .santo-card, .via-card, .objecao-card, .tese-item, .etapa-card, .timeline-item, .conceito-card, .estado-card, .maria-card, .sacramento-card, .caract-card, .trindade-card, .virtude-card, .filosofo-card, .dimensao-card, .distincao-item').forEach(el => {
+            el.classList.add('animavel');
+            observer.observe(el);
+        });
+    </script>
+
+</body>
+</html>
