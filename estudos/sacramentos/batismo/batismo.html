@@ -5,7 +5,9 @@
 <title>O Batismo – Estudo Completo – Lux Fidei</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600;700&family=Cinzel:wght@400;500;600;700&display=swap" rel="stylesheet">
-
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 /* ============================================
    RESET & BASE
@@ -1835,6 +1837,54 @@ footer::before {
   .timeline-marker::after { display: none; }
   .hero-estudo { padding: 2.5rem 1.5rem; }
   .citacao-inicio { padding: 1.4rem 1.6rem; }
+}
+   /* Adicione ao CSS */
+details.faq-item summary {
+  list-style: none;
+  padding: 1.3rem 1.7rem;
+  cursor: pointer;
+  background: linear-gradient(135deg, #faf7f2, #f0ebe0);
+  font-family: 'Cormorant Garamond', serif;
+  color: var(--azul-escuro);
+  font-size: 1.1rem;
+  font-style: italic;
+  font-weight: 500;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background 0.3s ease;
+}
+
+details.faq-item summary:hover {
+  background: linear-gradient(135deg, #f4eed8, #ebe2c8);
+}
+
+details.faq-item summary::after {
+  content: '▼';
+  color: var(--dourado);
+  font-size: 0.85rem;
+  transition: transform 0.3s ease;
+  font-style: normal;
+  flex-shrink: 0;
+}
+
+details.faq-item[open] summary::after {
+  transform: rotate(180deg);
+}
+
+details.faq-item[open] summary {
+  border-bottom: 1px solid rgba(201,168,76,0.15);
+}
+
+.faq-resposta {
+  padding: 1.4rem 1.7rem;
+  background: var(--branco);
+  animation: fadeIn 0.3s ease;
+}
+
+/* Remove o marcador padrão do details em webkit */
+details.faq-item summary::-webkit-details-marker {
+  display: none;
 }
 </style>
 </head>
@@ -4894,6 +4944,26 @@ footer::before {
     </p>
   </div>
 </section>
+<script>
+function toggleIndice() {
+  const menu = document.getElementById('indiceMenu');
+  menu.classList.toggle('aberto');
+}
 
+// Fecha o índice ao clicar em um link
+document.querySelectorAll('.indice-menu a').forEach(link => {
+  link.addEventListener('click', () => {
+    document.getElementById('indiceMenu').classList.remove('aberto');
+  });
+});
+
+// Fecha ao clicar fora
+document.addEventListener('click', (e) => {
+  const indice = document.querySelector('.indice-rapido');
+  if (!indice.contains(e.target)) {
+    document.getElementById('indiceMenu').classList.remove('aberto');
+  }
+});
+</script>
 </body>
 </html>
