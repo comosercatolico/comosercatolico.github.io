@@ -119,6 +119,9 @@
     /* ============================= */
     /* NAVEGAÇÃO */
     /* ============================= */
+      /* ============================= */
+    /* NAVEGAÇÃO */
+    /* ============================= */
     #nav-principal {
         position: fixed;
         top: 0;
@@ -134,7 +137,7 @@
         background: rgba(18, 18, 32, 0.97);
         backdrop-filter: blur(20px);
         -webkit-backdrop-filter: blur(20px);
-        padding: 0.6rem 0;
+        padding: 0.7rem 0;
         box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
         border-bottom: 1px solid var(--cor-borda-escura);
     }
@@ -153,11 +156,16 @@
         align-items: center;
         gap: 0.6rem;
         font-family: var(--font-titulo);
-        font-size: 1.3rem;
+        font-size: 1.35rem;
         font-weight: 700;
         color: var(--cor-accent);
         letter-spacing: 0.05em;
         text-decoration: none;
+        transition: var(--transicao);
+    }
+
+    .nav-logo:hover {
+        opacity: 0.85;
     }
 
     .nav-logo i {
@@ -165,47 +173,279 @@
         opacity: 0.9;
     }
 
-    .nav-links {
-        display: flex;
-        list-style: none;
-        gap: 0.15rem;
-        flex-wrap: wrap;
-        justify-content: center;
-    }
-
-    .nav-links a {
-        font-family: var(--font-ui);
-        font-size: 0.72rem;
-        font-weight: 500;
-        color: var(--cor-texto-sobre-escuro);
-        text-decoration: none;
-        padding: 0.4rem 0.65rem;
-        border-radius: var(--raio-sm);
-        transition: var(--transicao);
-        letter-spacing: 0.03em;
-        text-transform: uppercase;
-        white-space: nowrap;
-    }
-
-    .nav-links a:hover,
-    .nav-links a.nav-ativo {
-        color: var(--cor-accent);
-        background: var(--cor-accent-suave);
-    }
-
     .nav-toggle {
-        display: none;
-        background: none;
-        border: none;
+        display: flex;
+        align-items: center;
+        gap: 0.7rem;
+        background: transparent;
+        border: 1.5px solid var(--cor-accent);
         color: var(--cor-accent);
-        font-size: 1.4rem;
+        font-family: var(--font-ui);
+        font-size: 0.78rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.15em;
+        padding: 0.65rem 1.3rem;
+        border-radius: var(--raio-sm);
         cursor: pointer;
-        padding: 0.5rem;
         transition: var(--transicao);
     }
 
     .nav-toggle:hover {
-        transform: scale(1.1);
+        background: var(--cor-accent);
+        color: var(--cor-primaria);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 15px rgba(201, 168, 76, 0.3);
+    }
+
+    .nav-toggle i {
+        font-size: 0.9rem;
+    }
+
+    /* ============================= */
+    /* SIDEBAR LATERAL */
+    /* ============================= */
+    .sidebar-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.7);
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
+        opacity: 0;
+        visibility: hidden;
+        transition: var(--transicao);
+        z-index: 1001;
+    }
+
+    .sidebar-overlay.ativo {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .sidebar {
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: 420px;
+        max-width: 90vw;
+        height: 100vh;
+        background: linear-gradient(180deg, var(--cor-fundo-escuro) 0%, var(--cor-primaria) 100%);
+        border-left: 2px solid var(--cor-accent);
+        z-index: 1002;
+        transform: translateX(100%);
+        transition: transform 0.45s cubic-bezier(0.65, 0, 0.35, 1);
+        display: flex;
+        flex-direction: column;
+        box-shadow: -20px 0 60px rgba(0, 0, 0, 0.5);
+    }
+
+    .sidebar.ativa {
+        transform: translateX(0);
+    }
+
+    .sidebar-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1.5rem 2rem;
+        border-bottom: 1px solid var(--cor-borda-escura);
+        flex-shrink: 0;
+    }
+
+    .sidebar-logo {
+        display: flex;
+        align-items: center;
+        gap: 0.7rem;
+        font-family: var(--font-titulo);
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: var(--cor-accent);
+    }
+
+    .sidebar-logo i {
+        font-size: 1.1rem;
+    }
+
+    .sidebar-fechar {
+        background: transparent;
+        border: 1px solid var(--cor-borda-escura);
+        color: var(--cor-accent);
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: var(--transicao);
+        font-size: 1rem;
+    }
+
+    .sidebar-fechar:hover {
+        background: var(--cor-accent);
+        color: var(--cor-primaria);
+        transform: rotate(90deg);
+        border-color: var(--cor-accent);
+    }
+
+    .sidebar-conteudo {
+        flex: 1;
+        overflow-y: auto;
+        padding: 2rem;
+    }
+
+    .sidebar-supratitulo {
+        font-family: var(--font-ui);
+        font-size: 0.7rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.3em;
+        color: var(--cor-accent);
+        margin-bottom: 0.3rem;
+    }
+
+    .sidebar-subtitulo {
+        font-family: var(--font-classica);
+        font-size: 1rem;
+        font-style: italic;
+        color: var(--cor-texto-sobre-escuro);
+        opacity: 0.7;
+        margin-bottom: 2rem;
+        padding-bottom: 1.5rem;
+        border-bottom: 1px solid var(--cor-borda-escura);
+    }
+
+    .sidebar-grupo {
+        margin-bottom: 2rem;
+    }
+
+    .sidebar-grupo-titulo {
+        font-family: var(--font-ui);
+        font-size: 0.7rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        color: var(--cor-accent);
+        margin-bottom: 0.9rem;
+        opacity: 0.85;
+    }
+
+    .sidebar-links {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .sidebar-links li {
+        margin-bottom: 0.15rem;
+    }
+
+    .sidebar-links a {
+        display: flex;
+        align-items: center;
+        gap: 0.9rem;
+        padding: 0.75rem 0.9rem;
+        font-family: var(--font-corpo);
+        font-size: 0.98rem;
+        color: var(--cor-texto-sobre-escuro);
+        text-decoration: none;
+        border-radius: var(--raio-sm);
+        transition: var(--transicao);
+        border-left: 2px solid transparent;
+    }
+
+    .sidebar-links a:hover {
+        background: rgba(201, 168, 76, 0.08);
+        color: var(--cor-accent-clara);
+        border-left-color: var(--cor-accent);
+        padding-left: 1.1rem;
+    }
+
+    .sidebar-num {
+        flex-shrink: 0;
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        background: rgba(201, 168, 76, 0.12);
+        color: var(--cor-accent);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: var(--font-titulo);
+        font-size: 0.78rem;
+        font-weight: 700;
+        transition: var(--transicao);
+    }
+
+    .sidebar-links a:hover .sidebar-num {
+        background: var(--cor-accent);
+        color: var(--cor-primaria);
+    }
+
+    .sidebar-rodape {
+        padding: 1.5rem 2rem;
+        border-top: 1px solid var(--cor-borda-escura);
+        text-align: center;
+        flex-shrink: 0;
+        background: rgba(0, 0, 0, 0.2);
+    }
+
+    .sidebar-rodape p {
+        font-family: var(--font-classica);
+        font-size: 0.92rem;
+        color: var(--cor-texto-sobre-escuro);
+        opacity: 0.8;
+        margin: 0;
+        line-height: 1.5;
+    }
+
+    .sidebar-rodape-ref {
+        font-family: var(--font-ui) !important;
+        font-size: 0.7rem !important;
+        text-transform: uppercase;
+        letter-spacing: 0.15em;
+        color: var(--cor-accent) !important;
+        margin-top: 0.4rem !important;
+        opacity: 1 !important;
+    }
+
+    /* Scrollbar da sidebar */
+    .sidebar-conteudo::-webkit-scrollbar {
+        width: 5px;
+    }
+
+    .sidebar-conteudo::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    .sidebar-conteudo::-webkit-scrollbar-thumb {
+        background: var(--cor-accent-escura);
+        border-radius: 10px;
+    }
+
+    /* Bloqueia scroll do body quando sidebar aberta */
+    body.sidebar-aberta {
+        overflow: hidden;
+    }
+
+    /* Responsividade da sidebar */
+    @media (max-width: 768px) {
+        .nav-toggle-texto {
+            display: none;
+        }
+
+        .nav-toggle {
+            padding: 0.6rem 0.85rem;
+        }
+
+        .sidebar {
+            width: 100%;
+            max-width: 100%;
+        }
+
+        .sidebar-conteudo {
+            padding: 1.5rem;
+        }
     }
 
     /* ============================= */
@@ -2326,37 +2566,82 @@
 </head>
 <body>
 
-    <!-- ============================= -->
+      <!-- ============================= -->
     <!-- NAVEGAÇÃO SUPERIOR -->
     <!-- ============================= -->
     <nav id="nav-principal">
         <div class="nav-container">
-            <div class="nav-logo">
+            <a href="#hero" class="nav-logo">
                 <i class="fas fa-cross"></i>
                 <span>Santidade</span>
-            </div>
+            </a>
             <button class="nav-toggle" id="navToggle" aria-label="Abrir menu">
                 <i class="fas fa-bars"></i>
+                <span class="nav-toggle-texto">Índice</span>
             </button>
-            <ul class="nav-links" id="navLinks">
-                <li><a href="#introducao">Introdução</a></li>
-                <li><a href="#etimologia">Etimologia</a></li>
-                <li><a href="#escrituras">Escrituras</a></li>
-                <li><a href="#teologia">Teologia</a></li>
-                <li><a href="#magistério">Magistério</a></li>
-                <li><a href="#doutores">Doutores</a></li>
-                <li><a href="#filosofia">Filosofia</a></li>
-                <li><a href="#mistica">Mística</a></li>
-                <li><a href="#moral">Moral</a></li>
-                <li><a href="#canonizacao">Canonização</a></li>
-                <li><a href="#santos-modelos">Santos</a></li>
-                <li><a href="#vocacao-universal">Vocação Universal</a></li>
-                <li><a href="#objecoes">Objeções</a></li>
-                <li><a href="#bibliografia">Bibliografia</a></li>
-            </ul>
         </div>
     </nav>
 
+    <!-- ============================= -->
+    <!-- SIDEBAR LATERAL -->
+    <!-- ============================= -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo">
+                <i class="fas fa-cross"></i>
+                <span>Santidade</span>
+            </div>
+            <button class="sidebar-fechar" id="sidebarFechar" aria-label="Fechar menu">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <div class="sidebar-conteudo">
+            <p class="sidebar-supratitulo">Compêndio Teológico</p>
+            <p class="sidebar-subtitulo">Navegue pelos capítulos</p>
+
+            <div class="sidebar-grupo">
+                <h4 class="sidebar-grupo-titulo">Parte I — Fundamentos</h4>
+                <ul class="sidebar-links">
+                    <li><a href="#introducao"><span class="sidebar-num">I</span> Introdução Geral</a></li>
+                    <li><a href="#etimologia"><span class="sidebar-num">II</span> Etimologia e Semântica</a></li>
+                    <li><a href="#escrituras"><span class="sidebar-num">III</span> Sagradas Escrituras</a></li>
+                    <li><a href="#teologia"><span class="sidebar-num">IV</span> Teologia Dogmática</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-grupo">
+                <h4 class="sidebar-grupo-titulo">Parte II — Desenvolvimento</h4>
+                <ul class="sidebar-links">
+                    <li><a href="#magistério"><span class="sidebar-num">V</span> Magistério da Igreja</a></li>
+                    <li><a href="#patristica"><span class="sidebar-num">VI</span> Patrística</a></li>
+                    <li><a href="#doutores"><span class="sidebar-num">VII</span> Doutores da Igreja</a></li>
+                    <li><a href="#filosofia"><span class="sidebar-num">VIII</span> Filosofia da Santidade</a></li>
+                    <li><a href="#mistica"><span class="sidebar-num">IX</span> Teologia Mística</a></li>
+                    <li><a href="#moral"><span class="sidebar-num">X</span> Teologia Moral</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-grupo">
+                <h4 class="sidebar-grupo-titulo">Parte III — Aplicação</h4>
+                <ul class="sidebar-links">
+                    <li><a href="#vocacao-universal"><span class="sidebar-num">XI</span> Vocação Universal</a></li>
+                    <li><a href="#canonizacao"><span class="sidebar-num">XII</span> Canonização</a></li>
+                    <li><a href="#santos-modelos"><span class="sidebar-num">XIII</span> Santos Modelos</a></li>
+                    <li><a href="#maria-santidade"><span class="sidebar-num">XIV</span> Maria Santíssima</a></li>
+                    <li><a href="#objecoes"><span class="sidebar-num">XV</span> Objeções</a></li>
+                    <li><a href="#sintese"><span class="sidebar-num">XVI</span> Síntese Final</a></li>
+                    <li><a href="#bibliografia"><span class="sidebar-num">★</span> Bibliografia</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="sidebar-rodape">
+            <p><em>«Sede santos, porque Eu sou Santo»</em></p>
+            <p class="sidebar-rodape-ref">— Lv 19,2</p>
+        </div>
+    </aside>
     <!-- ============================= -->
     <!-- CABEÇALHO HERO -->
     <!-- ============================= -->
@@ -4350,34 +4635,45 @@
     <!-- ============================= -->
     <script>
         // Menu mobile toggle
+              // ============================
+        // SIDEBAR LATERAL
+        // ============================
         const navToggle = document.getElementById('navToggle');
-        const navLinks = document.getElementById('navLinks');
+        const sidebar = document.getElementById('sidebar');
+        const sidebarOverlay = document.getElementById('sidebarOverlay');
+        const sidebarFechar = document.getElementById('sidebarFechar');
+        const body = document.body;
 
-        navToggle.addEventListener('click', () => {
-            navLinks.classList.toggle('nav-aberto');
-            const icon = navToggle.querySelector('i');
-            if (navLinks.classList.contains('nav-aberto')) {
-                icon.classList.remove('fa-bars');
-                icon.classList.add('fa-times');
-            } else {
-                icon.classList.remove('fa-times');
-                icon.classList.add('fa-bars');
+        function abrirSidebar() {
+            sidebar.classList.add('ativa');
+            sidebarOverlay.classList.add('ativo');
+            body.classList.add('sidebar-aberta');
+        }
+
+        function fecharSidebar() {
+            sidebar.classList.remove('ativa');
+            sidebarOverlay.classList.remove('ativo');
+            body.classList.remove('sidebar-aberta');
+        }
+
+        navToggle.addEventListener('click', abrirSidebar);
+        sidebarFechar.addEventListener('click', fecharSidebar);
+        sidebarOverlay.addEventListener('click', fecharSidebar);
+
+        // Fechar ao clicar em link da sidebar
+        document.querySelectorAll('.sidebar-links a').forEach(link => {
+            link.addEventListener('click', fecharSidebar);
+        });
+
+        // Fechar com tecla ESC
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && sidebar.classList.contains('ativa')) {
+                fecharSidebar();
             }
         });
-
-        // Fechar menu ao clicar em link
-        navLinks.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => {
-                navLinks.classList.remove('nav-aberto');
-                const icon = navToggle.querySelector('i');
-                icon.classList.remove('fa-times');
-                icon.classList.add('fa-bars');
-            });
-        });
-
         // Navegação ativa ao rolar
         const sections = document.querySelectorAll('section[id]');
-        const navItems = document.querySelectorAll('.nav-links a');
+      
 
         window.addEventListener('scroll', () => {
             let current = '';
@@ -4388,12 +4684,7 @@
                 }
             });
 
-            navItems.forEach(item => {
-                item.classList.remove('nav-ativo');
-                if (item.getAttribute('href') === '#' + current) {
-                    item.classList.add('nav-ativo');
-                }
-            });
+        
 
             // Navbar com fundo ao rolar
             const nav = document.getElementById('nav-principal');
