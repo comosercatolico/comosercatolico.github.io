@@ -13,7 +13,6 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  /* Paleta refinada — azul profundo + dourado antigo */
   --noite-profunda: #050b1a;
   --azul-meia-noite: #0a1428;
   --azul-escuro:    #0f1d3a;
@@ -39,7 +38,7 @@
   --sombra-forte:   0 16px 48px rgba(10,20,40,0.25);
   --sombra-glow:    0 0 40px rgba(201,168,76,0.15);
 
-  --borda-ouro:     1px solid rgba(201,168,76,0.4);
+  --borda-ouro:       1px solid rgba(201,168,76,0.4);
   --borda-ouro-forte: 2px solid var(--dourado);
 }
 
@@ -47,8 +46,7 @@ html { scroll-behavior: smooth; }
 
 body {
   font-family: 'Inter', sans-serif;
-  background:
-    radial-gradient(ellipse at top, #faf7f0 0%, #f0ebe0 100%);
+  background: radial-gradient(ellipse at top, #faf7f0 0%, #f0ebe0 100%);
   color: var(--texto-corpo);
   line-height: 1.8;
   font-size: 16px;
@@ -57,7 +55,6 @@ body {
   font-feature-settings: 'liga', 'kern';
 }
 
-/* Padrão sutil de fundo */
 body::before {
   content: '';
   position: fixed;
@@ -102,7 +99,7 @@ body::before {
 }
 
 /* ============================================
-   ÍNDICE — Glassmorphism elegante
+   ÍNDICE
    ============================================ */
 .indice-rapido {
   position: sticky;
@@ -120,6 +117,7 @@ body::before {
   flex-wrap: wrap;
   box-shadow: 0 4px 24px rgba(0,0,0,0.15);
 }
+
 .indice-btn {
   background: linear-gradient(135deg, var(--dourado), var(--dourado-antigo));
   color: var(--noite-profunda);
@@ -141,16 +139,22 @@ body::before {
   transform: translateY(-1px);
   box-shadow: 0 4px 16px rgba(201,168,76,0.5);
 }
+
 .indice-menu {
   display: none;
   flex-wrap: wrap;
   gap: 0.4rem;
 }
-.indice-menu.aberto { display: flex; animation: fadeSlide 0.4s ease; }
+.indice-menu.aberto {
+  display: flex;
+  animation: fadeSlide 0.4s ease;
+}
+
 @keyframes fadeSlide {
   from { opacity: 0; transform: translateY(-6px); }
   to   { opacity: 1; transform: translateY(0); }
 }
+
 .indice-menu a {
   color: var(--dourado-pale);
   text-decoration: none;
@@ -180,6 +184,8 @@ body::before {
   position: relative;
   z-index: 1;
 }
+.estudo-section:first-of-type { padding-top: 3.5rem; }
+
 .estudo-section h3 {
   font-family: 'Cinzel', serif;
   font-size: clamp(1.4rem, 2.8vw, 1.9rem);
@@ -191,6 +197,14 @@ body::before {
   position: relative;
   text-align: center;
 }
+.estudo-section h3::before {
+  content: '✦';
+  display: block;
+  font-size: 0.9rem;
+  color: var(--dourado);
+  margin-bottom: 0.8rem;
+  opacity: 0.7;
+}
 .estudo-section h3::after {
   content: '';
   position: absolute;
@@ -201,19 +215,9 @@ body::before {
   height: 2px;
   background: linear-gradient(to right, transparent, var(--dourado), transparent);
 }
-.estudo-section h3::before {
-  content: '✦';
-  display: block;
-  font-size: 0.9rem;
-  color: var(--dourado);
-  margin-bottom: 0.8rem;
-  opacity: 0.7;
-}
-
-.estudo-section:first-of-type { padding-top: 3.5rem; }
 
 /* ============================================
-   HERO — Cinematográfico
+   HERO
    ============================================ */
 .hero-estudo {
   background:
@@ -233,8 +237,6 @@ body::before {
   position: relative;
   overflow: hidden;
 }
-
-/* Moldura ornamental interna */
 .hero-estudo::before {
   content: '';
   position: absolute;
@@ -243,8 +245,6 @@ body::before {
   border-radius: 12px;
   pointer-events: none;
 }
-
-/* Estrelas decorativas em todos os cantos */
 .hero-estudo::after {
   content: '';
   position: absolute;
@@ -338,7 +338,7 @@ body::before {
 }
 
 /* ============================================
-   LAYOUT FLEXÍVEL (INTRO)
+   LAYOUT INTRODUÇÃO
    ============================================ */
 .conteudo-flexivel {
   display: grid;
@@ -346,9 +346,7 @@ body::before {
   gap: 2.5rem;
   align-items: start;
 }
-@media (max-width: 768px) {
-  .conteudo-flexivel { grid-template-columns: 1fr; }
-}
+
 .texto-principal p {
   margin-bottom: 1.3rem;
   color: var(--texto-corpo);
@@ -358,15 +356,13 @@ body::before {
 .texto-principal strong { color: var(--azul-escuro); font-weight: 600; }
 
 .caixa-destaque {
-  background:
-    linear-gradient(135deg, #fffdf5, #fef5dc);
+  background: linear-gradient(135deg, #fffdf5, #fef5dc);
   border: 1px solid rgba(201,168,76,0.3);
   border-left: 4px solid var(--dourado);
   border-radius: 12px;
   padding: 1.6rem 1.8rem;
   margin-top: 1.8rem;
   box-shadow: 0 4px 20px rgba(201,168,76,0.12);
-  position: relative;
 }
 .caixa-destaque h4 {
   font-family: 'Cinzel', serif;
@@ -426,7 +422,12 @@ body::before {
   gap: 0.8rem;
   font-style: italic;
 }
-.aviso-citacao::before { content: '⚠'; flex-shrink: 0; font-style: normal; font-size: 1rem; }
+.aviso-citacao::before {
+  content: '⚠';
+  flex-shrink: 0;
+  font-style: normal;
+  font-size: 1rem;
+}
 
 /* ============================================
    CARDS TEOLOGIA
@@ -504,6 +505,515 @@ body::before {
   font-size: 0.78rem;
   letter-spacing: 0.08em;
   font-weight: 600;
+}
+
+/* ============================================
+   NOVO — SEÇÃO PRÉ-HISTÓRIA / AT
+   ============================================ */
+.pré-historia-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+  gap: 1.6rem;
+  margin-bottom: 2rem;
+}
+
+.prefigura-card {
+  background: linear-gradient(160deg, #0a1f0a, #0f2e18);
+  border-radius: 14px;
+  padding: 1.8rem;
+  border: 1px solid rgba(100,180,100,0.2);
+  box-shadow: var(--sombra);
+  transition: all 0.35s ease;
+  position: relative;
+  overflow: hidden;
+}
+.prefigura-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(to right, transparent, #4caf50, transparent);
+}
+.prefigura-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--sombra-forte);
+  border-color: rgba(100,180,100,0.4);
+}
+.prefigura-card h4 {
+  font-family: 'Cinzel', serif;
+  color: #90ee90;
+  font-size: 0.95rem;
+  margin-bottom: 0.8rem;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+}
+.prefigura-card p {
+  font-size: 0.9rem;
+  color: rgba(255,255,255,0.82);
+  line-height: 1.7;
+}
+.prefigura-card blockquote {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 0.95rem;
+  color: #c8f0c8;
+  border-left: 2px solid #4caf50;
+  padding-left: 0.8rem;
+  margin: 0.8rem 0;
+  line-height: 1.6;
+}
+.prefigura-card .ref {
+  font-size: 0.78rem;
+  color: rgba(144,238,144,0.6);
+  font-family: 'Cinzel', serif;
+  letter-spacing: 0.06em;
+  margin-top: 0.5rem;
+  display: block;
+}
+
+/* Joao vs Cristo comparação */
+.comparacao-batismos {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 1.5rem;
+  align-items: center;
+  margin: 2rem 0;
+}
+.comp-col {
+  background: var(--branco);
+  border-radius: 14px;
+  padding: 1.8rem;
+  box-shadow: var(--sombra-suave);
+  border: 1px solid rgba(201,168,76,0.15);
+}
+.comp-col.joao { border-top: 3px solid #78909c; }
+.comp-col.cristo { border-top: 3px solid var(--dourado); }
+.comp-col h4 {
+  font-family: 'Cinzel', serif;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+}
+.comp-col.joao h4 { color: #546e7a; }
+.comp-col.cristo h4 { color: var(--azul-escuro); }
+.comp-col ul { list-style: none; }
+.comp-col ul li {
+  font-size: 0.87rem;
+  color: var(--texto-corpo);
+  padding: 0.3rem 0;
+  padding-left: 1.1rem;
+  position: relative;
+  line-height: 1.55;
+}
+.comp-col ul li::before {
+  content: '◆';
+  position: absolute;
+  left: 0;
+  font-size: 0.6rem;
+  top: 0.55rem;
+}
+.comp-col.joao ul li::before { color: #78909c; }
+.comp-col.cristo ul li::before { color: var(--dourado); }
+.comp-vs {
+  font-family: 'Cinzel', serif;
+  font-size: 1.4rem;
+  color: var(--dourado);
+  font-weight: 700;
+  text-align: center;
+  opacity: 0.6;
+}
+
+/* ============================================
+   NOVO — PECADO ORIGINAL
+   ============================================ */
+.pecado-original-box {
+  background: linear-gradient(135deg, #1a0a2e, #2d1050);
+  border-radius: 16px;
+  padding: 2.5rem;
+  border: 1px solid rgba(150,100,220,0.3);
+  box-shadow: var(--sombra-forte);
+  margin-bottom: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+.pecado-original-box::before {
+  content: '';
+  position: absolute;
+  inset: 10px;
+  border: 1px solid rgba(150,100,220,0.12);
+  border-radius: 10px;
+  pointer-events: none;
+}
+.pecado-original-box h4 {
+  font-family: 'Cinzel', serif;
+  color: #ce93d8;
+  font-size: 1.1rem;
+  margin-bottom: 1.2rem;
+  letter-spacing: 0.06em;
+  font-weight: 600;
+  position: relative;
+  z-index: 2;
+}
+.pecado-original-box p {
+  color: rgba(255,255,255,0.85);
+  font-size: 0.95rem;
+  line-height: 1.8;
+  margin-bottom: 1rem;
+  position: relative;
+  z-index: 2;
+}
+.pecado-original-box strong { color: #ce93d8; font-weight: 600; }
+
+.po-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+  margin-top: 1.5rem;
+  position: relative;
+  z-index: 2;
+}
+.po-item {
+  background: rgba(255,255,255,0.05);
+  border-radius: 10px;
+  padding: 1.2rem;
+  border: 1px solid rgba(150,100,220,0.2);
+  border-left: 3px solid #9c27b0;
+}
+.po-item h5 {
+  font-family: 'Cinzel', serif;
+  color: #ce93d8;
+  font-size: 0.82rem;
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+}
+.po-item p {
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.75);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ============================================
+   NOVO — LIMBO
+   ============================================ */
+.limbo-section {
+  background: linear-gradient(160deg, #0d0d1a, #1a1a30);
+  border-radius: 16px;
+  padding: 2.5rem;
+  border: 1px solid rgba(100,100,180,0.3);
+  box-shadow: var(--sombra-forte);
+  margin-bottom: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+.limbo-section::after {
+  content: '?';
+  position: absolute;
+  right: 2rem;
+  top: 1rem;
+  font-size: 8rem;
+  font-family: 'Cinzel', serif;
+  color: rgba(100,100,255,0.06);
+  font-weight: 700;
+  line-height: 1;
+}
+.limbo-section h4 {
+  font-family: 'Cinzel', serif;
+  color: #9fa8da;
+  font-size: 1.1rem;
+  margin-bottom: 1.2rem;
+  letter-spacing: 0.06em;
+  font-weight: 600;
+}
+.limbo-section p {
+  color: rgba(255,255,255,0.82);
+  font-size: 0.95rem;
+  line-height: 1.8;
+  margin-bottom: 1rem;
+}
+.limbo-section strong { color: #c5cae9; font-weight: 600; }
+.limbo-section em { color: #9fa8da; font-style: italic; }
+
+.limbo-evolucao {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+.limbo-era {
+  background: rgba(255,255,255,0.04);
+  border-radius: 10px;
+  padding: 1.2rem;
+  border-top: 3px solid;
+  text-align: center;
+}
+.limbo-era.antiga { border-color: #ef9a9a; }
+.limbo-era.medieval { border-color: #fff176; }
+.limbo-era.moderna { border-color: #a5d6a7; }
+.limbo-era h5 {
+  font-family: 'Cinzel', serif;
+  font-size: 0.78rem;
+  margin-bottom: 0.6rem;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+}
+.limbo-era.antiga h5 { color: #ef9a9a; }
+.limbo-era.medieval h5 { color: #fff176; }
+.limbo-era.moderna h5 { color: #a5d6a7; }
+.limbo-era p { font-size: 0.82rem; color: rgba(255,255,255,0.7); line-height: 1.6; }
+
+/* ============================================
+   NOVO — VALIDADE / CASOS CONCRETOS
+   ============================================ */
+.validade-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+.caso-card {
+  background: var(--branco);
+  border-radius: 14px;
+  padding: 1.6rem;
+  box-shadow: var(--sombra-suave);
+  border: 1px solid rgba(201,168,76,0.12);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+.caso-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--sombra);
+}
+.caso-card .caso-badge {
+  display: inline-block;
+  font-family: 'Cinzel', serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  padding: 0.25rem 0.8rem;
+  border-radius: 20px;
+  margin-bottom: 0.9rem;
+  text-transform: uppercase;
+}
+.caso-card .caso-badge.valido {
+  background: #e8f5e9;
+  color: #2e7d32;
+  border: 1px solid #a5d6a7;
+}
+.caso-card .caso-badge.invalido {
+  background: #ffebee;
+  color: #c62828;
+  border: 1px solid #ef9a9a;
+}
+.caso-card .caso-badge.duvidoso {
+  background: #fff8e1;
+  color: #f57f17;
+  border: 1px solid #ffe082;
+}
+.caso-card h4 {
+  font-family: 'Cinzel', serif;
+  color: var(--azul-escuro);
+  font-size: 0.9rem;
+  margin-bottom: 0.6rem;
+  letter-spacing: 0.04em;
+  font-weight: 600;
+}
+.caso-card p { font-size: 0.87rem; color: var(--texto-corpo); line-height: 1.65; }
+
+/* ============================================
+   NOVO — PATRÍSTICA EXPANDIDA
+   ============================================ */
+.patristica-timeline {
+  position: relative;
+  padding-left: 2rem;
+  margin-bottom: 2rem;
+}
+.patristica-timeline::before {
+  content: '';
+  position: absolute;
+  left: 0.6rem;
+  top: 0; bottom: 0;
+  width: 2px;
+  background: linear-gradient(to bottom, #4caf50, var(--dourado), #9c27b0, transparent);
+  opacity: 0.5;
+}
+.patristica-item {
+  position: relative;
+  margin-bottom: 2rem;
+  padding-left: 1.5rem;
+}
+.patristica-item::before {
+  content: '';
+  position: absolute;
+  left: -1.5rem;
+  top: 0.5rem;
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  background: var(--dourado);
+  border: 2px solid var(--pergaminho);
+  box-shadow: 0 0 0 2px var(--dourado);
+}
+.patristica-item .pat-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.7rem;
+  flex-wrap: wrap;
+}
+.pat-nome {
+  font-family: 'Cinzel', serif;
+  color: var(--azul-escuro);
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+.pat-periodo {
+  font-size: 0.75rem;
+  color: var(--dourado-antigo);
+  font-family: 'Cinzel', serif;
+  background: rgba(201,168,76,0.08);
+  padding: 0.2rem 0.6rem;
+  border-radius: 10px;
+  border: 1px solid rgba(201,168,76,0.2);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+.pat-obra {
+  font-size: 0.75rem;
+  color: var(--texto-suave);
+  font-style: italic;
+}
+.patristica-item blockquote {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-weight: 500;
+  font-size: 1rem;
+  color: #2a2a4a;
+  border-left: 3px solid var(--dourado);
+  padding-left: 1rem;
+  margin-bottom: 0.6rem;
+  line-height: 1.65;
+}
+.patristica-item p {
+  font-size: 0.88rem;
+  color: var(--texto-suave);
+  line-height: 1.65;
+}
+.patristica-item strong { color: var(--azul-escuro); font-weight: 600; }
+
+/* ============================================
+   NOVO — IGREJAS ORIENTAIS
+   ============================================ */
+.oriental-section {
+  background: linear-gradient(135deg, #1a0f05, #2e1a08);
+  border-radius: 16px;
+  padding: 2.5rem;
+  border: 1px solid rgba(210,140,60,0.3);
+  box-shadow: var(--sombra-forte);
+  margin-bottom: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+.oriental-section::before {
+  content: '☦';
+  position: absolute;
+  right: 2rem;
+  top: 1rem;
+  font-size: 6rem;
+  color: rgba(210,140,60,0.06);
+}
+.oriental-section h4 {
+  font-family: 'Cinzel', serif;
+  color: #ffcc80;
+  font-size: 1.1rem;
+  margin-bottom: 1.2rem;
+  letter-spacing: 0.06em;
+  font-weight: 600;
+}
+.oriental-section p {
+  color: rgba(255,255,255,0.85);
+  font-size: 0.95rem;
+  line-height: 1.8;
+  margin-bottom: 1rem;
+}
+.oriental-section strong { color: #ffcc80; font-weight: 600; }
+
+.oriental-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+.oriental-item {
+  background: rgba(255,255,255,0.04);
+  border-radius: 10px;
+  padding: 1.2rem;
+  border: 1px solid rgba(210,140,60,0.2);
+  border-left: 3px solid #e65100;
+  transition: all 0.3s ease;
+}
+.oriental-item:hover {
+  background: rgba(255,255,255,0.07);
+  transform: translateX(3px);
+}
+.oriental-item h5 {
+  font-family: 'Cinzel', serif;
+  color: #ffcc80;
+  font-size: 0.8rem;
+  margin-bottom: 0.4rem;
+  letter-spacing: 0.04em;
+  font-weight: 600;
+}
+.oriental-item p { font-size: 0.82rem; color: rgba(255,255,255,0.72); line-height: 1.55; }
+
+/* ============================================
+   NOVO — DIMENSÃO ESCATOLÓGICA
+   ============================================ */
+.escatologia-box {
+  background: linear-gradient(135deg, #050510, #0a0a28);
+  border-radius: 16px;
+  padding: 2.5rem;
+  border: 1px solid rgba(100,120,255,0.25);
+  box-shadow: var(--sombra-forte);
+  margin-bottom: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+.escatologia-box::before {
+  content: '✦';
+  position: absolute;
+  right: 2rem;
+  top: 1.5rem;
+  font-size: 5rem;
+  color: rgba(100,120,255,0.05);
+}
+.escatologia-box h4 {
+  font-family: 'Cinzel', serif;
+  color: #b0bec5;
+  font-size: 1.1rem;
+  margin-bottom: 1.2rem;
+  letter-spacing: 0.06em;
+  font-weight: 600;
+}
+.escatologia-box p {
+  color: rgba(255,255,255,0.82);
+  font-size: 0.95rem;
+  line-height: 1.8;
+  margin-bottom: 1rem;
+}
+.escatologia-box strong { color: #b0c4de; font-weight: 600; }
+.escatologia-box blockquote {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 1.05rem;
+  color: #b0bec5;
+  border-left: 3px solid #3949ab;
+  padding-left: 1rem;
+  margin: 1rem 0;
+  line-height: 1.65;
 }
 
 /* ============================================
@@ -673,7 +1183,6 @@ body::before {
 .tipo-agua   { background: linear-gradient(135deg, #0a2858 0%, #1a4080 100%); }
 .tipo-sangue { background: linear-gradient(135deg, #4a0a0a 0%, #82181c 100%); }
 .tipo-desejo { background: linear-gradient(135deg, #2a0a5c 0%, #4a1a8c 100%); }
-
 .tipo-card h4 {
   font-family: 'Cinzel', serif;
   color: var(--dourado-claro);
@@ -727,7 +1236,6 @@ body::before {
   border-radius: 14px;
   padding: 1.6rem 2rem;
   box-shadow: 0 4px 24px rgba(201,168,76,0.15);
-  position: relative;
 }
 .caixa-importante h4 {
   font-family: 'Cinzel', serif;
@@ -786,9 +1294,7 @@ body::before {
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow:
-    0 4px 12px rgba(10,20,40,0.3),
-    inset 0 1px 0 rgba(255,255,255,0.1);
+  box-shadow: 0 4px 12px rgba(10,20,40,0.3), inset 0 1px 0 rgba(255,255,255,0.1);
   flex-shrink: 0;
   border: 1px solid rgba(201,168,76,0.3);
 }
@@ -892,8 +1398,7 @@ body::before {
   gap: 1.7rem;
 }
 .santo-card {
-  background:
-    linear-gradient(160deg, var(--noite-profunda) 0%, var(--azul-escuro) 100%);
+  background: linear-gradient(160deg, var(--noite-profunda) 0%, var(--azul-escuro) 100%);
   border-radius: 16px;
   padding: 2rem;
   border: 1px solid rgba(201,168,76,0.2);
@@ -995,7 +1500,6 @@ body::before {
   gap: 1.5rem;
   margin-top: 1.2rem;
 }
-@media (max-width: 600px) { .comparacao { grid-template-columns: 1fr; } }
 .item-comparacao {
   background: linear-gradient(135deg, var(--cinza-claro), var(--pergaminho));
   border-radius: 12px;
@@ -1118,14 +1622,26 @@ body::before {
   border-top: 1px solid rgba(201,168,76,0.15);
   background: var(--branco);
 }
-.faq-resposta.aberta { display: block; animation: fadeIn 0.4s ease; }
+.faq-resposta.aberta {
+  display: block;
+  animation: fadeIn 0.4s ease;
+}
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(-4px); }
   to   { opacity: 1; transform: translateY(0); }
 }
-.faq-resposta p { font-size: 0.94rem; color: var(--texto-corpo); margin-bottom: 0.8rem; line-height: 1.75; }
+.faq-resposta p {
+  font-size: 0.94rem;
+  color: var(--texto-corpo);
+  margin-bottom: 0.8rem;
+  line-height: 1.75;
+}
 .faq-resposta ul { margin-left: 1.5rem; margin-top: 0.5rem; }
-.faq-resposta ul li { font-size: 0.92rem; color: var(--texto-corpo); padding: 0.25rem 0; }
+.faq-resposta ul li {
+  font-size: 0.92rem;
+  color: var(--texto-corpo);
+  padding: 0.25rem 0;
+}
 .faq-resposta blockquote {
   background: linear-gradient(135deg, #f4f7ff, #ebf0ff);
   border-left: 3px solid var(--azul-real);
@@ -1285,7 +1801,6 @@ footer {
   letter-spacing: 0.15em;
   border-top: 1px solid rgba(201,168,76,0.3);
   font-weight: 500;
-  position: relative;
 }
 footer::before {
   content: '✦';
@@ -1299,8 +1814,15 @@ footer::before {
 /* ============================================
    RESPONSIVO
    ============================================ */
+@media (max-width: 900px) {
+  .comparacao-batismos { grid-template-columns: 1fr; }
+  .comp-vs { display: none; }
+  .limbo-evolucao { grid-template-columns: 1fr; }
+}
 @media (max-width: 768px) {
   .estudo-section { padding: 2rem 1rem; }
+  .conteudo-flexivel { grid-template-columns: 1fr; }
+  .comparacao { grid-template-columns: 1fr; }
   .timeline-item { grid-template-columns: 90px 1fr; gap: 1.2rem; }
   .passo { grid-template-columns: 52px 1fr; gap: 1.2rem; padding: 1.3rem; }
   .indice-rapido { padding: 0.6rem; padding-right: 75px; }
@@ -1316,6 +1838,13 @@ footer::before {
 }
 </style>
 </head>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>O Batismo — Estudo Completo</title>
+</head>
 <body>
 
 <a href="../../estudos.html" class="btn-fechar" title="Voltar aos Estudos" aria-label="Voltar">✕</a>
@@ -1325,12 +1854,21 @@ footer::before {
   <button class="indice-btn" onclick="toggleIndice()">✦ Índice</button>
   <div class="indice-menu" id="indiceMenu">
     <a href="#introducao">Introdução</a>
+    <a href="#prehistoria">Pré-História Bíblica</a>
+    <a href="#joao">Batismo de João</a>
     <a href="#teologia">Teologia</a>
+    <a href="#pecado-original">Pecado Original</a>
     <a href="#historia">História</a>
+    <a href="#patristica">Patrística</a>
     <a href="#biblia">Bíblia</a>
     <a href="#tipos">Tipos</a>
+    <a href="#validade">Validade e Licitude</a>
     <a href="#rito">Rito</a>
+    <a href="#orientais">Igrejas Orientais</a>
     <a href="#efeitos">Efeitos</a>
+    <a href="#limbo">O Limbo</a>
+    <a href="#ecumenismo">Ecumenismo</a>
+    <a href="#escatologia">Escatologia</a>
     <a href="#santos">Santos</a>
     <a href="#pratica">Prática</a>
     <a href="#faq">FAQ</a>
@@ -1365,6 +1903,12 @@ footer::before {
         morremos ao pecado e ressuscitamos em Cristo: não apenas em figura,
         mas <strong>sacramentalmente eficaz</strong>.
       </p>
+      <p>
+        Este estudo percorre o sacramento em sua totalidade: desde as prefigurações
+        no Antigo Testamento até as questões disputadas na teologia contemporânea,
+        passando pela patrística, pela escolástica, pelo magistério conciliar
+        e pelas questões práticas da vida eclesial.
+      </p>
       <div class="caixa-destaque">
         <h4>✦ O Batismo em uma frase</h4>
         <p>
@@ -1391,6 +1935,377 @@ footer::before {
         </ul>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- ==========================================
+     SEÇÃO NOVA 1: PRÉ-HISTÓRIA BÍBLICA
+     ========================================== -->
+<section class="estudo-section" id="prehistoria">
+  <h3>Pré-História do Batismo — As Prefigurações no Antigo Testamento</h3>
+
+  <p class="intro-secao">
+    O Batismo cristão não surgiu do vazio. A economia da salvação prepara
+    cada sacramento por séculos de tipos, figuras e prefigurações.
+    Os Padres da Igreja, seguindo o próprio São Paulo e São Pedro,
+    leram o Antigo Testamento como <em>pedagogia batismal</em> providencial.
+    O CIC n° 1217 afirma: "Desde a origem do mundo, a água, essa
+    criatura humilde e admirável, foi já fonte de vida e de fecundidade."
+  </p>
+
+  <div class="prehistoria-grid">
+
+    <div class="prehistoria-card">
+      <div class="prehistoria-icone">〰</div>
+      <h4>As Águas da Criação — Gênesis 1, 1-2</h4>
+      <blockquote>
+        "O Espírito de Deus pairava sobre as águas."
+      </blockquote>
+      <p>
+        O Espírito <em>(ruah)</em> paira sobre o caos aquático primordial
+        e da água emerge toda a vida. Os Padres veem aqui a
+        <strong>primeira prefiguração do Batismo</strong>: assim como o Espírito
+        criou a vida ao pairar sobre as águas originárias,
+        no Batismo o mesmo Espírito paira sobre as águas consagradas
+        e gera nova criatura.
+      </p>
+      <p>
+        <strong>Tertuliano</strong> (<em>De Baptismo</em> III) formula:
+        <em>"Spiritus Sanctus aquis superferebatur ut naturam aquarum sanctificaret"</em>
+        — o Espírito Santo pairava sobre as águas para santificar a natureza da água,
+        preparando-a desde a eternidade para ser veículo de santificação.
+      </p>
+      <p class="referencia-patristica">
+        Cf. Tertuliano, <em>De Baptismo</em> III; CIC n° 1218; Cirilo de Jerusalém, <em>Cat. Myst.</em> III, 1
+      </p>
+    </div>
+
+    <div class="prehistoria-card">
+      <div class="prehistoria-icone">🌊</div>
+      <h4>O Dilúvio — Génesis 6–9 e 1 Pedro 3, 20-21</h4>
+      <blockquote>
+        "Essa água prefigurava o batismo que agora vos salva."
+        <strong>— 1 Pedro 3, 21</strong>
+      </blockquote>
+      <p>
+        São Pedro estabelece explicitamente a tipologia:
+        <strong>o dilúvio prefigura o Batismo</strong>. O paralelo é preciso:
+      </p>
+      <div class="tabela-comparacao">
+        <div class="coluna-tipo">
+          <h5>Dilúvio (Tipo)</h5>
+          <ul>
+            <li>Água destrói o mundo pecador</li>
+            <li>A arca salva oito pessoas</li>
+            <li>Noé emerge para nova aliança</li>
+            <li>Pomba anuncia a nova era</li>
+          </ul>
+        </div>
+        <div class="coluna-antitipo">
+          <h5>Batismo (Antitipo)</h5>
+          <ul>
+            <li>Água destrói o pecado na alma</li>
+            <li>A Igreja salva os batizados</li>
+            <li>O batizado emerge para nova vida</li>
+            <li>O Espírito Santo é derramado</li>
+          </ul>
+        </div>
+      </div>
+      <p>
+        A exegese patrística é unânime nessa leitura.
+        Santo Agostinho (<em>Contra Faustum</em> XII, 16) comenta:
+        a arca é a Igreja; a água é o Batismo;
+        o madeiro pelo qual Noé se salva prefigura a Cruz.
+      </p>
+      <p class="referencia-patristica">
+        Cf. 1Pd 3,20-21; CIC n° 1219; Agostinho, <em>Contra Faustum</em> XII, 16; Cirilo, <em>Cat. Myst.</em> II, 5
+      </p>
+    </div>
+
+    <div class="prehistoria-card">
+      <div class="prehistoria-icone">🌊</div>
+      <h4>A Passagem do Mar Vermelho — 1 Coríntios 10, 1-2</h4>
+      <blockquote>
+        "Todos foram batizados em Moisés na nuvem e no mar."
+        <strong>— 1 Coríntios 10, 2</strong>
+      </blockquote>
+      <p>
+        São Paulo declara explicitamente que a travessia do Mar Vermelho
+        foi um <strong>batismo tipológico</strong>. O povo de Israel,
+        perseguido pela escravidão egípcia, passa pelas águas e emerge livre —
+        o Egito e seus perseguidores são engolidos pelo mar.
+      </p>
+      <p>
+        A correspondência simbólica é densa:
+      </p>
+      <div class="tabela-comparacao">
+        <div class="coluna-tipo">
+          <h5>Êxodo (Tipo)</h5>
+          <ul>
+            <li>Egito = escravidão do pecado</li>
+            <li>Mar Vermelho = águas batismais</li>
+            <li>Moisés = Cristo mediador</li>
+            <li>Nuvem = Espírito Santo</li>
+            <li>Terra Prometida = vida eterna</li>
+          </ul>
+        </div>
+        <div class="coluna-antitipo">
+          <h5>Batismo (Antitipo)</h5>
+          <ul>
+            <li>O pecado é a escravidão liberada</li>
+            <li>As águas destroem o homem velho</li>
+            <li>Cristo nos conduz pela graça</li>
+            <li>O Espírito santifica a água</li>
+            <li>O batizado é herdeiro do Reino</li>
+          </ul>
+        </div>
+      </div>
+      <p>
+        São Cirilo de Jerusalém (<em>Catequeses Mistagógicas</em> I, 2) comenta:
+        "Moisés foi enviado por Deus ao Egito; Cristo foi enviado pelo Pai ao mundo.
+        Aquele conduziu o povo perseguido para fora do Egito;
+        Este livra os homens subjugados pelo pecado."
+      </p>
+      <p class="referencia-patristica">
+        Cf. 1Cor 10,1-2; Êx 14; CIC n° 1221; Cirilo, <em>Cat. Myst.</em> I, 2-3
+      </p>
+    </div>
+
+    <div class="prehistoria-card">
+      <div class="prehistoria-icone">✦</div>
+      <h4>A Circuncisão — Colossenses 2, 11-12</h4>
+      <blockquote>
+        "Nele também fostes circuncidados com circuncisão não feita por mão humana,
+        mas com a circuncisão de Cristo, sepultados com Ele no Batismo."
+        <strong>— Colossenses 2, 11-12</strong>
+      </blockquote>
+      <p>
+        São Paulo estabelece explicitamente que o Batismo é a
+        <strong>circuncisão espiritual do Novo Testamento</strong>.
+        A circuncisão incorporava o israelita à Aliança de Abraão
+        (Gn 17,10-14); o Batismo incorpora o cristão à Nova Aliança em Cristo.
+      </p>
+      <p>
+        Este paralelo é um dos argumentos patrísticos e escolásticos mais sólidos
+        para o <strong>Batismo infantil</strong>: assim como Israel circuncidava
+        os meninos no oitavo dia sem esperar seu consentimento,
+        a Igreja incorpora os infantes à Aliança batismal
+        na fé dos pais e da comunidade.
+      </p>
+      <p>
+        Santo Tomás de Aquino (<em>S.Th.</em> III, q. 70, a. 2) desenvolve:
+        "Assim como a circuncisão era sinal da fé de Abraão,
+        o Batismo é sinal e causa da justificação."
+      </p>
+      <p class="referencia-patristica">
+        Cf. Cl 2,11-12; Gn 17,10-14; Agostinho, <em>Contra Iulianum</em> VI; Tomás, <em>S.Th.</em> III, q. 70
+      </p>
+    </div>
+
+    <div class="prehistoria-card">
+      <div class="prehistoria-icone">〰</div>
+      <h4>As Purificações Rituais Judaicas — O Mikveh</h4>
+      <p>
+        O contexto imediato do Batismo cristão é o universo das
+        <strong>purificações rituais judaicas</strong>.
+        O <em>mikveh</em> (מִקְוֶה — "coleção de água") era a imersão ritual
+        prescrita pela Lei Mosaica para purificação de impurezas legais
+        (Lv 11–15; Nm 19).
+      </p>
+      <p>
+        Características do <em>mikveh</em>:
+      </p>
+      <ul class="lista-estruturada">
+        <li><strong>Água viva</strong> (corrente ou de nascente) era preferida</li>
+        <li><strong>Imersão total</strong> do corpo — sem exceção</li>
+        <li><strong>Repetível</strong> — ato de purificação periódica, não único</li>
+        <li><strong>Efeito ritual</strong>, não moral — removia impureza legal</li>
+        <li>Usado também para a <strong>conversão de prosélitos</strong> ao judaísmo</li>
+      </ul>
+      <p>
+        A diferença teológica fundamental com o Batismo cristão:
+        o <em>mikveh</em> purificava de <em>impureza ritual</em>;
+        o Batismo cristão purifica de <em>pecado real</em> e confere graça.
+        O <em>mikveh</em> era repetível; o Batismo é único e definitivo.
+        O <em>mikveh</em> pressupunha o crente já na Aliança;
+        o Batismo <em>insere</em> na Nova Aliança.
+      </p>
+      <p class="referencia-patristica">
+        Cf. Lv 14,8; 15,5-27; Nm 19,17-21; Joachim Jeremias, <em>Infant Baptism in the First Four Centuries</em>
+      </p>
+    </div>
+
+    <div class="prehistoria-card">
+      <div class="prehistoria-icone">〰</div>
+      <h4>Outros Tipos Veterotestamentários</h4>
+      <p>
+        A tradição patrística identificou ainda outras prefigurações:
+      </p>
+      <div class="sub-tipos">
+        <div class="sub-tipo">
+          <h5>Naaman o Sírio — 2 Reis 5, 1-14</h5>
+          <p>
+            O general leproso é curado ao imergir sete vezes no Jordão.
+            Os Padres veem: a lepra = pecado; as sete imersões = plenitude da graça;
+            a cura pelo general pagão = universalidade do Batismo além de Israel.
+          </p>
+        </div>
+        <div class="sub-tipo">
+          <h5>A Piscina de Betesda — João 5, 1-9</h5>
+          <p>
+            Água que cura ao ser agitada pelo anjo.
+            Os Padres leem: as águas imóveis não curam (AT);
+            as águas movidas pelo Espírito (NT) curam definitivamente.
+          </p>
+        </div>
+        <div class="sub-tipo">
+          <h5>A Água do Lado de Cristo — João 19, 34</h5>
+          <p>
+            Da ferida de Cristo brotam sangue e água.
+            Agostinho (<em>In Ioannem</em> CXX, 2):
+            "Do lado do Segundo Adão, dormindo na Cruz,
+            se formou a Igreja, como do lado do primeiro Adão se formou Eva."
+            O sangue = Eucaristia; a água = Batismo.
+          </p>
+        </div>
+      </div>
+      <p class="referencia-patristica">
+        Cf. CIC nn. 1217-1222; Agostinho, <em>In Ioannem</em> CXX; Tertuliano, <em>De Baptismo</em> IX
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ==========================================
+     SEÇÃO NOVA 2: O BATISMO DE JOÃO
+     ========================================== -->
+<section class="estudo-section" id="joao">
+  <h3>O Batismo de João — Diferença Teológica Essencial</h3>
+
+  <p class="intro-secao">
+    O Batismo cristão não nasceu imediatamente do <em>mikveh</em> judaico —
+    nasceu da prática de João Batista, que serviu de
+    <strong>ponte providencial entre os dois Testamentos</strong>.
+    Compreender as diferenças entre o batismo de João e o Batismo de Cristo
+    é decisivo para a teologia sacramental.
+  </p>
+
+  <div class="joao-container">
+
+    <div class="joao-bloco joao-descricao">
+      <h4>O Batismo de João — O Que Era</h4>
+      <p>
+        João Batista administrava um batismo de penitência
+        "para remissão dos pecados" (Mc 1,4) — um ato profético único,
+        irrepetível, que exigia conversão genuína.
+        Não era simples <em>mikveh</em> periódico, mas
+        <strong>chamado escatológico urgente</strong>: o Reino está próximo,
+        convertei-vos e expressa essa conversão pelo batismo.
+      </p>
+      <p>
+        As multidões afluíam ao Jordão porque João anunciava:
+        "Depois de mim vem Aquele que é mais poderoso do que eu"
+        (Mc 1,7). O batismo de João era <strong>preparação, não consumação</strong>.
+        Apontava para Cristo.
+      </p>
+    </div>
+
+    <div class="joao-comparacao">
+      <h4>Batismo de João × Batismo Cristão</h4>
+      <div class="tabela-joao">
+        <div class="linha-tabela cabecalho">
+          <span>Aspecto</span>
+          <span>Batismo de João</span>
+          <span>Batismo Cristão</span>
+        </div>
+        <div class="linha-tabela">
+          <span>Natureza</span>
+          <span>Rito profético de penitência</span>
+          <span>Sacramento instituído por Cristo</span>
+        </div>
+        <div class="linha-tabela">
+          <span>Efeito</span>
+          <span>Disposição para o perdão; não conferia graça santificante</span>
+          <span>Confere graça santificante <em>ex opere operato</em></span>
+        </div>
+        <div class="linha-tabela">
+          <span>Espírito Santo</span>
+          <span>Não conferia o Espírito Santo</span>
+          <span>Confere o Espírito Santo (At 2,38)</span>
+        </div>
+        <div class="linha-tabela">
+          <span>Em nome de</span>
+          <span>Penitência, em nome do que viria</span>
+          <span>Em nome do Pai, do Filho e do Espírito Santo</span>
+        </div>
+        <div class="linha-tabela">
+          <span>Finalidade</span>
+          <span>Preparar a chegada do Messias</span>
+          <span>Inserir no mistério pascal de Cristo</span>
+        </div>
+        <div class="linha-tabela">
+          <span>Validade hoje</span>
+          <span>Cessou com a vinda de Cristo</span>
+          <span>Permanente até o fim dos tempos</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="joao-bloco joao-atos">
+      <h4>O Caso dos Discípulos de Éfeso — Atos 19, 1-6</h4>
+      <blockquote>
+        "Paulo perguntou-lhes: Recebestes o Espírito Santo quando crestes?
+        Eles responderam: Nem sequer ouvimos dizer que existe um Espírito Santo.
+        Ele então perguntou: Qual foi o batismo que recebestes?
+        Disseram: O batismo de João."
+        <strong>— Atos 19, 2-3</strong>
+      </blockquote>
+      <p>
+        Este texto é decisivo. Doze discípulos de Éfeso, batizados por João,
+        <strong>receberam novo batismo</strong> — o Batismo cristão —
+        e somente então receberam o Espírito Santo.
+        A Igreja sempre leu aqui a prova de que o batismo de João
+        era insuficiente e foi <strong>superado</strong> pelo Batismo de Cristo.
+      </p>
+      <p>
+        Santo Tomás comenta (<em>S.Th.</em> III, q. 38, a. 2):
+        "O batismo de João não conferia a graça, mas apenas dispunha para ela,
+        ao mover os homens à penitência e à fé em Cristo vindouro."
+      </p>
+    </div>
+
+    <div class="joao-bloco joao-batismo-jesus">
+      <h4>O Batismo de Jesus no Jordão — Mt 3, 13-17</h4>
+      <p>
+        Cristo — sem pecado — desce ao Jordão e recebe o batismo de João.
+        Os Padres unânimes explicam: Jesus não foi batizado
+        <em>por necessidade própria</em>, mas por três razões teológicas:
+      </p>
+      <ol class="lista-estruturada numerada">
+        <li>
+          <strong>Santificação das águas:</strong>
+          ao imergir no Jordão, Cristo consagra para sempre o elemento água
+          como veículo de graça. "Cristo não é purificado pela água;
+          Ele purifica a água." (Ambrósio, <em>De Mysteriis</em> IV, 20)
+        </li>
+        <li>
+          <strong>Manifestação trinitária:</strong>
+          a Trindade se revela — Pai fala, Filho é batizado, Espírito desce.
+          O Batismo cristão é, por isso, essencialmente trinitário.
+        </li>
+        <li>
+          <strong>Instituição tipológica:</strong>
+          ao descer e ascender das águas, Cristo prefigura
+          Sua própria morte e ressurreição — o mistério pascal
+          que o Batismo sacramental reproduzirá em cada alma.
+        </li>
+      </ol>
+      <p class="referencia-patristica">
+        Cf. Mt 3,13-17; Ambrósio, <em>De Mysteriis</em> IV; CIC n° 1224; Cirilo de Jerusalém, <em>Cat. Bap.</em> III, 11
+      </p>
+    </div>
+
   </div>
 </section>
 
@@ -1451,6 +2366,164 @@ footer::before {
     <p>O batizado sai das águas já <strong>santificado</strong>, não apenas absolvido.
     Recebe as virtudes teologais (fé, esperança, caridade)
     e os sete dons do Espírito Santo.</p>
+  </div>
+</section>
+
+<!-- ==========================================
+     SEÇÃO NOVA 3: PECADO ORIGINAL
+     ========================================== -->
+<section class="estudo-section" id="pecado-original">
+  <h3>O Batismo e o Pecado Original — Teologia Desenvolvida</h3>
+
+  <p class="intro-secao">
+    A remissão do pecado original é o efeito mais fundamental do Batismo
+    e exige desenvolvimento teológico preciso. Muitas confusões pastorais
+    provêm de incompreensão sobre o que exatamente o Batismo remove,
+    o que permanece após ele, e por que os infantes que não pecaram
+    pessoalmente precisam ser batizados.
+  </p>
+
+  <div class="pecado-blocos">
+
+    <div class="pecado-bloco">
+      <h4>O Que é o Pecado Original</h4>
+      <p>
+        O pecado original não é simplesmente uma mancha externa ou imputação jurídica —
+        é uma <strong>privação real da graça santificante</strong> e uma
+        <strong>desordem ontológica</strong> transmitida a toda a descendência de Adão
+        por geração natural.
+      </p>
+      <p>
+        O Concílio de Trento (Sess. V) define com precisão:
+        o pecado original é <em>unum in omnibus</em> — um único pecado em todos —
+        "proprio cuiusque" — próprio de cada um, não simplesmente imputado.
+        Cada ser humano nasce <strong>privado da graça</strong>,
+        não em estado de "neutralidade espiritual".
+      </p>
+      <p>
+        O CIC n° 405 resume: "O pecado original é 'contraído', não 'cometido';
+        é uma condição, não um ato. É uma privação da graça original,
+        com que a natureza humana veio a ser ferida."
+      </p>
+    </div>
+
+    <div class="pecado-bloco">
+      <h4>O Que Exatamente o Batismo Remove</h4>
+      <p>
+        O Batismo remove do pecado original:
+      </p>
+      <ol class="lista-estruturada numerada">
+        <li>
+          <strong>A culpa (reatus culpae):</strong>
+          a privação da graça santificante é completamente removida.
+          O batizado não está mais em estado de alienação de Deus.
+          A filiação divina é plenamente restaurada.
+        </li>
+        <li>
+          <strong>A pena eterna (reatus poenae aeternae):</strong>
+          o batizado não está mais sujeito à condenação eterna pelo pecado original.
+        </li>
+        <li>
+          <strong>Os pecados pessoais anteriores</strong> (se adulto):
+          remissão total, sem exceção.
+        </li>
+      </ol>
+      <p>
+        O Concílio de Trento (Sess. V, Cânon 3) é explícito:
+        "Se alguém negar que pelo batismo de Cristo é removido o pecado original,
+        ou afirmar que apenas é raspado ou não imputado, seja anátema."
+      </p>
+    </div>
+
+    <div class="pecado-bloco destaque-especial">
+      <h4>O Que Permanece Após o Batismo — A Concupiscência</h4>
+      <p>
+        Esta é a questão mais frequentemente mal compreendida pelos fiéis.
+        Após o Batismo, permanecem as
+        <strong><em>sequelae peccati</em> — as consequências do pecado</strong>,
+        embora o próprio pecado original tenha sido removido:
+      </p>
+      <ul class="lista-estruturada">
+        <li><strong>A morte do corpo</strong> — o batizado ainda morre naturalmente</li>
+        <li><strong>O sofrimento</strong> — o batizado ainda sofre</li>
+        <li><strong>A ignorância do intelecto</strong> — o batizado ainda erra e se engana</li>
+        <li>
+          <strong>A concupiscência (<em>fomes peccati</em>)</strong>
+          — a inclinação desordenada das paixões contra a razão e a fé
+        </li>
+      </ul>
+      <p>
+        Sobre a concupiscência, Trento (Sess. V, Decreto) é preciso e necessário:
+      </p>
+      <blockquote class="citacao-concilio">
+        "Esta concupiscência, que o Apóstolo chama de pecado (Rm 7,14),
+        a Santa Igreja Católica jamais entendeu ser chamada pecado
+        no sentido de ser verdadeiramente e em sentido próprio pecado
+        nos regenerados, mas por ser do pecado e inclinar para o pecado.
+        Se alguém o contrário entender, seja anátema."
+        <strong>— Concílio de Trento, Sessão V</strong>
+      </blockquote>
+      <p>
+        Portanto: a concupiscência <strong>não é pecado formal</strong> no batizado —
+        é consequência do pecado original que permanece como
+        <em>matéria de combate</em> e <em>ocasião de mérito</em>.
+        Resistir à concupiscência pela graça é virtude; ceder a ela,
+        quando deliberado e consentido, é o que se torna pecado pessoal.
+      </p>
+      <p>
+        Santo Tomás explica (<em>S.Th.</em> I-II, q. 82, a. 1):
+        "A concupiscência, considerada como inclinação, é uma disposição;
+        somente torna-se pecado formal quando existe o consentimento da vontade."
+      </p>
+    </div>
+
+    <div class="pecado-bloco">
+      <h4>Por Que os Infantes Precisam Ser Batizados?</h4>
+      <p>
+        A questão mais frequente: se as crianças não cometeram pecado pessoal,
+        por que precisam ser batizadas? A resposta requer distinguir
+        duas coisas radicalmente diferentes:
+      </p>
+      <div class="duas-colunas-teologia">
+        <div>
+          <h5>Pecado Pessoal (Actual Sin)</h5>
+          <p>
+            Ato voluntário do indivíduo contra a lei de Deus.
+            As crianças claramente não cometem pecado pessoal —
+            carecem de uso pleno da razão e da vontade.
+          </p>
+        </div>
+        <div>
+          <h5>Pecado Original (Original Sin)</h5>
+          <p>
+            Condição de privação herdada por natureza.
+            Todo ser nascido de Adão — independentemente de atos pessoais —
+            nasce privado da graça santificante e excluído da
+            filiação divina sobrenatural.
+          </p>
+        </div>
+      </div>
+      <p>
+        O argumento de Santo Agostinho, desenvolvido contra os Pelagianos
+        (<em>De Peccatorum Meritis</em> I, 26), é decisivo:
+        a própria prática constante da Igreja de batizar infantes —
+        atestada antes mesmo de qualquer controvérsia —
+        prova que eles <strong>precisavam</strong> de algo que o Batismo confere.
+        Se não precisassem de graça e redenção, por que a Igreja universal
+        os batizava desde sempre?
+      </p>
+      <p>
+        O CIC n° 1250 conclui: "Nascidos com uma natureza humana caída
+        e manchada pelo pecado original, as crianças têm também elas
+        necessidade do novo nascimento no Batismo para serem libertos
+        do poder das trevas e transferidos para o domínio da liberdade
+        dos filhos de Deus."
+      </p>
+      <p class="referencia-patristica">
+        Cf. CIC nn. 1250-1252; Concílio de Trento, Sess. V; Agostinho, <em>De Peccatorum Meritis</em> I, 26-28; Tomás, <em>S.Th.</em> III, q. 68, a. 9
+      </p>
+    </div>
+
   </div>
 </section>
 
@@ -1542,6 +2615,269 @@ footer::before {
   </div>
 </section>
 
+<!-- ==========================================
+     SEÇÃO NOVA 4: PATRÍSTICA RICA
+     ========================================== -->
+<section class="estudo-section" id="patristica">
+  <h3>Patrística do Batismo — Os Grandes Tratados</h3>
+
+  <p class="intro-secao">
+    Os Padres da Igreja produziram sobre o Batismo alguns dos textos
+    mais belos e teologicamente densos de toda a tradição cristã.
+    Apresentamos aqui os tratados fundamentais, com seus argumentos centrais
+    e contribuições específicas para a teologia batismal.
+  </p>
+
+  <div class="patristica-grid">
+
+    <div class="patristica-card">
+      <div class="patristica-header">
+        <h4>Justino Mártir (†165)</h4>
+        <span class="obra-principal"><em>I Apologia</em>, cap. 61-65</span>
+      </div>
+      <div class="patristica-contribuicao">
+        <h5>Contribuição Principal: Primeira Descrição Detalhada do Rito</h5>
+        <p>
+          A <em>Primeira Apologia</em> de Justino (~155 d.C.) oferece
+          a <strong>descrição mais antiga e detalhada do rito batismal</strong>
+          que chegou até nós — dirigida ao imperador Antonino Pio
+          para demonstrar que os cristãos não praticavam rituais secretos vergonhosos.
+        </p>
+        <p>
+          Justino descreve o processo completo: o candidato é instruído,
+          faz a profissão de fé, jejua, é levado à água e batizado
+          "em nome de Deus Pai e Senhor do universo,
+          e de nosso Salvador Jesus Cristo,
+          e do Espírito Santo."
+        </p>
+        <p>
+          Teologicamente, Justino afirma que no Batismo ocorre
+          <strong>iluminação (<em>phôtismos</em>)</strong> — termo que passou
+          a ser sinônimo de Batismo na antiguidade cristã.
+          O batizado é "iluminado" porque passa das trevas da ignorância
+          e do pecado para a luz do conhecimento de Deus.
+        </p>
+        <blockquote>
+          "Este banho chama-se iluminação, porque aqueles que aprendem estas coisas
+          têm o entendimento iluminado."
+          <strong>— I Apologia, 61</strong>
+        </blockquote>
+        <p>
+          Significativo também: Justino já descreve a liturgia que segue o Batismo —
+          a reunião eucarística da comunidade para receber o recém-batizado.
+          O Batismo e a Eucaristia são, desde o início, inseparáveis.
+        </p>
+      </div>
+    </div>
+
+    <div class="patristica-card">
+      <div class="patristica-header">
+        <h4>Tertuliano de Cartago (c. 155–220)</h4>
+        <span class="obra-principal"><em>De Baptismo</em> (~200 d.C.)</span>
+      </div>
+      <div class="patristica-contribuicao">
+        <h5>Contribuição Principal: Primeiro Tratado Sistemático sobre o Batismo</h5>
+        <p>
+          O <em>De Baptismo</em> de Tertuliano é o
+          <strong>mais antigo tratado monográfico sobre o Batismo</strong>
+          que a cristandade possui — uma obra de 20 capítulos escrita em latim,
+          redigida contra uma gnóstica chamada Quintila que negava
+          a necessidade da água para o sacramento.
+        </p>
+        <p>
+          Os argumentos de Tertuliano são magistrais:
+        </p>
+        <ol class="lista-estruturada numerada">
+          <li>
+            <strong>A água foi criada por Deus antes de tudo</strong> (Gn 1,2)
+            e o Espírito a habitou desde o princípio —
+            portanto é o veículo mais adequado do Espírito.
+          </li>
+          <li>
+            <strong>Cristo santificou a água ao ser batizado</strong> no Jordão
+            (cap. IV): "Não foi Cristo que necessitava do banho;
+            foi a água que necessitou de Cristo."
+          </li>
+          <li>
+            <strong>A fórmula trinitária é essencial</strong> (cap. VI):
+            invoca-se o Pai, o Filho e o Espírito, e cada Pessoa age no Batismo.
+          </li>
+        </ol>
+        <p>
+          Tertuliano é também o primeiro a mencionar explicitamente
+          os <strong>padrinhos (<em>sponsores</em>)</strong> no Batismo (cap. XVIII),
+          e o primeiro a registrar uma hesitação sobre o Batismo infantil —
+          não por negá-lo, mas por temer que os padrinhos não cumprissem
+          suas promessas, o que não é argumento teológico contra o rito em si.
+        </p>
+        <blockquote>
+          "A água não faz nada por si mesma, mas sob a invocação de Deus
+          adquire o poder de santificar; porque a Palavra de Deus a penetra,
+          e nela o Espírito de Deus desce e a santifica."
+          <strong>— <em>De Baptismo</em>, IV</strong>
+        </blockquote>
+      </div>
+    </div>
+
+    <div class="patristica-card">
+      <div class="patristica-header">
+        <h4>Hipólito de Roma (c. 170–235)</h4>
+        <span class="obra-principal"><em>Traditio Apostolica</em> (~215 d.C.)</span>
+      </div>
+      <div class="patristica-contribuicao">
+        <h5>Contribuição Principal: O Rito Batismal Apostólico Documentado</h5>
+        <p>
+          A <em>Traditio Apostolica</em> de Hipólito é fonte primária inestimável:
+          descreve o <strong>rito batismal como praticado em Roma
+          no início do séc. III</strong>, reivindicando ser fiel à tradição apostólica.
+        </p>
+        <p>
+          O processo descrito é notavelmente completo:
+        </p>
+        <ul class="lista-estruturada">
+          <li><strong>Catecumenato de três anos</strong> com instrução regular</li>
+          <li>Exame moral dos candidatos — testemunhos de seus padrinhos</li>
+          <li>Ritos de purificação na semana anterior ao Batismo</li>
+          <li>Exorcismos na quinta-feira antes do Batismo</li>
+          <li>Vigília noturna de sábado para domingo</li>
+          <li>Bênção da água ao amanhecer</li>
+          <li><strong>Imersão tripla</strong> com profissão de fé dialogada</li>
+          <li>Unção com óleo dos catecúmenos e depois com Crisma</li>
+          <li>Primeira Eucaristia</li>
+        </ul>
+        <p>
+          A imersão tripla de Hipólito corresponde às três Pessoas da Trindade:
+          o candidato é imerso três vezes, respondendo afirmativamente
+          a três perguntas ("Crês em Deus Pai? Crês em Jesus Cristo, Seu Filho? Crês no Espírito Santo?").
+          Esta estrutura dialogada é um dos modelos do
+          <strong>Rito da Iniciação Cristã de Adultos (RICA)</strong> moderno.
+        </p>
+      </div>
+    </div>
+
+    <div class="patristica-card">
+      <div class="patristica-header">
+        <h4>São Cirilo de Jerusalém (313–386)</h4>
+        <span class="obra-principal"><em>Catequeses Mistagógicas</em> I-V</span>
+      </div>
+      <div class="patristica-contribuicao">
+        <h5>Contribuição Principal: A Mistagogia — Revelar os Mistérios Após o Batismo</h5>
+        <p>
+          As cinco <em>Catequeses Mistagógicas</em> de Cirilo são únicas:
+          enquanto antes do Batismo ensinava a doutrina,
+          <strong>depois do Batismo ele revelava o significado profundo
+          dos gestos sacramentais</strong> aos recém-iniciados.
+        </p>
+        <p>
+          O método mistagógico parte da experiência vivida:
+          "Estais de pé e banhado pela água — agora vos digo o que aconteceu."
+          Esta pedagogia do mistério velado e depois revelado
+          caracteriza toda a catequese patrística oriental.
+        </p>
+        <p>
+          Sua descrição da descida e ascensão das águas é magistral:
+        </p>
+        <blockquote>
+          "Quando descestes na água, recordai que fomos sepultados com Cristo.
+          Quando saístes, ressuscitastes com Ele.
+          Assim como Cristo morreu de verdade e ressuscitou de verdade,
+          vós morrestes ao pecado de verdade e ressuscitastes à justiça de verdade."
+          <strong>— Cat. Myst. II, 5-6</strong>
+        </blockquote>
+        <p>
+          Cirilo também desenvolve a teologia da <strong>unção crísmal</strong>
+          como participação no Nome de Cristo (=o Ungido),
+          tornando cada batizado <em>christos</em> — ungido, participante do sacerdócio,
+          profecia e realeza de Cristo.
+        </p>
+      </div>
+    </div>
+
+    <div class="patristica-card">
+      <div class="patristica-header">
+        <h4>Santo Ambrósio de Milão (c. 340–397)</h4>
+        <span class="obra-principal"><em>De Sacramentis</em> e <em>De Mysteriis</em></span>
+      </div>
+      <div class="patristica-contribuicao">
+        <h5>Contribuição Principal: A Eficácia da Palavra sobre a Matéria</h5>
+        <p>
+          Ambrósio oferece, especialmente no <em>De Sacramentis</em>,
+          a reflexão mais aprofundada da época sobre
+          <strong>como a palavra age sobre o elemento material</strong>
+          para produzir o efeito sacramental.
+        </p>
+        <p>
+          Seu argumento fundamental: se a palavra de Deus criou o mundo do nada
+          (Gn 1), a mesma Palavra de Deus pode transformar a natureza da água
+          batismal para santificar a alma. A eficácia vem da Palavra, não da água em si.
+        </p>
+        <blockquote>
+          "Não é a água que opera, mas a graça do Espírito.
+          A água é pura por si, mas não tem poder para purificar a alma
+          sem o Espírito de Deus."
+          <strong>— <em>De Sacramentis</em> I, 15</strong>
+        </blockquote>
+        <p>
+          Ambrósio também insiste que o Batismo de Cristo
+          <strong>superou definitivamente o Batismo de João</strong>:
+          João batizava em água, Cristo batiza no Espírito Santo (Mt 3,11).
+          O Batismo cristão é qualitativamente superior porque
+          não só purifica exteriormente mas regenera interiormente.
+        </p>
+        <p>
+          No <em>De Mysteriis</em> (IV, 20), escreve a frase famosa:
+          "Não Cristo recebeu purificação pelo batismo;
+          o batismo recebeu purificação por Cristo."
+        </p>
+      </div>
+    </div>
+
+    <div class="patristica-card">
+      <div class="patristica-header">
+        <h4>Santo Agostinho de Hipona (354–430)</h4>
+        <span class="obra-principal"><em>De Baptismo contra Donatistas</em></span>
+      </div>
+      <div class="patristica-contribuicao">
+        <h5>Contribuição Principal: Validade Objetiva e Independência do Ministro</h5>
+        <p>
+          Os Donatistas afirmavam que o Batismo administrado por um padre indigno
+          ou herético era inválido. Agostinho respondeu com a distinção
+          que se tornou fundamento da teologia sacramental ocidental:
+        </p>
+        <p>
+          O Batismo é válido <strong><em>ex opere operato</em></strong>
+          — pela força do próprio ato sacramental —
+          independentemente da santidade pessoal do ministro.
+          O verdadeiro ministro de qualquer sacramento é Cristo;
+          o padre humano é apenas instrumento.
+        </p>
+        <blockquote>
+          "Quando Pedro batiza, é Cristo quem batiza.
+          Quando Paulo batiza, é Cristo quem batiza.
+          Quando Judas batizasse, seria Cristo quem batizaria."
+          <strong>— <em>In Ioannem</em> VI, 7</strong>
+        </blockquote>
+        <p>
+          Esta doutrina — desenvolvida por Agostinho em sete livros
+          do <em>De Baptismo contra Donatistas</em> — é a base para:
+        </p>
+        <ul class="lista-estruturada">
+          <li>Reconhecimento de batismos de hereticos (se válidos)</li>
+          <li>Validade do batismo conferido por padre em estado de pecado</li>
+          <li>A impossibilidade de "rebatizar"</li>
+          <li>A natureza objetiva do caráter indelével</li>
+        </ul>
+        <p>
+          Agostinho também é o grande sistematizador da doutrina do
+          <strong>pecado original e a necessidade do Batismo infantil</strong>,
+          desenvolvida em polêmica com Pelágio.
+        </p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
 <!-- BÍBLIA -->
 <section class="estudo-section" id="biblia">
   <h3>A Palavra de Deus sobre o Batismo</h3>
@@ -1586,7 +2922,7 @@ footer::before {
       <h4>Atos 8, 36-38</h4>
       <blockquote>"Disse o eunuco: Eis aqui água; que impede que eu seja batizado?
       E Filipe disse: Se crês de todo o coração, é lícito."</blockquote>
-      <p><strong>Fé e Batismo inseparáveis.</strong> A fé precede, o Batismo sela — foi <em>Filipe</em>, não Pedro.</p>
+      <p><strong>Fé e Batismo inseparáveis.</strong> A fé precede, o Batismo sela.</p>
     </div>
   </div>
 </section>
@@ -1651,8 +2987,261 @@ footer::before {
       É o <strong>Batismo de Água que a Igreja ordena como caminho ordinário</strong>.
       Os batismos de Sangue e Desejo são provisões divinas para casos excepcionais —
       não substituem a graça sacramental plena do Batismo de Água.
-      A ninguém é lícito desprezar o Batismo sacramental baseando-se nessas exceções.
     </p>
+  </div>
+</section>
+
+<!-- ==========================================
+     SEÇÃO NOVA 5: VALIDADE E LICITUDE
+     ========================================== -->
+<section class="estudo-section" id="validade">
+  <h3>Validade e Licitude — Casos Concretos e Questões Disputadas</h3>
+
+  <p class="intro-secao">
+    A distinção entre <strong>validade</strong> (o sacramento produziu seu efeito?)
+    e <strong>licitude</strong> (foi administrado segundo as normas canônicas?)
+    é fundamental para a vida eclesial. Um batismo pode ser válido mas ilícito
+    (ex.: administrado por padre sem jurisdição); pode ser lícito mas inválido
+    (ex.: administrado com sumo de uva por ignorância).
+    Examinamos aqui os elementos essenciais, os casos concretos
+    e os procedimentos canônicos pertinentes.
+  </p>
+
+  <div class="validade-grid">
+
+    <div class="validade-bloco">
+      <h4>Os Três Elementos Essenciais para a Validade</h4>
+      <p>
+        O Catecismo e o Direito Canônico estabelecem com precisão:
+        para um batismo ser <strong>válido</strong>, são necessários e suficientes:
+      </p>
+      <div class="tres-elementos">
+        <div class="elemento">
+          <h5>1. Matéria — Água Natural</h5>
+          <p>
+            A matéria válida é exclusivamente <strong>água natural</strong>
+            (<em>aqua naturalis et vera</em>).
+            O Código de Direito Canônico (c. 849) especifica: "água verdadeira".
+            A Instrução <em>Dominus Iesus</em> e os manuais de direito canônico
+            são unânimes: qualquer água natural é válida —
+            água do mar, da chuva, de rio, de torneira, mineral,
+            destilada, com cloro (em quantidades normais),
+            fria ou quente.
+          </p>
+          <div class="caixa-invalido">
+            <h6>❌ Matérias Inválidas</h6>
+            <p>
+              A Congregação para a Doutrina da Fé (2020) respondeu explicitamente
+              que batismos administrados com fórmula "Nós te batizamos"
+              são inválidos — mas a questão da matéria também tem casos concretos
+              examinados historicamente:
+            </p>
+            <ul>
+              <li>
+                <strong>Sumo de fruta</strong> — inválido.
+                Não é água, ainda que contenha água.
+              </li>
+              <li>
+                <strong>Leite</strong> — inválido.
+                Caso antigo debatido: o leite não é "agua vera et naturalis".
+              </li>
+              <li>
+                <strong>Caldo/sopa</strong> — inválido.
+                Hipótese excêntrica mas examinada na literatura teológica:
+                um líquido é "água" somente se for essencialmente água.
+              </li>
+              <li>
+                <strong>Refrigerante/Coca-Cola</strong> — inválido.
+                A CDF e os manuais são claros: não é água natural.
+                Qualquer batismo com refrigerante é sacramentalmente nulo.
+              </li>
+              <li>
+                <strong>Vinho</strong> — inválido e grave abuso.
+                Casos históricos foram declarados inválidos.
+              </li>
+              <li>
+                <strong>Água benta</strong> — válido.
+                A bênção não altera a natureza da água.
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="elemento">
+          <h5>2. Forma — A Fórmula Trinitária</h5>
+          <p>
+            A fórmula essencial é a <strong>invocação explícita da Santíssima Trindade</strong>
+            simultânea à aplicação da água:
+          </p>
+          <blockquote class="formula-batismal">
+            "Eu te batizo em nome do Pai, e do Filho, e do Espírito Santo."
+          </blockquote>
+          <p>
+            Elementos constitutivos da fórmula válida:
+          </p>
+          <ul class="lista-estruturada">
+            <li>Verbo ativo no presente ("batizo")</li>
+            <li>Sujeito determinado ("eu")</li>
+            <li>As três Pessoas nomeadas explicitamente</li>
+            <li>"Em nome" — não "nos nomes" nem "nos poderes de"</li>
+          </ul>
+          <div class="caixa-invalido">
+            <h6>❌ Fórmulas Inválidas — Casos Reais</h6>
+            <ul>
+              <li>
+                <strong>"Nós te batizamos..."</strong> — Declarado <strong>inválido</strong>
+                pela CDF em 2020 (Resp. ad dubium, 24/06/2020).
+                O sujeito "nós" altera a estrutura sacramental;
+                o ministro do Batismo é uma pessoa, não uma assembleia.
+                Muitos fiéis batizados com essa fórmula foram rebatizados condicionalmente.
+              </li>
+              <li>
+                <strong>"No nome do Criador, do Redentor e do Santificador"</strong>
+                — Declarado <strong>inválido</strong> pela CDF em 2008.
+                Estes não são nomes das três Pessoas — são funções ou atributos.
+                A Trindade deve ser invocada pelos nomes revelados.
+              </li>
+              <li>
+                <strong>"No nome de Jesus Cristo somente"</strong>
+                — Questão disputada historicamente (<em>cf.</em> At 2,38).
+                A posição hoje dominante e praticamente unânime:
+                inválido para os fins do c. 849,
+                porque o mandamento de Mt 28,19 exige a fórmula trinitária.
+              </li>
+              <li>
+                <strong>"No nome de Deus, do Bem, do Amor"</strong>
+                — Claramente inválido. Formulações criativas que omitem
+                as Pessoas da Trindade não constituem o sacramento.
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="elemento">
+          <h5>3. Intenção — Fazer o que a Igreja Faz</h5>
+          <p>
+            O ministro deve ter intenção de <strong>fazer o que a Igreja cristã faz</strong>
+            ao batizar. Não exige fé pessoal do ministro, nem virtude,
+            nem sequer pertença à Igreja Católica.
+            Exige somente a intenção de realizar o ato que a Igreja chama Batismo.
+          </p>
+          <p>
+            Casos problemáticos de intenção:
+          </p>
+          <ul class="lista-estruturada">
+            <li>
+              <strong>Ministro ateu ou agnóstico</strong> —
+              válido <em>se tiver intenção</em> de fazer o que os cristãos fazem,
+              mesmo sem crer nisso. A intenção mínima é suficiente.
+              (Posição comum dos manuais, seguindo Agostinho e Tomás)
+            </li>
+            <li>
+              <strong>Ministro que acredita ser apenas ritual simbólico</strong>
+              — duvidoso. Se a intenção positiva de excluir o efeito sacramental
+              está presente, o sacramento pode ser inválido.
+            </li>
+            <li>
+              <strong>Ministro que nega explicitamente que está batizando</strong>
+              — inválido. Ausência total de intenção.
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="validade-bloco">
+      <h4>O Batismo Condicional — <em>Sub conditione</em></h4>
+      <p>
+        Quando existe <strong>dúvida séria e fundada</strong>
+        sobre a validade de um batismo anterior, a Igreja admite o
+        <strong>Batismo Condicional</strong> (CIC c. 869):
+      </p>
+      <blockquote class="formula-batismal">
+        "Se ainda não és batizado, eu te batizo em nome do Pai,
+        e do Filho, e do Espírito Santo."
+      </blockquote>
+      <p>
+        O batismo condicional é permitido quando:
+      </p>
+      <ul class="lista-estruturada">
+        <li>Há dúvida sobre a matéria usada (não era água natural?)</li>
+        <li>Há dúvida sobre a fórmula (não invocou a Trindade?)</li>
+        <li>Há dúvida sobre a intenção do ministro</li>
+        <li>A pessoa foi batizada em denominação de validade duvidosa</li>
+        <li>Não há registros ou certeza sobre o batismo anterior</li>
+      </ul>
+      <p>
+        O que o batismo condicional <strong>não é</strong>:
+        não é "rebatizar" — é precaver-se pastoralmente
+        diante de uma dúvida real. Se o batismo anterior era válido,
+        a condição não se cumpre e o ato é sacramentalmente ineficaz,
+        mas nenhum mal é feito. Se era inválido, supre agora a falta.
+      </p>
+      <p>
+        <strong>Quem decide?</strong> O Ordinário local (bispo ou vigário),
+        após investigação canônica. O fiel não decide unilateralmente
+        receber novo batismo (CIC c. 869 §3).
+      </p>
+    </div>
+
+    <div class="validade-bloco">
+      <h4>O Que Invalida um Batismo — Síntese Canônica</h4>
+      <div class="tabela-invalidade">
+        <div class="linha-invalidade cabecalho-invalidade">
+          <span>Elemento</span>
+          <span>Defeito</span>
+          <span>Efeito sobre o sacramento</span>
+        </div>
+        <div class="linha-invalidade">
+          <span>Matéria</span>
+          <span>Líquido diferente de água natural</span>
+          <span>Inválido — nulo</span>
+        </div>
+        <div class="linha-invalidade">
+          <span>Matéria</span>
+          <span>Água não tocou o batizando</span>
+          <span>Inválido — nulo</span>
+        </div>
+        <div class="linha-invalidade">
+          <span>Forma</span>
+          <span>Fórmula trinitária omitida ou alterada</span>
+          <span>Inválido — nulo</span>
+        </div>
+        <div class="linha-invalidade">
+          <span>Forma</span>
+          <span>Fórmula não proferida simultaneamente à aplicação da água</span>
+          <span>Inválido — nulo</span>
+        </div>
+        <div class="linha-invalidade">
+          <span>Intenção</span>
+          <span>Intenção positiva de não fazer o que a Igreja faz</span>
+          <span>Inválido — nulo</span>
+        </div>
+        <div class="linha-invalidade">
+          <span>Ministro</span>
+          <span>Padre não ordenado (sem ordens)</span>
+          <span>Válido mas ilícito (exceto emergência)</span>
+        </div>
+        <div class="linha-invalidade">
+          <span>Local</span>
+          <span>Fora da Igreja sem licença</span>
+          <span>Válido mas ilícito</span>
+        </div>
+        <div class="linha-invalidade">
+          <span>Disposição</span>
+          <span>Adulto sem fé ou intenção pessoal</span>
+          <span>Válido mas infrutuoso (<em>fictus</em>)</span>
+        </div>
+      </div>
+      <p class="nota-tabela">
+        <strong>Nota:</strong> "Ilícito" significa transgressão da lei canônica com possível penalidade
+        para o ministro, mas sem invalidar o sacramento. "Infrutuoso" significa
+        que o efeito não é produzido enquanto perdurar o obstáculo (frúto suspenso),
+        mas o caráter indelével é impresso. Se o obstáculo cessa (conversão, penitência),
+        o efeito retorna sem novo batismo.
+      </p>
+    </div>
+
   </div>
 </section>
 
@@ -1682,8 +3271,7 @@ footer::before {
         <h4>Renúncia a Satanás</h4>
         <p>O batizando (ou pais/padrinhos) renuncia solenemente a Satanás,
         a todas as suas obras e seduções.
-        É uma <strong>ruptura formal e sacramental com o reino das trevas</strong>
-        — não mera formalidade, mas declaração de guerra espiritual.</p>
+        É uma <strong>ruptura formal e sacramental com o reino das trevas</strong>.</p>
       </div>
     </div>
 
@@ -1692,8 +3280,7 @@ footer::before {
       <div class="descricao-passo">
         <h4>Profissão de Fé</h4>
         <p>Segue-se a adesão a Cristo e a profissão do Credo Apostólico.
-        O Batismo nasce da fé — primeiro se crê, depois se batiza.
-        Nos infantes, é a <strong>fé da Igreja e da família</strong> que sustenta o ato.</p>
+        O Batismo nasce da fé — primeiro se crê, depois se batiza.</p>
       </div>
     </div>
 
@@ -1702,8 +3289,7 @@ footer::before {
       <div class="descricao-passo">
         <h4>Unção com Óleo dos Catecúmenos</h4>
         <p>Um óleo consagrado fortalece o batizando antes da imersão —
-        como um <strong>atleta ungido para o combate espiritual</strong>.
-        Símbolo de força, proteção e preparação para a luta cristã.</p>
+        como um <strong>atleta ungido para o combate espiritual</strong>.</p>
       </div>
     </div>
 
@@ -1713,8 +3299,7 @@ footer::before {
         <h4>A Imersão ou Aspersão — O Coração do Sacramento</h4>
         <p>O ministro derrama água sobre a cabeça (ou imerge) pronunciando:
         <br><strong>"Eu te batizo em nome do Pai, do Filho e do Espírito Santo."</strong>
-        <br>Neste instante, <strong>o batizado morre para o pecado e ressuscita em Cristo</strong>.
-        É o momento sacramental central.</p>
+        <br>Neste instante, <strong>o batizado morre para o pecado e ressuscita em Cristo</strong>.</p>
       </div>
     </div>
 
@@ -1722,8 +3307,7 @@ footer::before {
       <div class="numero-passo">VI</div>
       <div class="descricao-passo">
         <h4>Unção com Santo Crisma</h4>
-        <p>O Crisma (óleo consagrado pelo bispo na Quinta-feira Santa) unge a testa.
-        O batizando se torna <strong>"Christus" — o Ungido</strong>.
+        <p>O Crisma unge a testa. O batizando se torna <strong>"Christus" — o Ungido</strong>.
         Sinal de participação no sacerdócio, profecia e realeza de Cristo.</p>
       </div>
     </div>
@@ -1732,7 +3316,7 @@ footer::before {
       <div class="numero-passo">VII</div>
       <div class="descricao-passo">
         <h4>Imposição da Veste Branca</h4>
-        <p>Símbolo poderoso: o batizado reveste a inocência de Cristo.
+        <p>O batizado reveste a inocência de Cristo.
         <strong>"Revestistes de Cristo"</strong> (Gl 3,27) — a veste branca anuncia
         que a alma está agora sem mancha diante de Deus.</p>
       </div>
@@ -1743,9 +3327,7 @@ footer::before {
       <div class="descricao-passo">
         <h4>Entrega da Vela Acesa</h4>
         <p>A vela é acesa da Vela Pascal — Cristo Ressuscitado.
-        O batizado é agora <strong>luz do mundo em Cristo</strong>.
-        Muitas famílias guardam essa vela por toda a vida,
-        acendendo-a em momentos solenes: Crisma, Casamento, última hora.</p>
+        O batizado é agora <strong>luz do mundo em Cristo</strong>.</p>
       </div>
     </div>
 
@@ -1754,8 +3336,7 @@ footer::before {
       <div class="descricao-passo">
         <h4>Apresentação à Comunidade</h4>
         <p>O batizado é apresentado à assembleia reunida.
-        Não é ato privado — é entrada pública num Corpo vivo.
-        A Igreja inteira o recebe como membro novo.</p>
+        Não é ato privado — é entrada pública num Corpo vivo.</p>
       </div>
     </div>
   </div>
@@ -1764,6 +3345,170 @@ footer::before {
     <strong>Nota Litúrgica:</strong> O Rito Ordinário (pós-1969) e o Rito Extraordinário
     (Forma Tridentina) diferem em detalhes — o rito tradicional mantém mais exorcismos
     e enfatiza mais explicitamente o combate espiritual. Ambos são plenamente válidos e lícitos.
+  </div>
+</section>
+
+<!-- ==========================================
+     SEÇÃO NOVA 6: IGREJAS ORIENTAIS
+     ========================================== -->
+<section class="estudo-section" id="orientais">
+  <h3>O Batismo nas Igrejas Orientais</h3>
+
+  <p class="intro-secao">
+    As Igrejas Católicas Orientais (em comunhão com Roma) e as Igrejas Ortodoxas
+    praticam o Batismo segundo tradições litúrgicas próprias, distintas do rito latino,
+    mas igualmente válidas e, em muitos aspectos, <strong>teologicamente mais explícitas</strong>
+    no simbolismo sacramental.
+  </p>
+
+  <div class="orientais-grid">
+
+    <div class="orientais-bloco">
+      <h4>A Imersão Tripla — Norma do Oriente</h4>
+      <p>
+        Enquanto o rito latino pratica ordinariamente a
+        <strong>infusão</strong> (derramamento sobre a cabeça),
+        as tradições orientais — tanto católicas quanto ortodoxas —
+        mantêm a <strong>imersão tripla</strong> como norma
+        praticamente universal.
+      </p>
+      <p>
+        O candidato é submerso três vezes:
+        cada imersão corresponde a uma Pessoa da Santíssima Trindade
+        e à profissão de fé dialogada:
+      </p>
+      <div class="imersao-tripla">
+        <div class="imersao-item">
+          <span class="numero-imersao">1ª</span>
+          <p>"Batiza-se o servo de Deus <em>[nome]</em>
+          em nome do Pai—"
+          <em>(primeira imersão)</em></p>
+        </div>
+        <div class="imersao-item">
+          <span class="numero-imersao">2ª</span>
+          <p>"—e do Filho—"
+          <em>(segunda imersão)</em></p>
+        </div>
+        <div class="imersao-item">
+          <span class="numero-imersao">3ª</span>
+          <p>"—e do Espírito Santo."
+          <em>(terceira imersão)</em></p>
+        </div>
+      </div>
+      <p>
+        Esta estrutura tripla é atestada já em Hipólito de Roma
+        (<em>Traditio Apostolica</em>) e na <em>Didaché</em>,
+        demonstrando que a imersão tripla é a forma mais antiga documentada.
+        Tertuliano (<em>De Corona</em> III) e outros Padres a mencionam
+        como prática universal da era apostólica.
+      </p>
+    </div>
+
+    <div class="orientais-bloco">
+      <h4>A Chrismation Imediata — A Grande Diferença Pastoral</h4>
+      <p>
+        Talvez a diferença mais significativa entre os ritos orientais
+        e o rito latino seja que, no Oriente,
+        a <strong>Chrismation (equivalente à Confirmação) é administrada
+        imediatamente após o Batismo</strong> — pelo mesmo presbítero,
+        no mesmo rito, inclusive a infantes.
+      </p>
+      <p>
+        Consequências teológicas e pastorais:
+      </p>
+      <ul class="lista-estruturada">
+        <li>
+          Os três sacramentos de iniciação (Batismo, Crisma, Eucaristia)
+          são conferidos <strong>conjuntamente</strong> —
+          inclusive ao recém-nascido
+        </li>
+        <li>
+          No Oriente, um infante batizado recebe imediatamente o Crisma
+          e depois recebe a Comunhão eucarística (sob a espécie do vinho)
+        </li>
+        <li>
+          A separação ocidental entre Batismo e Confirmação
+          (às vezes por décadas) é vista pelas igrejas orientais
+          como um empobrecimento da unidade sacramental da iniciação
+        </li>
+        <li>
+          O presbítero oriental pode administrar a Chrismation
+          usando o Santo Myron (Crisma) consagrado pelo Patriarca —
+          sem exigir a presença do bispo como no rito latino
+        </li>
+      </ul>
+      <p class="referencia-patristica">
+        Cf. Código dos Cânones das Igrejas Orientais (CCEO), c. 695; CIC n° 1233
+      </p>
+    </div>
+
+    <div class="orientais-bloco">
+      <h4>Diferenças Litúrgicas Específicas</h4>
+      <div class="tabela-orientais">
+        <div class="linha-orientais cabecalho-orientais">
+          <span>Aspecto</span>
+          <span>Rito Latino</span>
+          <span>Ritos Orientais</span>
+        </div>
+        <div class="linha-orientais">
+          <span>Modo ordinário</span>
+          <span>Infusão (aspersão sobre a cabeça)</span>
+          <span>Imersão tripla completa</span>
+        </div>
+        <div class="linha-orientais">
+          <span>Confirmação</span>
+          <span>Separada, pelo bispo, anos depois</span>
+          <span>Imediata, pelo presbítero com Myron patriarcal</span>
+        </div>
+        <div class="linha-orientais">
+          <span>Primeira Comunhão</span>
+          <span>Separada, após instrução</span>
+          <span>Imediata, no mesmo rito (vinho)</span>
+        </div>
+        <div class="linha-orientais">
+          <span>Ministro do Crisma</span>
+          <span>Ordinariamente o Bispo</span>
+          <span>O presbítero com Myron do Patriarca</span>
+        </div>
+        <div class="linha-orientais">
+          <span>Nome da unção pós-batismal</span>
+          <span>Confirmação (<em>Confirmatio</em>)</span>
+          <span>Chrismation (Myron)</span>
+        </div>
+        <div class="linha-orientais">
+          <span>Exorcismos pré-batismais</span>
+          <span>Simplificados no rito pós-V2</span>
+          <span>Extensos e elaborados</span>
+        </div>
+        <div class="linha-orientais">
+          <span>Orientação durante o rito</span>
+          <span>Variável</span>
+          <span>Frequentemente a leste (ad orientem)</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="orientais-bloco">
+      <h4>Validade Mútua e Comunhão</h4>
+      <p>
+        As Igrejas Católicas Orientais (como a Igreja Greco-Católica Ucraniana,
+        a Igreja Maronita, a Igreja Melquita, etc.) estão em plena comunhão
+        com Roma. Seus batismos são plenamente válidos e reconhecidos.
+      </p>
+      <p>
+        Quanto às Igrejas Ortodoxas (Ortodoxa Russa, Grega, etc.),
+        <strong>fora da plena comunhão com Roma</strong>:
+        seus batismos são geralmente reconhecidos como válidos pela Igreja Católica,
+        desde que usem água, a fórmula trinitária e tenham a intenção correta.
+        Um cristão ortodoxo que se converte ao catolicismo
+        <strong>não é rebatizado</strong> — é recebido mediante profissão de fé
+        e, se necessário, Confirmação.
+      </p>
+      <p class="referencia-patristica">
+        Cf. Unitatis Redintegratio n° 15-16; CCEO c. 672; CIC c. 869
+      </p>
+    </div>
+
   </div>
 </section>
 
@@ -1824,9 +3569,416 @@ footer::before {
     <div class="efeito-card">
       <span class="efeito-icone">✦</span>
       <h4>Acesso aos Sacramentos</h4>
-      <p>O Batismo abre a porta para todos os demais sacramentos: Eucaristia, Confirmação, Penitência...</p>
+      <p>O Batismo abre a porta para todos os demais sacramentos.</p>
       <p class="detalhe">Sem Batismo, nenhum outro sacramento pode ser recebido.</p>
     </div>
+  </div>
+</section>
+
+<!-- ==========================================
+     SEÇÃO NOVA 7: O LIMBO
+     ========================================== -->
+<section class="estudo-section" id="limbo">
+  <h3>O Limbo das Crianças — Doutrina, Revisão e Posição Atual</h3>
+
+  <p class="intro-secao">
+    A questão do destino eterno das crianças mortas sem Batismo
+    é uma das mais dolorosas e delicadas da teologia cristã.
+    Nenhuma resposta fácil existe. A Igreja percorreu um longo caminho
+    nesta questão — da formulação escolástica do <em>limbus puerorum</em>
+    à reflexão contemporânea mais aberta da Comissão Teológica Internacional.
+    Examinaremos o percurso honestamente.
+  </p>
+
+  <div class="limbo-blocos">
+
+    <div class="limbo-bloco">
+      <h4>O Problema Teológico — Por Que é Tão Difícil</h4>
+      <p>
+        A tensão está entre dois princípios igualmente sólidos da fé:
+      </p>
+      <div class="tensao-teologica">
+        <div class="polo-tensao">
+          <h5>Princípio A</h5>
+          <p>
+            "Quem não renascer da água e do Espírito Santo
+            não pode entrar no Reino de Deus." (Jo 3,5)
+            — O Batismo é necessário para a salvação.
+          </p>
+        </div>
+        <div class="polo-tensao">
+          <h5>Princípio B</h5>
+          <p>
+            "Deus quer que todos os homens sejam salvos." (1Tm 2,4)
+            — A vontade salvífica universal de Deus é real e absoluta.
+          </p>
+        </div>
+      </div>
+      <p>
+        Como conciliar esses dois princípios no caso de uma criança
+        que morre antes do Batismo, sem possibilidade de Batismo de Desejo
+        (pois não tem uso da razão) e sem Batismo de Sangue?
+        Esta pergunta não tem resposta definitiva no Magistério.
+      </p>
+    </div>
+
+    <div class="limbo-bloco">
+      <h4>A Doutrina Histórica do <em>Limbus Puerorum</em></h4>
+      <p>
+        A resposta que a teologia escolástica — especialmente a escola tomista —
+        desenvolveu foi a doutrina do <strong><em>limbus puerorum</em></strong>
+        (limbo das crianças): um estado de felicidade natural,
+        sem sofrimento, mas sem a visão beatífica de Deus.
+      </p>
+      <p>
+        O raciocínio: a criança morta sem Batismo
+        não tem pecado pessoal, portanto não merece pena positiva (sofrimento).
+        Mas também não possui a graça santificante necessária para a visão beatífica.
+        Portanto encontra-se num estado intermediário de
+        <strong>felicidade natural sem visão de Deus</strong>.
+      </p>
+      <p>
+        <strong>Status do Limbo na tradição:</strong>
+      </p>
+      <ul class="lista-estruturada">
+        <li>
+          <strong>Não é dogma de fé definido</strong>.
+          Nenhum Concílio jamais definiu o Limbo como verdade de fé.
+        </li>
+        <li>
+          Foi uma <strong>opinião teológica comum</strong> (sententia communis)
+          por séculos, especialmente na escola tomista.
+        </li>
+        <li>
+          O <strong>Concílio de Florença</strong> (1439) afirmou que
+          os que morrem com apenas o pecado original vão imediatamente
+          ao Inferno — mas com penas mais leves — frase ambígua
+          que foi interpretada de modos variados.
+        </li>
+        <li>
+          Santo Agostinho tinha posição mais severa:
+          as crianças não batizadas sofrem a "pena mais leve de todas"
+          (<em>mitissima omnium poena</em>), mas sofrem pena.
+        </li>
+        <li>
+          São Tomás de Aquino desenvolveu a versão do
+          <em>limbus</em> como felicidade natural sem sofrimento,
+          que se tornou a posição dominante da escolástica.
+        </li>
+      </ul>
+    </div>
+
+    <div class="limbo-bloco destaque-especial">
+      <h4>O Documento de 2007 da Comissão Teológica Internacional</h4>
+      <p>
+        Em abril de 2007, a
+        <strong>Comissão Teológica Internacional (CTI)</strong>
+        — órgão consultivo da Santa Sé — publicou o documento
+        <em>"A Esperança da Salvação para os Infantes que Morrem sem Baptismo"</em>,
+        aprovado pelo Papa Bento XVI para publicação.
+      </p>
+      <p>
+        O documento é cuidadoso e nuançado. Suas conclusões principais:
+      </p>
+      <ol class="lista-estruturada numerada">
+        <li>
+          <strong>O Limbo não é uma doutrina definida</strong> —
+          é uma hipótese teológica possível, mas não obrigatória.
+          A Igreja nunca a definiu solenemente.
+        </li>
+        <li>
+          <strong>Há razões sérias para esperança</strong> na salvação
+          dessas crianças, fundadas na vontade salvífica universal de Deus
+          e nos méritos infinitos de Cristo.
+        </li>
+        <li>
+          <strong>A misericórdia de Deus transcende os sacramentos</strong>
+          sem anulá-los: Deus pode salvar além dos meios sacramentais ordinários,
+          embora não possamos presumir isso de modo sistemático.
+        </li>
+        <li>
+          O documento afirma: "Nosso objetivo é confirmar a necessidade
+          do Batismo e ao mesmo tempo propor fundamentos teológicos
+          para a esperança bem fundada de que Deus salva esses infantes
+          quando nós não temos a possibilidade de fazer o que gostaríamos de fazer."
+        </li>
+        <li>
+          <strong>Não é revogação do Limbo</strong> — é abertura para
+          uma reflexão mais ampla baseada em fundamentos cristológicos e pneumatológicos.
+        </li>
+      </ol>
+      <blockquote class="citacao-documento">
+        "A teoria do limbo [...] permanece uma hipótese teológica possível.
+        No entanto, à luz das razões desenvolvidas neste documento,
+        concluímos que existem sólidos fundamentos teológicos e litúrgicos
+        para esperar que os infantes que morrem sem Batismo sejam salvos
+        e gozem da visão beatífica."
+        <strong>— CTI, <em>A Esperança da Salvação</em>, 2007, n° 102</strong>
+      </blockquote>
+    </div>
+
+    <div class="limbo-bloco">
+      <h4>O Que a Igreja Diz Hoje — Síntese Pastoral</h4>
+      <p>
+        A posição atual da Igreja pode ser resumida assim:
+      </p>
+      <ul class="lista-estruturada">
+        <li>
+          <strong>A necessidade do Batismo é mantida</strong> —
+          ninguém deve concluir que o Batismo dos filhos é irrelevante.
+          A urgência do Batismo das crianças permanece plenamente válida.
+        </li>
+        <li>
+          <strong>O Limbo não é dogma</strong> —
+          é hipótese teológica não definida, que pode ser abandonada
+          em favor de posição mais esperançosa.
+        </li>
+        <li>
+          <strong>Há fundamento para esperança</strong> —
+          a Igreja encoraja os pais enlutados a confiar na misericórdia
+          de Deus, sem presumir automaticamente a condenação.
+        </li>
+        <li>
+          <strong>O mistério permanece</strong> —
+          não temos revelação definitiva sobre o destino preciso
+          dessas crianças. A humildade teológica é obrigatória.
+        </li>
+      </ul>
+      <p>
+        O CIC n° 1261 afirma:
+        "Quanto às crianças mortas sem Batismo, a Igreja só pode
+        confiá-las à misericórdia de Deus [...].
+        Com efeito, a grande misericórdia de Deus [...] e a ternura de Jesus
+        para com as crianças [...] permitem-nos esperar que haja um caminho
+        de salvação para as crianças que morreram sem Batismo."
+      </p>
+      <p class="referencia-patristica">
+        Cf. CIC n° 1261; CTI, <em>A Esperança da Salvação para os Infantes</em>, 2007;
+        Agostinho, <em>De Natura et Origine Animae</em> IV, 11;
+        Tomás, <em>S.Th.</em> III, q. 68, a. 2
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ==========================================
+     SEÇÃO NOVA 8: ECUMENISMO
+     ========================================== -->
+<section class="estudo-section" id="ecumenismo">
+  <h3>O Batismo e o Ecumenismo — Questões Profundas</h3>
+
+  <p class="intro-secao">
+    O Batismo é o <strong>fundamento mínimo da unidade cristã</strong>
+    e ao mesmo tempo o ponto em que as divisões doutrinárias
+    tornam-se mais concretas e consequentes.
+    Examinamos aqui com rigor teológico os critérios de reconhecimento,
+    as denominações cujos batismos são inválidos e por quê,
+    e o diálogo ecumênico em curso.
+  </p>
+
+  <div class="ecumenismo-grid">
+
+    <div class="ecumenismo-bloco">
+      <h4>O Batismo como Fundamento da Unidade</h4>
+      <p>
+        O Vaticano II (<em>Unitatis Redintegratio</em> n° 3) afirma
+        que o Batismo válido — mesmo fora da plena comunhão com Roma —
+        constitui uma "irmandade real, ainda que imperfeita" com a Igreja Católica:
+      </p>
+      <blockquote>
+        "Os que crêem em Cristo e foram devidamente batizados
+        encontram-se em certa comunhão com a Igreja Católica,
+        ainda que imperfeita."
+        <strong>— Unitatis Redintegratio, n° 3</strong>
+      </blockquote>
+      <p>
+        São Paulo afirma: "Um só Senhor, uma só fé, um só Batismo" (Ef 4,5).
+        O Batismo válido é, portanto, laço real de unidade — não apenas simbólico.
+        Isso tem consequências práticas: um cristão protestante validamente batizado
+        que se torna católico <strong>não é rebatizado</strong>.
+      </p>
+    </div>
+
+    <div class="ecumenismo-bloco">
+      <h4>Critérios de Reconhecimento</h4>
+      <p>
+        A Igreja Católica reconhece como válido o Batismo de outra denominação
+        quando estão presentes os três elementos essenciais:
+      </p>
+      <div class="criterios-reconhecimento">
+        <div class="criterio">
+          <h5>✓ Água Natural</h5>
+          <p>Qualquer água natural foi usada.</p>
+        </div>
+        <div class="criterio">
+          <h5>✓ Fórmula Trinitária</h5>
+          <p>As três Pessoas da Trindade foram invocadas explicitamente.</p>
+        </div>
+        <div class="criterio">
+          <h5>✓ Intenção Cristã</h5>
+          <p>Havia intenção de fazer o que os cristãos fazem ao batizar.</p>
+        </div>
+      </div>
+      <p>
+        Geralmente reconhecidos como válidos:
+        Anglicanos, Luteranos, Presbiterianos/Reformados, Metodistas,
+        Batistas (em geral), Congregacionalistas, Igrejas Pentecostais
+        trinitárias, Igrejas Ortodoxas, Coptas, Armênios, etc.
+      </p>
+    </div>
+
+    <div class="ecumenismo-bloco destaque-especial">
+      <h4>Batismos Declarados Inválidos — Por Que e Por Quem</h4>
+
+      <div class="invalidos-grid">
+
+        <div class="invalido-card">
+          <h5>Testemunhas de Jeová</h5>
+          <div class="invalido-razao">
+            <strong>Por que é inválido:</strong>
+            <p>
+              As Testemunhas de Jeová negam explicitamente a Santíssima Trindade
+              conforme entendida pelo Cristianismo histórico.
+              Para elas, Jesus Cristo é uma criatura — "o Filho de Deus",
+              mas não Deus em sentido próprio (identificam-no com o Arcanjo Miguel).
+              O Espírito Santo não é uma Pessoa, mas "força ativa de Jeová".
+            </p>
+            <p>
+              Quando uma TJ batiza "em nome do Pai, do Filho e do Espírito Santo",
+              está invocando realidades radicalmente diferentes
+              das Pessoas divinas que a Igreja invoca com os mesmos nomes.
+              A <strong>intenção teológica</strong> é tão distinta
+              que a fórmula compartilha apenas as palavras, não o referente.
+            </p>
+            <p>
+              A posição comum dos canonistas e da CDF:
+              os batismos das TJ são <strong>inválidos</strong>.
+              Quem vem das TJ ao catolicismo é batizado,
+              não simplesmente recebido.
+            </p>
+          </div>
+        </div>
+
+        <div class="invalido-card">
+          <h5>Igreja de Jesus Cristo dos Santos dos Últimos Dias (Mórmons)</h5>
+          <div class="invalido-razao">
+            <strong>Por que é inválido:</strong>
+            <p>
+              Os Mórmons também usam a fórmula trinitária ao batizar,
+              mas entendem a Trindade de modo radicalmente diferente do Cristianismo histórico:
+              Pai, Filho e Espírito Santo são, para eles,
+              <strong>três seres distintos e separados</strong>
+              — literalmente três deuses diferentes —
+              com corpos físicos (Pai e Filho possuem corpos de "carne e osso glorificados").
+            </p>
+            <p>
+              O conceito mórmon de Deus é tão diferente do conceito cristão trinitário
+              que a Congregação para a Doutrina da Fé,
+              em resposta oficial de 5 de junho de 2001 (<em>Responsum ad propositum dubium</em>),
+              declarou formalmente:
+            </p>
+            <blockquote>
+              "O batismo conferido pelos Mórmons não é válido."
+              <strong>— CDF, 5 de junho de 2001</strong>
+            </blockquote>
+            <p>
+              Portanto: um convertido do mormonismo ao catolicismo
+              deve ser <strong>batizado</strong> — não apenas recebido.
+            </p>
+          </div>
+        </div>
+
+        <div class="invalido-card">
+          <h5>Grupos que Usam "Nós Te Batizamos"</h5>
+          <div class="invalido-razao">
+            <strong>Por que é inválido:</strong>
+            <p>
+              Como mencionado na seção de validade,
+              a CDF declarou em 2020 que a fórmula "Nós te batizamos..."
+              é inválida, pois altera a estrutura essencial do sacramento.
+              O ministro do Batismo é uma pessoa, não uma assembleia coletiva.
+              Batismos conferidos com essa fórmula em qualquer denominação
+              são <strong>sacramentalmente nulos</strong>.
+            </p>
+          </div>
+        </div>
+
+        <div class="invalido-card">
+          <h5>Grupos Unitários (<em>Unitarians</em>)</h5>
+          <div class="invalido-razao">
+            <strong>Por que é inválido:</strong>
+            <p>
+              Os Unitários negam explicitamente a Santíssima Trindade.
+              Não há fórmula trinitária em seu batismo
+              (quando o praticam — alguns grupos unitários nem sequer batizam).
+              Sem invocação trinitária, o Batismo cristão é impossível.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="ecumenismo-bloco">
+      <h4>O Diálogo com Denominações que Batizam Somente Adultos</h4>
+      <p>
+        Diversas denominações protestantes (Batistas, Menonitas, Adventistas,
+        muitas Igrejas Pentecostais) praticam o que chamam de
+        "Batismo do Crente" (<em>Believer's Baptism</em>) —
+        ou seja, reservam o Batismo exclusivamente a adultos
+        que fazem profissão de fé pessoal e consciente.
+      </p>
+      <p>
+        Consequências para o ecumenismo:
+      </p>
+      <ul class="lista-estruturada">
+        <li>
+          <strong>Quanto à validade:</strong> Se usam água e a fórmula trinitária,
+          seus batismos de adultos são reconhecidos pela Igreja Católica como válidos.
+        </li>
+        <li>
+          <strong>Quanto ao batismo infantil:</strong>
+          As crianças criadas nessas comunidades não são batizadas.
+          Quando se tornam adultas e se convertem ao catolicismo,
+          precisam ser batizadas pela primeira vez.
+        </li>
+        <li>
+          <strong>O argumento teológico das denominações "crente-batistas"</strong>
+          é que o NT registra apenas batismos de adultos
+          e que o Batismo pressupõe fé pessoal.
+          A resposta católica (e de toda a tradição anterior às Reformas radicais)
+          é o paralelo com a circuncisão (Cl 2,11-12)
+          e a evidência patrística de batismo infantil anterior a qualquer controvérsia.
+        </li>
+      </ul>
+    </div>
+
+    <div class="ecumenismo-bloco">
+      <h4>Declarações Ecumênicas Conjuntas sobre o Batismo</h4>
+      <p>
+        O diálogo ecumênico produziu documentos importantes:
+      </p>
+      <ul class="lista-estruturada">
+        <li>
+          <strong>Documento de Lima (1982) — "Batismo, Eucaristia, Ministério" (BEM)</strong>:
+          produzido pelo Conselho Mundial de Igrejas,
+          estabelece amplo consenso entre denominações cristãs
+          sobre a natureza do Batismo, seus efeitos e a pertinência do Batismo infantil.
+          A Igreja Católica contribuiu para as discussões mas não assinou,
+          permanecendo como observadora no CMI.
+        </li>
+        <li>
+          <strong>Reconhecimento mútuo de batismos</strong>:
+          a Igreja Católica firmou acordos bilaterais de reconhecimento mútuo
+          de batismos com várias denominações protestantes em vários países.
+          Na Alemanha (1973), por exemplo, uma declaração conjunta foi assinada
+          por católicos, luteranos, reformados e outras denominações,
+          reconhecendo mutuamente a validade dos respectivos batismos trinitários.
+        </li>
+      </ul>
+    </div>
+
   </div>
 </section>
 
@@ -1841,11 +3993,6 @@ footer::before {
     consulte as obras originais referenciadas na seção de Fontes.
   </p>
 
-  <p class="intro-santos">
-    Ao longo de dois milênios, os maiores espíritos da Igreja contemplaram
-    o mistério do Batismo e nos legaram luzes preciosas.
-  </p>
-
   <div class="santos-grid">
     <div class="santo-card">
       <h4>Santo Agostinho (354–430)</h4>
@@ -1855,9 +4002,7 @@ footer::before {
         Quem foi batizado, morreu; quem morreu em Cristo, viverá para sempre.
       </blockquote>
       <p class="nota-santo">
-        Síntese a partir de <em>De Baptismo</em> e <em>In Ioannem</em> —
-        Agostinho insistia na transformação <strong>ontológica</strong> real do batizado.
-        Teologia que moldou todo o Ocidente.
+        Síntese a partir de <em>De Baptismo</em> e <em>In Ioannem</em>.
       </p>
     </div>
 
@@ -1869,9 +4014,7 @@ footer::before {
         gerado pelo Espírito Santo.
       </blockquote>
       <p class="nota-santo">
-        Síntese das <em>Catequeses Batismais</em> —
-        imagem clássica da pia como <strong>útero e túmulo</strong>.
-        Pregava com urgência sobre a eficácia real do sacramento.
+        Síntese das <em>Catequeses Batismais</em>.
       </p>
     </div>
 
@@ -1882,9 +4025,7 @@ footer::before {
         e subistes portadores da graça.
       </blockquote>
       <p class="nota-santo">
-        Das <em>Catequeses Mistagógicas</em> — Cirilo ensinava
-        os recém-batizados na semana após a Páscoa, revelando
-        os <strong>mistérios sacramentais</strong> passo a passo.
+        Das <em>Catequeses Mistagógicas</em>.
       </p>
     </div>
 
@@ -1896,9 +4037,7 @@ footer::before {
         nem a salvação alcançada.
       </blockquote>
       <p class="nota-santo">
-        Síntese de <em>Summa Theologiae</em>, III, q. 66 —
-        Tomás sistematizou a teologia sacramental:
-        <strong>matéria + forma + intenção = eficácia ex opere operato</strong>.
+        Síntese de <em>Summa Theologiae</em>, III, q. 66.
       </p>
     </div>
 
@@ -1910,9 +4049,7 @@ footer::before {
         mas a participação na vida do próprio Deus.
       </blockquote>
       <p class="nota-santo">
-        Síntese de <em>Commentarii in Ioannem</em> —
-        enfatizava a dimensão da <strong>theosis</strong> (divinização)
-        já iniciada no Batismo. Visão característica da tradição oriental.
+        Síntese de <em>Commentarii in Ioannem</em>.
       </p>
     </div>
 
@@ -1924,9 +4061,7 @@ footer::before {
         e templos do Espírito Santo.
       </blockquote>
       <p class="nota-santo">
-        Inspirado no <em>Catecismo da Igreja Católica</em> —
-        João Paulo II sempre insistia na <strong>dignidade baptismal</strong>
-        como base de toda a identidade cristã.
+        Inspirado no <em>Catecismo da Igreja Católica</em>.
       </p>
     </div>
 
@@ -1938,8 +4073,7 @@ footer::before {
         Sua morte e ressurreição — entendemos quem somos como cristãos.
       </blockquote>
       <p class="nota-santo">
-        Tema recorrente em suas homilias da Vigília Pascal —
-        Bento XVI sempre unia o Batismo ao <strong>mistério pascal</strong>.
+        Tema recorrente em suas homilias da Vigília Pascal.
       </p>
     </div>
 
@@ -1952,10 +4086,169 @@ footer::before {
         nascimento numa família e numa missão.
       </blockquote>
       <p class="nota-santo">
-        Tema das catequeses sobre os sacramentos (2014) —
-        Francisco enfatiza a dimensão <strong>comunitária e missionária</strong>.
+        Catequeses sobre os sacramentos (2014).
       </p>
     </div>
+  </div>
+</section>
+
+<!-- ==========================================
+     SEÇÃO NOVA 9: ESCATOLOGIA
+     ========================================== -->
+<section class="estudo-section" id="escatologia">
+  <h3>A Dimensão Escatológica do Batismo</h3>
+
+  <p class="intro-secao">
+    O Batismo não é apenas entrada na Igreja terrena —
+    é <strong>antecipação sacramental da ressurreição final</strong>.
+    A dimensão escatológica do sacramento é frequentemente negligenciada
+    na catequese pastoral, mas é constitutiva de seu significado pleno.
+    O batizado vive entre dois polos: o Batismo como "já" da vida nova
+    e a ressurreição gloriosa como o "ainda não" de sua plenitude.
+  </p>
+
+  <div class="escatologia-grid">
+
+    <div class="escatologia-bloco">
+      <h4>O Batismo como Antecipação da Ressurreição Final</h4>
+      <p>
+        São Paulo é extraordinariamente explícito:
+      </p>
+      <blockquote>
+        "Se morremos com Cristo, cremos que também viveremos com Ele."
+        <strong>— Romanos 6, 8</strong>
+      </blockquote>
+      <blockquote>
+        "Se o Espírito dAquele que ressuscitou Jesus dos mortos habita em vós,
+        aquele que ressuscitou Cristo dos mortos dará também vida
+        aos vossos corpos mortais, por meio do seu Espírito que habita em vós."
+        <strong>— Romanos 8, 11</strong>
+      </blockquote>
+      <p>
+        A lógica paulina é clara: o mesmo Espírito que já habitou em nós
+        pelo Batismo é a garantia (<em>arrabon</em> — penhor, sinal adiantado)
+        da ressurreição corporal futura.
+        O Batismo não garante apenas a salvação da alma —
+        garante a <strong>ressurreição do corpo</strong>.
+      </p>
+      <p>
+        São Paulo usa o termo técnico <em>arrabon</em> (2Cor 1,22; 5,5; Ef 1,14)
+        — palavra grega que designava o penhor, o sinal antecipado de um contrato.
+        O Espírito dado no Batismo é o "penhor" divino da ressurreição corporal:
+        Deus comprometeu-se sacramentalmente a ressuscitar o batizado.
+      </p>
+      <p class="referencia-patristica">
+        Cf. Rm 6,3-11; 8,11; 2Cor 1,22; 5,5; Ef 1,14; 2,5-6
+      </p>
+    </div>
+
+    <div class="escatologia-bloco">
+      <h4>O Batismo e o Juízo Particular</h4>
+      <p>
+        A Igreja ensina que imediatamente após a morte ocorre
+        o <strong>Juízo Particular</strong> (CIC n° 1022):
+        cada alma é julgada segundo seus atos e disposições.
+      </p>
+      <p>
+        O Batismo tem relevância direta para o Juízo Particular:
+      </p>
+      <ul class="lista-estruturada">
+        <li>
+          <strong>O caráter batismal é eterno</strong>: a marca de pertença a Cristo
+          impressa no Batismo não se apaga com a morte —
+          o batizado comparece ao Juízo como "marcado por Cristo".
+          Santo Tomás (<em>S.Th.</em> III, q. 63, a. 5) afirma que
+          o caráter permanece na alma glorificada como título de glória.
+        </li>
+        <li>
+          <strong>A fé e a caridade nascidas no Batismo</strong>
+          — se preservadas ou restauradas pela penitência —
+          são o que permite a entrada na visão beatífica.
+          Sem a graça santificante (conferida no Batismo
+          e recuperável pela Confissão), a visão de Deus é impossível.
+        </li>
+        <li>
+          <strong>O batizado em estado de graça</strong> que morre
+          vai diretamente à Visão Beatífica (se purificado)
+          ou ao Purgatório para purificação das penas temporais.
+        </li>
+        <li>
+          <strong>O batizado que morre em pecado mortal grave</strong>
+          e não se arrependeu: o caráter permanece,
+          mas a graça santificante se perdeu pelo pecado.
+          O Juízo é segundo seus atos e disposições finais.
+        </li>
+      </ul>
+    </div>
+
+    <div class="escatologia-bloco">
+      <h4>O Batismo e a Ressurreição — Antecipação "Já" e Promessa "Ainda Não"</h4>
+      <p>
+        A teologia do "<strong>já mas ainda não</strong>"
+        (<em>already but not yet</em>) estrutura a compreensão batismal completa:
+      </p>
+      <div class="ja-ainda-nao">
+        <div class="polo-ja">
+          <h5>JÁ — O que o Batismo realizou</h5>
+          <ul>
+            <li>Morte ao pecado sacramental (Rm 6,3-4)</li>
+            <li>Ressurreição espiritual em Cristo (Cl 3,1)</li>
+            <li>Filiação divina conferida (Gl 4,5-7)</li>
+            <li>Habitação do Espírito na alma (1Cor 6,19)</li>
+            <li>Inserção no Corpo glorioso de Cristo (1Cor 12,13)</li>
+            <li>Penhor da ressurreição corporal (2Cor 1,22)</li>
+          </ul>
+        </div>
+        <div class="polo-ainda">
+          <h5>AINDA NÃO — O que aguardamos</h5>
+          <ul>
+            <li>Ressurreição corporal gloriosa</li>
+            <li>Visão beatífica face a face</li>
+            <li>Revelação plena da filiação (Rm 8,19)</li>
+            <li>Libertação da concupiscência</li>
+            <li>Transfiguração do corpo mortal (1Cor 15,52-54)</li>
+            <li>Plenitude do Reino de Deus</li>
+          </ul>
+        </div>
+      </div>
+      <p>
+        São Paulo resume magnificamente:
+        "Porque fomos salvos em esperança. A esperança que se vê
+        não é esperança [...]. Esperamos com perseverança." (Rm 8,24-25)
+      </p>
+    </div>
+
+    <div class="escatologia-bloco">
+      <h4>A Vida Cristã como Vivência da Tensão Escatológica</h4>
+      <p>
+        Esta tensão escatológica não é abstração teológica —
+        é a estrutura da <strong>vida cristã concreta</strong>.
+        O batizado vive entre o passado do Batismo e o futuro da Parúsia:
+      </p>
+      <blockquote>
+        "Foram ressuscitados com Cristo — buscai as coisas que estão lá em cima,
+        onde Cristo está sentado à direita de Deus."
+        <strong>— Colossenses 3, 1</strong>
+      </blockquote>
+      <p>
+        Cirilo de Jerusalém (<em>Cat. Myst.</em> II, 6) formula com beleza:
+        "Vossa morte foi real, vossa ressurreição foi real.
+        A cruz foi real, a sepultura foi real. A ressurreição foi real.
+        Tudo em figura — mas a graça, a verdade."
+      </p>
+      <p>
+        Esta visão escatológica transforma a vida cotidiana:
+        o trabalho, o sofrimento, o amor, o serviço do batizado
+        são antecipações reais do Reino.
+        O Batismo não é memória do passado — é promessa viva do futuro
+        que já começa no presente.
+      </p>
+      <p class="referencia-patristica">
+        Cf. Rm 8,18-25; Cl 3,1-4; 2Cor 5,1-10; 1Cor 15,35-57;
+        Cirilo, <em>Cat. Myst.</em> II, 6; CIC nn. 1000-1004
+      </p>
+    </div>
+
   </div>
 </section>
 
@@ -1965,264 +4258,431 @@ footer::before {
 
   <div class="pratica-bloco">
     <h4>Batismo Infantil versus Batismo de Adultos</h4>
-    <p>A Igreja Católica pratica e valoriza ambos como legítimos e plenos.
-    O debate não é "qual é válido" — ambos o são —
-    mas compreender as especificidades de cada um.</p>
     <div class="comparacao">
       <div class="item-comparacao">
         <h5>Batismo Infantil</h5>
         <ul>
           <li>Atestado na Igreja desde o séc. II</li>
           <li>Fé da família e da comunidade eclesial</li>
-          <li>Remove pecado original imediatamente</li>
-          <li>Inserção na comunidade desde o início</li>
-          <li>Exige formação cristã posterior</li>
-          <li>Base: CIC n° 1250–1252</li>
+                  <li>Remove o pecado original imediatamente</li>
+          <li>Padrinhos assumem responsabilidade pela educação na fé</li>
+          <li>Exige educação cristã posterior</li>
+          <li>Fundamento: Cl 2,11-12; prática apostólica das famílias (At 16,15.33)</li>
         </ul>
       </div>
       <div class="item-comparacao">
-        <h5>Batismo de Adultos (RICA)</h5>
+        <h5>Batismo de Adultos — RICA</h5>
         <ul>
-          <li>Processo catecumenal de iniciação</li>
-          <li>Fé pessoal, consciente e livre</li>
-          <li>Remove pecado original e pessoais</li>
-          <li>Conversão explícita e deliberada</li>
-          <li>Celebrado preferencialmente na Vigília Pascal</li>
-          <li>Base: CIC n° 1247–1249</li>
+          <li>Rito da Iniciação Cristã de Adultos</li>
+          <li>Catecumenato de meses ou anos</li>
+          <li>Instrução progressiva na fé</li>
+          <li>Escrutínios e exorcismos durante a Quaresma</li>
+          <li>Batismo preferentemente na Vigília Pascal</li>
+          <li>Fé pessoal explícita e conversão genuína</li>
         </ul>
       </div>
     </div>
   </div>
 
   <div class="pratica-bloco">
-    <h4>Preparando o Batismo de uma Criança</h4>
-    <div class="lista-pratica">
-      <div class="item-lista">
-        <strong>1 — Escolha de Padrinhos com Critério</strong>
-        <p>Padrinhos são <em>responsáveis espirituais</em> da criança perante Deus e a Igreja.
-        O Direito Canônico (c. 874) exige: batizados, confirmados, praticantes,
-        de vida exemplar e com mais de 16 anos.
-        Não escolha por afeição apenas — escolha por testemunho de fé.</p>
-      </div>
-      <div class="item-lista">
-        <strong>2 — Catequese Familiar Prévia</strong>
-        <p>A paróquia normalmente exige ao menos um encontro de preparação.
-        Aproveite-o genuinamente. A família inteira deve compreender:
-        não é festejo social, é sacramento.</p>
-      </div>
-      <div class="item-lista">
-        <strong>3 — Guardar a Vela Batismal</strong>
-        <p>A vela acesa no Batismo acompanha toda a vida.
-        Acenda-a na Crisma, no Casamento, nos aniversários de fé.
-        Escreva no verso: nome, data, padrinho/madrinha, pároco.</p>
-      </div>
-      <div class="item-lista">
-        <strong>4 — Participar Atentamente da Liturgia</strong>
-        <p>Não vá como espectador. Renuncie ao pecado quando solicitado.
-        Afirme o Credo com convicção.
-        É ato sacramental, não espetáculo fotográfico.</p>
-      </div>
-      <div class="item-lista">
-        <strong>5 — Cuidado com o Nome Batismal</strong>
-        <p>A tradição católica recomenda nomear a criança com um <strong>santo patrono</strong>
-        (CIC c. 855). Esse santo será intercessor e modelo para a vida inteira.</p>
-      </div>
+    <h4>Responsabilidades dos Padrinhos</h4>
+    <p>
+      Os padrinhos não são apenas testemunhas cerimoniais —
+      assumem <strong>responsabilidade espiritual real</strong>
+      perante Deus e a Igreja (CIC c. 872-874):
+    </p>
+    <ul class="lista-estruturada">
+      <li>Assistir o batizado no caminho da fé cristã</li>
+      <li>Ser exemplo de vida cristã genuína</li>
+      <li>Rezar pelo afilhado regularmente</li>
+      <li>Auxiliar os pais na educação religiosa</li>
+      <li>Substituir os pais em caso de necessidade</li>
+    </ul>
+    <div class="caixa-destaque">
+      <h5>Requisitos Canônicos do Padrinho (CIC c. 874)</h5>
+      <ul>
+        <li>Designado pelos pais ou pelo batizando</li>
+        <li>Dezesseis anos completos (salvo dispensa)</li>
+        <li>Católico confirmado e que recebe a Eucaristia</li>
+        <li>Não pode ser pai ou mãe do batizando</li>
+        <li>Não impedido por pena canônica</li>
+        <li>Um padrinho ou uma madrinha — ou um de cada</li>
+      </ul>
+      <p class="nota-canonica">
+        <strong>Nota:</strong> Um cristão não católico validamente batizado
+        pode ser admitido como <em>testemunha cristã</em> ao lado
+        do padrinho católico, mas não como padrinho em sentido próprio (CIC c. 874 §2).
+      </p>
     </div>
   </div>
 
   <div class="pratica-bloco">
-    <h4>Vivendo o Batismo ao Longo da Vida</h4>
-    <div class="lista-pratica">
-      <div class="item-lista">
-        <strong>Renovação dos Votos Batismais — Vigília Pascal</strong>
-        <p>A Igreja inteira renova seus votos batismais a cada Páscoa.
-        É o momento mais solene do ano litúrgico para recordar quem somos.
-        Não falte à Vigília Pascal.</p>
-      </div>
-      <div class="item-lista">
-        <strong>Celebrar o Aniversário do Batismo</strong>
-        <p>Seu "segundo nascimento" merece tanta memória quanto o primeiro.
-        Comemore com uma Missa votiva, leitura do Evangelho do Batismo,
-        ou simplesmente acendendo a vela batismal em família.</p>
-      </div>
-      <div class="item-lista">
-        <strong>A Água Benta como Memória Diária</strong>
-        <p>Benzer-se com água benta ao entrar numa Igreja
-        é <strong>gesto de memória batismal</strong>.
-        A Igreja sempre ensinou isso — não é superstição, é teologia vivida.</p>
-      </div>
-      <div class="item-lista">
-        <strong>Exercer a Vocação Batismal Missionária</strong>
-        <p>Todo batizado é <strong>sacerdote, profeta e rei</strong> (CIC n° 1268).
-        Isso não é apenas título — é missão:
-        oferecer a Deus o próprio dia, anunciar o Evangelho com a vida,
-        e servir ao próximo com autoridade de filho de Deus.</p>
-      </div>
+    <h4>O Batismo de Emergência</h4>
+    <p>
+      Dado o absoluto necessidade do Batismo para a salvação,
+      a Igreja sempre permitiu — e na prática exige —
+      que qualquer pessoa possa batizar em caso de perigo de morte:
+    </p>
+    <blockquote class="formula-batismal">
+      Derramar água sobre a cabeça e pronunciar:
+      "Eu te batizo em nome do Pai, e do Filho, e do Espírito Santo."
+    </blockquote>
+    <p>
+      Este batismo é <strong>plenamente válido e eficaz</strong>.
+      Casos práticos:
+    </p>
+    <ul class="lista-estruturada">
+      <li>Recém-nascido em perigo de morte no hospital</li>
+      <li>Adulto que pede o Batismo em seus últimos momentos</li>
+      <li>Acidente grave sem sacerdote disponível</li>
+      <li>Bebê prematuro com prognóstico grave</li>
+    </ul>
+    <div class="caixa-importante">
+      <p>
+        <strong>Procedimento após o perigo:</strong>
+        Se a pessoa sobreviver, o pastor deve ser notificado,
+        o batismo registrado nos livros paroquiais,
+        e os ritos complementares (unção com Crisma, vela, etc.)
+        devem ser celebrados em momento posterior (CIC c. 867 §2).
+      </p>
     </div>
   </div>
 
   <div class="pratica-bloco">
-    <h4>Nota para os Fiéis da Renovação Carismática</h4>
-    <p>A experiência do "Batismo no Espírito Santo" é reconhecida pela Igreja
-    como graça espiritual autêntica e preciosa.
-    Contudo, teologicamente ela <strong>não é um sacramento distinto</strong>:
-    é uma <em>atualização vivencial</em> dos dons já conferidos sacramentalmente no Batismo.</p>
-    <blockquote class="citacao-carismatica">
-      "Os dons do Espírito Santo são dados no Batismo e na Confirmação.
-      O que a experiência carismática realiza é despertar, ativar e manifestar
-      conscientemente aquilo que o Espírito já havia infundido sacramentalmente."
-      <br>— Síntese doutrinal a partir do CIC nn. 798–801 e 1266
-    </blockquote>
+    <h4>Registro e Documentação</h4>
+    <p>
+      Todo Batismo deve ser registrado no
+      <strong>Livro de Batizados da paróquia</strong>
+      onde foi administrado (CIC c. 877):
+    </p>
+    <ul class="lista-estruturada">
+      <li>Nome do batizado</li>
+      <li>Data e local do Batismo</li>
+      <li>Nome dos pais</li>
+      <li>Nome dos padrinhos</li>
+      <li>Nome do ministro</li>
+      <li>Testemunhas (se houver)</li>
+    </ul>
+    <p>
+      A <strong>Certidão de Batismo</strong> é o documento eclesiástico
+      que comprova o Batismo e registra também os sacramentos
+      subsequentes recebidos (Crisma, Matrimônio, Ordem).
+      É documento indispensável para receber os demais sacramentos.
+    </p>
+    <p>
+      Quando um adulto é batizado, deve-se também notificar
+      a paróquia de seu domicílio (CIC c. 877 §3).
+    </p>
   </div>
 
   <div class="pratica-bloco">
-    <h4>Nota para os Fiéis de Tradição Litúrgica</h4>
-    <p>O Rito Extraordinário do Batismo (Forma Tridentina) é totalmente válido e lícito,
-    celebrado em comunidades com permissão ordinária.
-    Distingue-se pelo maior número de exorcismos,
-    a ênfase explícita no combate espiritual
-    e a solene sequência de unções.</p>
-    <blockquote class="citacao-tradicional">
-      "No rito tradicional, cada gesto, cada exorcismo e cada unção
-      declara a gravidade do que acontece: Cristo arranca uma alma das trevas
-      e a consagra à luz."
-    </blockquote>
+    <h4>O Tempo Próprio para o Batismo de Crianças</h4>
+    <p>
+      O CIC (c. 867) estabelece que os pais têm obrigação de
+      fazer batizar os filhos <strong>nas primeiras semanas após o nascimento</strong>.
+      Se o bebê está em perigo de morte, deve ser batizado imediatamente.
+    </p>
+    <p>
+      A praxis pastoral recomendada:
+    </p>
+    <ul class="lista-estruturada">
+      <li>
+        <strong>Idealmente:</strong> nas primeiras semanas de vida,
+        preferencialmente nos primeiros dois meses
+      </li>
+      <li>
+        <strong>Preparação:</strong> os pais devem participar de uma
+        reunião de preparação batismal na paróquia
+      </li>
+      <li>
+        <strong>Dia litúrgico preferencial:</strong>
+        Domingo (Dia do Senhor) ou grandes festas litúrgicas,
+        especialmente a Vigília Pascal
+      </li>
+      <li>
+        <strong>Compromisso dos pais:</strong>
+        devem comprometer-se à educação cristã do filho —
+        sem isso, o pároco pode adiar prudencialmente (CIC c. 868)
+      </li>
+    </ul>
   </div>
 </section>
 
 <!-- FAQ -->
 <section class="estudo-section" id="faq">
-  <h3>Perguntas Frequentes</h3>
+  <h3>Perguntas Frequentes — FAQ</h3>
 
   <div class="faq-container">
-    <div class="faq-item">
-      <div class="faq-pergunta" onclick="toggleFaq(this)">
-        <h4>Se meu batismo é questionável, posso ser batizado novamente?</h4>
-        <span class="faq-seta">▼</span>
-      </div>
-      <div class="faq-resposta">
-        <p>Se há dúvida séria e fundamentada sobre a validade do batismo anterior
-        (uso de líquido diferente de água, fórmula trinitária ausente, falta de intenção),
-        a Igreja admite o <strong>Batismo Condicional</strong>:</p>
-        <blockquote>"Se não és ainda batizado, eu te batizo em nome do Pai, do Filho e do Espírito Santo."</blockquote>
-        <p>Isso reconhece a possível validade anterior enquanto assegura a validade presente.
-        Fale com seu pároco para avaliar o caso.</p>
-      </div>
-    </div>
 
-    <div class="faq-item">
-      <div class="faq-pergunta" onclick="toggleFaq(this)">
-        <h4>Uma criança batizada que morre antes da Confirmação está salva?</h4>
-        <span class="faq-seta">▼</span>
-      </div>
+    <details class="faq-item">
+      <summary>O Batismo é realmente necessário ou é apenas uma tradição?</summary>
       <div class="faq-resposta">
-        <p>Sim, plenamente. O Batismo é completo em si mesmo.
-        A Confirmação aprofunda e sela o que o Batismo iniciou,
-        mas não é complementação <em>necessária</em> para a salvação.</p>
-        <p>Uma criança batizada, morta em inocência, é membro pleno da Igreja
-        e herdeira da vida eterna (CIC n° 1250).</p>
+        <p>
+          O Batismo é <strong>absolutamente necessário</strong> — não por tradição humana,
+          mas por instituição divina direta de Jesus Cristo:
+          "Quem não renascer da água e do Espírito Santo
+          não pode entrar no Reino de Deus." (Jo 3,5)
+          "Quem crer e for batizado será salvo." (Mc 16,16)
+        </p>
+        <p>
+          Deus, porém, não está limitado pelos seus sacramentos ordinários:
+          provê caminhos extraordinários (Batismo de Sangue e de Desejo)
+          para casos excepcionais. Mas a necessidade do Batismo sacramental
+          como via ordinária é doutrina definida e inegociável.
+        </p>
       </div>
-    </div>
+    </details>
 
-    <div class="faq-item">
-      <div class="faq-pergunta" onclick="toggleFaq(this)">
-        <h4>Um leigo pode batizar? O batismo é válido?</h4>
-        <span class="faq-seta">▼</span>
-      </div>
+    <details class="faq-item">
+      <summary>Posso batizar meu filho em casa, sem padre?</summary>
       <div class="faq-resposta">
-        <p>Sim — em caso de perigo de morte, qualquer pessoa pode batizar validamente (CIC c. 861 §2):</p>
+        <p>
+          Em <strong>situação de emergência</strong> (perigo de morte iminente),
+          qualquer pessoa pode e deve batizar, inclusive em casa:
+          derramar água sobre a cabeça e pronunciar a fórmula trinitária.
+          Esse batismo é plenamente válido.
+        </p>
+        <p>
+          Fora de situação de emergência, o Batismo deve ser celebrado
+          na Igreja, pelo padre ou diácono, com os ritos litúrgicos completos.
+          O batismo doméstico sem necessidade grave é ilícito,
+          embora tecnicamente válido se aplicados corretamente
+          matéria, forma e intenção.
+        </p>
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary>Meu filho foi batizado numa Igreja evangélica. Precisa ser rebatizado para entrar na Igreja Católica?</summary>
+      <div class="faq-resposta">
+        <p>
+          Depende do batismo específico recebido. A Igreja Católica
+          reconhece como válido o Batismo de qualquer denominação cristã
+          que use água natural e a fórmula trinitária
+          ("em nome do Pai, do Filho e do Espírito Santo")
+          com intenção cristã.
+        </p>
+        <p>
+          Se o batismo evangélico foi realizado com esses elementos,
+          é plenamente válido e <strong>não se repete</strong>.
+          A pessoa é recebida na Igreja Católica mediante profissão de fé
+          e recebe os sacramentos que ainda não recebeu
+          (normalmente Confirmação e Primeira Eucaristia).
+        </p>
+        <p>
+          Se houver dúvida séria sobre a validade (fórmula errada, matéria errada),
+          o Ordinário pode autorizar um Batismo Condicional.
+          Consulte seu pároco com os detalhes específicos.
+        </p>
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary>O batismo de uma Testemunha de Jeová é válido?</summary>
+      <div class="faq-resposta">
+        <p>
+          <strong>Não.</strong> As Testemunhas de Jeová negam a Santíssima Trindade
+          conforme compreendida pelo Cristianismo histórico.
+          Para elas, Jesus é uma criatura (identificado com o Arcanjo Miguel)
+          e o Espírito Santo não é uma Pessoa divina, mas "força ativa de Jeová".
+        </p>
+        <p>
+          Quando uma TJ pronuncia a fórmula trinitária,
+          os referentes são tão diferentes das Pessoas divinas reais
+          que a intenção teológica fundamental está ausente.
+          A posição comum dos teólogos e canonistas:
+          esses batismos são inválidos.
+          Quem vem das TJ ao catolicismo deve ser batizado.
+        </p>
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary>O que acontece com bebês que morrem sem batismo?</summary>
+      <div class="faq-resposta">
+        <p>
+          Esta é uma das questões mais dolorosas da teologia.
+          A resposta honesta é que a Igreja <strong>não tem definição dogmática</strong>
+          sobre o destino preciso dessas crianças.
+        </p>
+        <p>
+          A posição atual, conforme o CIC n° 1261 e o documento da
+          Comissão Teológica Internacional de 2007:
+          a Igreja confia essas crianças à misericórdia de Deus
+          e tem <em>fundamento para esperança</em> em sua salvação,
+          baseado na vontade salvífica universal de Deus
+          e nos méritos infinitos de Cristo.
+        </p>
+        <p>
+          O Limbo histórico (felicidade natural sem visão de Deus)
+          nunca foi definido como dogma — é hipótese teológica não obrigatória.
+          A esperança na salvação dessas crianças é teologicamente fundamentada,
+          embora não seja certeza definida.
+        </p>
+        <p>
+          Conclusão pastoral: os pais enlutados devem confiar
+          na misericórdia de Deus, que é incomparavelmente maior
+          que qualquer fórmula teológica. Isso não diminui
+          a urgência do Batismo das crianças vivas.
+        </p>
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary>O Batismo apaga absolutamente todo o pecado? E a concupiscência?</summary>
+      <div class="faq-resposta">
+        <p>
+          O Batismo apaga:
+        </p>
         <ul>
-          <li>Use água natural (não sumo, não leite)</li>
-          <li>Derrame sobre a cabeça</li>
-          <li>Diga simultaneamente: <em>"Eu te batizo em nome do Pai, do Filho e do Espírito Santo"</em></li>
-          <li>Tenha intenção de fazer o que a Igreja faz</li>
+          <li>O pecado original — completamente</li>
+          <li>Todos os pecados pessoais anteriores (se adulto) — completamente</li>
+          <li>Toda a pena eterna devida por esses pecados</li>
         </ul>
-        <p>Se a pessoa sobreviver, o batismo de emergência deve ser notificado à paróquia
-        para registro e celebração dos demais ritos.</p>
-      </div>
-    </div>
-
-    <div class="faq-item">
-      <div class="faq-pergunta" onclick="toggleFaq(this)">
-        <h4>O batismo protestante é reconhecido pela Igreja Católica?</h4>
-        <span class="faq-seta">▼</span>
-      </div>
-      <div class="faq-resposta">
-        <p>Em geral sim, se realizado com validade. A Igreja reconhece batismos de outras denominações se:</p>
+        <p>
+          O Batismo <strong>não remove</strong>:
+        </p>
         <ul>
-          <li>Usou-se água natural</li>
-          <li>Invocou-se a Santíssima Trindade (Pai, Filho e Espírito Santo)</li>
-          <li>Havia intenção de fazer o que o Batismo cristão faz</li>
+          <li>
+            A <strong>concupiscência</strong> — a inclinação desordenada das paixões.
+            Permanece como consequência do pecado original, mas não é pecado formal
+            enquanto não há consentimento da vontade.
+            É "matéria de combate" e "ocasião de mérito" (Concílio de Trento, Sess. V).
+          </li>
+          <li>A morte corporal — o batizado ainda morre naturalmente</li>
+          <li>O sofrimento — o batizado ainda sofre</li>
+          <li>A ignorância — o batizado ainda pode errar e pecar</li>
         </ul>
-        <p>Exceção: denominações que negam a Trindade (ex.: Testemunhas de Jeová, Mórmons)
-        têm batismos considerados inválidos pela Igreja Católica.
-        O adulto proveniente dessas tradições é batizado, não "recebido".</p>
+        <p>
+          A batalha espiritual não termina no Batismo — começa de modo mais consciente.
+          Mas agora o batizado combate com a graça de Cristo, não sozinho.
+        </p>
       </div>
-    </div>
+    </details>
 
-    <div class="faq-item">
-      <div class="faq-pergunta" onclick="toggleFaq(this)">
-        <h4>Posso batizar em casa ou é obrigatório na igreja?</h4>
-        <span class="faq-seta">▼</span>
-      </div>
+    <details class="faq-item">
+      <summary>Se o Batismo imprime caráter indelével, por que o pecado mortal afasta de Deus?</summary>
       <div class="faq-resposta">
-        <p>Ordinariamente, o Batismo deve ser celebrado na Igreja paroquial,
-        na pia batismal consagrada, em celebração comunitária (CIC c. 857).</p>
-        <p>Em perigo de morte iminente, qualquer lugar é válido e necessário.
-        Para outras situações excepcionais, é preciso licença do ordinário local.
-        Consulte sua paróquia.</p>
-      </div>
-    </div>
-
-    <div class="faq-item">
-      <div class="faq-pergunta" onclick="toggleFaq(this)">
-        <h4>Qual é a diferença entre imersão, aspersão e infusão?</h4>
-        <span class="faq-seta">▼</span>
-      </div>
-      <div class="faq-resposta">
-        <p>São os três modos válidos de administrar o Batismo (CIC c. 854):</p>
+        <p>
+          O caráter batismal e a graça santificante são realidades distintas:
+        </p>
         <ul>
-          <li><strong>Imersão:</strong> o batizando é submerso na água — simbolismo mais rico da morte e ressurreição</li>
-          <li><strong>Infusão:</strong> água é derramada sobre a cabeça — forma mais comum no Ocidente</li>
-          <li><strong>Aspersão:</strong> água é aspergida sobre a pessoa — menos comum, reservada a situações especiais</li>
+          <li>
+            <strong>Caráter indelével:</strong> marca de pertença a Cristo
+            que <em>nenhum pecado apaga</em>.
+            É configuração ontológica permanente.
+            O batizado é sempre "marcado por Cristo" — mesmo em estado de pecado mortal.
+          </li>
+          <li>
+            <strong>Graça santificante:</strong> a vida divina na alma,
+            que pode ser <em>perdida pelo pecado mortal grave</em>.
+            O pecado mortal não apaga o caráter, mas destrói a amizade com Deus.
+          </li>
         </ul>
-        <p>Todos são válidos. O pároco escolhe conforme a tradição da comunidade e as circunstâncias.</p>
+        <p>
+          Analogia: um filho pródigo continua filho mesmo quando
+          abandona a casa do pai. O caráter é a filiação permanente;
+          a graça é a amizade vivida. O sacramento da Penitência
+          restaura a graça sem novo Batismo — porque o caráter permanece.
+        </p>
       </div>
-    </div>
+    </details>
 
-    <div class="faq-item">
-      <div class="faq-pergunta" onclick="toggleFaq(this)">
-        <h4>O Batismo "cancela" se a pessoa deixa a fé?</h4>
-        <span class="faq-seta">▼</span>
-      </div>
+    <details class="faq-item">
+      <summary>Qual a diferença entre aspersão, infusão e imersão? Qual é válida?</summary>
       <div class="faq-resposta">
-        <p>Não. O caráter batismal é <strong>indelével</strong> — permanece para sempre,
-        independentemente de qualquer ato humano posterior (CIC n° 1272).</p>
-        <p>Quem abandona a fé permanece batizado ontologicamente.
-        Por isso, ao retornar à Igreja após apostasia,
-        não se administra novo batismo — faz-se apenas a reconciliação sacramental (Confissão).
-        A marca de Deus não se apaga por decisão humana.</p>
-      </div>
-    </div>
-
-    <div class="faq-item">
-      <div class="faq-pergunta" onclick="toggleFaq(this)">
-        <h4>Quando devo renovar meus votos batismais?</h4>
-        <span class="faq-seta">▼</span>
-      </div>
-      <div class="faq-resposta">
-        <p>A renovação pública mais solene é na <strong>Vigília Pascal</strong> — coração do ano litúrgico.
-        Além disso, é espiritualmente fecundo renovar os votos:</p>
+        <p>
+          Os três modos são válidos para a Igreja Latina:
+        </p>
         <ul>
-          <li>No aniversário do próprio Batismo</li>
-          <li>Na recepção da Crisma e Eucaristia</li>
-          <li>No dia do Casamento</li>
-          <li>Em retiros espirituais e momentos de conversão</li>
-          <li>Pessoalmente, sempre que sentir o chamado a reafirmar a fé</li>
+          <li>
+            <strong>Imersão:</strong> o corpo do batizando é mergulhado na água
+            (total ou até o pescoço). Modo mais antigo e simbolicamente mais rico
+            — expressa melhor a morte e ressurreição com Cristo.
+            É a norma dos ritos orientais.
+          </li>
+          <li>
+            <strong>Infusão:</strong> a água é derramada sobre a cabeça do batizando.
+            Modo mais comum no rito latino desde a Idade Média.
+            Plenamente válido.
+          </li>
+          <li>
+            <strong>Aspersão (<em>per aspersionem</em>):</strong>
+            a água é aspergida (borrifada) sobre o rosto ou cabeça.
+            Menos comum, mas válido se a água tocar efetivamente
+            a pele do batizando.
+          </li>
         </ul>
-        <p>Não há limite. Cada renovação é fruto e expressão da graça batismal viva.</p>
+        <p>
+          O elemento essencial não é o modo, mas que
+          <strong>água natural toque o batizando</strong>
+          enquanto é pronunciada a fórmula trinitária.
+          O rito romano atual (RICA) menciona a imersão como opção preferencial,
+          mas admite igualmente a infusão.
+        </p>
       </div>
-    </div>
+    </details>
+
+    <details class="faq-item">
+      <summary>Uma pessoa batizada que nunca praticou a fé está "salva" pelo batismo?</summary>
+      <div class="faq-resposta">
+        <p>
+          O Batismo confere graça santificante real.
+          Uma criança batizada que nunca foi evangelizada
+          recebeu objetivamente o Batismo e seus efeitos.
+        </p>
+        <p>
+          Contudo, o Batismo exige <strong>cooperação da liberdade humana</strong>
+          à medida que a pessoa amadurece.
+          O batizado que, chegando ao uso da razão, rejeita deliberadamente
+          a fé, pratica pecados mortais e morre sem arrependimento,
+          não está "automaticamente salvo" pelo Batismo de infância.
+        </p>
+        <p>
+          O Batismo não é "apólice de seguro" automático —
+          é o início de uma vida que deve ser vivida, não apenas recebida.
+          O caráter indelével permanece, mas a graça pode ser perdida
+          e o juízo é segundo as obras e disposições finais (Mt 25; Rm 2,6).
+        </p>
+        <p>
+          Porém: o Batismo confere disposições e inclinações sobrenaturais
+          que acompanham o batizado mesmo quando afastado da prática —
+          a graça de Deus continua a trabalhar misteriosamente.
+          Nunca devemos presumir a condenação de ninguém.
+        </p>
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary>Posso escolher meu próprio nome no Batismo?</summary>
+      <div class="faq-resposta">
+        <p>
+          O CIC (c. 855) determina que os pais, padrinhos e pároco
+          devem zelar para que o nome dado ao batizando
+          <strong>não seja contrário ao senso cristão</strong>.
+        </p>
+        <p>
+          A tradição da Igreja é dar nomes de santos —
+          o santo torna-se padroeiro do batizado,
+          modelo de vida e intercessor.
+          Esta tradição é altamente recomendada mas não é
+          absolutamente obrigatória sob pena de invalidade.
+        </p>
+        <p>
+          Um adulto que se batiza pode escolher seu nome cristão.
+          Se seu nome civil é pagão ou contrário ao senso cristão,
+          é recomendado (não obrigatório) adotar um nome de santo
+          como nome de Batismo.
+        </p>
+        <p>
+          O que é contrário ao senso cristão: nomes de divindades pagãs,
+          nomes explicitamente anticristãos ou blasfemos.
+          Nomes simplesmente seculares ou de origem não cristã
+          não constituem necessariamente problema.
+        </p>
+      </div>
+    </details>
+
   </div>
 </section>
 
@@ -2230,168 +4690,210 @@ footer::before {
 <section class="estudo-section" id="fontes">
   <h3>Fontes e Referências</h3>
 
-  <div class="fontes-section">
-    <h4>Fontes Primárias e Documentos da Igreja</h4>
-    <div class="fontes-grid">
-      <div class="fonte-item">
-        <strong>Catecismo da Igreja Católica</strong>
-        <span>Nn. 1213–1284 (Sobre o Batismo)</span>
-      </div>
-      <div class="fonte-item">
-        <strong>Código de Direito Canônico</strong>
-        <span>Cânones 849–878</span>
-      </div>
-      <div class="fonte-item">
-        <strong>Sacrosanctum Concilium</strong>
-        <span>Constituição sobre a Liturgia, Vaticano II</span>
-      </div>
-      <div class="fonte-item">
-        <strong>Summa Theologiae</strong>
-        <span>Santo Tomás de Aquino, III, qq. 66–71</span>
-      </div>
-      <div class="fonte-item">
-        <strong>Didaché</strong>
-        <span>Capítulo VII — O Batismo (~100 d.C.)</span>
-      </div>
-      <div class="fonte-item">
-        <strong>Catequeses Mistagógicas</strong>
-        <span>São Cirilo de Jerusalém (séc. IV)</span>
-      </div>
-      <div class="fonte-item">
-        <strong>De Baptismo</strong>
-        <span>Santo Agostinho de Hipona</span>
-      </div>
-      <div class="fonte-item">
-        <strong>Catequeses Batismais</strong>
-        <span>São João Crisóstomo</span>
-      </div>
-      <div class="fonte-item">
-        <strong>Concílio de Trento</strong>
-        <span>Sessão VII — Decreto sobre os Sacramentos (1547)</span>
-      </div>
-      <div class="fonte-item">
-        <strong>Concílio de Florença</strong>
-        <span>Decreto para os Armênios (1439)</span>
-      </div>
-      <div class="fonte-item">
-        <strong>Lumen Gentium</strong>
-        <span>Nn. 7, 11 — Vaticano II</span>
-      </div>
-      <div class="fonte-item">
-        <strong>Audiência Geral — Bento XVI</strong>
-        <span>Série sobre os sacramentos, 2012</span>
-      </div>
+  <div class="fontes-grid">
+
+    <div class="fonte-categoria">
+      <h4>✦ Magistério e Documentos Oficiais</h4>
+      <ul class="lista-fontes">
+        <li>
+          <strong>Catecismo da Igreja Católica</strong>, nn. 1213–1284
+          — Doutrina completa sobre o Batismo
+        </li>
+        <li>
+          <strong>Código de Direito Canônico (1983)</strong>, cc. 849–878
+          — Normas canônicas sobre o Batismo
+        </li>
+        <li>
+          <strong>Concílio de Trento</strong>, Sessão V (1546)
+          — Decreto sobre o pecado original e o Batismo
+        </li>
+        <li>
+          <strong>Concílio de Florença</strong> (1439)
+          — <em>Decretum pro Armenis</em> — definição dos sacramentos
+        </li>
+        <li>
+          <strong>Concílio Vaticano II</strong>
+          — <em>Lumen Gentium</em> nn. 7, 11;
+          <em>Unitatis Redintegratio</em> nn. 3, 15-16
+        </li>
+        <li>
+          <strong>Comissão Teológica Internacional</strong>
+          — <em>A Esperança da Salvação para os Infantes que Morrem sem Baptismo</em>
+          (2007)
+        </li>
+        <li>
+          <strong>Congregação para a Doutrina da Fé</strong>
+          — Resposta sobre o batismo mórmon (2001);
+          Resposta sobre "Nós te batizamos" (2020)
+        </li>
+        <li>
+          <strong>Rito do Batismo de Crianças</strong> (1969, revisado 1973)
+          — Rito litúrgico oficial
+        </li>
+        <li>
+          <strong>Rito da Iniciação Cristã de Adultos (RICA)</strong> (1972)
+        </li>
+        <li>
+          <strong>Código dos Cânones das Igrejas Orientais (CCEO)</strong>,
+          cc. 672–691
+        </li>
+      </ul>
     </div>
+
+    <div class="fonte-categoria">
+      <h4>✦ Fontes Patrísticas Primárias</h4>
+      <ul class="lista-fontes">
+        <li>
+          <strong>Tertuliano</strong>, <em>De Baptismo</em> (~200 d.C.)
+          — Primeiro tratado monográfico sobre o Batismo
+        </li>
+        <li>
+          <strong>Hipólito de Roma</strong>, <em>Traditio Apostolica</em> (~215 d.C.)
+          — O rito batismal apostólico documentado
+        </li>
+        <li>
+          <strong>Justino Mártir</strong>, <em>I Apologia</em>, caps. 61-65 (~155 d.C.)
+          — Primeira descrição detalhada do rito
+        </li>
+        <li>
+          <strong>Cirilo de Jerusalém</strong>,
+          <em>Catequeses Mistagógicas</em> I-V (~350 d.C.)
+          — A mistagogia batismal do Oriente
+        </li>
+        <li>
+          <strong>Ambrósio de Milão</strong>,
+          <em>De Sacramentis</em> e <em>De Mysteriis</em> (~390 d.C.)
+          — A eficácia da Palavra sobre a matéria
+        </li>
+        <li>
+          <strong>Agostinho de Hipona</strong>,
+          <em>De Baptismo contra Donatistas</em> (7 livros);
+          <em>De Peccatorum Meritis et Remissione</em>;
+          <em>In Ioannem</em> (~400-420 d.C.)
+          — Validade objetiva; pecado original e batismo infantil
+        </li>
+        <li>
+          <strong>João Crisóstomo</strong>,
+          <em>Catequeses Batismais</em> (~390 d.C.)
+          — O Batismo como sepulcro e mãe
+        </li>
+        <li>
+          <strong>Didaché</strong>, cap. 7 (~100 d.C.)
+          — A mais antiga descrição do rito batismal
+        </li>
+      </ul>
+    </div>
+
+    <div class="fonte-categoria">
+      <h4>✦ Teologia Escolástica e Sistemática</h4>
+      <ul class="lista-fontes">
+        <li>
+          <strong>Santo Tomás de Aquino</strong>,
+          <em>Summa Theologiae</em>, III, qq. 60-83
+          — Tratado completo sobre os sacramentos e especialmente o Batismo
+        </li>
+        <li>
+          <strong>Santo Tomás de Aquino</strong>,
+          <em>Summa contra Gentiles</em> IV, 59-78
+          — Os sacramentos e a salvação
+        </li>
+        <li>
+          <strong>Duns Scotus</strong>,
+          <em>Ordinatio</em> IV, d. 2-6
+          — A visão franciscana do Batismo
+        </li>
+        <li>
+          <strong>Francisco Suárez</strong>,
+          <em>Commentaria ac Disputationes in Tertiam Partem D. Thomae</em>
+          — Tratado pós-tridentino sobre o Batismo
+        </li>
+      </ul>
+    </div>
+
+    <div class="fonte-categoria">
+      <h4>✦ Teologia Contemporânea</h4>
+      <ul class="lista-fontes">
+        <li>
+          <strong>Karl Rahner</strong>,
+          <em>Theology of the Sacraments</em>
+          — A dimensão antropológica dos sacramentos
+        </li>
+        <li>
+          <strong>Louis Bouyer</strong>,
+          <em>Le mystère pascal</em>
+          — Batismo e mistério pascal na tradição litúrgica
+        </li>
+        <li>
+          <strong>Aidan Kavanagh OSB</strong>,
+          <em>The Shape of Baptism</em> (1978)
+          — O rito batismal como ação eclesial
+        </li>
+        <li>
+          <strong>Joachim Jeremias</strong>,
+          <em>Infant Baptism in the First Four Centuries</em> (1960)
+          — Pesquisa histórica sobre o batismo infantil na Igreja primitiva
+        </li>
+        <li>
+          <strong>Kurt Aland</strong>,
+          <em>Did the Early Church Baptize Infants?</em> (1963)
+          — A posição contrária de Jeremias; debate histórico-crítico
+        </li>
+        <li>
+          <strong>Liam Walsh OP</strong>,
+          <em>The Sacraments of Initiation</em>
+          — Síntese sistemática e pastoral
+        </li>
+        <li>
+          <strong>Pino Lorizio</strong>,
+          <em>Sacramento e mistero</em>
+          — Hermenêutica contemporânea dos sacramentos
+        </li>
+      </ul>
+    </div>
+
+    <div class="fonte-categoria">
+      <h4>✦ Fontes Bíblicas Principais</h4>
+      <ul class="lista-fontes">
+        <li>Mateus 28, 19 — O mandamento batismal missionário</li>
+        <li>Marcos 16, 16 — Fé e Batismo para a salvação</li>
+        <li>João 3, 5 — Nascimento da água e do Espírito</li>
+        <li>Atos 2, 38-41 — Pentecostes e os primeiros batismos</li>
+        <li>Atos 8, 36-38 — O eunuco etíope</li>
+        <li>Atos 19, 1-6 — Os discípulos de João em Éfeso</li>
+        <li>Romanos 6, 3-11 — Batismo como morte e ressurreição</li>
+        <li>1 Coríntios 10, 1-2 — O Mar Vermelho como tipo batismal</li>
+        <li>1 Coríntios 12, 13 — Batismo e incorporação ao Corpo</li>
+        <li>Gálatas 3, 26-27 — Revestir-se de Cristo</li>
+        <li>Colossenses 2, 11-12 — Batismo como circuncisão espiritual</li>
+        <li>Tito 3, 5 — O banho de regeneração</li>
+        <li>1 Pedro 3, 20-21 — O dilúvio prefigura o Batismo</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <div class="nota-final">
+    <h4>✦ Nota sobre as Citações Patrísticas neste Estudo</h4>
+    <p>
+      As citações dos Padres e santos neste estudo são de dois tipos:
+      (1) transcrições diretas de fontes primárias, com indicação precisa
+      do livro e capítulo; e (2) sínteses doutrinárias que refletem
+      fielmente o pensamento do autor citado, mas não são transcrições literais.
+      As sínteses são indicadas como tal.
+      Para uso acadêmico ou citação formal, recomenda-se consultar
+      as edições críticas nas coleções <em>Patrologia Graeca</em>
+      e <em>Patrologia Latina</em> de Migne,
+      a série <em>Sources Chrétiennes</em>,
+      ou o <em>Corpus Christianorum</em> (Brepols).
+    </p>
+    <p>
+      As referências ao Catecismo utilizam a numeração oficial
+      da edição típica latina (<em>Catechismus Catholicae Ecclesiae</em>, 1997).
+      As referências ao Código de Direito Canônico utilizam
+      a edição promulgada por João Paulo II em 1983.
+    </p>
   </div>
 </section>
 
-<!-- CONCLUSÃO -->
-<section class="conclusao" id="conclusao">
-  <h3>O Batismo é Sempre Presente</h3>
-
-  <div class="texto-conclusao">
-    <p>
-      Caro leitor, o Batismo não é memória do passado — é
-      <strong>realidade viva e operante</strong> em você neste exato momento.
-      Aquelas águas que tocaram sua testa naquele dia
-      continuam a agir, invisíveis mas reais, na profundidade de sua alma.
-    </p>
-
-    <p>
-      Quer você tenha sido batizado aos oito dias de vida,
-      ou aos oitenta anos de idade, a realidade é a mesma:
-      <strong>você é criatura nova em Cristo</strong>.
-      A antiga natureza foi sepultada. O Espírito Santo habita em você.
-      Você é templo vivo de Deus.
-    </p>
-
-    <p>
-      Essa verdade não depende de seus sentimentos,
-      nem de sua fidelidade, nem de sua santidade atual.
-      Ela foi gravada por Deus em sua alma com marca que nenhum pecado apaga,
-      nenhuma apostasia cancela, nenhuma fraqueza humana desfaz.
-    </p>
-
-    <p>
-      <strong>Você foi batizado. Você pertence a Cristo.
-      Esse compromisso não tem prazo de validade.</strong>
-    </p>
-
-    <p>
-      O que resta é a sua resposta cotidiana:
-      viver à altura daquilo que você já é —
-      filho de Deus, membro do Corpo de Cristo,
-      templo do Espírito Santo,
-      herdeiro do Reino dos Céus.
-    </p>
-
-    <p class="assinatura-conclusao">
-      "Não vos esqueceis de que fostes batizados,<br>
-      e que o Batismo é o fundamento de toda a vossa vida cristã."
-      <br><em>— Inspirado em São João Paulo II</em>
-    </p>
-  </div>
-</section>
-
-<footer>
-  © 2026 — Lux Fidei · Luz da Fé Católica
-</footer>
-
-<script>
-function toggleIndice() {
-  document.getElementById('indiceMenu').classList.toggle('aberto');
-}
-document.querySelectorAll('.indice-menu a').forEach(link => {
-  link.addEventListener('click', () => {
-    document.getElementById('indiceMenu').classList.remove('aberto');
-  });
-});
-
-function toggleFaq(el) {
-  const item   = el.closest('.faq-item');
-  const resp   = item.querySelector('.faq-resposta');
-  const seta   = item.querySelector('.faq-seta');
-  const aberta = resp.classList.contains('aberta');
-
-  document.querySelectorAll('.faq-resposta').forEach(r => r.classList.remove('aberta'));
-  document.querySelectorAll('.faq-seta').forEach(s => s.classList.remove('aberta'));
-
-  if (!aberta) {
-    resp.classList.add('aberta');
-    seta.classList.add('aberta');
-  }
-}
-
-document.querySelectorAll('a[href^="#"]').forEach(link => {
-  link.addEventListener('click', function(e) {
-    const id = this.getAttribute('href').slice(1);
-    const el = document.getElementById(id);
-    if (el) {
-      e.preventDefault();
-      const offset = 80;
-      const top = el.getBoundingClientRect().top + window.scrollY - offset;
-      window.scrollTo({ top, behavior: 'smooth' });
-    }
-  });
-});
-
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.style.opacity = '1';
-      entry.target.style.transform = 'translateY(0)';
-    }
-  });
-}, { threshold: 0.08 });
-
-document.querySelectorAll(
-  '.card-teologia, .biblia-card, .efeito-card, .santo-card, .passo, .timeline-item, .pratica-bloco, .faq-item'
-).forEach(el => {
-  el.style.opacity = '0';
-  el.style.transform = 'translateY(24px)';
-  el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-  observer.observe(el);
-});
-</script>
 </body>
 </html>
