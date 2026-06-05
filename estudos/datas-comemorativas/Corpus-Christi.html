@@ -1,0 +1,3927 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Corpus Christi - Guia Completo | Tudo Sobre a Solenidade do Corpo e Sangue de Cristo</title>
+    <meta name="description" content="O guia mais completo sobre Corpus Christi: história, teologia, procissão, tapetes, liturgia, milagres eucarísticos, tradições pelo mundo e muito mais.">
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap');
+
+    :root {
+        --gold: #C9A84C;
+        --gold-light: #E8D48B;
+        --gold-dark: #8B6914;
+        --wine: #6B0F1A;
+        --wine-dark: #3D0A10;
+        --wine-light: #8B1A2B;
+        --cream: #FDF8EE;
+        --cream-dark: #F0E6D0;
+        --brown: #3E2723;
+        --brown-light: #5D4037;
+        --white: #FFFFFF;
+        --text-dark: #2C1810;
+        --text-medium: #4A3728;
+        --text-light: #6D5D4E;
+        --shadow: rgba(0,0,0,0.15);
+        --shadow-strong: rgba(0,0,0,0.3);
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    html {
+        scroll-behavior: smooth;
+        font-size: 16px;
+    }
+
+    body {
+        font-family: 'Crimson Text', 'Lora', Georgia, serif;
+        background-color: var(--cream);
+        color: var(--text-dark);
+        line-height: 1.8;
+        overflow-x: hidden;
+    }
+
+    /* ===== LOADING SCREEN ===== */
+    #loading {
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background: linear-gradient(135deg, var(--wine-dark) 0%, var(--wine) 50%, var(--wine-dark) 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 10000;
+        transition: opacity 0.8s ease;
+    }
+
+    .loading-content {
+        text-align: center;
+        color: var(--gold);
+    }
+
+    .loading-host {
+        font-size: 80px;
+        animation: pulse 1.5s ease-in-out infinite;
+        margin-bottom: 20px;
+    }
+
+    .loading-text {
+        font-family: 'Cinzel', serif;
+        font-size: 1.5rem;
+        letter-spacing: 3px;
+        animation: fadeInOut 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+        0%, 100% { transform: scale(1); opacity: 1; }
+        50% { transform: scale(1.1); opacity: 0.7; }
+    }
+
+    @keyframes fadeInOut {
+        0%, 100% { opacity: 0.5; }
+        50% { opacity: 1; }
+    }
+
+    /* ===== PROGRESS BAR ===== */
+    .progress-bar {
+        position: fixed;
+        top: 0; left: 0;
+        width: 0%;
+        height: 4px;
+        background: linear-gradient(90deg, var(--gold), var(--wine), var(--gold));
+        z-index: 2000;
+        transition: width 0.1s ease;
+    }
+
+    /* ===== HEADER ===== */
+    header {
+        position: relative;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, var(--wine-dark) 0%, var(--wine) 30%, var(--brown) 70%, var(--wine-dark) 100%);
+        overflow: hidden;
+    }
+
+    .header-bg-pattern {
+        position: absolute;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        opacity: 0.05;
+        background-image:
+            radial-gradient(circle at 20% 50%, var(--gold) 1px, transparent 1px),
+            radial-gradient(circle at 80% 20%, var(--gold) 1px, transparent 1px),
+            radial-gradient(circle at 40% 80%, var(--gold) 1px, transparent 1px);
+        background-size: 100px 100px;
+    }
+
+    .header-rays {
+        position: absolute;
+        top: 50%; left: 50%;
+        transform: translate(-50%, -50%);
+        width: 800px; height: 800px;
+        background: radial-gradient(ellipse at center, rgba(201,168,76,0.15) 0%, transparent 70%);
+        animation: rayPulse 4s ease-in-out infinite;
+    }
+
+    @keyframes rayPulse {
+        0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
+        50% { transform: translate(-50%, -50%) scale(1.15); opacity: 0.8; }
+    }
+
+    .header-content {
+        position: relative;
+        z-index: 2;
+        text-align: center;
+        padding: 2rem;
+        max-width: 900px;
+    }
+
+    .header-cross {
+        font-size: 2rem;
+        color: var(--gold);
+        margin-bottom: 1rem;
+        letter-spacing: 15px;
+    }
+
+    .header-icon {
+        font-size: 100px;
+        margin-bottom: 1.5rem;
+        animation: float 3s ease-in-out infinite;
+        filter: drop-shadow(0 0 30px rgba(201,168,76,0.5));
+    }
+
+    @keyframes float {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-15px); }
+    }
+
+    header h1 {
+        font-family: 'Cinzel', serif;
+        font-size: clamp(2.5rem, 6vw, 5rem);
+        font-weight: 900;
+        color: var(--gold);
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        margin-bottom: 0.5rem;
+        letter-spacing: 5px;
+    }
+
+    .header-subtitle {
+        font-family: 'Cinzel', serif;
+        font-size: clamp(1rem, 2.5vw, 1.5rem);
+        color: var(--gold-light);
+        letter-spacing: 8px;
+        text-transform: uppercase;
+        margin-bottom: 1.5rem;
+        font-weight: 400;
+    }
+
+    .header-latin {
+        font-style: italic;
+        font-size: 1.3rem;
+        color: rgba(232,212,139,0.7);
+        margin-bottom: 2rem;
+        font-family: 'Crimson Text', serif;
+    }
+
+    .header-divider {
+        width: 200px;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, var(--gold), transparent);
+        margin: 0 auto 2rem;
+    }
+
+    .header-description {
+        font-size: 1.15rem;
+        color: rgba(255,255,255,0.85);
+        max-width: 700px;
+        margin: 0 auto 2.5rem;
+        line-height: 1.9;
+    }
+
+    .scroll-indicator {
+        position: absolute;
+        bottom: 30px;
+        left: 50%;
+        transform: translateX(-50%);
+        color: var(--gold);
+        font-size: 2rem;
+        animation: bounce 2s ease-in-out infinite;
+        cursor: pointer;
+        z-index: 5;
+    }
+
+    @keyframes bounce {
+        0%, 100% { transform: translateX(-50%) translateY(0); }
+        50% { transform: translateX(-50%) translateY(15px); }
+    }
+
+    /* ===== NAVIGATION ===== */
+   /* ===== NAVIGATION (ÍNDICE RECOLHÍVEL) ===== */
+nav {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background: linear-gradient(135deg, var(--wine-dark), var(--wine));
+    box-shadow: 0 4px 20px var(--shadow-strong);
+    border-bottom: 2px solid var(--gold);
+}
+
+.nav-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* BOTÃO ÍNDICE - sempre visível e centralizado */
+.nav-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    background: linear-gradient(135deg, var(--wine), var(--wine-dark));
+    border: 2px solid var(--gold);
+    color: var(--gold);
+    font-family: 'Cinzel', serif;
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 12px 40px;
+    cursor: pointer;
+    border-radius: 50px;
+    margin: 15px auto;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    position: relative;
+    min-width: 220px;
+}
+
+.nav-toggle:hover {
+    background: linear-gradient(135deg, var(--gold-dark), var(--gold));
+    color: var(--white);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(201,168,76,0.4);
+}
+
+.nav-toggle-icon {
+    font-size: 1.2rem;
+    line-height: 1;
+}
+
+.nav-toggle-text {
+    line-height: 1;
+}
+
+.nav-toggle-arrow {
+    font-size: 0.7rem;
+    transition: transform 0.4s ease;
+    line-height: 1;
+}
+
+.nav-toggle.active .nav-toggle-arrow {
+    transform: rotate(180deg);
+}
+
+/* MENU - escondido por padrão */
+.nav-menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.5s ease, opacity 0.4s ease, padding 0.3s ease;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    background: rgba(0,0,0,0.15);
+}
+
+.nav-menu.active {
+    max-height: 600px;
+    opacity: 1;
+    padding: 15px 10px;
+    border-top: 1px solid rgba(201,168,76,0.3);
+}
+
+.nav-menu li {
+    margin: 0;
+    list-style: none;
+}
+
+.nav-menu a {
+    display: block;
+    padding: 12px 16px;
+    color: var(--gold-light);
+    text-decoration: none;
+    font-family: 'Cinzel', serif;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+    border-radius: 6px;
+    margin: 3px;
+    white-space: nowrap;
+    border: 1px solid transparent;
+}
+
+.nav-menu a:hover,
+.nav-menu a.active-link {
+    color: var(--white);
+    background: rgba(201,168,76,0.18);
+    border-color: rgba(201,168,76,0.4);
+    transform: translateY(-1px);
+}
+
+/* ===== RESPONSIVE NAV ===== */
+@media (max-width: 768px) {
+    .nav-toggle {
+        font-size: 0.9rem;
+        padding: 10px 30px;
+        letter-spacing: 2px;
+        min-width: 180px;
+    }
+
+    .nav-menu.active {
+        max-height: 800px;
+        flex-direction: column;
+        padding: 10px 5px;
+    }
+
+    .nav-menu a {
+        padding: 10px 20px;
+        font-size: 0.75rem;
+        text-align: center;
+        width: 100%;
+        margin: 2px 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .nav-toggle {
+        font-size: 0.85rem;
+        padding: 10px 25px;
+        min-width: 160px;
+    }
+}
+    /* ===== MAIN ===== */
+    main {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 2rem;
+    }
+
+    /* ===== SECTIONS ===== */
+    section {
+        padding: 4rem 0;
+        border-bottom: 1px solid rgba(201,168,76,0.2);
+    }
+
+    section:last-child {
+        border-bottom: none;
+    }
+
+    .section-header {
+        text-align: center;
+        margin-bottom: 3rem;
+    }
+
+    .section-number {
+        font-family: 'Cinzel', serif;
+        font-size: 0.85rem;
+        color: var(--gold);
+        letter-spacing: 5px;
+        text-transform: uppercase;
+        display: block;
+        margin-bottom: 0.5rem;
+    }
+
+    .section-icon {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        display: block;
+    }
+
+    h2 {
+        font-family: 'Cinzel', serif;
+        font-size: clamp(1.8rem, 4vw, 2.8rem);
+        color: var(--wine);
+        margin-bottom: 0.5rem;
+        font-weight: 700;
+    }
+
+    .section-subtitle {
+        font-size: 1.1rem;
+        color: var(--text-light);
+        font-style: italic;
+        margin-bottom: 1rem;
+    }
+
+    .section-divider {
+        width: 100px;
+        height: 3px;
+        background: linear-gradient(90deg, transparent, var(--gold), transparent);
+        margin: 1.5rem auto;
+    }
+
+    h3 {
+        font-family: 'Cinzel', serif;
+        font-size: 1.5rem;
+        color: var(--wine);
+        margin: 2.5rem 0 1rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 2px solid var(--gold-light);
+        display: inline-block;
+    }
+
+    h4 {
+        font-family: 'Cinzel', serif;
+        font-size: 1.1rem;
+        color: var(--brown);
+        margin: 1.5rem 0 0.8rem;
+    }
+
+    p {
+        margin-bottom: 1.2rem;
+        font-size: 1.1rem;
+        text-align: justify;
+        line-height: 1.9;
+    }
+
+    strong {
+        color: var(--wine);
+    }
+
+    em {
+        color: var(--gold-dark);
+        font-style: italic;
+    }
+
+    /* ===== SPECIAL BOXES ===== */
+    .highlight-box {
+        background: linear-gradient(135deg, rgba(201,168,76,0.08), rgba(201,168,76,0.15));
+        border-left: 5px solid var(--gold);
+        padding: 2rem;
+        margin: 2rem 0;
+        border-radius: 0 12px 12px 0;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    }
+
+    .highlight-box h4 {
+        color: var(--gold-dark);
+        margin-top: 0;
+    }
+
+    .scripture-box {
+        background: linear-gradient(135deg, rgba(107,15,26,0.05), rgba(107,15,26,0.1));
+        border: 2px solid rgba(107,15,26,0.2);
+        border-radius: 12px;
+        padding: 2.5rem 2rem;
+        margin: 2rem 0;
+        text-align: center;
+        position: relative;
+    }
+
+    .scripture-box::before {
+        content: '✟';
+        position: absolute;
+        top: -16px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: var(--cream);
+        padding: 0 15px;
+        color: var(--wine);
+        font-size: 1.5rem;
+    }
+
+    .scripture-text {
+        font-size: 1.2rem;
+        font-style: italic;
+        color: var(--wine);
+        line-height: 1.9;
+        margin-bottom: 1rem;
+        display: block;
+    }
+
+    .scripture-ref {
+        font-family: 'Cinzel', serif;
+        font-size: 0.9rem;
+        color: var(--gold-dark);
+        font-weight: 600;
+        display: block;
+    }
+
+    .miracle-box {
+        background: linear-gradient(135deg, #FFF8E1, #FFF3C4);
+        border: 2px solid var(--gold);
+        border-radius: 12px;
+        padding: 2rem;
+        margin: 2rem 0;
+        box-shadow: 0 4px 20px rgba(201,168,76,0.15);
+    }
+
+    .miracle-box h4 {
+        color: var(--gold-dark);
+        margin-top: 0;
+        text-align: center;
+    }
+
+    .info-box {
+        background: linear-gradient(135deg, #E8EAF6, #C5CAE9);
+        border-left: 5px solid #3F51B5;
+        padding: 1.5rem 2rem;
+        margin: 2rem 0;
+        border-radius: 0 12px 12px 0;
+    }
+
+    .info-box h4 {
+        color: #283593;
+        margin-top: 0;
+    }
+
+    .curiosity-box {
+        background: linear-gradient(135deg, #E8F5E9, #C8E6C9);
+        border-left: 5px solid #4CAF50;
+        padding: 1.5rem 2rem;
+        margin: 2rem 0;
+        border-radius: 0 12px 12px 0;
+    }
+
+    .curiosity-box h4 {
+        color: #2E7D32;
+        margin-top: 0;
+    }
+
+    /* ===== STATS ROW ===== */
+    .stats-row {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 2rem;
+        margin: 2.5rem 0;
+        padding: 2rem;
+        background: linear-gradient(135deg, rgba(107,15,26,0.04), rgba(201,168,76,0.08));
+        border-radius: 16px;
+        border: 1px solid rgba(201,168,76,0.2);
+    }
+
+    .stat-item {
+        text-align: center;
+        padding: 1rem 1.5rem;
+        min-width: 140px;
+    }
+
+    .stat-number {
+        font-family: 'Cinzel', serif;
+        font-size: 2.5rem;
+        font-weight: 900;
+        color: var(--wine);
+        display: block;
+        line-height: 1;
+        margin-bottom: 0.5rem;
+    }
+
+    .stat-label {
+        font-size: 0.85rem;
+        color: var(--text-light);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-family: 'Cinzel', serif;
+    }
+
+    /* ===== CARD GRID ===== */
+    .card-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 2rem;
+        margin: 2rem 0;
+    }
+
+    .card {
+        background: var(--white);
+        border-radius: 15px;
+        padding: 2rem;
+        box-shadow: 0 5px 20px var(--shadow);
+        transition: all 0.3s ease;
+        border: 1px solid rgba(201,168,76,0.15);
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px var(--shadow-strong);
+        border-color: var(--gold);
+    }
+
+    .card-icon {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+        display: block;
+    }
+
+    .card h4 {
+        color: var(--wine);
+        margin-top: 0;
+    }
+
+    .card p {
+        font-size: 0.98rem;
+        color: var(--text-medium);
+        text-align: left;
+        margin-bottom: 0;
+    }
+
+    /* ===== TIMELINE ===== */
+    .timeline {
+        position: relative;
+        padding: 2rem 0;
+        margin: 2rem 0;
+    }
+
+    .timeline::before {
+        content: '';
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        top: 0; bottom: 0;
+        width: 3px;
+        background: linear-gradient(to bottom, var(--gold), var(--wine), var(--gold));
+    }
+
+    .timeline-item {
+        display: flex;
+        margin-bottom: 3rem;
+        position: relative;
+        align-items: flex-start;
+    }
+
+    .timeline-item:nth-child(odd) {
+        flex-direction: row-reverse;
+    }
+
+    .timeline-content {
+        width: 45%;
+        background: var(--white);
+        border-radius: 12px;
+        padding: 1.8rem;
+        box-shadow: 0 4px 15px var(--shadow);
+        border: 1px solid rgba(201,168,76,0.2);
+        transition: all 0.3s ease;
+    }
+
+    .timeline-content:hover {
+        border-color: var(--gold);
+        box-shadow: 0 6px 20px var(--shadow-strong);
+    }
+
+    .timeline-item:nth-child(odd) .timeline-content {
+        margin-right: 5%;
+    }
+
+    .timeline-item:nth-child(even) .timeline-content {
+        margin-left: 5%;
+    }
+
+    .timeline-dot {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 22px; height: 22px;
+        background: var(--gold);
+        border: 4px solid var(--wine);
+        border-radius: 50%;
+        z-index: 2;
+        top: 20px;
+    }
+
+    .timeline-year {
+        font-family: 'Cinzel', serif;
+        font-weight: 700;
+        color: var(--gold-dark);
+        font-size: 1.2rem;
+        margin-bottom: 0.4rem;
+    }
+
+    .timeline-content h4 {
+        margin-top: 0;
+        margin-bottom: 0.5rem;
+    }
+
+    .timeline-content p {
+        font-size: 0.95rem;
+        text-align: left;
+        margin-bottom: 0;
+        color: var(--text-medium);
+    }
+
+    /* ===== HYMN BOX ===== */
+    .hymn-container {
+        background: linear-gradient(135deg, var(--wine-dark), var(--wine));
+        border-radius: 15px;
+        padding: 2.5rem;
+        margin: 2rem 0;
+        color: var(--gold-light);
+        box-shadow: 0 8px 30px var(--shadow-strong);
+        border: 1px solid rgba(201,168,76,0.3);
+    }
+
+    .hymn-container h4 {
+        color: var(--gold);
+        text-align: center;
+        font-size: 1.3rem;
+        margin-top: 0;
+        margin-bottom: 1.5rem;
+    }
+
+    .hymn-text {
+        text-align: center;
+        font-style: italic;
+        font-size: 1.1rem;
+        line-height: 2;
+    }
+
+    .hymn-text .latin {
+        color: var(--gold);
+        display: block;
+        margin-bottom: 0.2rem;
+        font-size: 1.15rem;
+    }
+
+    .hymn-text .translation {
+        color: rgba(255,255,255,0.75);
+        font-size: 0.95rem;
+        display: block;
+        margin-bottom: 1rem;
+    }
+
+    .hymn-author {
+        text-align: center;
+        margin-top: 1.5rem;
+        font-family: 'Cinzel', serif;
+        color: var(--gold);
+        font-size: 0.85rem;
+        letter-spacing: 2px;
+    }
+
+    /* ===== TABLE ===== */
+    .table-container {
+        overflow-x: auto;
+        margin: 2rem 0;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px var(--shadow);
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        background: var(--white);
+    }
+
+    thead {
+        background: linear-gradient(135deg, var(--wine), var(--wine-dark));
+    }
+
+    th {
+        font-family: 'Cinzel', serif;
+        color: var(--gold);
+        padding: 15px 20px;
+        text-align: left;
+        font-size: 0.9rem;
+        letter-spacing: 1px;
+    }
+
+    td {
+        padding: 12px 20px;
+        border-bottom: 1px solid rgba(201,168,76,0.1);
+        font-size: 1rem;
+        color: var(--text-medium);
+    }
+
+    tr:nth-child(even) td {
+        background: rgba(201,168,76,0.04);
+    }
+
+    tr:hover td {
+        background: rgba(201,168,76,0.09);
+    }
+
+    /* ===== WORLD GRID ===== */
+    .world-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+        gap: 2rem;
+        margin: 2rem 0;
+    }
+
+    .country-card {
+        background: var(--white);
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 4px 20px var(--shadow);
+        transition: all 0.3s ease;
+        border: 1px solid rgba(201,168,76,0.1);
+    }
+
+    .country-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 30px var(--shadow-strong);
+        border-color: var(--gold);
+    }
+
+    .country-header {
+        background: linear-gradient(135deg, var(--wine), var(--wine-light));
+        padding: 1.2rem 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .country-flag { font-size: 2.5rem; }
+
+    .country-name {
+        font-family: 'Cinzel', serif;
+        color: var(--gold);
+        font-size: 1.1rem;
+        font-weight: 600;
+    }
+
+    .country-local-name {
+        color: rgba(255,255,255,0.7);
+        font-size: 0.85rem;
+        font-style: italic;
+    }
+
+    .country-body { padding: 1.5rem; }
+
+    .country-body p {
+        font-size: 0.95rem;
+        text-align: left;
+        margin-bottom: 0;
+        color: var(--text-medium);
+    }
+
+    /* ===== FAQ ===== */
+    .faq-container {
+        display: grid;
+        gap: 1rem;
+        margin: 2rem 0;
+    }
+
+    .faq-item {
+        background: var(--white);
+        border-radius: 12px;
+        box-shadow: 0 3px 12px var(--shadow);
+        overflow: hidden;
+        border: 1px solid rgba(201,168,76,0.15);
+        transition: border-color 0.3s ease;
+    }
+
+    .faq-item:hover {
+        border-color: rgba(201,168,76,0.4);
+    }
+
+    .faq-question {
+        width: 100%;
+        background: none;
+        border: none;
+        padding: 1.5rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+        font-family: 'Cinzel', serif;
+        font-size: 1rem;
+        color: var(--wine);
+        font-weight: 600;
+        text-align: left;
+        transition: background 0.3s ease;
+        gap: 1rem;
+    }
+
+    .faq-question:hover,
+    .faq-question.active {
+        background: rgba(201,168,76,0.06);
+    }
+
+    .faq-arrow {
+        color: var(--gold);
+        font-size: 1rem;
+        flex-shrink: 0;
+        transition: transform 0.35s ease;
+        display: inline-block;
+    }
+
+    .faq-arrow.rotated {
+        transform: rotate(180deg);
+    }
+
+    .faq-answer {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.4s ease, padding 0.3s ease;
+        padding: 0 2rem;
+        background: rgba(253,248,238,0.6);
+    }
+
+    .faq-answer.open {
+        padding: 1.5rem 2rem;
+    }
+
+    .faq-answer p {
+        font-size: 1rem;
+        color: var(--text-medium);
+        text-align: left;
+        margin-bottom: 0.8rem;
+    }
+
+    .faq-answer p:last-child { margin-bottom: 0; }
+
+    .faq-answer ul {
+        padding-left: 1.5rem;
+        color: var(--text-medium);
+    }
+
+    .faq-answer li {
+        font-size: 1rem;
+        margin-bottom: 0.5rem;
+    }
+
+    /* ===== PRAYER CARDS ===== */
+    .prayer-card {
+        background: linear-gradient(135deg, #FFFBF0, #FFF8E1);
+        border: 2px solid rgba(201,168,76,0.4);
+        border-radius: 15px;
+        padding: 2.5rem;
+        margin: 2rem 0;
+        position: relative;
+        box-shadow: 0 5px 25px rgba(201,168,76,0.15);
+        transition: all 0.3s ease;
+    }
+
+    .prayer-card:hover {
+        border-color: var(--gold);
+        box-shadow: 0 8px 30px rgba(201,168,76,0.25);
+    }
+
+    .prayer-card::before {
+        content: '☩';
+        position: absolute;
+        top: -14px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: var(--cream);
+        padding: 0 15px;
+        color: var(--wine);
+        font-size: 1.4rem;
+    }
+
+    .prayer-card h4 {
+        color: var(--wine);
+        text-align: center;
+        margin-top: 0;
+        margin-bottom: 1.5rem;
+        font-size: 1.15rem;
+        border-bottom: 1px solid rgba(201,168,76,0.3);
+        padding-bottom: 1rem;
+    }
+
+    .prayer-text {
+        font-style: italic;
+        font-size: 1.1rem;
+        line-height: 2;
+        color: var(--text-dark);
+        text-align: center;
+        max-width: 750px;
+        margin: 0 auto;
+    }
+
+    .prayer-text p {
+        text-align: center;
+        font-size: 1.1rem;
+        margin-bottom: 1rem;
+    }
+
+    .prayer-text p:last-child { margin-bottom: 0; }
+
+    /* ===== CURIOSITIES GRID ===== */
+    .curiosities-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 2rem;
+        margin: 2rem 0;
+    }
+
+    .curiosity-card {
+        background: var(--white);
+        border-radius: 15px;
+        padding: 2rem;
+        box-shadow: 0 5px 20px var(--shadow);
+        border: 1px solid rgba(201,168,76,0.15);
+        transition: all 0.3s ease;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .curiosity-card::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0;
+        width: 100%; height: 4px;
+        background: linear-gradient(90deg, var(--gold), var(--wine), var(--gold));
+    }
+
+    .curiosity-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px var(--shadow-strong);
+        border-color: var(--gold);
+    }
+
+    .curiosity-number {
+        font-family: 'Cinzel', serif;
+        font-size: 2.5rem;
+        font-weight: 900;
+        color: rgba(107,15,26,0.08);
+        line-height: 1;
+        position: absolute;
+        top: 1rem;
+        right: 1.5rem;
+    }
+
+    .curiosity-content h4 {
+        color: var(--wine);
+        margin-top: 0;
+        margin-bottom: 0.5rem;
+        font-size: 1.1rem;
+    }
+
+    .curiosity-content p {
+        font-size: 0.97rem;
+        color: var(--text-medium);
+        text-align: left;
+        margin-bottom: 0;
+        line-height: 1.75;
+    }
+
+    /* ===== DOCUMENT LIST ===== */
+    .doc-list {
+        display: grid;
+        gap: 1.5rem;
+        margin: 2rem 0;
+    }
+
+    .doc-item {
+        display: flex;
+        gap: 1.5rem;
+        background: var(--white);
+        border-radius: 12px;
+        padding: 1.5rem;
+        box-shadow: 0 3px 12px var(--shadow);
+        align-items: flex-start;
+        border: 1px solid rgba(201,168,76,0.1);
+        transition: all 0.3s ease;
+    }
+
+    .doc-item:hover {
+        border-color: var(--gold);
+        transform: translateX(5px);
+        box-shadow: 0 5px 18px var(--shadow-strong);
+    }
+
+    .doc-year {
+        font-family: 'Cinzel', serif;
+        font-weight: 700;
+        color: var(--gold-dark);
+        font-size: 1rem;
+        min-width: 65px;
+        text-align: center;
+        background: rgba(201,168,76,0.12);
+        padding: 8px 10px;
+        border-radius: 8px;
+        line-height: 1.4;
+    }
+
+    .doc-info h4 {
+        margin-top: 0;
+        margin-bottom: 0.2rem;
+        color: var(--wine);
+    }
+
+    .doc-author {
+        font-size: 0.85rem;
+        color: var(--text-light);
+        font-style: italic;
+        margin-bottom: 0.5rem !important;
+    }
+
+    .doc-info p {
+        font-size: 0.95rem;
+        margin-bottom: 0;
+        text-align: left;
+        color: var(--text-medium);
+    }
+
+    /* ===== TAPETE GALLERY ===== */
+    .tapete-gallery {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+        margin: 2rem 0;
+    }
+
+    .tapete-city {
+        background: var(--white);
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 15px var(--shadow);
+        transition: all 0.3s ease;
+        border: 1px solid rgba(201,168,76,0.1);
+    }
+
+    .tapete-city:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px var(--shadow-strong);
+        border-color: var(--gold);
+    }
+
+    .tapete-color {
+        height: 8px;
+        background: linear-gradient(90deg, var(--gold), var(--wine), var(--gold-light), var(--wine-light), var(--gold));
+        background-size: 200% 100%;
+        animation: shimmer 3s linear infinite;
+    }
+
+    @keyframes shimmer {
+        0% { background-position: 0% 50%; }
+        100% { background-position: 200% 50%; }
+    }
+
+    .tapete-info { padding: 1.5rem; }
+
+    .tapete-info h4 {
+        margin-top: 0;
+        color: var(--wine);
+        font-size: 1rem;
+    }
+
+    .tapete-info p {
+        font-size: 0.92rem;
+        text-align: left;
+        margin-bottom: 0;
+        color: var(--text-medium);
+        line-height: 1.65;
+    }
+
+    /* ===== SYMBOLS GRID ===== */
+    .symbols-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+        gap: 1.5rem;
+        margin: 2rem 0;
+    }
+
+    .symbol-item {
+        text-align: center;
+        padding: 2rem 1rem;
+        background: var(--white);
+        border-radius: 12px;
+        box-shadow: 0 3px 15px var(--shadow);
+        transition: all 0.3s ease;
+        border: 1px solid rgba(201,168,76,0.1);
+    }
+
+    .symbol-item:hover {
+        transform: translateY(-4px);
+        border-color: var(--gold);
+        box-shadow: 0 6px 20px var(--shadow-strong);
+    }
+
+    .symbol-icon {
+        font-size: 3rem;
+        margin-bottom: 0.8rem;
+        display: block;
+    }
+
+    .symbol-name {
+        font-family: 'Cinzel', serif;
+        font-weight: 600;
+        color: var(--wine);
+        margin-bottom: 0.5rem;
+        font-size: 0.95rem;
+    }
+
+    .symbol-meaning {
+        font-size: 0.88rem;
+        color: var(--text-light);
+        font-style: italic;
+        line-height: 1.6;
+    }
+
+    /* ===== BLOCKQUOTE ===== */
+    blockquote {
+        position: relative;
+        margin: 2.5rem 0;
+        padding: 2rem 2.5rem 2rem 3rem;
+        background: linear-gradient(135deg, rgba(107,15,26,0.04), rgba(107,15,26,0.09));
+        border-left: 4px solid var(--wine);
+        border-radius: 0 12px 12px 0;
+        font-style: italic;
+        font-size: 1.12rem;
+        line-height: 1.85;
+    }
+
+    blockquote::before {
+        content: '"';
+        position: absolute;
+        top: -5px;
+        left: 10px;
+        font-size: 4.5rem;
+        color: var(--wine);
+        opacity: 0.2;
+        font-family: Georgia, serif;
+        line-height: 1;
+    }
+
+    blockquote cite {
+        display: block;
+        margin-top: 1rem;
+        font-family: 'Cinzel', serif;
+        font-size: 0.88rem;
+        color: var(--gold-dark);
+        font-style: normal;
+        font-weight: 600;
+    }
+
+    /* ===== STEPS ===== */
+    .steps {
+        display: grid;
+        gap: 1.2rem;
+        margin: 2rem 0;
+        counter-reset: step;
+    }
+
+    .step {
+        display: flex;
+        gap: 1.5rem;
+        align-items: flex-start;
+        background: var(--white);
+        border-radius: 12px;
+        padding: 1.5rem;
+        box-shadow: 0 3px 12px var(--shadow);
+        counter-increment: step;
+        border: 1px solid rgba(201,168,76,0.1);
+        transition: all 0.3s ease;
+    }
+
+    .step:hover {
+        border-color: var(--gold);
+        transform: translateX(4px);
+    }
+
+    .step::before {
+        content: counter(step);
+        font-family: 'Cinzel', serif;
+        font-weight: 700;
+        font-size: 1.1rem;
+        color: var(--white);
+        background: linear-gradient(135deg, var(--wine), var(--gold-dark));
+        min-width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+
+    .step-content h4 {
+        margin-top: 0;
+        margin-bottom: 0.4rem;
+        color: var(--wine);
+        font-size: 1.05rem;
+    }
+
+    .step-content p {
+        margin-bottom: 0;
+        font-size: 0.96rem;
+        text-align: left;
+        color: var(--text-medium);
+    }
+
+    /* ===== TWO COLUMNS ===== */
+    .two-columns {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 3rem;
+        margin: 2rem 0;
+    }
+
+    /* ===== CUSTOM LIST ===== */
+    ul.custom-list {
+        list-style: none;
+        padding-left: 0;
+        margin-bottom: 1.5rem;
+    }
+
+    ul.custom-list li {
+        padding-left: 2rem;
+        position: relative;
+        margin-bottom: 0.8rem;
+        font-size: 1.05rem;
+    }
+
+    ul.custom-list li::before {
+        content: '✦';
+        position: absolute;
+        left: 0;
+        color: var(--gold);
+        font-size: 0.8rem;
+        top: 4px;
+    }
+
+    /* ===== BACK TO TOP ===== */
+    .back-to-top {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        width: 55px;
+        height: 55px;
+        background: linear-gradient(135deg, var(--wine), var(--wine-dark));
+        color: var(--gold);
+        border: 2px solid var(--gold);
+        border-radius: 50%;
+        font-size: 1.5rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+        z-index: 999;
+        box-shadow: 0 4px 15px var(--shadow-strong);
+    }
+
+    .back-to-top.visible {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .back-to-top:hover {
+        background: var(--gold);
+        color: var(--wine);
+        transform: translateY(-3px) scale(1.05);
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+        background: linear-gradient(135deg, var(--wine-dark), var(--brown), var(--wine-dark));
+        color: var(--gold-light);
+        padding: 4rem 2rem 2rem;
+        text-align: center;
+        margin-top: 4rem;
+    }
+
+    .footer-host {
+        font-size: 3.5rem;
+        color: var(--gold);
+        margin-bottom: 1rem;
+        display: block;
+        animation: pulse 3s ease-in-out infinite;
+    }
+
+    .footer-title {
+        font-family: 'Cinzel', serif;
+        font-size: 2rem;
+        font-weight: 700;
+        color: var(--gold);
+        letter-spacing: 5px;
+        margin-bottom: 0.5rem;
+    }
+
+    .footer-subtitle {
+        font-family: 'Cinzel', serif;
+        font-size: 0.9rem;
+        color: rgba(232,212,139,0.6);
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        margin-bottom: 2rem;
+    }
+
+    .footer-quote {
+        max-width: 600px;
+        margin: 0 auto 2rem;
+        padding: 1.5rem 2rem;
+        border: 1px solid rgba(201,168,76,0.3);
+        border-radius: 12px;
+        background: rgba(255,255,255,0.03);
+    }
+
+    .footer-quote p {
+        font-style: italic;
+        font-size: 1.05rem;
+        color: rgba(232,212,139,0.85);
+        text-align: center;
+        margin-bottom: 0.5rem;
+    }
+
+    .footer-quote cite {
+        font-family: 'Cinzel', serif;
+        font-size: 0.82rem;
+        color: var(--gold);
+        font-style: normal;
+    }
+
+    .footer-links {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.8rem;
+        margin: 2rem 0;
+        padding: 2rem 0;
+        border-top: 1px solid rgba(201,168,76,0.2);
+        border-bottom: 1px solid rgba(201,168,76,0.2);
+    }
+
+    .footer-links a {
+        color: rgba(232,212,139,0.7);
+        text-decoration: none;
+        font-family: 'Cinzel', serif;
+        font-size: 0.75rem;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        transition: color 0.3s ease;
+        padding: 4px 8px;
+    }
+
+    .footer-links a:hover {
+        color: var(--gold);
+    }
+
+    .footer-latin {
+        margin: 2rem auto;
+        max-width: 500px;
+    }
+
+    .footer-latin p {
+        font-style: italic;
+        font-size: 0.95rem;
+        color: rgba(232,212,139,0.6);
+        text-align: center;
+        margin-bottom: 0.3rem;
+        line-height: 1.7;
+    }
+
+    .footer-copy {
+        margin-top: 2rem;
+        padding-top: 2rem;
+        border-top: 1px solid rgba(201,168,76,0.15);
+    }
+
+    .footer-copy p {
+        font-size: 0.85rem;
+        color: rgba(232,212,139,0.4);
+        text-align: center;
+        margin-bottom: 0.4rem;
+        line-height: 1.6;
+    }
+
+    .footer-nota {
+        font-size: 0.78rem !important;
+        color: rgba(232,212,139,0.3) !important;
+        margin-top: 1rem !important;
+    }
+
+    /* ===== ANIMATIONS ===== */
+    .fade-in {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .fade-in.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 900px) {
+        .world-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .nav-toggle {
+            display: block;
+        }
+
+        .nav-menu {
+            display: none;
+            flex-direction: column;
+            width: 100%;
+        }
+
+        .nav-menu.active {
+            display: flex;
+        }
+
+        .nav-menu a {
+            padding: 12px 20px;
+            border-bottom: 1px solid rgba(201,168,76,0.1);
+            border-right: none;
+            width: 100%;
+        }
+
+        .timeline::before {
+            left: 16px;
+        }
+
+        .timeline-item,
+        .timeline-item:nth-child(odd) {
+            flex-direction: column;
+            padding-left: 50px;
+        }
+
+        .timeline-content,
+        .timeline-item:nth-child(odd) .timeline-content,
+        .timeline-item:nth-child(even) .timeline-content {
+            width: 100%;
+            margin: 0;
+        }
+
+        .timeline-dot {
+            left: 16px;
+            top: 10px;
+        }
+
+        .two-columns {
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
+        .card-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .symbols-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .curiosities-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .header-icon { font-size: 70px; }
+
+        section { padding: 3rem 0; }
+
+        main { padding: 0 1.2rem; }
+
+        h2 { font-size: 1.7rem; }
+        h3 { font-size: 1.25rem; }
+
+        p { text-align: left; }
+
+        .faq-question {
+            font-size: 0.92rem;
+            padding: 1.2rem 1.5rem;
+        }
+
+        .prayer-card { padding: 2rem 1.5rem; }
+
+        blockquote { padding: 1.5rem 1.5rem 1.5rem 2rem; }
+
+        .doc-item { flex-direction: column; gap: 0.8rem; }
+
+        .stats-row { gap: 1rem; }
+    }
+
+    @media (max-width: 480px) {
+        .symbols-grid {
+            grid-template-columns: 1fr;
+        }
+
+        header { min-height: 90vh; }
+
+        .header-icon { font-size: 60px; }
+
+        header h1 { font-size: 2rem; }
+
+        .hymn-container { padding: 1.5rem 1rem; }
+
+        .tapete-gallery {
+            grid-template-columns: 1fr;
+        }
+
+        .footer-title { font-size: 1.5rem; }
+
+        .stat-number { font-size: 2rem; }
+
+        .curiosity-number { font-size: 2rem; }
+
+        .back-to-top {
+            bottom: 20px;
+            right: 20px;
+            width: 48px;
+            height: 48px;
+        }
+    }
+</style>
+</head>
+<body>
+
+    <!-- LOADING SCREEN -->
+    <div id="loading">
+        <div class="loading-content">
+            <div class="loading-host">☩</div>
+            <div class="loading-text">CORPUS CHRISTI</div>
+        </div>
+    </div>
+
+    <!-- PROGRESS BAR -->
+    <div class="progress-bar" id="progressBar"></div>
+
+    <!-- HEADER -->
+    <header id="top">
+        <div class="header-bg-pattern"></div>
+        <div class="header-rays"></div>
+        <div class="header-content">
+            <div class="header-cross">✦ ✦ ✦</div>
+            <div class="header-icon">🍞</div>
+            <h1>Corpus Christi</h1>
+            <div class="header-subtitle">Solenidade do Santíssimo Corpo e Sangue de Cristo</div>
+            <div class="header-latin">"Hoc est enim Corpus meum" — "Isto é o meu Corpo"</div>
+            <div class="header-divider"></div>
+
+        </div>
+        <div class="scroll-indicator" onclick="document.getElementById('intro').scrollIntoView()">▼</div>
+    </header>
+
+    <!-- NAVIGATION -->
+   <!-- NAVIGATION -->
+<nav>
+    <div class="nav-container">
+        <button class="nav-toggle" onclick="toggleMenu()" id="navToggleBtn">
+            <span class="nav-toggle-icon">📖</span>
+            <span class="nav-toggle-text">Índice</span>
+            <span class="nav-toggle-arrow">▼</span>
+        </button>
+        <ul class="nav-menu" id="navMenu">
+            <li><a href="#intro">Introdução</a></li>
+            <li><a href="#historia">História</a></li>
+            <li><a href="#contexto">Contexto</a></li>
+            <li><a href="#teologia">Teologia</a></li>
+            <li><a href="#liturgia">Liturgia</a></li>
+            <li><a href="#tomas">S. Tomás</a></li>
+            <li><a href="#procissao">Procissão</a></li>
+            <li><a href="#tapetes">Tapetes</a></li>
+            <li><a href="#brasil">Brasil</a></li>
+            <li><a href="#mundo">Pelo Mundo</a></li>
+            <li><a href="#milagres">Milagres</a></li>
+            <li><a href="#simbolos">Símbolos</a></li>
+            <li><a href="#arte">Arte</a></li>
+            <li><a href="#documentos">Documentos</a></li>
+            <li><a href="#data">Calendário</a></li>
+            <li><a href="#social">Comunidade</a></li>
+            <li><a href="#oracoes">Orações</a></li>
+            <li><a href="#curiosidades">Curiosidades</a></li>
+            <li><a href="#faq">FAQ</a></li>
+        </ul>
+    </div>
+</nav>
+
+    <!-- MAIN CONTENT -->
+    <main>
+
+        <!-- ==================== SEÇÃO 1: INTRODUÇÃO ==================== -->
+        <section id="intro" class="fade-in">
+            <div class="section-header">
+                <span class="section-number">Capítulo I</span>
+                <span class="section-icon">📖</span>
+                <h2>O que é Corpus Christi?</h2>
+                <p class="section-subtitle">Uma introdução à maior festa eucarística da Igreja</p>
+                <div class="section-divider"></div>
+            </div>
+
+            <p><strong>Corpus Christi</strong> — expressão latina que significa literalmente <em>"Corpo de Cristo"</em> — é a <strong>Solenidade do Santíssimo Corpo e Sangue de Cristo</strong>, uma das mais importantes festas do calendário litúrgico da Igreja Católica. Celebrada com grande pompa, devoção e alegria, esta solenidade é dedicada exclusivamente a honrar, adorar e proclamar publicamente a <strong>presença real de Jesus Cristo</strong> no sacramento da Eucaristia.</p>
+
+            <div class="highlight-box">
+                <h4>🔑 Em resumo</h4>
+                <p>Corpus Christi é a festa que celebra o mistério da <strong>Transubstanciação</strong>: a fé católica de que, na Missa, o pão e o vinho se convertem verdadeiramente no Corpo e Sangue de Jesus Cristo, embora mantenham as aparências (espécies) de pão e vinho.</p>
+            </div>
+
+            <p>Diferente da <strong>Quinta-feira Santa</strong> — que também recorda a instituição da Eucaristia, mas dentro do contexto penitencial e solene da Semana Santa —, Corpus Christi é uma celebração de <strong>caráter festivo e triunfal</strong>. É o dia em que a Igreja sai às ruas, literalmente, para proclamar ao mundo que Cristo está vivo e presente na Eucaristia.</p>
+
+            <div class="stats-row">
+                <div class="stat-item">
+                    <span class="stat-number">760+</span>
+                    <span class="stat-label">Anos de tradição</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">1264</span>
+                    <span class="stat-label">Ano de instituição</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">100+</span>
+                    <span class="stat-label">Países celebrantes</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">1 bilhão+</span>
+                    <span class="stat-label">Fiéis no mundo</span>
+                </div>
+            </div>
+
+            <p>A solenidade é marcada por três elementos fundamentais que a tornam única no calendário da Igreja:</p>
+
+            <div class="card-grid">
+                <div class="card">
+                    <span class="card-icon">⛪</span>
+                    <h4>A Missa Solene</h4>
+                    <p>Uma liturgia especialmente elaborada, com textos próprios compostos por São Tomás de Aquino, incluindo a rara <em>Sequência</em> "Lauda Sion Salvatorem".</p>
+                </div>
+                <div class="card">
+                    <span class="card-icon">🚶</span>
+                    <h4>A Procissão</h4>
+                    <p>O Santíssimo Sacramento é conduzido solenemente pelas ruas, numa manifestação pública de fé que transforma o espaço urbano em espaço sagrado.</p>
+                </div>
+                <div class="card">
+                    <span class="card-icon">🎨</span>
+                    <h4>Os Tapetes</h4>
+                    <p>Em muitas cidades, especialmente no Brasil, as ruas são ornamentadas com tapetes artísticos feitos de serragem colorida, flores, sal e outros materiais.</p>
+                </div>
+            </div>
+
+            <p>Esta solenidade ocupa um lugar tão central na vida da Igreja que o <strong>Papa Urbano IV</strong>, ao instituí-la em 1264, pediu ninguém menos que <strong>São Tomás de Aquino</strong> — o maior teólogo da história — para compor todos os textos litúrgicos da celebração, incluindo hinos que são cantados até hoje em todo o mundo.</p>
+        </section>
+
+        <!-- ==================== SEÇÃO 2: HISTÓRIA ==================== -->
+        <section id="historia" class="fade-in">
+            <div class="section-header">
+                <span class="section-number">Capítulo II</span>
+                <span class="section-icon">📜</span>
+                <h2>História e Origem</h2>
+                <p class="section-subtitle">Como nasceu a maior festa eucarística do cristianismo</p>
+                <div class="section-divider"></div>
+            </div>
+
+            <p>A história de Corpus Christi é uma trama fascinante que envolve visões místicas, um milagre extraordinário, a decisão de papas e o gênio de um dos maiores intelectuais de todos os tempos. Tudo começa no século XIII, uma época de grande fervor eucarístico na Europa.</p>
+
+            <h3>Santa Juliana de Liège: A Visionária</h3>
+
+            <p>Tudo começou com uma jovem religiosa agostiniana chamada <strong>Juliana de Mont Cornillon</strong> (1193-1258), nascida em Retinne, próximo a Liège (na atual Bélgica). Desde os 16 anos de idade, Juliana recebia uma visão recorrente e intrigante: via a <strong>lua cheia com uma faixa escura atravessando-a</strong>.</p>
+
+            <p>Após anos de oração e discernimento, Juliana compreendeu o significado da visão: a lua representava o <strong>ano litúrgico da Igreja</strong>, que era brilhante e completo; porém, a faixa escura indicava a <strong>ausência de uma festa específica dedicada ao Santíssimo Sacramento</strong>. Cristo, segundo a visão, desejava que fosse instituída uma solenidade em honra de Seu Corpo e Sangue.</p>
+
+            <div class="highlight-box">
+                <h4>📌 O significado da visão</h4>
+                <p>A lua cheia = o ciclo completo do Ano Litúrgico. A faixa escura = a lacuna de uma festa exclusivamente dedicada à Eucaristia. Embora a Quinta-feira Santa recordasse a instituição da Eucaristia, o clima penitencial da Semana Santa não permitia a celebração festiva que o sacramento merecia.</p>
+            </div>
+
+            <p>Juliana comunicou sua visão ao <strong>cônego João de Lausanne</strong> e a outros teólogos, que após análise consideraram-na autêntica. Em 1246, o <strong>Bispo Roberto de Thourotte</strong>, bispo de Liège, instituiu pela primeira vez a festa do Corpus Christi em sua diocese. Foi a <strong>primeira celebração oficial</strong> desta solenidade.</p>
+
+            <h3>O Milagre de Bolsena (1263)</h3>
+
+            <div class="miracle-box">
+                <h4>🔥 O Milagre que Mudou a História</h4>
+                <p>Em <strong>1263</strong>, um sacerdote boêmio chamado <strong>Pedro de Praga</strong> peregrinou até Roma. Este padre passava por uma crise de fé: duvidava da <strong>presença real de Cristo na Eucaristia</strong>. Ele não conseguia crer plenamente que o pão e o vinho se transformassem verdadeiramente no Corpo e Sangue de Cristo durante a consagração.</p>
+                <p>Ao passar pela cidade de <strong>Bolsena</strong>, na Itália, Pedro celebrou a Missa na <strong>Igreja de Santa Cristina</strong>. No momento da consagração, quando elevou a Hóstia, aconteceu o extraordinário: a <strong>Hóstia começou a sangrar</strong>, gotejando sangue sobre o <strong>corporal</strong> (o pano litúrgico sobre o altar). O sangue formou um padrão que, segundo a tradição, delineava o rosto de Cristo.</p>
+                <p>Pedro de Praga, atônito e em lágrimas, interrompeu a Missa e levou o corporal ensanguentado ao <strong>Papa Urbano IV</strong>, que se encontrava na vizinha cidade de <strong>Orvieto</strong>. O Papa, profundamente impressionado, mandou investigar o milagre e, convencido de sua autenticidade, tomou uma decisão histórica.</p>
+            </div>
+
+            <p>O corporal manchado de sangue é conservado até hoje na magnífica <strong>Catedral de Orvieto</strong>, construída especialmente para abrigá-lo. A catedral, uma das mais belas da Itália, é em si mesma um monumento a Corpus Christi.</p>
+
+            <h3>Linha do Tempo Histórica</h3>
+
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-year">1193</div>
+                        <h4>Nascimento de Santa Juliana</h4>
+                        <p>Juliana nasce em Retinne, perto de Liège (Bélgica). Órfã desde cedo, é criada por religiosas agostinianas.</p>
+                    </div>
+                    <div class="timeline-dot"></div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-year">1209</div>
+                        <h4>As visões começam</h4>
+                        <p>Aos 16 anos, Juliana começa a receber a visão recorrente da lua com a faixa escura, sem compreender seu significado.</p>
+                    </div>
+                    <div class="timeline-dot"></div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-year">~1230</div>
+                        <h4>Juliana compreende a visão</h4>
+                        <p>Após anos de oração, compreende que Cristo pede uma festa dedicada exclusivamente ao Santíssimo Sacramento.</p>
+                    </div>
+                    <div class="timeline-dot"></div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-year">1246</div>
+                        <h4>Primeira celebração</h4>
+                        <p>O Bispo Roberto de Thourotte institui a festa de Corpus Christi na diocese de Liège. É a primeira vez que se celebra oficialmente.</p>
+                    </div>
+                    <div class="timeline-dot"></div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-year">1258</div>
+                        <h4>Morte de Santa Juliana</h4>
+                        <p>Juliana morre sem ver seu sonho realizado para a Igreja universal. Será canonizada posteriormente.</p>
+                    </div>
+                    <div class="timeline-dot"></div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-year">1263</div>
+                        <h4>Milagre de Bolsena</h4>
+                        <p>A Hóstia sangra nas mãos do padre Pedro de Praga em Bolsena, Itália. O corporal é levado ao Papa Urbano IV em Orvieto.</p>
+                    </div>
+                    <div class="timeline-dot"></div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-year">1264</div>
+                        <h4>Instituição universal</h4>
+                        <p>O Papa Urbano IV publica a bula <em>"Transiturus de hoc mundo"</em> e institui Corpus Christi para toda a Igreja. Encarrega São Tomás de Aquino de compor o ofício litúrgico.</p>
+                    </div>
+                    <div class="timeline-dot"></div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-year">1311-1312</div>
+                        <h4>Concílio de Vienne</h4>
+                        <p>O Papa Clemente V confirma e reforça a obrigatoriedade da festa em toda a cristandade, pois a morte de Urbano IV (1264) havia dificultado a implementação imediata.</p>
+                    </div>
+                    <div class="timeline-dot"></div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-year">1317</div>
+                        <h4>Papa João XXII</h4>
+                        <p>Introduz oficialmente a procissão com o Santíssimo Sacramento como parte integrante da celebração, consolidando o formato que conhecemos.</p>
+                    </div>
+                    <div class="timeline-dot"></div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-year">Séc. XIV-XV</div>
+                        <h4>Expansão pela Europa</h4>
+                        <p>A festa se espalha por toda a Europa, tornando-se uma das mais populares. Surgem os Autos Sacramentais, as confrarias e as grandes procissões públicas.</p>
+                    </div>
+                    <div class="timeline-dot"></div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-year">Séc. XVI</div>
+                        <h4>Concílio de Trento</h4>
+                        <p>Em resposta à Reforma Protestante, o Concílio reafirma solenemente a doutrina da Transubstanciação e valoriza ainda mais a procissão de Corpus Christi como profissão pública de fé.</p>
+                    </div>
+                    <div class="timeline-dot"></div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-year">Séc. XVI-XVIII</div>
+                        <h4>Chegada às Américas</h4>
+                        <p>Os colonizadores portugueses e espanhóis levam a tradição de Corpus Christi para o Novo Mundo. No Brasil, as primeiras celebrações datam do século XVI.</p>
+                    </div>
+                    <div class="timeline-dot"></div>
+                </div>
+            </div>
+
+            <h3>A Bula "Transiturus de hoc mundo"</h3>
+
+            <p>O documento que instituiu Corpus Christi para toda a Igreja é a bula papal <em>"Transiturus de hoc mundo"</em>, publicada pelo <strong>Papa Urbano IV</strong> em <strong>11 de agosto de 1264</strong>. O título vem das palavras iniciais do texto, que faz referência à passagem de Cristo deste mundo ao Pai (João 13,1).</p>
+
+            <blockquote>
+                "Consideramos justo e digno que, da instituição tão salutar e tão maravilhosa [da Eucaristia], se celebre anualmente uma festa especial e solene, a fim de que, neste dia, o que diariamente se venera na Igreja, com maior solenidade e esplendor se honre."
+                <cite>— Papa Urbano IV, Transiturus de hoc mundo, 1264</cite>
+            </blockquote>
+
+            <p>Urbano IV faleceu poucos meses após publicar a bula, o que retardou sua implementação. Foi necessário que o <strong>Papa Clemente V</strong>, no <strong>Concílio de Vienne</strong> (1311-1312), reconfirmasse a festa, e que o <strong>Papa João XXII</strong> a promulgasse definitivamente com a inclusão da procissão (1317), para que Corpus Christi se tornasse prática universal e irreversível.</p>
+        </section>
+<!-- ==================== SEÇÃO 3: CONTEXTO HISTÓRICO-CRÍTICO ==================== -->
+<section id="contexto" class="fade-in">
+    <div class="section-header">
+        <span class="section-number">Capítulo III</span>
+        <span class="section-icon">🏛️</span>
+        <h2>O Contexto da Época</h2>
+        <p class="section-subtitle">Por que o Século XIII? As forças históricas que prepararam o terreno</p>
+        <div class="section-divider"></div>
+    </div>
+
+    <p>A instituição de Corpus Christi em 1264 não foi um evento isolado: ela emergiu de um <strong>contexto histórico, cultural, político e espiritual</strong> extraordinariamente rico. Compreender este contexto não diminui o caráter providencial da festa — ao contrário, mostra como Deus se serve das circunstâncias humanas para realizar Sua obra. O século XIII foi, sem exagero, um dos períodos mais férteis da história da Igreja.</p>
+
+    <div class="highlight-box">
+        <h4>🔑 A grande questão</h4>
+        <p>Por que Corpus Christi surgiu <em>justamente</em> no século XIII, e não antes ou depois? A Eucaristia era celebrada desde o século I; a doutrina da Presença Real era pacificamente aceita. O que mudou para que se sentisse a necessidade de uma festa específica e pública? A resposta está numa convergência única de fatores históricos.</p>
+    </div>
+
+    <h3>1. A Reação à Heresia Cátara</h3>
+
+    <p>No século XII e XIII, o sul da França e o norte da Itália foram tomados pela <strong>heresia cátara</strong> (também chamada de albigense, em referência à cidade de Albi). Os cátaros pregavam um <strong>dualismo radical</strong>: o mundo material seria criação de um deus mau, enquanto apenas o espírito seria obra do Deus bom. Como consequência lógica desta visão:</p>
+
+    <ul class="custom-list">
+        <li><strong>Negavam a Encarnação:</strong> Cristo não poderia ter assumido carne material, pois a matéria é má. Sua humanidade seria apenas aparente.</li>
+        <li><strong>Negavam a Eucaristia:</strong> Se Cristo nunca teve corpo real, como poderia Sua "carne" estar presente no pão? Para os cátaros, a Missa era idolatria.</li>
+        <li><strong>Negavam os sacramentos materiais:</strong> Água, óleo, pão — toda matéria era rejeitada como veículo da graça.</li>
+    </ul>
+
+    <p>A resposta da Igreja foi múltipla: o <strong>Concílio de Latrão IV</strong> (1215), convocado pelo Papa Inocêncio III, definiu <em>oficialmente pela primeira vez</em> a doutrina da <strong>Transubstanciação</strong> — usando esta palavra técnica para responder aos cátaros. A criação de Corpus Christi, meio século depois, completaria essa resposta com uma <strong>afirmação pública e festiva</strong> da fé eucarística.</p>
+
+    <blockquote>
+        "Se os cátaros negavam que o pão pudesse conter Deus, a Igreja responderia levando esse mesmo pão pelas ruas, em procissão triunfal, à vista de todos."
+        <cite>— Síntese da reação eclesial do século XIII</cite>
+    </blockquote>
+
+    <h3>2. A Disputa entre Papado e Império</h3>
+
+    <p>O século XIII foi marcado pela violenta disputa entre o <strong>Papado</strong> e o <strong>Sacro Império Romano-Germânico</strong>, especialmente sob o imperador <strong>Frederico II Hohenstaufen</strong> (1194-1250), figura controvertida que foi excomungado quatro vezes e chamado pelos seus contemporâneos de <em>stupor mundi</em> ("o assombro do mundo").</p>
+
+    <p>Frederico II questionava a autoridade temporal do papa e disputava o controle da Itália. Neste contexto, os papas do século XIII precisavam <strong>reafirmar a centralidade espiritual e visível</strong> da Igreja. Corpus Christi se inseria nesta estratégia:</p>
+
+    <div class="card-grid">
+        <div class="card">
+            <span class="card-icon">👑</span>
+            <h4>Cristo Rei</h4>
+            <p>A procissão eucarística proclamava que o <strong>verdadeiro Rei</strong> não era nem o imperador nem o papa, mas Cristo presente no Sacramento. Isto desarmava as pretensões absolutistas dos governantes seculares.</p>
+        </div>
+        <div class="card">
+            <span class="card-icon">⛪</span>
+            <h4>Autoridade Papal</h4>
+            <p>Ao instituir uma festa universal, o papa exercia sua <strong>autoridade sobre toda a cristandade</strong> — incluindo os territórios sob influência imperial. Era um gesto de soberania espiritual.</p>
+        </div>
+        <div class="card">
+            <span class="card-icon">🌍</span>
+            <h4>Unidade da Cristandade</h4>
+            <p>Em meio às divisões políticas, uma festa <strong>celebrada simultaneamente em toda a Europa</strong> reafirmava a unidade espiritual dos cristãos, transcendendo fronteiras.</p>
+        </div>
+    </div>
+
+    <p>Não é coincidência que <strong>Urbano IV</strong> — antigo patriarca de Jerusalém e diplomata experiente — tenha sido o papa a instituir a festa. Ele compreendia o poder simbólico de uma celebração pública e universal.</p>
+
+    <h3>3. O Movimento de Piedade Eucarística Feminina</h3>
+
+    <p>Um dos aspectos mais fascinantes (e frequentemente esquecidos) do contexto é o <strong>protagonismo das mulheres</strong> no desenvolvimento da devoção eucarística no século XIII. Não foi por acaso que a visão original veio de uma religiosa, Juliana de Liège.</p>
+
+    <p>Na região da <strong>Bélgica, Holanda e Renânia</strong>, floresceu o movimento das <strong>beguinas</strong> — mulheres leigas que viviam em comunidades semi-religiosas, dedicadas à oração, ao trabalho e à caridade, sem fazer votos perpétuos. Estas mulheres desenvolveram uma <strong>espiritualidade intensamente eucarística e mística</strong>:</p>
+
+    <div class="card-grid">
+        <div class="card">
+            <span class="card-icon">🕊️</span>
+            <h4>Maria de Oignies (†1213)</h4>
+            <p>Beguina belga conhecida por seu fervor eucarístico extraordinário. Suas experiências místicas centradas na Eucaristia influenciaram toda uma geração.</p>
+        </div>
+        <div class="card">
+            <span class="card-icon">📖</span>
+            <h4>Hadewijch de Antuérpia (séc. XIII)</h4>
+            <p>Mística e poetisa beguina cuja obra "Visões" descreve experiências sublimes de união com Cristo na Eucaristia, num lirismo nupcial inédito.</p>
+        </div>
+        <div class="card">
+            <span class="card-icon">✨</span>
+            <h4>Juliana de Liège (1193-1258)</h4>
+            <p>Religiosa agostiniana — mas formada no ambiente das beguinas de Liège. Sua visão e sua persistência tornaram possível a festa de Corpus Christi.</p>
+        </div>
+        <div class="card">
+            <span class="card-icon">💫</span>
+            <h4>Eva de Saint-Martin (†1265)</h4>
+            <p>Reclusa amiga de Juliana, que continuou a luta pela festa após a morte desta. Foi a destinatária da bula de Urbano IV instituindo Corpus Christi.</p>
+        </div>
+    </div>
+
+    <div class="info-box">
+        <h4>📌 Um fato notável</h4>
+        <p>A bula <em>Transiturus de hoc mundo</em>, que instituiu Corpus Christi para toda a Igreja, foi endereçada pessoalmente a <strong>Eva de Saint-Martin</strong> — uma mulher leiga reclusa. Em uma época em que as mulheres tinham pouca voz oficial na Igreja, este gesto papal é extraordinário e mostra o reconhecimento do protagonismo feminino no surgimento da festa.</p>
+    </div>
+
+    <h3>4. As Ordens Mendicantes: Dominicanos e Franciscanos</h3>
+
+    <p>O século XIII viu o nascimento das <strong>ordens mendicantes</strong> — religiosos que, ao contrário dos monges tradicionais (que viviam em mosteiros isolados), iam às cidades para pregar, ensinar e viver entre o povo:</p>
+
+    <ul class="custom-list">
+        <li><strong>Franciscanos</strong> (fundados por São Francisco de Assis, 1209): centrados na pobreza evangélica e numa espiritualidade afetiva centrada na humanidade de Cristo — incluindo a Eucaristia. São Francisco escreveu textos comoventes sobre a reverência devida ao Sacramento.</li>
+        <li><strong>Dominicanos</strong> (fundados por São Domingos, 1216): dedicados à pregação e ao estudo. Foi a ordem de <strong>São Tomás de Aquino</strong>, que escreveu o ofício de Corpus Christi.</li>
+    </ul>
+
+    <p>Estas ordens foram fundamentais para a <strong>difusão rápida</strong> de Corpus Christi: pregavam sobre a festa em todas as cidades, organizavam procissões, ensinavam a doutrina eucarística nas universidades e formavam confrarias leigas dedicadas ao Santíssimo Sacramento. Sem os mendicantes, a festa não teria se espalhado pela Europa em poucas décadas.</p>
+
+    <h3>5. As Universidades e a Escolástica</h3>
+
+    <p>O século XIII é a era das <strong>grandes universidades medievais</strong>: Paris, Bolonha, Oxford, Salamanca. Nelas se desenvolvia a <strong>Escolástica</strong> — método teológico que buscava conciliar fé e razão, usando ferramentas da filosofia aristotélica (recém-redescoberta no Ocidente) para aprofundar os mistérios cristãos.</p>
+
+    <p>Foi neste ambiente que conceitos como <strong>"substância"</strong> e <strong>"acidentes"</strong> (de Aristóteles) foram aplicados à Eucaristia, originando a doutrina técnica da <strong>Transubstanciação</strong>. São Tomás de Aquino — o maior dos escolásticos — sintetizou esta reflexão de modo definitivo.</p>
+
+    <div class="highlight-box">
+        <h4>📚 A precisão escolástica</h4>
+        <p>Antes do século XIII, a fé na Presença Real era afirmada de modo intuitivo e devocional. A Escolástica forneceu o <strong>aparato conceitual preciso</strong> para defender, explicar e aprofundar essa fé diante de objeções intelectuais. Corpus Christi nasce justamente quando a teologia eucarística atinge sua máxima maturidade técnica.</p>
+    </div>
+
+    <h3>6. A Urbanização e a Religião Pública</h3>
+
+    <p>O século XIII presenciou o <strong>renascimento das cidades</strong> europeias após séculos de ruralização. Surgiram burgos populosos, com mercados, catedrais góticas, universidades, corporações de ofícios. Nasceu uma nova forma de viver a fé: <strong>urbana, comunitária, visível</strong>.</p>
+
+    <p>Neste contexto, as <strong>procissões públicas</strong> tornaram-se uma forma característica de devoção. A cidade medieval era um espaço onde o sagrado e o profano se entrelaçavam: as ruas eram cenário de festas religiosas, dramatizações, peregrinações. Corpus Christi se encaixou perfeitamente neste padrão — e logo se tornou <strong>a festa urbana por excelência</strong>, organizada pelas confrarias, corporações e câmaras municipais.</p>
+
+    <h3>7. A Devoção à Humanidade de Cristo</h3>
+
+    <p>A espiritualidade do século XIII operou uma <strong>mudança importante de tom</strong> em relação aos séculos anteriores. Se a alta Idade Média havia enfatizado Cristo <em>Pantocrator</em> — o Senhor glorioso e majestoso —, o século XIII começa a contemplar com ternura a <strong>humanidade concreta de Jesus</strong>: o Menino de Belém (São Francisco inventou o presépio em 1223), o Cristo sofredor da Cruz, o Coração que ama.</p>
+
+    <p>Esta nova sensibilidade tornou a Eucaristia ainda mais central: nela, a humanidade concreta de Cristo — Seu Corpo, Seu Sangue — está realmente presente, palpável, próxima. Corpus Christi é, neste sentido, uma <strong>festa profundamente "encarnacional"</strong>: celebra que Deus se fez carne e continua carne no Sacramento.</p>
+
+    <h3>Síntese: A Convergência Providencial</h3>
+
+    <p>Corpus Christi surgiu, portanto, da <strong>convergência única</strong> de sete fatores históricos:</p>
+
+    <div class="steps">
+        <div class="step">
+            <div class="step-content">
+                <h4>Necessidade Doutrinária</h4>
+                <p>Responder às heresias que negavam a Presença Real (cátaros, e mais tarde, prefigurando os protestantes).</p>
+            </div>
+        </div>
+        <div class="step">
+            <div class="step-content">
+                <h4>Estratégia Eclesial</h4>
+                <p>Reafirmar a centralidade espiritual da Igreja em meio às disputas com o poder temporal.</p>
+            </div>
+        </div>
+        <div class="step">
+            <div class="step-content">
+                <h4>Inspiração Mística</h4>
+                <p>Acolher as visões e experiências espirituais (especialmente femininas) que pediam uma festa eucarística.</p>
+            </div>
+        </div>
+        <div class="step">
+            <div class="step-content">
+                <h4>Capilaridade Pastoral</h4>
+                <p>Contar com franciscanos e dominicanos para difundir a festa por toda a Europa.</p>
+            </div>
+        </div>
+        <div class="step">
+            <div class="step-content">
+                <h4>Maturidade Teológica</h4>
+                <p>Dispor da precisão conceitual da Escolástica para explicar e defender o mistério.</p>
+            </div>
+        </div>
+        <div class="step">
+            <div class="step-content">
+                <h4>Contexto Urbano</h4>
+                <p>Ter cidades capazes de organizar grandes procissões e festas públicas com participação de todas as corporações.</p>
+            </div>
+        </div>
+        <div class="step">
+            <div class="step-content">
+                <h4>Espiritualidade Encarnacional</h4>
+                <p>Viver uma piedade que contemplava com ternura a humanidade de Cristo, presente realmente no Sacramento.</p>
+            </div>
+        </div>
+    </div>
+
+    <blockquote>
+        "A história da Igreja é a história de como Deus se serve do tempo, das culturas e dos contextos humanos para realizar a Sua obra. Corpus Christi não foi uma invenção arbitrária do século XIII, mas a <em>floração visível</em> de uma fé que estava madura para se expressar publicamente."
+        <cite>— Reflexão histórico-teológica</cite>
+    </blockquote>
+
+    <p>Compreender este contexto não diminui em nada o caráter <strong>providencial e sobrenatural</strong> de Corpus Christi. Pelo contrário: mostra como a Providência age <em>dentro</em> da história, servindo-se de circunstâncias humanas — políticas, culturais, intelectuais, espirituais — para realizar Sua obra. A festa que celebramos hoje carrega em si toda a riqueza desse momento extraordinário da história cristã.</p>
+
+    <div class="info-box">
+        <h4>📌 Uma observação final</h4>
+        <p>Alguns historiadores seculares interpretam Corpus Christi <em>exclusivamente</em> como ferramenta de poder político-eclesial ou como construção sociocultural. Esta leitura é <strong>reducionista</strong>: ignora a dimensão espiritual genuína (as visões místicas, a fé sincera dos fiéis, os milagres documentados) e a coerência teológica da festa com toda a tradição cristã anterior. A leitura mais completa reconhece tanto o <strong>contexto humano</strong> quanto a <strong>ação divina</strong> — ambos verdadeiros, ambos necessários para entender o fenômeno.</p>
+    </div>
+</section>
+        <!-- ==================== SEÇÃO 3: TEOLOGIA ==================== -->
+        <section id="teologia" class="fade-in">
+            <div class="section-header">
+                <span class="section-number">Capítulo III</span>
+                <span class="section-icon">✝️</span>
+                <h2>Fundamento Teológico</h2>
+                <p class="section-subtitle">A profundidade da fé que sustenta a solenidade</p>
+                <div class="section-divider"></div>
+            </div>
+
+            <p>A solenidade de Corpus Christi não é simplesmente uma "festa bonita" ou uma tradição cultural: ela se sustenta sobre <strong>pilares teológicos profundos</strong> que remontam às próprias palavras de Jesus Cristo, à tradição apostólica e à reflexão dos maiores teólogos da história da Igreja.</p>
+
+            <h3>A Última Ceia: O Momento Fundante</h3>
+
+            <p>Tudo começa na noite anterior à Paixão de Cristo. Na <strong>Última Ceia</strong>, Jesus realiza um gesto que mudará para sempre a história da humanidade. Ele toma o pão, dá graças, parte-o e diz as palavras que fundamentam toda a fé eucarística:</p>
+
+            <div class="scripture-box">
+                <p class="scripture-text">"Enquanto comiam, Jesus tomou o pão e, tendo pronunciado a bênção, partiu-o e, dando-o aos discípulos, disse: <strong>'Tomai, comei, isto é o meu corpo.'</strong> Depois, tomou um cálice e, dando graças, deu-lho dizendo: <strong>'Bebei dele todos, pois isto é o meu sangue, o sangue da Aliança, derramado por muitos para a remissão dos pecados.'</strong>"</p>
+                <p class="scripture-ref">— Mateus 26, 26-28</p>
+            </div>
+
+            <p>É fundamental notar que Jesus não disse "isto <em>representa</em> meu corpo" ou "isto <em>simboliza</em> meu sangue". Ele disse <strong>"isto É"</strong> — uma afirmação direta, categórica e literal que a Igreja, desde os primeiros séculos, entendeu em seu sentido mais pleno.</p>
+
+            <h3>A Transubstanciação</h3>
+
+            <p>O conceito central da teologia eucarística — e, portanto, de Corpus Christi — é a <strong>Transubstanciação</strong>. Este termo, definido solenemente pelo <strong>Concílio de Trento</strong> (Sessão XIII, 1551), descreve o que acontece no momento da consagração durante a Missa:</p>
+
+            <div class="card-grid">
+                <div class="card">
+                    <span class="card-icon">🍞</span>
+                    <h4>Antes da Consagração</h4>
+                    <p>Sobre o altar estão pão e vinho comuns. Sua <strong>substância</strong> (aquilo que faz o pão ser pão e o vinho ser vinho) é de pão e vinho. Suas <strong>aparências</strong> (sabor, cor, textura, forma) são de pão e vinho.</p>
+                </div>
+                <div class="card">
+                    <span class="card-icon">✨</span>
+                    <h4>No momento da Consagração</h4>
+                    <p>Quando o sacerdote pronuncia as palavras de Cristo ("Isto é o meu Corpo... Isto é o meu Sangue"), ocorre a Transubstanciação: a <strong>substância</strong> do pão e do vinho se converte totalmente na substância do Corpo e Sangue de Cristo.</p>
+                </div>
+                <div class="card">
+                    <span class="card-icon">🙏</span>
+                    <h4>Depois da Consagração</h4>
+                    <p>As <strong>aparências</strong> (espécies) de pão e vinho permanecem — sabor, cor, textura continuam os mesmos. Mas a <strong>substância</strong> agora é inteiramente Cristo: Corpo, Sangue, Alma e Divindade.</p>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <h4>📘 Definição do Concílio de Trento</h4>
+                <p>"Pela consagração do pão e do vinho se realiza a conversão de toda a substância do pão na substância do Corpo de Cristo nosso Senhor, e de toda a substância do vinho na substância do Seu Sangue. E esta conversão é pela santa Igreja Católica conveniente e propriamente chamada <strong>Transubstanciação</strong>." (Sessão XIII, Capítulo IV)</p>
+            </div>
+
+            <h3>A Presença Real</h3>
+
+            <p>A doutrina da <strong>Presença Real</strong> afirma que Cristo está <em>verdadeira</em>, <em>real</em> e <em>substancialmente</em> presente na Eucaristia — não de modo figurado, simbólico ou metafórico. Esta presença:</p>
+
+            <ul class="custom-list">
+                <li><strong>É total em cada partícula:</strong> Cristo está inteiro em cada fragmento da Hóstia e em cada gota do Vinho consagrado.</li>
+                <li><strong>Permanece após a Missa:</strong> Cristo continua presente enquanto subsistirem as espécies (aparências) de pão e vinho. Por isso as Hóstias consagradas são guardadas no sacrário.</li>
+                <li><strong>Inclui Corpo, Sangue, Alma e Divindade:</strong> Não se recebe apenas o "corpo" ou apenas o "sangue", mas Cristo todo e inteiro.</li>
+                <li><strong>É independente da fé de quem recebe:</strong> A presença de Cristo não depende da fé subjetiva do fiel, mas da validade da consagração realizada pelo sacerdote ordenado.</li>
+            </ul>
+
+            <h3>Referências Bíblicas Fundamentais</h3>
+
+            <p>A fé eucarística não se baseia apenas na narrativa da Última Ceia. O <strong>Discurso do Pão da Vida</strong>, registrado no capítulo 6 do Evangelho de São João, é o grande fundamento bíblico:</p>
+
+            <div class="scripture-box">
+                <p class="scripture-text">"Eu sou o pão vivo descido do céu. Quem comer deste pão viverá eternamente. E o pão que eu darei é a minha carne, dada para a vida do mundo. (...) Pois a minha carne é verdadeiramente comida, e o meu sangue é verdadeiramente bebida. Quem come a minha carne e bebe o meu sangue permanece em mim, e eu nele."</p>
+                <p class="scripture-ref">— João 6, 51.55-56</p>
+            </div>
+
+            <p>Note que muitos discípulos, escandalizados com estas palavras, abandonaram Jesus (Jo 6,66). Se Jesus estivesse falando em sentido figurado, teria esclarecido e os chamado de volta. Ao contrário, Ele <strong>reforçou</strong> a afirmação e voltou-se para os Doze perguntando: "Vós também quereis ir embora?" (Jo 6,67).</p>
+
+            <div class="two-columns">
+                <div>
+                    <h4>Outras referências do Novo Testamento:</h4>
+                    <ul>
+                        <li><strong>Lucas 22, 19-20:</strong> "Isto é o meu corpo, que é dado por vós. Fazei isto em minha memória."</li>
+                        <li><strong>Marcos 14, 22-24:</strong> Relato da instituição da Eucaristia no Evangelho de Marcos.</li>
+                        <li><strong>1 Coríntios 11, 23-29:</strong> São Paulo transmite a tradição recebida "do Senhor" e adverte: "Aquele que comer o pão ou beber o cálice do Senhor indignamente será réu do Corpo e do Sangue do Senhor."</li>
+                        <li><strong>1 Coríntios 10, 16:</strong> "O cálice de bênção que abençoamos não é a comunhão do Sangue de Cristo? O pão que partimos não é a comunhão do Corpo de Cristo?"</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Prefigurações no Antigo Testamento:</h4>
+                    <ul>
+                        <li><strong>Gênesis 14, 18:</strong> Melquisedec, rei de Salém e sacerdote, oferece pão e vinho — prefiguração do sacrifício eucarístico.</li>
+                        <li><strong>Êxodo 12:</strong> O Cordeiro Pascal, cujo sangue salva o povo — Cristo é o verdadeiro Cordeiro.</li>
+                        <li><strong>Êxodo 16:</strong> O Maná no deserto — alimento milagroso que prefigura a Eucaristia.</li>
+                        <li><strong>Salmo 78, 24-25:</strong> "Fez chover o maná para eles comerem, deu-lhes o trigo do céu."</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>A Eucaristia nos Padres da Igreja</h3>
+
+            <p>Desde os primeiros séculos, os Padres da Igreja (os grandes mestres do cristianismo primitivo) testemunharam a fé na Presença Real:</p>
+
+            <blockquote>
+                "Esta não é comida e bebida comum. Mas assim como Jesus Cristo, nosso Salvador, feito carne pelo Verbo de Deus, teve carne e sangue para nossa salvação, assim também o alimento eucaristizado é a carne e o sangue daquele mesmo Jesus encarnado."
+                <cite>— São Justino Mártir (†165 d.C.), Primeira Apologia, cap. 66</cite>
+            </blockquote>
+
+            <blockquote>
+                "Ele declarou que o cálice, que é parte da criação, é o Seu próprio Sangue, e que o pão, parte da criação, é o Seu próprio Corpo."
+                <cite>— Santo Irineu de Lyon (†202 d.C.), Contra as Heresias, IV, 18</cite>
+            </blockquote>
+
+            <blockquote>
+                "Não consideres o Pão e o Vinho eucarísticos como simples elementos naturais. Pois o Senhor disse claramente: 'Isto é o Meu Corpo.' A fé te assegura, mesmo que os sentidos sugiram outra coisa."
+                <cite>— São Cirilo de Jerusalém (†386 d.C.), Catequeses Mistagógicas, IV, 6</cite>
+            </blockquote>
+
+            <h3>Relação entre Corpus Christi e a Quinta-feira Santa</h3>
+
+            <div class="card-grid">
+                <div class="card">
+                    <span class="card-icon">💜</span>
+                    <h4>Quinta-feira Santa</h4>
+                    <p>Recorda a <strong>instituição da Eucaristia</strong> na Última Ceia. O contexto é penitencial (Semana Santa), com lavapés, o despojamento do altar e a vigília. O tom é de intimidade, despedida e entrega sacrificial.</p>
+                </div>
+                <div class="card">
+                    <span class="card-icon">💛</span>
+                    <h4>Corpus Christi</h4>
+                    <p>Celebra a <strong>presença real permanente</strong> de Cristo na Eucaristia com tom festivo, triunfal e público. A Eucaristia é levada às ruas em procissão, proclamando ao mundo a fé na Presença Real.</p>
+                </div>
+            </div>
+
+            <p>Assim, Corpus Christi não é uma "repetição" da Quinta-feira Santa, mas seu <strong>complemento festivo</strong>: o que na Semana Santa é vivido em clima de Paixão, em Corpus Christi é celebrado em clima de <strong>glória e exultação</strong>.</p>
+        </section>
+
+        <!-- ==================== SEÇÃO 4: LITURGIA ==================== -->
+        <section id="liturgia" class="fade-in">
+            <div class="section-header">
+                <span class="section-number">Capítulo IV</span>
+                <span class="section-icon">⛪</span>
+                <h2>A Liturgia de Corpus Christi</h2>
+                <p class="section-subtitle">A Missa Solene e seus elementos únicos</p>
+                <div class="section-divider"></div>
+            </div>
+
+            <p>A liturgia de Corpus Christi é uma das mais ricas do calendário litúrgico. Praticamente todos os textos da Missa — orações, antífonas, hinos e até a Sequência — foram compostos por <strong>São Tomás de Aquino</strong>, a pedido do Papa Urbano IV, tornando este ofício uma obra-prima tanto teológica quanto literária.</p>
+
+            <h3>A Missa Solene</h3>
+
+            <p>A Missa de Corpus Christi é celebrada com o máximo de solenidade: paramentos <strong>brancos ou dourados</strong> (cores da glória e da alegria), incenso abundante, cantos solenes e, de preferência, com diácono e subdiácono.</p>
+
+            <div class="highlight-box">
+                <h4>📋 Estrutura da Missa</h4>
+                <ul>
+                    <li><strong>Antífona de Entrada:</strong> "Ele os alimentou com a flor do trigo e os saciou com o mel da rocha" (Sl 81,17)</li>
+                    <li><strong>Oração Coleta:</strong> Composta por São Tomás de Aquino</li>
+                    <li><strong>Leituras:</strong> Variam conforme o ciclo litúrgico (A, B ou C)</li>
+                    <li><strong>Sequência:</strong> "Lauda Sion Salvatorem" (obrigatória ou facultativa conforme o rito)</li>
+                    <li><strong>Evangelho:</strong> Os relatos da instituição eucarística ou o Discurso do Pão da Vida</li>
+                    <li><strong>Prefácio:</strong> Prefácio próprio da Santíssima Eucaristia</li>
+                    <li><strong>Antífona de Comunhão:</strong> "Quem come a minha carne e bebe o meu sangue permanece em mim e eu nele" (Jo 6,57)</li>
+                </ul>
+            </div>
+
+            <h3>As Leituras nos Três Ciclos</h3>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Ciclo</th>
+                            <th>1ª Leitura</th>
+                            <th>Salmo</th>
+                            <th>2ª Leitura</th>
+                            <th>Evangelho</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Ano A</strong></td>
+                            <td>Dt 8, 2-3.14b-16a (O maná no deserto)</td>
+                            <td>Sl 147</td>
+                            <td>1Cor 10, 16-17 (O cálice e o pão)</td>
+                            <td>Jo 6, 51-58 (Pão da Vida)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Ano B</strong></td>
+                            <td>Ex 24, 3-8 (Sangue da Aliança)</td>
+                            <td>Sl 116</td>
+                            <td>Hb 9, 11-15 (Mediador da Nova Aliança)</td>
+                            <td>Mc 14, 12-16.22-26 (Última Ceia)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Ano C</strong></td>
+                            <td>Gn 14, 18-20 (Melquisedec)</td>
+                            <td>Sl 110</td>
+                            <td>1Cor 11, 23-26 (Tradição da Ceia)</td>
+                            <td>Lc 9, 11b-17 (Multiplicação dos pães)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>A Sequência: "Lauda Sion Salvatorem"</h3>
+
+            <p>Uma das características mais notáveis da liturgia de Corpus Christi é a presença de uma <strong>Sequência</strong> — um tipo de hino poético cantado antes do Evangelho. No rito romano atual, existem apenas <strong>quatro solenidades com Sequência</strong>: Páscoa (<em>Victimae Paschali Laudes</em>), Pentecostes (<em>Veni Sancte Spiritus</em>), Corpus Christi (<em>Lauda Sion</em>) e Nossa Senhora das Dores (<em>Stabat Mater</em>).</p>
+
+            <p>A <em>Lauda Sion Salvatorem</em>, composta por São Tomás de Aquino, é um verdadeiro <strong>tratado teológico em forma de poesia</strong>. Em 24 estrofes, ela expõe com precisão filosófica e beleza literária toda a doutrina da Eucaristia: a Presença Real, a Transubstanciação, a integridade de Cristo em cada fragmento, a diferença entre os que comungam dignamente e indignamente.</p>
+
+            <h3>Cores Litúrgicas</h3>
+
+            <p>A cor litúrgica de Corpus Christi é o <strong>branco</strong> (ou <strong>dourado</strong>, quando disponível), a cor das grandes festas do Senhor, simbolizando <strong>glória, alegria, luz e pureza</strong>.</p>
+        </section>
+
+        <!-- ==================== SEÇÃO 5: SÃO TOMÁS DE AQUINO ==================== -->
+        <section id="tomas" class="fade-in">
+            <div class="section-header">
+                <span class="section-number">Capítulo V</span>
+                <span class="section-icon">📝</span>
+                <h2>São Tomás de Aquino e Corpus Christi</h2>
+                <p class="section-subtitle">O gênio teológico por trás da liturgia</p>
+                <div class="section-divider"></div>
+            </div>
+
+            <p><strong>São Tomás de Aquino</strong> (1225-1274), frade dominicano, é considerado o maior teólogo da história da Igreja Católica, honrado com o título de <em>Doctor Angelicus</em> (Doutor Angélico). Sua obra-prima, a <em>Summa Theologiae</em>, é o mais sistemático tratado de teologia jamais escrito. Mas foi em seu trabalho para Corpus Christi que ele uniu como ninguém a <strong>profundidade teológica à beleza poética</strong>.</p>
+
+            <h3>O Pedido do Papa</h3>
+
+            <p>Quando o Papa Urbano IV decidiu instituir a festa de Corpus Christi para toda a Igreja (1264), ele precisava de textos litúrgicos à altura da solenidade. Para esta tarefa monumental, escolheu São Tomás de Aquino, que então lecionava na Itália. Tomás compôs:</p>
+
+            <div class="card-grid">
+                <div class="card">
+                    <span class="card-icon">📿</span>
+                    <h4>O Ofício Completo</h4>
+                    <p>Todas as orações, antífonas, responsórios e lições das Horas Litúrgicas (Matinas, Laudes, Vésperas, etc.) para a festa e sua oitava.</p>
+                </div>
+                <div class="card">
+                    <span class="card-icon">🎵</span>
+                    <h4>Os Hinos</h4>
+                    <p>Seis hinos que se tornaram imortais: Pange Lingua, Tantum Ergo, Lauda Sion, Sacris Solemniis, Verbum Supernum e Adoro Te Devote.</p>
+                </div>
+                <div class="card">
+                    <span class="card-icon">📖</span>
+                    <h4>A Missa Própria</h4>
+                    <p>As orações (coleta, sobre as oferendas e após a comunhão) da Missa de Corpus Christi.</p>
+                </div>
+            </div>
+
+            <h3>Os Grandes Hinos</h3>
+
+            <div class="hymn-container">
+                <h4>🎶 Pange Lingua Gloriosi Corporis Mysterium</h4>
+                <div class="hymn-text">
+                    <span class="latin">Pange, lingua, gloriosi Corporis mysterium,</span>
+                    <span class="translation">Canta, ó língua, o mistério do glorioso Corpo,</span>
+                    <span class="latin">Sanguinisque pretiosi, quem in mundi pretium</span>
+                    <span class="translation">e do precioso Sangue que, como preço do mundo,</span>
+                    <span class="latin">Fructus ventris generosi Rex effudit gentium.</span>
+                    <span class="translation">o Rei das nações, fruto de um ventre generoso, derramou.</span>
+                </div>
+                <p class="hymn-author">— São Tomás de Aquino, 1264</p>
+            </div>
+
+            <p>As duas últimas estrofes do <em>Pange Lingua</em> formam o célebre <strong>Tantum Ergo</strong>, cantado em toda exposição solene do Santíssimo Sacramento ao redor do mundo:</p>
+
+            <div class="hymn-container">
+                <h4>🎶 Tantum Ergo</h4>
+                <div class="hymn-text">
+                    <span class="latin">Tantum ergo Sacramentum veneremur cernui,</span>
+                    <span class="translation">Veneremos, pois, de joelhos, tão grande Sacramento,</span>
+                    <span class="latin">Et antiquum documentum novo cedat ritui;</span>
+                    <span class="translation">e o antigo rito ceda lugar ao novo;</span>
+                    <span class="latin">Praestet fides supplementum sensuum defectui.</span>
+                    <span class="translation">que a fé supra o que falta aos sentidos.</span>
+                </div>
+                <p class="hymn-author">— São Tomás de Aquino</p>
+            </div>
+
+            <p>O último verso — <em>"Praestet fides supplementum sensuum defectui"</em> ("que a fé supra o que falta aos sentidos") — é considerado uma das frases mais geniais da história da teologia. Em poucas palavras, Tomás resume toda a doutrina eucarística: os sentidos percebem pão e vinho, mas a <strong>fé</strong> nos revela que ali está Cristo.</p>
+
+            <h3>Outros Hinos Célebres</h3>
+
+            <div class="hymn-container">
+                <h4>🎶 Adoro Te Devote (Adoro-te devotamente)</h4>
+                <div class="hymn-text">
+                    <span class="latin">Adoro te devote, latens Deitas,</span>
+                    <span class="translation">Adoro-te devotamente, Divindade escondida,</span>
+                    <span class="latin">Quae sub his figuris vere latitas;</span>
+                    <span class="translation">que sob estas aparências verdadeiramente te ocultas;</span>
+                    <span class="latin">Tibi se cor meum totum subjicit,</span>
+                    <span class="translation">a Ti se submete inteiramente o meu coração,</span>
+                    <span class="latin">Quia te contemplans totum deficit.</span>
+                    <span class="translation">porque ao te contemplar, todo ele desfalece.</span>
+                </div>
+                <p class="hymn-author">— São Tomás de Aquino</p>
+            </div>
+
+            <div class="hymn-container">
+                <h4>🎶 Panis Angelicus (Pão dos Anjos)</h4>
+                <div class="hymn-text">
+                    <span class="latin">Panis angelicus fit panis hominum;</span>
+                    <span class="translation">O pão dos anjos torna-se pão dos homens;</span>
+                    <span class="latin">Dat panis caelicus figuris terminum;</span>
+                    <span class="translation">o pão celeste põe fim às figuras;</span>
+                    <span class="latin">O res mirabilis! Manducat Dominum</span>
+                    <span class="translation">Ó coisa admirável! Come o Senhor</span>
+                    <span class="latin">Pauper, servus et humilis.</span>
+                    <span class="translation">o pobre, o servo e o humilde.</span>
+                </div>
+                <p class="hymn-author">— São Tomás de Aquino (estrofe do hino Sacris Solemniis)</p>
+            </div>
+
+            <div class="curiosity-box">
+                <h4>💡 Você sabia?</h4>
+                <p>Conta a tradição que, ao entregar os textos ao Papa, São Tomás de Aquino soube que outro teólogo (possivelmente São Boaventura) também havia sido convidado a compor os textos. Ao ouvir os hinos de Tomás, o outro teria rasgado os seus próprios, reconhecendo a superioridade insuperável da obra do Aquinate. Embora a historicidade do episódio seja debatida, ele ilustra o reconhecimento universal da qualidade destes textos.</p>
+            </div>
+
+            <h3>A Teologia nos Hinos</h3>
+
+            <p>O que torna os hinos de São Tomás tão extraordinários é que eles são simultaneamente <strong>poesia de altíssimo nível</strong> e <strong>teologia de precisão cirúrgica</strong>. Cada verso contém uma afirmação doutrinária precisa, expressa com beleza que toca o coração. Vejamos alguns exemplos da <em>Lauda Sion</em>:</p>
+
+            <ul>
+                <li><strong>"Sub diversis speciebus, signis tantum et non rebus, latent res eximiae"</strong> — "Sob diversas espécies, apenas sinais e não coisas, escondem-se realidades sublimes." → Expressa com perfeição a doutrina das espécies (aparências) vs. substância.</li>
+                <li><strong>"Fracto demum sacramento, ne vacilles, sed memento, tantum esse sub fragmento, quantum toto tegitur"</strong> — "Ao partir o sacramento, não vaciles, mas lembra: tanto está num fragmento quanto se contém no todo." → Cristo inteiro em cada partícula.</li>
+                <li><strong>"Sumunt boni, sumunt mali, sorte tamen inaequali, vitae vel interitus"</strong> — "Recebem-no bons e maus, com sorte porém desigual: para vida ou perdição." → A comunhão indigna é condenação, não salvação.</li>
+            </ul>
+        </section>
+
+        <!-- ==================== SEÇÃO 6: PROCISSÃO ==================== -->
+        <section id="procissao" class="fade-in">
+            <div class="section-header">
+                <span class="section-number">Capítulo VI</span>
+                <span class="section-icon">🚶</span>
+                <h2>A Procissão de Corpus Christi</h2>
+                <p class="section-subtitle">Quando Cristo sai às ruas</p>
+                <div class="section-divider"></div>
+            </div>
+
+            <p>A <strong>procissão de Corpus Christi</strong> é uma das tradições mais emblemáticas e emocionantes da fé católica. Nela, o Santíssimo Sacramento — Jesus Cristo realmente presente na Hóstia consagrada — é conduzido solenemente pelas ruas da cidade, transformando o espaço público em espaço sagrado.</p>
+
+            <h3>Origem da Procissão</h3>
+
+            <p>Embora a bula de Urbano IV (1264) não mencionasse explicitamente uma procissão, esta prática surgiu de forma espontânea e rapidamente se tornou inseparável da festa. A primeira procissão documentada ocorreu em <strong>Colônia, Alemanha</strong>, por volta de <strong>1279</strong>. Em <strong>1317</strong>, o Papa João XXII oficializou a procissão como parte integrante da celebração.</p>
+
+            <p>Após o <strong>Concílio de Trento</strong> (1545-1563), a procissão ganhou ainda maior importância como <strong>profissão pública de fé</strong> na Presença Real, em resposta direta à negação protestante da Transubstanciação.</p>
+
+            <h3>Significado Teológico</h3>
+
+            <p>A procissão de Corpus Christi não é uma simples caminhada devocional. Ela possui significados profundos:</p>
+
+            <div class="card-grid">
+                <div class="card">
+                    <span class="card-icon">👑</span>
+                    <h4>Cristo Rei</h4>
+                    <p>Cristo é conduzido pelas ruas como um Rei que percorre seu reino. A procissão proclama a <strong>soberania de Cristo</strong> sobre toda a realidade — não apenas o interior dos templos, mas as casas, as ruas, a vida pública.</p>
+                </div>
+                <div class="card">
+                    <span class="card-icon">🏃</span>
+                    <h4>Igreja Peregrina</h4>
+                    <p>A procissão simboliza a <strong>Igreja em caminhada</strong> rumo à Pátria celeste. Assim como o povo de Israel caminhou pelo deserto alimentado pelo maná, a Igreja caminha pela história alimentada pela Eucaristia.</p>
+                </div>
+                <div class="card">
+                    <span class="card-icon">📢</span>
+                    <h4>Evangelização</h4>
+                    <p>É uma forma de <strong>anúncio público da fé</strong>. Os que veem a procissão são interpelados pelo testemunho de uma comunidade que crê na presença real de Deus entre os homens.</p>
+                </div>
+                <div class="card">
+                    <span class="card-icon">🙏</span>
+                    <h4>Bênção sobre a cidade</h4>
+                    <p>Cristo, ao passar pelas ruas, <strong>abençoa</strong> toda a cidade — suas casas, seus habitantes, seu trabalho, suas dores. A procissão é intercessão viva.</p>
+                </div>
+            </div>
+
+            <h3>Elementos da Procissão</h3>
+
+            <div class="steps">
+                <div class="step">
+                    <div class="step-content">
+                        <h4>A Cruz Processional</h4>
+                        <p>Abre a procissão, indicando que todo o cortejo segue Cristo crucificado e ressuscitado.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-content">
+                        <h4>Estandartes e Bandeiras</h4>
+                        <p>As diferentes comunidades, pastorais, movimentos e irmandades levam seus estandartes, mostrando a diversidade e unidade da Igreja.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-content">
+                        <h4>As Crianças</h4>
+                        <p>Meninas vestidas de anjo e crianças da Primeira Comunhão ocupam lugar de destaque, lançando pétalas de flores pelo caminho.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-content">
+                        <h4>Incenso</h4>
+                        <p>Os turiferários balançam os turíbulos, espalhando nuvens de incenso perfumado, símbolo das orações que sobem a Deus (Sl 141,2) e sinal da sacralidade.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-content">
+                        <h4>Velas e Tochas</h4>
+                        <p>Fiéis carregam velas acesas, símbolo de Cristo como Luz do Mundo (Jo 8,12) e de fé ardente.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-content">
+                        <h4>O Pálio (Baldaquino)</h4>
+                        <p>Cobertura de tecido nobre (geralmente branco e dourado), sustentada por quatro ou seis varas, sob a qual caminha o sacerdote que carrega o Santíssimo. Simboliza a proteção, a reverência e a dignidade real.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-content">
+                        <h4>O Sacerdote com o Santíssimo</h4>
+                        <p>O celebrante principal carrega o Santíssimo Sacramento, usando o véu umeral (um véu que cobre os ombros e as mãos, por reverência). É o centro de toda a procissão.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-content">
+                        <h4>Os Altares de Repouso (Estações)</h4>
+                        <p>Ao longo do percurso, são montados altares temporários (geralmente quatro, simbolizando os quatro Evangelhos ou os quatro cantos do mundo). Em cada altar, a procissão para, lê-se o Evangelho, canta-se e dá-se a bênção com o Santíssimo.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-content">
+                        <h4>Cantos e Hinos</h4>
+                        <p>Durante todo o percurso, cantam-se os hinos eucarísticos compostos por São Tomás de Aquino e outros cantos de louvor ao Santíssimo Sacramento.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-content">
+                        <h4>Pétalas de Flores</h4>
+                        <p>Flores e pétalas são lançadas ao chão diante do Santíssimo, perfumando o caminho — gesto de honra e amor, inspirado na entrada triunfal de Jesus em Jerusalém.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <h4>📌 O percurso</h4>
+                <p>Tradicionalmente, a procissão parte da igreja principal (catedral ou matriz), percorre as ruas da cidade e retorna ao templo, onde se dá a bênção final. O trajeto costuma ser circular ou em formato que permita o maior alcance possível pelas ruas da comunidade.</p>
+            </div>
+        </section>
+
+        <!-- ==================== SEÇÃO 7: TAPETES ==================== -->
+        <section id="tapetes" class="fade-in">
+            <div class="section-header">
+                <span class="section-number">Capítulo VII</span>
+                <span class="section-icon">🎨</span>
+                <h2>Os Tapetes de Corpus Christi</h2>
+                <p class="section-subtitle">Arte efêmera, fé duradoura</p>
+                <div class="section-divider"></div>
+            </div>
+
+            <p>Uma das tradições mais belas e singulares de Corpus Christi é a confecção de <strong>tapetes artísticos</strong> nas ruas por onde passará a procissão. Verdadeiras obras de arte efêmeras, estes tapetes são feitos com materiais como serragem colorida, areia, sal, flores, folhas, grãos, pó de café, cascas de ovos e outros materiais naturais.</p>
+
+            <h3>Origem da Tradição</h3>
+
+            <p>A tradição de decorar as ruas para a passagem de Corpus Christi remonta à <strong>Idade Média europeia</strong>, quando os caminhos eram ornamentados com flores e ramos, inspirados no relato da entrada triunfal de Jesus em Jerusalém (Mt 21,8: "A multidão estendeu suas vestes pelo caminho; outros cortavam ramos de árvores e os espalhavam pela estrada").</p>
+
+            <p>Em Portugal, a tradição evoluiu para tapetes mais elaborados. No <strong>Brasil</strong>, trazida pelos colonizadores, a prática se desenvolveu de forma espetacular, especialmente em <strong>Minas Gerais</strong>, onde a abundância de minérios coloridos e a tradição artística barroca contribuíram para elevar os tapetes ao nível de verdadeira arte.</p>
+
+            <h3>Materiais e Técnicas</h3>
+
+            <div class="card-grid">
+                <div class="card">
+                    <span class="card-icon">🪵</span>
+                    <h4>Serragem Colorida</h4>
+                    <p>O material mais comum. A serragem é tingida com anilina em diversas cores e peneirada para obter texturas finas e uniformes. Permite grande riqueza de detalhes.</p>
+                </div>
+                <div class="card">
+                    <span class="card-icon">🌸</span>
+                    <h4>Flores e Pétalas</h4>
+                    <p>Flores naturais, especialmente pétalas de rosas, cravos, margaridas e outras flores da estação, criam composições de beleza e perfume incomparáveis.</p>
+                </div>
+                <div class="card">
+                    <span class="card-icon">🧂</span>
+                    <h4>Sal e Areia</h4>
+                    <p>Sal grosso (às vezes colorido) e areia de diferentes tonalidades naturais são usados para criar fundos e contornos.</p>
+                </div>
+                <div class="card">
+                    <span class="card-icon">🌾</span>
+                    <h4>Grãos e Sementes</h4>
+                    <p>Arroz, feijão, milho, café, lentilha e outros grãos são utilizados para detalhes e texturas, além de carregar o simbolismo do alimento.</p>
+                </div>
+                <div class="card">
+                    <span class="card-icon">🥚</span>
+                    <h4>Outros Materiais</h4>
+                    <p>Cascas de ovos trituradas, borra de café, folhas secas, pétalas desidratadas, pó de mármore e até materiais reciclados em composições criativas.</p>
+                </div>
+                <div class="card">
+                    <span class="card-icon">📐</span>
+                    <h4>Técnica de Confecção</h4>
+                    <p>Moldes de papelão ou madeira são posicionados no chão; os espaços são preenchidos com os materiais coloridos. As equipes trabalham durante a madrugada para que tudo esteja pronto ao amanhecer.</p>
+                </div>
+            </div>
+
+            <h3>O Simbolismo dos Tapetes</h3>
+
+            <p>Os tapetes de Corpus Christi são muito mais que decoração: são <strong>expressão de fé, sacrifício e amor</strong>. Os desenhos geralmente incluem:</p>
+
+            <ul class="custom-list">
+                <li><strong>Cálices e Hóstias:</strong> O símbolo central da Eucaristia</li>
+                <li><strong>Espigas de trigo e cachos de uva:</strong> Matérias-primas do pão e do vinho eucarísticos</li>
+                <li><strong>Cruzes e monogramas:</strong> IHS, Chi-Rho e outros símbolos cristológicos</li>
+                <li><strong>O Pelicano:</strong> Símbolo eucarístico — acreditava-se que o pelicano alimentava os filhotes com seu próprio sangue</li>
+                <li><strong>Anjos e querubins:</strong> Seres celestiais que adoram o Sacramento</li>
+                <li><strong>Cordeiro de Deus:</strong> Cristo, o Cordeiro pascal</li>
+                <li><strong>Frases bíblicas e litúrgicas:</strong> Versículos e orações relacionados à Eucaristia</li>
+                <li><strong>A pomba:</strong> Símbolo do Espírito Santo</li>
+            </ul>
+
+            <h3>O Significado da Arte Efêmera</h3>
+
+            <p>Um dos aspectos mais tocantes dos tapetes é seu caráter <strong>efêmero</strong>: horas de trabalho intenso, muitas vezes durante toda a madrugada, produzem obras de arte que serão <strong>destruídas pela própria procissão</strong> que passará sobre elas. Este fato carrega um simbolismo profundo:</p>
+
+            <div class="highlight-box">
+                <h4>💎 Significados espirituais da efemeridade</h4>
+                <ul>
+                    <li><strong>Gratuidade:</strong> O trabalho é oferecido a Deus sem esperar que permaneça — assim deve ser nossa oração e nosso serviço.</li>
+                    <li><strong>Humildade:</strong> A beleza se desfaz sob os pés de Cristo — somos chamados a nos fazer "tapete" para que Ele passe.</li>
+                    <li><strong>Transitoriedade da vida:</strong> As coisas materiais passam; só o que é feito por amor permanece na eternidade.</li>
+                    <li><strong>Oferenda total:</strong> Assim como o pão se transforma no Corpo de Cristo (desaparecendo como pão), o tapete se transforma em caminho para Cristo (desaparecendo como arte).</li>
+                </ul>
+            </div>
+
+            <h3>Cidades Famosas pelos Tapetes</h3>
+
+            <div class="tapete-gallery">
+                <div class="tapete-city">
+                    <div class="tapete-color"></div>
+                    <div class="tapete-info">
+                        <h4>🇧🇷 Ouro Preto (MG)</h4>
+                        <p>A cidade histórica mineira é mundialmente famosa por seus tapetes de Corpus Christi, que cobrem as ladeiras coloniais. A tradição data do período colonial e os tapetes interagem com a arquitetura barroca de forma espetacular.</p>
+                    </div>
+                </div>
+                <div class="tapete-city">
+                    <div class="tapete-color"></div>
+                    <div class="tapete-info">
+                        <h4>🇧🇷 Matão (SP)</h4>
+                        <p>Reconhecida por produzir alguns dos maiores tapetes do Brasil, com quilômetros de extensão. A cidade mobiliza milhares de voluntários e a tradição atrai turistas de todo o estado.</p>
+                    </div>
+                </div>
+                <div class="tapete-city">
+                    <div class="tapete-color"></div>
+                    <div class="tapete-info">
+                        <h4>🇧🇷 Castelo (ES)</h4>
+                        <p>A pequena cidade capixaba é famosa por tapetes de altíssima qualidade artística, com desenhos detalhados que rivalizam com as maiores cidades.</p>
+                    </div>
+                </div>
+                <div class="tapete-city">
+                    <div class="tapete-color"></div>
+                    <div class="tapete-info">
+                        <h4>🇧🇷 Santana de Parnaíba (SP)</h4>
+                        <p>Uma das mais antigas tradições de tapetes do estado de São Paulo, com tapetes que cobrem o centro histórico colonial da cidade.</p>
+                    </div>
+                </div>
+                <div class="tapete-city">
+                    <div class="tapete-color"></div>
+                    <div class="tapete-info">
+                        <h4>🇮🇹 Spello (Itália)</h4>
+                        <p>As <em>Infiorate di Spello</em> são tapetes de flores naturais de extraordinária beleza, realizados na região da Úmbria. A tradição atrai artistas e visitantes de toda a Europa.</p>
+                    </div>
+                </div>
+                <div class="tapete-city">
+                    <div class="tapete-color"></div>
+                    <div class="tapete-info">
+                        <h4>🇪🇸 La Orotava (Tenerife)</h4>
+                        <p>Na ilha espanhola de Tenerife, os tapetes são feitos com areias vulcânicas multicoloridas do Teide, criando composições de cores únicas no mundo.</p>
+                    </div>
+                </div>
+                <div class="tapete-city">
+                    <div class="tapete-color"></div>
+                    <div class="tapete-info">
+                        <h4>🇪🇸 Ponteareas (Galícia)</h4>
+                        <p>A cidade galega é famosa por tapetes florais de grandes dimensões e riqueza artística, declarados Festa de Interesse Turístico Internacional na Espanha.</p>
+                    </div>
+                </div>
+                <div class="tapete-city">
+                    <div class="tapete-color"></div>
+                    <div class="tapete-info">
+                        <h4>🇧🇷 São José dos Pinhais (PR)</h4>
+                        <p>No Paraná, destaca-se pelo envolvimento comunitário massivo e pela criatividade dos tapetes que cobrem as principais ruas.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SEÇÃO 8: BRASIL ==================== -->
+        <section id="brasil" class="fade-in">
+            <div class="section-header">
+                <span class="section-number">Capítulo VIII</span>
+                <span class="section-icon">🇧🇷</span>
+                <h2>Corpus Christi no Brasil</h2>
+                <p class="section-subtitle">Uma tradição que se tornou parte da alma brasileira</p>
+                <div class="section-divider"></div>
+            </div>
+
+            <p>O Brasil possui uma das <strong>mais ricas e vibrantes tradições</strong> de Corpus Christi no mundo. Trazida pelos colonizadores portugueses no século XVI, a celebração se enraizou profundamente na cultura brasileira, adquirindo características únicas que mesclam a solenidade europeia com a criatividade, a cor e o calor do povo brasileiro.</p>
+
+            <h3>Chegada e Período Colonial</h3>
+
+            <p>As primeiras celebrações de Corpus Christi no Brasil datam do <strong>século XVI</strong>, logo após o início da colonização portuguesa. As <strong>Ordenações Manuelinas</strong> (1521) e depois as <strong>Ordenações Filipinas</strong> (1603) tornavam obrigatória a participação de todas as autoridades e corporações nas procissões de Corpus Christi.</p>
+
+            <p>No período colonial, a procissão era o <strong>evento social e religioso mais importante do ano</strong>. Participavam obrigatoriamente:</p>
+
+            <ul>
+                <li>O governador ou capitão-mor e toda a nobreza</li>
+                <li>O clero secular e regular (padres, frades, monges)</li>
+                <li>As irmandades e confrarias religiosas (com seus estandartes e opas)</li>
+                <li>As corporações de ofícios (carpinteiros, sapateiros, ferreiros, etc.)</li>
+                <li>Os militares e a guarda</li>
+                <li>O povo em geral</li>
+            </ul>
+
+            <div class="curiosity-box">
+                <h4>💡 Curiosidade colonial</h4>
+                <p>No Brasil colonial, as câmaras municipais eram responsáveis por organizar e custear parte da procissão. Havia multas para quem se recusasse a participar! As corporações de ofícios eram obrigadas a apresentar danças e representações teatrais durante o cortejo — prática que originou algumas das tradições folclóricas brasileiras.</p>
+            </div>
+
+            <h3>Corpus Christi como Feriado Nacional</h3>
+
+            <p>No Brasil, Corpus Christi é um <strong>feriado religioso</strong>, mas com uma particularidade legal: não é feriado nacional por lei federal. A data é, no entanto, reconhecida como <strong>ponto facultativo federal</strong> e a grande maioria dos municípios brasileiros decreta feriado municipal. Na prática, funciona como feriado em quase todo o país.</p>
+
+            <h3>Tradições Regionais</h3>
+
+            <div class="two-columns">
+                <div>
+                    <h4>Minas Gerais</h4>
+                    <p>O estado que mais preserva a tradição colonial. Cidades como <strong>Ouro Preto</strong>, <strong>Mariana</strong>, <strong>São João del-Rei</strong>, <strong>Tiradentes</strong>, <strong>Diamantina</strong> e <strong>Sabará</strong> realizam procissões grandiosas com tapetes espetaculares pelas ruas de paralelepípedos colonial. As igrejas barrocas servem de cenário incomparável.</p>
+                    
+                    <h4>São Paulo</h4>
+                    <p>Cidades como <strong>Matão</strong>, <strong>Santana de Parnaíba</strong> e <strong>São Manuel</strong> destacam-se pela extensão e qualidade dos tapetes. A capital paulista realiza procissão na Praça da Sé.</p>
+                </div>
+                <div>
+                    <h4>Nordeste</h4>
+                    <p>Em cidades como <strong>Salvador</strong>, <strong>Olinda</strong> e <strong>São Cristóvão</strong> (SE), a tradição colonial se mantém forte, com procissões que combinam a solenidade litúrgica com a exuberância cultural nordestina.</p>
+
+                    <h4>Sul do Brasil</h4>
+                    <p>A influência da imigração europeia (italiana, alemã, polonesa) fortaleceu a tradição em cidades como <strong>São José dos Pinhais</strong> (PR), <strong>Antônio Prado</strong> (RS) e diversas cidades de colonização açoriana em Santa Catarina.</p>
+                </div>
+            </div>
+
+            <h3>As Cavalhadas</h3>
+
+            <p>Em algumas regiões do Brasil, especialmente em <strong>Goiás</strong> (Pirenópolis) e <strong>Alagoas</strong>, as celebrações de Corpus Christi estão historicamente associadas às <strong>Cavalhadas</strong> — encenações equestres que representam batalhas entre mouros e cristãos, tradição trazida de Portugal. Embora originalmente ligadas ao Divino Espírito Santo, em muitos locais se fundiram ao período de Corpus Christi.</p>
+        </section>
+
+        <!-- ==================== SEÇÃO 9: PELO MUNDO ==================== -->
+        <section id="mundo" class="fade-in">
+            <div class="section-header">
+                <span class="section-number">Capítulo IX</span>
+                <span class="section-icon">🌍</span>
+                <h2>Corpus Christi pelo Mundo</h2>
+                <p class="section-subtitle">Uma festa universal com sabores locais</p>
+                <div class="section-divider"></div>
+            </div>
+
+            <p>Corpus Christi é celebrado em <strong>todos os países de tradição católica</strong>, mas cada nação desenvolveu costumes e expressões próprias que enriquecem esta festa universal. Conheça como diferentes culturas vivem esta solenidade:</p>
+
+            <div class="world-grid">
+                <div class="country-card">
+                    <div class="country-header">
+                        <span class="country-flag">🇻🇦</span>
+                        <div>
+                            <div class="country-name">Vaticano / Roma</div>
+                            <div class="country-local-name">Solennità del Corpus Domini</div>
+                        </div>
+                    </div>
+                    <div class="country-body">
+                        <p>O Papa celebra a Missa solene e preside a procissão de <strong>São João de Latrão</strong> (catedral do bispo de Roma) até a <strong>Basílica de Santa Maria Maior</strong>, percorrendo as ruas de Roma. É uma das procissões mais solenes e televisadas do mundo.</p>
+                    </div>
+                </div>
+
+                <div class="country-card">
+                    <div class="country-header">
+                        <span class="country-flag">🇪🇸</span>
+                        <div>
+                            <div class="country-name">Espanha</div>
+                            <div class="country-local-name">Solemnidad del Corpus Christi</div>
+                        </div>
+                    </div>
+                    <div class="country-body">
+                        <p>A Espanha possui as celebrações mais espetaculares da Europa. Em <strong>Toledo</strong>, a procissão com a monumental custódia de Arfe (1517-1524) é patrimônio cultural. <strong>Sevilla</strong>, <strong>Granada</strong> e <strong>Valencia</strong> realizam procissões grandiosas. Os <strong>Seises</strong> de Sevilla — meninos cantores que dançam diante do Santíssimo — são tradição única desde o século XV.</p>
+                    </div>
+                </div>
+
+                <div class="country-card">
+                    <div class="country-header">
+                        <span class="country-flag">🇮🇹</span>
+                        <div>
+                            <div class="country-name">Itália</div>
+                            <div class="country-local-name">Solennità del Corpus Domini</div>
+                        </div>
+                    </div>
+                    <div class="country-body">
+                        <p><strong>Orvieto</strong> é o epicentro: a catedral abriga o corporal do Milagre de Bolsena. As <strong>Infiorate</strong> (tapetes de flores) de Spello, Genzano e outras cidades são de beleza extraordinária. Cada cidade e aldeia italiana tem sua procissão, muitas com tradições seculares.</p>
+                    </div>
+                </div>
+
+                <div class="country-card">
+                    <div class="country-header">
+                        <span class="country-flag">🇵🇹</span>
+                        <div>
+                            <div class="country-name">Portugal</div>
+                            <div class="country-local-name">Solenidade do Corpo de Deus</div>
+                        </div>
+                    </div>
+                    <div class="country-body">
+                        <p>Berço da tradição que chegou ao Brasil. As procissões mais notáveis ocorrem em <strong>Braga</strong>, <strong>Porto</strong> e <strong>Lisboa</strong>. Em muitas vilas e aldeias, a tradição medieval se mantém praticamente intacta, com tapetes de flores e ervas aromáticas.</p>
+                    </div>
+                </div>
+
+                <div class="country-card">
+                    <div class="country-header">
+                        <span class="country-flag">🇩🇪</span>
+                        <div>
+                            <div class="country-name">Alemanha e Áustria</div>
+                            <div class="country-local-name">Fronleichnam</div>
+                        </div>
+                    </div>
+                    <div class="country-body">
+                        <p>Na Baviera e na Áustria, as procissões de <strong>Fronleichnam</strong> são espetaculares. Destaque para as <strong>Seeprozessionen</strong> — procissões em barcos decorados nos lagos alpinos, como no <strong>Lago Hallstatt</strong> e no <strong>Lago Staffel</strong>. Os fiéis em trajes típicos acompanham em barcos ornamentados. É feriado nacional na Alemanha (nos estados católicos) e na Áustria.</p>
+                    </div>
+                </div>
+
+                <div class="country-card">
+                    <div class="country-header">
+                        <span class="country-flag">🇵🇱</span>
+                        <div>
+                            <div class="country-name">Polônia</div>
+                            <div class="country-local-name">Boże Ciało</div>
+                        </div>
+                    </div>
+                    <div class="country-body">
+                        <p>Um dos países onde a celebração é mais fervorosa. <strong>Boże Ciało</strong> é feriado nacional e as procissões são massivas, com milhares de fiéis. A tradição dos <strong>quatro altares</strong> ao longo do percurso é rigidamente mantida. Em <strong>Łowicz</strong>, as procissões com trajes folclóricos regionais são patrimônio cultural.</p>
+                    </div>
+                </div>
+
+                <div class="country-card">
+                    <div class="country-header">
+                        <span class="country-flag">🇵🇪</span>
+                        <div>
+                            <div class="country-name">Peru</div>
+                            <div class="country-local-name">Corpus Christi de Cusco</div>
+                        </div>
+                    </div>
+                    <div class="country-body">
+                        <p>A celebração de Corpus Christi em <strong>Cusco</strong> é uma das mais fascinantes do mundo, pois <strong>funde tradições católicas e incas</strong>. Quinze santos padroeiros de diferentes paróquias são levados em procissão até a catedral, numa festa que dura 15 dias. A tradição remonta ao período colonial, quando os espanhóis adaptaram a festa inca do <strong>Inti Raymi</strong> (festa do Sol).</p>
+                    </div>
+                </div>
+
+                <div class="country-card">
+                    <div class="country-header">
+                        <span class="country-flag">🇵🇭</span>
+                        <div>
+                            <div class="country-name">Filipinas</div>
+                            <div class="country-local-name">Kapistahan ng Korpus Kristi</div>
+                        </div>
+                    </div>
+                    <div class="country-body">
+                        <p>O único país majoritariamente católico da Ásia celebra Corpus Christi com grande fervor. As procissões combinam a herança espanhola com a devoção filipina, conhecida por sua intensidade emocional. Ruas são decoradas com flores e folhas de palmeira.</p>
+                    </div>
+                </div>
+
+                <div class="country-card">
+                    <div class="country-header">
+                        <span class="country-flag">🇨🇴</span>
+                        <div>
+                            <div class="country-name">Colômbia</div>
+                            <div class="country-local-name">Corpus Christi</div>
+                        </div>
+                    </div>
+                    <div class="country-body">
+                        <p>É feriado nacional. As celebrações são marcantes especialmente em cidades coloniais como <strong>Popayán</strong>, onde as procissões noturnas com velas são de beleza inesquecível, e em <strong>Villa de Leyva</strong>, com tapetes de flores no centro histórico.</p>
+                    </div>
+                </div>
+
+                <div class="country-card">
+                    <div class="country-header">
+                        <span class="country-flag">🇲🇽</span>
+                        <div>
+                            <div class="country-name">México</div>
+                            <div class="country-local-name">Corpus Christi</div>
+                        </div>
+                    </div>
+                    <div class="country-body">
+                        <p>A tradição mexicana inclui um costume singular: as crianças são levadas à igreja vestidas como <strong>indígenas</strong> (com trajes tradicionais pré-hispânicos) e levam <strong>mulinhos</strong> (brinquedos de palha). Esta tradição se relaciona com a evangelização e a Primeira Comunhão.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SEÇÃO 10: MILAGRES ==================== -->
+        <section id="milagres" class="fade-in">
+            <div class="section-header">
+                <span class="section-number">Capítulo X</span>
+                <span class="section-icon">✨</span>
+                <h2>Milagres Eucarísticos</h2>
+                <p class="section-subtitle">Quando o véu se abriu e os olhos puderam ver</p>
+                <div class="section-divider"></div>
+            </div>
+
+            <p>Ao longo da história, a Igreja registrou numerosos <strong>milagres eucarísticos</strong> — eventos extraordinários nos quais a Hóstia consagrada manifestou sinais visíveis da presença real de Cristo. Estes milagres estão intimamente ligados à história e ao significado de Corpus Christi.</p>
+
+            <h3>O Milagre de Bolsena (1263) — O Milagre que gerou Corpus Christi</h3>
+
+            <div class="miracle-box">
+                <h4>🔥 Bolsena, Itália — 1263</h4>
+                <p>Como já relatado na seção histórica, o sacerdote boêmio <strong>Pedro de Praga</strong>, que duvidava da Presença Real, celebrou Missa na Igreja de Santa Cristina em Bolsena. A Hóstia sangrou sobre o corporal. O corporal foi levado ao Papa Urbano IV em Orvieto, que no ano seguinte instituiu Corpus Christi.</p>
+                <p><strong>Evidência preservada:</strong> O corporal manchado de sangue está conservado na <strong>Catedral de Orvieto</strong>, em um relicário de prata e esmalte. A catedral, com seus extraordinários afrescos de Luca Signorelli e Fra Angelico, foi construída a partir de 1290 especificamente para abrigar esta relíquia.</p>
+            </div>
+
+            <h3>O Milagre de Lanciano (Século VIII)</h3>
+
+            <div class="miracle-box">
+                <h4>🔥 Lanciano, Itália — Séc. VIII</h4>
+                <p>Um monge basiliano que duvidava da Presença Real celebrava a Missa no Mosteiro de São Legonziano. No momento da consagração, a Hóstia se transformou visivelmente em <strong>carne</strong> (um fragmento de tecido cardíaco) e o vinho se transformou em <strong>sangue</strong> (que depois se coagulou em cinco glóbulos).</p>
+                <p><strong>Investigação científica:</strong> Em 1970-1971, o Professor <strong>Odoardo Linoli</strong>, docente de anatomia e histologia patológica, realizou análises que concluíram: a carne é <strong>tecido miocárdico humano</strong> (músculo do coração); o sangue é <strong>sangue humano do tipo AB</strong>; não há vestígios de qualquer conservante. Em 1981, o Professor <strong>Ruggero Bertelli</strong>, da Universidade de Siena, confirmou os resultados.</p>
+            </div>
+
+            <h3>Outros Milagres Eucarísticos Notáveis</h3>
+
+            <div class="card-grid">
+                <div class="card">
+                    <span class="card-icon">🇪🇸</span>
+                    <h4>Daroca, Espanha (1239)</h4>
+                    <p>Durante a Reconquista, seis Hóstias consagradas foram guardadas nos corporais de um capelão militar. Ao abrir os corporais, descobriu-se que as Hóstias estavam tingidas de sangue. As relíquias são veneradas até hoje na igreja de Daroca.</p>
+                </div>
+                <div class="card">
+                    <span class="card-icon">🇧🇪</span>
+                    <h4>Bruxelas, Bélgica (1370)</h4>
+                    <p>Hóstias consagradas, roubadas por profanadores de uma igreja, foram esfaqueadas e começaram a sangrar. O milagre é celebrado anualmente e deu origem à construção da Catedral de São Miguel e Santa Gúdula.</p>
+                </div>
+                <div class="card">
+                    <span class="card-icon">🇦🇷</span>
+                    <h4>Buenos Aires, Argentina (1992-1996)</h4>
+                    <p>Em 1996, uma Hóstia consagrada, colocada em água para dissolver-se (procedimento padrão para Hóstias que caem ao chão), transformou-se em substância sanguinolenta. Análises laboratoriais (Dr. Ricardo Castañón e Prof. Frederick Zugibe) identificaram tecido miocárdico humano com sinais de estresse intenso, sangue do tipo AB — <strong>o mesmo tipo encontrado em Lanciano e no Sudário de Turim</strong>. O arcebispo que autorizou as investigações era o então Cardeal <strong>Jorge Mario Bergoglio</strong> — hoje Papa Francisco.</p>
+                </div>
+                <div class="card">
+                    <span class="card-icon">🇵🇱</span>
+                    <h4>Sokółka, Polônia (2008)</h4>
+                    <p>Uma Hóstia consagrada caiu ao chão durante a distribuição da Comunhão e foi colocada em água. Dias depois, apresentou uma mancha vermelha. Análises histopatológicas da Universidade de Białystok revelaram que a substância era <strong>tecido do músculo cardíaco em estado de agonia</strong> — um coração em sofrimento.</p>
+                </div>
+            </div>
+
+            <h3>A Exposição de Carlo Acutis</h3>
+
+            <p>O jovem <strong>Beato Carlo Acutis</strong> (1991-2006), adolescente italiano beatificado em 2020, dedicou parte de sua curta vida a catalogar e documentar milagres eucarísticos de todo o mundo. Ele criou uma <strong>exposição virtual</strong> (e depois itinerante) que reúne mais de <strong>130 milagres eucarísticos</strong> verificados em diversos países ao longo dos séculos. Esta exposição já percorreu milhares de paróquias em dezenas de países, tornando-se uma das mais eficazes ferramentas de evangelização eucarística da era moderna.</p>
+
+            <div class="info-box">
+                <h4>📌 Padrão científico recorrente</h4>
+                <p>É notável que em diversos milagres eucarísticos analisados em laboratório nos séculos XX e XXI, os cientistas encontraram o <strong>mesmo resultado</strong>: tecido miocárdico humano (músculo do coração) e sangue do tipo AB — independentemente do país, da época ou do laboratório. Este padrão tem sido apontado por apologistas como evidência da autenticidade dos fenômenos.</p>
+            </div>
+        </section>
+
+        <!-- ==================== SEÇÃO 11: SÍMBOLOS ==================== -->
+        <section id="simbolos" class="fade-in">
+            <div class="section-header">
+                <span class="section-number">Capítulo XI</span>
+                <span class="section-icon">🕊️</span>
+                <h2>Símbolos e Iconografia</h2>
+                <p class="section-subtitle">A linguagem visual da fé eucarística</p>
+                <div class="section-divider"></div>
+            </div>
+
+            <p>A tradição cristã desenvolveu, ao longo dos séculos, uma rica <strong>linguagem simbólica e iconográfica</strong> para expressar o mistério eucarístico. Estes símbolos aparecem na arte sacra, nos tapetes de Corpus Christi, nos paramentos litúrgicos e na decoração das igrejas.</p>
+
+            <div class="symbols-grid">
+                <div class="symbol-item">
+                    <span class="symbol-icon">🍞</span>
+                    <div class="symbol-name">Pão / Hóstia</div>
+                    <div class="symbol-meaning">O Corpo de Cristo. A Hóstia representada com raios de luz simboliza a Presença Real irradiante.</div>
+                </div>
+                <div class="symbol-item">
+                    <span class="symbol-icon">🍷</span>
+                    <div class="symbol-name">Cálice com Vinho</div>
+                    <div class="symbol-meaning">O Sangue de Cristo. Frequentemente representado com uma Hóstia sobre ele.</div>
+                </div>
+                <div class="symbol-item">
+                    <span class="symbol-icon">🌾</span>
+                    <div class="symbol-name">Espigas de Trigo</div>
+                    <div class="symbol-meaning">A matéria do pão eucarístico. Também simboliza a morte e ressurreição (Jo 12,24).</div>
+                </div>
+                <div class="symbol-item">
+                    <span class="symbol-icon">🍇</span>
+                    <div class="symbol-name">Cachos de Uva</div>
+                    <div class="symbol-meaning">A matéria do vinho eucarístico. Também simboliza a videira e os ramos (Jo 15).</div>
+                </div>
+                <div class="symbol-item">
+                    <span class="symbol-icon">🐑</span>
+                    <div class="symbol-name">Cordeiro de Deus</div>
+                    <div class="symbol-meaning">Cristo, o Cordeiro Pascal imolado. Frequentemente representado com uma bandeira da Ressurreição.</div>
+                </div>
+                <div class="symbol-item">
+                    <span class="symbol-icon">🦅</span>
+                    <div class="symbol-name">Pelicano</div>
+                    <div class="symbol-meaning">Símbolo eucarístico desde a Idade Média. A lenda dizia que o pelicano alimentava os filhotes com seu próprio sangue — imagem de Cristo que nos alimenta com Seu Corpo e Sangue.</div>
+                </div>
+                <div class="symbol-item">
+                    <span class="symbol-icon">☀️</span>
+                    <div class="symbol-name">Sol / Raios</div>
+                    <div class="symbol-meaning">Cristo como Sol da Justiça (Ml 3,20). Os raios ao redor da Hóstia simbolizam a glória divina que emana do Sacramento.</div>
+                </div>
+                <div class="symbol-item">
+                    <span class="symbol-icon">✝️</span>
+                    <div class="symbol-name">IHS</div>
+                    <div class="symbol-meaning">Monograma de Jesus (abreviação grega de IHΣOYΣ — Iesous). Frequentemente inscrito na Hóstia.</div>
+                </div>
+                <div class="symbol-item">
+                    <span class="symbol-icon">🕊️</span>
+                    <div class="symbol-name">Pomba</div>
+                    <div class="symbol-meaning">O Espírito Santo, que atua na Transubstanciação. Também símbolo de paz e pureza.</div>
+                </div>
+                <div class="symbol-item">
+                    <span class="symbol-icon">⚓</span>
+                    <div class="symbol-name">Âncora / Cruz</div>
+                    <div class="symbol-meaning">A Cruz de Cristo, fonte de toda graça sacramental. A Eucaristia torna presente o sacrifício da Cruz.</div>
+                </div>
+                <div class="symbol-item">
+                    <span class="symbol-icon">🔺</span>
+                    <div class="symbol-name">Triângulo</div>
+                    <div class="symbol-meaning">A Santíssima Trindade. Lembra que na Eucaristia encontramos o Filho, enviado pelo Pai, pela ação do Espírito.</div>
+                </div>
+                <div class="symbol-item">
+                    <span class="symbol-icon">👑</span>
+                    <div class="symbol-name">Coroa</div>
+                    <div class="symbol-meaning">A realeza de Cristo. Na Eucaristia, o Rei dos Reis se faz presente humildemente sob as espécies do pão.</div>
+                </div>
+            </div>
+
+            <h3>Cores Litúrgicas e seu Simbolismo</h3>
+
+            <div class="highlight-box">
+                <h4>🎨 Branco e Dourado</h4>
+                <p>As cores litúrgicas de Corpus Christi são o <strong>branco</strong> e o <strong>dourado</strong>. O branco simboliza <strong>pureza, glória, alegria e luz</strong> — é a cor das grandes festas de Cristo (Natal, Páscoa, Corpus Christi). O dourado, usado quando disponível, acentua a <strong>realeza, a majestade e a preciosidade</strong> do mistério celebrado.</p>
+            </div>
+        </section>
+
+        <!-- ==================== SEÇÃO 12: ARTE ==================== -->
+        <section id="arte" class="fade-in">
+            <div class="section-header">
+                <span class="section-number">Capítulo XII</span>
+                <span class="section-icon">🖼️</span>
+                <h2>Corpus Christi na Arte</h2>
+                <p class="section-subtitle">Como os maiores artistas expressaram o mistério eucarístico</p>
+                <div class="section-divider"></div>
+            </div>
+
+            <p>Ao longo dos séculos, Corpus Christi e o mistério eucarístico inspiraram algumas das mais sublimes obras de arte da civilização ocidental — em pintura, escultura, arquitetura, música e ourivesaria.</p>
+
+            <h3>Pintura</h3>
+
+            <div class="card-grid">
+                <div class="card">
+                    <span class="card-icon">🎨</span>
+                    <h4>A Última Ceia — Leonardo da Vinci (1495-1498)</h4>
+                    <p>A mais famosa representação do momento da instituição da Eucaristia. Embora não seja especificamente sobre Corpus Christi, é a imagem que fundamenta toda a festa. Pintada no refeitório do convento de Santa Maria delle Grazie, em Milão.</p>
+                </div>
+                <div class="card">
+                    <span class="card-icon">🎨</span>
+                    <h4>A Missa de Bolsena — Rafael Sanzio (1512)</h4>
+                    <p>Afresco nos Apartamentos Papais do Vaticano (Sala de Heliodoro), que retrata o Milagre de Bolsena — o evento que originou Corpus Christi. Uma das obras-primas do Renascimento.</p>
+                </div>
+                <div class="card">
+                    <span class="card-icon">🎨</span>
+                    <h4>O Sacramento da Última Ceia — Salvador Dalí (1955)</h4>
+                    <p>Uma das mais surpreendentes representações modernas, combinando o estilo surrealista de Dalí com profundo misticismo. A perspectiva geométrica e a luz etérea criam uma atmosfera sobrenatural.</p>
+                </div>
+                <div class="card">
+                    <span class="card-icon">🎨</span>
+                    <h4>A Disputa do Santíssimo Sacramento — Rafael (1509-1510)</h4>
+                    <p>Grandioso afresco na Sala da Assinatura do Vaticano, que mostra a Igreja triunfante (no céu) e a Igreja militante (na terra) unidas pela Eucaristia, no centro da composição.</p>
+                </div>
+            </div>
+
+            <h3>Arquitetura</h3>
+
+            <p>A <strong>Catedral de Orvieto</strong> (Itália) é o monumento arquitetônico mais diretamente ligado a Corpus Christi. Iniciada em 1290 para abrigar o corporal do Milagre de Bolsena, sua fachada gótica é considerada uma das mais belas do mundo. No interior, a <strong>Capela do Corporal</strong> contém afrescos que narram milagres eucarísticos, e a <strong>Capela de São Brício</strong> possui os célebres afrescos de Luca Signorelli sobre o Juízo Final.</p>
+
+            <h3>Ourivesaria Sacra: As Custódias</h3>
+
+            <p>Algumas das mais espetaculares obras de ourivesaria da história foram criadas para Corpus Christi — as <strong>custódias</strong> (peças de metal precioso usadas para expor a Hóstia consagrada). Embora o uso devocional da custódia pertença ao tema da Adoração, como obras de arte merecem menção:</p>
+
+            <ul class="custom-list">
+                <li><strong>Custódia de Toledo</strong> (Espanha, 1517-1524): Obra de Enrique de Arfe, mede 3 metros de altura, pesa 200 kg e é feita de prata dourada com 260 estatuetas. É conduzida em procissão pelas ruas de Toledo em Corpus Christi.</li>
+                <li><strong>Custódia de Córdoba</strong> (Espanha): Outra obra monumental de Enrique de Arfe.</li>
+                <li><strong>La Lechuga</strong> de Bogotá (Colômbia, 1700-1707): Custódia com 1.485 esmeraldas, uma das obras de ourivesaria mais valiosas do mundo.</li>
+            </ul>
+
+            <h3>Música</h3>
+
+            <p>Além dos hinos de São Tomás de Aquino (já abordados), grandes compositores dedicaram obras a Corpus Christi e à Eucaristia:</p>
+
+            <ul class="custom-list">
+                <li><strong>César Franck:</strong> <em>Panis Angelicus</em> (1872) — a mais famosa versão musical do hino de São Tomás, para tenor, órgão, harpa, violoncelo e contrabaixo.</li>
+                <li><strong>Mozart:</strong> <em>Ave Verum Corpus</em> (K. 618, 1791) — um dos motetos mais belos jamais escritos, composto pouco antes de sua morte.</li>
+                <li><strong>William Byrd:</strong> <em>Ave Verum Corpus</em> — versão renascentista polifônica de extraordinária beleza.</li>
+                <li><strong>Josquin des Prez:</strong> Diversas composições eucarísticas polifônicas.</li>
+                <li><strong>Tomás Luis de Victoria:</strong> <em>O Sacrum Convivium</em> — obra-prima da polifonia sacra espanhola.</li>
+            </ul>
+
+            <h3>Os Autos Sacramentais</h3>
+
+            <p>Na Espanha dos séculos XVI e XVII, Corpus Christi deu origem a um gênero teatral único: os <strong>Autos Sacramentais</strong> — peças de teatro alegórico de tema eucarístico, representadas nas praças durante a festa. Os maiores dramaturgos espanhóis escreveram autos sacramentais:</p>
+
+            <ul>
+                <li><strong>Pedro Calderón de la Barca</strong> — o mestre do gênero, com mais de 70 autos, incluindo <em>"O Grande Teatro do Mundo"</em> e <em>"A Ceia do Rei Baltasar"</em></li>
+                <li><strong>Lope de Vega</strong> — escreveu diversos autos de grande qualidade lírica</li>
+                <li><strong>Tirso de Molina</strong> — contribuiu com obras que combinam humor e profundidade teológica</li>
+            </ul>
+
+            <p>Os autos sacramentais foram proibidos em 1765 pelo rei Carlos III, mas seu legado permanece como uma das contribuições mais originais de Corpus Christi para a história da arte.</p>
+        </section>
+
+        <!-- ==================== SEÇÃO 13: DOCUMENTOS ==================== -->
+        <section id="documentos" class="fade-in">
+            <div class="section-header">
+                <span class="section-number">Capítulo XIII</span>
+                <span class="section-icon">📋</span>
+                <h2>Documentos do Magistério</h2>
+                <p class="section-subtitle">O que a Igreja ensinou oficialmente sobre a Eucaristia</p>
+                <div class="section-divider"></div>
+            </div>
+
+            <p>A doutrina eucarística — que Corpus Christi celebra — foi definida e aprofundada ao longo dos séculos por documentos oficiais do Magistério da Igreja. Conheça os principais:</p>
+
+            <div class="doc-list">
+                <div class="doc-item">
+                    <div class="doc-year">1264</div>
+                    <div class="doc-info">
+                        <h4>"Transiturus de hoc mundo"</h4>
+                        <p class="doc-author">Papa Urbano IV</p>
+                        <p>Bula papal que instituiu a solenidade de Corpus Christi para toda a Igreja universal. Fundamenta teologicamente a necessidade de uma festa dedicada ao Sacramento.</p>
+                    </div>
+                </div>
+                <div class="doc-item">
+                    <div class="doc-year">1551</div>
+                    <div class="doc-info">
+                        <h4>Decreto sobre a Eucaristia (Sessão XIII)</h4>
+                        <p class="doc-author">Concílio de Trento</p>
+                        <p>Define solenemente a doutrina da <strong>Transubstanciação</strong>, a Presença Real e condena as heresias protestantes sobre a Eucaristia. É o documento dogmático mais importante sobre o tema.</p>
+                    </div>
+                </div>
+                <div class="doc-item">
+                    <div class="doc-year">1551</div>
+                    <div class="doc-info">
+                        <h4>Decreto sobre a Procissão (Sessão XIII, Cap. V)</h4>
+                        <p class="doc-author">Concílio de Trento</p>
+                        <p>Defende a legitimidade da procissão de Corpus Christi como "triunfo sobre a heresia" e exorta todos os fiéis católicos a participar.</p>
+                    </div>
+                </div>
+                <div class="doc-item">
+                    <div class="doc-year">1965</div>
+                    <div class="doc-info">
+                        <h4>"Mysterium Fidei"</h4>
+                        <p class="doc-author">Papa Paulo VI</p>
+                        <p>Encíclica que reafirma a doutrina da Transubstanciação diante de novas interpretações teológicas (transsignificação, transfinalização) que pareciam reduzir a Presença Real.</p>
+                    </div>
+                </div>
+                <div class="doc-item">
+                    <div class="doc-year">2003</div>
+                    <div class="doc-info">
+                        <h4>"Ecclesia de Eucharistia"</h4>
+                        <p class="doc-author">Papa João Paulo II</p>
+                        <p>Encíclica sobre a Eucaristia em sua relação com a Igreja. Aborda a Eucaristia como fonte e ápice da vida cristã, a dimensão sacrificial e escatológica do sacramento.</p>
+                    </div>
+                </div>
+                <div class="doc-item">
+                    <div class="doc-year">2007</div>
+                    <div class="doc-info">
+                        <h4>"Sacramentum Caritatis"</h4>
+                        <p class="doc-author">Papa Bento XVI</p>
+                        <p>Exortação apostólica pós-sinodal sobre a Eucaristia como fonte e ápice da vida e da missão da Igreja. Aprofunda aspectos litúrgicos, teológicos e pastorais.</p>
+                    </div>
+                </div>
+                <div class="doc-item">
+                    <div class="doc-year">1992</div>
+                    <div class="doc-info">
+                        <h4>Catecismo da Igreja Católica</h4>
+                        <p class="doc-author">§§ 1322-1419</p>
+                        <p>Os parágrafos dedicados à Eucaristia no Catecismo oferecem uma síntese completa e acessível da doutrina: nomes, sinais, presença real, sacrifício, banquete e comunhão.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SEÇÃO 14: DATA E CALENDÁRIO ==================== -->
+        <section id="data" class="fade-in">
+            <div class="section-header">
+                <span class="section-number">Capítulo XIV</span>
+                <span class="section-icon">📅</span>
+                <h2>Data e Calendário</h2>
+                <p class="section-subtitle">Quando se celebra e por que a data muda todo ano</p>
+                <div class="section-divider"></div>
+            </div>
+
+            <p>Corpus Christi é uma festa <strong>móvel</strong>, ou seja, sua data muda a cada ano porque depende da data da Páscoa (que também é móvel).</p>
+
+            <h3>Como se Calcula a Data</h3>
+
+            <div class="highlight-box">
+                <h4>📐 A fórmula</h4>
+                <p>Corpus Christi é celebrado na <strong>quinta-feira após a Solenidade da Santíssima Trindade</strong>, que por sua vez é o domingo após Pentecostes. Em termos simples:</p>
+                <ul>
+                    <li>Páscoa + 60 dias = Corpus Christi</li>
+                    <li>Ou: segunda quinta-feira após Pentecostes</li>
+                </ul>
+                <p>Em países que transferem a celebração para o domingo seguinte (como nos EUA e em parte da Europa), a data cai 3 dias depois.</p>
+            </div>
+
+            <h3>Tabela de Datas</h3>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Ano</th>
+                            <th>Páscoa</th>
+                            <th>Corpus Christi (Quinta)</th>
+                            <th>Corpus Christi (Domingo)*</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>2024</strong></td>
+                            <td>31 de março</td>
+                            <td>30 de maio</td>
+                            <td>2 de junho</td>
+                        </tr>
+                        <tr>
+                            <td><strong>2025</strong></td>
+                            <td>20 de abril</td>
+                            <td>19 de junho</td>
+                            <td>22 de junho</td>
+                        </tr>
+                        <tr>
+                            <td><strong>2026</strong></td>
+                            <td>5 de abril</td>
+                            <td>4 de junho</td>
+                            <td>7 de junho</td>
+                        </tr>
+                        <tr>
+                            <td><strong>2027</strong></td>
+                            <td>28 de março</td>
+                            <td>27 de maio</td>
+                            <td>30 de maio</td>
+                        </tr>
+                        <tr>
+                            <td><strong>2028</strong></td>
+                            <td>16 de abril</td>
+                            <td>15 de junho</td>
+                            <td>18 de junho</td>
+                        </tr>
+                        <tr>
+                            <td><strong>2029</strong></td>
+                            <td>1 de abril</td>
+                            <td>31 de maio</td>
+                            <td>3 de junho</td>
+                        </tr>
+                        <tr>
+                            <td><strong>2030</strong></td>
+                            <td>21 de abril</td>
+                            <td>20 de junho</td>
+                            <td>23 de junho</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p><em>* Nos países que transferem a celebração para o domingo.</em></p>
+
+            <h3>Corpus Christi como Feriado Civil</h3>
+
+            <p>Em diversos países, Corpus Christi é <strong>feriado nacional oficial</strong>. Em outros, é ponto facultativo ou feriado apenas em regiões de maioria católica:</p>
+
+            <div class="two-columns">
+                <div>
+                    <h4>🟢 Feriado Nacional</h4>
+                    <ul>
+                        <li>Áustria</li>
+                        <li>Bolívia</li>
+                        <li>Colômbia</li>
+                                        <li>Costa Rica</li>
+                        <li>Croácia</li>
+                        <li>El Salvador</li>
+                        <li>Equador</li>
+                        <li>Haiti</li>
+                        <li>Honduras</li>
+                        <li>Liechtenstein</li>
+                        <li>Mônaco</li>
+                        <li>Panamá</li>
+                        <li>Peru</li>
+                        <li>Polônia</li>
+                        <li>Portugal</li>
+                        <li>República Dominicana</li>
+                        <li>San Marino</li>
+                        <li>Trinidad e Tobago</li>
+                        <li>Venezuela</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>🟡 Feriado Regional / Ponto Facultativo</h4>
+                    <ul>
+                        <li>Brasil (ponto facultativo federal; feriado na maioria dos municípios)</li>
+                        <li>Alemanha (feriado nos estados católicos: Baviera, Baden-Württemberg, etc.)</li>
+                        <li>Suíça (feriado nos cantões católicos)</li>
+                        <li>Espanha (feriado em várias comunidades autônomas)</li>
+                        <li>Argentina (feriado em algumas províncias)</li>
+                        <li>México (não é feriado oficial, mas amplamente celebrado)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>A Questão da Transferência para o Domingo</h3>
+
+            <p>Originalmente, Corpus Christi é sempre celebrado na <strong>quinta-feira</strong> — o mesmo dia da semana da Última Ceia. Esta quinta-feira é considerada o dia litúrgico "correto" da festa e é mantida na maioria dos países latino-americanos, Itália, Espanha, Polônia e outros.</p>
+
+            <p>No entanto, desde as reformas pós-Concílio Vaticano II, muitas conferências episcopais — especialmente nos Estados Unidos, Canadá, Irlanda e Alemanha — obtiveram permissão para transferir a celebração para o <strong>domingo seguinte</strong>, visando maior participação dos fiéis que trabalham durante a semana. Esta transferência é considerada legítima mas opcional.</p>
+        </section>
+
+        <!-- ==================== SEÇÃO 15: COMUNIDADE ==================== -->
+        <section id="social" class="fade-in">
+            <div class="section-header">
+                <span class="section-number">Capítulo XV</span>
+                <span class="section-icon">👥</span>
+                <h2>Comunidade, Pastoral e Espiritualidade</h2>
+                <p class="section-subtitle">Como viver Corpus Christi além do feriado</p>
+                <div class="section-divider"></div>
+            </div>
+
+            <p>Corpus Christi não é apenas uma data no calendário litúrgico: é um convite a aprofundar a vida eucarística durante todo o ano. A solenidade tem dimensões pastorais, comunitárias e espirituais que vão muito além das celebrações do dia.</p>
+
+            <h3>A Dimensão Comunitária</h3>
+
+            <p>A procissão de Corpus Christi é, por natureza, um ato <strong>comunitário</strong>. Ela exige a colaboração de toda a paróquia — dos que fazem os tapetes, dos músicos, dos acólitos, dos ministros, das crianças, dos enfermos que acompanham de suas janelas. Esta dimensão comunitária é teologicamente significativa:</p>
+
+            <div class="highlight-box">
+                <h4>🤝 "Porque o pão é um só, nós, embora sendo muitos, somos um só corpo" (1Cor 10,17)</h4>
+                <p>São Paulo ensina que a Eucaristia não apenas alimenta individualmente cada fiel, mas <strong>constrói o Corpo de Cristo que é a Igreja</strong>. Corpus Christi, ao reunir toda a comunidade em torno do Santíssimo, visibiliza esta verdade: somos um só corpo porque comungamos do mesmo Pão.</p>
+            </div>
+
+            <h3>Confrarias e Irmandades do Santíssimo Sacramento</h3>
+
+            <p>Desde o século XIV, foram surgindo em toda a Europa <strong>confrarias e irmandades</strong> dedicadas ao Santíssimo Sacramento — associações de leigos com a missão específica de honrar, guardar e promover a devoção eucarística. Suas atividades incluem:</p>
+
+            <ul class="custom-list">
+                <li>Organização das procissões de Corpus Christi</li>
+                <li>Manutenção da lâmpada do sacrário acesa</li>
+                <li>Turnos de oração diante do Santíssimo exposto</li>
+                <li>Assistência aos enfermos (levando a Comunhão aos doentes)</li>
+                <li>Promoção de retiros e catequeses eucarísticas</li>
+                <li>Confecção e conservação dos paramentos e vasos sagrados</li>
+            </ul>
+
+            <p>No Brasil, as <strong>Irmandades do Santíssimo Sacramento</strong> foram das primeiras associações de leigos fundadas no período colonial e desempenharam papel fundamental na organização social e caritativa das comunidades.</p>
+
+            <h3>Preparação Pastoral para Corpus Christi</h3>
+
+            <div class="steps">
+                <div class="step">
+                    <div class="step-content">
+                        <h4>Catequese Eucarística</h4>
+                        <p>Semanas antes de Corpus Christi, as paróquias promovem catequeses sobre a Eucaristia: o que é a Missa, a Transubstanciação, como receber bem a Comunhão. É oportunidade de aprofundar a fé dos fiéis.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-content">
+                        <h4>Primeiro Sábado / Hora Santa</h4>
+                        <p>Muitas comunidades realizam <em>Horas Santas</em> de preparação para Corpus Christi, com oração contemplativa diante do Santíssimo.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-content">
+                        <h4>Sacramento da Reconciliação</h4>
+                        <p>A confissão sacramental é incentivada antes de Corpus Christi, para que os fiéis possam comungar dignamente. A Igreja ensina que quem tem consciência de pecado grave não deve comungar sem antes se confessar (1Cor 11,27-29; CIC, can. 916).</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-content">
+                        <h4>Confecção dos Tapetes</h4>
+                        <p>A preparação dos tapetes é, em si mesma, uma atividade pastoral: reúne famílias, grupos jovens e toda a comunidade em torno de um trabalho comum de fé e arte. O processo de trabalho noturno partilhado cria laços de comunhão.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-content">
+                        <h4>Visita aos Enfermos</h4>
+                        <p>Após a procissão, é tradição em muitas comunidades que ministros extraordinários da Eucaristia levem a Sagrada Comunhão aos doentes e idosos que não puderam participar — prolongando a procissão até os que sofrem.</p>
+                    </div>
+                </div>
+            </div>
+
+            <h3>Corpus Christi e a Nova Evangelização</h3>
+
+            <p>A procissão de Corpus Christi é frequentemente citada como exemplo de <strong>evangelização por presença</strong>: ao sair às ruas com o Santíssimo, a Igreja não impõe, mas propõe — oferece ao olhar de todos o testemunho de uma fé que não se envergonha de ser pública. Quem vê a procissão é interpelado: <em>"O que é aquilo? O que eles acreditam? Por que fazem isso?"</em></p>
+
+            <p>Neste sentido, Corpus Christi é uma forma de evangelização que não usa palavras, mas gestos — a linguagem universal da beleza, da reverência e da alegria.</p>
+
+            <h3>A Dimensão Social da Eucaristia</h3>
+
+            <p>A Igreja ensina que quem verdadeiramente crê na presença de Cristo na Eucaristia não pode ignorar a presença de Cristo nos pobres (Mt 25,31-46). Assim, Corpus Christi tem uma dimensão social intrínseca:</p>
+
+            <blockquote>
+                "Não podemos iludir-nos: ao amor que serve Cristo na Eucaristia deve corresponder o amor que serve Cristo no rosto dos pobres."
+                <cite>— São João Paulo II, Ecclesia de Eucharistia, §20</cite>
+            </blockquote>
+
+            <p>Por esta razão, muitas paróquias associam às celebrações de Corpus Christi ações de caridade: partilha de alimentos, visitas a hospitais e asilos, campanhas de arrecadação. O pão que partilhamos na Eucaristia nos envia a partilhar o pão com os famintos.</p>
+        </section>
+
+        <!-- ==================== SEÇÃO 16: ORAÇÕES ==================== -->
+        <section id="oracoes" class="fade-in">
+            <div class="section-header">
+                <span class="section-number">Capítulo XVI</span>
+                <span class="section-icon">🙏</span>
+                <h2>Orações e Devoções</h2>
+                <p class="section-subtitle">Rezar com a Igreja no dia de Corpus Christi</p>
+                <div class="section-divider"></div>
+            </div>
+
+            <p>A tradição da Igreja oferece um rico repertório de orações relacionadas à Eucaristia e a Corpus Christi. Estas preces, compostas ao longo dos séculos, expressam com profundidade a fé, a adoração e o amor ao Sacramento.</p>
+
+            <div class="prayer-card">
+                <h4>🙏 Oração de São Tomás de Aquino antes da Comunhão</h4>
+                <div class="prayer-text">
+                    <p>Senhor Todo-Poderoso e Eterno Deus, eis que me aproximo do sacramento do Vosso Filho Unigênito, Nosso Senhor Jesus Cristo. Como enfermo, aproximo-me do médico da vida; como impuro, da fonte da misericórdia; como cego, da luz da clareza eterna; como pobre e necessitado, do Senhor do céu e da terra.</p>
+                    <p>Peço-Vos que, pela imensidade da Vossa misericórdia, cureis a minha enfermidade, laveis a minha impureza, ilumineis a minha cegueira, enriqueceis a minha pobreza, cobrais a minha nudez.</p>
+                    <p>Fazei que eu receba com tal reverência e humildade, com tal contrição e devoção, com tal pureza e fé, com tal propósito e intenção, que me seja para saúde e remédio da alma e do corpo. Amém.</p>
+                </div>
+            </div>
+
+            <div class="prayer-card">
+                <h4>🙏 Oração de Ação de Graças após a Comunhão (São Tomás de Aquino)</h4>
+                <div class="prayer-text">
+                    <p>Graças Te dou, Senhor Santo, Pai Todo-Poderoso, Deus Eterno, que me deste nutrir, pecador, pela preciosa Hóstia do Santíssimo Corpo e Sangue de Teu Filho, Nosso Senhor Jesus Cristo.</p>
+                    <p>Rogo que esta sagrada Comunhão não seja para mim condenação e castigo, mas perdoamento salvífico. Seja para mim armadura da fé e escudo da boa vontade; extinção de todos os meus vícios; raiz e incremento de virtudes e boas obras; defesa da alma e do corpo contra todos os inimigos.</p>
+                    <p>Seja para mim perfeita adesão a Ti, único e verdadeiro Deus; e finalmente beata plenitude até a morte bem-aventurada. Amém.</p>
+                </div>
+            </div>
+
+            <div class="prayer-card">
+                <h4>🙏 Oração de Corpus Christi</h4>
+                <div class="prayer-text">
+                    <p>Ó Jesus Eucarístico, que vos dignaístes instituir este admirável Sacramento para nos deixar um memorial perpétuo de Vosso amor, e para continuar entre nós o sacrifício do Calvário:</p>
+                    <p>Fazei que nunca nos aproximemos de Vós com indiferença ou tibieza, mas sempre com ardente amor, profunda humildade e sincero desejo de Vos agradar.</p>
+                    <p>Neste dia de Corpus Christi, enquanto Vos louvamos e Vos conduzimos em triunfo pelas ruas, fazei que toda a nossa vida seja uma procissão contínua em Vossa honra, até que Vos possamos contemplar face a face na glória do Paraíso. Amém.</p>
+                </div>
+            </div>
+
+            <div class="prayer-card">
+                <h4>🙏 Anima Christi</h4>
+                <div class="prayer-text">
+                    <p>Alma de Cristo, santificai-me.<br>
+                    Corpo de Cristo, salvai-me.<br>
+                    Sangue de Cristo, embriagai-me.<br>
+                    Água do lado de Cristo, lavai-me.<br>
+                    Paixão de Cristo, fortalecei-me.<br>
+                    Ó bom Jesus, ouvi-me.<br>
+                    Dentro das Vossas chagas, escondei-me.<br>
+                    Não permitais que me separe de Vós.<br>
+                    Do inimigo maligno, defendei-me.<br>
+                    Na hora da minha morte, chamai-me<br>
+                    e mandai-me ir a Vós,<br>
+                    para que com os Vossos santos Vos louve<br>
+                    pelos séculos dos séculos. Amém.</p>
+                </div>
+            </div>
+
+            <div class="prayer-card">
+                <h4>🙏 O Sacrum Convivium (Antífona das Vésperas de Corpus Christi)</h4>
+                <div class="prayer-text">
+                    <p><em>O sacrum convivium, in quo Christus sumitur,</em><br>
+                    <em>recolitur memoria passionis ejus,</em><br>
+                    <em>mens impletur gratia et futurae gloriae nobis pignus datur.</em></p>
+                    <br>
+                    <p><strong>Tradução:</strong><br>
+                    Ó sagrado banquete, no qual Cristo é recebido,<br>
+                    revive-se a memória de Sua Paixão,<br>
+                    a alma se enche de graça e nos é dado o penhor da glória futura.</p>
+                </div>
+            </div>
+
+            <div class="prayer-card">
+                <h4>🙏 Oração de Consagração da Família ao Sagrado Coração</h4>
+                <div class="prayer-text">
+                    <p>Senhor Jesus Cristo, que na última Ceia instituístes o Santíssimo Sacramento como memorial perpétuo de Vossa Paixão e Morte, e que quereis ser o centro e o coração da família cristã:</p>
+                    <p>Recebei a nossa família sob a Vossa proteção especial. Sede o Rei de nossa casa. Que Vosso amor seja o laço que une todos os membros desta família. Que Vossa presença eucarística seja nossa força nos momentos de dificuldade e nossa alegria nos momentos de graça.</p>
+                    <p>E quando nos reunirmos à mesa da família, façamos sempre memória da Mesa do Senhor, onde Vos dais a nós como alimento para a vida eterna. Amém.</p>
+                </div>
+            </div>
+
+            <h3>A Oração dos Fiéis em Corpus Christi</h3>
+
+            <p>A liturgia de Corpus Christi costuma incluir nas <em>Orações dos Fiéis</em> intenções específicas relacionadas ao mistério celebrado:</p>
+
+            <ul class="custom-list">
+                <li>Pelos que não conhecem ou não acreditam na Eucaristia — para que se abram à fé</li>
+                <li>Pelos cristãos separados — para que a unidade eucarística seja um dia restaurada</li>
+                <li>Pelos sacerdotes — instrumentos da Transubstanciação</li>
+                <li>Pelos enfermos — que recebem a Comunhão como Viático</li>
+                <li>Pelos que se afastaram da Comunhão por pecado grave — para que se reconciliem com Deus</li>
+                <li>Pelo mundo — para que a presença de Cristo na Eucaristia traga paz e justiça</li>
+            </ul>
+        </section>
+
+        <!-- ==================== SEÇÃO 17: CURIOSIDADES ==================== -->
+        <section id="curiosidades" class="fade-in">
+            <div class="section-header">
+                <span class="section-number">Capítulo XVII</span>
+                <span class="section-icon">💡</span>
+                <h2>Curiosidades sobre Corpus Christi</h2>
+                <p class="section-subtitle">Fatos surpreendentes que você provavelmente não sabia</p>
+                <div class="section-divider"></div>
+            </div>
+
+            <div class="curiosities-grid">
+
+                <div class="curiosity-card">
+                    <div class="curiosity-number">01</div>
+                    <div class="curiosity-content">
+                        <h4>O maior tapete do Brasil</h4>
+                        <p>A cidade de <strong>Matão (SP)</strong> detém o recorde nacional de maior tapete de Corpus Christi, com mais de <strong>6 quilômetros</strong> de extensão, cobrindo as principais ruas do centro. Milhares de voluntários trabalham durante a madrugada para sua confecção.</p>
+                    </div>
+                </div>
+
+                <div class="curiosity-card">
+                    <div class="curiosity-number">02</div>
+                    <div class="curiosity-content">
+                        <h4>A palavra "Hóstia"</h4>
+                        <p>O nome "hóstia" vem do latim <em>hostia</em>, que significa <strong>"vítima sacrificial"</strong> — o animal oferecido em sacrifício. O uso da palavra para designar o pão eucarístico sublinha que a Eucaristia é o sacrifício de Cristo, a Vítima perfeita.</p>
+                    </div>
+                </div>
+
+                <div class="curiosity-card">
+                    <div class="curiosity-number">03</div>
+                    <div class="curiosity-content">
+                        <h4>A dança dos Seises</h4>
+                        <p>Em <strong>Sevilha</strong>, meninos chamados <em>Seises</em> (originalmente seis, hoje dez) dançam diante do Santíssimo na catedral durante Corpus Christi — tradição que remonta ao século XV. Quando o Papa tentou abolir esta prática, a catedral respondeu: "continuaremos enquanto durar a roupa dos meninos". As roupas foram cuidadosamente conservadas por séculos!</p>
+                    </div>
+                </div>
+
+                <div class="curiosity-card">
+                    <div class="curiosity-number">04</div>
+                    <div class="curiosity-content">
+                        <h4>Corpus Christi inspirou uma cidade</h4>
+                        <p>A cidade de <strong>Corpus Christi</strong>, no estado do Texas (EUA), recebeu este nome porque o explorador espanhol <strong>Alonso Álvarez de Pineda</strong> chegou à baía em <strong>1519 no dia de Corpus Christi</strong> e a batizou em homenagem à festa. Hoje é a oitava maior cidade do Texas.</p>
+                    </div>
+                </div>
+
+                <div class="curiosity-card">
+                    <div class="curiosity-number">05</div>
+                    <div class="curiosity-content">
+                        <h4>São Tomás chorou ao compor</h4>
+                        <p>Conta a tradição que quando São Tomás de Aquino leu os textos do ofício de Corpus Christi ao Papa Urbano IV, o próprio Tomás <strong>chorou</strong> ao recitar os hinos — tal era a profundidade do mistério que ele havia tentado expressar em palavras. O papa e os cardeais presentes também teriam ficado em lágrimas.</p>
+                    </div>
+                </div>
+
+                <div class="curiosity-card">
+                    <div class="curiosity-number">06</div>
+                    <div class="curiosity-content">
+                        <h4>A procissão mais longa do mundo</h4>
+                        <p>A procissão de Corpus Christi de <strong>São Cristóvão</strong>, em Sergipe (considerada a maior e mais antiga procissão de Corpus Christi do Brasil em continuidade ininterrupta), percorre mais de <strong>4 quilômetros</strong> pelas ruas históricas da cidade, patrimônio mundial da UNESCO.</p>
+                    </div>
+                </div>
+
+                <div class="curiosity-card">
+                    <div class="curiosity-number">07</div>
+                    <div class="curiosity-content">
+                        <h4>O sangue do tipo AB</h4>
+                        <p>Em análises científicas independentes de diferentes milagres eucarísticos (Lanciano, Buenos Aires, Sokółka, entre outros), os laboratórios encontraram consistentemente <strong>sangue do tipo AB</strong> — o mesmo tipo identificado nas análises do <strong>Santo Sudário de Turim</strong>. Esta coincidência entre relíquias de países, épocas e laboratórios distintos é considerada notável.</p>
+                    </div>
+                </div>
+
+                <div class="curiosity-card">
+                    <div class="curiosity-number">08</div>
+                    <div class="curiosity-content">
+                        <h4>O "Tantum Ergo" no cinema e na TV</h4>
+                        <p>O hino <em>Tantum Ergo</em> de São Tomás de Aquino é um dos hinos religiosos mais conhecidos e citados na cultura popular. Aparece em filmes, séries, documentários e músicas de diferentes gêneros, sempre evocando solenidade e espiritualidade.</p>
+                    </div>
+                </div>
+
+                <div class="curiosity-card">
+                    <div class="curiosity-number">09</div>
+                    <div class="curiosity-content">
+                        <h4>Santa Juliana nunca viu o sonho realizado</h4>
+                        <p>A religiosa que recebeu a visão pedindo a festa de Corpus Christi, <strong>Santa Juliana de Liège</strong>, morreu em 1258 — <strong>seis anos antes</strong> de o Papa Urbano IV instituir a festa para toda a Igreja. Ela viveu para ver a primeira celebração em Liège (1246), mas não viu o sonho universal realizado. Foi canonizada pelo Papa Pio IX em 1869.</p>
+                    </div>
+                </div>
+
+                <div class="curiosity-card">
+                    <div class="curiosity-number">10</div>
+                    <div class="curiosity-content">
+                        <h4>As procissões aquáticas da Baviera</h4>
+                        <p>Nos lagos alpinos da Baviera (Alemanha), a procissão de <strong>Fronleichnam</strong> acontece sobre a água: o Santíssimo é levado em uma barca ornamentada, seguida de dezenas de barcos com os fiéis em trajes tradicionais. É uma das imagens mais poéticas e incomuns de Corpus Christi no mundo.</p>
+                    </div>
+                </div>
+
+                <div class="curiosity-card">
+                    <div class="curiosity-number">11</div>
+                    <div class="curiosity-content">
+                        <h4>A Beata que influenciou um Papa</h4>
+                        <p>O papa que instituiu Corpus Christi, <strong>Urbano IV</strong>, conhecia o pedido de Juliana de Liège antes de ser papa: quando era arquidiácono de Liège, teve contato com a religiosa e com a ideia da festa. Quando se tornou papa, tinha as informações necessárias para agir — e o Milagre de Bolsena foi o catalisador.</p>
+                    </div>
+                </div>
+
+                <div class="curiosity-card">
+                    <div class="curiosity-number">12</div>
+                    <div class="curiosity-content">
+                        <h4>A Eucaristia na língua dos astronautas</h4>
+                        <p>O astronauta americano <strong>Buzz Aldrin</strong> levou para a Lua, na missão Apollo 11 (1969), uma pequena porção de vinho e uma Hóstia. Antes da caminhada lunar, ele celebrou uma breve Comunhão privada. Foi a primeira Eucaristia celebrada fora da Terra — embora não fosse uma Missa católica (Aldrin era presbiteriano).</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ==================== SEÇÃO 18: FAQ ==================== -->
+        <section id="faq" class="fade-in">
+            <div class="section-header">
+                <span class="section-number">Capítulo XVIII</span>
+                <span class="section-icon">❓</span>
+                <h2>Perguntas Frequentes</h2>
+                <p class="section-subtitle">As dúvidas mais comuns sobre Corpus Christi respondidas</p>
+                <div class="section-divider"></div>
+            </div>
+
+            <div class="faq-container">
+
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        <span>Por que Corpus Christi é celebrado numa quinta-feira?</span>
+                        <span class="faq-arrow">▼</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>A escolha da quinta-feira é intencional e simbólica: a <strong>Última Ceia</strong>, na qual Jesus instituiu a Eucaristia, ocorreu numa quinta-feira (a chamada Quinta-feira Santa). Corpus Christi, portanto, é celebrado no mesmo dia da semana em que a Eucaristia foi instituída — mas numa atmosfera de alegria festiva, ao contrário do clima solene e penitencial da Semana Santa.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        <span>Qual a diferença entre Corpus Christi e a Quinta-feira Santa?</span>
+                        <span class="faq-arrow">▼</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>A <strong>Quinta-feira Santa</strong> celebra a <em>instituição</em> da Eucaristia dentro do contexto da Paixão e Morte de Cristo — o tom é de intimidade, solenidade e serviço (lavapés). <strong>Corpus Christi</strong> celebra a <em>presença real</em> e <em>permanente</em> de Cristo no Sacramento com tom festivo e triunfal, saindo às ruas em procissão. São celebrações complementares: a Quinta-feira Santa é o "nascimento" do sacramento; Corpus Christi é a sua "exaltação pública".</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        <span>Por que passar sobre o tapete não é desrespeitoso com o sacramento?</span>
+                        <span class="faq-arrow">▼</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>O tapete não é o Santíssimo Sacramento — é uma <strong>homenagem ao caminho por onde Cristo passará</strong>. A tradição é inspirada na entrada de Jesus em Jerusalém, quando a multidão estendeu mantos e ramos de palmeira no caminho. O tapete é destruído pela passagem da procissão justamente porque seu propósito é servir de <em>caminho honroso</em> para Cristo. É um ato de amor e serviço, não de desrespeito.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        <span>É obrigatorio ir à procissão de Corpus Christi?</span>
+                        <span class="faq-arrow">▼</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>A participação na <strong>Missa</strong> é obrigatória em todas as solenidades de preceito, e Corpus Christi é uma delas — portanto, a Missa é de obrigação (sob pena de pecado grave, salvo justa causa). A <strong>procissão</strong>, por sua vez, não é tecnicamente de obrigação canônica, mas é fortemente recomendada como expressão de fé e devoção eucarística. Historicamente, no Brasil colonial, a participação era obrigatória por lei civil.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        <span>O pão e o vinho da Missa realmente se transformam?</span>
+                        <span class="faq-arrow">▼</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Esta é a fé da Igreja Católica, definida solenemente no <strong>Concílio de Trento</strong> (1551): sim, no momento da consagração, a substância do pão e do vinho se converte totalmente na substância do Corpo e Sangue de Cristo (Transubstanciação). As aparências (cor, sabor, textura) permanecem as de pão e vinho, mas a realidade — a substância — é Cristo. Esta doutrina se baseia nas palavras explícitas do próprio Jesus ("Isto é o meu corpo") e na tradição ininterrupta da Igreja desde os primeiros séculos.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        <span>Por que os tapetes são feitos se vão ser destruídos?</span>
+                        <span class="faq-arrow">▼</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Precisamente porque são destruídos, os tapetes ganham um significado espiritual especial. A <strong>efemeridade</strong> é parte essencial da mensagem: toda beleza criada por amor a Deus, mesmo que destruída, tem valor eterno porque foi oferecida com fé. É uma lição sobre a <em>gratuidade</em> do amor — fazemos o bem não para que dure, mas porque amamos. Além disso, a destruição do tapete pela passagem de Cristo simboliza a entrega total: nós mesmos somos convidados a nos tornar "caminho" para que Cristo passe.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        <span>Corpus Christi é comemorado apenas por católicos?</span>
+                        <span class="faq-arrow">▼</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Corpus Christi é uma festa <strong>exclusivamente católica</strong> em sua origem e significado teológico. Algumas igrejas anglicanas de tendência alta (<em>high church</em>) também celebram o "Corpo de Cristo" de forma semelhante. As igrejas protestantes tradicionais (luterana, reformada/calvinista, batista) não celebram Corpus Christi, pois rejeitam a doutrina da Transubstanciação e da Presença Real no sentido católico. Luteranos creem numa "presença real" mas diferente da católica; calvinistas veem a Ceia como memorial simbólico.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        <span>Qual a origem do nome "Fronleichnam" (alemão para Corpus Christi)?</span>
+                        <span class="faq-arrow">▼</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p><em>Fronleichnam</em> vem do alemão medieval: <em>Vron-</em> (do latim <em>Dominus</em>, "Senhor") + <em>Lichnam</em> (corpo). Literalmente significa "<strong>Corpo do Senhor</strong>" — equivalente exato ao latim <em>Corpus Domini</em>. A palavra <em>Leichnam</em>, porém, em alemão moderno significa também "cadáver", o que confunde alguns falantes modernos — mas no alemão medieval significava simplesmente "corpo".</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        <span>Como devemos nos comportar durante a procissão de Corpus Christi?</span>
+                        <span class="faq-arrow">▼</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Durante a procissão de Corpus Christi, a postura deve ser de <strong>reverência e devoção</strong>:</p>
+                        <ul>
+                            <li>Participar com recato e silêncio respeitoso — é uma caminhada de oração, não um passeio</li>
+                            <li>Quando o Santíssimo passa, inclinar-se profundamente ou ajoelhar (se possível)</li>
+                            <li>Participar dos cânticos e das orações</li>
+                            <li>Vestir-se com decência e modéstia</li>
+                            <li>Desligar ou silenciar o celular</li>
+                            <li>Manter as crianças orientadas sobre o significado da celebração</li>
+                            <li>Quem observa a procissão da calçada deve fazer uma reverência ao Santíssimo ao ele passar</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        <span>Quando a Igreja começou a guardar as Hóstias consagradas no sacrário?</span>
+                        <span class="faq-arrow">▼</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>A prática de guardar as Hóstias consagradas é muito antiga. Desde os primeiros séculos, as Hóstias eram reservadas principalmente para levar a <strong>Comunhão aos doentes e enfermos</strong> que não podiam ir à Missa. As Hóstias eram guardadas em casa pelos próprios fiéis ou nas sacristias. O <strong>sacrário</strong> (tabernáculo), como local fixo e solene de reserva na própria nave da igreja, se tornou universal a partir da Idade Média, impulsionado pelo crescimento da devoção eucarística — da qual Corpus Christi é expressão máxima.</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-host">☩</div>
+            <div class="footer-title">Corpus Christi</div>
+            <div class="footer-subtitle">Solenidade do Santíssimo Corpo e Sangue de Cristo</div>
+
+            <div class="footer-quote">
+                <p>"Quanto mais perfeita for a vida, mais plenamente encontraremos o Senhor na Eucaristia."</p>
+                <cite>— São João Paulo II</cite>
+            </div>
+
+            <div class="footer-links">
+                <a href="#top">↑ Voltar ao Topo</a>
+                <a href="#intro">Introdução</a>
+                <a href="#contexto">Contexto</a>
+                <a href="#historia">História</a>
+                <a href="#teologia">Teologia</a>
+                <a href="#liturgia">Liturgia</a>
+                <a href="#tomas">São Tomás</a>
+                <a href="#procissao">Procissão</a>
+                <a href="#tapetes">Tapetes</a>
+                <a href="#brasil">Brasil</a>
+                <a href="#mundo">Pelo Mundo</a>
+                <a href="#milagres">Milagres</a>
+                <a href="#simbolos">Símbolos</a>
+                <a href="#arte">Arte</a>
+                <a href="#documentos">Documentos</a>
+                <a href="#data">Calendário</a>
+                <a href="#social">Comunidade</a>
+                <a href="#oracoes">Orações</a>
+                <a href="#curiosidades">Curiosidades</a>
+                <a href="#faq">FAQ</a>
+            </div>
+
+            <div class="footer-latin">
+                <p><em>Tantum ergo Sacramentum veneremur cernui</em></p>
+                <p><em>Veneremos, pois, de joelhos, tão grande Sacramento</em></p>
+                <p>— São Tomás de Aquino —</p>
+            </div>
+
+            <div class="footer-copy">
+                <p>Página informativa sobre a Solenidade de Corpus Christi</p>
+                <p>Conteúdo baseado em fontes históricas, teológicas e litúrgicas da Igreja Católica</p>
+                <p class="footer-nota">⚠️ Esta é uma página de conteúdo educativo e devocional. Os textos bíblicos são da versão Bíblia de Jerusalém (PAULUS). Documentos do Magistério: Vatican.va.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- BACK TO TOP BUTTON -->
+    <a href="#top" class="back-to-top" id="backToTop" title="Voltar ao topo">☩</a>
+
+    <script>
+        // ==================== LOADING SCREEN ====================
+        window.addEventListener('load', function () {
+            setTimeout(function () {
+                document.getElementById('loading').style.opacity = '0';
+                setTimeout(function () {
+                    document.getElementById('loading').style.display = 'none';
+                }, 600);
+            }, 1800);
+        });
+
+        // ==================== PROGRESS BAR ====================
+        window.addEventListener('scroll', function () {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById('progressBar').style.width = scrolled + '%';
+
+            // Back to top button
+            const backToTop = document.getElementById('backToTop');
+            if (winScroll > 400) {
+                backToTop.classList.add('visible');
+            } else {
+                backToTop.classList.remove('visible');
+            }
+        });
+
+        // ==================== MOBILE MENU ====================
+       // ==================== MENU TOGGLE (ÍNDICE) ====================
+function toggleMenu() {
+    const menu = document.getElementById('navMenu');
+    const btn = document.getElementById('navToggleBtn');
+    menu.classList.toggle('active');
+    btn.classList.toggle('active');
+    
+    // Atualiza o texto do botão
+    const text = btn.querySelector('.nav-toggle-text');
+    if (menu.classList.contains('active')) {
+        text.textContent = 'Fechar Índice';
+    } else {
+        text.textContent = 'Índice';
+    }
+}
+
+// Fechar menu ao clicar em link
+document.querySelectorAll('.nav-menu a').forEach(function (link) {
+    link.addEventListener('click', function () {
+        const menu = document.getElementById('navMenu');
+        const btn = document.getElementById('navToggleBtn');
+        menu.classList.remove('active');
+        btn.classList.remove('active');
+        btn.querySelector('.nav-toggle-text').textContent = 'Índice';
+    });
+});
+
+// Fechar menu ao clicar fora dele
+document.addEventListener('click', function(event) {
+    const nav = document.querySelector('nav');
+    const menu = document.getElementById('navMenu');
+    const btn = document.getElementById('navToggleBtn');
+    
+    if (!nav.contains(event.target) && menu.classList.contains('active')) {
+        menu.classList.remove('active');
+        btn.classList.remove('active');
+        btn.querySelector('.nav-toggle-text').textContent = 'Índice';
+    }
+});
+
+        // ==================== FAQ ====================
+        function toggleFaq(button) {
+            const answer = button.nextElementSibling;
+            const arrow = button.querySelector('.faq-arrow');
+            const isOpen = answer.classList.contains('open');
+
+            // Fechar todos
+            document.querySelectorAll('.faq-answer').forEach(function (a) {
+                a.classList.remove('open');
+                a.style.maxHeight = null;
+            });
+            document.querySelectorAll('.faq-arrow').forEach(function (ar) {
+                ar.classList.remove('rotated');
+            });
+            document.querySelectorAll('.faq-question').forEach(function (q) {
+                q.classList.remove('active');
+            });
+
+            // Abrir o clicado se estava fechado
+            if (!isOpen) {
+                answer.classList.add('open');
+                answer.style.maxHeight = answer.scrollHeight + 'px';
+                arrow.classList.add('rotated');
+                button.classList.add('active');
+            }
+        }
+
+        // ==================== FADE IN on SCROLL ====================
+        const observer = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.08 });
+
+        document.querySelectorAll('.fade-in').forEach(function (el) {
+            observer.observe(el);
+        });
+
+        // ==================== ACTIVE NAV LINK ====================
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('.nav-menu a');
+
+        window.addEventListener('scroll', function () {
+            let current = '';
+            sections.forEach(function (section) {
+                const sectionTop = section.offsetTop - 120;
+                if (window.scrollY >= sectionTop) {
+                    current = section.getAttribute('id');
+                }
+            });
+            navLinks.forEach(function (link) {
+                link.classList.remove('active-link');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active-link');
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
