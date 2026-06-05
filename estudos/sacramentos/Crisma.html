@@ -1,0 +1,3176 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crisma - O Sacramento do Espírito Santo</title>
+    <style>
+        /* ===== RESET & BASE ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --vermelho: #8B0000;
+            --vermelho-claro: #C0392B;
+            --dourado: #D4AF37;
+            --dourado-claro: #F0D060;
+            --branco: #FAFAFA;
+            --cinza-claro: #F5F5F0;
+            --cinza: #666;
+            --preto: #1a1a1a;
+            --sombra: rgba(0,0,0,0.15);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background-color: var(--cinza-claro);
+            color: var(--preto);
+            line-height: 1.8;
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            background: linear-gradient(135deg, #4a0000 0%, #8B0000 40%, #6B0000 70%, #2c0000 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            padding: 2rem;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: 
+                radial-gradient(ellipse at 20% 50%, rgba(212,175,55,0.15) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 50%, rgba(212,175,55,0.1) 0%, transparent 60%);
+        }
+
+        .hero-flames {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 200px;
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-end;
+            pointer-events: none;
+        }
+
+        .flame {
+            width: 30px;
+            height: 80px;
+            background: linear-gradient(to top, #ff6600, #ffaa00, #ffff00, transparent);
+            border-radius: 50% 50% 30% 30%;
+            animation: flicker 1.5s ease-in-out infinite alternate;
+            opacity: 0.4;
+        }
+
+        .flame:nth-child(2n) { animation-delay: 0.3s; height: 60px; }
+        .flame:nth-child(3n) { animation-delay: 0.7s; height: 100px; }
+        .flame:nth-child(4n) { animation-delay: 1.1s; height: 50px; }
+
+        @keyframes flicker {
+            0% { transform: scaleX(1) scaleY(1) rotate(-2deg); opacity: 0.3; }
+            100% { transform: scaleX(0.8) scaleY(1.1) rotate(2deg); opacity: 0.5; }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-icon {
+            font-size: 5rem;
+            margin-bottom: 1rem;
+            animation: glow 2s ease-in-out infinite alternate;
+            display: block;
+        }
+
+        @keyframes glow {
+            from { filter: drop-shadow(0 0 10px rgba(212,175,55,0.5)); }
+            to { filter: drop-shadow(0 0 25px rgba(212,175,55,0.9)); }
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 6vw, 5rem);
+            color: var(--dourado);
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.8);
+            letter-spacing: 3px;
+            margin-bottom: 0.5rem;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1rem, 2.5vw, 1.4rem);
+            color: rgba(255,255,255,0.85);
+            font-style: italic;
+            margin-bottom: 2rem;
+            letter-spacing: 1px;
+        }
+
+        .hero-verse {
+            background: rgba(212,175,55,0.15);
+            border: 1px solid rgba(212,175,55,0.4);
+            border-radius: 12px;
+            padding: 1.5rem 2.5rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            color: rgba(255,255,255,0.9);
+            font-style: italic;
+            font-size: 1.1rem;
+        }
+
+        .hero-verse cite {
+            display: block;
+            margin-top: 0.5rem;
+            color: var(--dourado-claro);
+            font-size: 0.9rem;
+            font-style: normal;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 220px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+        }
+
+        .scroll-indicator span {
+            display: block;
+            color: rgba(255,255,255,0.6);
+            font-size: 0.85rem;
+            margin-bottom: 0.5rem;
+            letter-spacing: 2px;
+        }
+
+        .scroll-arrow {
+            width: 30px;
+            height: 30px;
+            border-right: 2px solid rgba(212,175,55,0.7);
+            border-bottom: 2px solid rgba(212,175,55,0.7);
+            transform: rotate(45deg);
+            margin: 0 auto;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(10px); }
+        }
+
+        /* ===== NAVEGAÇÃO ===== */
+        .nav-sticky {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: linear-gradient(135deg, #6B0000, #8B0000);
+            box-shadow: 0 3px 15px rgba(0,0,0,0.4);
+            padding: 0;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0;
+        }
+
+        .nav-sticky a {
+            color: rgba(255,255,255,0.85);
+            text-decoration: none;
+            padding: 1rem 1.2rem;
+            font-size: 0.82rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: all 0.3s;
+            border-bottom: 3px solid transparent;
+            white-space: nowrap;
+        }
+
+        .nav-sticky a:hover {
+            color: var(--dourado);
+            border-bottom-color: var(--dourado);
+            background: rgba(0,0,0,0.2);
+        }
+
+        /* ===== AVISOS / BADGES ===== */
+        .diferenca-batismo-banner {
+            background: linear-gradient(135deg, #1a3a1a, #2d5a2d);
+            border-left: 5px solid #4CAF50;
+            color: white;
+            padding: 1.5rem 2rem;
+            margin: 2rem auto;
+            max-width: 900px;
+            border-radius: 0 12px 12px 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 1.5rem;
+        }
+
+        .diferenca-batismo-banner .icon {
+            font-size: 2.5rem;
+            flex-shrink: 0;
+        }
+
+        .diferenca-batismo-banner h3 {
+            color: #90EE90;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .diferenca-batismo-banner p {
+            font-size: 0.95rem;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+
+        .diferenca-batismo-banner a {
+            color: #90EE90;
+            text-decoration: underline;
+        }
+
+        /* ===== LAYOUT PRINCIPAL ===== */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        /* ===== SEÇÕES ===== */
+        section {
+            margin-bottom: 4rem;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-header .section-tag {
+            display: inline-block;
+            background: var(--vermelho);
+            color: var(--dourado);
+            font-size: 0.75rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            padding: 0.4rem 1.2rem;
+            border-radius: 20px;
+            margin-bottom: 1rem;
+        }
+
+        .section-header h2 {
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            color: var(--vermelho);
+            position: relative;
+            padding-bottom: 1rem;
+        }
+
+        .section-header h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(to right, var(--vermelho), var(--dourado), var(--vermelho));
+            border-radius: 3px;
+        }
+
+        .section-header p {
+            color: var(--cinza);
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 1.5rem auto 0;
+            font-style: italic;
+        }
+
+        /* ===== CARDS ===== */
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 4px 20px var(--sombra);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 30px rgba(139,0,0,0.2);
+        }
+
+        .card-gold {
+            background: linear-gradient(135deg, #fff8e1, #fffde7);
+            border: 1px solid rgba(212,175,55,0.4);
+        }
+
+        .card-red {
+            background: linear-gradient(135deg, #fff5f5, #fff0f0);
+            border-left: 4px solid var(--vermelho);
+        }
+
+        .card-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .card h3 {
+            color: var(--vermelho);
+            font-size: 1.3rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .card p {
+            color: #444;
+            font-size: 0.95rem;
+        }
+
+        /* ===== GRIDS ===== */
+        .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+        .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 2rem; }
+        .grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; }
+
+        /* ===== LINHA DO TEMPO ===== */
+        .timeline {
+            position: relative;
+            padding-left: 3rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 1rem;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--vermelho), var(--dourado), var(--vermelho));
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 3rem;
+            background: white;
+            border-radius: 12px;
+            padding: 1.8rem;
+            box-shadow: 0 3px 15px var(--sombra);
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -2.35rem;
+            top: 1.8rem;
+            width: 14px;
+            height: 14px;
+            background: var(--dourado);
+            border: 3px solid var(--vermelho);
+            border-radius: 50%;
+        }
+
+        .timeline-date {
+            display: inline-block;
+            background: var(--vermelho);
+            color: var(--dourado);
+            padding: 0.2rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+            margin-bottom: 0.8rem;
+        }
+
+        .timeline-item h3 {
+            color: var(--vermelho);
+            margin-bottom: 0.5rem;
+        }
+
+        /* ===== CITAÇÕES ===== */
+        .quote-block {
+            border-left: 4px solid var(--dourado);
+            background: linear-gradient(135deg, #fff8e1, #fffde7);
+            padding: 1.5rem 2rem;
+            border-radius: 0 12px 12px 0;
+            margin: 2rem 0;
+            position: relative;
+        }
+
+        .quote-block::before {
+            content: '"';
+            font-size: 5rem;
+            color: var(--dourado);
+            opacity: 0.3;
+            position: absolute;
+            top: -1rem;
+            left: 0.5rem;
+            font-family: Georgia, serif;
+            line-height: 1;
+        }
+
+        .quote-block p {
+            font-style: italic;
+            font-size: 1.05rem;
+            color: #333;
+            position: relative;
+            z-index: 1;
+        }
+
+        .quote-block cite {
+            display: block;
+            margin-top: 0.8rem;
+            color: var(--vermelho);
+            font-weight: bold;
+            font-style: normal;
+            font-size: 0.9rem;
+        }
+
+        /* ===== DONS CARDS ===== */
+        .dom-card {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem 1.5rem;
+            text-align: center;
+            box-shadow: 0 4px 20px var(--sombra);
+            border-top: 4px solid var(--dourado);
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .dom-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(to right, var(--vermelho), var(--dourado));
+            transform: scaleX(0);
+            transition: transform 0.3s;
+        }
+
+        .dom-card:hover::after { transform: scaleX(1); }
+        .dom-card:hover { transform: translateY(-6px); box-shadow: 0 12px 35px rgba(139,0,0,0.2); }
+
+        .dom-card .dom-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .dom-card h3 {
+            color: var(--vermelho);
+            font-size: 1.2rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .dom-card .dom-numero {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 3rem;
+            font-weight: bold;
+            color: rgba(139,0,0,0.08);
+            font-family: Georgia, serif;
+        }
+
+        /* ===== FRUTOS CARD ===== */
+        .fruto-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 1rem;
+            border-radius: 10px;
+            transition: background 0.3s;
+        }
+
+        .fruto-item:hover { background: rgba(139,0,0,0.05); }
+
+        .fruto-icon {
+            font-size: 1.8rem;
+            flex-shrink: 0;
+        }
+
+        /* ===== SANTOS CARDS ===== */
+        .santo-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px var(--sombra);
+            transition: all 0.3s;
+        }
+
+        .santo-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 35px rgba(139,0,0,0.25);
+        }
+
+        .santo-header {
+            background: linear-gradient(135deg, var(--vermelho), #6B0000);
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .santo-emoji {
+            font-size: 3.5rem;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .santo-header h3 {
+            color: var(--dourado);
+            font-size: 1.2rem;
+        }
+
+        .santo-header .santo-epoca {
+            color: rgba(255,255,255,0.7);
+            font-size: 0.8rem;
+        }
+
+        .santo-body {
+            padding: 1.8rem;
+        }
+
+        .santo-body blockquote {
+            font-style: italic;
+            color: #555;
+            border-left: 3px solid var(--dourado);
+            padding-left: 1rem;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+        }
+
+        .santo-body p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* ===== HISTÓRIA BOX ===== */
+        .historia-box {
+            background: linear-gradient(135deg, #1a0a0a, #2d1010);
+            border-radius: 16px;
+            padding: 3rem;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            margin: 2rem 0;
+        }
+
+        .historia-box::before {
+            content: '✝';
+            position: absolute;
+            right: 2rem;
+            top: 1rem;
+            font-size: 8rem;
+            color: rgba(212,175,55,0.07);
+        }
+
+        .historia-box h3 {
+            color: var(--dourado);
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .historia-box p {
+            color: rgba(255,255,255,0.85);
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+        }
+
+        /* ===== STEPS (COMO SE PREPARAR) ===== */
+        .step {
+            display: flex;
+            gap: 2rem;
+            align-items: flex-start;
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 3px 15px var(--sombra);
+            transition: transform 0.3s;
+        }
+
+        .step:hover { transform: translateX(8px); }
+
+        .step-number {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--vermelho), #6B0000);
+            color: var(--dourado);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            flex-shrink: 0;
+            box-shadow: 0 4px 12px rgba(139,0,0,0.4);
+        }
+
+        .step-content h3 {
+            color: var(--vermelho);
+            margin-bottom: 0.5rem;
+        }
+
+        /* ===== COMPARAÇÃO BATISMO/CRISMA ===== */
+        .comparacao-grid {
+            display: grid;
+            grid-template-columns: 1fr 60px 1fr;
+            gap: 0;
+            align-items: start;
+        }
+
+        .comp-col {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 20px var(--sombra);
+        }
+
+        .comp-col.batismo { border-top: 4px solid #2196F3; }
+        .comp-col.crisma { border-top: 4px solid var(--vermelho); }
+
+        .comp-middle {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding-top: 2rem;
+            gap: 1rem;
+            color: var(--dourado);
+            font-size: 1.5rem;
+        }
+
+        .comp-col h3 { margin-bottom: 1rem; font-size: 1.1rem; }
+        .comp-col.batismo h3 { color: #2196F3; }
+        .comp-col.crisma h3 { color: var(--vermelho); }
+
+        .comp-item {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #eee;
+            font-size: 0.9rem;
+            color: #555;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+        }
+
+        .comp-item:last-child { border-bottom: none; }
+
+        /* ===== AVISO DE NÃO DUPLICAR ===== */
+        .no-duplicate-zone {
+            background: linear-gradient(135deg, #0a1628, #1a2a4a);
+            border: 2px solid #3a5a8a;
+            border-radius: 16px;
+            padding: 2.5rem;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .no-duplicate-zone::before {
+            content: '🚫';
+            position: absolute;
+            right: 2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 5rem;
+            opacity: 0.15;
+        }
+
+        .no-duplicate-zone h3 {
+            color: #7EB8F7;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .no-duplicate-zone p { color: rgba(255,255,255,0.8); margin-bottom: 0.5rem; }
+        .no-duplicate-zone ul { color: rgba(255,255,255,0.7); padding-left: 1.5rem; }
+        .no-duplicate-zone li { margin-bottom: 0.5rem; }
+        .no-duplicate-zone a { color: #7EB8F7; }
+
+        /* ===== CURIOSIDADES ===== */
+        .curiosidade-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            border-left: 4px solid var(--dourado);
+            box-shadow: 0 3px 15px var(--sombra);
+            transition: all 0.3s;
+        }
+
+        .curiosidade-card:hover {
+            border-left-color: var(--vermelho);
+            transform: translateX(5px);
+        }
+
+        .curiosidade-card h4 {
+            color: var(--vermelho);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* ===== MATÉRIA SACRAMENTAL ===== */
+        .materia-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .materia-box {
+            background: white;
+            border-radius: 16px;
+            padding: 2.5rem;
+            box-shadow: 0 4px 20px var(--sombra);
+            text-align: center;
+        }
+
+        .materia-box .big-icon {
+            font-size: 4rem;
+            display: block;
+            margin-bottom: 1rem;
+        }
+
+        .materia-box h3 {
+            color: var(--vermelho);
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .materia-box .badge {
+            display: inline-block;
+            background: var(--vermelho);
+            color: white;
+            font-size: 0.75rem;
+            padding: 0.2rem 0.8rem;
+            border-radius: 20px;
+            margin-bottom: 1rem;
+            letter-spacing: 1px;
+        }
+
+        /* ===== ACCORDION ===== */
+        .accordion-item {
+            background: white;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            box-shadow: 0 2px 10px var(--sombra);
+        }
+
+        .accordion-header {
+            padding: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: white;
+            transition: background 0.3s;
+            border: none;
+            width: 100%;
+            text-align: left;
+            font-size: 1rem;
+            font-family: Georgia, serif;
+        }
+
+        .accordion-header:hover { background: #fff5f5; }
+
+        .accordion-header h3 {
+            color: var(--vermelho);
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .accordion-icon {
+            color: var(--vermelho);
+            font-size: 1.2rem;
+            transition: transform 0.3s;
+            flex-shrink: 0;
+        }
+
+        .accordion-content {
+            display: none;
+            padding: 0 1.5rem 1.5rem;
+            border-top: 1px solid #f0e0e0;
+        }
+
+        .accordion-content.active { display: block; }
+        .accordion-icon.rotated { transform: rotate(180deg); }
+
+        /* ===== EFEITOS DOS DONS ===== */
+        .efeito-card {
+            display: flex;
+            gap: 1.5rem;
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 3px 15px var(--sombra);
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .efeito-icon-box {
+            width: 55px;
+            height: 55px;
+            background: linear-gradient(135deg, var(--vermelho), #6B0000);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            flex-shrink: 0;
+        }
+
+        /* ===== RITO ===== */
+        .rito-step {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 3px 15px var(--sombra);
+            margin-bottom: 1.5rem;
+            border-right: 4px solid var(--vermelho);
+            position: relative;
+        }
+
+        .rito-step-number {
+            position: absolute;
+            top: -15px;
+            left: 1.5rem;
+            background: var(--vermelho);
+            color: var(--dourado);
+            font-size: 0.85rem;
+            font-weight: bold;
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            letter-spacing: 1px;
+        }
+
+        .rito-step h3 {
+            color: var(--vermelho);
+            margin-bottom: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        /* ===== BANDEIRA SÍNODOS ===== */
+        .synod-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .synod-badge {
+            background: white;
+            border: 2px solid var(--dourado);
+            border-radius: 8px;
+            padding: 0.5rem 1.2rem;
+            font-size: 0.85rem;
+            color: var(--vermelho);
+            font-weight: bold;
+        }
+
+        /* ===== SEÇÃO DE MISSÃO ===== */
+        .missao-hero {
+            background: linear-gradient(135deg, #4a0000, #8B0000);
+            border-radius: 20px;
+            padding: 3rem;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .missao-hero::before {
+            content: '🕊️';
+            position: absolute;
+            font-size: 10rem;
+            opacity: 0.07;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .missao-hero h2 {
+            color: var(--dourado);
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .missao-hero p {
+            color: rgba(255,255,255,0.85);
+            max-width: 700px;
+            margin: 0 auto 1.5rem;
+            font-size: 1.05rem;
+        }
+
+        /* ===== ORAÇÃO BOX ===== */
+        .oracao-box {
+            background: linear-gradient(135deg, #fff8e1, #fffde7);
+            border: 2px solid var(--dourado);
+            border-radius: 16px;
+            padding: 2.5rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .oracao-box::before,
+        .oracao-box::after {
+            content: '✦';
+            color: var(--dourado);
+            font-size: 1.5rem;
+            position: absolute;
+        }
+
+        .oracao-box::before { top: 1rem; left: 1rem; }
+        .oracao-box::after { bottom: 1rem; right: 1rem; }
+
+        .oracao-box h3 {
+            color: var(--vermelho);
+            font-size: 1.4rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .oracao-box p {
+            font-style: italic;
+            color: #444;
+            line-height: 2;
+            font-size: 1.05rem;
+        }
+
+        /* ===== TABELA ===== */
+        .tabela-container {
+            overflow-x: auto;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px var(--sombra);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+        }
+
+        thead {
+            background: linear-gradient(135deg, var(--vermelho), #6B0000);
+            color: var(--dourado);
+        }
+
+        thead th {
+            padding: 1.2rem 1.5rem;
+            text-align: left;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        tbody tr {
+            border-bottom: 1px solid #f0e0e0;
+            transition: background 0.2s;
+        }
+
+        tbody tr:hover { background: #fff5f5; }
+
+        tbody td {
+            padding: 1rem 1.5rem;
+            color: #444;
+            font-size: 0.95rem;
+        }
+
+        tbody td:first-child { font-weight: bold; color: var(--vermelho); }
+
+        /* ===== ESTATÍSTICAS ===== */
+        .stat-card {
+            background: linear-gradient(135deg, var(--vermelho), #6B0000);
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            color: white;
+            box-shadow: 0 4px 20px rgba(139,0,0,0.3);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--dourado);
+            display: block;
+            line-height: 1;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            opacity: 0.85;
+            letter-spacing: 1px;
+        }
+
+        /* ===== BACKGROUND SECTIONS ===== */
+        .bg-dark {
+            background: linear-gradient(135deg, #1a0505, #2d0a0a);
+            color: white;
+            padding: 4rem 0;
+            margin: 4rem 0;
+        }
+
+        .bg-dark .section-header h2 { color: var(--dourado); }
+        .bg-dark .section-header p { color: rgba(255,255,255,0.7); }
+
+        .bg-light {
+            background: linear-gradient(135deg, #fff8f0, #fffaf5);
+            padding: 4rem 0;
+            margin: 4rem 0;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: linear-gradient(135deg, #0d0d0d, #1a1a1a);
+            color: rgba(255,255,255,0.7);
+            padding: 3rem 2rem 2rem;
+            text-align: center;
+        }
+
+        footer .footer-cross {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        footer h3 {
+            color: var(--dourado);
+            margin-bottom: 0.5rem;
+        }
+
+        footer p { font-size: 0.9rem; margin-bottom: 0.5rem; }
+
+        footer .footer-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        footer .footer-links a {
+            color: rgba(255,255,255,0.6);
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: color 0.3s;
+        }
+
+        footer .footer-links a:hover { color: var(--dourado); }
+
+        /* ===== HIGHLIGHT BOX ===== */
+        .highlight {
+            background: linear-gradient(135deg, #fff3e0, #fff8e1);
+            border: 1px solid #FFB74D;
+            border-radius: 12px;
+            padding: 1.5rem 2rem;
+            margin: 1.5rem 0;
+        }
+
+        .highlight h4 {
+            color: #E65100;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* ===== INFO TAGS ===== */
+        .tag {
+            display: inline-block;
+            padding: 0.2rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin: 0.2rem;
+        }
+
+        .tag-red { background: #ffebee; color: #c62828; border: 1px solid #ef9a9a; }
+        .tag-gold { background: #fff8e1; color: #f57f17; border: 1px solid #ffe082; }
+        .tag-green { background: #e8f5e9; color: #2e7d32; border: 1px solid #a5d6a7; }
+        .tag-blue { background: #e3f2fd; color: #1565c0; border: 1px solid #90caf9; }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .nav-sticky a { padding: 0.8rem 0.7rem; font-size: 0.72rem; }
+            .comparacao-grid { grid-template-columns: 1fr; }
+            .comp-middle { display: none; }
+            .materia-grid { grid-template-columns: 1fr; }
+            .historia-box { padding: 2rem; }
+            .step { flex-direction: column; gap: 1rem; }
+            .diferenca-batismo-banner { flex-direction: column; gap: 1rem; }
+            .timeline { padding-left: 2rem; }
+        }
+
+        /* ===== SEPARADORES ===== */
+        .divider {
+            text-align: center;
+            margin: 3rem 0;
+            color: var(--dourado);
+            font-size: 1.5rem;
+            letter-spacing: 1rem;
+            opacity: 0.6;
+        }
+
+        /* ===== BOTÃO ===== */
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+
+        .btn-gold {
+            background: linear-gradient(135deg, var(--dourado), var(--dourado-claro));
+            color: var(--vermelho);
+        }
+
+        .btn-gold:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(212,175,55,0.5);
+        }
+
+        .btn-outline {
+            border: 2px solid var(--dourado);
+            color: var(--dourado);
+        }
+
+        .btn-outline:hover {
+            background: var(--dourado);
+            color: var(--vermelho);
+        }
+
+        /* Pequenos detalhes */
+        .text-center { text-align: center; }
+        .mt-2 { margin-top: 2rem; }
+        .mb-2 { margin-bottom: 2rem; }
+        strong { color: var(--vermelho); }
+
+        /* Seção especial para mística */
+        .mistica-section {
+            background: linear-gradient(160deg, #0d0005 0%, #1a0010 50%, #0d0005 100%);
+            color: white;
+            padding: 4rem 0;
+        }
+
+        .mistica-section .section-header h2 { color: #E040FB; }
+
+        .mistica-card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(224,64,251,0.2);
+            border-radius: 16px;
+            padding: 2rem;
+            color: rgba(255,255,255,0.85);
+        }
+
+        .mistica-card h3 { color: #E040FB; margin-bottom: 0.8rem; }
+    </style>
+</head>
+<body>
+
+<!-- ===== HERO ===== -->
+<header class="hero">
+    <div class="hero-content">
+        <span class="hero-icon">🔥</span>
+        <h1>CRISMA</h1>
+        <p class="hero-subtitle">O Sacramento do Espírito Santo • A Confirmação da Fé</p>
+        <div class="hero-verse">
+            <p>"Recebereis a força do Espírito Santo, que virá sobre vós, e sereis minhas testemunhas em Jerusalém, em toda a Judeia e Samaria, e até os confins da terra."</p>
+            <cite>— Atos dos Apóstolos 1,8</cite>
+        </div>
+        <div style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;">
+            <a href="#o-que-e" class="btn btn-gold">Conhecer o Sacramento</a>
+            <a href="#dons" class="btn btn-outline">Os 7 Dons</a>
+        </div>
+    </div>
+    <div class="hero-flames">
+        <div class="flame"></div><div class="flame"></div><div class="flame"></div>
+        <div class="flame"></div><div class="flame"></div><div class="flame"></div>
+        <div class="flame"></div><div class="flame"></div><div class="flame"></div>
+        <div class="flame"></div><div class="flame"></div><div class="flame"></div>
+    </div>
+    <div class="scroll-indicator">
+        <span>DESÇA</span>
+        <div class="scroll-arrow"></div>
+    </div>
+</header>
+
+<!-- ===== NAVEGAÇÃO ===== -->
+<nav class="nav-sticky">
+    <div class="nav-container">
+        <a href="#o-que-e">O Que É</a>
+        <a href="#historia">História</a>
+        <a href="#teologia">Teologia</a>
+        <a href="#rito">O Rito</a>
+        <a href="#dons">7 Dons</a>
+        <a href="#frutos">12 Frutos</a>
+        <a href="#efeitos">Efeitos</a>
+        <a href="#santos">Santos</a>
+        <a href="#ministro">Ministro</a>
+        <a href="#preparacao">Preparação</a>
+        <a href="#curiosidades">Curiosidades</a>
+        <a href="#questoes">FAQ</a>
+    </div>
+</nav>
+
+<!-- ===== CONTEÚDO PRINCIPAL ===== -->
+<main>
+
+<!-- AVISO: DIFERENÇA DO BATISMO -->
+<div class="container">
+    <div class="diferenca-batismo-banner">
+        <span class="icon">ℹ️</span>
+        <div>
+            <h3>📌 Nota sobre os Sacramentos de Iniciação</h3>
+            <p>
+                Esta página aborda exclusivamente o Sacramento da <strong>Crisma (Confirmação)</strong>. 
+                Os temas de <strong>Batismo</strong> — incluindo sua história, teologia, matéria e forma, 
+                efeitos próprios como o nascimento espiritual, remoção do pecado original, e questões 
+                sobre o batismo de desejo — são tratados integralmente na 
+                <a href="batismo.html">página do Batismo ↗</a>. 
+                Aqui, a Crisma é apresentada como o segundo sacramento de iniciação, que 
+                <em>pressupõe e completa</em> o Batismo, mas não o repete nem substitui.
+            </p>
+        </div>
+    </div>
+</div>
+
+<!-- ===== SEÇÃO 1: O QUE É A CRISMA ===== -->
+<section id="o-que-e">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-tag">⛪ Definição</span>
+            <h2>O Que É a Crisma?</h2>
+            <p>O segundo sacramento de iniciação cristã que completa e confirma o que foi iniciado no Batismo</p>
+        </div>
+
+        <div class="grid-2">
+            <div class="card card-gold">
+                <span class="card-icon">📖</span>
+                <h3>Definição Catequética</h3>
+                <p>
+                    A Crisma, chamada também de <strong>Confirmação</strong>, é o sacramento pelo qual o 
+                    batizado recebe o Espírito Santo em plenitude, é confirmado na fé e se torna 
+                    <strong>soldado de Cristo</strong>, capaz de testemunhá-lo publicamente no mundo. 
+                    O nome "Crisma" vem do grego <em>chrisma</em>, que significa "unção" — referindo-se 
+                    ao óleo sagrado com que o confirmando é marcado.
+                </p>
+            </div>
+
+            <div class="card card-gold">
+                <span class="card-icon">⛪</span>
+                <h3>No Catecismo da Igreja</h3>
+                <p>
+                    O Catecismo da Igreja Católica (CIC nº 1285) define: <em>"A Confirmação aperfeiçoa 
+                    a graça baptismal; é o sacramento que dá o Espírito Santo para nos enraizar mais 
+                    profundamente na filiação divina, nos incorporar mais firmemente a Cristo, tornar 
+                    mais sólido nosso vínculo com a Igreja, associar-nos mais à sua missão e ajudar-nos 
+                    a testemunhar a fé cristã pela palavra e pela ação."</em>
+                </p>
+            </div>
+        </div>
+
+        <div class="divider">✦ ✦ ✦</div>
+
+        <!-- Os 3 sacramentos de iniciação -->
+        <div class="historia-box">
+            <h3>🏛️ Os Três Sacramentos de Iniciação</h3>
+            <p>
+                A Crisma faz parte de uma trilogia sagrada. A Igreja Católica ensina que há três 
+                sacramentos de <strong>iniciação cristã</strong>, que juntos formam o cristão completo:
+            </p>
+            <div class="grid-3" style="margin-top:1.5rem;">
+                <div style="text-align:center; padding:1.5rem; background:rgba(255,255,255,0.07); border-radius:12px; border:1px solid rgba(255,255,255,0.1);">
+                    <span style="font-size:3rem;">💧</span>
+                    <h4 style="color:#7EB8F7; margin:0.5rem 0;">Batismo</h4>
+                    <p style="color:rgba(255,255,255,0.7); font-size:0.9rem;">Gera o cristão. Lava o pecado original. Torna filho de Deus. <em>(Tópico abordado na página do Batismo)</em></p>
+                </div>
+                <div style="text-align:center; padding:1.5rem; background:rgba(212,175,55,0.15); border-radius:12px; border:1px solid rgba(212,175,55,0.3);">
+                    <span style="font-size:3rem;">🔥</span>
+                    <h4 style="color:var(--dourado); margin:0.5rem 0;">Crisma</h4>
+                    <p style="color:rgba(255,255,255,0.7); font-size:0.9rem;">Confirma o cristão. Dá plenitude do Espírito. Torna soldado e testemunha.</p>
+                </div>
+                <div style="text-align:center; padding:1.5rem; background:rgba(255,255,255,0.07); border-radius:12px; border:1px solid rgba(255,255,255,0.1);">
+                    <span style="font-size:3rem;">🍞</span>
+                    <h4 style="color:#EF9A9A; margin:0.5rem 0;">Eucaristia</h4>
+                    <p style="color:rgba(255,255,255,0.7); font-size:0.9rem;">Nutre o cristão. Corpo e Sangue de Cristo. Plenitude da vida cristã.</p>
+                </div>
+            </div>
+            <p style="margin-top:1.5rem;">
+                Santo Tomás de Aquino comparava os sacramentos à vida humana: assim como o ser humano 
+                nasce (Batismo), cresce (Crisma) e se alimenta (Eucaristia), o mesmo se dá na vida espiritual.
+            </p>
+        </div>
+
+        <!-- ZONA DE NÃO DUPLICAÇÃO -->
+        <div class="no-duplicate-zone" style="margin-top:2rem;">
+            <h3>🚫 Área de Demarcação — Batismo × Crisma</h3>
+            <p>Para manter clareza e evitar conteúdo duplicado neste site, os seguintes temas pertencem 
+            exclusivamente à página do Batismo e <strong>não serão abordados aqui</strong>:</p>
+            <ul>
+                <li>Remoção do pecado original</li>
+                <li>Nascimento espiritual e filiação divina (fundamento)</li>
+                <li>Batismo de desejo e de sangue</li>
+                <li>Batismo de infantes e adultos (catecumenato)</li>
+                <li>Matéria e forma do Batismo (água e palavras trinitárias)</li>
+                <li>Efeito regenerador e caráter batismal em si mesmo</li>
+                <li>História e evolução do rito batismal</li>
+            </ul>
+            <p style="margin-top:1rem;">
+                ✅ O que <em>esta página</em> aborda: como a Crisma <strong>pressupõe, completa e 
+                distingue-se</strong> do Batismo — sem repetir o que já está explicado lá.
+                <a href="batismo.html">→ Ver página do Batismo</a>
+            </p>
+        </div>
+
+    </div>
+</section>
+
+<!-- ===== SEÇÃO 2: HISTÓRIA ===== -->
+<section id="historia" class="bg-dark">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-tag" style="background:rgba(212,175,55,0.2); color:var(--dourado);">📜 Origem</span>
+            <h2>História da Crisma</h2>
+            <p style="color:rgba(255,255,255,0.7);">De Pentecostes ao século XXI — dois mil anos de história fascinante</p>
+        </div>
+
+        <!-- PENTECOSTES - A GRANDE HISTÓRIA -->
+        <div style="background:rgba(212,175,55,0.1); border:1px solid rgba(212,175,55,0.3); border-radius:16px; padding:2.5rem; margin-bottom:3rem;">
+            <h3 style="color:var(--dourado); font-size:1.6rem; margin-bottom:1.5rem;">🔥 Pentecostes: O Primeiro "Crisma" da História</h3>
+            <p style="color:rgba(255,255,255,0.85); margin-bottom:1rem; font-size:1.05rem;">
+                Era o quinquagésimo dia após a Páscoa. Cento e vinte discípulos estavam reunidos no 
+                Cenáculo de Jerusalém, aterrorizados. Três anos acompanhando Jesus não foram suficientes 
+                para transformá-los em homens corajosos — Pedro havia negado o Mestre três vezes, os 
+                demais fugiram. Aquele grupo era um conjunto de fracassados com medo.
+            </p>
+            <p style="color:rgba(255,255,255,0.85); margin-bottom:1rem;">
+                Então <strong style="color:var(--dourado);">algo extraordinário aconteceu</strong>. De repente, veio do céu um som como 
+                de vento impetuoso que encheu toda a casa. Línguas de fogo pousaram sobre cada um 
+                deles. E todos ficaram cheios do Espírito Santo.
+            </p>
+            <p style="color:rgba(255,255,255,0.85); margin-bottom:1rem;">
+                O mesmo Pedro que tremia de medo saiu às ruas e pregou com tal força que três mil 
+                pessoas se converteram em um único dia. A transformação foi tão radical que os que 
+                os conheciam ficaram espantados — perguntavam se estavam bêbados.
+            </p>
+            <p style="color:rgba(255,255,255,0.85);">
+                <strong style="color:var(--dourado);">Este evento é o protótipo da Crisma.</strong> O que aconteceu no Cenáculo é 
+                o que acontece, de modo sacramental, na fronte de cada confirmando: a irrupção do 
+                Espírito Santo que transforma covardes em testemunhas, medrosos em mártires.
+            </p>
+        </div>
+
+        <!-- TIMELINE -->
+        <div class="timeline">
+
+            <div class="timeline-item" style="background:rgba(255,255,255,0.05); color:white; border:1px solid rgba(255,255,255,0.1);">
+                <span class="timeline-date">Século I d.C.</span>
+                <h3 style="color:var(--dourado);">A Igreja Apostólica</h3>
+                <p style="color:rgba(255,255,255,0.8);">
+                    Os Apóstolos impunham as mãos sobre os batizados e eles recebiam o Espírito Santo 
+                    (At 8,14-17; 19,1-7). Esta ação era tão central que São Paulo chama-a de "doutrina 
+                    fundamental" (Hb 6,2). Em Atos 8, os samaritanos haviam sido batizados, mas Pedro 
+                    e João foram enviados de Jerusalém especialmente para impor as mãos sobre eles — 
+                    mostrando que o rito era distinto e necessário.
+                </p>
+            </div>
+
+            <div class="timeline-item" style="background:rgba(255,255,255,0.05); color:white; border:1px solid rgba(255,255,255,0.1);">
+                <span class="timeline-date">Séculos II-III</span>
+                <h3 style="color:var(--dourado);">A Unção Pós-Batismal</h3>
+                <p style="color:rgba(255,255,255,0.8);">
+                    A <em>Traditio Apostolica</em> de Hipólito de Roma (c. 215 d.C.) descreve o rito: 
+                    após o Batismo, o bispo derramava óleo sobre o batizando dizendo 
+                    <em>"Eu te uno com o óleo santo em Deus Pai Todo-Poderoso, em Cristo Jesus 
+                    e no Espírito Santo."</em> O rito já existia consolidado — Tertuliano, Cipriano 
+                    e outros padres o mencionam como parte normal da iniciação.
+                </p>
+            </div>
+
+            <div class="timeline-item" style="background:rgba(255,255,255,0.05); color:white; border:1px solid rgba(255,255,255,0.1);">
+                <span class="timeline-date">Séculos IV-V</span>
+                <h3 style="color:var(--dourado);">A Separação dos Ritos — Uma Separação que Durou Séculos</h3>
+                <p style="color:rgba(255,255,255,0.8);">
+                    Com a expansão do Cristianismo pelo Império Romano, os bispos — únicos ministros 
+                    ordinários da Confirmação — não conseguiam mais estar presentes em todos os batismos. 
+                    O que antes era um único rito contínuo foi dividido: padres batizavam, e o bispo 
+                    confirmava em visita posterior. Esse arranjo prático moldou toda a disciplina 
+                    ocidental por mais de mil anos. No Oriente, os padres continuaram administrando 
+                    ambos os sacramentos juntos — tradição que persiste até hoje nas Igrejas Orientais.
+                </p>
+            </div>
+
+            <div class="timeline-item" style="background:rgba(255,255,255,0.05); color:white; border:1px solid rgba(255,255,255,0.1);">
+                <span class="timeline-date">Séculos VIII-IX</span>
+                <h3 style="color:var(--dourado);">A Fórmula Medieval e a "Palmada"</h3>
+                <p style="color:rgba(255,255,255,0.8);">
+                    Um costume surgiu no Ocidente medieval: o bispo dava uma leve palmada (ou toque 
+                    na face) ao confirmando, simbolizando que o cristão deveria estar pronto para 
+                    sofrer por Cristo. Essa prática, não parte do rito essencial, tornou-se muito 
+                    popular e durou até o século XX. Muitos avós ainda se lembram de receber a 
+                    "bofetada do bispo".
+                </p>
+            </div>
+
+            <div class="timeline-item" style="background:rgba(255,255,255,0.05); color:white; border:1px solid rgba(255,255,255,0.1);">
+                <span class="timeline-date">1215</span>
+                <h3 style="color:var(--dourado);">Concílio de Latrão IV — Sacramentos Definidos</h3>
+                <p style="color:rgba(255,255,255,0.8);">
+                    O IV Concílio do Latrão marca um ponto de maturidade teológica: os sete sacramentos 
+                    são claramente listados, e a Confirmação figura entre eles. A teologia escolástica 
+                    começará a articular sistematicamente sua natureza, causas e efeitos.
+                </p>
+            </div>
+
+            <div class="timeline-item" style="background:rgba(255,255,255,0.05); color:white; border:1px solid rgba(255,255,255,0.1);">
+                <span class="timeline-date">1439</span>
+                <h3 style="color:var(--dourado);">Concílio de Florença — Definição Solene</h3>
+                <p style="color:rgba(255,255,255,0.8);">
+                    O <em>Decreto para os Armênios</em> define formalmente: matéria da Confirmação é o 
+                    crisma (mistura de azeite e bálsamo); forma são as palavras do bispo; ministro 
+                    ordinário é o bispo. Esta definição, embora formulada para instrução dos Armênios, 
+                    refletia a teologia comum da Igreja.
+                </p>
+            </div>
+
+            <div class="timeline-item" style="background:rgba(255,255,255,0.05); color:white; border:1px solid rgba(255,255,255,0.1);">
+                <span class="timeline-date">1545-1563</span>
+                <h3 style="color:var(--dourado);">Concílio de Trento — Resposta à Reforma</h3>
+                <p style="color:rgba(255,255,255,0.8);">
+                    Quando os reformadores protestantes rejeitaram a Confirmação como sacramento 
+                    (argumentando que não era instituída por Cristo), Trento respondeu com vigor: 
+                    <em>"Se alguém disser que a Confirmação dos batizados é uma cerimônia ociosa 
+                    e não verdadeiro e próprio sacramento... seja anátema"</em> (DS 1628). 
+                    A doutrina foi solidificada contra o erro.
+                </p>
+            </div>
+
+            <div class="timeline-item" style="background:rgba(255,255,255,0.05); color:white; border:1px solid rgba(255,255,255,0.1);">
+                <span class="timeline-date">1910</span>
+                <h3 style="color:var(--dourado);">Quaesitum est — A Ordem dos Sacramentos</h3>
+                <p style="color:rgba(255,255,255,0.8);">
+                    São Pio X, com o decreto <em>Quam Singulari</em>, baixa a idade de Primeira 
+                    Comunhão para a idade da razão (~7 anos). Isso criou uma anomalia não planejada: 
+                    crianças passaram a receber a Eucaristia antes da Confirmação, invertendo a 
+                    ordem tradicional. Este debate sobre a ordem correta dos sacramentos persiste 
+                    até hoje em algumas dioceses.
+                </p>
+            </div>
+
+            <div class="timeline-item" style="background:rgba(255,255,255,0.05); color:white; border:1px solid rgba(255,255,255,0.1);">
+                <span class="timeline-date">1971</span>
+                <h3 style="color:var(--dourado);">Paulo VI — Novo Rito Oficial</h3>
+                <p style="color:rgba(255,255,255,0.8);">
+                    A Constituição Apostólica <em>Divinae Consortium Naturae</em> de Paulo VI 
+                    reformou o rito: a fórmula oficial passou a ser 
+                    <strong>"Recebe o sinal do Dom do Espírito Santo"</strong>, alinhando-se com 
+                    a tradição oriental. O rito foi simplificado mas manteve toda sua substância.
+                </p>
+            </div>
+
+            <div class="timeline-item" style="background:rgba(255,255,255,0.05); color:white; border:1px solid rgba(255,255,255,0.1);">
+                <span class="timeline-date">1992-Hoje</span>
+                <h3 style="color:var(--dourado);">Catecismo e Diretório Geral para a Catequese</h3>
+                <p style="color:rgba(255,255,255,0.8);">
+                    O Catecismo de 1992 oferece a síntese mais completa da doutrina sobre a 
+                    Confirmação (nn. 1285-1321). Debates contemporâneos incluem a idade ideal 
+                    para receber o sacramento, a duração e qualidade da preparação, e como 
+                    reconectar jovens que se "afastam após a crisma" com a vida eclesial.
+                </p>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- ===== SEÇÃO 3: TEOLOGIA ===== -->
+<section id="teologia">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-tag">🧠 Doutrina</span>
+            <h2>Teologia da Crisma</h2>
+            <p>A profundidade teológica por trás de um gesto que dura segundos mas tem efeitos eternos</p>
+        </div>
+
+        <!-- INSTITUIÇÃO DIVINA -->
+        <div class="card" style="margin-bottom:2rem;">
+            <h3>⚡ Instituição por Cristo</h3>
+            <p style="margin-bottom:1rem;">
+                A Crisma foi instituída por Jesus Cristo? Esta pergunta aparentemente simples gerou 
+                debates sérios. Os reformadores negavam, argumentando que não há uma cena explícita 
+                nos Evangelhos onde Jesus "crie" o sacramento da Confirmação como criou a Eucaristia.
+            </p>
+            <p style="margin-bottom:1rem;">
+                A resposta católica é múltipla: Cristo prometeu o Espírito Santo (Jo 14,16; 16,7), 
+                enviou-O em Pentecostes como cumprimento dessa promessa, e os Apóstolos praticaram 
+                a imposição de mãos como ato oficial da Igreja (At 8,14-17; 19,1-7). 
+                O Concílio de Trento definiu dogmaticamente que todos os sete sacramentos foram 
+                instituídos por Cristo — mas reconhece que o modo de instituição pode ser indireto.
+            </p>
+            <div class="highlight">
+                <h4>⚠️ Posição do Magistério</h4>
+                <p>É de fé definida (dogma) que a Confirmação é um verdadeiro sacramento instituído 
+                por Cristo. Negar isso é heresia formal (DS 1628, Cânon sobre a Confirmação, Trento).</p>
+            </div>
+        </div>
+
+        <!-- MATÉRIA E FORMA -->
+        <div class="materia-grid" style="margin-bottom:2rem;">
+            <div class="materia-box">
+                <span class="big-icon">🫒</span>
+                <span class="badge">MATÉRIA</span>
+                <h3>O Santo Crisma</h3>
+                <p>
+                    A matéria <strong>remota</strong> é o <em>Sagrado Crisma</em> — azeite de oliva 
+                    misturado com bálsamo (perfume vegetal), consagrado pelo bispo na <strong>Missa 
+                    Crismal</strong> da Quinta-Feira Santa.
+                </p>
+                <p style="margin-top:1rem;">
+                    A matéria <strong>próxima</strong> é a unção feita pelo ministro na fronte do 
+                    confirmando, na forma de cruz.
+                </p>
+                <p style="margin-top:1rem; font-size:0.85rem; color:#888;">
+                    O óleo representa a força e a graça; o bálsamo, o aroma de Cristo (2Cor 2,15). 
+                    Na tradição oriental, o crisma consagrado pelo patriarca é distribuído 
+                    às paróquias — enfatizando a unidade da Igreja.
+                </p>
+            </div>
+
+            <div class="materia-box">
+                <span class="big-icon">🗣️</span>
+                <span class="badge">FORMA</span>
+                <h3>As Palavras Sacramentais</h3>
+                <p>
+                    A forma do sacramento são as palavras pronunciadas pelo ministro durante a unção:
+                </p>
+                <div style="background:linear-gradient(135deg,#fff8e1,#fffde7); border:1px solid #FFD700; border-radius:12px; padding:1.5rem; margin:1rem 0;">
+                    <p style="font-style:italic; font-size:1.1rem; color:#8B0000; font-weight:bold;">
+                        "N., recebe o sinal do Dom do Espírito Santo."
+                    </p>
+                    <p style="font-size:0.85rem; color:#666; margin-top:0.5rem;">
+                        Fórmula Latina: <em>"Accipe signaculum doni Spiritus Sancti."</em>
+                    </p>
+                </div>
+                <p style="font-size:0.85rem; color:#666;">
+                    Esta fórmula, estabelecida por Paulo VI (1971), alinha-se com a tradição oriental 
+                    que remonta ao século IV. A tradição ocidental anterior usava diversas fórmulas, 
+                    mas todas evocavam o Espírito Santo.
+                </p>
+            </div>
+        </div>
+
+        <!-- CARÁTER SACRAMENTAL -->
+        <div class="card card-red" style="margin-bottom:2rem;">
+            <span class="card-icon">🔏</span>
+            <h3>O Caráter Indelével — Por Que Só Se Crismam Uma Vez</h3>
+            <p style="margin-bottom:1rem;">
+                Assim como o Batismo, a Crisma imprime um <strong>caráter sacramental</strong> — 
+                uma marca espiritual permanente, indelével, que não pode ser apagada. Por isso, 
+                quem recebeu a Crisma <strong>não pode recebê-la novamente</strong>, mesmo que 
+                tenha perdido a fé, pecado gravemente ou se afastado da Igreja.
+            </p>
+            <p style="margin-bottom:1rem;">
+                Santo Tomás explica que o caráter configura o cristão a Cristo Sacerdote, Profeta 
+                e Rei — capacitando-o para o culto divino e a missão. O caráter da Confirmação 
+                em particular configura ao poder de Cristo (em relação ao caráter batismal que 
+                configura à recepção).
+            </p>
+            <div class="quote-block">
+                <p>"O caráter é uma participação do sacerdócio de Cristo, impressa na alma como 
+                sinal espiritual que a distingue e habilita para os atos do culto."</p>
+                <cite>— São Tomás de Aquino, Suma Teológica, III, q.63, a.1</cite>
+            </div>
+        </div>
+
+        <!-- COMPARAÇÃO COM ORIENTE -->
+        <div class="grid-2">
+            <div class="card">
+                <span class="card-icon">✝️</span>
+                <h3>Rito Latino (Ocidente)</h3>
+                <ul style="color:#555; padding-left:1.2rem; line-height:2;">
+                    <li>Sacramento chamado: <strong>Confirmação / Crisma</strong></li>
+                    <li>Ministro ordinário: <strong>Bispo</strong></li>
+                    <li>Administrado: geralmente separado do Batismo</li>
+                    <li>Idade habitual: adolescência</li>
+                    <li>Óleo: crisma consagrado pelo bispo</li>
+                    <li>Gesto central: unção na fronte + imposição de mão</li>
+                </ul>
+            </div>
+            <div class="card">
+                <span class="card-icon">☦️</span>
+                <h3>Ritos Orientais (Chrismation)</h3>
+                <ul style="color:#555; padding-left:1.2rem; line-height:2;">
+                    <li>Sacramento chamado: <strong>Chrismation / Myron</strong></li>
+                    <li>Ministro: <strong>Padre</strong> (com crisma do patriarca)</li>
+                    <li>Administrado: imediatamente após o Batismo</li>
+                    <li>Idade habitual: qualquer idade (inclusive bebês)</li>
+                    <li>Óleo: <em>myron</em> consagrado pelo patriarca</li>
+                    <li>Unção em múltiplas partes do corpo</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="highlight" style="margin-top:2rem;">
+            <h4>🔍 Dado Importante</h4>
+            <p>Nas Igrejas Católicas de rito oriental (em plena comunhão com Roma, como os Melquitas, 
+            Maronitas, Coptos-Católicos etc.), o padre pode administrar a Confirmação imediatamente 
+            após o Batismo. Isso mostra que a reserva ao bispo no Ocidente é uma disciplina 
+            eclesiástica, não um dado revelado imutável.</p>
+        </div>
+
+    </div>
+</section>
+
+<!-- ===== SEÇÃO 4: O RITO ===== -->
+<section id="rito" class="bg-light">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-tag">🕯️ Celebração</span>
+            <h2>O Rito da Crisma</h2>
+            <p>Passo a passo de uma celebração que toca a eternidade</p>
+        </div>
+
+        <div class="rito-step">
+            <span class="rito-step-number">PASSO 1</span>
+            <h3>🏛️ Contexto: Dentro da Missa</h3>
+            <p>
+                A Confirmação é normalmente celebrada dentro da Santa Missa, para manifestar sua 
+                íntima conexão com a Eucaristia. O Rito da Confirmação pode também ser celebrado 
+                fora da Missa em circunstâncias especiais (como perigo de morte).
+            </p>
+        </div>
+
+        <div class="rito-step">
+            <span class="rito-step-number">PASSO 2</span>
+            <h3>📖 Liturgia da Palavra</h3>
+            <p>
+                As leituras são escolhidas para iluminar o mistério do Espírito Santo. 
+                Frequentemente usa-se o texto de Isaías 11 (os sete dons), Atos 2 (Pentecostes) 
+                ou João 14-16 (promessa do Paráclito).
+            </p>
+        </div>
+
+        <div class="rito-step">
+            <span class="rito-step-number">PASSO 3</span>
+            <h3>🎤 Renovação das Promessas Batismais</h3>
+            <p>
+                Os confirmandos respondem às perguntas do bispo: Renunciam a Satanás? Creem em 
+                Deus Pai, Filho e Espírito Santo? Creem na Igreja Católica? Este momento é 
+                teologicamente significativo: o que no Batismo foi prometido pelos pais e padrinhos 
+                é agora <strong>afirmado pela própria pessoa</strong>. A Crisma é a "fé assumida 
+                pessoalmente".
+            </p>
+        </div>
+
+        <div class="rito-step">
+            <span class="rito-step-number">PASSO 4</span>
+            <h3>🙌 Imposição das Mãos</h3>
+            <p>
+                O bispo (com outros sacerdotes presentes) estende as mãos sobre o conjunto dos 
+                confirmandos e reza a oração de invocação do Espírito Santo — chamada 
+                <em>epiclese</em>. Este gesto remonta à prática apostólica descrita nos Atos 
+                (8,17; 19,6) e é considerado o momento em que o Espírito é invocado sobre os 
+                candidatos.
+            </p>
+            <div class="quote-block" style="margin-top:1rem;">
+                <p><em>"Deus Todo-Poderoso, Pai de Nosso Senhor Jesus Cristo, que regenerastes 
+                estes vossos filhos pela água e pelo Espírito Santo, libertando-os do pecado, 
+                enviai sobre eles o vosso Espírito Santo, Paráclito: espírito de sabedoria e 
+                de entendimento, espírito de conselho e de fortaleza, espírito de ciência e de 
+                piedade; e enchei-os do espírito do vosso temor santo. Por Cristo Nosso Senhor."</em></p>
+                <cite>— Oração de Imposição das Mãos, Rito da Confirmação</cite>
+            </div>
+        </div>
+
+        <div class="rito-step">
+            <span class="rito-step-number">PASSO 5</span>
+            <h3>🫒 A Unção com o Santo Crisma</h3>
+            <p>
+                Este é o <strong>momento central e essencial</strong> do sacramento. O padrinho 
+                (ou madrinha) coloca a mão no ombro do confirmando. O bispo molha o polegar 
+                direito no crisma e traça uma cruz na fronte do confirmando, dizendo:
+            </p>
+            <div style="text-align:center; padding:2rem; background:linear-gradient(135deg,#fff8e1,#fffde7); border-radius:12px; margin:1.5rem 0; border:2px solid var(--dourado);">
+                <p style="font-size:1.4rem; font-style:italic; color:var(--vermelho); font-weight:bold;">
+                    "[Nome], recebe o sinal do Dom do Espírito Santo."
+                </p>
+                <p style="color:#888; font-size:0.9rem; margin-top:0.5rem;">
+                    O confirmando responde: <strong>"Amém."</strong>
+                </p>
+                <p style="color:#888; font-size:0.9rem;">
+                    O bispo acrescenta: <strong>"A paz esteja convosco."</strong>
+                    O confirmando: <strong>"Ela está também convosco."</strong>
+                </p>
+            </div>
+        </div>
+
+        <div class="rito-step">
+            <span class="rito-step-number">PASSO 6</span>
+            <h3>🙏 Oração dos Fiéis e Continuação da Missa</h3>
+            <p>
+                Após as unções de todos os confirmandos, a Missa prossegue normalmente. 
+                Os recém-confirmados são convidados a receber a comunhão de modo especialmente 
+                consciencioso — celebrando a plena integração na vida eclesial.
+            </p>
+        </div>
+
+        <!-- O NOME DE CRISMA -->
+        <div class="grid-2" style="margin-top:2rem;">
+            <div class="card">
+                <span class="card-icon">📛</span>
+                <h3>O Nome de Crisma</h3>
+                <p>
+                    Muitos confirmandos escolhem um <strong>nome de Santo</strong> para a Crisma — 
+                    tradição de longa data na Igreja Latina. A ideia é escolher um santo como 
+                    protetor e modelo para a vida de testemunho cristão que a Confirmação inaugura.
+                </p>
+                <p style="margin-top:1rem;">
+                    Teologicamente, não é um requisito essencial do sacramento — a Crisma é válida 
+                    sem nome específico. Mas é uma prática piedosa recomendada pelo Ritual Romano.
+                </p>
+            </div>
+            <div class="card">
+                <span class="card-icon">👫</span>
+                <h3>O Papel do Padrinho/Madrinha</h3>
+                <p>
+                    O padrinho (ou madrinha) de Crisma deve ser um católico praticante, ter pelo 
+                    menos 16 anos, e ser diferente do padrinho/madrinha de Batismo (embora possa 
+                    ser o mesmo por razão especial). Seu papel simbólico é representar a comunidade 
+                    eclesial que acompanha o confirmando.
+                </p>
+                <p style="margin-top:1rem; font-size:0.9rem; color:#666;">
+                    <strong>CIC can. 893 §2:</strong> "É de conveniência que o padrinho de Crisma 
+                    seja o mesmo do Batismo."
+                </p>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- ===== SEÇÃO 5: OS 7 DONS ===== -->
+<section id="dons">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-tag">🕊️ Dons</span>
+            <h2>Os Sete Dons do Espírito Santo</h2>
+            <p>Habitus infusos que aperfeiçoam as virtudes e nos tornam dóceis à ação divina</p>
+        </div>
+
+        <div class="quote-block">
+            <p>"E repousará sobre ele o espírito do Senhor: espírito de sabedoria e de entendimento, 
+            espírito de conselho e de fortaleza, espírito de ciência e de piedade; e o encherá 
+            o espírito do temor do Senhor."</p>
+            <cite>— Isaías 11,2-3 (A Profecia Messiânica dos Sete Dons)</cite>
+        </div>
+
+        <div class="grid-3" style="margin-bottom:2rem;">
+
+            <div class="dom-card">
+                <span class="dom-numero">I</span>
+                <span class="dom-icon">🦅</span>
+                <h3>Sabedoria</h3>
+                <p>
+                    Don mais elevado. Permite conhecer as realidades divinas e humanas sob a 
+                    perspectiva de Deus. O sábio <em>saboreia</em> as coisas de Deus. Enquanto 
+                    a teologia alcança Deus pelo raciocínio, a Sabedoria alcança por connaturalidade 
+                    — porque ama. Um dos mais belos dons: rezar com sabedoria é rezar como criança 
+                    que conhece seu pai.
+                </p>
+                <div style="margin-top:1rem;">
+                    <span class="tag tag-gold">Perfaz: Virtude da Fé</span>
+                </div>
+            </div>
+
+            <div class="dom-card">
+                <span class="dom-numero">II</span>
+                <span class="dom-icon">💡</span>
+                <h3>Entendimento</h3>
+                <p>
+                    Capacidade de penetrar nas verdades reveladas além da superfície. Não é apenas 
+                    saber que Cristo ressuscitou — é <em>compreender</em> o que isso significa para 
+                    toda a existência humana. Dom que ilumina as Escrituras, os dogmas e a própria 
+                    vida como histórica sagrada.
+                </p>
+                <div style="margin-top:1rem;">
+                    <span class="tag tag-blue">Perfaz: Virtude da Fé</span>
+                </div>
+            </div>
+
+            <div class="dom-card">
+                <span class="dom-numero">III</span>
+                <span class="dom-icon">⚖️</span>
+                <h3>Conselho</h3>
+                <p>
+                    Auxilia nas decisões práticas da vida moral — especialmente nas situações 
+                    complexas onde as regras gerais não respondem facilmente. É a prudência 
+                    sobrenaturalizada: discernir o que Deus quer <em>neste momento concreto</em>. 
+                    O dom que impede de ser fariseu (aplico regras cegamente) ou relativista 
+                    (ignoro as regras).
+                </p>
+                <div style="margin-top:1rem;">
+                    <span class="tag tag-green">Perfaz: Virtude da Prudência</span>
+                </div>
+            </div>
+
+            <div class="dom-card">
+                <span class="dom-numero">IV</span>
+                <span class="dom-icon">⚔️</span>
+                <h3>Fortaleza</h3>
+                <p>
+                    Dom que supera os medos e dificuldades no cumprimento do dever cristão. 
+                    É o dom dos mártires — não anestesia o medo, mas dá coragem para agir 
+                    <em>apesar</em> do medo. Um cristão pode tremer de medo diante da perseguição 
+                    e ainda assim proclamar a fé: isso é fortaleza sobrenatural.
+                </p>
+                <div style="margin-top:1rem;">
+                    <span class="tag tag-red">Perfaz: Virtude da Fortaleza</span>
+                </div>
+            </div>
+
+            <div class="dom-card">
+                <span class="dom-numero">V</span>
+                <span class="dom-icon">🔬</span>
+                <h3>Ciência</h3>
+                <p>
+                    Capacidade de julgar retamente as criaturas em relação a Deus — usando as 
+                    realidades criadas como degraus para o Criador, sem se prender a elas. 
+                    Oposto da mundanidade: o cristão com Ciência usa o mundo sem ser usado por ele. 
+                    Dom dos contemplativos que veem Deus em tudo.
+                </p>
+                <div style="margin-top:1rem;">
+                    <span class="tag tag-gold">Perfaz: Virtude da Esperança</span>
+                </div>
+            </div>
+
+            <div class="dom-card">
+                <span class="dom-numero">VI</span>
+                <span class="dom-icon">❤️</span>
+                <h3>Piedade</h3>
+                <p>
+                    Dom que perfaz a relação filial com Deus e fraterna com os homens. Não é 
+                    sentimentalismo nem exterioridade devocional — é o afeto sobrenatural que 
+                    reverencia Deus como Pai e trata o próximo como irmão. Um cristão piedoso 
+                    reza com gosto, não por obrigação.
+                </p>
+                <div style="margin-top:1rem;">
+                    <span class="tag tag-red">Perfaz: Virtude da Justiça</span>
+                </div>
+            </div>
+
+            <div class="dom-card" style="grid-column: 1 / -1; max-width: 350px; margin: 0 auto;">
+                <span class="dom-numero">VII</span>
+                <span class="dom-icon">🙇</span>
+                <h3>Temor de Deus</h3>
+                <p>
+                    Mal entendido como "terror", é na realidade o amor filial que teme desagradar 
+                    a Deus — não por punição, mas por amor. É o oposto da presunção. 
+                    A Bíblia repete 365 vezes "não temas" — mas o temor de Deus não é o medo 
+                    que paralisa, é o respeito que santifica. "Início da Sabedoria" (Pr 1,7).
+                </p>
+                <div style="margin-top:1rem;">
+                    <span class="tag tag-green">Perfaz: Virtude da Temperança</span>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- CURIOSIDADE DOS DONS -->
+        <div class="historia-box">
+            <h3>🤔 Por Que "Sete" Dons e Não Mais ou Menos?</h3>
+            <p>
+                O número sete na Bíblia significa perfeição e completude. Os sete dons não são 
+                uma lista exaustiva de toda ação do Espírito, mas uma <strong>síntese orgânica</strong> 
+                que corresponde ao número de aspectos fundamentais da vida moral e espiritual.
+            </p>
+            <p>
+                Santo Tomás os organizou em relação às virtudes teologais e cardeais: Sabedoria 
+                e Entendimento aperfeiçoam a Fé; Ciência e Conselho a Prudência; Fortaleza a 
+                Fortaleza; Piedade a Justiça; e Temor de Deus a Temperança. É um sistema 
+                de uma elegância filosófica impressionante.
+            </p>
+            <p>
+                Já os cristãos das Igrejas Orientais às vezes contam os dons como oito, lendo 
+                Isaías 11,2-3 de forma diferente. Mas a tradição latina desde Santo Agostinho 
+                mantém o número sete.
+            </p>
+        </div>
+
+    </div>
+</section>
+
+<!-- ===== SEÇÃO 6: OS 12 FRUTOS ===== -->
+<section id="frutos" class="bg-light">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-tag">🍇 Frutos</span>
+            <h2>Os Doze Frutos do Espírito Santo</h2>
+            <p>Se os Dons são as sementes, os Frutos são a colheita visível na vida do cristão</p>
+        </div>
+
+        <div class="card" style="margin-bottom:2rem;">
+            <p>
+                São Paulo lista os frutos do Espírito em Gálatas 5,22-23: <em>"amor, alegria, paz, 
+                longanimidade, benignidade, bondade, fidelidade, mansidão, domínio próprio."</em> 
+                A tradição latina (seguindo São Jerônimo, que usou uma versão mais ampla do texto 
+                grego) enumerou doze frutos, acrescentando: paciência, gentileza e continência. 
+                São Tomás os trata na Suma (I-II, q.70).
+            </p>
+        </div>
+
+        <div class="grid-3">
+
+            <div>
+                <div class="fruto-item">
+                    <span class="fruto-icon">❤️</span>
+                    <div>
+                        <strong>Amor (Caridade)</strong>
+                        <p style="font-size:0.9rem; color:#666;">O primeiro e raiz de todos. Amor a Deus acima de tudo e ao próximo como a si mesmo.</p>
+                    </div>
+                </div>
+                <div class="fruto-item">
+                    <span class="fruto-icon">😊</span>
+                    <div>
+                        <strong>Alegria</strong>
+                        <p style="font-size:0.9rem; color:#666;">Não é felicidade superficial, mas a paz profunda de quem está em Deus.</p>
+                    </div>
+                </div>
+                <div class="fruto-item">
+                    <span class="fruto-icon">☮️</span>
+                    <div>
+                        <strong>Paz</strong>
+                        <p style="font-size:0.9rem; color:#666;">"Paz que o mundo não pode dar" — equilíbrio interior mesmo no sofrimento.</p>
+                    </div>
+                </div>
+                <div class="fruto-item">
+                    <span class="fruto-icon">⏳</span>
+                    <div>
+                        <strong>Longanimidade</strong>
+                        <p style="font-size:0.9rem; color:#666;">Capacidade de aguardar com serenidade o cumprimento das promessas de Deus.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <div class="fruto-item">
+                    <span class="fruto-icon">🤝</span>
+                    <div>
+                        <strong>Benignidade</strong>
+                        <p style="font-size:0.9rem; color:#666;">Doçura no trato com o próximo; disposição de fazer o bem ativamente.</p>
+                    </div>
+                </div>
+                <div class="fruto-item">
+                    <span class="fruto-icon">💚</span>
+                    <div>
+                        <strong>Bondade</strong>
+                        <p style="font-size:0.9rem; color:#666;">Excelência moral interior que se traduz em atos concretos de bem.</p>
+                    </div>
+                </div>
+                <div class="fruto-item">
+                    <span class="fruto-icon">🌸</span>
+                    <div>
+                        <strong>Gentileza (Modéstia)</strong>
+                        <p style="font-size:0.9rem; color:#666;">Polidez e decoro nas palavras e comportamentos — o "charme" cristão.</p>
+                    </div>
+                </div>
+                <div class="fruto-item">
+                    <span class="fruto-icon">🤜</span>
+                    <div>
+                        <strong>Fidelidade</strong>
+                        <p style="font-size:0.9rem; color:#666;">Constância nos compromissos, especialmente com Deus e com a Igreja.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <div class="fruto-item">
+                    <span class="fruto-icon">🕊️</span>
+                    <div>
+                        <strong>Mansidão</strong>
+                        <p style="font-size:0.9rem; color:#666;">Controle das reações de ira; capacidade de responder ao mal com calma.</p>
+                    </div>
+                </div>
+                <div class="fruto-item">
+                    <span class="fruto-icon">🏋️</span>
+                    <div>
+                        <strong>Paciência</strong>
+                        <p style="font-size:0.9rem; color:#666;">Suportar as provações e sofrimentos sem perder a paz interior.</p>
+                    </div>
+                </div>
+                <div class="fruto-item">
+                    <span class="fruto-icon">🌊</span>
+                    <div>
+                        <strong>Continência</strong>
+                        <p style="font-size:0.9rem; color:#666;">Refrear os impulsos desordenados; temperança nas satisfações corporais.</p>
+                    </div>
+                </div>
+                <div class="fruto-item">
+                    <span class="fruto-icon">🛡️</span>
+                    <div>
+                        <strong>Domínio Próprio</strong>
+                        <p style="font-size:0.9rem; color:#666;">Autogoverno segundo a razão iluminada pela fé — não ser escravo das paixões.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+<!-- ===== SEÇÃO 7: EFEITOS DA CRISMA ===== -->
+<section id="efeitos">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-tag">✨ Graças</span>
+            <h2>Efeitos da Crisma</h2>
+            <p>O que realmente acontece quando alguém recebe este sacramento?</p>
+        </div>
+
+        <div class="efeito-card">
+            <div class="efeito-icon-box">🔥</div>
+            <div>
+                <h3 style="color:var(--vermelho); margin-bottom:0.5rem;">1. Aumento e Aprofundamento da Graça Santificante</h3>
+                <p style="color:#555;">
+                    A Crisma não "começa" a graça (isso foi o Batismo) mas a aprofunda, fortalece 
+                    e integra. Como a adolescência em relação à infância: não se torna outra pessoa, 
+                    mas se torna mais completa. O CIC (1303) ensina que a Confirmação "aumenta em 
+                    nós os dons do Espírito Santo."
+                </p>
+            </div>
+        </div>
+
+        <div class="efeito-card">
+            <div class="efeito-icon-box">🔏</div>
+            <div>
+                <h3 style="color:var(--vermelho); margin-bottom:0.5rem;">2. Impressão do Caráter Sacramental</h3>
+                <p style="color:#555;">
+                    Como mencionado na seção de teologia, imprime uma marca espiritual permanente 
+                    que configura o cristão a Cristo e o capacita para a missão. Por isso, é 
+                    <strong>recebido somente uma vez</strong> — e mesmo pecadores que se afastaram 
+                    não precisam (nem podem) recebê-lo novamente ao regressar.
+                </p>
+            </div>
+        </div>
+
+        <div class="efeito-card">
+            <div class="efeito-icon-box">⚔️</div>
+            <div>
+                <h3 style="color:var(--vermelho); margin-bottom:0.5rem;">3. Fortalecimento para o Combate Espiritual</h3>
+                <p style="color:#555;">
+                    A tradição chama o confirmando de <em>miles Christi</em> — "soldado de Cristo". 
+                    A Confirmação arma o cristão para resistir às tentações, combater o mal no mundo 
+                    e perseverar na fé mesmo sob pressão. É por isso que a Crisma sempre foi 
+                    associada à maturidade cristã.
+                </p>
+            </div>
+        </div>
+
+        <div class="efeito-card">
+            <div class="efeito-icon-box">📢</div>
+            <div>
+                <h3 style="color:var(--vermelho); margin-bottom:0.5rem;">4. Capacitação para o Testemunho Missionário</h3>
+                <p style="color:#555;">
+                    O CIC (1305) afirma: "O confirmado pode e deve defender e difundir a fé por 
+                    palavras e atos como verdadeiro testemunho de Cristo." Não se trata apenas de 
+                    não pecar pessoalmente — é uma capacitação positiva para transformar o mundo.
+                </p>
+            </div>
+        </div>
+
+        <div class="efeito-card">
+            <div class="efeito-icon-box">⛪</div>
+            <div>
+                <h3 style="color:var(--vermelho); margin-bottom:0.5rem;">5. Incorporação Mais Profunda à Igreja</h3>
+                <p style="color:#555;">
+                    A Confirmação une o fiel mais estreitamente à Igreja universal. O CIC (1303) 
+                    fala em "vínculo mais perfeito com a Igreja". Isso tem implicações práticas: 
+                    o confirmado assume responsabilidades eclesiais maiores e pode exercer certos 
+                    direitos (como ser padrinho de batismo ou de crisma).
+                </p>
+            </div>
+        </div>
+
+        <div class="efeito-card">
+            <div class="efeito-icon-box">🕊️</div>
+            <div>
+                <h3 style="color:var(--vermelho); margin-bottom:0.5rem;">6. Os Sete Dons em Plenitude</h3>
+                <p style="color:#555;">
+                    Os dons do Espírito Santo (Sabedoria, Entendimento, Conselho, Fortaleza, 
+                    Ciência, Piedade e Temor de Deus) são dados ao batizando, mas intensificados 
+                    na Confirmação. São <em>habitus</em> — disposições permanentes que nos tornam 
+                    responsivos à ação do Espírito.
+                </p>
+            </div>
+        </div>
+
+        <div class="efeito-card">
+            <div class="efeito-icon-box">🙏</div>
+            <div>
+                <h3 style="color:var(--vermelho); margin-bottom:0.5rem;">7. Graças Sacramentais Específicas</h3>
+                <p style="color:#555;">
+                    Além dos efeitos permanentes, o sacramento confere o direito a graças 
+                    <em>actuais</em> especiais ao longo da vida: em momentos de tentação, de 
+                    missão, de sofrimento, o confirmado pode recorrer às graças deste sacramento 
+                    recebido anos antes. O tesouro da Crisma não se esgota no dia da celebração.
+                </p>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- ===== SEÇÃO 8: O QUE OS SANTOS DIZEM ===== -->
+<section id="santos" class="bg-dark">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-tag" style="background:rgba(212,175,55,0.2);color:var(--dourado);">👑 Santos</span>
+            <h2>O Que os Santos Dizem sobre a Crisma</h2>
+            <p style="color:rgba(255,255,255,0.7);">Dois mil anos de sabedoria sobre o poder do Espírito Santo</p>
+        </div>
+
+        <div class="grid-3">
+
+            <div class="santo-card">
+                <div class="santo-header">
+                    <span class="santo-emoji">🦁</span>
+                    <h3>São Leão Magno</h3>
+                    <span class="santo-epoca">Papa • Século V</span>
+                </div>
+                <div class="santo-body">
+                    <blockquote>
+                        "Depois do batismo, o Espírito Santo é dado pela unção do crisma; pela 
+                        imposição de mãos do bispo, recebemos o Espírito de sabedoria e de 
+                        entendimento para confesar a fé de modo perfeito."
+                    </blockquote>
+                    <p>
+                        Um dos maiores papas da antiguidade, Leão entendeu a Crisma como o 
+                        aperfeiçoamento necessário do Batismo — o cristão que nasce precisa crescer.
+                    </p>
+                </div>
+            </div>
+
+            <div class="santo-card">
+                <div class="santo-header">
+                    <span class="santo-emoji">📚</span>
+                    <h3>Santo Tomás de Aquino</h3>
+                    <span class="santo-epoca">Doutor Angélico • 1225-1274</span>
+                </div>
+                <div class="santo-body">
+                    <blockquote>
+                        "Pelo batismo o homem é regenerado para a vida espiritual. Pela confirmação, 
+                        recebe a força para lutar. Por isso, a confirmação é para a alma o que 
+                        a adolescência é para o corpo."
+                    </blockquote>
+                    <p>
+                        A analogia tomista corpo-espírito é pedagógica: assim como o adolescente 
+                        precisa de força para enfrentar o mundo, o confirmado recebe força 
+                        espiritual para o combate.
+                    </p>
+                </div>
+            </div>
+
+            <div class="santo-card">
+                <div class="santo-header">
+                    <span class="santo-emoji">🌹</span>
+                    <h3>Santa Teresa d'Ávila</h3>
+                    <span class="santo-epoca">Doutora da Igreja • 1515-1582</span>
+                </div>
+                <div class="santo-body">
+                    <blockquote>
+                        "O Espírito Santo é como fogo que, uma vez aceso, não se apaga facilmente 
+                        quando o sopro da graça sacramental alimenta a chama interior."
+                    </blockquote>
+                    <p>
+                        A grande mística espanhola via a Crisma como o início de uma aventura 
+                        espiritual, não um ponto final. Ela mesma entrou no Carmelo anos após 
+                        sua Confirmação, buscando viver plenamente o que o sacramento prometia.
+                    </p>
+                </div>
+            </div>
+
+            <div class="santo-card">
+                <div class="santo-header">
+                    <span class="santo-emoji">⚡</span>
+                    <h3>São Francisco de Sales</h3>
+                    <span class="santo-epoca">Bispo e Doutor • 1567-1622</span>
+                </div>
+                <div class="santo-body">
+                    <blockquote>
+                        "O batismo nos dá o ser cristão; a confirmação nos dá a perfeição do 
+                        cristão. O batismo é o nascimento; a confirmação é a plena maturidade 
+                        na vida de Cristo."
+                    </blockquote>
+                    <p>
+                        Francis de Sales era um mestre da vida espiritual para leigos. Via a 
+                        Confirmação não como "rito de passagem social" mas como equipamento para 
+                        a santidade no mundo secular.
+                    </p>
+                </div>
+            </div>
+
+            <div class="santo-card">
+                <div class="santo-header">
+                    <span class="santo-emoji">🔥</span>
+                    <h3>São Luís Maria Grignion de Montfort</h3>
+                    <span class="santo-epoca">Missionário • 1673-1716</span>
+                </div>
+                <div class="santo-body">
+                    <blockquote>
+                        "O Espírito Santo age naqueles que correspondem à sua graça. O confirmado 
+                        que deixa o Espírito agir torna-se instrumento nas mãos de Deus. O que 
+                        se fecha à sua ação permanece como um instrumento enferrujado."
+                    </blockquote>
+                    <p>
+                        O apóstolo mariano enfatizava a <strong>correspondência pessoal</strong> 
+                        à graça: o sacramento abre a porta, mas o fiel deve entrar.
+                    </p>
+                </div>
+            </div>
+
+            <div class="santo-card">
+                <div class="santo-header">
+                    <span class="santo-emoji">💫</span>
+                    <h3>Santo Afonso de Ligório</h3>
+                    <span class="santo-epoca">Doutor da Igreja • 1696-1787</span>
+                </div>
+                <div class="santo-body">
+                    <blockquote>
+                        "A confirmação fortalece as graças do batismo. Os que foram bem 
+                        preparados para recebê-la encontram nela um auxílio poderosíssimo 
+                        para perseverar na virtude."
+                    </blockquote>
+                    <p>
+                        Afonso, grande moralista e missionário, sublinhava a preparação. 
+                        Não por superstição "mágica", mas porque a abertura da alma amplifica 
+                        a receptividade à graça.
+                    </p>
+                </div>
+            </div>
+
+            <div class="santo-card">
+                <div class="santo-header">
+                    <span class="santo-emoji">✊</span>
+                    <h3>São João Paulo II</h3>
+                    <span class="santo-epoca">Papa • 1920-2005</span>
+                </div>
+                <div class="santo-body">
+                    <blockquote>
+                        "A Confirmação dá ao cristão o Espírito Santo como força de testemunho. 
+                        Não é o final de um percurso: é o início de uma missão. Sereis minhas 
+                        testemunhas!"
+                    </blockquote>
+                    <p>
+                        JPII, que viveu sob nazismo e comunismo, sabia o que era ser testemunha 
+                        de Cristo num mundo hostil. Para ele, a Crisma era urgentemente necessária 
+                        na época moderna.
+                    </p>
+                </div>
+            </div>
+
+            <div class="santo-card">
+                <div class="santo-header">
+                    <span class="santo-emoji">🌺</span>
+                    <h3>Beata Chiara Badano</h3>
+                    <span class="santo-epoca">Jovem Beata • 1971-1990</span>
+                </div>
+                <div class="santo-body">
+                    <blockquote>
+                        "Quero viver o que recebi na Crisma. O Espírito Santo que entrou em mim 
+                        deve poder agir. Não posso fechá-lo."
+                    </blockquote>
+                    <p>
+                        Chiara morreu de câncer aos 18 anos com uma alegria que comoveu o Papa. 
+                        Ela dizia que a Crisma havia sido o momento em que decidiu ser 
+                        <em>completamente</em> de Deus. Um modelo perfeito para jovens crismandos.
+                    </p>
+                </div>
+            </div>
+
+            <div class="santo-card">
+                <div class="santo-header">
+                    <span class="santo-emoji">📿</span>
+                    <h3>Santo Agostinho</h3>
+                    <span class="santo-epoca">Bispo e Doutor • 354-430</span>
+                </div>
+                <div class="santo-body">
+                    <blockquote>
+                        "O Espírito Santo, dado pela imposição das mãos, é o mesmo que foi dado 
+                        aos Apóstolos. A Igreja nunca interrompeu esta tradição dos Apóstolos."
+                    </blockquote>
+                    <p>
+                        Agostinho foi fundamental para estabelecer a continuidade apostólica da 
+                        Confirmação. Contra os donatistas, defendeu que a validade dos sacramentos 
+                        não depende da dignidade do ministro.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- HISTÓRIA ESPECIAL DE MÁRTIR -->
+        <div style="margin-top:3rem; background:rgba(212,175,55,0.1); border:1px solid rgba(212,175,55,0.3); border-radius:16px; padding:2.5rem;">
+            <h3 style="color:var(--dourado); font-size:1.5rem; margin-bottom:1.5rem;">
+                🩸 A História dos Mártires de Lyon (177 d.C.) — A Crisma em Sangue
+            </h3>
+            <p style="color:rgba(255,255,255,0.85); margin-bottom:1rem;">
+                No ano 177, em Lyon (atual França), uma perseguição violenta explodiu contra os 
+                cristãos. Entre os aprisionados estava uma jovem escrava chamada <strong>Blandina</strong>. 
+                Seus companheiros temiam que ela, frágil e sem instrução, cedesse sob tortura.
+            </p>
+            <p style="color:rgba(255,255,255,0.85); margin-bottom:1rem;">
+                Mas Blandina confundiu seus algozes. Cada vez que era torturada, repetia: 
+                <em>"Sou cristã e entre nós nada de mal é feito."</em> Ela foi submetida aos mais 
+                terríveis suplícios durante horas — e resistiu a todos. A carta das Igrejas de 
+                Lyon e Viena, conservada por Eusébio de Cesareia, diz que os próprios pagãos 
+                ficaram espantados.
+            </p>
+            <p style="color:rgba(255,255,255,0.85);">
+                Blandina não era uma filósofa, não era nobre, não tinha formação teológica. 
+                Era uma escrava confirmada no Espírito. E demonstrou que o dom da Fortaleza 
+                não é reservado a heróis naturais — é dado por Deus a quem O recebe.
+                <strong style="color:var(--dourado);"> É a Crisma feita vida e sangue.</strong>
+            </p>
+        </div>
+
+    </div>
+</section>
+
+<!-- ===== SEÇÃO 9: O MINISTRO ===== -->
+<section id="ministro">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-tag">👨‍⚖️ Ministério</span>
+            <h2>O Ministro da Crisma</h2>
+            <p>Quem pode conferir este sacramento e em quais circunstâncias?</p>
+        </div>
+
+        <div class="grid-2" style="margin-bottom:2rem;">
+            <div class="card">
+                <span class="card-icon">✝️</span>
+                <h3>Ministro Ordinário: O Bispo</h3>
+                <p style="margin-bottom:1rem;">
+                    No Rito Latino, o <strong>bispo</strong> é o ministro ordinário da Confirmação. 
+                    Isso não é uma convenção administrativa: aponta para a unidade da Igreja. 
+                    O bispo representa a Igreja local em comunhão com a Igreja universal. 
+                    Quando confirma, é a Igreja toda que confirma.
+                </p>
+                <p style="font-size:0.9rem; color:#666;">
+                    <strong>CIC can. 882:</strong> "O ministro originário da Confirmação é o Bispo."
+                </p>
+            </div>
+            <div class="card">
+                <span class="card-icon">🙏</span>
+                <h3>Ministro Extraordinário: O Padre</h3>
+                <p style="margin-bottom:1rem;">
+                    O padre pode administrar a Confirmação quando:
+                </p>
+                <ul style="padding-left:1.2rem; color:#555; line-height:1.8;">
+                    <li>Tem delegação da Santa Sé</li>
+                    <li>Recebe delegação do bispo diocesano</li>
+                    <li>O confirmando está em perigo de morte</li>
+                    <li>Está recebendo adultos no RCIA (Rito de Iniciação)</li>
+                    <li>Em Igrejas Orientais: todos os padres podem confirmar</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- QUESTÃO DO PERIGO DE MORTE -->
+        <div class="historia-box">
+            <h3>⚠️ Confirmação em Perigo de Morte</h3>
+            <p>
+                Se alguém está em perigo de morte e nunca foi confirmado, qualquer padre pode 
+                administrar o sacramento — mesmo sem delegação especial. O CIC (can. 883, §3) 
+                reconhece isso expressamente.
+            </p>
+            <p>
+                Por que isso importa? Porque a Confirmação é necessária para a plenitude 
+                da iniciação cristã. Uma pessoa que morre tendo sido batizada mas não confirmada 
+                não está "incompleta" — a salvação não depende disso. Mas a Igreja deseja que 
+                cada batizado receba a plenitude dos sacramentos de iniciação, especialmente 
+                antes da morte.
+            </p>
+            <p>
+                É uma manifestação linda da maternidade da Igreja: mesmo na última hora, 
+                busca dar ao filho tudo que tem a oferecer.
+            </p>
+        </div>
+
+        <!-- TABELA RESUMO -->
+        <div class="tabela-container" style="margin-top:2rem;">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Ministro</th>
+                        <th>Quando</th>
+                        <th>Tradição</th>
+                        <th>Autoridade</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Bispo diocesano</td>
+                        <td>Sempre, em sua diocese</td>
+                        <td>Oriental e Ocidental</td>
+                        <td>Por direito próprio</td>
+                    </tr>
+                    <tr>
+                        <td>Padre (delegado pelo bispo)</td>
+                        <td>Com licença específica</td>
+                        <td>Ocidental (exceção)</td>
+                        <td>Por delegação</td>
+                    </tr>
+                    <tr>
+                        <td>Padre (RCIA)</td>
+                        <td>Iniciação de adultos</td>
+                        <td>Ocidental</td>
+                        <td>Por lei (can. 883)</td>
+                    </tr>
+                    <tr>
+                        <td>Padre oriental</td>
+                        <td>Após o batismo, sempre</td>
+                        <td>Só Oriental</td>
+                        <td>Tradição apostólica</td>
+                    </tr>
+                    <tr>
+                        <td>Qualquer padre</td>
+                        <td>Perigo de morte</td>
+                        <td>Ocidental</td>
+                        <td>Por lei (can. 883§3)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</section>
+
+<!-- ===== SEÇÃO 10: QUEM PODE RECEBER ===== -->
+<section id="preparacao" class="bg-light">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-tag">📋 Preparação</span>
+            <h2>Quem Pode Receber e Como se Preparar</h2>
+            <p>Requisitos, disposições e o caminho para uma Crisma frutífera</p>
+        </div>
+
+        <!-- REQUISITOS -->
+        <div class="card" style="margin-bottom:2rem;">
+            <h3>✅ Requisitos para Receber a Crisma</h3>
+            <div class="grid-2" style="margin-top:1rem;">
+                <div>
+                    <h4 style="color:var(--vermelho); margin-bottom:0.8rem;">Requisitos Essenciais (Validade)</h4>
+                    <ul style="padding-left:1.2rem; color:#555; line-height:2;">
+                        <li>Ter sido validamente batizado</li>
+                        <li>Não ter recebido a Crisma antes</li>
+                        <li>Intenção de receber o sacramento</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 style="color:var(--vermelho); margin-bottom:0.8rem;">Requisitos para Licitude (Frutificação)</h4>
+                    <ul style="padding-left:1.2rem; color:#555; line-height:2;">
+                        <li>Estado de graça (sem pecado mortal)</li>
+                        <li>Instrução suficiente na fé</li>
+                        <li>Disposição de receber o Espírito Santo</li>
+                        <li>Preparação catequética adequada</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- IDADE -->
+        <div class="card card-red" style="margin-bottom:2rem;">
+            <span class="card-icon">📅</span>
+            <h3>A Questão da Idade — Um Debate que Não Para</h3>
+            <p style="margin-bottom:1rem;">
+                O CIC (can. 891) diz que a Confirmação deve ser conferida "por volta dos anos 
+                da discrição" (7 anos), a menos que a Conferência Episcopal determine outra idade 
+                — o que na prática significa que a maioria das dioceses latinoamericanas, 
+                norte-americanas e europeias a administra na adolescência (12-17 anos).
+            </p>
+            <div class="grid-2">
+                <div>
+                    <h4 style="color:var(--vermelho);">Argumento para Confirmação na Infância</h4>
+                    <ul style="padding-left:1.2rem; color:#555; line-height:1.8; font-size:0.9rem;">
+                        <li>Mantém a ordem dos sacramentos de iniciação</li>
+                        <li>As Igrejas Orientais confirmam bebês com sucesso</li>
+                        <li>Crianças são tão merecedoras de graça quanto adultos</li>
+                        <li>A graça "confirma" a pessoa ao longo de toda a vida</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 style="color:var(--vermelho);">Argumento para Confirmação na Adolescência</h4>
+                    <ul style="padding-left:1.2rem; color:#555; line-height:1.8; font-size:0.9rem;">
+                        <li>Permite escolha pessoal consciente da fé</li>
+                        <li>A "confirmação" pressupõe algo a confirmar</li>
+                        <li>Evita receber por pressão familiar sem intenção</li>
+                        <li>Mais compatível com a maturidade cristã</li>
+                    </ul>
+                </div>
+            </div>
+            <p style="margin-top:1rem; font-size:0.9rem; color:#666;">
+                <strong>Nota:</strong> Este debate é legítimo e não está dogmaticamente definido. 
+                Ambas as práticas têm fundamento teológico sólido.
+            </p>
+        </div>
+
+        <!-- COMO SE PREPARAR -->
+        <h3 style="color:var(--vermelho); font-size:1.5rem; margin-bottom:1.5rem;">🗺️ Roteiro de Preparação</h3>
+
+        <div class="step">
+            <div class="step-number">1</div>
+            <div class="step-content">
+                <h3>Conhecer a Fé</h3>
+                <p>
+                    A preparação catequética é obrigatória. O candidato deve conhecer os 
+                    fundamentos da fé católica: o Credo, os Sacramentos, os Mandamentos, 
+                    o Pai-Nosso, as virtudes, os pecados capitais. Não de modo mecânico, 
+                    mas com compreensão. Paróquias costumam ter cursos de 1-2 anos.
+                </p>
+            </div>
+        </div>
+
+        <div class="step">
+            <div class="step-number">2</div>
+            <div class="step-content">
+                <h3>Frequentar a Missa e os Sacramentos</h3>
+                <p>
+                    A preparação não é só teórica. O candidato deve participar da vida da Igreja: 
+                    missas dominicais, confissão regular, oração pessoal. Sem essa prática, 
+                    o conhecimento teológico é vazio.
+                </p>
+            </div>
+        </div>
+
+        <div class="step">
+            <div class="step-number">3</div>
+            <div class="step-content">
+                <h3>Escolher o Padrinho/Madrinha</h3>
+                <p>
+                    O padrinho deve ser um católico praticante (batizado, confirmado, 
+                    com comunhão regular), com pelo menos 16 anos, não ser o pai ou a mãe 
+                    do confirmando, e estar disponível para acompanhar espiritualmente 
+                    o confirmando — não apenas no dia da cerimônia.
+                </p>
+            </div>
+        </div>
+
+        <div class="step">
+            <div class="step-number">4</div>
+            <div class="step-content">
+                <h3>Escolher o Nome de Santo</h3>
+                <p>
+                    Tradição piedosa: escolher um santo como modelo e protetor. 
+                    O candidato deve pesquisar a vida do santo escolhido, não apenas 
+                    o nome. São João Bosco? São Francisco de Assis? Santa Teresa de Lisieux? 
+                    Cada santo é uma proposta de como viver o Evangelho.
+                </p>
+            </div>
+        </div>
+
+        <div class="step">
+            <div class="step-number">5</div>
+            <div class="step-content">
+                <h3>Fazer uma Boa Confissão</h3>
+                <p>
+                    O CIC exige que o confirmando esteja em estado de graça. Por isso, 
+                    é fortemente recomendado (e em muitas dioceses obrigatório) fazer a 
+                    Confissão antes de receber a Crisma. Não por mera formalidade — 
+                    mas para abrir o coração totalmente ao Espírito Santo.
+                </p>
+            </div>
+        </div>
+
+        <div class="step">
+            <div class="step-number">6</div>
+            <div class="step-content">
+                <h3>Retiro Espiritual</h3>
+                <p>
+                    Muitas dioceses exigem um retiro pré-crisma. É uma oportunidade de 
+                    silêncio, oração e encontro pessoal com Deus antes do grande dia. 
+                    Um dos momentos mais transformadores na preparação.
+                </p>
+            </div>
+        </div>
+
+        <div class="step">
+            <div class="step-number">7</div>
+            <div class="step-content">
+                <h3>O Grande Dia — e o Que Vem Depois</h3>
+                <p>
+                    A Crisma não é chegada — é partida. Paróquias conscientes ajudam os 
+                    recém-confirmados a continuarem engajados: grupos de jovens, serviço 
+                    pastoral, aprofundamento espiritual. O "afastamento pós-crisma" é 
+                    uma das maiores preocupações pastorais da Igreja contemporânea.
+                </p>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- ===== SEÇÃO 11: CURIOSIDADES ===== -->
+<section id="curiosidades">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-tag">🔍 Curiosidades</span>
+            <h2>Curiosidades e Fatos Surpreendentes</h2>
+            <p>O que poucos sabem sobre o sacramento da Confirmação</p>
+        </div>
+
+        <div class="grid-2">
+
+            <div class="curiosidade-card">
+                <h4>🫒 O Que É o Crisma, Exatamente?</h4>
+                <p style="color:#555; font-size:0.95rem;">
+                    O crisma é uma mistura de azeite de oliva e bálsamo (perfume de origem vegetal). 
+                    Na Missa Crismal da Quinta-Feira Santa, o bispo consagra três óleos: o Óleo dos 
+                    Catecúmenos, o Óleo dos Enfermos e o <strong>Santo Crisma</strong>. Este último 
+                    é o único que é propriamente "consagrado" — os outros são apenas "bêntos". 
+                    Todos os padres da diocese comparecem à Missa Crismal para renovar promessas 
+                    sacerdotais e levar os óleos às paróquias.
+                </p>
+            </div>
+
+            <div class="curiosidade-card">
+                <h4>👋 A "Bofetada" que Sumiu</h4>
+                <p style="color:#555; font-size:0.95rem;">
+                    Por séculos, o bispo dava uma leve palmada na face do confirmando após a unção. 
+                    Era simbólica — um "lembre-se de que você deve estar pronto para sofrer por 
+                    Cristo." Algumas fontes explicam como memória do gesto cavaleiresco com que 
+                    um rei armava seu cavaleiro. Com a reforma do Rito em 1971, foi substituída 
+                    por um gesto de paz. Muitos idosos ainda se lembram da "bofetada do bispo" 
+                    com carinho e admiração.
+                </p>
+            </div>
+
+            <div class="curiosidade-card">
+                <h4>🌍 A Crisma dos Bebês no Oriente</h4>
+                <p style="color:#555; font-size:0.95rem;">
+                    Em todas as Igrejas de rito oriental (incluindo as Católicas orientais como 
+                    Melquitas, Maronitas, Ucranianas etc.), os bebês são batizados, confirmados 
+                    E recebem a Primeira Comunhão no mesmo rito — imediatamente após o nascimento 
+                    espiritual. Um bebê de dias de vida recebe os três sacramentos de iniciação 
+                    completos. Para muitos ocidentais isso parece estranho, mas é a tradição 
+                    ininterrupta que remonta ao século II.
+                </p>
+            </div>
+
+            <div class="curiosidade-card">
+                <h4>🏰 A Crisma dos Imperadores</h4>
+                <p style="color:#555; font-size:0.95rem;">
+                    Na Idade Média, a unção com crisma era reservada a reis e imperadores na 
+                    cerimônia de coroação — não porque fossem "especiais", mas para marcar que 
+                    o poder vinha de Deus. Carlos Magno, os reis da França e da Inglaterra 
+                    eram ungidos com crisma consagrado. O rito da coroação britânica ainda 
+                    inclui uma unção com óleo sagrado até hoje — uma sobrevivência deste 
+                    antigo simbolismo cristão.
+                </p>
+            </div>
+
+            <div class="curiosidade-card">
+                <h4>📜 "Confirmação" ou "Crisma" — Qual o Nome Certo?</h4>
+                <p style="color:#555; font-size:0.95rem;">
+                    Ambos! "Crisma" vem do grego <em>chrisma</em> (unção) e enfatiza o rito 
+                    exterior — o óleo. "Confirmação" é o nome latino que enfatiza o efeito 
+                    interior — confirmar, fortalecer. O Catecismo usa os dois como sinônimos. 
+                    Em algumas regiões do Brasil fala-se quase só em "crisma"; em Portugal 
+                    é comum "confirmação". Nos documentos oficiais da Igreja em latim: 
+                    <em>Confirmatio</em>.
+                </p>
+            </div>
+
+            <div class="curiosidade-card">
+                <h4>✈️ A Crisma Mais Improvável da História</h4>
+                <p style="color:#555; font-size:0.95rem;">
+                    Durante as perseguições na China (séculos XVII-XIX), os missionários eram 
+                    frequentemente presos. Para garantir que os fiéis recebessem a Crisma, 
+                    alguns bispos tinham de se disfarçar de mercadores ou camponeses e viajar 
+                    centenas de quilômetros em segredo para confirmar grupos de cristãos escondidos 
+                    em casas e cavernas. A fidelidade ao sacramento custava a liberdade e às 
+                    vezes a vida.
+                </p>
+            </div>
+
+            <div class="curiosidade-card">
+                <h4>🔢 Os Sete Dons Foram "Inventados" na Idade Média?</h4>
+                <p style="color:#555; font-size:0.95rem;">
+                    Não exatamente. A lista de sete dons vem de Isaías 11,2-3, que profecia sobre 
+                    o Messias. No texto hebraico original, há seis dons. Na tradução grega (LXX), 
+                    aparece uma repetição de "piedade" que dá sete. Santo Agostinho sistematizou 
+                    os sete dons em relação às Bem-aventuranças de Mateus 5, e São Gregório Magno 
+                    os aplicou à vida espiritual. São Tomás completou o sistema no século XIII.
+                </p>
+            </div>
+
+            <div class="curiosidade-card">
+                <h4>😲 A Crisma Pode Ser Inválida?</h4>
+                <p style="color:#555; font-size:0.95rem;">
+                    Sim, teoricamente. Se faltar a matéria (crisma não consagrado), a forma 
+                    (palavras essenciais) ou a intenção do ministro ("fazer o que a Igreja faz"), 
+                    o sacramento é inválido. Casos assim são raros mas ocorreram na história — 
+                    levando a rebatismos e reconfirmações. Por isso, a preparação cuidadosa e 
+                    o uso correto dos elementos são tão importantes na teologia sacramental.
+                </p>
+            </div>
+
+        </div>
+
+        <!-- ESTATÍSTICAS -->
+        <div style="margin-top:3rem;">
+            <h3 style="color:var(--vermelho); text-align:center; font-size:1.5rem; margin-bottom:2rem;">📊 A Crisma em Números</h3>
+            <div class="grid-4">
+                <div class="stat-card">
+                    <span class="stat-number">~1.3B</span>
+                    <span class="stat-label">Católicos no mundo — potencialmente crismados</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">2000+</span>
+                    <span class="stat-label">Anos de história ininterrupta do sacramento</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">7</span>
+                    <span class="stat-label">Dons do Espírito Santo conferidos</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">1×</span>
+                    <span class="stat-label">Só se recebe UMA vez na vida (caráter indelével)</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- ===== SEÇÃO 12: QUESTÕES TEOLÓGICAS ===== -->
+<section id="questoes" class="bg-dark">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-tag" style="background:rgba(212,175,55,0.2);color:var(--dourado);">❓ FAQ Teológico</span>
+            <h2>Questões Difíceis e Debatidas</h2>
+            <p style="color:rgba(255,255,255,0.7);">As perguntas que realmente importam — com respostas honestas</p>
+        </div>
+
+        <div class="accordion-item">
+            <button class="accordion-header" onclick="toggleAccordion(this)">
+                <h3>❓ "A Crisma é necessária para a salvação?"</h3>
+                <span class="accordion-icon">▼</span>
+            </button>
+            <div class="accordion-content">
+                <p style="margin-bottom:1rem;">
+                    Não da mesma forma que o Batismo. A teologia distingue: o Batismo é necessário 
+                    <em>necessitate medii</em> (é meio necessário para a salvação); a Crisma é 
+                    necessária <em>necessitate praecepti</em> (existe um preceito de recebê-la, 
+                    mas sua ausência não implica necessariamente a perda da salvação).
+                </p>
+                <p>
+                    O CIC (1307) afirma: "Para receber a Confirmação, é preciso estar em estado 
+                    de graça." E ensina que os fiéis têm a obrigação de recebê-la (can. 890). 
+                    Uma pessoa que deliberadamente e por orgulho rejeita a Crisma peca; 
+                    uma pessoa que morre sem tê-la recebido por circunstâncias alheias à sua 
+                    vontade não está por isso condenada.
+                </p>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <button class="accordion-header" onclick="toggleAccordion(this)">
+                <h3>❓ "Posso me crimar se tenho dúvidas na fé?"</h3>
+                <span class="accordion-icon">▼</span>
+            </button>
+            <div class="accordion-content">
+                <p style="margin-bottom:1rem;">
+                    Esta é uma das questões pastorais mais delicadas. Dúvidas são normais — 
+                    especialmente na adolescência e juventude. A questão não é "tenho certeza 
+                    absoluta de tudo?" mas "tenho intenção genuína de continuar buscando e 
+                    de receber o Espírito Santo?"
+                </p>
+                <p style="margin-bottom:1rem;">
+                    A fé não é ausência de dúvidas — é confiança apesar das dúvidas. 
+                    Muitos dos maiores santos tiveram dúvidas intensas (a chamada "noite escura"). 
+                    Santa Teresa de Calcutá viveu décadas de seca espiritual.
+                </p>
+                <p>
+                    O que seria problemático: receber a Crisma com a intenção explícita de 
+                    <em>não</em> crer e <em>não</em> viver como cristão — por pressão familiar, 
+                    apenas por tradição social etc. Nesse caso, falta a intenção mínima. 
+                    O candidato honesto deve conversar com o padre ou catequista.
+                </p>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <button class="accordion-header" onclick="toggleAccordion(this)">
+                <h3>❓ "Qual a diferença da Crisma para a 'Confirmação' das outras denominações cristãs?"</h3>
+                <span class="accordion-icon">▼</span>
+            </button>
+            <div class="accordion-content">
+                <p style="margin-bottom:1rem;">
+                    Distinções importantes:
+                </p>
+                <ul style="padding-left:1.5rem; line-height:2; color:#444;">
+                    <li><strong>Católica:</strong> Sacramento verdadeiro, institído por Cristo, confere graça <em>ex opere operato</em>, imprime caráter.</li>
+                    <li><strong>Ortodoxa:</strong> Mesma crença substancial; chamada <em>Chrismation</em>; administrada pelo padre imediatamente após o batismo.</li>
+                    <li><strong>Anglicana:</strong> Rito de maturidade cristã; a maioria das correntes anglicanas não a considera sacramento verdadeiro no sentido católico.</li>
+                    <li><strong>Luterana:</strong> Rito de confirmação da fé — sem valor sacramental na maioria das tradições; é uma afirmação pública do que o batismo conferiu.</li>
+                    <li><strong>Reformada/Presbiteriana:</strong> Profissão de fé pública; não é sacramento.</li>
+                    <li><strong>Batista:</strong> Não existe; a conversão pessoal e o batismo de adultos fazem papel análogo.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <button class="accordion-header" onclick="toggleAccordion(this)">
+                <h3>❓ "Por que tantos crismados abandonam a Igreja logo depois?"</h3>
+                <span class="accordion-icon">▼</span>
+            </button>
+            <div class="accordion-content">
+                <p style="margin-bottom:1rem;">
+                    Esta é uma das crises pastorais mais sérias da Igreja contemporânea, 
+                    especialmente no Ocidente. Estudos mostram que percentual significativo 
+                    de jovens diminui ou abandona a prática religiosa após a Confirmação.
+                </p>
+                <p style="margin-bottom:1rem;">
+                    Alguns diagnósticos honestos:
+                </p>
+                <ul style="padding-left:1.5rem; line-height:2; color:#444;">
+                    <li>A Crisma foi tratada culturalmente como "formatura religiosa" — chega-se ao fim e não se volta</li>
+                    <li>Preparação catequética sem encontro pessoal com Deus — conhecimento sem relacionamento</li>
+                    <li>Pressão familiar: o jovem se crismou "para agradar avó", não por convicção</li>
+                    <li>Falta de comunidade acolhedora após a Crisma</li>
+                    <li>Proposta da Igreja não conectada com os desafios reais da vida jovem</li>
+                </ul>
+                <p style="margin-top:1rem;">
+                    A solução não está em eliminar a Crisma, mas em reorientar toda a preparação 
+                    para que seja um encontro real com o Deus vivo — não uma checagem de requisitos.
+                </p>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <button class="accordion-header" onclick="toggleAccordion(this)">
+                <h3>❓ "O Espírito Santo já não estava em mim desde o Batismo? Por que preciso da Crisma?"</h3>
+                <span class="accordion-icon">▼</span>
+            </button>
+            <div class="accordion-content">
+                <p style="margin-bottom:1rem;">
+                    Excelente objeção — que os próprios teólogos medievais debateram. A resposta: 
+                    sim, o Espírito Santo habita no batizado (1Cor 3,16). Mas há modos diferentes 
+                    de presença e ação.
+                </p>
+                <p style="margin-bottom:1rem;">
+                    Analogia: uma criança ama sua mãe, e a mãe a ama. Mas esse amor, ao longo 
+                    dos anos, aprofunda-se, amadurece, torna-se mais consciente, mais forte, 
+                    mais capaz de sacrifício. É o mesmo amor, mas transformado. 
+                </p>
+                <p>
+                    Na Confirmação, não se recebe "outro" Espírito Santo — o mesmo Espírito 
+                    dado no Batismo age com <strong>plenitude</strong>: novos dons, novo caráter, 
+                    nova missão. Santo Tomás diz: <em>"O Espírito Santo não é dado de novo, 
+                    mas dado de modo mais pleno."</em>
+                </p>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <button class="accordion-header" onclick="toggleAccordion(this)">
+                <h3>❓ "Qual a relação entre Crisma e os carismas do Espírito Santo?"</h3>
+                <span class="accordion-icon">▼</span>
+            </button>
+            <div class="accordion-content">
+                <p style="margin-bottom:1rem;">
+                    Os <strong>dons</strong> da Crisma (os sete dons de Isaías) e os 
+                    <strong>carismas</strong> (falar em línguas, profecia, cura, etc. de 1Cor 12) 
+                    são realidades distintas.
+                </p>
+                <p style="margin-bottom:1rem;">
+                    Os sete dons são dados a todos os confirmados para sua santificação pessoal. 
+                    Os carismas são dados pelo Espírito a quem Ele quer (1Cor 12,11), para o 
+                    serviço da comunidade — não são garantidos pela Crisma nem são sinais de 
+                    santidade maior.
+                </p>
+                <p>
+                    Alguém pode falar em línguas e não ser santo (Mt 7,22). Alguém pode nunca 
+                    ter manifestado nenhum carisma extraordinário e ser grande santo (como 
+                    São Tomás de Aquino ou Santa Teresinha).
+                </p>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <button class="accordion-header" onclick="toggleAccordion(this)">
+                <h3>❓ "E se eu receber a Crisma em estado de pecado mortal?"</h3>
+                <span class="accordion-icon">▼</span>
+            </button>
+            <div class="accordion-content">
+                <p style="margin-bottom:1rem;">
+                    O sacramento é <strong>válido</strong> mas <strong>não frutifica</strong> 
+                    naquele momento. A graça fica "bloqueada" pelo pecado mortal, mas fica 
+                    depositada na alma através do caráter.
+                </p>
+                <p style="margin-bottom:1rem;">
+                    Quando essa pessoa fizer uma boa confissão e retornar ao estado de graça, 
+                    a graça da Crisma "revive" (<em>reviviscência dos sacramentos</em>). 
+                    O sacramento não precisa ser repetido.
+                </p>
+                <p>
+                    Isso é teologicamente importante: a graça sacramental não está perdida 
+                    para sempre por causa do pecado — ela aguarda na alma que se converte.
+                </p>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- ===== SEÇÃO 13: ORAÇÕES ===== -->
+<section id="oracoes">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-tag">🙏 Orações</span>
+            <h2>Orações para Antes e Depois da Crisma</h2>
+            <p>Rezar bem é metade da preparação</p>
+        </div>
+
+        <div class="grid-2">
+
+            <div class="oracao-box">
+                <h3>📿 Hino ao Espírito Santo (Veni Creator Spiritus)</h3>
+                <p>
+                    Vem, ó Espírito Criador,<br>
+                    visita as almas dos fiéis;<br>
+                    e enche com a graça do alto<br>
+                    os corações que criaste.<br><br>
+                    Tu és chamado o Paráclito,<br>
+                    dom de Deus, o mais sublime,<br>
+                    fonte viva, fogo, amor,<br>
+                    e unção espiritual.<br><br>
+                    Acende em nós a tua luz,<br>
+                    derrama em nossos corações<br>
+                    o teu amor, e com teu poder<br>
+                    fortalece nossa fraqueza.<br><br>
+                    <em>Amen.</em>
+                </p>
+            </div>
+
+            <div class="oracao-box">
+                <h3>🔥 Oração ao Espírito Santo</h3>
+                <p>
+                    Espírito Santo, amor do Pai e do Filho,<br>
+                    inspirai-me sempre o que devo pensar,<br>
+                    o que devo dizer, como devo dizer,<br>
+                    o que devo calar, como devo escrever,<br>
+                    o que devo fazer, como devo agir<br>
+                    para a glória de Deus,<br>
+                    o bem das almas e a minha santificação.<br><br>
+                    Que os Sete Dons que recebi na Crisma<br>
+                    floresçam em mim cada dia.<br>
+                    Não deixeis que eu resista à vossa ação.<br><br>
+                    <em>Amen.</em>
+                </p>
+            </div>
+
+            <div class="oracao-box">
+                <h3>✝️ Oração do Crismando (Antes da Celebração)</h3>
+                <p>
+                    Senhor Jesus,<br>
+                    que prometestes o Espírito de Verdade<br>
+                    e O enviastes em Pentecostes:<br><br>
+                    Estou pronto para recebê-Lo.<br>
+                    Perdoa meus pecados,<br>
+                    abre meu coração,<br>
+                    livra-me do medo e da indiferença.<br><br>
+                    Que a Crisma que recebo hoje<br>
+                    não seja uma formalidade,<br>
+                    mas o início de uma vida<br>
+                    verdadeiramente rendida a Ti.<br><br>
+                    <em>Maria, prepara o meu coração.<br>
+                    Amen.</em>
+                </p>
+            </div>
+
+            <div class="oracao-box">
+                <h3>🌺 Ação de Graças Após a Crisma</h3>
+                <p>
+                    Espírito Santo,<br>
+                    recebi hoje o Teu sinal.<br>
+                    Não sei ainda o que isso significa<br>
+                    em toda a sua profundidade —<br>
+                    mas sei que Tu sabes.<br><br>
+                    Guia-me. Fortifica-me.<br>
+                    Quando eu tiver medo, recorda-me<br>
+                    que não estou sozinho.<br>
+                    Quando eu pecar, não me abandones.<br>
+                    Quando eu duvidar, ilumina-me.<br><br>
+                    Fazes que eu seja testemunha<br>
+                    não de mim mesmo, mas de Cristo.<br><br>
+                    <em>Amen.</em>
+                </p>
+            </div>
+
+        </div>
+
+        <!-- SÍNODOS MENCIONADOS -->
+        <div style="margin-top:3rem; text-align:center;">
+            <h3 style="color:var(--vermelho); margin-bottom:1.5rem;">📋 Documentos do Magistério sobre a Crisma</h3>
+            <div class="synod-badges">
+                <span class="synod-badge">CIC nn. 1285-1321</span>
+                <span class="synod-badge">Concílio de Trento (1547)</span>
+                <span class="synod-badge">Lumen Gentium 11</span>
+                <span class="synod-badge">Divinae Consortium Naturae (Paulo VI, 1971)</span>
+                <span class="synod-badge">RICA (Rito de Iniciação Cristã de Adultos)</span>
+                <span class="synod-badge">Rito da Confirmação (1973)</span>
+                <span class="synod-badge">Carta Encíclica Dominum et Vivificantem (JPII, 1986)</span>
+                <span class="synod-badge">Diretório para a Catequese (2020)</span>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- ===== SEÇÃO: MISSÃO ===== -->
+<section id="missao">
+    <div class="container">
+        <div class="missao-hero">
+            <h2>🕊️ A Crisma é uma Missão, Não uma Chegada</h2>
+            <p>
+                O maior perigo com a Crisma é tratá-la como uma linha de chegada — o fim de um 
+                percurso catequético que libera o cristão de "ter de ir à Missa" ou "de se preocupar 
+                com religião". Mas a teologia é exatamente oposta: a Crisma é uma linha de partida.
+            </p>
+            <p>
+                Os Apóstolos receberam o Espírito em Pentecostes e saíram para o mundo. 
+                Não ficaram no Cenáculo. Não organizaram mais reuniões de discernimento. 
+                Foram. Pregaram. Amaram. Sofreram. Transformaram o mundo.
+            </p>
+            <p style="font-size:1.1rem; font-weight:bold; color:var(--dourado-claro);">
+                "Ide e fazei discípulos de todas as nações." — Mt 28,19
+            </p>
+            <div style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap; margin-top:1.5rem;">
+                <a href="#dons" class="btn btn-gold">Revisitar os 7 Dons</a>
+                <a href="#oracoes" class="btn btn-outline">Ir para as Orações</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+</main>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+    <span class="footer-cross">🔥</span>
+    <h3>Sacramento da Crisma</h3>
+    <p>Uma página a serviço do conhecimento da fé católica</p>
+
+    <div class="footer-links">
+        <a href="#o-que-e">O Que É</a>
+        <a href="#historia">História</a>
+        <a href="#dons">7 Dons</a>
+        <a href="#frutos">12 Frutos</a>
+        <a href="#santos">Santos</a>
+        <a href="#preparacao">Preparação</a>
+        <a href="#questoes">FAQ</a>
+        <a href="batismo.html">→ Página do Batismo</a>
+    </div>
+
+    <div style="margin-top:1.5rem; padding-top:1.5rem; border-top:1px solid rgba(255,255,255,0.1);">
+        <p style="font-size:0.85rem; color:rgba(255,255,255,0.4);">
+            Conteúdo baseado no Catecismo da Igreja Católica, documentos do Magistério e obras teológicas 
+            de referência. Esta página aborda exclusivamente a Crisma; o Batismo é tratado em página separada.
+        </p>
+        <p style="font-size:0.85rem; color:rgba(255,255,255,0.4); margin-top:0.5rem;">
+            "Recebe o sinal do Dom do Espírito Santo." — Rito da Confirmação
+        </p>
+    </div>
+</footer>
+
+<!-- ===== JAVASCRIPT ===== -->
+<script>
+    // Accordion
+    function toggleAccordion(button) {
+        const content = button.nextElementSibling;
+        const icon = button.querySelector('.accordion-icon');
+        const isActive = content.classList.contains('active');
+
+        // Fechar todos
+        document.querySelectorAll('.accordion-content').forEach(c => c.classList.remove('active'));
+        document.querySelectorAll('.accordion-icon').forEach(i => i.classList.remove('rotated'));
+
+        // Abrir o clicado (se estava fechado)
+        if (!isActive) {
+            content.classList.add('active');
+            icon.classList.add('rotated');
+        }
+    }
+
+    // Highlight da navegação ao scroll
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-sticky a');
+
+    window.addEventListener('scroll', () => {
+        let current = '';
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop - 100;
+            if (window.scrollY >= sectionTop) {
+                current = section.getAttribute('id');
+            }
+        });
+
+        navLinks.forEach(link => {
+            link.style.color = '';
+            link.style.borderBottomColor = '';
+            if (link.getAttribute('href') === '#' + current) {
+                link.style.color = 'var(--dourado)';
+                link.style.borderBottomColor = 'var(--dourado)';
+            }
+        });
+    });
+
+    // Animação ao entrar na viewport
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.card, .dom-card, .santo-card, .timeline-item, .step, .efeito-card').forEach(el => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(20px)';
+        el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        observer.observe(el);
+    });
+</script>
+
+</body>
+</html>
