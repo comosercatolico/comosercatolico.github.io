@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Primeira Comunhão - Guia Completo</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
- <style>
+<style>
     :root {
         --primary: #C41E3A;
         --primary-light: #E85A6F;
@@ -20,11 +20,14 @@
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
+    html { scroll-behavior: smooth; }
+
     body {
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         line-height: 1.6;
         color: var(--text-dark);
         background-color: #fff;
+        padding-top: 70px; /* compensar nav fixa */
     }
 
     /* ============================================
@@ -89,12 +92,12 @@
     }
 
     /* ============================================
-       NAVEGAÇÃO (agora é um botão único "ÍNDICE")
+       NAVEGAÇÃO (botão único "ÍNDICE")
        ============================================ */
     nav {
         background-color: var(--light-bg);
         padding: 0;
-        position: fixed;            /* mudado de sticky */
+        position: fixed;
         top: 0;
         left: 0;
         right: 0;
@@ -117,7 +120,7 @@
         display: flex;
         justify-content: flex-end;
         align-items: center;
-        padding: 12px 20px 12px 200px; /* espaço para o botão voltar */
+        padding: 12px 20px 12px 200px;
         position: relative;
     }
 
@@ -147,18 +150,14 @@
         box-shadow: 0 5px 16px rgba(196, 30, 58, 0.45);
     }
 
-    .btn-indice i {
-        transition: transform 0.3s;
-    }
+    .btn-indice i { transition: transform 0.3s; }
 
     .btn-indice.aberto {
         background: var(--gold);
         color: var(--primary-dark);
     }
 
-    .btn-indice.aberto i {
-        transform: rotate(90deg);
-    }
+    .btn-indice.aberto i { transform: rotate(90deg); }
 
     /* Painel dropdown do índice */
     nav ul {
@@ -176,11 +175,11 @@
         justify-content: center;
         box-shadow: 0 10px 30px rgba(0,0,0,0.15);
         animation: deslizarBaixo 0.3s ease;
+        max-height: 80vh;
+        overflow-y: auto;
     }
 
-    nav ul.aberto {
-        display: flex;
-    }
+    nav ul.aberto { display: flex; }
 
     @keyframes deslizarBaixo {
         from { opacity: 0; transform: translateY(-15px); }
@@ -221,26 +220,37 @@
         box-shadow: 0 2px 8px rgba(196, 30, 58, 0.4);
     }
 
-    /* compensar nav fixa */
-    body {
-        padding-top: 70px;
-    }
-
     /* ============================================
-       CONTAINER E SEÇÕES
+       CONTAINER E SEÇÕES (SCROLL CONTÍNUO)
        ============================================ */
     .container { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
 
-    .section { display: none; padding: 50px 0; }
-
-    .section.active {
+    /* ⭐ NOVO: Scroll contínuo (tudo visível) */
+    .section {
         display: block;
-        animation: fadeIn 0.5s ease;
+        padding: 60px 0;
+        scroll-margin-top: 90px; /* offset para o scroll de âncora */
+        border-bottom: 1px solid var(--border-color);
+
+        /* Animação de entrada ao scroll */
+        opacity: 0;
+        transform: translateY(30px);
+        transition: opacity 0.7s ease, transform 0.7s ease;
     }
 
-    @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(10px); }
-        to { opacity: 1; transform: translateY(0); }
+    .section:last-of-type {
+        border-bottom: none;
+    }
+
+    .section.visivel {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    /* Primeira seção sempre visível (sem precisar scroll) */
+    .section:first-of-type {
+        opacity: 1;
+        transform: translateY(0);
     }
 
     .section h2 {
@@ -250,6 +260,8 @@
         display: flex;
         align-items: center;
         gap: 15px;
+        padding-bottom: 15px;
+        border-bottom: 3px solid var(--gold);
     }
 
     .section h3 { color: var(--primary-dark); font-size: 1.4em; margin-top: 30px; margin-bottom: 15px; }
@@ -477,6 +489,7 @@
         transition: all 0.3s ease;
         box-shadow: 0 4px 12px rgba(196, 30, 58, 0.3);
         z-index: 99;
+        border: none;
     }
 
     .back-to-top.show { opacity: 1; visibility: visible; }
@@ -508,7 +521,7 @@
     @media (max-width: 768px) {
         header h1 { font-size: 2em; }
         header { padding: 50px 20px; }
-        .section { padding: 30px 0; }
+        .section { padding: 40px 0; scroll-margin-top: 80px; }
         .section h2 { font-size: 1.8em; }
         .grid-2 { grid-template-columns: 1fr; }
         .back-to-top { width: 45px; height: 45px; bottom: 20px; right: 20px; }
@@ -1560,7 +1573,7 @@
 
 <script>
     // ========================================
-    // VARIÁVEIS GLOBAIS
+    // VARIÁVEIS
     // ========================================
     const navButtons = document.querySelectorAll('.nav-btn');
     const sections = document.querySelectorAll('.section');
@@ -1579,7 +1592,6 @@
         navMenu.classList.toggle('aberto');
     });
 
-    // Fechar ao clicar fora do menu
     document.addEventListener('click', (e) => {
         if (!navMenu.contains(e.target) && !btnIndice.contains(e.target)) {
             btnIndice.classList.remove('aberto');
@@ -1587,7 +1599,6 @@
         }
     });
 
-    // Fechar com ESC
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
             btnIndice.classList.remove('aberto');
@@ -1596,44 +1607,65 @@
     });
 
     // ========================================
-    // NAVEGAÇÃO ENTRE SEÇÕES
+    // NAVEGAÇÃO POR SCROLL (âncoras)
     // ========================================
-    navButtons.forEach(button => {
-        button.addEventListener('click', (e) => {
-            const sectionId = e.target.closest('button').getAttribute('data-section');
-            showSection(sectionId);
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+    navButtons.forEach(btn => {
+        btn.addEventListener('click', function () {
+            const sectionId = this.getAttribute('data-section');
+            const target = document.getElementById(sectionId);
 
-            // Fecha o painel automaticamente
+            if (target) {
+                const offset = 80;
+                const pos = target.getBoundingClientRect().top + window.pageYOffset - offset;
+                window.scrollTo({ top: pos, behavior: 'smooth' });
+            }
+
+            // Fecha painel
             btnIndice.classList.remove('aberto');
             navMenu.classList.remove('aberto');
         });
     });
 
-    function showSection(sectionId) {
-        sections.forEach(s => s.classList.remove('active'));
-        navButtons.forEach(b => b.classList.remove('active'));
-        const targetSection = document.getElementById(sectionId);
-        if (targetSection) targetSection.classList.add('active');
-        const targetBtn = document.querySelector(`[data-section="${sectionId}"]`);
-        if (targetBtn) targetBtn.classList.add('active');
+    // ========================================
+    // HIGHLIGHT DO ITEM ATIVO AO SCROLL
+    // ========================================
+    function atualizarAtivo() {
+        let current = '';
+        sections.forEach(section => {
+            const top = section.offsetTop - 120;
+            if (window.pageYOffset >= top) {
+                current = section.getAttribute('id');
+            }
+        });
+
+        navButtons.forEach(btn => {
+            btn.classList.remove('active');
+            if (btn.getAttribute('data-section') === current) {
+                btn.classList.add('active');
+            }
+        });
     }
 
     // ========================================
-    // BOTÃO VOLTAR AO TOPO
+    // ANIMAÇÃO DE ENTRADA AO SCROLL
     // ========================================
-    function scrollToTop() {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visivel');
+            }
+        });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+    sections.forEach(section => observer.observe(section));
 
     // ========================================
     // TABS
     // ========================================
     function showTab(evt, tabName) {
-        const allContents = document.querySelectorAll('.tab-content');
-        const allButtons = document.querySelectorAll('.tab-button');
-        allContents.forEach(c => c.classList.remove('active'));
-        allButtons.forEach(b => b.classList.remove('active'));
+        const container = evt.currentTarget.closest('.container, .section') || document;
+        container.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+        container.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
         const tab = document.getElementById(tabName);
         if (tab) tab.classList.add('active');
         evt.currentTarget.classList.add('active');
@@ -1654,7 +1686,14 @@
     }
 
     // ========================================
-    // SCROLL: Auto-hide + Botão voltar ao topo
+    // BOTÃO VOLTAR AO TOPO
+    // ========================================
+    function scrollToTop() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // ========================================
+    // SCROLL: Auto-hide + Topo + Highlight
     // ========================================
     let ultimoScroll = 0;
     const limiarScroll = 80;
@@ -1662,19 +1701,21 @@
     window.addEventListener('scroll', () => {
         const scrollAtual = window.pageYOffset || document.documentElement.scrollTop;
 
-        // -- Botão voltar ao topo --
+        // Botão voltar ao topo
         if (backToTopBtn) {
             backToTopBtn.classList.toggle('show', scrollAtual > 300);
         }
 
-        // -- Auto-hide da navbar e botão voltar --
-        // Se o índice estiver aberto, não esconde
+        // Highlight
+        atualizarAtivo();
+
+        // Não esconde se painel aberto
         if (navMenu.classList.contains('aberto')) {
             ultimoScroll = scrollAtual;
             return;
         }
 
-        // No topo da página, sempre mostra
+        // No topo, sempre mostra
         if (scrollAtual <= limiarScroll) {
             navPrincipal.classList.remove('escondida');
             btnVoltar.classList.remove('escondido');
@@ -1683,11 +1724,9 @@
         }
 
         if (scrollAtual > ultimoScroll) {
-            // Rolando pra BAIXO → esconde
             navPrincipal.classList.add('escondida');
             btnVoltar.classList.add('escondido');
         } else {
-            // Rolando pra CIMA → mostra
             navPrincipal.classList.remove('escondida');
             btnVoltar.classList.remove('escondido');
         }
