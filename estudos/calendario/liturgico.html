@@ -3,35 +3,55 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Calendário Litúrgico Católico — Roda do Ano da Graça com tempos litúrgicos e semanas interativas" />
-  <title>Calendário Litúrgico Católico</title>
+  <meta name="description" content="Calendário Litúrgico Católico — Roda do Ano da Graça com tempos litúrgicos e semanas interativas, fiel à tradição do Rito Romano." />
+  <meta name="theme-color" content="#f5ecd4" />
 
+  <title>Calendário Litúrgico · Annus Gratiæ</title>
+
+  <!-- Preconnect para performance de fontes -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Crimson+Pro:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Crimson+Pro:ital,wght@0,400;0,500;0,600;1,400&display=swap"
+    rel="stylesheet"
+  >
 
   <link rel="stylesheet" href="calendario.css" />
 </head>
 <body>
 
-  <!-- ═══════════════════════════════════════════════
-       HEADER
-       ═══════════════════════════════════════════════ -->
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       HEADER ── Frontispício
+       ═══════════════════════════════════════════════════════════════════════ -->
   <header class="site-header">
+
+    <div class="header-ornament-top" aria-hidden="true">✦ ✟ ✦</div>
+
     <p class="header-subtitle">Sancta Mater Ecclesia</p>
+
     <h1 class="header-title">Calendário Litúrgico</h1>
-    <p class="header-tagline"><em>Annus Gratiæ</em> — O Ano da Graça</p>
+
+    <p class="header-tagline">
+      <em>Annus Gratiæ</em> &nbsp;·&nbsp; O Ano da Graça
+    </p>
+
+    <div class="header-ornament-bottom" aria-hidden="true">✧ ⊹ ✧</div>
+
   </header>
 
-  <!-- ═══════════════════════════════════════════════
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
        MAIN
-       ═══════════════════════════════════════════════ -->
+       ═══════════════════════════════════════════════════════════════════════ -->
   <main class="main-container">
 
-    <!-- ─── WHEEL SECTION ─── -->
+    <!-- ┌──────────────────────────────────────────────────────────────────┐
+         │  SEÇÃO DA RODA                                                   │
+         └──────────────────────────────────────────────────────────────────┘ -->
     <section class="wheel-section" aria-label="Roda do Calendário Litúrgico">
 
       <div class="wheel-wrapper">
+
         <svg
           id="liturgical-wheel"
           viewBox="0 0 1000 1000"
@@ -39,264 +59,515 @@
           role="img"
           aria-label="Roda do Calendário Litúrgico com tempos e semanas clicáveis"
         >
-          <!-- ─── DEFINITIONS ─── -->
+
+          <!-- ═══════════════════════════════════════════════════════════════
+               DEFINITIONS ── Gradientes, filtros, marcadores, padrões
+               ═══════════════════════════════════════════════════════════════ -->
           <defs>
-            <!-- Gradiente dourado para o centro -->
-            <radialGradient id="gold-grad" cx="35%" cy="30%" r="75%">
-              <stop offset="0%"   stop-color="#e8c66b" />
-              <stop offset="45%"  stop-color="#c49628" />
+
+            <!-- ─── Gradiente dourado principal ─── -->
+            <radialGradient id="gold-grad" cx="35%" cy="30%" r="80%">
+              <stop offset="0%"   stop-color="#fff5d6" />
+              <stop offset="20%"  stop-color="#e8c34a" />
+              <stop offset="55%"  stop-color="#b8891a" />
+              <stop offset="85%"  stop-color="#7a5a0e" />
+              <stop offset="100%" stop-color="#3d2b06" />
+            </radialGradient>
+
+            <!-- ─── Gradiente dourado polido (cruz) ─── -->
+            <linearGradient id="gold-polished" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%"   stop-color="#e8c34a" />
+              <stop offset="40%"  stop-color="#d4a942" />
+              <stop offset="60%"  stop-color="#b8891a" />
               <stop offset="100%" stop-color="#7a5a0e" />
+            </linearGradient>
+
+            <!-- ─── Halo luminoso central ─── -->
+            <radialGradient id="gold-halo" cx="50%" cy="50%" r="50%">
+              <stop offset="0%"   stop-color="#fff5d6" stop-opacity="0.7" />
+              <stop offset="60%"  stop-color="#e8c34a" stop-opacity="0.15" />
+              <stop offset="100%" stop-color="#b8891a" stop-opacity="0" />
             </radialGradient>
 
-            <!-- Brilho central -->
-            <radialGradient id="gold-glow" cx="50%" cy="50%" r="50%">
-              <stop offset="0%"   stop-color="#fff5d6" stop-opacity="0.6" />
-              <stop offset="100%" stop-color="#fff5d6" stop-opacity="0" />
-            </radialGradient>
+            <!-- ─── Padrão sutil de pergaminho para fundo da roda ─── -->
+            <pattern id="parchment-texture" patternUnits="userSpaceOnUse" width="60" height="60">
+              <rect width="60" height="60" fill="#fdfaf2" />
+              <circle cx="10" cy="20" r="0.5" fill="#b8891a" opacity="0.08" />
+              <circle cx="35" cy="45" r="0.4" fill="#b8891a" opacity="0.06" />
+              <circle cx="50" cy="10" r="0.5" fill="#b8891a" opacity="0.07" />
+            </pattern>
 
-            <!-- Marcador de seta para a anotação "início" -->
+            <!-- ─── Marcador de seta (para anotação "início") ─── -->
             <marker
               id="arrow-marker"
               viewBox="0 0 10 10"
-              refX="8" refY="5"
+              refX="9" refY="5"
               markerWidth="6" markerHeight="6"
               orient="auto-start-reverse"
             >
               <path d="M 0 0 L 10 5 L 0 10 z" fill="#4a3e2c" />
             </marker>
 
-            <!-- Sombra suave -->
+            <!-- ─── Filtro de sombra suave ─── -->
             <filter id="soft-shadow" x="-20%" y="-20%" width="140%" height="140%">
-              <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="rgba(0,0,0,0.15)" />
+              <feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="rgba(0,0,0,0.18)" />
             </filter>
 
-            <!-- Filtro de brilho para hover -->
-            <filter id="cell-glow">
-              <feGaussianBlur stdDeviation="2" result="blur" />
+            <!-- ─── Filtro de glow dourado (hover/active) ─── -->
+            <filter id="gold-glow" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur stdDeviation="4" result="blur" />
+              <feFlood flood-color="#b8891a" flood-opacity="0.6" result="color" />
+              <feComposite in="color" in2="blur" operator="in" result="glow" />
               <feMerge>
-                <feMergeNode in="blur" />
+                <feMergeNode in="glow" />
                 <feMergeNode in="SourceGraphic" />
               </feMerge>
             </filter>
+
+            <!-- ─── Filtro de relevo (para letras Α/Ω) ─── -->
+            <filter id="emboss">
+              <feGaussianBlur stdDeviation="0.5" />
+              <feSpecularLighting result="spec" specularExponent="20" lighting-color="#fff5d6">
+                <feDistantLight azimuth="135" elevation="60" />
+              </feSpecularLighting>
+              <feComposite in="spec" in2="SourceAlpha" operator="in" result="lit" />
+              <feMerge>
+                <feMergeNode in="SourceGraphic" />
+                <feMergeNode in="lit" />
+              </feMerge>
+            </filter>
+
+            <!-- ─── Clip path circular para a roda ─── -->
+            <clipPath id="wheel-clip">
+              <circle cx="500" cy="500" r="495" />
+            </clipPath>
+
           </defs>
 
-          <!-- ─── BACKGROUND ─── -->
-          <!-- Anel externo guia -->
+
+          <!-- ═══════════════════════════════════════════════════════════════
+               FUNDO E ESTRUTURA DE BASE
+               ═══════════════════════════════════════════════════════════════ -->
+
+          <!-- Borda externa decorativa (anel duplo) -->
+          <circle cx="500" cy="500" r="495" class="outer-ring-deco" />
           <circle cx="500" cy="500" r="490" class="outer-ring" />
 
-          <!-- ─── LAYERS (preenchidos via JS) ─── -->
 
-          <!-- Camada 1: Anel de datas (mais externo) -->
-          <g id="layer-dates" aria-label="Datas do calendário"></g>
+          <!-- ═══════════════════════════════════════════════════════════════
+               CAMADAS DA RODA ── populadas pelo JS
+               ═══════════════════════════════════════════════════════════════ -->
 
-          <!-- Camada 2: Anel de tempos litúrgicos (médio) -->
+          <!-- Camada 1 — Anel externo de DATAS -->
+          <g id="layer-dates" aria-label="Datas do calendário civil"></g>
+
+          <!-- Camada 2 — Anel médio de TEMPOS LITÚRGICOS -->
           <g id="layer-seasons" aria-label="Tempos litúrgicos"></g>
 
-          <!-- Camada 3: Anel de semanas (interno, clicável) -->
-          <g id="layer-weeks" aria-label="Semanas litúrgicas"></g>
+          <!-- Camada 3 — Anel interno de SEMANAS (clicáveis) -->
+          <g id="layer-weeks" aria-label="Semanas litúrgicas — clique para detalhes"></g>
 
-          <!-- Camada 4: Linhas divisórias (spokes) -->
-          <g id="layer-spokes"></g>
+          <!-- Camada 4 — Linhas divisórias (spokes) -->
+          <g id="layer-spokes" aria-hidden="true"></g>
 
-          <!-- Camada 5: Textos das datas -->
-          <g id="layer-date-labels"></g>
+          <!-- Camada 5 — Textos das datas (anel externo) -->
+          <g id="layer-date-labels" aria-hidden="true"></g>
 
-          <!-- Camada 6: Textos dos tempos litúrgicos -->
-          <g id="layer-season-labels"></g>
+          <!-- Camada 6 — Textos dos tempos litúrgicos (curvados) -->
+          <g id="layer-season-labels" aria-hidden="true"></g>
 
-          <!-- Camada 7: Textos das semanas -->
-          <g id="layer-week-labels"></g>
+          <!-- Camada 7 — Textos das semanas (radiais) -->
+          <g id="layer-week-labels" aria-hidden="true"></g>
 
-          <!-- Camada 8: Anel guia interno (linha tracejada "início do ano") -->
-          <g id="layer-guide"></g>
+          <!-- Camada 8 — Anel guia tracejado interno -->
+          <g id="layer-guide" aria-hidden="true"></g>
 
-          <!-- Camada 9: Anotação "início do ano litúrgico" -->
-          <g id="layer-annotation"></g>
+          <!-- Camada 9 — Anotação "início do ano litúrgico" + seta -->
+          <g id="layer-annotation" aria-hidden="true"></g>
 
-          <!-- Camada 10: Indicador "HOJE" -->
-          <g id="layer-today"></g>
+          <!-- Camada 10 — Indicador "HOJE" -->
+          <g id="layer-today" aria-label="Indicador do dia atual"></g>
 
-          <!-- ─── CENTRO — CORDEIRO PASCAL ─── -->
+
+          <!-- ═══════════════════════════════════════════════════════════════
+               CENTRO ── EMBLEMA SAGRADO
+               Cruz dourada bizantina + Cordeiro Pascal + Α/Ω
+               ═══════════════════════════════════════════════════════════════ -->
+
           <g id="center-emblem" transform="translate(500, 500)">
 
-            <!-- Brilho ambiental -->
-            <circle cx="0" cy="0" r="180" fill="url(#gold-glow)" opacity="0.5" />
+            <!-- ─── Halo luminoso ambiental ─── -->
+            <circle cx="0" cy="0" r="200" fill="url(#gold-halo)" opacity="0.6" />
 
-            <!-- Cruz dourada de fundo (atrás do círculo) -->
-            <g id="center-cross">
+            <!-- ─── Cruz dourada bizantina (ornamentada) ─── -->
+            <g id="byzantine-cross">
+
               <!-- Braço vertical -->
               <path
-                d="M -32 -140
-                   L 32 -140
-                   L 32 -50
-                   L 32 50
-                   L 32 140
-                   L -32 140
-                   L -32 50
-                   L -32 -50
+                d="M -38 -160
+                   L 38 -160
+                   L 38 -135
+                   L 50 -135
+                   L 50 -100
+                   L 38 -100
+                   L 38 -45
+                   L 38 45
+                   L 38 100
+                   L 50 100
+                   L 50 135
+                   L 38 135
+                   L 38 160
+                   L -38 160
+                   L -38 135
+                   L -50 135
+                   L -50 100
+                   L -38 100
+                   L -38 45
+                   L -38 -45
+                   L -38 -100
+                   L -50 -100
+                   L -50 -135
+                   L -38 -135
                    Z"
                 class="center-cross-bg"
               />
+
               <!-- Braço horizontal -->
               <path
-                d="M -140 -32
-                   L 140 -32
-                   L 140 32
-                   L -140 32
+                d="M -160 -38
+                   L -135 -38
+                   L -135 -50
+                   L -100 -50
+                   L -100 -38
+                   L -45 -38
+                   L 45 -38
+                   L 100 -38
+                   L 100 -50
+                   L 135 -50
+                   L 135 -38
+                   L 160 -38
+                   L 160 38
+                   L 135 38
+                   L 135 50
+                   L 100 50
+                   L 100 38
+                   L 45 38
+                   L -45 38
+                   L -100 38
+                   L -100 50
+                   L -135 50
+                   L -135 38
+                   L -160 38
                    Z"
                 class="center-cross-bg"
               />
 
-              <!-- Decoração nas extremidades da cruz (recortes ornamentais) -->
-              <g class="center-cross-decoration" opacity="0.7">
-                <!-- Topo -->
-                <path d="M -32 -140 L -22 -150 L -22 -140 M 32 -140 L 22 -150 L 22 -140" />
-                <!-- Base -->
-                <path d="M -32 140 L -22 150 L -22 140 M 32 140 L 22 150 L 22 140" />
-                <!-- Esquerda -->
-                <path d="M -140 -32 L -150 -22 L -140 -22 M -140 32 L -150 22 L -140 22" />
-                <!-- Direita -->
-                <path d="M 140 -32 L 150 -22 L 140 -22 M 140 32 L 150 22 L 140 22" />
-              </g>
+              <!-- Highlight superior (luz refletida na cruz) -->
+              <path
+                d="M -34 -156 L 34 -156"
+                class="center-cross-highlight"
+              />
+              <path
+                d="M -156 -34 L 156 -34"
+                class="center-cross-highlight"
+              />
+
+              <!-- Ornamentos nas extremidades (pequenos círculos dourados) -->
+              <circle cx="0"    cy="-148" r="3" class="center-cross-ornament" />
+              <circle cx="0"    cy="148"  r="3" class="center-cross-ornament" />
+              <circle cx="-148" cy="0"    r="3" class="center-cross-ornament" />
+              <circle cx="148"  cy="0"    r="3" class="center-cross-ornament" />
+
             </g>
 
-            <!-- Círculo central sobre a cruz -->
-            <circle cx="0" cy="0" r="105" class="center-circle" />
-            <circle cx="0" cy="0" r="98"  class="center-circle-inner" />
-            <circle cx="0" cy="0" r="92"  class="center-circle-inner" />
+            <!-- ─── Círculo central dourado (medalhão) ─── -->
+            <circle cx="0" cy="0" r="110" class="center-circle" />
+            <circle cx="0" cy="0" r="103" class="center-circle-inner-1" />
+            <circle cx="0" cy="0" r="96"  class="center-circle-inner-2" />
 
-            <!-- Letras Alfa e Ômega -->
-            <text x="-72" y="0" class="center-letter">Α</text>
-            <text x="72"  y="0" class="center-letter">Ω</text>
+            <!-- Gravações decorativas no medalhão -->
+            <circle cx="0" cy="0" r="88" class="center-circle-engraving" />
 
-            <!-- Cordeiro Pascal (Agnus Dei) -->
-            <g id="center-lamb" transform="translate(0, 5)">
-              <!-- Corpo -->
-              <ellipse cx="0" cy="20" rx="38" ry="26" class="center-lamb" />
-              <!-- Lã do corpo (textura) -->
-              <circle cx="-18" cy="12" r="9"  class="center-lamb" />
-              <circle cx="-8"  cy="5"  r="8"  class="center-lamb" />
-              <circle cx="6"   cy="6"  r="9"  class="center-lamb" />
-              <circle cx="20"  cy="12" r="8"  class="center-lamb" />
-              <circle cx="-22" cy="25" r="8"  class="center-lamb" />
-              <circle cx="22"  cy="25" r="8"  class="center-lamb" />
-              <!-- Cabeça -->
-              <ellipse cx="-22" cy="-8" rx="14" ry="18" class="center-lamb" />
-              <!-- Orelha -->
-              <ellipse cx="-30" cy="-18" rx="5" ry="8"
-                transform="rotate(-30 -30 -18)"
-                class="center-lamb" />
-              <!-- Olho -->
-              <circle cx="-20" cy="-10" r="1.8" fill="#3a2a18" />
-              <!-- Focinho -->
-              <ellipse cx="-28" cy="-2" rx="4" ry="3" fill="#d4b48a" />
+            <!-- ─── Letras Alfa e Ômega ─── -->
+            <text x="-78" y="3" class="center-letter">Α</text>
+            <text x="78"  y="3" class="center-letter">Ω</text>
 
-              <!-- Patas dianteiras -->
-              <rect x="-15" y="38" width="5" height="18" rx="2" class="center-lamb" />
-              <rect x="-6"  y="40" width="5" height="16" rx="2" class="center-lamb" />
+            <!-- ═══════════════════════════════════════════════════════════
+                 CORDEIRO PASCAL (Agnus Dei)
+                 Desenhado por partes para máximo detalhe
+                 ═══════════════════════════════════════════════════════════ -->
+            <g id="agnus-dei" transform="translate(0, 8)">
+
+              <!-- ─── Auréola atrás da cabeça ─── -->
+              <circle cx="-26" cy="-12" r="28" class="lamb-halo-glow" />
+              <circle cx="-26" cy="-12" r="26" class="lamb-halo" />
+              <!-- Cruz interna da auréola (cruciforme nimbus) -->
+              <line x1="-26" y1="-38" x2="-26" y2="-32"
+                stroke="#b8891a" stroke-width="2" opacity="0.7" />
+              <line x1="-52" y1="-12" x2="-46" y2="-12"
+                stroke="#b8891a" stroke-width="2" opacity="0.7" />
+              <line x1="-6"  y1="-12" x2="-12" y2="-12"
+                stroke="#b8891a" stroke-width="2" opacity="0.7" />
+
+              <!-- ─── Sombra do corpo (chão) ─── -->
+              <ellipse cx="2" cy="60" rx="48" ry="5" class="lamb-wool-shadow" />
+
+              <!-- ─── Corpo principal ─── -->
+              <ellipse cx="2" cy="22" rx="44" ry="30" class="lamb-body" />
+
+              <!-- ─── Textura de lã (círculos sobrepostos) ─── -->
+              <circle cx="-22" cy="10" r="11" class="lamb-wool" />
+              <circle cx="-10" cy="2"  r="10" class="lamb-wool" />
+              <circle cx="4"   cy="0"  r="11" class="lamb-wool" />
+              <circle cx="18"  cy="3"  r="10" class="lamb-wool" />
+              <circle cx="30"  cy="12" r="10" class="lamb-wool" />
+              <circle cx="-26" cy="25" r="10" class="lamb-wool" />
+              <circle cx="34"  cy="26" r="10" class="lamb-wool" />
+              <circle cx="-22" cy="40" r="9"  class="lamb-wool" />
+              <circle cx="-8"  cy="44" r="9"  class="lamb-wool" />
+              <circle cx="8"   cy="44" r="9"  class="lamb-wool" />
+              <circle cx="24"  cy="42" r="9"  class="lamb-wool" />
+
+              <!-- Sombras suaves entre as bolas de lã -->
+              <circle cx="-16" cy="20" r="3" class="lamb-wool-shadow" />
+              <circle cx="0"   cy="18" r="3" class="lamb-wool-shadow" />
+              <circle cx="16"  cy="20" r="3" class="lamb-wool-shadow" />
+              <circle cx="-8"  cy="35" r="2.5" class="lamb-wool-shadow" />
+              <circle cx="14"  cy="35" r="2.5" class="lamb-wool-shadow" />
+
+              <!-- ─── Patas dianteiras ─── -->
+              <rect x="-18" y="48" width="6" height="20" rx="2" class="lamb-leg" />
+              <rect x="-8"  y="50" width="6" height="18" rx="2" class="lamb-leg" />
               <!-- Patas traseiras -->
-              <rect x="8"   y="40" width="5" height="16" rx="2" class="center-lamb" />
-              <rect x="17"  y="38" width="5" height="18" rx="2" class="center-lamb" />
+              <rect x="10"  y="50" width="6" height="18" rx="2" class="lamb-leg" />
+              <rect x="20"  y="48" width="6" height="20" rx="2" class="lamb-leg" />
 
-              <!-- Cascos -->
-              <rect x="-15" y="54" width="5" height="3" fill="#3a2a18" opacity="0.7" />
-              <rect x="-6"  y="54" width="5" height="3" fill="#3a2a18" opacity="0.7" />
-              <rect x="8"   y="54" width="5" height="3" fill="#3a2a18" opacity="0.7" />
-              <rect x="17"  y="54" width="5" height="3" fill="#3a2a18" opacity="0.7" />
+              <!-- ─── Cascos ─── -->
+              <rect x="-18" y="66" width="6" height="3" rx="1" class="lamb-hoof" />
+              <rect x="-8"  y="66" width="6" height="3" rx="1" class="lamb-hoof" />
+              <rect x="10"  y="66" width="6" height="3" rx="1" class="lamb-hoof" />
+              <rect x="20"  y="66" width="6" height="3" rx="1" class="lamb-hoof" />
 
-              <!-- Auréola -->
-              <circle cx="-22" cy="-10" r="22"
-                fill="none" stroke="#b8891a" stroke-width="1.2"
-                stroke-dasharray="3,2" opacity="0.85" />
+              <!-- ─── Cabeça ─── -->
+              <ellipse cx="-26" cy="-12" rx="16" ry="20" class="lamb-head" />
 
-              <!-- Estandarte (haste) -->
-              <line x1="2" y1="10" x2="2" y2="-45"
-                stroke="#7a5a0e" stroke-width="2" stroke-linecap="round" />
+              <!-- Topo da cabeça com lã -->
+              <circle cx="-30" cy="-26" r="6" class="lamb-wool" />
+              <circle cx="-22" cy="-28" r="5" class="lamb-wool" />
+              <circle cx="-16" cy="-22" r="5" class="lamb-wool" />
+
+              <!-- Orelha -->
+              <ellipse cx="-38" cy="-22" rx="5" ry="9"
+                transform="rotate(-35 -38 -22)"
+                class="lamb-ear" />
+
+              <!-- Olho -->
+              <circle cx="-22" cy="-14" r="2" class="lamb-eye" />
+              <!-- Brilho no olho -->
+              <circle cx="-21.3" cy="-14.7" r="0.6" fill="#fff" opacity="0.9" />
+
+              <!-- Focinho -->
+              <ellipse cx="-34" cy="-4" rx="4" ry="3" class="lamb-snout" />
+              <!-- Boca (linha sutil) -->
+              <path d="M -36 -1 Q -34 1, -32 -1"
+                fill="none" stroke="#3d2b06" stroke-width="0.6" opacity="0.7" />
+
+              <!-- ═══════════════════════════════════════════════════════
+                   ESTANDARTE DA RESSURREIÇÃO
+                   ═══════════════════════════════════════════════════════ -->
+
+              <!-- Haste -->
+              <line x1="6" y1="14" x2="6" y2="-52" class="lamb-staff" />
+
               <!-- Cruz pequena no topo da haste -->
-              <line x1="-3" y1="-42" x2="7" y2="-42"
-                stroke="#7a5a0e" stroke-width="2" />
-              <!-- Bandeira -->
-              <path d="M 2 -38 L 28 -36 L 24 -28 L 28 -20 L 2 -22 Z"
-                fill="#faf5e8" stroke="#7a5a0e" stroke-width="1" />
-              <!-- Cruz vermelha na bandeira -->
-              <line x1="13" y1="-35" x2="13" y2="-25"
-                stroke="#a01825" stroke-width="1.8" />
-              <line x1="9"  y1="-29" x2="17" y2="-29"
-                stroke="#a01825" stroke-width="1.8" />
-            </g>
-          </g>
+              <line x1="0"  y1="-48" x2="12" y2="-48"
+                stroke="#3d2b06" stroke-width="2" stroke-linecap="round" />
+              <line x1="6"  y1="-54" x2="6"  y2="-44"
+                stroke="#3d2b06" stroke-width="2" stroke-linecap="round" />
 
-          <!-- ─── TOOLTIP-FREE INTERACTIVE TARGETS (rendered last for z-order on top) ─── -->
-          <!-- (preenchido via JS se necessário) -->
+              <!-- Bandeira (com pequena dobra) -->
+              <path
+                d="M 6 -42
+                   L 36 -40
+                   L 32 -32
+                   L 36 -22
+                   L 6 -24
+                   Z"
+                class="lamb-banner"
+              />
+
+              <!-- Cruz vermelha na bandeira -->
+              <line x1="20" y1="-38" x2="20" y2="-28"
+                class="lamb-banner-cross" />
+              <line x1="15" y1="-33" x2="25" y2="-33"
+                class="lamb-banner-cross" />
+
+            </g>
+
+          </g>
 
         </svg>
 
-        <!-- Tooltip (DOM, fora do SVG) -->
-        <div id="tooltip" class="tooltip" role="tooltip" aria-hidden="true">
+        <!-- ┌──────────────────────────────────────────────────────────────┐
+             │  TOOLTIP (fora do SVG, posicionado via JS)                   │
+             └──────────────────────────────────────────────────────────────┘ -->
+        <div
+          id="tooltip"
+          class="tooltip"
+          role="tooltip"
+          aria-hidden="true"
+        >
           <div class="tooltip-title" id="tooltip-title"></div>
           <div class="tooltip-subtitle" id="tooltip-subtitle"></div>
           <div class="tooltip-bar" id="tooltip-bar"></div>
         </div>
+
       </div>
 
-      <!-- ─── LEGENDA ─── -->
-      <div class="legend-bar" role="list" aria-label="Legenda dos tempos litúrgicos">
-        <button class="legend-item" data-season="advento" role="listitem">
+
+      <!-- ┌──────────────────────────────────────────────────────────────┐
+           │  LEGENDA DAS CORES LITÚRGICAS                                │
+           └──────────────────────────────────────────────────────────────┘ -->
+      <div
+        class="legend-bar"
+        role="group"
+        aria-label="Legenda dos tempos litúrgicos"
+      >
+
+        <button
+          class="legend-item"
+          data-season="advento"
+          type="button"
+          aria-label="Filtrar Advento"
+        >
           <span class="legend-dot" style="background: var(--c-advento)"></span>
           Advento
         </button>
-        <button class="legend-item" data-season="natal" role="listitem">
+
+        <button
+          class="legend-item"
+          data-season="natal"
+          type="button"
+          aria-label="Filtrar Natal"
+        >
           <span class="legend-dot bordered" style="background: var(--c-natal)"></span>
           Natal
         </button>
-        <button class="legend-item" data-season="comum" role="listitem">
+
+        <button
+          class="legend-item"
+          data-season="comum"
+          type="button"
+          aria-label="Filtrar Tempo Comum"
+        >
           <span class="legend-dot" style="background: var(--c-comum)"></span>
           Tempo Comum
         </button>
-        <button class="legend-item" data-season="quaresma" role="listitem">
+
+        <button
+          class="legend-item"
+          data-season="quaresma"
+          type="button"
+          aria-label="Filtrar Quaresma"
+        >
           <span class="legend-dot" style="background: var(--c-quaresma)"></span>
           Quaresma
         </button>
-        <button class="legend-item" data-season="triduo" role="listitem">
+
+        <button
+          class="legend-item"
+          data-season="triduo"
+          type="button"
+          aria-label="Filtrar Tríduo Pascal"
+        >
           <span class="legend-dot" style="background: var(--c-triduo)"></span>
           Tríduo Pascal
         </button>
-        <button class="legend-item" data-season="pascoa" role="listitem">
+
+        <button
+          class="legend-item"
+          data-season="pascoa"
+          type="button"
+          aria-label="Filtrar Páscoa"
+        >
           <span class="legend-dot bordered" style="background: var(--c-pascoa)"></span>
           Páscoa
         </button>
-        <button class="legend-item" data-season="rosa" role="listitem">
-          <span class="legend-dot" style="background: var(--c-gaudete)"></span>
+
+        <button
+          class="legend-item"
+          data-season="pentecostes"
+          type="button"
+          aria-label="Filtrar Pentecostes"
+        >
+          <span class="legend-dot" style="background: var(--c-pentecostes)"></span>
+          Pentecostes
+        </button>
+
+        <button
+          class="legend-item"
+          data-season="rosa"
+          type="button"
+          aria-label="Filtrar Domingos Gaudete e Laetare"
+        >
+          <span class="legend-dot" style="background: var(--c-rosa)"></span>
           Gaudete / Laetare
         </button>
+
       </div>
 
     </section>
 
-    <!-- ─── PAINEL DE DETALHES (vazio por enquanto) ─── -->
-    <section class="detail-panel" id="detail-panel" aria-live="polite" aria-atomic="true">
+
+    <!-- ┌──────────────────────────────────────────────────────────────────┐
+         │  PAINEL DE DETALHES                                              │
+         └──────────────────────────────────────────────────────────────────┘ -->
+    <section
+      class="detail-panel"
+      id="detail-panel"
+      aria-live="polite"
+      aria-atomic="true"
+      aria-label="Detalhes da semana ou tempo selecionado"
+    >
       <div class="detail-inner" id="detail-inner">
+
+        <!-- Estado inicial: placeholder -->
         <div class="detail-placeholder">
-          <div class="placeholder-icon">✦ ✦ ✦</div>
-          <p>Clique em uma semana ou tempo litúrgico para ver detalhes</p>
+          <div class="placeholder-icon" aria-hidden="true">✦ ✦ ✦</div>
+          <p>
+            Clique em uma semana ou tempo litúrgico na roda
+            para conhecer seus detalhes
+          </p>
         </div>
+
       </div>
     </section>
 
   </main>
 
-  <!-- ═══════════════════════════════════════════════
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
        FOOTER
-       ═══════════════════════════════════════════════ -->
+       ═══════════════════════════════════════════════════════════════════════ -->
   <footer class="site-footer">
-    <div class="footer-ornament">— ✟ —</div>
-    <p class="footer-text"><em>Ora et Labora</em> · Calendário do Rito Romano</p>
-    <p class="footer-small">Conforme o Missal Romano reformado pelo Concílio Vaticano II</p>
+
+    <div class="footer-ornament" aria-hidden="true">— ✟ —</div>
+
+    <p class="footer-text">
+      <em>Ora et Labora</em> &nbsp;·&nbsp; Calendário do Rito Romano
+    </p>
+
+    <p class="footer-small">
+      Conforme o Missal Romano reformado pelo Concílio Vaticano II
+    </p>
+
   </footer>
 
-  <!-- ═══════════════════════════════════════════════
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
        SCRIPTS
-       ═══════════════════════════════════════════════ -->
+       ═══════════════════════════════════════════════════════════════════════ -->
   <script src="calendario.js"></script>
+
 </body>
 </html>
