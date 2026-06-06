@@ -39,18 +39,26 @@
     /* ============================= */
     /* NAVEGAÇÃO SUPERIOR FIXA       */
     /* ============================= */
-    #nav-principal {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        z-index: 1000;
-        background: linear-gradient(180deg, #1a0505 0%, #2a0808 100%);
-        border-bottom: 1px solid rgba(212, 168, 67, 0.3);
-        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
-        padding: 14px 0;
-    }
+   #nav-principal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background: linear-gradient(180deg, #1a0505 0%, #2a0808 100%);
+    border-bottom: 1px solid rgba(212, 168, 67, 0.3);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+    padding: 14px 0;
+    
+    /* >>> EFEITO AUTO-HIDE <<< */
+    transform: translateY(0);
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
 
+/* Quando esconde */
+#nav-principal.nav-escondida {
+    transform: translateY(-100%);
+}
     .nav-container {
         max-width: 1400px;
         margin: 0 auto;
@@ -3449,7 +3457,36 @@
     navToggle.addEventListener('click', abrirSidebar);
     sidebarFechar.addEventListener('click', fecharSidebar);
     sidebarOverlay.addEventListener('click', fecharSidebar);
+// ========================================
+// NAVBAR AUTO-HIDE (esconde ao rolar pra baixo, mostra ao rolar pra cima)
+// ========================================
+const navPrincipal = document.getElementById('nav-principal');
+let ultimoScroll = 0;
+const limiarScroll = 80; // só começa a esconder depois de 80px do topo
 
+window.addEventListener('scroll', () => {
+    const scrollAtual = window.pageYOffset || document.documentElement.scrollTop;
+
+    // Se a sidebar estiver aberta, não esconde
+    if (sidebar.classList.contains('ativo')) return;
+
+    // No topo da página, sempre mostra
+    if (scrollAtual <= limiarScroll) {
+        navPrincipal.classList.remove('nav-escondida');
+        ultimoScroll = scrollAtual;
+        return;
+    }
+
+    if (scrollAtual > ultimoScroll) {
+        // Rolando para BAIXO → esconde
+        navPrincipal.classList.add('nav-escondida');
+    } else {
+        // Rolando para CIMA → mostra
+        navPrincipal.classList.remove('nav-escondida');
+    }
+
+    ultimoScroll = scrollAtual;
+}, { passive: true });
     // Fechar ao clicar em um link da sidebar
     document.querySelectorAll('.sidebar-links a').forEach(link => {
         link.addEventListener('click', fecharSidebar);
