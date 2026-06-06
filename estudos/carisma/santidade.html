@@ -132,7 +132,17 @@
         transition: var(--transicao);
         padding: 1rem 0;
     }
+    /* >>> AUTO-HIDE <<< */
+    transform: translateY(0);
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                background 0.3s ease,
+                box-shadow 0.3s ease;
+}
 
+/* Estado escondido */
+#nav-principal.nav-escondida {
+    transform: translateY(-100%);
+}
     #nav-principal.nav-scrolled {
         background: rgba(18, 18, 32, 0.97);
         backdrop-filter: blur(20px);
@@ -4657,115 +4667,156 @@
     <!-- ============================= -->
     <!-- SCRIPTS -->
     <!-- ============================= -->
-    <script>
-        // Menu mobile toggle
-              // ============================
-        // SIDEBAR LATERAL
-        // ============================
-        const navToggle = document.getElementById('navToggle');
-        const sidebar = document.getElementById('sidebar');
-        const sidebarOverlay = document.getElementById('sidebarOverlay');
-        const sidebarFechar = document.getElementById('sidebarFechar');
-        const body = document.body;
+<script>
+    // ============================
+    // SIDEBAR LATERAL
+    // ============================
+    const navToggle = document.getElementById('navToggle');
+    const sidebar = document.getElementById('sidebar');
+    const sidebarOverlay = document.getElementById('sidebarOverlay');
+    const sidebarFechar = document.getElementById('sidebarFechar');
+    const body = document.body;
 
-        function abrirSidebar() {
-            sidebar.classList.add('ativa');
-            sidebarOverlay.classList.add('ativo');
-            body.classList.add('sidebar-aberta');
+    function abrirSidebar() {
+        sidebar.classList.add('ativa');
+        sidebarOverlay.classList.add('ativo');
+        body.classList.add('sidebar-aberta');
+    }
+
+    function fecharSidebar() {
+        sidebar.classList.remove('ativa');
+        sidebarOverlay.classList.remove('ativo');
+        body.classList.remove('sidebar-aberta');
+    }
+
+    navToggle.addEventListener('click', abrirSidebar);
+    sidebarFechar.addEventListener('click', fecharSidebar);
+    sidebarOverlay.addEventListener('click', fecharSidebar);
+
+    // Fechar ao clicar em link da sidebar
+    document.querySelectorAll('.sidebar-links a').forEach(link => {
+        link.addEventListener('click', fecharSidebar);
+    });
+
+    // Fechar com tecla ESC
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && sidebar.classList.contains('ativa')) {
+            fecharSidebar();
+        }
+    });
+
+    // ============================
+    // NAVBAR AUTO-HIDE
+    // (esconde ao rolar pra baixo, mostra ao rolar pra cima)
+    // ============================
+    const navPrincipal = document.getElementById('nav-principal');
+    let ultimoScroll = 0;
+    const limiarScroll = 80;
+
+    // ============================
+    // SCROLL: navegação ativa + navbar bg + botão topo + auto-hide
+    // ============================
+    const sections = document.querySelectorAll('section[id]');
+
+    window.addEventListener('scroll', () => {
+        const scrollAtual = window.pageYOffset || document.documentElement.scrollTop;
+
+        // -- Seção atual --
+        let current = '';
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop - 120;
+            if (scrollAtual >= sectionTop) {
+                current = section.getAttribute('id');
+            }
+        });
+
+        // -- Navbar com fundo ao rolar --
+        if (scrollAtual > 100) {
+            navPrincipal.classList.add('nav-scrolled');
+        } else {
+            navPrincipal.classList.remove('nav-scrolled');
         }
 
-        function fecharSidebar() {
-            sidebar.classList.remove('ativa');
-            sidebarOverlay.classList.remove('ativo');
-            body.classList.remove('sidebar-aberta');
+        // -- Botão voltar ao topo --
+        const btnTopo = document.getElementById('btnTopo');
+        if (scrollAtual > 600) {
+            btnTopo.classList.add('btn-topo-visivel');
+        } else {
+            btnTopo.classList.remove('btn-topo-visivel');
         }
 
-        navToggle.addEventListener('click', abrirSidebar);
-        sidebarFechar.addEventListener('click', fecharSidebar);
-        sidebarOverlay.addEventListener('click', fecharSidebar);
+        // -- Navbar AUTO-HIDE --
+        // Não esconde se a sidebar estiver aberta
+        if (sidebar.classList.contains('ativa')) {
+            ultimoScroll = scrollAtual;
+            return;
+        }
 
-        // Fechar ao clicar em link da sidebar
-        document.querySelectorAll('.sidebar-links a').forEach(link => {
-            link.addEventListener('click', fecharSidebar);
-        });
+        // No topo da página, sempre mostra
+        if (scrollAtual <= limiarScroll) {
+            navPrincipal.classList.remove('nav-escondida');
+            ultimoScroll = scrollAtual;
+            return;
+        }
 
-        // Fechar com tecla ESC
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && sidebar.classList.contains('ativa')) {
-                fecharSidebar();
+        if (scrollAtual > ultimoScroll) {
+            // Rolando para BAIXO → esconde
+            navPrincipal.classList.add('nav-escondida');
+        } else {
+            // Rolando para CIMA → mostra
+            navPrincipal.classList.remove('nav-escondida');
+        }
+
+        ultimoScroll = scrollAtual;
+    }, { passive: true });
+
+    // ============================
+    // BOTÃO VOLTAR AO TOPO
+    // ============================
+    document.getElementById('btnTopo').addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // ============================
+    // SCROLL SUAVE
+    // ============================
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                const offsetTop = target.offsetTop - 80;
+                window.scrollTo({
+                    top: offsetTop,
+                    behavior: 'smooth'
+                });
             }
         });
-        // Navegação ativa ao rolar
-        const sections = document.querySelectorAll('section[id]');
-      
+    });
 
-        window.addEventListener('scroll', () => {
-            let current = '';
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop - 120;
-                if (pageYOffset >= sectionTop) {
-                    current = section.getAttribute('id');
-                }
-            });
+    // ============================
+    // ANIMAÇÃO DE ENTRADA AO ROLAR
+    // ============================
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
 
-        
-
-            // Navbar com fundo ao rolar
-            const nav = document.getElementById('nav-principal');
-            if (window.scrollY > 100) {
-                nav.classList.add('nav-scrolled');
-            } else {
-                nav.classList.remove('nav-scrolled');
-            }
-
-            // Botão voltar ao topo
-            const btnTopo = document.getElementById('btnTopo');
-            if (window.scrollY > 600) {
-                btnTopo.classList.add('btn-topo-visivel');
-            } else {
-                btnTopo.classList.remove('btn-topo-visivel');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visivel');
             }
         });
+    }, observerOptions);
 
-        // Botão voltar ao topo
-        document.getElementById('btnTopo').addEventListener('click', () => {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-
-        // Scroll suave
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    const offsetTop = target.offsetTop - 80;
-                    window.scrollTo({
-                        top: offsetTop,
-                        behavior: 'smooth'
-                    });
-                }
-            });
-        });
-
-        // Animação de entrada ao rolar
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visivel');
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('.conteudo-texto, .dimensao-item, .profeta-card, .padre-card, .doutor-card, .santo-card, .via-card, .objecao-card, .tese-item, .etapa-card, .timeline-item, .conceito-card, .estado-card, .maria-card, .sacramento-card, .caract-card, .trindade-card, .virtude-card, .filosofo-card, .dimensao-card, .distincao-item').forEach(el => {
-            el.classList.add('animavel');
-            observer.observe(el);
-        });
-    </script>
+    document.querySelectorAll(
+        '.conteudo-texto, .dimensao-item, .profeta-card, .padre-card, .doutor-card, .santo-card, .via-card, .objecao-card, .tese-item, .etapa-card, .timeline-item, .conceito-card, .estado-card, .maria-card, .sacramento-card, .caract-card, .trindade-card, .virtude-card, .filosofo-card, .dimensao-card, .distincao-item'
+    ).forEach(el => {
+        el.classList.add('animavel');
+        observer.observe(el);
+    });
+</script>
 
 </body>
 </html>
