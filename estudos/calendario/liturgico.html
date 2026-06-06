@@ -16,14 +16,20 @@
 <div id="scroll-bar"></div>
 
 <!-- ══════════════════════════════════════
+     TOOLTIP DA RODA (posicionado pelo JS)
+══════════════════════════════════════ -->
+<div class="roda-tooltip" id="roda-tooltip" aria-hidden="true"></div>
+
+<!-- ══════════════════════════════════════
      HEADER
 ══════════════════════════════════════ -->
 <header class="topo" role="banner">
     <div class="topo-esq">
         <a href="#" class="btn-nav" aria-label="Voltar">
-            <svg width="10" height="10" viewBox="0 0 24 24" fill="none"
-                 stroke="currentColor" stroke-width="2"
-                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <svg width="10" height="10" viewBox="0 0 24 24"
+                 fill="none" stroke="currentColor"
+                 stroke-width="2" stroke-linecap="round"
+                 stroke-linejoin="round" aria-hidden="true">
                 <path d="M19 12H5M12 19l-7-7 7-7"/>
             </svg>
             Voltar
@@ -44,7 +50,7 @@
      HERO
 ══════════════════════════════════════ -->
 <section class="hero" aria-label="Introdução ao Ano Litúrgico">
-    <div class="hero-rays" aria-hidden="true"></div>
+    <div class="hero-rays"        aria-hidden="true"></div>
     <div class="hero-cross-deco hero-cross-1" aria-hidden="true"></div>
     <div class="hero-cross-deco hero-cross-2" aria-hidden="true"></div>
 
@@ -56,8 +62,12 @@
             tempo sagrado em que a Igreja vive o mistério de Cristo.
         </p>
         <div class="hero-cta">
-            <a href="#roda" class="btn-primario">Contemplar a Roda</a>
-            <a href="#detalhes" class="btn-secundario">Ver os Tempos</a>
+            <a href="#roda" class="btn-primario">
+                Contemplar a Roda
+            </a>
+            <a href="#detalhes" class="btn-secundario">
+                Ver os Tempos
+            </a>
         </div>
     </div>
 </section>
@@ -68,38 +78,59 @@
 <nav class="legenda-section" aria-label="Tempos litúrgicos">
     <div class="legenda" role="list">
 
-        <div class="leg-item" role="listitem" data-tempo="advento" tabindex="0">
-            <span class="leg-cor" style="background:#6b2fa0"></span>
+        <div class="leg-item" role="listitem"
+             data-tempo="advento" tabindex="0"
+             style="--cor-item: var(--cor-advento)">
+            <span class="leg-cor"
+                  style="background:var(--cor-advento)"></span>
             Advento
         </div>
 
-        <div class="leg-item" role="listitem" data-tempo="natal" tabindex="0">
-            <span class="leg-cor" style="background:#c8980a"></span>
+        <div class="leg-item" role="listitem"
+             data-tempo="natal" tabindex="0"
+             style="--cor-item: var(--cor-natal)">
+            <span class="leg-cor"
+                  style="background:var(--cor-natal)"></span>
             Natal
         </div>
 
-        <div class="leg-item" role="listitem" data-tempo="comum1" tabindex="0">
-            <span class="leg-cor" style="background:#2468b8"></span>
+        <div class="leg-item" role="listitem"
+             data-tempo="comum1" tabindex="0"
+             style="--cor-item: var(--cor-comum1)">
+            <span class="leg-cor"
+                  style="background:var(--cor-comum1)"></span>
             Tempo Comum I
         </div>
 
-        <div class="leg-item" role="listitem" data-tempo="quaresma" tabindex="0">
-            <span class="leg-cor" style="background:#8b5a2b"></span>
+        <div class="leg-item" role="listitem"
+             data-tempo="quaresma" tabindex="0"
+             style="--cor-item: var(--cor-quaresma)">
+            <span class="leg-cor"
+                  style="background:var(--cor-quaresma)"></span>
             Quaresma
         </div>
 
-        <div class="leg-item" role="listitem" data-tempo="triduo" tabindex="0">
-            <span class="leg-cor" style="background:#1a6b35"></span>
+        <div class="leg-item" role="listitem"
+             data-tempo="triduo" tabindex="0"
+             style="--cor-item: var(--cor-triduo)">
+            <span class="leg-cor"
+                  style="background:var(--cor-triduo)"></span>
             Tríduo Pascal
         </div>
 
-        <div class="leg-item" role="listitem" data-tempo="pascal" tabindex="0">
-            <span class="leg-cor" style="background:#2e9e4a"></span>
+        <div class="leg-item" role="listitem"
+             data-tempo="pascal" tabindex="0"
+             style="--cor-item: var(--cor-pascal)">
+            <span class="leg-cor"
+                  style="background:var(--cor-pascal)"></span>
             Tempo Pascal
         </div>
 
-        <div class="leg-item" role="listitem" data-tempo="comum2" tabindex="0">
-            <span class="leg-cor" style="background:#2468b8"></span>
+        <div class="leg-item" role="listitem"
+             data-tempo="comum2" tabindex="0"
+             style="--cor-item: var(--cor-comum2)">
+            <span class="leg-cor"
+                  style="background:var(--cor-comum2)"></span>
             Tempo Comum II
         </div>
 
@@ -109,23 +140,111 @@
 <!-- ══════════════════════════════════════
      RODA LITÚRGICA
 ══════════════════════════════════════ -->
-<section id="roda" class="roda-section" aria-label="Roda do Ano Litúrgico">
+<section id="roda" class="roda-section"
+         aria-label="Roda do Ano Litúrgico">
 
+    <!-- ── Coluna texto ── -->
     <div class="roda-texto anim-entrada">
-        <span class="roda-kicker">O Tempo Sagrado</span>
-        <h2 class="roda-heading">A Roda do<br>Ano Litúrgico</h2>
-        <p class="roda-p">
-            A Igreja organiza o tempo em torno do mistério pascal de Cristo —
-            sua Paixão, Morte e Ressurreição. Cada tempo litúrgico tem cor,
-            tom espiritual e graça própria.
-        </p>
-        <p class="roda-p">
-            Selecione um tempo na roda para contemplar suas semanas
-            e receber uma reflexão gerada especialmente para o momento.
-        </p>
-        <div class="roda-hint">Clique nos arcos para explorar</div>
-    </div>
 
+        <span class="roda-kicker">O Tempo Sagrado</span>
+
+        <h2 class="roda-heading">
+            A Roda do<br>Ano Litúrgico
+        </h2>
+
+        <p class="roda-p">
+            A Igreja organiza o tempo em torno do mistério pascal
+            de Cristo — sua Paixão, Morte e Ressurreição. Cada
+            tempo litúrgico tem cor, tom espiritual e graça própria.
+        </p>
+        <p class="roda-p">
+            Selecione um tempo na roda ao lado para contemplar
+            suas semanas e receber uma reflexão gerada para
+            o momento presente.
+        </p>
+
+        <!-- Mini-cards dos 7 tempos -->
+        <div class="roda-info-grid" role="list">
+
+            <div class="roda-info-item" role="listitem"
+                 data-tempo="advento" tabindex="0">
+                <span class="roda-info-dot"
+                      style="background:var(--cor-advento)"></span>
+                <span>
+                    <span class="roda-info-nome">Advento</span>
+                    <span class="roda-info-dur">4 semanas</span>
+                </span>
+            </div>
+
+            <div class="roda-info-item" role="listitem"
+                 data-tempo="natal" tabindex="0">
+                <span class="roda-info-dot"
+                      style="background:var(--cor-natal)"></span>
+                <span>
+                    <span class="roda-info-nome">Natal</span>
+                    <span class="roda-info-dur">~6 semanas</span>
+                </span>
+            </div>
+
+            <div class="roda-info-item" role="listitem"
+                 data-tempo="comum1" tabindex="0">
+                <span class="roda-info-dot"
+                      style="background:var(--cor-comum1)"></span>
+                <span>
+                    <span class="roda-info-nome">Comum I</span>
+                    <span class="roda-info-dur">7 semanas</span>
+                </span>
+            </div>
+
+            <div class="roda-info-item" role="listitem"
+                 data-tempo="quaresma" tabindex="0">
+                <span class="roda-info-dot"
+                      style="background:var(--cor-quaresma)"></span>
+                <span>
+                    <span class="roda-info-nome">Quaresma</span>
+                    <span class="roda-info-dur">40 dias</span>
+                </span>
+            </div>
+
+            <div class="roda-info-item" role="listitem"
+                 data-tempo="triduo" tabindex="0">
+                <span class="roda-info-dot"
+                      style="background:var(--cor-triduo)"></span>
+                <span>
+                    <span class="roda-info-nome">Tríduo</span>
+                    <span class="roda-info-dur">3 dias</span>
+                </span>
+            </div>
+
+            <div class="roda-info-item" role="listitem"
+                 data-tempo="pascal" tabindex="0">
+                <span class="roda-info-dot"
+                      style="background:var(--cor-pascal)"></span>
+                <span>
+                    <span class="roda-info-nome">Pascal</span>
+                    <span class="roda-info-dur">50 dias</span>
+                </span>
+            </div>
+
+            <div class="roda-info-item" role="listitem"
+                 data-tempo="comum2" tabindex="0">
+                <span class="roda-info-dot"
+                      style="background:var(--cor-comum2)"></span>
+                <span>
+                    <span class="roda-info-nome">Comum II</span>
+                    <span class="roda-info-dur">26 semanas</span>
+                </span>
+            </div>
+
+        </div><!-- /.roda-info-grid -->
+
+        <div class="roda-hint">
+            Clique nos arcos para explorar cada tempo
+        </div>
+
+    </div><!-- /.roda-texto -->
+
+    <!-- ── Coluna da roda ── -->
     <div class="roda-wrap anim-entrada">
         <div class="roda-outer">
             <svg id="roda-svg"
@@ -137,13 +256,85 @@
 
                 <defs>
 
-                    <!-- ── Sombra interna do centro ── -->
-                    <filter id="f-centro-shadow"
-                            x="-10%" y="-10%" width="120%" height="120%">
-                        <feGaussianBlur in="SourceAlpha" stdDeviation="6" result="blur"/>
-                        <feOffset dx="0" dy="3" result="offset"/>
+                    <!-- Cores sólidas dos tempos (sem gradiente) -->
+                    <style>
+                        #arco-advento  { fill: var(--cor-advento); }
+                        #arco-natal    { fill: var(--cor-natal); }
+                        #arco-comum1   { fill: var(--cor-comum1); }
+                        #arco-quaresma { fill: var(--cor-quaresma); }
+                        #arco-triduo   { fill: var(--cor-triduo); }
+                        #arco-pascal   { fill: var(--cor-pascal); }
+                        #arco-comum2   { fill: var(--cor-comum2); }
+                    </style>
+
+                    <!-- Gradientes dos tempos -->
+                    <linearGradient id="g-advento"
+                                    x1="0%" y1="0%"
+                                    x2="100%" y2="100%">
+                        <stop offset="0%"   stop-color="#9b4dca"/>
+                        <stop offset="100%" stop-color="#5a1e8a"/>
+                    </linearGradient>
+
+                    <linearGradient id="g-natal"
+                                    x1="0%" y1="0%"
+                                    x2="100%" y2="100%">
+                        <stop offset="0%"   stop-color="#e8c030"/>
+                        <stop offset="100%" stop-color="#a07808"/>
+                    </linearGradient>
+
+                    <linearGradient id="g-comum1"
+                                    x1="0%" y1="0%"
+                                    x2="100%" y2="100%">
+                        <stop offset="0%"   stop-color="#4a90e0"/>
+                        <stop offset="100%" stop-color="#1a58a8"/>
+                    </linearGradient>
+
+                    <linearGradient id="g-quaresma"
+                                    x1="0%" y1="0%"
+                                    x2="100%" y2="100%">
+                        <stop offset="0%"   stop-color="#b07850"/>
+                        <stop offset="100%" stop-color="#6a3e20"/>
+                    </linearGradient>
+
+                    <linearGradient id="g-triduo"
+                                    x1="0%" y1="0%"
+                                    x2="100%" y2="100%">
+                        <stop offset="0%"   stop-color="#2a9050"/>
+                        <stop offset="100%" stop-color="#145828"/>
+                    </linearGradient>
+
+                    <linearGradient id="g-pascal"
+                                    x1="0%" y1="0%"
+                                    x2="100%" y2="100%">
+                        <stop offset="0%"   stop-color="#50c870"/>
+                        <stop offset="100%" stop-color="#1e8038"/>
+                    </linearGradient>
+
+                    <linearGradient id="g-comum2"
+                                    x1="0%" y1="0%"
+                                    x2="100%" y2="100%">
+                        <stop offset="0%"   stop-color="#4a90e0"/>
+                        <stop offset="100%" stop-color="#1a58a8"/>
+                    </linearGradient>
+
+                    <!-- Centro: branco/creme limpo -->
+                    <radialGradient id="g-centro"
+                                    cx="42%" cy="38%" r="65%">
+                        <stop offset="0%"   stop-color="#ffffff"/>
+                        <stop offset="70%"  stop-color="#f8f7f4"/>
+                        <stop offset="100%" stop-color="#f0ede6"/>
+                    </radialGradient>
+
+                    <!-- Sombra interna do centro -->
+                    <filter id="f-centro"
+                            x="-8%" y="-8%"
+                            width="116%" height="116%">
+                        <feGaussianBlur in="SourceAlpha"
+                                        stdDeviation="5"
+                                        result="blur"/>
+                        <feOffset dx="0" dy="2"/>
                         <feComponentTransfer>
-                            <feFuncA type="linear" slope="0.5"/>
+                            <feFuncA type="linear" slope="0.12"/>
                         </feComponentTransfer>
                         <feMerge>
                             <feMergeNode/>
@@ -151,186 +342,170 @@
                         </feMerge>
                     </filter>
 
-                    <!-- ── Brilho da cruz ── -->
+                    <!-- Brilho suave da cruz -->
                     <filter id="f-cruz"
-                            x="-60%" y="-60%" width="220%" height="220%">
-                        <feGaussianBlur stdDeviation="2" result="blur"/>
+                            x="-80%" y="-80%"
+                            width="260%" height="260%">
+                        <feGaussianBlur stdDeviation="1.8"
+                                        result="blur"/>
                         <feMerge>
                             <feMergeNode in="blur"/>
                             <feMergeNode in="SourceGraphic"/>
                         </feMerge>
                     </filter>
 
-                    <!-- ── Gradientes dos tempos (lineares, cores vivas) ── -->
-                    <linearGradient id="g-advento" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%"   stop-color="#9b4dca"/>
-                        <stop offset="100%" stop-color="#5a1e8a"/>
-                    </linearGradient>
-
-                    <linearGradient id="g-natal" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%"   stop-color="#e8b820"/>
-                        <stop offset="100%" stop-color="#a87a08"/>
-                    </linearGradient>
-
-                    <linearGradient id="g-comum1" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%"   stop-color="#4a90e0"/>
-                        <stop offset="100%" stop-color="#1a58a8"/>
-                    </linearGradient>
-
-                    <linearGradient id="g-quaresma" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%"   stop-color="#a87050"/>
-                        <stop offset="100%" stop-color="#6a3e20"/>
-                    </linearGradient>
-
-                    <linearGradient id="g-triduo" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%"   stop-color="#28904a"/>
-                        <stop offset="100%" stop-color="#145a28"/>
-                    </linearGradient>
-
-                    <linearGradient id="g-pascal" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%"   stop-color="#50c870"/>
-                        <stop offset="100%" stop-color="#1e8038"/>
-                    </linearGradient>
-
-                    <linearGradient id="g-comum2" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%"   stop-color="#4a90e0"/>
-                        <stop offset="100%" stop-color="#1a58a8"/>
-                    </linearGradient>
-
-                    <!-- ── Centro: fundo escuro elegante ── -->
-                    <radialGradient id="g-centro" cx="40%" cy="35%" r="65%">
-                        <stop offset="0%"   stop-color="#2a2830"/>
-                        <stop offset="60%"  stop-color="#161420"/>
-                        <stop offset="100%" stop-color="#0a0910"/>
-                    </radialGradient>
-
-                    <!-- ── Anel dourado do centro ── -->
-                    <radialGradient id="g-anel-ouro" cx="50%" cy="50%" r="50%">
-                        <stop offset="82%" stop-color="transparent"/>
-                        <stop offset="91%" stop-color="rgba(212,168,60,0.6)"/>
-                        <stop offset="100%" stop-color="rgba(212,168,60,0.15)"/>
-                    </radialGradient>
-
-                    <!-- ── Máscara do anel externo ── -->
-                    <radialGradient id="g-anel-externo" cx="50%" cy="50%" r="50%">
-                        <stop offset="93%" stop-color="transparent"/>
-                        <stop offset="96%" stop-color="rgba(255,255,255,0.12)"/>
-                        <stop offset="100%" stop-color="transparent"/>
-                    </radialGradient>
+                    <!-- Clip do centro para não vazar -->
+                    <clipPath id="clip-centro">
+                        <circle cx="300" cy="300" r="126"/>
+                    </clipPath>
 
                 </defs>
 
-                <!-- ── Anel externo decorativo ── -->
-                <circle cx="300" cy="300" r="292"
+                <!-- ════════════════════════════════
+                     ANEL EXTERNO DECORATIVO
+                ════════════════════════════════ -->
+                <circle cx="300" cy="300" r="295"
                         fill="none"
-                        stroke="rgba(0,0,0,0.08)"
-                        stroke-width="1.5"/>
-                <circle cx="300" cy="300" r="285"
+                        stroke="rgba(0,0,0,0.06)"
+                        stroke-width="1"/>
+                <circle cx="300" cy="300" r="288"
                         fill="none"
-                        stroke="rgba(0,0,0,0.05)"
-                        stroke-width="0.8"/>
+                        stroke="rgba(0,0,0,0.04)"
+                        stroke-width="0.5"/>
 
-                <!-- ── ARCOS GERADOS PELO JS ── -->
+                <!-- ════════════════════════════════
+                     ARCOS (gerados pelo JS)
+                ════════════════════════════════ -->
                 <g id="g-arcos"></g>
 
-                <!-- ── Anel separador interno (entre arcos e centro) ── -->
+                <!-- ════════════════════════════════
+                     ANEL SEPARADOR (arcos → centro)
+                ════════════════════════════════ -->
                 <circle cx="300" cy="300" r="263"
                         fill="none"
-                        stroke="rgba(255,255,255,0.25)"
-                        stroke-width="1.5"/>
+                        stroke="rgba(255,255,255,0.6)"
+                        stroke-width="2"/>
                 <circle cx="300" cy="300" r="260"
                         fill="none"
-                        stroke="rgba(0,0,0,0.18)"
+                        stroke="rgba(0,0,0,0.1)"
                         stroke-width="1"/>
 
-                <!-- ── CENTRO ── -->
+                <!-- ════════════════════════════════
+                     CENTRO — fundo branco/creme
+                ════════════════════════════════ -->
                 <circle cx="300" cy="300" r="128"
                         fill="url(#g-centro)"
-                        filter="url(#f-centro-shadow)"/>
+                        filter="url(#f-centro)"/>
 
-                <!-- Anel dourado ao redor do centro -->
-                <circle cx="300" cy="300" r="128"
-                        fill="url(#g-anel-ouro)"/>
-
-                <!-- Borda dourada nítida -->
+                <!-- Borda interna sutil -->
                 <circle cx="300" cy="300" r="128"
                         fill="none"
-                        stroke="rgba(212,168,60,0.55)"
-                        stroke-width="1.2"/>
+                        stroke="rgba(0,0,0,0.08)"
+                        stroke-width="1"/>
                 <circle cx="300" cy="300" r="124"
                         fill="none"
-                        stroke="rgba(212,168,60,0.18)"
-                        stroke-width="0.6"/>
+                        stroke="rgba(0,0,0,0.04)"
+                        stroke-width="0.5"/>
 
-                <!-- ── TEXTOS acima da cruz ── -->
-                <text x="300" y="250"
-                      text-anchor="middle"
-                      class="centro-tex-ano">ANNO DOMINI</text>
-                <text x="300" y="268"
-                      text-anchor="middle"
-                      class="centro-tex-liturgico">LITÚRGICO</text>
-
-                <!-- ── CRUZ CENTRAL ── -->
+                <!-- ════════════════════════════════
+                     CRUZ CENTRAL DOURADA
+                     (estilo relicário, sem textos)
+                ════════════════════════════════ -->
                 <g transform="translate(300,300)"
                    filter="url(#f-cruz)">
 
-                    <!-- Halo suave -->
-                    <circle cx="0" cy="0" r="38"
-                            fill="rgba(230,190,80,0.07)"/>
+                    <!-- Halo levíssimo -->
+                    <circle cx="0" cy="0" r="42"
+                            fill="rgba(180,140,40,0.06)"/>
 
                     <!-- Braço vertical -->
-                    <rect x="-2" y="-38" width="4" height="76"
+                    <rect x="-3.5" y="-44"
+                          width="7" height="88"
+                          rx="2"
+                          fill="#c8900a"/>
+                    <!-- Highlight vertical -->
+                    <rect x="-1.5" y="-44"
+                          width="3" height="88"
                           rx="1.5"
-                          fill="#d4a830"/>
+                          fill="rgba(255,220,100,0.45)"/>
 
                     <!-- Braço horizontal -->
-                    <rect x="-38" y="-2" width="76" height="4"
+                    <rect x="-44" y="-3.5"
+                          width="88" height="7"
+                          rx="2"
+                          fill="#c8900a"/>
+                    <!-- Highlight horizontal -->
+                    <rect x="-44" y="-1.5"
+                          width="88" height="3"
                           rx="1.5"
-                          fill="#d4a830"/>
+                          fill="rgba(255,220,100,0.45)"/>
 
-                    <!-- Ponto central -->
-                    <circle cx="0" cy="0" r="5.5"
-                            fill="#e8c050"/>
-                    <circle cx="0" cy="0" r="3"
-                            fill="#a87820"/>
+                    <!-- Medalhão central -->
+                    <circle cx="0" cy="0" r="9"
+                            fill="#c8900a"/>
+                    <circle cx="0" cy="0" r="7"
+                            fill="#e8b030"/>
+                    <circle cx="0" cy="0" r="4.5"
+                            fill="#c8900a"/>
+                    <circle cx="0" cy="0" r="2.5"
+                            fill="#f0c840"/>
 
                     <!-- Anéis decorativos -->
-                    <circle cx="0" cy="0" r="10"
+                    <circle cx="0" cy="0" r="13"
                             fill="none"
-                            stroke="rgba(212,168,60,0.45)"
-                            stroke-width="0.7"/>
-                    <circle cx="0" cy="0" r="14"
+                            stroke="#c8900a"
+                            stroke-width="0.8"
+                            opacity="0.5"/>
+                    <circle cx="0" cy="0" r="18"
                             fill="none"
-                            stroke="rgba(212,168,60,0.22)"
-                            stroke-width="0.5"/>
+                            stroke="#c8900a"
+                            stroke-width="0.4"
+                            opacity="0.25"/>
 
-                    <!-- Pontas nas extremidades -->
-                    <circle cx="0"   cy="-38" r="2" fill="#e8c050"/>
-                    <circle cx="0"   cy="38"  r="2" fill="#e8c050"/>
-                    <circle cx="-38" cy="0"   r="2" fill="#e8c050"/>
-                    <circle cx="38"  cy="0"   r="2" fill="#e8c050"/>
-                </g>
+                    <!-- Ornamentos nas extremidades -->
+                    <circle cx="0"   cy="-44" r="3"
+                            fill="#e8b030"/>
+                    <circle cx="0"   cy="-44" r="1.5"
+                            fill="#c8900a"/>
+                    <circle cx="0"   cy="44"  r="3"
+                            fill="#e8b030"/>
+                    <circle cx="0"   cy="44"  r="1.5"
+                            fill="#c8900a"/>
+                    <circle cx="-44" cy="0"   r="3"
+                            fill="#e8b030"/>
+                    <circle cx="-44" cy="0"   r="1.5"
+                            fill="#c8900a"/>
+                    <circle cx="44"  cy="0"   r="3"
+                            fill="#e8b030"/>
+                    <circle cx="44"  cy="0"   r="1.5"
+                            fill="#c8900a"/>
 
-                <!-- ── TEXTO abaixo da cruz ── -->
-                <text x="300" y="348"
-                      text-anchor="middle"
-                      class="centro-tex-extra">· MMXXV ·</text>
+                    <!-- Texto "ANO LITÚRGICO" curvado no topo do centro -->
+                    <text text-anchor="middle"
+                          y="-58"
+                          class="centro-tex-ano">
+                        ANO LITÚRGICO
+                    </text>
 
-                <!-- ── Pontos nos eixos cardeais ── -->
-                <circle cx="300" cy="170" r="3"
-                        fill="rgba(255,255,255,0.2)"/>
-                <circle cx="300" cy="430" r="3"
-                        fill="rgba(255,255,255,0.2)"/>
-                <circle cx="170" cy="300" r="3"
-                        fill="rgba(255,255,255,0.2)"/>
-                <circle cx="430" cy="300" r="3"
-                        fill="rgba(255,255,255,0.2)"/>
+                </g><!-- /grupo cruz -->
+
+                <!-- ════════════════════════════════
+                     PONTOS NOS EIXOS CARDEAIS
+                ════════════════════════════════ -->
+                <circle cx="300" cy="168" r="3"
+                        fill="rgba(200,144,10,0.35)"/>
+                <circle cx="300" cy="432" r="3"
+                        fill="rgba(200,144,10,0.35)"/>
+                <circle cx="168" cy="300" r="3"
+                        fill="rgba(200,144,10,0.35)"/>
+                <circle cx="432" cy="300" r="3"
+                        fill="rgba(200,144,10,0.35)"/>
 
             </svg>
         </div><!-- /.roda-outer -->
     </div><!-- /.roda-wrap -->
 
-</section>
+</section><!-- /#roda -->
 
 <!-- ══════════════════════════════════════
      DETALHES / SEMANAS / REFLEXÃO
@@ -344,19 +519,29 @@
 
         <!-- Estado vazio -->
         <div id="estado-vazio" class="detalhes-vazio">
-            <span class="detalhes-vazio-ornamento" aria-hidden="true">✦</span>
+            <span class="detalhes-vazio-ornamento"
+                  aria-hidden="true">✦</span>
             <p>Selecione um tempo litúrgico na roda acima</p>
         </div>
 
         <!-- Cabeçalho do tempo selecionado -->
         <div id="tempo-cabecalho" class="tempo-cabecalho">
 
-            <div class="tempo-header-grid">
-                <div id="tempo-cor-bar" class="tempo-cor-bar"></div>
-                <div>
-                    <p id="tempo-periodo"   class="tempo-periodo"></p>
-                    <h2 id="tempo-nome"     class="tempo-nome"></h2>
-                    <p id="tempo-descricao" class="tempo-descricao"></p>
+            <!-- Card com faixa colorida -->
+            <div class="tempo-header-card">
+                <div id="tempo-header-faixa"
+                     class="tempo-header-faixa"></div>
+                <div class="tempo-header-body">
+                    <div id="tempo-cor-bar"
+                         class="tempo-cor-bar"></div>
+                    <div>
+                        <p id="tempo-periodo"
+                           class="tempo-periodo"></p>
+                        <h2 id="tempo-nome"
+                            class="tempo-nome"></h2>
+                        <p id="tempo-descricao"
+                           class="tempo-descricao"></p>
+                    </div>
                 </div>
             </div>
 
@@ -366,30 +551,37 @@
                  class="semanas-grid"
                  role="list"></div>
 
-        </div>
+        </div><!-- /#tempo-cabecalho -->
 
-        <!-- Painel de reflexão -->
+        <!-- Painel reflexão -->
         <article id="reflexao-painel"
                  class="reflexao-painel"
                  aria-label="Reflexão litúrgica">
 
             <div class="reflexao-card">
 
+                <div id="reflexao-topo-line"
+                     class="reflexao-topo-line"></div>
+
                 <div class="reflexao-topo">
-                    <div id="reflexao-topo-line" class="reflexao-topo-line"></div>
-                    <p id="reflexao-kicker" class="reflexao-kicker">
+                    <p id="reflexao-kicker"
+                       class="reflexao-kicker">
                         Reflexão Litúrgica
                         <span class="ia-badge">
                             <span class="ia-badge-dot"></span>
                             IA · Lux Fidei
                         </span>
                     </p>
-                    <h3 id="reflexao-titulo" class="reflexao-titulo"></h3>
-                    <p  id="reflexao-sub"   class="reflexao-sub"></p>
+                    <h3 id="reflexao-titulo"
+                        class="reflexao-titulo"></h3>
+                    <p  id="reflexao-sub"
+                        class="reflexao-sub"></p>
                 </div>
 
-                <div id="reflexao-corpo" class="reflexao-corpo">
-                    <div id="reflexao-conteudo" class="reflexao-texto"></div>
+                <div id="reflexao-corpo"
+                     class="reflexao-corpo">
+                    <div id="reflexao-conteudo"
+                         class="reflexao-texto"></div>
                 </div>
 
                 <div class="reflexao-rodape">
