@@ -1,6 +1,6 @@
 /* ══════════════════════════════════════════════════════════════════════════
    CALENDÁRIO LITÚRGICO — JS
-   Abordagem: renderização única via string SVG (sem appendChild)
+   Abordagem: renderização única via string SVG
    ══════════════════════════════════════════════════════════════════════════ */
 
 'use strict';
@@ -178,6 +178,63 @@ function getSeasonById(id) {
 
 
 /* ═══════════════════════════════════════════════════════════════════════
+   CÁLCULO DA SEMANA ATUAL (HOJE)
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/**
+ * Converte uma data (mês/dia) em "dia desde o início do ano litúrgico"
+ * O ano litúrgico começa em ~29/11 (dia 333 do ano civil)
+ */
+function monthDayToLiturgicalDay(month, day) {
+  // Dias acumulados até o início de cada mês (não-bissexto)
+  const cumDays = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334];
+  const dayOfYear = cumDays[month - 1] + day;
+
+  // Início do ano litúrgico: 29/11 = dia 333 do ano civil
+  const liturgicalStart = 333;
+
+  // Datas de nov-dez (>= 333): início do ano litúrgico (0 a 32)
+  if (dayOfYear >= liturgicalStart) {
+    return dayOfYear - liturgicalStart;
+  }
+  // Datas de jan-nov (< 333): meio/fim do ano litúrgico (33 a 365)
+  return dayOfYear + (365 - liturgicalStart);
+}
+
+/**
+ * Encontra a célula da roda mais próxima da data de hoje.
+ * Procura a DATE cujo "dia litúrgico" está mais próximo (e não no futuro distante).
+ */
+function getTodayWeekIndex() {
+  const today = new Date();
+  const todayMonth = today.getMonth() + 1;
+  const todayDay = today.getDate();
+  const todayLitDay = monthDayToLiturgicalDay(todayMonth, todayDay);
+
+  let bestIdx = 0;
+  let bestDiff = Infinity;
+
+  for (let i = 0; i < DATES.length; i++) {
+    const [dayStr, monthStr] = DATES[i].split('/');
+    const cellDay = parseInt(dayStr, 10);
+    const cellMonth = parseInt(monthStr, 10);
+    const cellLitDay = monthDayToLiturgicalDay(cellMonth, cellDay);
+
+    // Diferença: positivo = célula já passou ou é hoje
+    const diff = todayLitDay - cellLitDay;
+
+    // Queremos a célula mais recente que já passou (diff entre 0 e 6 dias)
+    if (diff >= 0 && diff < bestDiff) {
+      bestDiff = diff;
+      bestIdx = i;
+    }
+  }
+
+  return bestIdx;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════
    RENDERIZADORES (cada um retorna STRING SVG)
    ═══════════════════════════════════════════════════════════════════════ */
 
@@ -216,7 +273,6 @@ function renderDateRing() {
   let cells = '';
   let labels = '';
 
-  // Background do anel
   cells += `<path d="${arcSlice(CX, CY, R_DATE_OUT, R_DATE_IN, 0, 359.999)}" fill="${COLORS.neutralBg}" />`;
 
   DATES.forEach((dateStr, i) => {
@@ -235,7 +291,6 @@ function renderDateRing() {
                      transform="rotate(${rotation}, ${pos.x}, ${pos.y})">${dateStr}</text>`;
   });
 
-  // Separadores
   cells += `<circle cx="${CX}" cy="${CY}" r="${R_DATE_OUT}" class="ring-divider" />`;
   cells += `<circle cx="${CX}" cy="${CY}" r="${R_DATE_IN}" class="ring-divider" />`;
 
@@ -249,7 +304,6 @@ function renderSeasonRing() {
   let labels = '';
   let arcPaths = '';
 
-  // Background
   cells += `<path d="${arcSlice(CX, CY, R_SEASON_OUT, R_SEASON_IN, 0, 359.999)}" fill="${COLORS.neutralBg}" />`;
 
   let currentDeg = 0;
@@ -260,16 +314,13 @@ function renderSeasonRing() {
     const endDeg = currentDeg + spanDeg;
     const midDeg = (startDeg + endDeg) / 2;
 
-    // Célula colorida
     cells += `<path d="${arcSlice(CX, CY, R_SEASON_OUT, R_SEASON_IN, startDeg, endDeg)}"
                     fill="${season.color}" class="season-cell"
                     data-season="${season.id}"
                     tabindex="0" role="button"
                     aria-label="Tempo litúrgico: ${season.label}" />`;
 
-    // Label
     if (spanDeg > 22) {
-      // Texto curvo para tempos longos
       const labelR = (R_SEASON_OUT + R_SEASON_IN) / 2;
       const isBottom = midDeg > 90 && midDeg < 270;
       const arcSpan = Math.min(25, spanDeg / 3);
@@ -291,7 +342,6 @@ function renderSeasonRing() {
                    <textPath href="#${pathId}" startOffset="50%" text-anchor="middle">${season.label}</textPath>
                  </text>`;
     } else {
-      // Texto radial para tempos curtos
       const labelR = (R_SEASON_OUT + R_SEASON_IN) / 2;
       const pos = polarToXY(CX, CY, labelR, midDeg);
       const rotation = getRadialRotation(midDeg);
@@ -304,7 +354,6 @@ function renderSeasonRing() {
     currentDeg = endDeg;
   });
 
-  // Separadores
   cells += `<circle cx="${CX}" cy="${CY}" r="${R_SEASON_OUT}" class="ring-divider" />`;
   cells += `<circle cx="${CX}" cy="${CY}" r="${R_SEASON_IN}" class="ring-divider" />`;
 
@@ -360,7 +409,6 @@ function renderSpokes() {
     spokes += `<line x1="${o.x}" y1="${o.y}" x2="${inn.x}" y2="${inn.y}" class="spoke" />`;
   }
 
-  // Spokes principais nas transições
   let currentDeg = 0;
   for (const season of SEASONS) {
     const o = polarToXY(CX, CY, R_DATE_OUT, currentDeg);
@@ -400,6 +448,8 @@ function renderTodayMarker() {
   const labelPos = polarToXY(CX, CY, R_DATE_OUT + 38, midDeg);
   const rotation = getRadialRotation(midDeg);
 
+  console.log(`HOJE → célula ${idx} (${DATES[idx]}) — ${WEEKS[idx]?.label || '?'}`);
+
   return `
     <g id="layer-today">
       <circle cx="${pos.x}" cy="${pos.y}" r="7" class="today-pulse" />
@@ -409,15 +459,6 @@ function renderTodayMarker() {
             transform="rotate(${rotation}, ${labelPos.x}, ${labelPos.y})">HOJE</text>
     </g>
   `;
-}
-
-function getTodayWeekIndex() {
-  const today = new Date();
-  const year = today.getFullYear();
-  let advStart = new Date(year, 10, 29);
-  if (today < advStart) advStart = new Date(year - 1, 10, 29);
-  const diffWeeks = Math.floor((today - advStart) / (7 * 24 * 60 * 60 * 1000));
-  return Math.min(Math.max(diffWeeks, 0), TOTAL_WEEKS - 1);
 }
 
 
