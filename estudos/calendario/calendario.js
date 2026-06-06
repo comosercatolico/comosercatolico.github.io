@@ -1,829 +1,575 @@
-/* ═══════════════════════════════════════════════════════════
-   LUX FIDEI · ANO LITÚRGICO — calendario.js
-═══════════════════════════════════════════════════════════ */
+/* ══════════════════════════════════════════════════════
+   CALENDÁRIO LITÚRGICO — JS
+   Draws the SVG wheel and manages interactions
+   ══════════════════════════════════════════════════════ */
 
-/* ───────────────────────────────────────────────────────────
-   SCROLL PROGRESS
-─────────────────────────────────────────────────────────── */
-window.addEventListener('scroll', () => {
-    const bar   = document.getElementById('scroll-bar');
-    const total = document.body.scrollHeight - window.innerHeight;
-    if (total <= 0) return;
-    bar.style.width = Math.min((window.scrollY / total) * 100, 100) + '%';
-}, { passive: true });
+'use strict';
 
-/* ═══════════════════════════════════════════════════════════
-   CONSTANTES SVG
-═══════════════════════════════════════════════════════════ */
-const NS   = 'http://www.w3.org/2000/svg';
-const CX   = 300;
-const CY   = 300;
-const ROUT = 260;
-const RIN  = 132;
-const GAP  = 1.8;
+/* ── CONSTANTS ── */
+const CX = 450, CY = 450;        // SVG centre
+const R_OUTER  = 420;             // outermost date ring
+const R_DATE   = 398;             // inner edge of date ring
+const R_WEEK   = 370;             // outer edge of week ring
+const R_WEEK_IN = 270;            // inner edge of week ring
+const R_SEASON = 255;             // outer edge of season arc
+const R_SEASON_IN = 205;          // inner edge (hugs the hub)
+const HUB_R    = 188;             // golden hub radius
 
-/* ═══════════════════════════════════════════════════════════
-   DADOS DOS TEMPOS
-═══════════════════════════════════════════════════════════ */
-const TEMPOS = [
-    {
-        id: 'advento',
-        nome: 'Advento',
-        grad: 'g-advento',
-        cor: '#6b2fa0',
-        span: 42,
-        label: 'ADVENTO',
-        sub: '4 semanas',
-        periodo: 'Primeiro Tempo do Ano Litúrgico',
-        desc: 'O Advento inaugura o Ano Litúrgico. Tempo de vigilância, esperança e conversão — a Igreja aguarda a vinda do Senhor.'
-    },
-    {
-        id: 'natal',
-        nome: 'Natal',
-        grad: 'g-natal',
-        cor: '#c8980a',
-        span: 32,
-        label: 'NATAL',
-        sub: 'Verbo encarnado',
-        periodo: 'Da Vigília do Natal ao Batismo do Senhor',
-        desc: 'O Tempo do Natal celebra o mistério da Encarnação — o eterno Filho de Deus que assumiu nossa natureza humana.'
-    },
-    {
-        id: 'comum1',
-        nome: 'Tempo Comum I',
-        grad: 'g-comum1',
-        cor: '#2468b8',
-        span: 50,
-        label: 'COMUM I',
-        sub: 'O ministério',
-        periodo: 'Entre o Natal e a Quaresma',
-        desc: 'O Tempo Comum acompanha o ministério público de Jesus: seus ensinamentos, milagres e o chamado dos discípulos.'
-    },
-    {
-        id: 'quaresma',
-        nome: 'Quaresma',
-        grad: 'g-quaresma',
-        cor: '#8b5a2b',
-        span: 50,
-        label: 'QUARESMA',
-        sub: '40 dias',
-        periodo: 'Da Quarta-feira de Cinzas ao Tríduo',
-        desc: 'A Quaresma é o grande tempo de conversão. Quarenta dias no deserto interior, a caminho da Páscoa.'
-    },
-    {
-        id: 'triduo',
-        nome: 'Tríduo Pascal',
-        grad: 'g-triduo',
-        cor: '#1a6b35',
-        span: 22,
-        label: 'TRÍDUO',
-        sub: 'Coração do Ano',
-        periodo: 'Quinta · Sexta · Sábado Santo · Páscoa',
-        desc: 'O Tríduo Pascal é o ápice de todo o Ano Litúrgico: a Paixão, Morte e Ressurreição gloriosa de Cristo.'
-    },
-    {
-        id: 'pascal',
-        nome: 'Tempo Pascal',
-        grad: 'g-pascal',
-        cor: '#2e9e4a',
-        span: 64,
-        label: 'PASCAL',
-        sub: '50 dias',
-        periodo: 'Da Páscoa a Pentecoste',
-        desc: 'O Tempo Pascal celebra por cinquenta dias o mistério da Ressurreição, da Ascensão e do dom do Espírito Santo.'
-    },
-    {
-        id: 'comum2',
-        nome: 'Tempo Comum II',
-        grad: 'g-comum2',
-        cor: '#2468b8',
-        span: 100,
-        label: 'COMUM II',
-        sub: 'Caminhando com Cristo',
-        periodo: 'De Pentecoste a Cristo Rei',
-        desc: 'A segunda parte do Tempo Comum percorre o Evangelho do Ano, culminando na solenidade de Cristo Rei do Universo.'
+/* ── SEASONS DATA ── */
+// startDeg = degrees from top (N), clockwise
+// 1 full year = 360°; starting point = 1st Sunday of Advent ≈ late November
+
+const SEASONS = [
+  {
+    id: 'advento',
+    label: 'Advento',
+    latin: 'Adventus Domini',
+    color: '#6b3fa0',
+    colorLight: '#9b6fcf',
+    textColor: '#fff',
+    startDeg: 0,
+    spanDeg: 28,   // ~4 weeks
+    weeks: 4,
+    liturgicalColor: 'Roxo / Violeta',
+    badgeColor: '#6b3fa0',
+    content: {
+      historia: 'O Advento é o ponto de partida do ano litúrgico, a grande espera do Messias. Com origem nas tradições do século IV na Gália e na Espanha, foi inicialmente um tempo de jejum de 40 dias antes do Natal (chamado "Quadragesima Sancti Martini"). Roma adotou o Advento de apenas 4 semanas por volta do século VI, sob o pontificado de São Gregório Magno. Etimologicamente, "Adventus" (chegada) traduz o grego "Parousía" — a vinda gloriosa do Senhor.',
+      espiritualidade: 'O Advento cultiva a tríplice dimensão da espera cristã: a lembrança histórica do nascimento do Verbo em Belém; a presença interior de Cristo na alma pela graça; e a expectativa escatológica de Sua vinda na glória. Os quatro domingos evocam os milênios de anseio de Israel pelo Redentor. A Igreja reza intensamente com os "O Antífonos" — sete clamores solenes da semana antes do Natal: Ó Sapiência, Ó Adonai, Ó Raiz de Jessé...',
+      personagens: 'São João Batista, a Virgem Maria, o profeta Isaías e os Patriarcas bíblicos são as figuras centrais. A liturgia medita especialmente no "Precursor" que preparou os caminhos do Senhor e na Imaculada que carregou a Palavra feita carne.',
+      praticas: 'Coroa do Advento com quatro velas (três roxas, uma rosa), Calendário do Advento, Rorate Caeli (Missa votiva da Virgem ao amanhecer), Novena do Natal, confissão e preparação espiritual. No III Domingo — "Gaudete" — a cor festiva rosa pode ser usada.',
+      quote: '"Vinde, Senhor, não tardes." — Antífona de Advento',
+      dates: 'Início: 1.º Domingo do Advento (final de novembro) · Fim: 24 de dezembro',
+      symbol: '✦',
     }
+  },
+  {
+    id: 'natal',
+    label: 'Natal',
+    latin: 'Tempus Nativitatis',
+    color: '#c9a84c',
+    colorLight: '#e8cc88',
+    textColor: '#1a150d',
+    startDeg: 28,
+    spanDeg: 22,   // 25/12 até Batismo do Senhor
+    weeks: 3,
+    liturgicalColor: 'Branco / Dourado',
+    badgeColor: '#c9a84c',
+    content: {
+      historia: 'A festa do Natal — celebração do nascimento de Jesus Cristo — é atestada em Roma desde 336 d.C. Em 25 de dezembro, data possivelmente escolhida por seu alinhamento com o solstício de inverno romano (Natalis Solis Invicti), a Igreja proclama que o verdadeiro "Sol de Justiça" surgiu para o mundo. O Tempo de Natal se estende do 25 de dezembro ao Domingo do Batismo do Senhor, passando pela Sagrada Família, Santa Maria Mãe de Deus (1.º de janeiro) e a Epifania.',
+      espiritualidade: 'O mistério da Encarnação — Deus tornando-se homem no seio da Virgem — está no coração do Natal. A contemplação do Menino na manjedoura convida à kênosis (esvaziamento): a grandeza de Deus que se faz pequeno por amor à humanidade. A Epifania ("manifestação") celebra a universalidade da salvação, revelada aos Magos como representantes das nações pagãs.',
+      personagens: 'O Menino Jesus, a Virgem Maria e São José, os Magos do Oriente, os Pastores de Belém e os Santos Inocentes (28 de dezembro) são as figuras que a liturgia contempla neste tempo.',
+      praticas: 'Presépio (cena natalícia), Missa da Meia-Noite (In nocte), Missa da Aurora (In aurora) e Missa do Dia (In die), Adoração ao Santíssimo, procissão da Epifania, bênção da casa com giz (K+M+B), Oferta da Paz.',
+      quote: '"O Verbo se fez carne e habitou entre nós." — Jo 1, 14',
+      dates: '25 de dezembro · Encerramento: Batismo do Senhor (segunda semana de janeiro)',
+      symbol: '✦',
+    }
+  },
+  {
+    id: 'comum-pre',
+    label: 'Tempo Comum I',
+    latin: 'Per Annum',
+    color: '#2e7d4f',
+    colorLight: '#5aaa78',
+    textColor: '#fff',
+    startDeg: 50,
+    spanDeg: 38,   // do Batismo do Senhor até Quarta-feira de Cinzas
+    weeks: 6,
+    liturgicalColor: 'Verde',
+    badgeColor: '#2e7d4f',
+    isCommon: true,
+    content: {
+      historia: 'O Tempo Comum ("Tempus per Annum") é o maior período do ano litúrgico, dividido em dois blocos: antes e depois do Tempo Pascal. A denominação "comum" não significa ordinário ou menos importante, mas refere-se ao calendário "numerado" (do latim "numerus") — as semanas são contadas ordinalmente. Esse sistema foi reformado e sistematizado pelo Missal Romano de 1969, resultado do Concílio Vaticano II.',
+      espiritualidade: 'Este é o tempo de crescimento, de aprofundamento e de amadurecimento na fé. A Igreja percorre continuamente os evangelhos sinóticos (Mateus, Marcos, Lucas em anos A, B e C), contemplando os ensinamentos, os milagres e os gestos de misericórdia de Cristo. É o tempo das bem-aventuranças vividas no cotidiano.',
+      personagens: 'Os Santos do calendário universal e local marcam este período com sua rica variedade: mártires, confessores, doutores, virgens, religiosos e leigos. Cada festa dos santos ilumina uma faceta do único mistério de Cristo.',
+      praticas: 'Leitura contínua das Epístolas e dos Evangelhos, aprofundamento da Lectio Divina, devoções marianas (Maio e Outubro), Festas de Santos, Corpus Christi (após Pentecostes), Sagrado Coração de Jesus, Liturgia das Horas.',
+      quote: '"Crescei na graça e no conhecimento de Nosso Senhor Jesus Cristo." — 2 Pd 3, 18',
+      dates: 'Após o Batismo do Senhor até a Quarta-feira de Cinzas',
+      symbol: '✦',
+    }
+  },
+  {
+    id: 'quaresma',
+    label: 'Quaresma',
+    latin: 'Quadragesima',
+    color: '#7a5080',
+    colorLight: '#c9a4bc',
+    textColor: '#fff',
+    startDeg: 88,
+    spanDeg: 40,   // 40 dias
+    weeks: 6,
+    liturgicalColor: 'Roxo / Violeta',
+    badgeColor: '#7a5080',
+    content: {
+      historia: 'A Quaresma ("Quadragesima" = quarenta dias) remonta ao século IV como período final de preparação dos catecúmenos para o Batismo na Vigília Pascal, e simultaneamente de penitência pública para os pecadores reconciliados na Quinta-feira Santa. O papa São Leão Magno (séc. V) a teologizou como "décima parte do ano" consagrada a Deus. Os 40 dias evocam Moisés no Sinai, Elias no deserto e os 40 anos de Israel no êremo — sobretudo os 40 dias de Cristo no deserto.',
+      espiritualidade: 'A tradição quaresmal conjuga três pilares: oração (intensificação da vida litúrgica e pessoal), jejum (mortificação do corpo e da vontade) e esmola (caridade ativa com o próximo). A Quaresma é uma "grande pascoa" interior: o cristão percorre com Cristo o caminho da cruz, morrendo ao pecado para ressuscitar à graça. As escrutínios dos catecúmenos nos III, IV e V Domingos revelam a dimensão batismal do tempo.',
+      personagens: 'Cristo tentado no deserto (I Domingo), a Transfiguração (II Domingo), Simeão, a Samaritana, o Cego de nascença e a Ressurreição de Lázaro (domingos do Ano A) dominam a meditação quaresmal. São João Batista e os profetas completam o elenco.',
+      praticas: 'Imposição das Cinzas (Quarta-Feira de Cinzas), Via Sacra, abstinência e jejum (sextas-feiras e Quarta e Sexta-feira Santa), confissão sacramental, RICA (Rito de Iniciação Cristã de Adultos), retiros, adoração noturna. Rosa é a cor no IV Domingo (Laetare).',
+      quote: '"Convertei-vos a mim de todo o coração — com jejum, choro e pranto." — Jl 2, 12',
+      dates: 'Quarta-Feira de Cinzas (fevereiro/março) até o início do Tríduo Pascal (Quinta-Feira Santa)',
+      symbol: '✦',
+    }
+  },
+  {
+    id: 'triduo',
+    label: 'Tríduo Pascal',
+    latin: 'Triduum Paschale',
+    color: '#9b1a2a',
+    colorLight: '#c44050',
+    textColor: '#fff',
+    startDeg: 128,
+    spanDeg: 12,
+    weeks: 1,
+    liturgicalColor: 'Vermelho / Branco',
+    badgeColor: '#9b1a2a',
+    content: {
+      historia: 'O Tríduo Pascal — Quinta-Feira Santa à tarde até Domingo de Páscoa à noite — é o ápice absoluto de todo o ano litúrgico, o "ponto de gravidade" da fé cristã. O termo "Triduum" foi popularizado por Santo Ambrósio de Milão (†397) e São Agostinho (†430). Celebra o único Mistério Pascal: a Paixão, Morte, Sepultura e Ressurreição de Cristo — não como três eventos separados, mas como um único ato redentor.',
+      espiritualidade: 'O Tríduo é a "páscoa" no sentido mais literal: a "passagem" do Senhor da morte à vida, na qual o cristão batizado participa sacramentalmente. A Quinta-Feira Santa revela o amor até o fim (mandato da lavagem dos pés e instituição da Eucaristia). A Sexta-Feira Santa contempla o Servo sofredor que "carregou os nossos pecados". O Sábado Santo é o silêncio sepulcral da terra orphã. A Vigília Pascal é "a mãe de todas as vigílias" (Santo Agostinho).',
+      personagens: 'Cristo Senhor no centro absoluto. Maria, a Mãe dos Doores, permanece junto à Cruz (Stabat Mater). São João Apóstolo, o Discípulo Amado. Maria Madalena, primeira testemunha da Ressurreição. Os Doze, os soldados romanos, Simão de Cirene.',
+      praticas: 'Missa In Cena Domini (Quinta-Feira, com lavagem dos pés e procissão ao Monumento), Ação Litúrgica da Paixão do Senhor (Sexta-Feira, com a Adoração da Santa Cruz), Vigília Pascal com o Exsultet, bênção do fogo, Pregão Pascal, Liturgia Batismal e Eucaristia da Ressurreição.',
+      quote: '"Eis o madeiro da Cruz em que esteve suspenso o Salvador do mundo. Vinde adorai." — Antífona da Sexta-Feira Santa',
+      dates: 'Quinta-Feira Santa (após a Missa vespertina) até Domingo de Páscoa (2.ª Vésperas)',
+      symbol: '✦',
+    }
+  },
+  {
+    id: 'pascoa',
+    label: 'Tempo Pascal',
+    latin: 'Tempus Paschale',
+    color: '#b8891a',
+    colorLight: '#e8cc88',
+    textColor: '#fff',
+    startDeg: 140,
+    spanDeg: 70,   // 50 days to Pentecost
+    weeks: 7,
+    liturgicalColor: 'Branco / Dourado',
+    badgeColor: '#b8891a',
+    content: {
+      historia: 'O Tempo Pascal celebra durante 50 dias a Ressurreição de Cristo, culminando em Pentecostes. Nos primeiros séculos, os cristãos celebravam a Páscoa como uma única festa de 50 dias — o "Grande Domingo". A Ascensão do Senhor (40.º dia) e Pentecostes (50.º dia) foram paulatinamente individualizadas como solenidades. O domingo de Páscoa é a "festa das festas", a "solennitas sollenitatum" (Santo Agostinho), superior a todos os outros dias do calendário.',
+      espiritualidade: 'O Ressuscitado está vivo e presente — esta é a proclamação central do Tempo Pascal. Os aparecimentos do Ressuscitado (Maria Madalena, discípulos de Emaús, Tomé, orla do lago de Tiberíades) revelam a continuidade e a transformação glorificada do Corpo de Cristo. A Ascensão não é ausência, mas presença transformada. Pentecostes efunde o Espírito prometido, "alma" da Igreja.',
+      personagens: 'O Ressuscitado, Maria Madalena ("Apostola Apostolorum"), os Onze, Tomé o incrédulo-crente, os discípulos de Emaús, o Espírito Santo derramado sobre Maria e os discípulos no Cenáculo de Jerusalém.',
+      praticas: '"Aleluia" ressoa em todas as orações. Rito do Círio Pascal permanece aceso junto ao altar. Oito dias da Oitava de Páscoa celebrados como um único "Grande Domingo". Primeiras Comunhões de crianças. Domingo da Divina Misericórdia (II Domingo Pascal). Festa do Padroeiro em muitas paróquias. Rogações antes da Ascensão.',
+      quote: '"Aleluia! Cristo ressuscitou! Ressuscitou de verdade, aleluia!" — Aclamação Pascal',
+      dates: 'Domingo de Páscoa até Pentecostes (domingo, 50 dias depois)',
+      symbol: '✦',
+    }
+  },
+  {
+    id: 'pentecostes-solenidades',
+    label: 'Solenidades',
+    latin: 'Post Pentecosten',
+    color: '#5c4009',
+    colorLight: '#8b6914',
+    textColor: '#fff',
+    startDeg: 210,
+    spanDeg: 22,
+    weeks: 3,
+    liturgicalColor: 'Vermelho / Branco / Verde',
+    badgeColor: '#5c4009',
+    content: {
+      historia: 'Imediatamente após Pentecostes, a Igreja celebra três solenidades de altíssimo grau: a Santíssima Trindade (domingo seguinte), o Corpo e Sangue de Cristo — Corpus Christi (segunda quinta-feira após Pentecostes) e, no Sexta-Feira seguinte, o Sagrado Coração de Jesus. Corpus Christi foi estabelecida pelo papa Urbano IV em 1264, após o Milagre de Bolsena, com a bela liturgia composta por Santo Tomás de Aquino (Pange Lingua, Tantum Ergo).',
+      espiritualidade: 'Este período revela o fruto do Mistério Pascal: o Espírito derramado manifesta o rosto trinitário de Deus e alimenta a Igreja com o Corpo eucarístico de Cristo. A procissão de Corpus Christi é um ato de fé pública, levando a presença real de Cristo pelas ruas do mundo. O Sagrado Coração revela o amor infinito que moveu a Encarnação e a Cruz.',
+      personagens: 'Santa Juliana de Liège (mística que inspirou Corpus Christi), Beata Eva de Liège, Santa Marguerite-Marie Alacoque (revelações do Sagrado Coração), São João Eudes.',
+      praticas: 'Procissão de Corpus Christi com o Santíssimo (domus), adoração eucarística, Bênção com o Santíssimo, Exposição e Benedição, Hora Santa, Novena e Missa do Sagrado Coração.',
+      quote: '"Quantas vezes repetirdes isto, o fareis em memória de mim." — 1 Cor 11, 25',
+      dates: 'Da semana de Pentecostes até a entrada no Tempo Comum (final de junho)',
+      symbol: '✦',
+    }
+  },
+  {
+    id: 'comum-pos',
+    label: 'Tempo Comum II',
+    latin: 'Per Annum',
+    color: '#2e7d4f',
+    colorLight: '#5aaa78',
+    textColor: '#fff',
+    startDeg: 232,
+    spanDeg: 113,  // goes back to Christ the King
+    weeks: 28,
+    liturgicalColor: 'Verde',
+    badgeColor: '#2e7d4f',
+    isCommon: true,
+    content: {
+      historia: 'O segundo bloco do Tempo Comum é o mais longo do ano litúrgico, percorrendo o verão, o outono e parte do inverno até encerrar com o grande domingo de Cristo Rei. Estas semanas ordinais (que podem chegar à 34.ª semana) continuam a leitura semicontínua dos evangelhos sinóticos e das cartas apostólicas, aprofundando o discipulado cristão na vida cotidiana.',
+      espiritualidade: 'Este é o período da "pedagogia da cotidianidade": encontrar Cristo no trabalho, na família, na solidariedade. Os documentos do Vaticano II (especialmente a Gaudium et Spes) propõem que o cristão "leia os sinais dos tempos" à luz do Evangelho. A liturgia convida ao crescimento nas virtudes teologais (fé, esperança, caridade) e cardeais.',
+      personagens: 'O calendário dos santos é particularmente rico neste período: São João Maria Vianney (4/8), São Pio X (21/8), Santa Teresa de Calcutá (5/9), São Miguel Arcanjo (29/9), São Francisco de Assis (4/10), São Lucas (18/10), Todos os Santos (1/11), Todos os Fiéis Defuntos (2/11), São Carlos Borromeu (4/11).',
+      praticas: 'Missas dominicais e diárias com leitura contínua dos evangelhos, Liturgia das Horas, Novenas de santos, Devoção ao Rosário (especialmente em outubro, Mês do Rosário), Visitas ao cemitério em Novembro, Missa pelos defuntos, Festas de padroeiros e titulares.',
+      quote: '"Sede perfeitos como o vosso Pai celeste é perfeito." — Mt 5, 48',
+      dates: 'Final de junho (após Corpus Christi) até a Solenidade de Cristo Rei',
+      symbol: '✦',
+    }
+  },
+  {
+    id: 'cristo-rei',
+    label: 'Cristo Rei',
+    latin: 'Christus Rex',
+    color: '#8b6914',
+    colorLight: '#c9a84c',
+    textColor: '#fff',
+    startDeg: 345,
+    spanDeg: 15,
+    weeks: 1,
+    liturgicalColor: 'Branco / Dourado',
+    badgeColor: '#8b6914',
+    content: {
+      historia: 'A Solenidade de Nosso Senhor Jesus Cristo, Rei do Universo encerra o ano litúrgico com uma proclamação triunfal. Foi instituída pelo papa Pio XI em 1925 (encíclica Quas Primas) como resposta ao laicismo crescente do século XX, afirmando a soberania de Cristo sobre todos os domínios da vida. O Vaticano II deslocou-a para o último domingo do ano litúrgico (XXXIV Semana do Tempo Comum), conferindo-lhe um tom escatológico ainda mais acentuado.',
+      espiritualidade: 'Cristo Rei não é um monarca temporal, mas o Servo Sofredor que reina pela cruz e pelo amor. O Evangelho do julgamento final (Mt 25) revela o critério de Seu reino: a caridade com os pobres, os doentes, os presos, os forasteiros. Este domingo constitui ao mesmo tempo o coroamento do ano que passa e o limiar que abre para o Advento do ano seguinte.',
+      personagens: 'Cristo Pantocrator e Juiz escatológico, Pilatos diante de Quem o Verdadeiro Rei testemunha (Jo 18), o Bom Ladrão que recebe o paraíso (Lc 23). Os profetas que anunciaram o reinado eterno do filho de Davi.',
+      praticas: 'Missa solene de encerramento do Ano Litúrgico, Bênção Papal Urbi et Orbi em algumas igrejas, procissão com a Coroa de Cristo, meditação escatológica sobre o Julgamento Final e as Novíssimas (morte, julgamento, inferno, glória).',
+      quote: '"Meu reino não é deste mundo." — Jo 18, 36',
+      dates: 'Último Domingo do Tempo Comum (XXXIV Semana) — final de novembro',
+      symbol: '✦',
+    }
+  },
 ];
 
-/* ═══════════════════════════════════════════════════════════
-   DADOS DAS SEMANAS
-═══════════════════════════════════════════════════════════ */
-const SEMANAS = {
-    advento: [
-        { id: 'advento-1', num: '1ª Semana do Advento',   titulo: 'O Senhor que vem' },
-        { id: 'advento-2', num: '2ª Semana do Advento',   titulo: 'Preparar os caminhos' },
-        { id: 'advento-3', num: '3ª Semana · Gaudete',    titulo: 'Alegrai-vos no Senhor' },
-        { id: 'advento-4', num: '4ª Semana do Advento',   titulo: 'A Virgem e o Emmanuel' }
-    ],
-    natal: [
-        { id: 'natal-1', num: 'Oitava do Natal',          titulo: 'A Palavra feita carne' },
-        { id: 'natal-2', num: 'Sagrada Família',           titulo: 'O lar de Nazaré' },
-        { id: 'natal-3', num: 'Solenidade da Epifania',   titulo: 'A luz revelada às nações' },
-        { id: 'natal-4', num: 'Batismo do Senhor',        titulo: 'O Filho amado do Pai' }
-    ],
-    comum1: [
-        { id: 'comum-2', num: '2ª Semana do Tempo Comum', titulo: 'O início do ministério' },
-        { id: 'comum-3', num: '3ª Semana do Tempo Comum', titulo: 'Convertei-vos e crede' },
-        { id: 'comum-4', num: '4ª Semana do Tempo Comum', titulo: 'A autoridade da Palavra' },
-        { id: 'comum-5', num: '5ª Semana do Tempo Comum', titulo: 'Luz do mundo, sal da terra' },
-        { id: 'comum-6', num: '6ª Semana do Tempo Comum', titulo: 'A Lei e o coração novo' },
-        { id: 'comum-7', num: '7ª Semana do Tempo Comum', titulo: 'Amai os vossos inimigos' },
-        { id: 'comum-8', num: '8ª Semana do Tempo Comum', titulo: 'Servir a Deus ou às riquezas' }
-    ],
-    quaresma: [
-        { id: 'quaresma-0',    num: 'Quarta-feira de Cinzas',  titulo: 'Memento homo quia pulvis es' },
-        { id: 'quaresma-1',    num: '1ª Semana da Quaresma',   titulo: 'A tentação no deserto' },
-        { id: 'quaresma-2',    num: '2ª Semana da Quaresma',   titulo: 'A Transfiguração do Senhor' },
-        { id: 'quaresma-3',    num: '3ª Semana da Quaresma',   titulo: 'A água viva da Samaritana' },
-        { id: 'quaresma-4',    num: '4ª Semana · Laetare',     titulo: 'O cego de nascença' },
-        { id: 'quaresma-5',    num: '5ª Semana da Quaresma',   titulo: 'A ressurreição de Lázaro' },
-        { id: 'quaresma-ramos',num: 'Semana Santa',            titulo: 'A entrada triunfal em Jerusalém' }
-    ],
-    triduo: [
-        { id: 'triduo-quinta', num: 'Quinta-feira Santa', titulo: 'A Ceia e o mandamento novo' },
-        { id: 'triduo-sexta',  num: 'Sexta-feira Santa',  titulo: 'A Paixão e Morte do Senhor' },
-        { id: 'triduo-sabado', num: 'Sábado Santo',       titulo: 'O silêncio sagrado do sepulcro' },
-        { id: 'triduo-pascoa', num: 'Domingo de Páscoa',  titulo: 'Resurrexit, sicut dixit!' }
-    ],
-    pascal: [
-        { id: 'pascal-1',          num: 'Oitava da Páscoa',                titulo: 'O encontro com o Ressuscitado' },
-        { id: 'pascal-2',          num: '2ª Semana · Divina Misericórdia', titulo: 'Minha mão na ferida' },
-        { id: 'pascal-3',          num: '3ª Semana do Tempo Pascal',       titulo: 'O pão da vida' },
-        { id: 'pascal-4',          num: '4ª Semana do Tempo Pascal',       titulo: 'O Bom Pastor' },
-        { id: 'pascal-5',          num: '5ª Semana do Tempo Pascal',       titulo: 'A videira verdadeira' },
-        { id: 'pascal-6',          num: '6ª Semana do Tempo Pascal',       titulo: 'O Espírito da verdade' },
-        { id: 'pascal-ascensao',   num: 'Solenidade da Ascensão',          titulo: 'Subiu aos céus em glória' },
-        { id: 'pascal-7',          num: '7ª Semana do Tempo Pascal',       titulo: 'A oração sacerdotal de Jesus' },
-        { id: 'pascal-pentecoste', num: 'Solenidade de Pentecoste',        titulo: 'O dom do Espírito Santo' }
-    ],
-    comum2: [
-        { id: 'comum-9',  num: '9ª Semana',                titulo: 'A fé do centurião' },
-        { id: 'comum-10', num: '10ª Semana',               titulo: 'A vocação de Mateus' },
-        { id: 'comum-11', num: '11ª Semana',               titulo: 'A missão dos Doze' },
-        { id: 'comum-12', num: '12ª Semana',               titulo: 'Não temais os homens' },
-        { id: 'comum-13', num: '13ª Semana',               titulo: 'Seguir a Cristo sem reservas' },
-        { id: 'comum-14', num: '14ª Semana',               titulo: 'O jugo suave do Senhor' },
-        { id: 'comum-15', num: '15ª Semana',               titulo: 'A parábola do semeador' },
-        { id: 'comum-16', num: '16ª Semana',               titulo: 'O trigo e o joio' },
-        { id: 'comum-17', num: '17ª Semana',               titulo: 'O tesouro e a pérola preciosa' },
-        { id: 'comum-18', num: '18ª Semana',               titulo: 'A multiplicação dos pães' },
-        { id: 'comum-19', num: '19ª Semana',               titulo: 'Caminhar sobre as águas' },
-        { id: 'comum-20', num: '20ª Semana',               titulo: 'A fé da mulher cananeia' },
-        { id: 'comum-21', num: '21ª Semana',               titulo: 'Tu és Pedro' },
-        { id: 'comum-22', num: '22ª Semana',               titulo: 'Tomar a cruz e seguir' },
-        { id: 'comum-23', num: '23ª Semana',               titulo: 'A correção fraterna' },
-        { id: 'comum-24', num: '24ª Semana',               titulo: 'O perdão sem limites' },
-        { id: 'comum-25', num: '25ª Semana',               titulo: 'Os operários da vinha' },
-        { id: 'comum-26', num: '26ª Semana',               titulo: 'Os dois filhos' },
-        { id: 'comum-27', num: '27ª Semana',               titulo: 'Os vinhateiros homicidas' },
-        { id: 'comum-28', num: '28ª Semana',               titulo: 'O banquete nupcial' },
-        { id: 'comum-29', num: '29ª Semana',               titulo: 'Dar a Deus o que é de Deus' },
-        { id: 'comum-30', num: '30ª Semana',               titulo: 'O grande mandamento do amor' },
-        { id: 'comum-31', num: '31ª Semana',               titulo: 'Chamai-vos todos irmãos' },
-        { id: 'comum-32', num: '32ª Semana',               titulo: 'As dez virgens' },
-        { id: 'comum-33', num: '33ª Semana',               titulo: 'A parábola dos talentos' },
-        { id: 'comum-34', num: '34ª Semana · Cristo Rei',  titulo: 'O Rei do Universo' }
-    ]
+/* ── HELPERS ── */
+function degToRad(d) { return (d - 90) * Math.PI / 180; }
+
+function polarToXY(cx, cy, r, deg) {
+  const rad = degToRad(deg);
+  return { x: cx + r * Math.cos(rad), y: cy + r * Math.sin(rad) };
+}
+
+function arcPath(cx, cy, r1, r2, startDeg, endDeg) {
+  const s1 = polarToXY(cx, cy, r1, startDeg);
+  const e1 = polarToXY(cx, cy, r1, endDeg);
+  const s2 = polarToXY(cx, cy, r2, endDeg);
+  const e2 = polarToXY(cx, cy, r2, startDeg);
+  const large = (endDeg - startDeg) > 180 ? 1 : 0;
+  return [
+    `M ${s1.x} ${s1.y}`,
+    `A ${r1} ${r1} 0 ${large} 1 ${e1.x} ${e1.y}`,
+    `L ${s2.x} ${s2.y}`,
+    `A ${r2} ${r2} 0 ${large} 0 ${e2.x} ${e2.y}`,
+    'Z'
+  ].join(' ');
+}
+
+function createSVGEl(tag, attrs) {
+  const el = document.createElementNS('http://www.w3.org/2000/svg', tag);
+  for (const [k, v] of Object.entries(attrs)) el.setAttribute(k, v);
+  return el;
+}
+
+/* ── BUILD WHEEL ── */
+function buildWheel() {
+  const arcsG   = document.getElementById('season-arcs');
+  const labelsG = document.getElementById('season-labels');
+  const spokesG = document.getElementById('spokes');
+  const dateG   = document.getElementById('date-labels');
+  const weekG   = document.getElementById('week-labels');
+
+  SEASONS.forEach(season => {
+    const midDeg = season.startDeg + season.spanDeg / 2;
+    const endDeg = season.startDeg + season.spanDeg;
+
+    /* ── SEASON ARC ── */
+    const arc = createSVGEl('path', {
+      d: arcPath(CX, CY, R_SEASON, R_SEASON_IN, season.startDeg, endDeg),
+      fill: season.color,
+      stroke: 'rgba(255,255,255,0.25)',
+      'stroke-width': '1',
+      class: 'season-arc',
+      tabindex: '0',
+      role: 'button',
+      'aria-label': season.label,
+      'data-season': season.id,
+    });
+    arcsG.appendChild(arc);
+
+    /* ── WEEK SUB-SEGMENTS ── */
+    if (season.weeks > 1) {
+      const weekSpan = season.spanDeg / season.weeks;
+      for (let w = 0; w < season.weeks; w++) {
+        const wStart = season.startDeg + w * weekSpan;
+        const wEnd   = wStart + weekSpan;
+        const wMid   = (wStart + wEnd) / 2;
+
+        // alternating shade
+        const shade = w % 2 === 0 ? 0 : 0.09;
+        const wseg = createSVGEl('path', {
+          d: arcPath(CX, CY, R_WEEK, R_WEEK_IN, wStart, wEnd),
+          fill: `rgba(0,0,0,${shade})`,
+          stroke: 'rgba(255,255,255,0.18)',
+          'stroke-width': '0.6',
+          class: 'week-seg',
+          'data-season': season.id,
+          'data-week': w + 1,
+        });
+        arcsG.appendChild(wseg);
+
+        /* week number label */
+        const rLabel = (R_WEEK + R_WEEK_IN) / 2;
+        const lPos   = polarToXY(CX, CY, rLabel, wMid);
+        const lAngle = wMid - 90;
+
+        const wLabel = createSVGEl('text', {
+          x: lPos.x,
+          y: lPos.y,
+          transform: `rotate(${lAngle},${lPos.x},${lPos.y})`,
+          'text-anchor': 'middle',
+          'dominant-baseline': 'central',
+          class: 'wheel-week-label',
+          'data-season': season.id,
+        });
+        wLabel.textContent = `${w + 1}ª sem.`;
+        weekG.appendChild(wLabel);
+
+        /* spoke lines */
+        const sp = polarToXY(CX, CY, R_OUTER, wStart);
+        const ep = polarToXY(CX, CY, R_SEASON_IN, wStart);
+        spokesG.appendChild(createSVGEl('line', {
+          x1: sp.x, y1: sp.y, x2: ep.x, y2: ep.y
+        }));
+      }
+    }
+
+    /* ── SEASON LABEL (curved text) ── */
+    // Place label at mid-radius of season arc
+    const labelR = (R_SEASON + R_SEASON_IN) / 2 - 2;
+    // For short arcs use a straight rotated text; for long arcs use a text path
+    const arcSpan = season.spanDeg;
+    const lPos    = polarToXY(CX, CY, labelR, midDeg);
+    const lAngle  = midDeg - 90 + (midDeg > 180 ? 180 : 0);
+
+    const ltext = createSVGEl('text', {
+      x: lPos.x, y: lPos.y,
+      transform: `rotate(${lAngle},${lPos.x},${lPos.y})`,
+      'text-anchor': 'middle',
+      'dominant-baseline': 'central',
+      class: 'wheel-season-label',
+      fill: season.textColor,
+    });
+
+    if (arcSpan >= 40) {
+      // Multi-line
+      const t1 = createSVGEl('tspan', { x: lPos.x, dy: '-7', 'text-anchor': 'middle' });
+      t1.textContent = season.label.split(' ')[0];
+      const t2 = createSVGEl('tspan', { x: lPos.x, dy: '13', 'text-anchor': 'middle', 'font-size': '9' });
+      t2.textContent = season.label.split(' ').slice(1).join(' ') || season.latin;
+      ltext.appendChild(t1);
+      ltext.appendChild(t2);
+    } else {
+      ltext.textContent = season.label;
+    }
+    labelsG.appendChild(ltext);
+
+    /* main spoke at season boundary */
+    const spMain  = polarToXY(CX, CY, R_OUTER, season.startDeg);
+    const epMain  = polarToXY(CX, CY, R_SEASON_IN, season.startDeg);
+    const mainSpoke = createSVGEl('line', {
+      x1: spMain.x, y1: spMain.y, x2: epMain.x, y2: epMain.y,
+      'stroke-width': '1.2'
+    });
+    spokesG.appendChild(mainSpoke);
+  });
+
+  /* ── DATE LABELS ── */
+  const dates = [
+    { deg: 0,   label: '1º Dom. Advento' },
+    { deg: 28,  label: '25/12 — Natal' },
+    { deg: 50,  label: 'Batismo Senhor' },
+    { deg: 88,  label: 'Cinzas' },
+    { deg: 128, label: 'Quinta-Feira Santa' },
+    { deg: 140, label: 'Páscoa' },
+    { deg: 210, label: 'Pentecostes' },
+    { deg: 232, label: 'Tempo Comum II' },
+    { deg: 345, label: 'Cristo Rei' },
+  ];
+  dates.forEach(d => {
+    const rDate = (R_OUTER + R_DATE) / 2;
+    const pos   = polarToXY(CX, CY, rDate, d.deg + 2);
+    const angle = d.deg + 2 - 90;
+    const txt   = createSVGEl('text', {
+      x: pos.x, y: pos.y,
+      transform: `rotate(${angle},${pos.x},${pos.y})`,
+      class: 'wheel-date-label',
+      'text-anchor': 'start',
+      'dominant-baseline': 'central',
+    });
+    txt.textContent = d.label;
+    dateG.appendChild(txt);
+  });
+
+  /* ── ARROW for "Início do Ano Litúrgico" ── */
+  const arrowG  = document.getElementById('start-arrow');
+  const arrowPos = polarToXY(CX, CY, R_OUTER - 10, 0);
+  // small filled triangle
+  const tri = createSVGEl('polygon', {
+    points: `${arrowPos.x},${arrowPos.y - 14} ${arrowPos.x - 7},${arrowPos.y + 2} ${arrowPos.x + 7},${arrowPos.y + 2}`,
+    fill: '#6b3fa0',
+    opacity: '0.9',
+  });
+  arrowG.appendChild(tri);
+}
+
+/* ── DETAIL PANEL ── */
+const COLORS = {
+  advento:               '#6b3fa0',
+  natal:                 '#c9a84c',
+  'comum-pre':           '#2e7d4f',
+  'comum-pos':           '#2e7d4f',
+  quaresma:              '#7a5080',
+  triduo:                '#9b1a2a',
+  pascoa:                '#b8891a',
+  'pentecostes-solenidades': '#5c4009',
+  'cristo-rei':          '#8b6914',
 };
 
-/* ═══════════════════════════════════════════════════════════
-   GEOMETRIA SVG
-═══════════════════════════════════════════════════════════ */
-function deg2rad(d) {
-    return (d - 90) * Math.PI / 180;
-}
+function showDetail(seasonId) {
+  const season = SEASONS.find(s => s.id === seasonId);
+  if (!season) return;
 
-function pt(cx, cy, r, deg) {
-    const a = deg2rad(deg);
-    return { x: cx + r * Math.cos(a), y: cy + r * Math.sin(a) };
-}
+  const panel = document.getElementById('detail-inner');
+  const c = season.content;
+  const color = season.color;
 
-function arcPath(cx, cy, ro, ri, startDeg, endDeg) {
-    const p1 = pt(cx, cy, ro, startDeg);
-    const p2 = pt(cx, cy, ro, endDeg);
-    const p3 = pt(cx, cy, ri, endDeg);
-    const p4 = pt(cx, cy, ri, startDeg);
-    const large = (endDeg - startDeg) > 180 ? 1 : 0;
-    return [
-        `M ${p1.x} ${p1.y}`,
-        `A ${ro} ${ro} 0 ${large} 1 ${p2.x} ${p2.y}`,
-        `L ${p3.x} ${p3.y}`,
-        `A ${ri} ${ri} 0 ${large} 0 ${p4.x} ${p4.y}`,
-        'Z'
-    ].join(' ');
-}
+  panel.innerHTML = `
+    <div class="detail-card" data-season="${season.id}">
+      <div class="detail-header">
+        <div class="detail-color-bar" style="background:${color}"></div>
+        <div class="detail-header-content">
+          <p class="detail-season-label">Tempo Litúrgico</p>
+          <h2 class="detail-title" style="color:${color}">${season.label}</h2>
+          <p class="detail-latin">${season.latin}</p>
+        </div>
+      </div>
 
-function midAngle(a, b) {
-    return (a + b) / 2;
-}
+      <div class="detail-body">
+        <div class="detail-col">
+          <h4>História & Origem</h4>
+          <p>${c.historia}</p>
+          <h4 style="margin-top:1rem">Personagens & Figuras</h4>
+          <p>${c.personagens}</p>
+        </div>
+        <div class="detail-col">
+          <h4>Espiritualidade</h4>
+          <p>${c.espiritualidade}</p>
+          <h4 style="margin-top:1rem">Práticas Litúrgicas</h4>
+          <p>${c.praticas}</p>
+        </div>
+      </div>
 
-/* ═══════════════════════════════════════════════════════════
-   RÓTULOS DOS ARCOS
-═══════════════════════════════════════════════════════════ */
-function criarRotulo(cx, cy, r, angMid, linhas) {
-    const ESPACAMENTO = 14;
-    const totalAltura = (linhas.length - 1) * ESPACAMENTO;
-
-    const g = document.createElementNS(NS, 'g');
-    g.setAttribute('class', 'arco-label');
-
-    // Rotação para o texto ficar legível em qualquer ângulo
-    const rotacao = angMid > 90 && angMid < 270
-        ? angMid + 180
-        : angMid;
-
-    linhas.forEach((linha, i) => {
-        const offset    = -totalAltura / 2 + i * ESPACAMENTO;
-        const perpRad   = deg2rad(angMid + 90);
-        const centroRad = deg2rad(angMid);
-        const tx = cx + r * Math.cos(centroRad) + Math.cos(perpRad) * offset;
-        const ty = cy + r * Math.sin(centroRad) + Math.sin(perpRad) * offset;
-
-        const t = document.createElementNS(NS, 'text');
-        t.setAttribute('x', tx);
-        t.setAttribute('y', ty);
-        t.setAttribute('text-anchor', 'middle');
-        t.setAttribute('dominant-baseline', 'middle');
-        t.setAttribute('transform', `rotate(${rotacao}, ${tx}, ${ty})`);
-        t.setAttribute('class', linha.cls);
-        t.textContent = linha.texto;
-        g.appendChild(t);
-    });
-
-    return g;
-}
-
-/* ═══════════════════════════════════════════════════════════
-   ESTADO GLOBAL
-═══════════════════════════════════════════════════════════ */
-let tempoAtual  = null;
-let semanaAtual = null;
-let abortCtrl   = null;
-
-/* ═══════════════════════════════════════════════════════════
-   INICIALIZAÇÃO
-═══════════════════════════════════════════════════════════ */
-document.addEventListener('DOMContentLoaded', () => {
-    construirRoda();
-    iniciarInteracoes();
-    iniciarAnimacoesEntrada();
-});
-
-/* ═══════════════════════════════════════════════════════════
-   CONSTRUIR A RODA SVG
-═══════════════════════════════════════════════════════════ */
-function construirRoda() {
-    const gArcos  = document.getElementById('g-arcos');
-    const LABEL_R = (ROUT + RIN) / 2;
-    let   angulo  = 0;
-
-    TEMPOS.forEach(tempo => {
-        const angInicio = angulo + GAP;
-        const angFim    = angulo + tempo.span - GAP;
-        const angMeio   = midAngle(angInicio, angFim);
-
-        // ── Arco principal ───────────────────────
-        const arco = document.createElementNS(NS, 'path');
-        arco.setAttribute('d',
-            arcPath(CX, CY, ROUT, RIN, angInicio, angFim));
-        arco.setAttribute('fill', `url(#${tempo.grad})`);
-        arco.setAttribute('class', 'arco-tempo');
-        arco.setAttribute('role', 'button');
-        arco.setAttribute('aria-label',
-            `${tempo.nome}: ${tempo.sub}`);
-        arco.setAttribute('tabindex', '0');
-        arco.dataset.tempoId = tempo.id;
-        arco.dataset.cor     = tempo.cor;
-
-        // Clique / Enter / Espaço
-        arco.addEventListener('click', () => selecionarTempo(tempo));
-        arco.addEventListener('keydown', e => {
-            if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                selecionarTempo(tempo);
-            }
-        });
-
-        // Tooltip
-        arco.addEventListener('mouseenter', e =>
-            mostrarTooltip(e, tempo));
-        arco.addEventListener('mousemove',  e =>
-            posicionarTooltip(e));
-        arco.addEventListener('mouseleave', () =>
-            esconderTooltip());
-
-        gArcos.appendChild(arco);
-
-        // ── Separador branco entre arcos ─────────
-        const p1Sep = pt(CX, CY, RIN + 2,  angulo);
-        const p2Sep = pt(CX, CY, ROUT - 2, angulo);
-        const sep   = document.createElementNS(NS, 'line');
-        sep.setAttribute('x1', p1Sep.x);
-        sep.setAttribute('y1', p1Sep.y);
-        sep.setAttribute('x2', p2Sep.x);
-        sep.setAttribute('y2', p2Sep.y);
-        sep.setAttribute('stroke', '#ffffff');
-        sep.setAttribute('stroke-width', '2');
-        sep.setAttribute('pointer-events', 'none');
-        gArcos.appendChild(sep);
-
-        // ── Rótulo (apenas se houver espaço) ─────
-        if (tempo.span >= 18) {
-            const linhas = [
-                { texto: tempo.label, cls: 'arco-label-main' },
-                { texto: tempo.sub,   cls: 'arco-label-sub'  }
-            ];
-            gArcos.appendChild(
-                criarRotulo(CX, CY, LABEL_R, angMeio, linhas)
-            );
-        } else {
-            // Tempo curto: só o nome principal
-            const linhas = [
-                { texto: tempo.label, cls: 'arco-label-main' }
-            ];
-            gArcos.appendChild(
-                criarRotulo(CX, CY, LABEL_R, angMeio, linhas)
-            );
-        }
-
-        angulo += tempo.span;
-    });
-
-    // Separador final (fecha o círculo)
-    const p1Fim = pt(CX, CY, RIN + 2,  angulo);
-    const p2Fim = pt(CX, CY, ROUT - 2, angulo);
-    const sepFim = document.createElementNS(NS, 'line');
-    sepFim.setAttribute('x1', p1Fim.x);
-    sepFim.setAttribute('y1', p1Fim.y);
-    sepFim.setAttribute('x2', p2Fim.x);
-    sepFim.setAttribute('y2', p2Fim.y);
-    sepFim.setAttribute('stroke', '#ffffff');
-    sepFim.setAttribute('stroke-width', '2');
-    sepFim.setAttribute('pointer-events', 'none');
-    gArcos.appendChild(sepFim);
-}
-
-/* ═══════════════════════════════════════════════════════════
-   TOOLTIP DA RODA
-═══════════════════════════════════════════════════════════ */
-const tooltipEl = () => document.getElementById('roda-tooltip');
-
-function mostrarTooltip(e, tempo) {
-    const tt = tooltipEl();
-    if (!tt) return;
-    tt.textContent = `${tempo.nome} · ${tempo.sub}`;
-    tt.style.borderTop = `2px solid ${tempo.cor}`;
-    tt.classList.add('vis');
-    posicionarTooltip(e);
-}
-
-function posicionarTooltip(e) {
-    const tt = tooltipEl();
-    if (!tt || !tt.classList.contains('vis')) return;
-    tt.style.left = (e.clientX - tt.offsetWidth / 2) + 'px';
-    tt.style.top  = (e.clientY - tt.offsetHeight - 14) + 'px';
-}
-
-function esconderTooltip() {
-    const tt = tooltipEl();
-    if (tt) tt.classList.remove('vis');
-}
-
-/* ═══════════════════════════════════════════════════════════
-   INTERAÇÕES (legenda + mini-cards)
-═══════════════════════════════════════════════════════════ */
-function iniciarInteracoes() {
-    // Legenda chips + mini-cards informativos
-    const seletores = ['.leg-item', '.roda-info-item'];
-
-    seletores.forEach(sel => {
-        document.querySelectorAll(sel).forEach(el => {
-            const tid = el.dataset.tempo;
-            if (!tid) return;
-
-            const acao = () => {
-                const t = TEMPOS.find(x => x.id === tid);
-                if (!t) return;
-                selecionarTempo(t);
-                document.getElementById('detalhes')
-                    .scrollIntoView({ behavior: 'smooth' });
-            };
-
-            el.addEventListener('click', acao);
-            el.addEventListener('keydown', e => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    acao();
-                }
-            });
-        });
-    });
-}
-
-/* ═══════════════════════════════════════════════════════════
-   ANIMAÇÕES DE ENTRADA (Intersection Observer)
-═══════════════════════════════════════════════════════════ */
-function iniciarAnimacoesEntrada() {
-    const prefersReduced = window.matchMedia(
-        '(prefers-reduced-motion: reduce)'
-    ).matches;
-
-    if (prefersReduced) {
-        document.querySelectorAll('.anim-entrada')
-            .forEach(el => el.classList.add('visivel'));
-        return;
-    }
-
-    const obs = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visivel');
-                obs.unobserve(entry.target);
-            }
-        });
-    }, { threshold: 0.12, rootMargin: '0px 0px -30px 0px' });
-
-    document.querySelectorAll('.anim-entrada')
-        .forEach(el => obs.observe(el));
-}
-
-/* ═══════════════════════════════════════════════════════════
-   SELECIONAR UM TEMPO
-═══════════════════════════════════════════════════════════ */
-function selecionarTempo(tempo) {
-    tempoAtual  = tempo;
-    semanaAtual = null;
-
-    // ── Atualizar arcos ──
-    const gArcos = document.getElementById('g-arcos');
-    document.querySelectorAll('.arco-tempo').forEach(a => {
-        a.classList.toggle('ativo',
-            a.dataset.tempoId === tempo.id);
-    });
-    gArcos.classList.add('g-arcos-com-ativo');
-
-    // ── Atualizar legenda ──
-    document.querySelectorAll('.leg-item').forEach(el => {
-        const ativo = el.dataset.tempo === tempo.id;
-        el.classList.toggle('leg-ativa', ativo);
-        if (ativo) {
-            el.style.color = tempo.cor;
-        } else {
-            el.style.color = '';
-        }
-    });
-
-    // ── Atualizar mini-cards informativos ──
-    document.querySelectorAll('.roda-info-item').forEach(el => {
-        el.style.background = el.dataset.tempo === tempo.id
-            ? 'var(--cinza-1)'
-            : '';
-    });
-
-    // ── Mostrar cabeçalho ──
-    document.getElementById('estado-vazio').style.display = 'none';
-
-    const cab = document.getElementById('tempo-cabecalho');
-    cab.classList.remove('vis');
-    void cab.offsetWidth;
-    cab.classList.add('vis');
-
-    // Faixa colorida no topo do card
-    document.getElementById('tempo-header-faixa').style.background =
-        `linear-gradient(90deg, ${tempo.cor}, ${shade(tempo.cor, -15)})`;
-
-    // Barra colorida lateral
-    document.getElementById('tempo-cor-bar').style.background = tempo.cor;
-
-    // Textos
-    document.getElementById('tempo-periodo').textContent   = tempo.periodo;
-    document.getElementById('tempo-nome').textContent      = tempo.nome;
-    document.getElementById('tempo-descricao').textContent = tempo.desc;
-
-    // ── Construir grid de semanas ──
-    const container = document.getElementById('semanas-container');
-    container.innerHTML = '';
-    const semanas = SEMANAS[tempo.id] || [];
-
-    semanas.forEach((s, i) => {
-        const btn = document.createElement('button');
-        btn.className = 'semana-btn';
-        btn.setAttribute('role', 'listitem');
-        btn.setAttribute('type', 'button');
-        btn.style.opacity   = '0';
-        btn.style.transform = 'translateY(8px)';
-
-        btn.innerHTML = `
-            <div class="semana-acento"
-                 style="background:${tempo.cor}"></div>
-            <span class="semana-num">${s.num}</span>
-            <span class="semana-titulo-txt">${s.titulo}</span>
-            <span class="semana-seta" aria-hidden="true">→</span>
-        `;
-
-        btn.addEventListener('click', () => {
-            document.querySelectorAll('.semana-btn')
-                .forEach(b => b.classList.remove('ativa'));
-            btn.classList.add('ativa');
-            semanaAtual = s;
-            carregarReflexao(s, tempo);
-        });
-
-        container.appendChild(btn);
-
-        // Entrada escalonada
-        requestAnimationFrame(() => {
-            setTimeout(() => {
-                btn.style.transition =
-                    'opacity 0.4s ease, transform 0.4s ease';
-                btn.style.opacity   = '1';
-                btn.style.transform = 'translateY(0)';
-            }, i * 35);
-        });
-    });
-
-    // Esconde reflexão anterior
-    document.getElementById('reflexao-painel').classList.remove('vis');
-
-    setTimeout(() => {
-        cab.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }, 60);
-}
-
-/* ═══════════════════════════════════════════════════════════
-   UTILITÁRIO: escurece ou clareia uma cor hex
-═══════════════════════════════════════════════════════════ */
-function shade(hex, pct) {
-    const f  = parseInt(hex.slice(1), 16);
-    const t  = pct < 0 ? 0 : 255;
-    const p  = Math.abs(pct) / 100;
-    const R  = f >> 16;
-    const G  = (f >> 8) & 0x00FF;
-    const B  = f & 0x0000FF;
-    return '#' + (
-        0x1000000 +
-        (Math.round((t - R) * p) + R) * 0x10000 +
-        (Math.round((t - G) * p) + G) * 0x100 +
-        (Math.round((t - B) * p) + B)
-    ).toString(16).slice(1);
-}
-
-/* ═══════════════════════════════════════════════════════════
-   CARREGAR REFLEXÃO VIA CLAUDE (STREAMING)
-═══════════════════════════════════════════════════════════ */
-async function carregarReflexao(semana, tempo) {
-    if (abortCtrl) abortCtrl.abort();
-    abortCtrl = new AbortController();
-
-    const painel   = document.getElementById('reflexao-painel');
-    const conteudo = document.getElementById('reflexao-conteudo');
-    const topLine  = document.getElementById('reflexao-topo-line');
-
-    // Cabeçalho do card
-    document.getElementById('reflexao-titulo').textContent = semana.titulo;
-    document.getElementById('reflexao-sub').textContent    = semana.num;
-    document.getElementById('reflexao-kicker').innerHTML = `
-        ${tempo.nome}
-        <span class="ia-badge">
-            <span class="ia-badge-dot"></span>
-            IA · Reflexão
+      <div class="detail-footer">
+        <span class="detail-badge" style="color:${color};border-color:${color};background:${color}18">
+          🎨 ${season.liturgicalColor}
         </span>
-    `;
+        <span class="detail-badge" style="color:var(--text-secondary);border-color:var(--border)">
+          📅 ${c.dates}
+        </span>
+        <p class="detail-quote">${c.quote}</p>
+      </div>
+    </div>
+  `;
 
-    // Faixa colorida no topo
-    topLine.style.background =
-        `linear-gradient(90deg, ${tempo.cor}, ${shade(tempo.cor, 30)}, ${tempo.cor})`;
-
-    // Loading
-    conteudo.innerHTML = `
-        <div class="reflexao-loading">
-            <div class="loading-cruz" aria-hidden="true"></div>
-            <span class="loading-txt">Contemplando...</span>
-            <div class="loading-dots" aria-hidden="true">
-                <span></span><span></span><span></span>
-            </div>
-        </div>
-    `;
-
-    painel.classList.remove('vis');
-    void painel.offsetWidth;
-    painel.classList.add('vis');
-
-    setTimeout(() => {
-        painel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    }, 80);
-
-    const prompt = `Você é um guia espiritual católico letrado e contemplativo, especialista em liturgia.
-Escreva uma reflexão meditativa sobre a "${semana.num}" do ${tempo.nome}, cujo tema é "${semana.titulo}".
-
-Estrutura obrigatória:
-- 3 parágrafos bem desenvolvidos, em português do Brasil
-- 1 citação bíblica formatada como:
-  <div class="reflexao-cita"><p>texto do versículo</p><cite>— Referência</cite></div>
-- Linguagem elevada, litúrgica e contemplativa
-- Conexão com a espiritualidade do ${tempo.nome} e com a vida cristã concreta
-- Tom de homilia: profundo mas acessível
-
-Comece direto no primeiro parágrafo sem título nem introdução. Use <p> para parágrafos.`;
-
-    try {
-        const resp = await fetch('https://api.anthropic.com/v1/messages', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                model:      'claude-sonnet-4-20250514',
-                max_tokens: 1000,
-                stream:     true,
-                messages:   [{ role: 'user', content: prompt }]
-            }),
-            signal: abortCtrl.signal
-        });
-
-        if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
-
-        conteudo.innerHTML = '';
-        conteudo.classList.add('streaming');
-
-        const reader  = resp.body.getReader();
-        const decoder = new TextDecoder();
-        let buffer    = '';
-        let fullText  = '';
-
-        while (true) {
-            const { done, value } = await reader.read();
-            if (done) break;
-
-            buffer += decoder.decode(value, { stream: true });
-            const lines = buffer.split('\n');
-            buffer = lines.pop();
-
-            for (const line of lines) {
-                if (!line.startsWith('data: ')) continue;
-                const raw = line.slice(6).trim();
-                if (raw === '[DONE]') continue;
-                try {
-                    const json = JSON.parse(raw);
-                    if (json.type === 'content_block_delta' && json.delta?.text) {
-                        fullText += json.delta.text;
-                        conteudo.innerHTML = fullText;
-                    }
-                } catch { /* parse parcial */ }
-            }
-        }
-
-        conteudo.classList.remove('streaming');
-
-    } catch (err) {
-        if (err.name === 'AbortError') return;
-        console.warn('API indisponível, usando fallback:', err.message);
-        conteudo.classList.remove('streaming');
-        conteudo.innerHTML = fallback(semana, tempo);
-    }
+  // Scroll into view
+  document.getElementById('detail-panel').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
 
-/* ═══════════════════════════════════════════════════════════
-   REFLEXÕES FALLBACK
-═══════════════════════════════════════════════════════════ */
-function fallback(semana, tempo) {
-    const reflexoes = {
+/* ── INTERACTION ── */
+let activeId = null;
 
-        'advento-1': `
-            <p>O Advento abre o Ano Litúrgico com uma pergunta que atravessa toda a Escritura:
-            <em>estais prontos?</em> A Igreja não nos convida a uma nostalgia sentimental
-            do Natal passado, mas a uma vigilância real diante do Senhor que vem —
-            que já vem, que sempre vem.</p>
-            <div class="reflexao-cita">
-                <p>Estai de prontidão, porque o Filho do Homem virá
-                na hora em que menos esperardes.</p>
-                <cite>— Mateus 24, 44</cite>
-            </div>
-            <p>A cor roxa desta semana não é sinal de tristeza, mas de conversão
-            e expectativa. O Advento é escola de desejo — aprender a desejar a Deus
-            acima de tudo. Neste início solene do ano litúrgico, somos convidados
-            a purificar nossos desejos, vigiar na oração e preparar o coração
-            para receber o Rei que vem em humildade.</p>`,
+function handleSeasonClick(seasonId) {
+  // Toggle active arc highlight
+  document.querySelectorAll('.season-arc').forEach(el => el.classList.remove('active'));
+  if (activeId === seasonId) {
+    activeId = null;
+    document.getElementById('detail-inner').innerHTML = `
+      <div class="detail-placeholder">
+        <div class="placeholder-icon">✦</div>
+        <p>Clique em um tempo litúrgico para conhecer sua história, simbolismo e espiritualidade</p>
+      </div>`;
+    return;
+  }
+  activeId = seasonId;
+  document.querySelectorAll(`[data-season="${seasonId}"].season-arc`).forEach(el => el.classList.add('active'));
 
-        'triduo-pascoa': `
-            <p>O Domingo de Páscoa é a festa das festas, a rainha de todas as solenidades.
-            A morte foi vencida, o sepulcro está vazio.
-            <em>Resurrexit, sicut dixit</em> — ressuscitou, como havia prometido.</p>
-            <div class="reflexao-cita">
-                <p>Por que buscais entre os mortos Aquele que vive?
-                Ele não está aqui, ressuscitou!</p>
-                <cite>— Lucas 24, 5-6</cite>
-            </div>
-            <p>A Páscoa é garantia da nossa própria ressurreição e a vitória definitiva
-            da Vida sobre a morte. O Ressuscitado transforma não apenas o sepulcro vazio,
-            mas o coração de todo aquele que crê. Que possamos ser testemunhas do Cristo
-            vivo, proclamando com alegria incontida: <em>Aleluia!</em></p>`,
+  // Legend highlight
+  document.querySelectorAll('.legend-item').forEach(li => li.classList.remove('active'));
+  document.querySelectorAll(`.legend-item[data-season="${seasonId}"]`).forEach(li => li.classList.add('active'));
 
-        'triduo-quinta': `
-            <p>Na Quinta-feira Santa, a Igreja entra no coração do Mistério Pascal.
-            Jesus reúne os seus para a última ceia e institui o sacramento do seu
-            Corpo e Sangue. Então se ajoelha diante dos discípulos e lava-lhes os pés —
-            escândalo e beleza do Evangelho num único gesto.</p>
-            <div class="reflexao-cita">
-                <p>Eu vos dei o exemplo, para que, como eu vos fiz,
-                assim façais vós também.</p>
-                <cite>— João 13, 15</cite>
-            </div>
-            <p>Nesta noite solene somos convidados a contemplar o amor que se entrega,
-            o pão que se parte, o serviço que se oferece — e a deixar que Cristo
-            lave também os nossos pés, transformando nossa soberba em serviço.</p>`,
-
-        'pascal-pentecoste': `
-            <p>Pentecoste é o coroamento de toda a Páscoa. O Espírito prometido desce
-            sobre os Apóstolos como línguas de fogo, e a Igreja nasce para o mundo.
-            O que estava fechado no Cenáculo irrompe pelas ruas de Jerusalém.</p>
-            <div class="reflexao-cita">
-                <p>Todos ficaram repletos do Espírito Santo e começaram a falar
-                em outras línguas, conforme o Espírito lhes concedia.</p>
-                <cite>— Atos 2, 4</cite>
-            </div>
-            <p>O dom do Espírito não é privilégio de poucos, mas vocação de todo
-            batizado. É Ele quem nos dá coragem de anunciar, sabedoria de discernir
-            e amor que supera nossas limitações humanas. Que esta solenidade
-            renove em nós o desejo de sermos templos vivos do Espírito Santo.</p>`,
-
-        'natal-1': `
-            <p>A Oitava do Natal nos faz permanecer, por oito dias inteiros, diante
-            do mistério que muda a história: o Verbo se fez carne e habitou entre nós.
-            Não é apenas uma data — é uma realidade que continua a transformar o tempo.</p>
-            <div class="reflexao-cita">
-                <p>E o Verbo se fez carne e habitou entre nós,
-                e vimos a sua glória.</p>
-                <cite>— João 1, 14</cite>
-            </div>
-            <p>A Encarnação é o eterno entrando no tempo, o infinito assumindo a
-            fragilidade humana. Nesta semana, somos convidados a contemplar com
-            os pastores e os Magos o Menino que é Deus conosco — Emmanuel.</p>`,
-
-        'quaresma-0': `
-            <p>A Quarta-feira de Cinzas inaugura os quarenta dias de conversão.
-            A cinza imposta sobre nossa fronte não é gesto vazio: é memória dolorosa
-            e libertadora de nossa condição mortal e da necessidade absoluta de Deus.</p>
-            <div class="reflexao-cita">
-                <p>Lembra-te de que és pó e ao pó hás de voltar.</p>
-                <cite>— Gênesis 3, 19</cite>
-            </div>
-            <p>A Quaresma é caminho de despojamento. Não para nos diminuir, mas
-            para nos libertar do que pesa demais. Jejum, oração e esmola não são
-            obrigações externas — são as três portas pelas quais o Espírito entra
-            num coração disposto a converter-se.</p>`
-    };
-
-    return reflexoes[semana.id] || `
-        <p>Esta reflexão contempla o mistério de <em>${semana.titulo}</em>
-        no contexto do ${tempo.nome} — tempo de graça, conversão e encontro
-        com o Deus vivo que age na história de cada alma.</p>
-        <div class="reflexao-cita">
-            <p>O Senhor é meu pastor, nada me faltará;
-            em verdes pastagens me faz repousar.</p>
-            <cite>— Salmo 23, 1-2</cite>
-        </div>
-        <p>A liturgia da Igreja não é mero rito externo, mas expressão viva do
-        mistério pascal de Cristo. Em cada celebração, o tempo torna-se sagrado
-        e o eterno se faz presente na história. Que este tempo de
-        <em>${tempo.nome}</em> nos conduza a uma fé mais profunda e a uma
-        caridade que não se extingue.</p>
-    `;
+  showDetail(seasonId);
 }
 
-/* ═══════════════════════════════════════════════════════════
-   CONTROLES DO PAINEL
-═══════════════════════════════════════════════════════════ */
-function fecharReflexao() {
-    if (abortCtrl) abortCtrl.abort();
-
-    document.getElementById('reflexao-painel').classList.remove('vis');
-    document.querySelectorAll('.semana-btn')
-        .forEach(b => b.classList.remove('ativa'));
-
-    semanaAtual = null;
-
-    const cab = document.getElementById('tempo-cabecalho');
-    if (cab.classList.contains('vis')) {
-        setTimeout(() => {
-            cab.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }, 80);
-    }
+/* Tooltip */
+const tooltip = document.getElementById('tooltip');
+function showTooltip(text, x, y) {
+  tooltip.textContent = text;
+  tooltip.style.left = x + 'px';
+  tooltip.style.top  = y + 'px';
+  tooltip.classList.add('visible');
+}
+function hideTooltip() {
+  tooltip.classList.remove('visible');
 }
 
-function regenerarReflexao() {
-    if (semanaAtual && tempoAtual) {
-        carregarReflexao(semanaAtual, tempoAtual);
-    }
+function attachEvents() {
+  const wheel = document.getElementById('liturgical-wheel');
+  const rect  = () => wheel.getBoundingClientRect();
+
+  wheel.addEventListener('click', e => {
+    const target = e.target.closest('[data-season]');
+    if (!target) return;
+    handleSeasonClick(target.dataset.season);
+  });
+
+  wheel.addEventListener('mousemove', e => {
+    const target = e.target.closest('[data-season]');
+    if (!target) { hideTooltip(); return; }
+    const s = SEASONS.find(s => s.id === target.dataset.season);
+    if (!s) return;
+    const r = rect();
+    // Convert to wrapper-relative coords
+    const wx = e.clientX - r.left;
+    const wy = e.clientY - r.top;
+    showTooltip(s.label, wx, wy);
+  });
+
+  wheel.addEventListener('mouseleave', hideTooltip);
+
+  // Keyboard
+  wheel.addEventListener('keydown', e => {
+    if (e.key !== 'Enter' && e.key !== ' ') return;
+    const target = document.activeElement.closest('[data-season]') || document.activeElement;
+    if (target && target.dataset.season) handleSeasonClick(target.dataset.season);
+  });
+
+  // Legend clicks
+  document.querySelectorAll('.legend-item').forEach(li => {
+    li.addEventListener('click', () => {
+      // Map legend data-season to closest season id
+      const sid = li.dataset.season;
+      const map = {
+        advento: 'advento',
+        natal:   'natal',
+        quaresma:'quaresma',
+        triduo:  'triduo',
+        pascoa:  'pascoa',
+        comum:   activeId === 'comum-pre' ? 'comum-pos' : 'comum-pre',
+      };
+      handleSeasonClick(map[sid] || sid);
+    });
+  });
 }
 
-/* ═══════════════════════════════════════════════════════════
-   ATALHOS DE TECLADO
-═══════════════════════════════════════════════════════════ */
-document.addEventListener('keydown', e => {
-    // ESC fecha reflexão
-    if (e.key === 'Escape') {
-        const painel = document.getElementById('reflexao-painel');
-        if (painel.classList.contains('vis')) {
-            fecharReflexao();
-        }
-    }
+/* ── SCROLL REVEAL ── */
+function initReveal() {
+  const els = document.querySelectorAll('.color-card, .sac-item, .intro-verse');
+  els.forEach(el => el.classList.add('reveal'));
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('revealed');
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  els.forEach(el => obs.observe(el));
+}
+
+/* ── INIT ── */
+document.addEventListener('DOMContentLoaded', () => {
+  buildWheel();
+  attachEvents();
+  initReveal();
 });
