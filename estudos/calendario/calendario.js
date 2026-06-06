@@ -1,10 +1,11 @@
-
 // ═══════════════════════════════════════════════════════════
 // SCROLL PROGRESS
 // ═══════════════════════════════════════════════════════════
 window.addEventListener('scroll', () => {
     const bar = document.getElementById('scroll-bar');
-    const pct = window.scrollY / (document.body.scrollHeight - window.innerHeight) * 100;
+    const total = document.body.scrollHeight - window.innerHeight;
+    if (total <= 0) { bar.style.width = '0%'; return; }
+    const pct = (window.scrollY / total) * 100;
     bar.style.width = Math.min(pct, 100) + '%';
 }, { passive: true });
 
@@ -140,7 +141,9 @@ const SEMANAS = {
 // ═══════════════════════════════════════════════════════════
 // GEOMETRIA SVG
 // ═══════════════════════════════════════════════════════════
-function deg2rad(d) { return (d - 90) * Math.PI / 180; }
+function deg2rad(d) {
+    return (d - 90) * Math.PI / 180;
+}
 
 function pt(cx, cy, r, deg) {
     const a = deg2rad(deg);
@@ -148,40 +151,46 @@ function pt(cx, cy, r, deg) {
 }
 
 function arcPath(cx, cy, ro, ri, s, e) {
-    const p1 = pt(cx, cy, ro, s), p2 = pt(cx, cy, ro, e);
-    const p3 = pt(cx, cy, ri, e), p4 = pt(cx, cy, ri, s);
+    const p1 = pt(cx, cy, ro, s);
+    const p2 = pt(cx, cy, ro, e);
+    const p3 = pt(cx, cy, ri, e);
+    const p4 = pt(cx, cy, ri, s);
     const large = (e - s) > 180 ? 1 : 0;
     return `M${p1.x},${p1.y} A${ro},${ro} 0 ${large} 1 ${p2.x},${p2.y} L${p3.x},${p3.y} A${ri},${ri} 0 ${large} 0 ${p4.x},${p4.y}Z`;
 }
 
-function midAngle(s, e) { return (s + e) / 2; }
+function midAngle(s, e) {
+    return (s + e) / 2;
+}
 
 function textOnArc(cx, cy, r, ang, lines) {
-    const lineH = 12;
+    const lineH = 13;
     const totalH = (lines.length - 1) * lineH;
-    const perpAng = ang;
     const g = document.createElementNS(NS, 'g');
     g.setAttribute('class', 'arco-label');
 
     lines.forEach((line, i) => {
         const offset = -totalH / 2 + i * lineH;
-        const perp = deg2rad(perpAng + 90);
-        const radA = deg2rad(perpAng);
+        const perp = deg2rad(ang + 90);
+        const radA = deg2rad(ang);
         const ox = Math.cos(perp) * offset;
         const oy = Math.sin(perp) * offset;
         const tx = cx + r * Math.cos(radA) + ox;
         const ty = cy + r * Math.sin(radA) + oy;
+
         const t = document.createElementNS(NS, 'text');
         t.setAttribute('x', tx);
         t.setAttribute('y', ty);
         t.setAttribute('text-anchor', 'middle');
         t.setAttribute('dominant-baseline', 'middle');
-        const rot = perpAng > 90 && perpAng < 270 ? perpAng + 180 : perpAng;
+
+        const rot = ang > 90 && ang < 270 ? ang + 180 : ang;
         t.setAttribute('transform', `rotate(${rot}, ${tx}, ${ty})`);
         t.setAttribute('class', line.cls);
         t.textContent = line.text;
         g.appendChild(t);
     });
+
     return g;
 }
 
@@ -195,13 +204,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const gArcos = document.getElementById('g-arcos');
     let angle = 0;
     const LABEL_R = (ROUT + RIN) / 2;
-    const GAP = 1.5;
+    const GAP = 1.8;
 
     TEMPOS.forEach(t => {
         const end = angle + t.span;
         const mid = midAngle(angle + GAP, end - GAP);
 
-        // Arco
+        // ── Arco principal ──
         const path = document.createElementNS(NS, 'path');
         path.setAttribute('d', arcPath(CX, CY, ROUT - 2, RIN + 2, angle + GAP, end - GAP));
         path.setAttribute('fill', `url(#${t.grad})`);
@@ -210,57 +219,111 @@ document.addEventListener('DOMContentLoaded', () => {
         path.setAttribute('aria-label', `${t.nome} — ${t.sub}`);
         path.setAttribute('tabindex', '0');
         path.dataset.tempoId = t.id;
+
         path.addEventListener('click', () => selecionarTempo(t));
-        path.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') selecionarTempo(t); });
+        path.addEventListener('keydown', e => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                selecionarTempo(t);
+            }
+        });
+
         gArcos.appendChild(path);
 
-        // Brilho de borda
+        // ── Brilho de borda superior ──
         const shimmer = document.createElementNS(NS, 'path');
-        shimmer.setAttribute('d', arcPath(CX, CY, ROUT - 2, ROUT - 6, angle + GAP, end - GAP));
-        shimmer.setAttribute('fill', 'rgba(255,255,255,0.06)');
+        shimmer.setAttribute('d', arcPath(CX, CY, ROUT - 2, ROUT - 7, angle + GAP, end - GAP));
+        shimmer.setAttribute('fill', 'rgba(255,255,255,0.07)');
         shimmer.setAttribute('pointer-events', 'none');
         gArcos.appendChild(shimmer);
 
-        // Label
-        const labelSpan = t.span;
-        if (labelSpan > 20) {
+        // ── Brilho de borda inferior (perto do centro) ──
+        const innerShimmer = document.createElementNS(NS, 'path');
+        innerShimmer.setAttribute('d', arcPath(CX, CY, RIN + 7, RIN + 2, angle + GAP, end - GAP));
+        innerShimmer.setAttribute('fill', 'rgba(0,0,0,0.15)');
+        innerShimmer.setAttribute('pointer-events', 'none');
+        gArcos.appendChild(innerShimmer);
+
+        // ── Label ──
+        if (t.span > 20) {
+            const subText = t.sub.split('·')[1]?.trim() || t.sub;
             const lines = [
                 { text: t.label, cls: 'arco-label-main' },
-                { text: t.sub.split('·')[1]?.trim() || t.sub, cls: 'arco-label-sub' }
+                { text: subText, cls: 'arco-label-sub' }
             ];
             const lbl = textOnArc(CX, CY, LABEL_R, mid, lines);
             gArcos.appendChild(lbl);
         }
 
+        // ── Separador dourado entre arcos ──
+        const sepStart = pt(CX, CY, RIN + 4, angle);
+        const sepEnd = pt(CX, CY, ROUT - 4, angle);
+        const sep = document.createElementNS(NS, 'line');
+        sep.setAttribute('x1', sepStart.x);
+        sep.setAttribute('y1', sepStart.y);
+        sep.setAttribute('x2', sepEnd.x);
+        sep.setAttribute('y2', sepEnd.y);
+        sep.setAttribute('stroke', 'rgba(154,122,58,0.2)');
+        sep.setAttribute('stroke-width', '0.8');
+        sep.setAttribute('pointer-events', 'none');
+        gArcos.appendChild(sep);
+
         angle = end;
     });
 
-    // Clique na legenda → seleciona tempo
+    // ── Legenda → seleciona tempo ──
     document.querySelectorAll('.leg-item').forEach(el => {
         const tid = el.dataset.tempo;
+
         el.addEventListener('click', () => {
             const t = TEMPOS.find(x => x.id === tid);
-            if (t) { selecionarTempo(t); document.getElementById('detalhes').scrollIntoView({ behavior: 'smooth' }); }
-        });
-    });
-
-    // Intersection Observer para animações de entrada
-    const io = new IntersectionObserver(entries => {
-        entries.forEach(e => {
-            if (e.isIntersecting) {
-                e.target.style.opacity = '1';
-                e.target.style.transform = 'translateY(0)';
+            if (t) {
+                selecionarTempo(t);
+                document.getElementById('detalhes').scrollIntoView({ behavior: 'smooth' });
             }
         });
-    }, { threshold: 0.1 });
+
+        el.addEventListener('keydown', e => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                el.click();
+            }
+        });
+    });
+
+    // ── Intersection Observer (entrada suave) ──
+    initScrollAnimations();
+});
+
+// ═══════════════════════════════════════════════════════════
+// ANIMAÇÕES DE ENTRADA (Intersection Observer)
+// ═══════════════════════════════════════════════════════════
+function initScrollAnimations() {
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (prefersReduced) {
+        document.querySelectorAll('.roda-texto, .roda-wrap').forEach(el => {
+            el.classList.add('visible');
+        });
+        return;
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, {
+        threshold: 0.15,
+        rootMargin: '0px 0px -40px 0px'
+    });
 
     document.querySelectorAll('.roda-texto, .roda-wrap').forEach(el => {
-        el.style.opacity = '0';
-        el.style.transform = 'translateY(30px)';
-        el.style.transition = 'opacity 0.9s var(--ease), transform 0.9s var(--ease)';
-        io.observe(el);
+        observer.observe(el);
     });
-});
+}
 
 // ═══════════════════════════════════════════════════════════
 // SELEÇÃO DE TEMPO
@@ -274,11 +337,22 @@ function selecionarTempo(tempo) {
         a.classList.toggle('ativo', a.dataset.tempoId === tempo.id);
     });
 
+    // Atualiza legenda ativa
+    document.querySelectorAll('.leg-item').forEach(el => {
+        el.style.opacity = el.dataset.tempo === tempo.id ? '1' : '0.5';
+        el.style.borderColor = el.dataset.tempo === tempo.id
+            ? 'rgba(154,122,58,0.3)' : 'transparent';
+    });
+
     // Esconde vazio
     document.getElementById('estado-vazio').style.display = 'none';
 
     // Mostra cabeçalho
     const cab = document.getElementById('tempo-cabecalho');
+    cab.classList.remove('vis');
+
+    // Força reflow pra re-disparar animação
+    void cab.offsetWidth;
     cab.classList.add('vis');
 
     document.getElementById('tempo-cor-bar').style.background =
@@ -291,30 +365,46 @@ function selecionarTempo(tempo) {
     const container = document.getElementById('semanas-container');
     container.innerHTML = '';
     const semanas = SEMANAS[tempo.id] || [];
+
     semanas.forEach((s, i) => {
         const btn = document.createElement('button');
         btn.className = 'semana-btn';
         btn.setAttribute('role', 'listitem');
+        btn.style.opacity = '0';
+        btn.style.transform = 'translateY(8px)';
         btn.innerHTML = `
             <div class="semana-acento" style="background:${tempo.cor}"></div>
             <span class="semana-num">${s.num}</span>
             <span class="semana-titulo-txt">${s.titulo}</span>
             <span class="semana-seta" aria-hidden="true">→</span>
         `;
-        btn.style.animationDelay = `${i * 0.05}s`;
+
         btn.onclick = () => {
             document.querySelectorAll('.semana-btn').forEach(b => b.classList.remove('ativa'));
             btn.classList.add('ativa');
             semanaAtual = s;
             carregarReflexaoIA(s, tempo);
         };
+
         container.appendChild(btn);
+
+        // Entrada escalonada
+        requestAnimationFrame(() => {
+            setTimeout(() => {
+                btn.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+                btn.style.opacity = '1';
+                btn.style.transform = 'translateY(0)';
+            }, i * 40);
+        });
     });
 
     // Fecha reflexão anterior
     document.getElementById('reflexao-painel').classList.remove('vis');
 
-    cab.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    // Scroll suave até o cabeçalho
+    setTimeout(() => {
+        cab.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 80);
 }
 
 // ═══════════════════════════════════════════════════════════
@@ -326,7 +416,6 @@ async function carregarReflexaoIA(semana, tempo) {
     if (abortCtrl) abortCtrl.abort();
     abortCtrl = new AbortController();
 
-    // Prepara o painel
     const painel = document.getElementById('reflexao-painel');
     const conteudo = document.getElementById('reflexao-conteudo');
     const topoLine = document.getElementById('reflexao-topo-line');
@@ -340,7 +429,8 @@ async function carregarReflexaoIA(semana, tempo) {
             IA · Reflexão
         </span>
     `;
-    topoLine.style.background = `linear-gradient(90deg, ${tempo.cor}, ${tempo.cor}44, transparent)`;
+    topoLine.style.background =
+        `linear-gradient(90deg, ${tempo.cor}, ${tempo.cor}44, transparent)`;
 
     conteudo.innerHTML = `
         <div class="reflexao-loading">
@@ -352,8 +442,13 @@ async function carregarReflexaoIA(semana, tempo) {
         </div>
     `;
 
+    painel.classList.remove('vis');
+    void painel.offsetWidth;
     painel.classList.add('vis');
-    painel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+    setTimeout(() => {
+        painel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }, 100);
 
     const prompt = `Você é um guia espiritual católico letrado e contemplativo, especialista em liturgia.
 Escreva uma reflexão meditativa sobre a "${semana.num}" do ${tempo.nome}, cujo tema é "${semana.titulo}".
@@ -408,7 +503,7 @@ Comece diretamente o primeiro parágrafo sem título. Use tags <p> para parágra
                         fullText += json.delta.text;
                         conteudo.innerHTML = fullText;
                     }
-                } catch {}
+                } catch { /* ignora parse errors */ }
             }
         }
 
@@ -422,19 +517,70 @@ Comece diretamente o primeiro parágrafo sem título. Use tags <p> para parágra
     }
 }
 
+// ═══════════════════════════════════════════════════════════
+// FALLBACK (sem API)
+// ═══════════════════════════════════════════════════════════
 function gerarReflexaoFallback(semana, tempo) {
     const reflexoes = {
-        'advento-1': `<p>O Advento abre o Ano Litúrgico com uma pergunta que atravessa toda a Escritura: <em>estais prontos?</em> A Igreja não nos convida a uma nostalgia sentimental do Natal passado, mas a uma vigilância real diante do Senhor que vem — que já vem, que sempre vem.</p><div class="reflexao-cita"><p>Estai de prontidão, porque o Filho do Homem virá na hora em que menos esperardes.</p><cite>— Mateus 24, 44</cite></div><p>A cor roxa desta semana não é sinal de tristeza, mas de conversão e expectativa. O Advento é escola de desejo — aprender a desejar a Deus acima de tudo. Não o Natal da nostalgia, mas o Cristo que vem.</p><p>Neste início solene do ano litúrgico, somos convidados a purificar nossos desejos, a vigiar na oração e a preparar o coração para receber o Rei que vem em humildade.</p>`,
-        'triduo-pascoa': `<p>O Domingo de Páscoa é a festa das festas, a rainha de todas as solenidades. A morte foi vencida, o sepulcro está vazio. <em>Resurrexit, sicut dixit</em> — ressuscitou, como havia prometido.</p><div class="reflexao-cita"><p>Por que buscais entre os mortos Aquele que vive? Ele não está aqui, ressuscitou!</p><cite>— Lucas 24, 5-6</cite></div><p>A Páscoa é garantia da nossa própria ressurreição e a vitória definitiva da Vida sobre a morte. O Ressuscitado transforma não apenas o sepulcro vazio, mas o coração de todo aquele que crê.</p><p>Que possamos ser testemunhas do Cristo vivo em nosso meio, proclamando com alegria incontida: <em>Aleluia! Cristo ressuscitou verdadeiramente!</em></p>`,
+        'advento-1': `<p>O Advento abre o Ano Litúrgico com uma pergunta que atravessa toda a Escritura: <em>estais prontos?</em> A Igreja não nos convida a uma nostalgia sentimental do Natal passado, mas a uma vigilância real diante do Senhor que vem — que já vem, que sempre vem.</p>
+            <div class="reflexao-cita"><p>Estai de prontidão, porque o Filho do Homem virá na hora em que menos esperardes.</p><cite>— Mateus 24, 44</cite></div>
+            <p>A cor roxa desta semana não é sinal de tristeza, mas de conversão e expectativa. O Advento é escola de desejo — aprender a desejar a Deus acima de tudo. Não o Natal da nostalgia, mas o Cristo que vem.</p>
+            <p>Neste início solene do ano litúrgico, somos convidados a purificar nossos desejos, a vigiar na oração e a preparar o coração para receber o Rei que vem em humildade.</p>`,
+
+        'advento-2': `<p>Na segunda semana do Advento, ressoa com força a voz do Precursor: <em>Preparai o caminho do Senhor, endireitai as suas veredas.</em> João Batista é a figura que atravessa todo este tempo como um dedo apontado para Aquele que vem.</p>
+            <div class="reflexao-cita"><p>Voz do que clama no deserto: Preparai o caminho do Senhor, aplainai as suas veredas.</p><cite>— Marcos 1, 3</cite></div>
+            <p>Preparar os caminhos exige abrir mão do que é torto em nós: os orgulhos, as mentiras interiores, as muralhas que construímos para não deixar Deus entrar. O deserto é lugar de verdade — ali não há onde se esconder.</p>
+            <p>Que possamos, nesta semana, acolher o convite à conversão sincera, tornando reto o caminho por onde o Salvador deseja passar em nossas vidas.</p>`,
+
+        'advento-3': `<p><em>Gaudete in Domino semper!</em> Alegrai-vos sempre no Senhor! A terceira semana do Advento acende a vela rósea no meio do roxo, sinal de que a alegria já desponta mesmo antes da festa. A Igreja nos ensina a alegria da espera.</p>
+            <div class="reflexao-cita"><p>Alegrai-vos sempre no Senhor. Repito: alegrai-vos! A vossa bondade seja conhecida de todos. O Senhor está perto.</p><cite>— Filipenses 4, 4-5</cite></div>
+            <p>Não se trata de uma alegria mundana ou superficial, mas daquela que nasce da certeza de que o Senhor está perto. É a alegria dos pobres de espírito, dos que não colocaram sua esperança nos poderes do mundo.</p>
+            <p>Nesta semana, somos convidados a viver a sobriedade alegre de quem sabe que a promessa se cumpre, que o deserto florirá e que o Salvador já se aproxima.</p>`,
+
+        'triduo-pascoa': `<p>O Domingo de Páscoa é a festa das festas, a rainha de todas as solenidades. A morte foi vencida, o sepulcro está vazio. <em>Resurrexit, sicut dixit</em> — ressuscitou, como havia prometido.</p>
+            <div class="reflexao-cita"><p>Por que buscais entre os mortos Aquele que vive? Ele não está aqui, ressuscitou!</p><cite>— Lucas 24, 5-6</cite></div>
+            <p>A Páscoa é garantia da nossa própria ressurreição e a vitória definitiva da Vida sobre a morte. O Ressuscitado transforma não apenas o sepulcro vazio, mas o coração de todo aquele que crê.</p>
+            <p>Que possamos ser testemunhas do Cristo vivo em nosso meio, proclamando com alegria incontida: <em>Aleluia! Cristo ressuscitou verdadeiramente!</em></p>`,
+
+        'triduo-quinta': `<p>Na Quinta-feira Santa, a Igreja entra no coração do Mistério Pascal. Jesus reúne os seus para uma última ceia, e nela institui o sacramento do seu Corpo e Sangue, e dá o mandamento novo: <em>Amai-vos uns aos outros como eu vos amei.</em></p>
+            <div class="reflexao-cita"><p>Eu vos dei o exemplo, para que, como eu vos fiz, assim façais vós também.</p><cite>— João 13, 15</cite></div>
+            <p>O lava-pés não é mero gesto simbólico, mas revelação da natureza de Deus. O Criador do universo se ajoelha diante da criatura. O Senhor se faz servo. Aqui está o escândalo e a beleza do Evangelho.</p>
+            <p>Nesta noite solene, somos convidados a contemplar o amor que se entrega, o pão que se parte, o serviço que se oferece — e a deixar que Cristo lave também os nossos pés.</p>`,
+
+        'triduo-sexta': `<p>A Sexta-feira Santa é o dia do grande silêncio. A Igreja se recolhe diante do mistério da Cruz — o Filho de Deus, pregado ao madeiro, entrega o espírito. <em>Consummatum est.</em> Tudo está consumado.</p>
+            <div class="reflexao-cita"><p>Ele foi traspassado por causa das nossas transgressões, triturado por causa das nossas iniquidades.</p><cite>— Isaías 53, 5</cite></div>
+            <p>A liturgia deste dia é sóbria e austera: não há Eucaristia, os altares estão nus, o tabernáculo vazio. Tudo aponta para a kenosis — o esvaziamento de Deus por amor.</p>
+            <p>Diante da Cruz, somos convidados ao silêncio reverente, à gratidão pela redenção oferecida e ao reconhecimento de que o amor mais profundo passa necessariamente pelo sofrimento fecundo.</p>`,
+
+        'pascal-pentecoste': `<p>Pentecoste é o coroamento de toda a Páscoa. O Espírito prometido desce sobre os Apóstolos como línguas de fogo, e a Igreja nasce para o mundo. O que estava oculto no Cenáculo agora irrompe pelas ruas de Jerusalém.</p>
+            <div class="reflexao-cita"><p>Todos ficaram repletos do Espírito Santo e começaram a falar em outras línguas, conforme o Espírito lhes concedia.</p><cite>— Atos 2, 4</cite></div>
+            <p>O dom do Espírito não é privilégio de poucos, mas vocação de todo batizado. É Ele quem nos dá a coragem de anunciar, a sabedoria de discernir e o amor que supera nossas limitações humanas.</p>
+            <p>Que a solenidade de Pentecoste renove em nós o desejo de sermos templos vivos do Espírito Santo, abertos à sua ação transformadora no mundo.</p>`
     };
-    return reflexoes[semana.id] || `<p>Esta reflexão contempla o mistério de <em>${semana.titulo}</em> no contexto do ${tempo.nome}. Um tempo de graça, de conversão e de encontro com o Deus vivo que age na história de cada alma.</p><div class="reflexao-cita"><p>O Senhor é meu pastor, nada me faltará; em verdes pastagens me faz repousar.</p><cite>— Salmo 23, 1-2</cite></div><p>A liturgia da Igreja não é mero rito externo, mas expressão viva do mistério pascal de Cristo. Em cada celebração, o tempo torna-se sagrado e o eterno se faz presente na história.</p>`;
+
+    return reflexoes[semana.id] || `<p>Esta reflexão contempla o mistério de <em>${semana.titulo}</em> no contexto do ${tempo.nome}. Um tempo de graça, de conversão e de encontro com o Deus vivo que age na história de cada alma.</p>
+        <div class="reflexao-cita"><p>O Senhor é meu pastor, nada me faltará; em verdes pastagens me faz repousar.</p><cite>— Salmo 23, 1-2</cite></div>
+        <p>A liturgia da Igreja não é mero rito externo, mas expressão viva do mistério pascal de Cristo. Em cada celebração, o tempo torna-se sagrado e o eterno se faz presente na história. Somos chamados a mergulhar nesta corrente de graça, deixando-nos transformar pelo ciclo contínuo da fé.</p>
+        <p>Que este tempo de <em>${tempo.nome}</em> nos conduza a uma vivência mais profunda do mistério de Cristo, renovando nossa esperança, fortalecendo nossa fé e inflamando em nós a caridade que não se extingue.</p>`;
 }
 
+// ═══════════════════════════════════════════════════════════
+// CONTROLES
+// ═══════════════════════════════════════════════════════════
 function fecharReflexao() {
     if (abortCtrl) abortCtrl.abort();
-    document.getElementById('reflexao-painel').classList.remove('vis');
+    const painel = document.getElementById('reflexao-painel');
+    painel.classList.remove('vis');
     document.querySelectorAll('.semana-btn').forEach(b => b.classList.remove('ativa'));
     semanaAtual = null;
+
+    // Scroll de volta ao cabeçalho do tempo
+    const cab = document.getElementById('tempo-cabecalho');
+    if (cab.classList.contains('vis')) {
+        setTimeout(() => {
+            cab.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 100);
+    }
 }
 
 function regenerarReflexao() {
