@@ -2,7 +2,9 @@
    LUX FIDEI · ANO LITÚRGICO — calendario.js
 ═══════════════════════════════════════════════════════════ */
 
-// ── Scroll progress ──────────────────────────────────────
+/* ───────────────────────────────────────────────────────────
+   SCROLL PROGRESS
+─────────────────────────────────────────────────────────── */
 window.addEventListener('scroll', () => {
     const bar   = document.getElementById('scroll-bar');
     const total = document.body.scrollHeight - window.innerHeight;
@@ -10,26 +12,26 @@ window.addEventListener('scroll', () => {
     bar.style.width = Math.min((window.scrollY / total) * 100, 100) + '%';
 }, { passive: true });
 
-// ═══════════════════════════════════════════════════════════
-// CONSTANTES SVG
-// ═══════════════════════════════════════════════════════════
+/* ═══════════════════════════════════════════════════════════
+   CONSTANTES SVG
+═══════════════════════════════════════════════════════════ */
 const NS   = 'http://www.w3.org/2000/svg';
 const CX   = 300;
 const CY   = 300;
-const ROUT = 260;   // raio externo dos arcos
-const RIN  = 132;   // raio interno (borda do centro)
-const GAP  = 2;     // espaço em graus entre cada arco
+const ROUT = 260;
+const RIN  = 132;
+const GAP  = 1.8;
 
-// ═══════════════════════════════════════════════════════════
-// DADOS DOS TEMPOS
-// ═══════════════════════════════════════════════════════════
+/* ═══════════════════════════════════════════════════════════
+   DADOS DOS TEMPOS
+═══════════════════════════════════════════════════════════ */
 const TEMPOS = [
     {
         id: 'advento',
         nome: 'Advento',
         grad: 'g-advento',
         cor: '#6b2fa0',
-        span: 48,
+        span: 42,
         label: 'ADVENTO',
         sub: '4 semanas',
         periodo: 'Primeiro Tempo do Ano Litúrgico',
@@ -40,9 +42,9 @@ const TEMPOS = [
         nome: 'Natal',
         grad: 'g-natal',
         cor: '#c8980a',
-        span: 30,
+        span: 32,
         label: 'NATAL',
-        sub: 'O Verbo encarnado',
+        sub: 'Verbo encarnado',
         periodo: 'Da Vigília do Natal ao Batismo do Senhor',
         desc: 'O Tempo do Natal celebra o mistério da Encarnação — o eterno Filho de Deus que assumiu nossa natureza humana.'
     },
@@ -51,7 +53,7 @@ const TEMPOS = [
         nome: 'Tempo Comum I',
         grad: 'g-comum1',
         cor: '#2468b8',
-        span: 52,
+        span: 50,
         label: 'COMUM I',
         sub: 'O ministério',
         periodo: 'Entre o Natal e a Quaresma',
@@ -62,7 +64,7 @@ const TEMPOS = [
         nome: 'Quaresma',
         grad: 'g-quaresma',
         cor: '#8b5a2b',
-        span: 55,
+        span: 50,
         label: 'QUARESMA',
         sub: '40 dias',
         periodo: 'Da Quarta-feira de Cinzas ao Tríduo',
@@ -73,9 +75,9 @@ const TEMPOS = [
         nome: 'Tríduo Pascal',
         grad: 'g-triduo',
         cor: '#1a6b35',
-        span: 14,
+        span: 22,
         label: 'TRÍDUO',
-        sub: 'O coração do Ano',
+        sub: 'Coração do Ano',
         periodo: 'Quinta · Sexta · Sábado Santo · Páscoa',
         desc: 'O Tríduo Pascal é o ápice de todo o Ano Litúrgico: a Paixão, Morte e Ressurreição gloriosa de Cristo.'
     },
@@ -84,7 +86,7 @@ const TEMPOS = [
         nome: 'Tempo Pascal',
         grad: 'g-pascal',
         cor: '#2e9e4a',
-        span: 68,
+        span: 64,
         label: 'PASCAL',
         sub: '50 dias',
         periodo: 'Da Páscoa a Pentecoste',
@@ -95,7 +97,7 @@ const TEMPOS = [
         nome: 'Tempo Comum II',
         grad: 'g-comum2',
         cor: '#2468b8',
-        span: 93,
+        span: 100,
         label: 'COMUM II',
         sub: 'Caminhando com Cristo',
         periodo: 'De Pentecoste a Cristo Rei',
@@ -103,9 +105,9 @@ const TEMPOS = [
     }
 ];
 
-// ═══════════════════════════════════════════════════════════
-// DADOS DAS SEMANAS
-// ═══════════════════════════════════════════════════════════
+/* ═══════════════════════════════════════════════════════════
+   DADOS DAS SEMANAS
+═══════════════════════════════════════════════════════════ */
 const SEMANAS = {
     advento: [
         { id: 'advento-1', num: '1ª Semana do Advento',   titulo: 'O Senhor que vem' },
@@ -129,30 +131,30 @@ const SEMANAS = {
         { id: 'comum-8', num: '8ª Semana do Tempo Comum', titulo: 'Servir a Deus ou às riquezas' }
     ],
     quaresma: [
-        { id: 'quaresma-0',    num: 'Quarta-feira de Cinzas',   titulo: 'Memento homo quia pulvis es' },
-        { id: 'quaresma-1',    num: '1ª Semana da Quaresma',    titulo: 'A tentação no deserto' },
-        { id: 'quaresma-2',    num: '2ª Semana da Quaresma',    titulo: 'A Transfiguração do Senhor' },
-        { id: 'quaresma-3',    num: '3ª Semana da Quaresma',    titulo: 'A água viva da Samaritana' },
-        { id: 'quaresma-4',    num: '4ª Semana · Laetare',      titulo: 'O cego de nascença' },
-        { id: 'quaresma-5',    num: '5ª Semana da Quaresma',    titulo: 'A ressurreição de Lázaro' },
-        { id: 'quaresma-ramos',num: 'Semana Santa',             titulo: 'A entrada triunfal em Jerusalém' }
+        { id: 'quaresma-0',    num: 'Quarta-feira de Cinzas',  titulo: 'Memento homo quia pulvis es' },
+        { id: 'quaresma-1',    num: '1ª Semana da Quaresma',   titulo: 'A tentação no deserto' },
+        { id: 'quaresma-2',    num: '2ª Semana da Quaresma',   titulo: 'A Transfiguração do Senhor' },
+        { id: 'quaresma-3',    num: '3ª Semana da Quaresma',   titulo: 'A água viva da Samaritana' },
+        { id: 'quaresma-4',    num: '4ª Semana · Laetare',     titulo: 'O cego de nascença' },
+        { id: 'quaresma-5',    num: '5ª Semana da Quaresma',   titulo: 'A ressurreição de Lázaro' },
+        { id: 'quaresma-ramos',num: 'Semana Santa',            titulo: 'A entrada triunfal em Jerusalém' }
     ],
     triduo: [
-        { id: 'triduo-quinta',  num: 'Quinta-feira Santa',  titulo: 'A Ceia e o mandamento novo' },
-        { id: 'triduo-sexta',   num: 'Sexta-feira Santa',   titulo: 'A Paixão e Morte do Senhor' },
-        { id: 'triduo-sabado',  num: 'Sábado Santo',        titulo: 'O silêncio sagrado do sepulcro' },
-        { id: 'triduo-pascoa',  num: 'Domingo de Páscoa',   titulo: 'Resurrexit, sicut dixit!' }
+        { id: 'triduo-quinta', num: 'Quinta-feira Santa', titulo: 'A Ceia e o mandamento novo' },
+        { id: 'triduo-sexta',  num: 'Sexta-feira Santa',  titulo: 'A Paixão e Morte do Senhor' },
+        { id: 'triduo-sabado', num: 'Sábado Santo',       titulo: 'O silêncio sagrado do sepulcro' },
+        { id: 'triduo-pascoa', num: 'Domingo de Páscoa',  titulo: 'Resurrexit, sicut dixit!' }
     ],
     pascal: [
-        { id: 'pascal-1',         num: 'Oitava da Páscoa',               titulo: 'O encontro com o Ressuscitado' },
-        { id: 'pascal-2',         num: '2ª Semana · Divina Misericórdia', titulo: 'Minha mão na ferida' },
-        { id: 'pascal-3',         num: '3ª Semana do Tempo Pascal',       titulo: 'O pão da vida' },
-        { id: 'pascal-4',         num: '4ª Semana do Tempo Pascal',       titulo: 'O Bom Pastor' },
-        { id: 'pascal-5',         num: '5ª Semana do Tempo Pascal',       titulo: 'A videira verdadeira' },
-        { id: 'pascal-6',         num: '6ª Semana do Tempo Pascal',       titulo: 'O Espírito da verdade' },
-        { id: 'pascal-ascensao',  num: 'Solenidade da Ascensão',          titulo: 'Subiu aos céus em glória' },
-        { id: 'pascal-7',         num: '7ª Semana do Tempo Pascal',       titulo: 'A oração sacerdotal de Jesus' },
-        { id: 'pascal-pentecoste',num: 'Solenidade de Pentecoste',        titulo: 'O dom do Espírito Santo' }
+        { id: 'pascal-1',          num: 'Oitava da Páscoa',                titulo: 'O encontro com o Ressuscitado' },
+        { id: 'pascal-2',          num: '2ª Semana · Divina Misericórdia', titulo: 'Minha mão na ferida' },
+        { id: 'pascal-3',          num: '3ª Semana do Tempo Pascal',       titulo: 'O pão da vida' },
+        { id: 'pascal-4',          num: '4ª Semana do Tempo Pascal',       titulo: 'O Bom Pastor' },
+        { id: 'pascal-5',          num: '5ª Semana do Tempo Pascal',       titulo: 'A videira verdadeira' },
+        { id: 'pascal-6',          num: '6ª Semana do Tempo Pascal',       titulo: 'O Espírito da verdade' },
+        { id: 'pascal-ascensao',   num: 'Solenidade da Ascensão',          titulo: 'Subiu aos céus em glória' },
+        { id: 'pascal-7',          num: '7ª Semana do Tempo Pascal',       titulo: 'A oração sacerdotal de Jesus' },
+        { id: 'pascal-pentecoste', num: 'Solenidade de Pentecoste',        titulo: 'O dom do Espírito Santo' }
     ],
     comum2: [
         { id: 'comum-9',  num: '9ª Semana',                titulo: 'A fé do centurião' },
@@ -184,22 +186,18 @@ const SEMANAS = {
     ]
 };
 
-// ═══════════════════════════════════════════════════════════
-// GEOMETRIA SVG
-// ═══════════════════════════════════════════════════════════
-
-/** Converte graus (com 0° no topo) para radianos */
+/* ═══════════════════════════════════════════════════════════
+   GEOMETRIA SVG
+═══════════════════════════════════════════════════════════ */
 function deg2rad(d) {
     return (d - 90) * Math.PI / 180;
 }
 
-/** Ponto num círculo de raio r no ângulo deg */
 function pt(cx, cy, r, deg) {
     const a = deg2rad(deg);
     return { x: cx + r * Math.cos(a), y: cy + r * Math.sin(a) };
 }
 
-/** Path SVG de um arco anelar (donut slice) */
 function arcPath(cx, cy, ro, ri, startDeg, endDeg) {
     const p1 = pt(cx, cy, ro, startDeg);
     const p2 = pt(cx, cy, ro, endDeg);
@@ -215,34 +213,28 @@ function arcPath(cx, cy, ro, ri, startDeg, endDeg) {
     ].join(' ');
 }
 
-/** Ângulo médio entre dois ângulos */
-function midAngle(a, b) { return (a + b) / 2; }
+function midAngle(a, b) {
+    return (a + b) / 2;
+}
 
-// ═══════════════════════════════════════════════════════════
-// CRIAÇÃO DOS RÓTULOS
-// ═══════════════════════════════════════════════════════════
-
-/**
- * Cria um grupo SVG com rótulo de texto curvo
- * centralizado no arco, sem stroke pesado.
- */
+/* ═══════════════════════════════════════════════════════════
+   RÓTULOS DOS ARCOS
+═══════════════════════════════════════════════════════════ */
 function criarRotulo(cx, cy, r, angMid, linhas) {
-    const ESPACAMENTO = 13;
+    const ESPACAMENTO = 14;
     const totalAltura = (linhas.length - 1) * ESPACAMENTO;
 
     const g = document.createElementNS(NS, 'g');
     g.setAttribute('class', 'arco-label');
 
-    // Ângulo de rotação do texto
+    // Rotação para o texto ficar legível em qualquer ângulo
     const rotacao = angMid > 90 && angMid < 270
         ? angMid + 180
         : angMid;
 
     linhas.forEach((linha, i) => {
-        const offset = -totalAltura / 2 + i * ESPACAMENTO;
-
-        // Posição perpendicular ao raio
-        const perpRad = deg2rad(angMid + 90);
+        const offset    = -totalAltura / 2 + i * ESPACAMENTO;
+        const perpRad   = deg2rad(angMid + 90);
         const centroRad = deg2rad(angMid);
         const tx = cx + r * Math.cos(centroRad) + Math.cos(perpRad) * offset;
         const ty = cy + r * Math.sin(centroRad) + Math.sin(perpRad) * offset;
@@ -261,30 +253,28 @@ function criarRotulo(cx, cy, r, angMid, linhas) {
     return g;
 }
 
-// ═══════════════════════════════════════════════════════════
-// ESTADO GLOBAL
-// ═══════════════════════════════════════════════════════════
+/* ═══════════════════════════════════════════════════════════
+   ESTADO GLOBAL
+═══════════════════════════════════════════════════════════ */
 let tempoAtual  = null;
 let semanaAtual = null;
 let abortCtrl   = null;
 
-// ═══════════════════════════════════════════════════════════
-// INICIALIZAÇÃO
-// ═══════════════════════════════════════════════════════════
+/* ═══════════════════════════════════════════════════════════
+   INICIALIZAÇÃO
+═══════════════════════════════════════════════════════════ */
 document.addEventListener('DOMContentLoaded', () => {
-
     construirRoda();
-    iniciarLegenda();
+    iniciarInteracoes();
     iniciarAnimacoesEntrada();
-
 });
 
-// ═══════════════════════════════════════════════════════════
-// CONSTRUÇÃO DA RODA SVG
-// ═══════════════════════════════════════════════════════════
+/* ═══════════════════════════════════════════════════════════
+   CONSTRUIR A RODA SVG
+═══════════════════════════════════════════════════════════ */
 function construirRoda() {
     const gArcos  = document.getElementById('g-arcos');
-    const LABEL_R = (ROUT + RIN) / 2;   // raio do centro dos rótulos
+    const LABEL_R = (ROUT + RIN) / 2;
     let   angulo  = 0;
 
     TEMPOS.forEach(tempo => {
@@ -292,16 +282,20 @@ function construirRoda() {
         const angFim    = angulo + tempo.span - GAP;
         const angMeio   = midAngle(angInicio, angFim);
 
-        // ── 1. Arco principal ──────────────────────────
+        // ── Arco principal ───────────────────────
         const arco = document.createElementNS(NS, 'path');
-        arco.setAttribute('d', arcPath(CX, CY, ROUT, RIN, angInicio, angFim));
+        arco.setAttribute('d',
+            arcPath(CX, CY, ROUT, RIN, angInicio, angFim));
         arco.setAttribute('fill', `url(#${tempo.grad})`);
         arco.setAttribute('class', 'arco-tempo');
         arco.setAttribute('role', 'button');
-        arco.setAttribute('aria-label', `${tempo.nome}: ${tempo.sub}`);
+        arco.setAttribute('aria-label',
+            `${tempo.nome}: ${tempo.sub}`);
         arco.setAttribute('tabindex', '0');
         arco.dataset.tempoId = tempo.id;
+        arco.dataset.cor     = tempo.cor;
 
+        // Clique / Enter / Espaço
         arco.addEventListener('click', () => selecionarTempo(tempo));
         arco.addEventListener('keydown', e => {
             if (e.key === 'Enter' || e.key === ' ') {
@@ -310,86 +304,125 @@ function construirRoda() {
             }
         });
 
+        // Tooltip
+        arco.addEventListener('mouseenter', e =>
+            mostrarTooltip(e, tempo));
+        arco.addEventListener('mousemove',  e =>
+            posicionarTooltip(e));
+        arco.addEventListener('mouseleave', () =>
+            esconderTooltip());
+
         gArcos.appendChild(arco);
 
-        // ── 2. Brilho na borda superior do arco ───────
-        const brilho = document.createElementNS(NS, 'path');
-        brilho.setAttribute('d', arcPath(CX, CY, ROUT, ROUT - 6, angInicio, angFim));
-        brilho.setAttribute('fill', 'rgba(255,255,255,0.12)');
-        brilho.setAttribute('pointer-events', 'none');
-        gArcos.appendChild(brilho);
-
-        // ── 3. Sombra na borda inferior do arco ───────
-        const sombra = document.createElementNS(NS, 'path');
-        sombra.setAttribute('d', arcPath(CX, CY, RIN + 8, RIN, angInicio, angFim));
-        sombra.setAttribute('fill', 'rgba(0,0,0,0.12)');
-        sombra.setAttribute('pointer-events', 'none');
-        gArcos.appendChild(sombra);
-
-        // ── 4. Separador branco entre arcos ───────────
+        // ── Separador branco entre arcos ─────────
         const p1Sep = pt(CX, CY, RIN + 2,  angulo);
         const p2Sep = pt(CX, CY, ROUT - 2, angulo);
-        const sep = document.createElementNS(NS, 'line');
-        sep.setAttribute('x1', p1Sep.x); sep.setAttribute('y1', p1Sep.y);
-        sep.setAttribute('x2', p2Sep.x); sep.setAttribute('y2', p2Sep.y);
-        sep.setAttribute('stroke', 'rgba(255,255,255,0.35)');
-        sep.setAttribute('stroke-width', '1.5');
+        const sep   = document.createElementNS(NS, 'line');
+        sep.setAttribute('x1', p1Sep.x);
+        sep.setAttribute('y1', p1Sep.y);
+        sep.setAttribute('x2', p2Sep.x);
+        sep.setAttribute('y2', p2Sep.y);
+        sep.setAttribute('stroke', '#ffffff');
+        sep.setAttribute('stroke-width', '2');
         sep.setAttribute('pointer-events', 'none');
         gArcos.appendChild(sep);
 
-        // ── 5. Rótulo de texto ─────────────────────────
-        if (tempo.span >= 20) {
+        // ── Rótulo (apenas se houver espaço) ─────
+        if (tempo.span >= 18) {
             const linhas = [
                 { texto: tempo.label, cls: 'arco-label-main' },
                 { texto: tempo.sub,   cls: 'arco-label-sub'  }
             ];
-            const rotulo = criarRotulo(CX, CY, LABEL_R, angMeio, linhas);
-            gArcos.appendChild(rotulo);
+            gArcos.appendChild(
+                criarRotulo(CX, CY, LABEL_R, angMeio, linhas)
+            );
+        } else {
+            // Tempo curto: só o nome principal
+            const linhas = [
+                { texto: tempo.label, cls: 'arco-label-main' }
+            ];
+            gArcos.appendChild(
+                criarRotulo(CX, CY, LABEL_R, angMeio, linhas)
+            );
         }
 
         angulo += tempo.span;
     });
 
     // Separador final (fecha o círculo)
-    const p1Final = pt(CX, CY, RIN + 2,  angulo);
-    const p2Final = pt(CX, CY, ROUT - 2, angulo);
-    const sepFinal = document.createElementNS(NS, 'line');
-    sepFinal.setAttribute('x1', p1Final.x); sepFinal.setAttribute('y1', p1Final.y);
-    sepFinal.setAttribute('x2', p2Final.x); sepFinal.setAttribute('y2', p2Final.y);
-    sepFinal.setAttribute('stroke', 'rgba(255,255,255,0.35)');
-    sepFinal.setAttribute('stroke-width', '1.5');
-    sepFinal.setAttribute('pointer-events', 'none');
-    gArcos.appendChild(sepFinal);
+    const p1Fim = pt(CX, CY, RIN + 2,  angulo);
+    const p2Fim = pt(CX, CY, ROUT - 2, angulo);
+    const sepFim = document.createElementNS(NS, 'line');
+    sepFim.setAttribute('x1', p1Fim.x);
+    sepFim.setAttribute('y1', p1Fim.y);
+    sepFim.setAttribute('x2', p2Fim.x);
+    sepFim.setAttribute('y2', p2Fim.y);
+    sepFim.setAttribute('stroke', '#ffffff');
+    sepFim.setAttribute('stroke-width', '2');
+    sepFim.setAttribute('pointer-events', 'none');
+    gArcos.appendChild(sepFim);
 }
 
-// ═══════════════════════════════════════════════════════════
-// LEGENDA — cliques e foco
-// ═══════════════════════════════════════════════════════════
-function iniciarLegenda() {
-    document.querySelectorAll('.leg-item').forEach(el => {
-        const tid = el.dataset.tempo;
+/* ═══════════════════════════════════════════════════════════
+   TOOLTIP DA RODA
+═══════════════════════════════════════════════════════════ */
+const tooltipEl = () => document.getElementById('roda-tooltip');
 
-        const acao = () => {
-            const t = TEMPOS.find(x => x.id === tid);
-            if (!t) return;
-            selecionarTempo(t);
-            document.getElementById('detalhes')
-                .scrollIntoView({ behavior: 'smooth' });
-        };
+function mostrarTooltip(e, tempo) {
+    const tt = tooltipEl();
+    if (!tt) return;
+    tt.textContent = `${tempo.nome} · ${tempo.sub}`;
+    tt.style.borderTop = `2px solid ${tempo.cor}`;
+    tt.classList.add('vis');
+    posicionarTooltip(e);
+}
 
-        el.addEventListener('click', acao);
-        el.addEventListener('keydown', e => {
-            if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                acao();
-            }
+function posicionarTooltip(e) {
+    const tt = tooltipEl();
+    if (!tt || !tt.classList.contains('vis')) return;
+    tt.style.left = (e.clientX - tt.offsetWidth / 2) + 'px';
+    tt.style.top  = (e.clientY - tt.offsetHeight - 14) + 'px';
+}
+
+function esconderTooltip() {
+    const tt = tooltipEl();
+    if (tt) tt.classList.remove('vis');
+}
+
+/* ═══════════════════════════════════════════════════════════
+   INTERAÇÕES (legenda + mini-cards)
+═══════════════════════════════════════════════════════════ */
+function iniciarInteracoes() {
+    // Legenda chips + mini-cards informativos
+    const seletores = ['.leg-item', '.roda-info-item'];
+
+    seletores.forEach(sel => {
+        document.querySelectorAll(sel).forEach(el => {
+            const tid = el.dataset.tempo;
+            if (!tid) return;
+
+            const acao = () => {
+                const t = TEMPOS.find(x => x.id === tid);
+                if (!t) return;
+                selecionarTempo(t);
+                document.getElementById('detalhes')
+                    .scrollIntoView({ behavior: 'smooth' });
+            };
+
+            el.addEventListener('click', acao);
+            el.addEventListener('keydown', e => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    acao();
+                }
+            });
         });
     });
 }
 
-// ═══════════════════════════════════════════════════════════
-// ANIMAÇÕES DE ENTRADA (Intersection Observer)
-// ═══════════════════════════════════════════════════════════
+/* ═══════════════════════════════════════════════════════════
+   ANIMAÇÕES DE ENTRADA (Intersection Observer)
+═══════════════════════════════════════════════════════════ */
 function iniciarAnimacoesEntrada() {
     const prefersReduced = window.matchMedia(
         '(prefers-reduced-motion: reduce)'
@@ -410,48 +443,64 @@ function iniciarAnimacoesEntrada() {
         });
     }, { threshold: 0.12, rootMargin: '0px 0px -30px 0px' });
 
-    document.querySelectorAll('.anim-entrada').forEach(el => obs.observe(el));
+    document.querySelectorAll('.anim-entrada')
+        .forEach(el => obs.observe(el));
 }
 
-// ═══════════════════════════════════════════════════════════
-// SELECIONAR TEMPO
-// ═══════════════════════════════════════════════════════════
+/* ═══════════════════════════════════════════════════════════
+   SELECIONAR UM TEMPO
+═══════════════════════════════════════════════════════════ */
 function selecionarTempo(tempo) {
     tempoAtual  = tempo;
     semanaAtual = null;
 
-    // ── Atualiza arcos ──
+    // ── Atualizar arcos ──
     const gArcos = document.getElementById('g-arcos');
     document.querySelectorAll('.arco-tempo').forEach(a => {
-        const ativo = a.dataset.tempoId === tempo.id;
-        a.classList.toggle('ativo', ativo);
+        a.classList.toggle('ativo',
+            a.dataset.tempoId === tempo.id);
     });
+    gArcos.classList.add('g-arcos-com-ativo');
 
-    // Classe no <g> pai controla opacidade dos inativos (via CSS)
-    gArcos.classList.toggle('g-arcos-com-ativo', true);
-
-    // ── Atualiza legenda ──
+    // ── Atualizar legenda ──
     document.querySelectorAll('.leg-item').forEach(el => {
-        el.classList.toggle('leg-ativa', el.dataset.tempo === tempo.id);
+        const ativo = el.dataset.tempo === tempo.id;
+        el.classList.toggle('leg-ativa', ativo);
+        if (ativo) {
+            el.style.color = tempo.cor;
+        } else {
+            el.style.color = '';
+        }
     });
 
-    // ── Mostra cabeçalho ──
+    // ── Atualizar mini-cards informativos ──
+    document.querySelectorAll('.roda-info-item').forEach(el => {
+        el.style.background = el.dataset.tempo === tempo.id
+            ? 'var(--cinza-1)'
+            : '';
+    });
+
+    // ── Mostrar cabeçalho ──
     document.getElementById('estado-vazio').style.display = 'none';
 
     const cab = document.getElementById('tempo-cabecalho');
     cab.classList.remove('vis');
-    void cab.offsetWidth; // força reflow para re-disparar animação
+    void cab.offsetWidth;
     cab.classList.add('vis');
 
-    // Barra colorida lateral
-    document.getElementById('tempo-cor-bar').style.cssText =
-        `background: ${tempo.cor}; box-shadow: 0 0 12px ${tempo.cor}55;`;
+    // Faixa colorida no topo do card
+    document.getElementById('tempo-header-faixa').style.background =
+        `linear-gradient(90deg, ${tempo.cor}, ${shade(tempo.cor, -15)})`;
 
+    // Barra colorida lateral
+    document.getElementById('tempo-cor-bar').style.background = tempo.cor;
+
+    // Textos
     document.getElementById('tempo-periodo').textContent   = tempo.periodo;
     document.getElementById('tempo-nome').textContent      = tempo.nome;
     document.getElementById('tempo-descricao').textContent = tempo.desc;
 
-    // ── Monta grid de semanas ──
+    // ── Construir grid de semanas ──
     const container = document.getElementById('semanas-container');
     container.innerHTML = '';
     const semanas = SEMANAS[tempo.id] || [];
@@ -461,8 +510,6 @@ function selecionarTempo(tempo) {
         btn.className = 'semana-btn';
         btn.setAttribute('role', 'listitem');
         btn.setAttribute('type', 'button');
-
-        // Entrada escalonada
         btn.style.opacity   = '0';
         btn.style.transform = 'translateY(8px)';
 
@@ -484,28 +531,46 @@ function selecionarTempo(tempo) {
 
         container.appendChild(btn);
 
-        // Anima entrada com delay
+        // Entrada escalonada
         requestAnimationFrame(() => {
             setTimeout(() => {
-                btn.style.transition = 'opacity 0.38s ease, transform 0.38s ease';
-                btn.style.opacity    = '1';
-                btn.style.transform  = 'translateY(0)';
+                btn.style.transition =
+                    'opacity 0.4s ease, transform 0.4s ease';
+                btn.style.opacity   = '1';
+                btn.style.transform = 'translateY(0)';
             }, i * 35);
         });
     });
 
-    // Esconde painel de reflexão anterior
+    // Esconde reflexão anterior
     document.getElementById('reflexao-painel').classList.remove('vis');
 
-    // Scroll suave para o cabeçalho
     setTimeout(() => {
         cab.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }, 60);
 }
 
-// ═══════════════════════════════════════════════════════════
-// CARREGAR REFLEXÃO VIA CLAUDE API (STREAMING)
-// ═══════════════════════════════════════════════════════════
+/* ═══════════════════════════════════════════════════════════
+   UTILITÁRIO: escurece ou clareia uma cor hex
+═══════════════════════════════════════════════════════════ */
+function shade(hex, pct) {
+    const f  = parseInt(hex.slice(1), 16);
+    const t  = pct < 0 ? 0 : 255;
+    const p  = Math.abs(pct) / 100;
+    const R  = f >> 16;
+    const G  = (f >> 8) & 0x00FF;
+    const B  = f & 0x0000FF;
+    return '#' + (
+        0x1000000 +
+        (Math.round((t - R) * p) + R) * 0x10000 +
+        (Math.round((t - G) * p) + G) * 0x100 +
+        (Math.round((t - B) * p) + B)
+    ).toString(16).slice(1);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   CARREGAR REFLEXÃO VIA CLAUDE (STREAMING)
+═══════════════════════════════════════════════════════════ */
 async function carregarReflexao(semana, tempo) {
     if (abortCtrl) abortCtrl.abort();
     abortCtrl = new AbortController();
@@ -514,7 +579,7 @@ async function carregarReflexao(semana, tempo) {
     const conteudo = document.getElementById('reflexao-conteudo');
     const topLine  = document.getElementById('reflexao-topo-line');
 
-    // Preenche cabeçalho do card
+    // Cabeçalho do card
     document.getElementById('reflexao-titulo').textContent = semana.titulo;
     document.getElementById('reflexao-sub').textContent    = semana.num;
     document.getElementById('reflexao-kicker').innerHTML = `
@@ -525,11 +590,11 @@ async function carregarReflexao(semana, tempo) {
         </span>
     `;
 
-    // Linha colorida no topo do card
+    // Faixa colorida no topo
     topLine.style.background =
-        `linear-gradient(90deg, ${tempo.cor}, ${tempo.cor}60, transparent)`;
+        `linear-gradient(90deg, ${tempo.cor}, ${shade(tempo.cor, 30)}, ${tempo.cor})`;
 
-    // Estado de carregamento
+    // Loading
     conteudo.innerHTML = `
         <div class="reflexao-loading">
             <div class="loading-cruz" aria-hidden="true"></div>
@@ -540,7 +605,6 @@ async function carregarReflexao(semana, tempo) {
         </div>
     `;
 
-    // Mostra painel com animação
     painel.classList.remove('vis');
     void painel.offsetWidth;
     painel.classList.add('vis');
@@ -549,7 +613,6 @@ async function carregarReflexao(semana, tempo) {
         painel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }, 80);
 
-    // Prompt para a IA
     const prompt = `Você é um guia espiritual católico letrado e contemplativo, especialista em liturgia.
 Escreva uma reflexão meditativa sobre a "${semana.num}" do ${tempo.nome}, cujo tema é "${semana.titulo}".
 
@@ -578,7 +641,6 @@ Comece direto no primeiro parágrafo sem título nem introdução. Use <p> para 
 
         if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
 
-        // Inicia streaming
         conteudo.innerHTML = '';
         conteudo.classList.add('streaming');
 
@@ -593,7 +655,7 @@ Comece direto no primeiro parágrafo sem título nem introdução. Use <p> para 
 
             buffer += decoder.decode(value, { stream: true });
             const lines = buffer.split('\n');
-            buffer = lines.pop(); // guarda linha incompleta
+            buffer = lines.pop();
 
             for (const line of lines) {
                 if (!line.startsWith('data: ')) continue;
@@ -605,7 +667,7 @@ Comece direto no primeiro parágrafo sem título nem introdução. Use <p> para 
                         fullText += json.delta.text;
                         conteudo.innerHTML = fullText;
                     }
-                } catch { /* ignora parse errors parciais */ }
+                } catch { /* parse parcial */ }
             }
         }
 
@@ -619,9 +681,9 @@ Comece direto no primeiro parágrafo sem título nem introdução. Use <p> para 
     }
 }
 
-// ═══════════════════════════════════════════════════════════
-// FALLBACKS (quando a API não está disponível)
-// ═══════════════════════════════════════════════════════════
+/* ═══════════════════════════════════════════════════════════
+   REFLEXÕES FALLBACK
+═══════════════════════════════════════════════════════════ */
 function fallback(semana, tempo) {
     const reflexoes = {
 
@@ -681,7 +743,33 @@ function fallback(semana, tempo) {
             <p>O dom do Espírito não é privilégio de poucos, mas vocação de todo
             batizado. É Ele quem nos dá coragem de anunciar, sabedoria de discernir
             e amor que supera nossas limitações humanas. Que esta solenidade
-            renove em nós o desejo de sermos templos vivos do Espírito Santo.</p>`
+            renove em nós o desejo de sermos templos vivos do Espírito Santo.</p>`,
+
+        'natal-1': `
+            <p>A Oitava do Natal nos faz permanecer, por oito dias inteiros, diante
+            do mistério que muda a história: o Verbo se fez carne e habitou entre nós.
+            Não é apenas uma data — é uma realidade que continua a transformar o tempo.</p>
+            <div class="reflexao-cita">
+                <p>E o Verbo se fez carne e habitou entre nós,
+                e vimos a sua glória.</p>
+                <cite>— João 1, 14</cite>
+            </div>
+            <p>A Encarnação é o eterno entrando no tempo, o infinito assumindo a
+            fragilidade humana. Nesta semana, somos convidados a contemplar com
+            os pastores e os Magos o Menino que é Deus conosco — Emmanuel.</p>`,
+
+        'quaresma-0': `
+            <p>A Quarta-feira de Cinzas inaugura os quarenta dias de conversão.
+            A cinza imposta sobre nossa fronte não é gesto vazio: é memória dolorosa
+            e libertadora de nossa condição mortal e da necessidade absoluta de Deus.</p>
+            <div class="reflexao-cita">
+                <p>Lembra-te de que és pó e ao pó hás de voltar.</p>
+                <cite>— Gênesis 3, 19</cite>
+            </div>
+            <p>A Quaresma é caminho de despojamento. Não para nos diminuir, mas
+            para nos libertar do que pesa demais. Jejum, oração e esmola não são
+            obrigações externas — são as três portas pelas quais o Espírito entra
+            num coração disposto a converter-se.</p>`
     };
 
     return reflexoes[semana.id] || `
@@ -701,21 +789,18 @@ function fallback(semana, tempo) {
     `;
 }
 
-// ═══════════════════════════════════════════════════════════
-// CONTROLES DO PAINEL
-// ═══════════════════════════════════════════════════════════
+/* ═══════════════════════════════════════════════════════════
+   CONTROLES DO PAINEL
+═══════════════════════════════════════════════════════════ */
 function fecharReflexao() {
     if (abortCtrl) abortCtrl.abort();
 
-    const painel = document.getElementById('reflexao-painel');
-    painel.classList.remove('vis');
-
+    document.getElementById('reflexao-painel').classList.remove('vis');
     document.querySelectorAll('.semana-btn')
         .forEach(b => b.classList.remove('ativa'));
 
     semanaAtual = null;
 
-    // Volta o scroll ao cabeçalho do tempo
     const cab = document.getElementById('tempo-cabecalho');
     if (cab.classList.contains('vis')) {
         setTimeout(() => {
@@ -729,3 +814,16 @@ function regenerarReflexao() {
         carregarReflexao(semanaAtual, tempoAtual);
     }
 }
+
+/* ═══════════════════════════════════════════════════════════
+   ATALHOS DE TECLADO
+═══════════════════════════════════════════════════════════ */
+document.addEventListener('keydown', e => {
+    // ESC fecha reflexão
+    if (e.key === 'Escape') {
+        const painel = document.getElementById('reflexao-painel');
+        if (painel.classList.contains('vis')) {
+            fecharReflexao();
+        }
+    }
+});
