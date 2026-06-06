@@ -6,395 +6,564 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Primeira Comunhão - Guia Completo</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root {
-            --primary: #C41E3A;
-            --primary-light: #E85A6F;
-            --primary-dark: #8B1428;
-            --gold: #D4AF37;
-            --light-bg: #F8F7F4;
-            --text-dark: #2C2C2C;
-            --text-light: #666;
-            --border-color: #E0E0E0;
+ <style>
+    :root {
+        --primary: #C41E3A;
+        --primary-light: #E85A6F;
+        --primary-dark: #8B1428;
+        --gold: #D4AF37;
+        --light-bg: #F8F7F4;
+        --text-dark: #2C2C2C;
+        --text-light: #666;
+        --border-color: #E0E0E0;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        color: var(--text-dark);
+        background-color: #fff;
+    }
+
+    /* ============================================
+       HEADER
+       ============================================ */
+    header {
+        background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+        color: white;
+        padding: 60px 20px;
+        text-align: center;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        position: relative;
+    }
+
+    header h1 { font-size: 3em; margin-bottom: 10px; text-shadow: 2px 2px 4px rgba(0,0,0,0.2); }
+    header p { font-size: 1.2em; opacity: 0.95; max-width: 600px; margin: 0 auto; }
+
+    /* ============================================
+       BOTÃO VOLTAR (fixo, com auto-hide)
+       ============================================ */
+    .btn-voltar {
+        position: fixed;
+        top: 18px;
+        left: 18px;
+        z-index: 1001;
+
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+
+        padding: 10px 22px;
+
+        background: var(--primary-dark);
+        color: var(--gold);
+        border: 2px solid var(--gold);
+        border-radius: 30px;
+
+        font-family: 'Segoe UI', sans-serif;
+        font-size: 0.78em;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        text-decoration: none;
+
+        box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+        transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                    background 0.3s,
+                    color 0.3s,
+                    box-shadow 0.3s;
+    }
+
+    .btn-voltar:hover {
+        background: var(--gold);
+        color: var(--primary-dark);
+        transform: translateX(-4px);
+        box-shadow: 0 6px 20px rgba(212, 175, 55, 0.5);
+    }
+
+    /* Estado escondido */
+    .btn-voltar.escondido {
+        transform: translateY(-120%);
+    }
+
+    /* ============================================
+       NAVEGAÇÃO (agora é um botão único "ÍNDICE")
+       ============================================ */
+    nav {
+        background-color: var(--light-bg);
+        padding: 0;
+        position: fixed;            /* mudado de sticky */
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 100;
+        border-bottom: 2px solid var(--primary);
+        box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+
+        /* Auto-hide */
+        transform: translateY(0);
+        transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    nav.escondida {
+        transform: translateY(-100%);
+    }
+
+    .nav-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        padding: 12px 20px 12px 200px; /* espaço para o botão voltar */
+        position: relative;
+    }
+
+    /* Botão único "ÍNDICE" */
+    .btn-indice {
+        background: var(--primary);
+        color: white;
+        border: none;
+        padding: 10px 24px;
+        border-radius: 30px;
+        font-family: 'Segoe UI', sans-serif;
+        font-size: 0.85em;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        transition: all 0.3s ease;
+        box-shadow: 0 3px 10px rgba(196, 30, 58, 0.3);
+    }
+
+    .btn-indice:hover {
+        background: var(--primary-dark);
+        transform: translateY(-2px);
+        box-shadow: 0 5px 16px rgba(196, 30, 58, 0.45);
+    }
+
+    .btn-indice i {
+        transition: transform 0.3s;
+    }
+
+    .btn-indice.aberto {
+        background: var(--gold);
+        color: var(--primary-dark);
+    }
+
+    .btn-indice.aberto i {
+        transform: rotate(90deg);
+    }
+
+    /* Painel dropdown do índice */
+    nav ul {
+        display: none;
+        list-style: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: linear-gradient(180deg, #fff 0%, var(--light-bg) 100%);
+        border-bottom: 3px solid var(--primary);
+        padding: 1.5rem 2rem;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        justify-content: center;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        animation: deslizarBaixo 0.3s ease;
+    }
+
+    nav ul.aberto {
+        display: flex;
+    }
+
+    @keyframes deslizarBaixo {
+        from { opacity: 0; transform: translateY(-15px); }
+        to   { opacity: 1; transform: translateY(0); }
+    }
+
+    nav ul li { list-style: none; }
+
+    nav button:not(.btn-indice) {
+        background: white;
+        border: 2px solid var(--border-color);
+        padding: 10px 18px;
+        cursor: pointer;
+        font-size: 0.88em;
+        font-weight: 500;
+        color: var(--text-dark);
+        transition: all 0.25s ease;
+        border-radius: 22px;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+    nav button:not(.btn-indice):hover {
+        background: var(--primary);
+        border-color: var(--primary);
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(196, 30, 58, 0.3);
+    }
+
+    nav button:not(.btn-indice).active {
+        background: var(--primary);
+        border-color: var(--primary);
+        color: white;
+        font-weight: 600;
+        box-shadow: 0 2px 8px rgba(196, 30, 58, 0.4);
+    }
+
+    /* compensar nav fixa */
+    body {
+        padding-top: 70px;
+    }
+
+    /* ============================================
+       CONTAINER E SEÇÕES
+       ============================================ */
+    .container { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
+
+    .section { display: none; padding: 50px 0; }
+
+    .section.active {
+        display: block;
+        animation: fadeIn 0.5s ease;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .section h2 {
+        color: var(--primary);
+        font-size: 2.2em;
+        margin-bottom: 30px;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .section h3 { color: var(--primary-dark); font-size: 1.4em; margin-top: 30px; margin-bottom: 15px; }
+    .section h4 { color: var(--primary-dark); font-size: 1.15em; margin-top: 20px; margin-bottom: 10px; }
+
+    .section p, .section li { font-size: 1.05em; line-height: 1.8; margin-bottom: 15px; color: var(--text-dark); }
+    .section ul, .section ol { margin-left: 25px; margin-bottom: 20px; }
+    .section li { margin-bottom: 10px; }
+
+    /* ============================================
+       CARDS
+       ============================================ */
+    .card {
+        background: var(--light-bg);
+        border-left: 5px solid var(--primary);
+        padding: 25px;
+        margin: 20px 0;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        transition: transform 0.3s ease;
+    }
+
+    .card:hover { transform: translateX(5px); box-shadow: 0 4px 12px rgba(196, 30, 58, 0.15); }
+
+    .card-title {
+        color: var(--primary);
+        font-weight: 600;
+        font-size: 1.1em;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .highlight-box {
+        background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, rgba(196, 30, 58, 0.05) 100%);
+        border: 2px solid var(--gold);
+        padding: 30px;
+        border-radius: 10px;
+        margin: 30px 0;
+        text-align: center;
+    }
+
+    .highlight-box p { font-size: 1.2em; color: var(--primary-dark); font-weight: 500; font-style: italic; }
+
+    .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; margin: 30px 0; }
+
+    .feature-card {
+        background: white;
+        border: 2px solid var(--border-color);
+        padding: 25px;
+        border-radius: 10px;
+        text-align: center;
+        transition: all 0.3s ease;
+    }
+
+    .feature-card:hover {
+        border-color: var(--primary);
+        box-shadow: 0 8px 20px rgba(196, 30, 58, 0.15);
+        transform: translateY(-5px);
+    }
+
+    .feature-card i { font-size: 2.5em; color: var(--primary); margin-bottom: 15px; }
+    .feature-card h4 { color: var(--primary); margin-bottom: 10px; font-size: 1.1em; }
+
+    /* ============================================
+       TIMELINE
+       ============================================ */
+    .timeline { position: relative; padding: 20px 0; }
+
+    .timeline-item {
+        padding-left: 40px;
+        padding-bottom: 30px;
+        border-left: 3px solid var(--primary);
+        position: relative;
+    }
+
+    .timeline-item:last-child { border-left: 3px solid transparent; }
+
+    .timeline-item::before {
+        content: '';
+        position: absolute;
+        left: -9px;
+        top: 0;
+        width: 15px;
+        height: 15px;
+        background: var(--primary);
+        border-radius: 50%;
+        border: 3px solid white;
+        box-shadow: 0 0 0 2px var(--primary);
+    }
+
+    .timeline-item h4 { color: var(--primary); font-size: 1.1em; margin-bottom: 10px; }
+
+    /* ============================================
+       QUOTE / TABS / TABELA / ORAÇÃO / FAQ
+       ============================================ */
+    .quote {
+        background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+        color: white;
+        padding: 30px;
+        border-radius: 8px;
+        margin: 30px 0;
+        font-size: 1.1em;
+        font-style: italic;
+        text-align: center;
+        border-left: 5px solid var(--gold);
+    }
+
+    .quote::before { content: '"'; font-size: 3em; opacity: 0.3; }
+
+    .tabs { display: flex; gap: 10px; margin: 25px 0; flex-wrap: wrap; }
+
+    .tab-button {
+        background: white;
+        border: 2px solid var(--border-color);
+        padding: 12px 20px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        color: var(--text-dark);
+    }
+
+    .tab-button:hover { border-color: var(--primary); color: var(--primary); }
+    .tab-button.active { background: var(--primary); color: white; border-color: var(--primary); }
+
+    .tab-content { display: none; padding: 25px; background: var(--light-bg); border-radius: 8px; margin-top: 15px; }
+    .tab-content.active { display: block; }
+
+    .comparison-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 25px 0;
+        background: white;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+    .comparison-table th { background: var(--primary); color: white; padding: 15px; text-align: left; font-weight: 600; }
+    .comparison-table td { padding: 15px; border-bottom: 1px solid var(--border-color); }
+    .comparison-table tr:hover { background: var(--light-bg); }
+
+    .prayer-box {
+        background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+        color: white;
+        padding: 30px;
+        border-radius: 10px;
+        margin: 25px 0;
+        text-align: center;
+    }
+
+    .prayer-box h4 { margin-bottom: 15px; font-size: 1.2em; font-weight: 700; color: var(--gold); }
+    .prayer-box p { font-style: italic; line-height: 2; font-size: 1.05em; margin-bottom: 0; color: white; }
+
+    .faq-item {
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        margin: 15px 0;
+        overflow: hidden;
+    }
+
+    .faq-question {
+        background: var(--light-bg);
+        padding: 20px 25px;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-weight: 600;
+        color: var(--primary-dark);
+        transition: all 0.3s ease;
+        border: none;
+        width: 100%;
+        text-align: left;
+        font-size: 1.05em;
+    }
+
+    .faq-question:hover { background: rgba(196, 30, 58, 0.08); color: var(--primary); }
+    .faq-question.open { background: var(--primary); color: white; }
+    .faq-question.open i { transform: rotate(180deg); }
+
+    .faq-answer {
+        display: none;
+        padding: 25px;
+        border-top: 1px solid var(--border-color);
+        background: white;
+    }
+
+    .faq-answer.open { display: block; }
+    .faq-question i { transition: transform 0.3s ease; }
+
+    /* ============================================
+       FOOTER
+       ============================================ */
+    footer {
+        background: var(--text-dark);
+        color: white;
+        padding: 40px 20px;
+        text-align: center;
+        margin-top: 60px;
+    }
+
+    footer p { margin: 10px 0; opacity: 0.9; }
+
+    /* ============================================
+       BACK TO TOP
+       ============================================ */
+    .back-to-top {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        background: var(--primary);
+        color: white;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 12px rgba(196, 30, 58, 0.3);
+        z-index: 99;
+    }
+
+    .back-to-top.show { opacity: 1; visibility: visible; }
+    .back-to-top:hover { background: var(--primary-dark); transform: translateY(-3px); }
+
+    .reading-time {
+        color: var(--text-light);
+        font-size: 0.9em;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 20px;
+    }
+
+    .badge {
+        display: inline-block;
+        background: var(--primary);
+        color: white;
+        padding: 3px 10px;
+        border-radius: 20px;
+        font-size: 0.85em;
+        font-weight: 600;
+        margin-left: 10px;
+    }
+
+    /* ============================================
+       RESPONSIVO
+       ============================================ */
+    @media (max-width: 768px) {
+        header h1 { font-size: 2em; }
+        header { padding: 50px 20px; }
+        .section { padding: 30px 0; }
+        .section h2 { font-size: 1.8em; }
+        .grid-2 { grid-template-columns: 1fr; }
+        .back-to-top { width: 45px; height: 45px; bottom: 20px; right: 20px; }
+
+        .nav-container {
+            padding: 10px 16px 10px 140px;
         }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: var(--text-dark);
-            background-color: #fff;
-        }
-
-        header {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-            color: white;
-            padding: 60px 20px;
-            text-align: center;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-
-        header h1 { font-size: 3em; margin-bottom: 10px; text-shadow: 2px 2px 4px rgba(0,0,0,0.2); }
-        header p { font-size: 1.2em; opacity: 0.95; max-width: 600px; margin: 0 auto; }
-
-        nav {
-            background-color: var(--light-bg);
-            padding: 0;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            border-bottom: 2px solid var(--primary);
-        }
-
-        nav ul {
-            list-style: none;
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        nav button {
-            background: none;
-            border: none;
-            padding: 15px 18px;
-            cursor: pointer;
-            font-size: 0.9em;
-            font-weight: 500;
-            color: var(--text-dark);
-            transition: all 0.3s ease;
-            border-bottom: 3px solid transparent;
-        }
-
-        nav button:hover {
-            background-color: rgba(196, 30, 58, 0.05);
-            border-bottom-color: var(--primary);
-            color: var(--primary);
-        }
-
-        nav button.active {
-            background-color: rgba(196, 30, 58, 0.1);
-            border-bottom-color: var(--primary);
-            color: var(--primary);
-            font-weight: 600;
-        }
-
-        .container { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
-
-        .section { display: none; padding: 50px 0; }
-
-        .section.active {
-            display: block;
-            animation: fadeIn 0.5s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .section h2 {
-            color: var(--primary);
-            font-size: 2.2em;
-            margin-bottom: 30px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .section h3 { color: var(--primary-dark); font-size: 1.4em; margin-top: 30px; margin-bottom: 15px; }
-        .section h4 { color: var(--primary-dark); font-size: 1.15em; margin-top: 20px; margin-bottom: 10px; }
-
-        .section p, .section li { font-size: 1.05em; line-height: 1.8; margin-bottom: 15px; color: var(--text-dark); }
-        .section ul, .section ol { margin-left: 25px; margin-bottom: 20px; }
-        .section li { margin-bottom: 10px; }
-
-        .card {
-            background: var(--light-bg);
-            border-left: 5px solid var(--primary);
-            padding: 25px;
-            margin: 20px 0;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-            transition: transform 0.3s ease;
-        }
-
-        .card:hover { transform: translateX(5px); box-shadow: 0 4px 12px rgba(196, 30, 58, 0.15); }
-
-        .card-title {
-            color: var(--primary);
-            font-weight: 600;
-            font-size: 1.1em;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .highlight-box {
-            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, rgba(196, 30, 58, 0.05) 100%);
-            border: 2px solid var(--gold);
-            padding: 30px;
-            border-radius: 10px;
-            margin: 30px 0;
-            text-align: center;
-        }
-
-        .highlight-box p { font-size: 1.2em; color: var(--primary-dark); font-weight: 500; font-style: italic; }
-
-        .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; margin: 30px 0; }
-
-        .feature-card {
-            background: white;
-            border: 2px solid var(--border-color);
-            padding: 25px;
-            border-radius: 10px;
-            text-align: center;
-            transition: all 0.3s ease;
-        }
-
-        .feature-card:hover {
-            border-color: var(--primary);
-            box-shadow: 0 8px 20px rgba(196, 30, 58, 0.15);
-            transform: translateY(-5px);
-        }
-
-        .feature-card i { font-size: 2.5em; color: var(--primary); margin-bottom: 15px; }
-        .feature-card h4 { color: var(--primary); margin-bottom: 10px; font-size: 1.1em; }
-
-        .timeline { position: relative; padding: 20px 0; }
-
-        .timeline-item {
-            padding-left: 40px;
-            padding-bottom: 30px;
-            border-left: 3px solid var(--primary);
-            position: relative;
-        }
-
-        .timeline-item:last-child { border-left: 3px solid transparent; }
-
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: -9px;
-            top: 0;
-            width: 15px;
-            height: 15px;
-            background: var(--primary);
-            border-radius: 50%;
-            border: 3px solid white;
-            box-shadow: 0 0 0 2px var(--primary);
-        }
-
-        .timeline-item h4 { color: var(--primary); font-size: 1.1em; margin-bottom: 10px; }
-
-        .quote {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-            color: white;
-            padding: 30px;
-            border-radius: 8px;
-            margin: 30px 0;
-            font-size: 1.1em;
-            font-style: italic;
-            text-align: center;
-            border-left: 5px solid var(--gold);
-        }
-
-        .quote::before { content: '"'; font-size: 3em; opacity: 0.3; }
-
-        .tabs { display: flex; gap: 10px; margin: 25px 0; flex-wrap: wrap; }
-
-        .tab-button {
-            background: white;
-            border: 2px solid var(--border-color);
-            padding: 12px 20px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            color: var(--text-dark);
-        }
-
-        .tab-button:hover { border-color: var(--primary); color: var(--primary); }
-        .tab-button.active { background: var(--primary); color: white; border-color: var(--primary); }
-
-        .tab-content { display: none; padding: 25px; background: var(--light-bg); border-radius: 8px; margin-top: 15px; }
-        .tab-content.active { display: block; }
-
-        .comparison-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 25px 0;
-            background: white;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-            border-radius: 8px;
-            overflow: hidden;
-        }
-
-        .comparison-table th { background: var(--primary); color: white; padding: 15px; text-align: left; font-weight: 600; }
-        .comparison-table td { padding: 15px; border-bottom: 1px solid var(--border-color); }
-        .comparison-table tr:hover { background: var(--light-bg); }
-
-        .prayer-box {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-            color: white;
-            padding: 30px;
-            border-radius: 10px;
-            margin: 25px 0;
-            text-align: center;
-        }
-
-        .prayer-box h4 { margin-bottom: 15px; font-size: 1.2em; font-weight: 700; color: var(--gold); }
-        .prayer-box p { font-style: italic; line-height: 2; font-size: 1.05em; margin-bottom: 0; color: white; }
-
-        .faq-item {
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            margin: 15px 0;
-            overflow: hidden;
-        }
-
-        .faq-question {
-            background: var(--light-bg);
-            padding: 20px 25px;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-weight: 600;
-            color: var(--primary-dark);
-            transition: all 0.3s ease;
-            border: none;
-            width: 100%;
-            text-align: left;
-            font-size: 1.05em;
-        }
-
-        .faq-question:hover { background: rgba(196, 30, 58, 0.08); color: var(--primary); }
-        .faq-question.open { background: var(--primary); color: white; }
-        .faq-question.open i { transform: rotate(180deg); }
-
-        .faq-answer {
-            display: none;
-            padding: 25px;
-            border-top: 1px solid var(--border-color);
-            background: white;
-        }
-
-        .faq-answer.open { display: block; }
-        .faq-question i { transition: transform 0.3s ease; }
-
-        footer {
-            background: var(--text-dark);
-            color: white;
-            padding: 40px 20px;
-            text-align: center;
-            margin-top: 60px;
-        }
-
-        footer p { margin: 10px 0; opacity: 0.9; }
-
-        .back-to-top {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background: var(--primary);
-            color: white;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 12px rgba(196, 30, 58, 0.3);
-            z-index: 99;
-        }
-
-        .back-to-top.show { opacity: 1; visibility: visible; }
-        .back-to-top:hover { background: var(--primary-dark); transform: translateY(-3px); }
-
-        .reading-time {
-            color: var(--text-light);
-            font-size: 0.9em;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 20px;
-        }
-
-        .badge {
-            display: inline-block;
-            background: var(--primary);
-            color: white;
-            padding: 3px 10px;
-            border-radius: 20px;
-            font-size: 0.85em;
-            font-weight: 600;
-            margin-left: 10px;
-        }
-
-        @media (max-width: 768px) {
-            header h1 { font-size: 2em; }
-            nav button { padding: 10px 12px; font-size: 0.82em; }
-            .section { padding: 30px 0; }
-            .section h2 { font-size: 1.8em; }
-            .grid-2 { grid-template-columns: 1fr; }
-            .back-to-top { width: 45px; height: 45px; bottom: 20px; right: 20px; }
+        .btn-indice {
+            padding: 8px 18px;
+            font-size: 0.78em;
         }
         .btn-voltar {
-  position: fixed;
-  top: 20px;
-  left: 20px;
-  z-index: 9999;
+            padding: 8px 14px;
+            font-size: 0.7em;
+            top: 14px;
+            left: 14px;
+        }
+        nav ul {
+            padding: 1rem;
+        }
+        nav button:not(.btn-indice) {
+            padding: 8px 14px;
+            font-size: 0.82em;
+        }
+    }
 
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-
-  padding: 8px 18px;
-
-  background: rgba(255, 255, 255, 0.15);
-  color: #ffffff;
-  border: 1px solid rgba(255, 255, 255, 0.7);
-  border-radius: 6px;
-
-  font-family: 'Inter', 'Segoe UI', sans-serif;
-  font-size: 0.82em;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  text-decoration: none;
-
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
-  transition: background 0.3s, color 0.3s, transform 0.2s;
-}
-
-.btn-voltar:hover {
-  background: #ffffff;
-  color: #a01c2c;
-  transform: translateX(-3px);
-}
-    </style>
+    @media (max-width: 480px) {
+        .btn-voltar .btn-voltar-texto {
+            display: none;
+        }
+        .btn-voltar {
+            padding: 8px 12px;
+        }
+        .nav-container {
+            padding-left: 80px;
+        }
+    }
+</style>
 </head>
 <body>
 <!-- BOTÃO VOLTAR -->
 <a href="../estudos.html" class="btn-voltar">
-  &#8592; Voltar
+    <span>&#8592;</span>
+    <span class="btn-voltar-texto">Voltar</span>
 </a>
-<header>
-    <h1>⛪ Primeira Comunhão</h1>
-    <p>Um guia completo sobre um dos momentos mais importantes da vida cristã</p>
-</header>
 
-<nav>
-    <ul>
+<!-- NAVEGAÇÃO (botão único que abre painel) -->
+<nav id="nav-principal">
+    <div class="nav-container">
+        <button class="btn-indice" id="btnIndice" aria-label="Abrir índice">
+            <i class="fas fa-bars"></i>
+            <span>Índice</span>
+        </button>
+    </div>
+    <ul id="navMenu">
         <li><button class="nav-btn active" data-section="inicio"><i class="fas fa-home"></i> Início</button></li>
         <li><button class="nav-btn" data-section="o-que-e"><i class="fas fa-book"></i> O que é</button></li>
         <li><button class="nav-btn" data-section="importancia"><i class="fas fa-star"></i> Importância</button></li>
@@ -409,8 +578,13 @@
     </ul>
 </nav>
 
-<div class="container">
+<header>
+    <h1>⛪ Primeira Comunhão</h1>
+    <p>Um guia completo sobre um dos momentos mais importantes da vida cristã</p>
+</header>
 
+<div class="container">
+    <!-- suas seções continuam aqui -->
     <!-- ===== INÍCIO ===== -->
     <section id="inicio" class="section active">
         <h2><i class="fas fa-cross"></i> Bem-vindo</h2>
@@ -1385,42 +1559,89 @@
 </div>
 
 <script>
+    // ========================================
+    // VARIÁVEIS GLOBAIS
+    // ========================================
     const navButtons = document.querySelectorAll('.nav-btn');
     const sections = document.querySelectorAll('.section');
     const backToTopBtn = document.getElementById('backToTop');
+    const btnIndice = document.getElementById('btnIndice');
+    const navMenu = document.getElementById('navMenu');
+    const navPrincipal = document.getElementById('nav-principal');
+    const btnVoltar = document.querySelector('.btn-voltar');
 
+    // ========================================
+    // ABRIR / FECHAR PAINEL DO ÍNDICE
+    // ========================================
+    btnIndice.addEventListener('click', (e) => {
+        e.stopPropagation();
+        btnIndice.classList.toggle('aberto');
+        navMenu.classList.toggle('aberto');
+    });
+
+    // Fechar ao clicar fora do menu
+    document.addEventListener('click', (e) => {
+        if (!navMenu.contains(e.target) && !btnIndice.contains(e.target)) {
+            btnIndice.classList.remove('aberto');
+            navMenu.classList.remove('aberto');
+        }
+    });
+
+    // Fechar com ESC
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            btnIndice.classList.remove('aberto');
+            navMenu.classList.remove('aberto');
+        }
+    });
+
+    // ========================================
+    // NAVEGAÇÃO ENTRE SEÇÕES
+    // ========================================
     navButtons.forEach(button => {
         button.addEventListener('click', (e) => {
             const sectionId = e.target.closest('button').getAttribute('data-section');
             showSection(sectionId);
             window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            // Fecha o painel automaticamente
+            btnIndice.classList.remove('aberto');
+            navMenu.classList.remove('aberto');
         });
     });
 
     function showSection(sectionId) {
         sections.forEach(s => s.classList.remove('active'));
         navButtons.forEach(b => b.classList.remove('active'));
-        document.getElementById(sectionId).classList.add('active');
-        document.querySelector(`[data-section="${sectionId}"]`).classList.add('active');
+        const targetSection = document.getElementById(sectionId);
+        if (targetSection) targetSection.classList.add('active');
+        const targetBtn = document.querySelector(`[data-section="${sectionId}"]`);
+        if (targetBtn) targetBtn.classList.add('active');
     }
 
-    window.addEventListener('scroll', () => {
-        backToTopBtn.classList.toggle('show', window.scrollY > 300);
-    });
-
+    // ========================================
+    // BOTÃO VOLTAR AO TOPO
+    // ========================================
     function scrollToTop() {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
+    // ========================================
+    // TABS
+    // ========================================
     function showTab(evt, tabName) {
         const allContents = document.querySelectorAll('.tab-content');
         const allButtons = document.querySelectorAll('.tab-button');
         allContents.forEach(c => c.classList.remove('active'));
         allButtons.forEach(b => b.classList.remove('active'));
-        document.getElementById(tabName).classList.add('active');
+        const tab = document.getElementById(tabName);
+        if (tab) tab.classList.add('active');
         evt.currentTarget.classList.add('active');
     }
 
+    // ========================================
+    // FAQ
+    // ========================================
     function toggleFaq(btn) {
         const answer = btn.nextElementSibling;
         const isOpen = answer.classList.contains('open');
@@ -1431,6 +1652,48 @@
             btn.classList.add('open');
         }
     }
+
+    // ========================================
+    // SCROLL: Auto-hide + Botão voltar ao topo
+    // ========================================
+    let ultimoScroll = 0;
+    const limiarScroll = 80;
+
+    window.addEventListener('scroll', () => {
+        const scrollAtual = window.pageYOffset || document.documentElement.scrollTop;
+
+        // -- Botão voltar ao topo --
+        if (backToTopBtn) {
+            backToTopBtn.classList.toggle('show', scrollAtual > 300);
+        }
+
+        // -- Auto-hide da navbar e botão voltar --
+        // Se o índice estiver aberto, não esconde
+        if (navMenu.classList.contains('aberto')) {
+            ultimoScroll = scrollAtual;
+            return;
+        }
+
+        // No topo da página, sempre mostra
+        if (scrollAtual <= limiarScroll) {
+            navPrincipal.classList.remove('escondida');
+            btnVoltar.classList.remove('escondido');
+            ultimoScroll = scrollAtual;
+            return;
+        }
+
+        if (scrollAtual > ultimoScroll) {
+            // Rolando pra BAIXO → esconde
+            navPrincipal.classList.add('escondida');
+            btnVoltar.classList.add('escondido');
+        } else {
+            // Rolando pra CIMA → mostra
+            navPrincipal.classList.remove('escondida');
+            btnVoltar.classList.remove('escondido');
+        }
+
+        ultimoScroll = scrollAtual;
+    }, { passive: true });
 </script>
 </body>
 </html>
