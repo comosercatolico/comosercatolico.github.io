@@ -46,47 +46,45 @@
     header p { font-size: 1.2em; opacity: 0.95; max-width: 600px; margin: 0 auto; }
 
     /* ============================================
-       BOTÃO VOLTAR (fixo, com auto-hide)
+       BOTÃO VOLTAR (mesmo nível e estilo do ÍNDICE)
        ============================================ */
     .btn-voltar {
         position: fixed;
-        top: 18px;
-        left: 18px;
+        top: 12px;              /* alinhado com .btn-indice */
+        left: 20px;
         z-index: 1001;
 
         display: inline-flex;
         align-items: center;
         gap: 8px;
 
-        padding: 10px 22px;
+        padding: 10px 24px;     /* mesmo padding do .btn-indice */
 
-        background: var(--primary-dark);
-        color: var(--gold);
-        border: 2px solid var(--gold);
+        background: var(--primary);
+        color: white;
+        border: none;
         border-radius: 30px;
 
         font-family: 'Segoe UI', sans-serif;
-        font-size: 0.78em;
+        font-size: 0.85em;      /* mesmo tamanho do .btn-indice */
         font-weight: 700;
-        letter-spacing: 0.12em;
+        letter-spacing: 0.1em;
         text-transform: uppercase;
         text-decoration: none;
 
-        box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+        box-shadow: 0 3px 10px rgba(196, 30, 58, 0.3);
         transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
                     background 0.3s,
-                    color 0.3s,
                     box-shadow 0.3s;
     }
 
     .btn-voltar:hover {
-        background: var(--gold);
-        color: var(--primary-dark);
-        transform: translateX(-4px);
-        box-shadow: 0 6px 20px rgba(212, 175, 55, 0.5);
+        background: var(--primary-dark);
+        transform: translateY(-2px);
+        box-shadow: 0 5px 16px rgba(196, 30, 58, 0.45);
     }
 
-    /* Estado escondido */
+    /* Estado escondido (auto-hide) */
     .btn-voltar.escondido {
         transform: translateY(-120%);
     }
@@ -225,11 +223,11 @@
        ============================================ */
     .container { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
 
-    /* ⭐ NOVO: Scroll contínuo (tudo visível) */
+    /* Scroll contínuo (tudo visível) */
     .section {
         display: block;
         padding: 60px 0;
-        scroll-margin-top: 90px; /* offset para o scroll de âncora */
+        scroll-margin-top: 90px;
         border-bottom: 1px solid var(--border-color);
 
         /* Animação de entrada ao scroll */
@@ -247,7 +245,7 @@
         transform: translateY(0);
     }
 
-    /* Primeira seção sempre visível (sem precisar scroll) */
+    /* Primeira seção sempre visível */
     .section:first-of-type {
         opacity: 1;
         transform: translateY(0);
@@ -534,9 +532,9 @@
             font-size: 0.78em;
         }
         .btn-voltar {
-            padding: 8px 14px;
-            font-size: 0.7em;
-            top: 14px;
+            padding: 8px 18px;
+            font-size: 0.78em;
+            top: 10px;
             left: 14px;
         }
         nav ul {
@@ -553,7 +551,7 @@
             display: none;
         }
         .btn-voltar {
-            padding: 8px 12px;
+            padding: 8px 14px;
         }
         .nav-container {
             padding-left: 80px;
