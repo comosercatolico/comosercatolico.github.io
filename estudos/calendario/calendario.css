@@ -1,1024 +1,709 @@
- <style>
-    /* ══════════════════════════════════════════════════════
-       CALENDÁRIO LITÚRGICO — CSS COMPLETO
-       ══════════════════════════════════════════════════════ */
-
-    :root {
-      --purple: #6b3fa0;
-      --purple-light: #9b6fcf;
-      --purple-dark: #4a2870;
-      --gold: #c9a84c;
-      --gold-light: #e8cc88;
-      --gold-dark: #8b6914;
-      --mauve: #7a5080;
-      --mauve-light: #c9a4bc;
-      --crimson: #9b1a2a;
-      --crimson-light: #c44050;
-      --green: #2e7d4f;
-      --green-light: #5aaa78;
-      --green-dark: #1a5035;
-      --ivory: #f5f0e0;
-      --white-linen: #faf8f3;
-      --bg: #faf8f3;
-      --bg-warm: #f5f0e6;
-      --bg-card: #ffffff;
-      --text-primary: #1a150d;
-      --text-secondary: #4a3e2c;
-      --text-muted: #8a7a60;
-      --border: #ddd5be;
-      --border-light: #ede8db;
-      --accent: #8b6914;
-      --accent-light: #c9a84c;
-      --font-display: 'Cinzel', 'Palatino Linotype', serif;
-      --font-body: 'Cormorant Garamond', 'Georgia', serif;
-      --font-text: 'Crimson Pro', 'Georgia', serif;
-      --radius: 6px;
-      --radius-lg: 12px;
-      --transition: 0.35s cubic-bezier(0.4,0,0.2,1);
-    }
-
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-
-    body {
-      background-color: var(--bg);
-      background-image:
-        radial-gradient(ellipse at 20% 50%, rgba(107,63,160,0.03) 0%, transparent 50%),
-        radial-gradient(ellipse at 80% 50%, rgba(201,168,76,0.04) 0%, transparent 50%);
-      color: var(--text-primary);
-      font-family: var(--font-text);
-      font-size: 17px;
-      line-height: 1.75;
-      -webkit-font-smoothing: antialiased;
-      overflow-x: hidden;
-    }
-
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image:
-        url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
-      pointer-events: none;
-      z-index: 9999;
-    }
-
-    /* ── HEADER ── */
-    .site-header {
-      background: linear-gradient(180deg, var(--white-linen) 0%, var(--bg) 100%);
-      border-bottom: 1px solid var(--border);
-      padding: 2.5rem 2rem 2rem;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .site-header::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(ellipse 80% 120% at 50% -20%, rgba(201,168,76,0.1) 0%, transparent 60%);
-      pointer-events: none;
-    }
-
-    .site-header::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 200px;
-      height: 3px;
-      background: linear-gradient(to right, transparent, var(--gold), transparent);
-    }
-
-    .header-ornament {
-      height: 1px;
-      background: linear-gradient(to right, transparent, var(--gold) 30%, var(--gold) 70%, transparent);
-      margin: 0 auto;
-      max-width: 500px;
-      opacity: 0.6;
-    }
-    .header-ornament.top { margin-bottom: 1.5rem; }
-    .header-ornament.bottom { margin-top: 1.5rem; }
-
-    .header-inner {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 2rem;
-      position: relative;
-      z-index: 1;
-    }
-
-    .header-cross {
-      font-size: 2.5rem;
-      color: var(--gold);
-      opacity: 0.6;
-      line-height: 1;
-      text-shadow: 0 2px 12px rgba(201,168,76,0.4);
-      animation: cross-breathe 5s ease-in-out infinite;
-    }
-
-    @keyframes cross-breathe {
-      0%, 100% { opacity: 0.6; transform: scale(1); }
-      50% { opacity: 0.9; transform: scale(1.08); }
-    }
-
-    .header-cross.mirror { transform: scaleX(-1); }
-
-    .header-subtitle {
-      font-family: var(--font-display);
-      font-size: 0.7rem;
-      font-weight: 400;
-      letter-spacing: 0.4em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 0.5rem;
-    }
-
-    .header-title {
-      font-family: var(--font-display);
-      font-size: clamp(1.8rem, 5vw, 3rem);
-      font-weight: 600;
-      color: var(--text-primary);
-      letter-spacing: 0.05em;
-      line-height: 1.15;
-      margin-bottom: 0.4rem;
-      background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .header-tagline {
-      font-family: var(--font-body);
-      font-size: 1rem;
-      color: var(--text-muted);
-    }
-    .header-tagline em { font-style: italic; color: var(--accent-light); }
-
-    /* ── TODAY BANNER ── */
-    .today-banner {
-      max-width: 700px;
-      margin: 0 auto 0.5rem;
-      padding: 1rem 2rem;
-      background: linear-gradient(135deg, rgba(201,168,76,0.08) 0%, rgba(201,168,76,0.02) 100%);
-      border: 1px solid rgba(201,168,76,0.25);
-      border-radius: var(--radius-lg);
-      text-align: center;
-      animation: banner-in 0.8s ease-out both;
-      animation-delay: 0.5s;
-    }
-
-    @keyframes banner-in {
-      from { opacity: 0; transform: translateY(-10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .today-banner .today-label {
-      font-family: var(--font-display);
-      font-size: 0.65rem;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 0.3rem;
-    }
-
-    .today-banner .today-season {
-      font-family: var(--font-display);
-      font-size: 1.2rem;
-      font-weight: 600;
-      color: var(--text-primary);
-    }
-
-    .today-banner .today-color-dot {
-      display: inline-block;
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      margin-right: 0.5rem;
-      vertical-align: middle;
-      box-shadow: 0 0 6px currentColor;
-    }
-
-    .today-banner .today-date {
-      font-family: var(--font-body);
-      font-size: 0.9rem;
-      color: var(--text-muted);
-      margin-top: 0.2rem;
-    }
-
-    /* ── MAIN ── */
-    .main-container {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 0 1.5rem 4rem;
-    }
-
-    .intro-section {
-      text-align: center;
-      padding: 2.5rem 1rem 1.5rem;
-      margin-bottom: 2rem;
-    }
-
-    .intro-verse {
-      font-family: var(--font-body);
-      font-size: 1.2rem;
-      font-style: italic;
-      color: var(--text-secondary);
-      max-width: 600px;
-      margin: 0 auto;
-      line-height: 1.85;
-      position: relative;
-    }
-
-    .intro-verse::before,
-    .intro-verse::after {
-      content: '';
-      position: absolute;
-      width: 40px;
-      height: 1px;
-      background: linear-gradient(to right, transparent, var(--gold), transparent);
-      left: 50%;
-      transform: translateX(-50%);
-    }
-    .intro-verse::before { top: -12px; }
-    .intro-verse::after { bottom: -12px; }
-
-    .verse-ref {
-      display: block;
-      font-size: 0.82rem;
-      font-style: normal;
-      font-family: var(--font-display);
-      letter-spacing: 0.12em;
-      color: var(--accent);
-      margin-top: 0.6rem;
-    }
-
-    /* ── CALENDAR SECTION ── */
-    .calendar-section {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 1.5rem;
-      margin-bottom: 3rem;
-    }
-
-    /* ── LEGEND ── */
-    .legend-bar {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.4rem 1rem;
-      justify-content: center;
-      padding: 0.8rem 1.5rem;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-    }
-
-    .legend-item {
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-      font-family: var(--font-display);
-      font-size: 0.72rem;
-      font-weight: 500;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--text-secondary);
-      cursor: pointer;
-      padding: 0.25rem 0.5rem;
-      border-radius: 4px;
-      transition: all var(--transition);
-      position: relative;
-    }
-
-    .legend-item::after {
-      content: '';
-      position: absolute;
-      bottom: -2px;
-      left: 50%;
-      width: 0;
-      height: 2px;
-      background: var(--gold);
-      transition: all var(--transition);
-      transform: translateX(-50%);
-    }
-
-    .legend-item:hover { color: var(--text-primary); }
-    .legend-item:hover::after { width: 80%; }
-    .legend-item.active { color: var(--text-primary); background: var(--bg-warm); }
-    .legend-item.active::after { width: 100%; }
-
-    .legend-dot {
-      display: inline-block;
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      flex-shrink: 0;
-      box-shadow: 0 0 0 2px rgba(255,255,255,0.9), 0 0 0 3px rgba(0,0,0,0.08);
-      transition: transform var(--transition), box-shadow var(--transition);
-    }
-
-    .legend-item:hover .legend-dot {
-      transform: scale(1.25);
-      box-shadow: 0 0 0 2px rgba(255,255,255,0.9), 0 0 8px currentColor;
-    }
-
-    /* ── WHEEL ── */
-    .wheel-wrapper {
-      position: relative;
-      width: 100%;
-      max-width: 720px;
-      animation: wheel-entrance 1.2s cubic-bezier(0.22,1,0.36,1) both;
-    }
-
-    @keyframes wheel-entrance {
-      from { opacity: 0; transform: scale(0.85) rotate(-15deg); }
-      to { opacity: 1; transform: scale(1) rotate(0deg); }
-    }
-
-    #liturgical-wheel {
-      width: 100%;
-      height: auto;
-      display: block;
-      cursor: default;
-    }
-
-    .season-arc {
-      cursor: pointer;
-      transition: filter 0.25s ease, opacity 0.25s ease;
-      transform-origin: 450px 450px;
-    }
-
-    .season-arc:hover {
-      filter: brightness(1.15) saturate(1.2);
-    }
-
-    .season-arc.active {
-      filter: brightness(1.2) saturate(1.3);
-      animation: arc-pulse 2s ease-in-out infinite;
-    }
-
-    @keyframes arc-pulse {
-      0%, 100% { filter: brightness(1.2) saturate(1.3); }
-      50% { filter: brightness(1.3) saturate(1.4); }
-    }
-
-    .season-arc.dimmed {
-      opacity: 0.35;
-      filter: saturate(0.5);
-    }
-
-    .week-seg {
-      cursor: pointer;
-      transition: filter 0.2s ease, opacity 0.2s ease;
-    }
-    .week-seg:hover {
-      filter: brightness(1.2);
-    }
-    .week-seg.dimmed {
-      opacity: 0.35;
-    }
-
-    /* ── TOOLTIP ── */
-    .tooltip {
-      position: absolute;
-      background: linear-gradient(135deg, rgba(26,21,13,0.96) 0%, rgba(40,30,18,0.96) 100%);
-      color: #f5f0e0;
-      font-family: var(--font-body);
-      font-size: 0.9rem;
-      padding: 0.7rem 1rem;
-      border-radius: 8px;
-      pointer-events: none;
-      opacity: 0;
-      transform: translate(-50%, -120%);
-      transition: opacity 0.2s, transform 0.2s;
-      white-space: nowrap;
-      z-index: 100;
-      border: 1px solid rgba(201,168,76,0.4);
-      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
-      max-width: 280px;
-    }
-
-    .tooltip.visible {
-      opacity: 1;
-      transform: translate(-50%, -130%);
-    }
-
-    .tooltip-title {
-      font-family: var(--font-display);
-      font-size: 0.8rem;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      color: var(--gold-light);
-      margin-bottom: 0.2rem;
-    }
-
-    .tooltip-latin {
-      font-style: italic;
-      font-size: 0.78rem;
-      color: rgba(245,240,224,0.7);
-    }
-
-    .tooltip-color-bar {
-      width: 100%;
-      height: 3px;
-      border-radius: 2px;
-      margin-top: 0.4rem;
-    }
-
-    /* ── MINI WHEEL (fixed) ── */
-    .mini-wheel {
-      position: fixed;
-      bottom: 24px;
-      right: 24px;
-      width: 70px;
-      height: 70px;
-      border-radius: 50%;
-      background: var(--bg-card);
-      border: 2px solid var(--gold);
-      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-      z-index: 500;
-      cursor: pointer;
-      opacity: 0;
-      transform: scale(0.5);
-      transition: all 0.4s cubic-bezier(0.22,1,0.36,1);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-    }
-
-    .mini-wheel.visible {
-      opacity: 1;
-      transform: scale(1);
-    }
-
-    .mini-wheel:hover {
-      transform: scale(1.1);
-      box-shadow: 0 6px 28px rgba(201,168,76,0.3);
-    }
-
-    .mini-wheel svg {
-      width: 56px;
-      height: 56px;
-    }
-
-    /* ── DETAIL PANEL ── */
-    .detail-panel {
-      width: 100%;
-      max-width: 900px;
-      margin: 0 auto 3rem;
-      min-height: 200px;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      box-shadow: 0 4px 24px rgba(0,0,0,0.06);
-      overflow: hidden;
-      transition: all var(--transition);
-    }
-
-    .detail-placeholder {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 1rem;
-      padding: 3.5rem 2rem;
-      text-align: center;
-      color: var(--text-muted);
-      min-height: 250px;
-    }
-
-    .placeholder-icon {
-      font-size: 2rem;
-      color: var(--gold-light);
-      animation: float 3s ease-in-out infinite;
-    }
-
-    @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-8px); }
-    }
-
-    .detail-placeholder p {
-      font-family: var(--font-body);
-      font-style: italic;
-      font-size: 1.05rem;
-      max-width: 420px;
-      line-height: 1.7;
-    }
-
-    .detail-card {
-      animation: detail-enter 0.5s cubic-bezier(0.22,1,0.36,1) both;
-    }
-
-    @keyframes detail-enter {
-      from { opacity: 0; transform: translateY(24px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .detail-header {
-      display: flex;
-      align-items: stretch;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .detail-header::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      opacity: 0.04;
-      background-size: cover;
-      pointer-events: none;
-    }
-
-    .detail-color-bar {
-      width: 6px;
-      flex-shrink: 0;
-      position: relative;
-    }
-
-    .detail-color-bar::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 6px;
-      width: 40px;
-      height: 100%;
-      background: inherit;
-      opacity: 0.08;
-    }
-
-    .detail-header-content {
-      flex: 1;
-      padding: 1.5rem 2rem 1.2rem;
-      border-bottom: 1px solid var(--border-light);
-      position: relative;
-      z-index: 1;
-    }
-
-    .detail-season-label {
-      font-family: var(--font-display);
-      font-size: 0.68rem;
-      font-weight: 600;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      margin-bottom: 0.3rem;
-    }
-
-    .detail-title {
-      font-family: var(--font-display);
-      font-size: clamp(1.5rem, 3vw, 2.2rem);
-      font-weight: 700;
-      line-height: 1.15;
-      margin-bottom: 0.2rem;
-    }
-
-    .detail-latin {
-      font-family: var(--font-body);
-      font-style: italic;
-      font-size: 1.05rem;
-      color: var(--text-muted);
-    }
-
-    .detail-header-symbol {
-      position: absolute;
-      right: 2rem;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 4rem;
-      opacity: 0.06;
-      font-family: var(--font-display);
-      z-index: 0;
-    }
-
-    /* ── TABS ── */
-    .detail-tabs {
-      display: flex;
-      border-bottom: 1px solid var(--border-light);
-      background: var(--bg-warm);
-      overflow-x: auto;
-    }
-
-    .detail-tab {
-      font-family: var(--font-display);
-      font-size: 0.7rem;
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      padding: 0.9rem 1.5rem;
-      cursor: pointer;
-      border: none;
-      background: none;
-      position: relative;
-      transition: all var(--transition);
-      white-space: nowrap;
-    }
-
-    .detail-tab::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 2px;
-      background: transparent;
-      transition: background var(--transition);
-    }
-
-    .detail-tab:hover { color: var(--text-primary); }
-
-    .detail-tab.active {
-      color: var(--text-primary);
-    }
-
-    .detail-tab.active::after {
-      background: var(--accent);
-    }
-
-    .detail-tab-content {
-      display: none;
-      padding: 1.8rem 2rem;
-      animation: tab-fade 0.3s ease both;
-    }
-
-    .detail-tab-content.active { display: block; }
-
-    @keyframes tab-fade {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    .detail-tab-content h4 {
-      font-family: var(--font-display);
-      font-size: 0.7rem;
-      font-weight: 600;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 0.6rem;
-      padding-bottom: 0.35rem;
-      border-bottom: 1px solid var(--border-light);
-    }
-
-    .detail-tab-content p {
-      font-family: var(--font-text);
-      font-size: 0.97rem;
-      color: var(--text-secondary);
-      line-height: 1.8;
-      margin-bottom: 1rem;
-    }
-
-    .detail-tab-content p:last-child { margin-bottom: 0; }
-
-    .detail-footer {
-      padding: 1rem 2rem;
-      background: var(--bg-warm);
-      border-top: 1px solid var(--border-light);
-      display: flex;
-      align-items: center;
-      gap: 0.8rem;
-      flex-wrap: wrap;
-    }
-
-    .detail-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.35rem;
-      font-family: var(--font-display);
-      font-size: 0.68rem;
-      font-weight: 500;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      padding: 0.3rem 0.75rem;
-      border-radius: 999px;
-      border: 1px solid;
-      transition: transform var(--transition);
-    }
-
-    .detail-badge:hover { transform: scale(1.05); }
-
-    .detail-quote {
-      font-family: var(--font-body);
-      font-style: italic;
-      font-size: 0.88rem;
-      color: var(--text-muted);
-      flex: 1;
-      text-align: right;
-      line-height: 1.5;
-    }
-
-    /* ── SECTION TITLE ── */
-    .section-title {
-      font-family: var(--font-display);
-      font-size: 1.25rem;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      color: var(--text-primary);
-      text-align: center;
-      margin-bottom: 2rem;
-      position: relative;
-    }
-
-    .section-title::before {
-      content: '✦';
-      display: block;
-      font-size: 0.8rem;
-      color: var(--gold);
-      margin-bottom: 0.5rem;
-    }
-
-    .section-title::after {
-      content: '';
-      display: block;
-      width: 80px;
-      height: 1px;
-      background: linear-gradient(to right, transparent, var(--gold), transparent);
-      margin: 0.5rem auto 0;
-    }
-
-    /* ── COLORS SECTION ── */
-    .colors-section {
-      margin-bottom: 3.5rem;
-      padding-top: 1rem;
-    }
-
-    .colors-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 1rem;
-    }
-
-    .color-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      overflow: hidden;
-      transition: all var(--transition);
-      position: relative;
-    }
-
-    .color-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 100%;
-      opacity: 0;
-      transition: opacity var(--transition);
-      pointer-events: none;
-    }
-
-    .color-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 12px 32px rgba(0,0,0,0.1);
-      border-color: var(--gold-light);
-    }
-
-    .color-swatch {
-      height: 6px;
-      transition: height var(--transition);
-    }
-
-    .color-card:hover .color-swatch { height: 10px; }
-
-    .color-card h3 {
-      font-family: var(--font-display);
-      font-size: 0.8rem;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--text-primary);
-      padding: 1rem 1.2rem 0.3rem;
-    }
-
-    .color-card p {
-      font-family: var(--font-text);
-      font-size: 0.92rem;
-      color: var(--text-secondary);
-      line-height: 1.7;
-      padding: 0 1.2rem 1.2rem;
-    }
-
-    /* ── SACRAMENTS ── */
-    .sacraments-section {
-      margin-bottom: 3rem;
-      padding: 2.5rem 2rem;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .sacraments-section::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 3px;
-      background: linear-gradient(to right, var(--purple), var(--gold), var(--crimson), var(--green));
-    }
-
-    .sacraments-timeline {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 1rem;
-    }
-
-    .sac-item {
-      display: flex;
-      gap: 1rem;
-      align-items: flex-start;
-      padding: 1rem 1.2rem;
-      border-radius: var(--radius);
-      border: 1px solid var(--border-light);
-      background: var(--bg-warm);
-      transition: all var(--transition);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .sac-item::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 0;
-      bottom: 0;
-      width: 3px;
-      background: var(--gold);
-      opacity: 0;
-      transition: opacity var(--transition);
-    }
-
-    .sac-item:hover {
-      background: var(--ivory);
-      border-color: var(--gold-light);
-      transform: translateX(4px);
-    }
-
-    .sac-item:hover::before { opacity: 1; }
-
-    .sac-icon {
-      font-size: 1.5rem;
-      line-height: 1;
-      flex-shrink: 0;
-    }
-
-    .sac-text strong {
-      display: block;
-      font-family: var(--font-display);
-      font-size: 0.78rem;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--text-primary);
-      margin-bottom: 0.25rem;
-    }
-
-    .sac-text span {
-      font-family: var(--font-text);
-      font-size: 0.9rem;
-      color: var(--text-secondary);
-      line-height: 1.6;
-    }
-
-    /* ── FOOTER ── */
-    .site-footer {
-      text-align: center;
-      padding: 2.5rem 1rem;
-      border-top: 1px solid var(--border);
-      background: linear-gradient(180deg, var(--bg) 0%, var(--white-linen) 100%);
-      position: relative;
-    }
-
-    .footer-ornament {
-      font-family: var(--font-display);
-      color: var(--gold);
-      letter-spacing: 0.5em;
-      font-size: 1rem;
-      margin-bottom: 0.7rem;
-    }
-
-    .footer-text {
-      font-family: var(--font-body);
-      font-style: italic;
-      color: var(--text-secondary);
-      font-size: 1rem;
-      margin-bottom: 0.3rem;
-    }
-
-    .footer-small {
-      font-family: var(--font-display);
-      font-size: 0.68rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-    }
-
-    /* ── SVG TEXT ── */
-    .wheel-season-label {
-      font-family: 'Cinzel', serif;
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 1.5px;
-      fill: #fff;
-      pointer-events: none;
-      paint-order: stroke;
-      stroke: rgba(0,0,0,0.3);
-      stroke-width: 2.5px;
-    }
-
-    .wheel-week-label {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 8px;
-      fill: rgba(255,255,255,0.9);
-      pointer-events: none;
-    }
-
-    .wheel-date-label {
-      font-family: 'Cinzel', serif;
-      font-size: 7.5px;
-      fill: #5c4009;
-      font-weight: 600;
-      letter-spacing: 0.5px;
-      pointer-events: none;
-    }
-
-    /* ── SCROLL REVEAL ── */
-    .reveal {
-      opacity: 0;
-      transform: translateY(24px);
-      transition: opacity 0.7s ease, transform 0.7s ease;
-    }
-    .reveal.revealed {
-      opacity: 1;
-      transform: none;
-    }
-
-    /* ── RESPONSIVE ── */
-    @media (max-width: 768px) {
-      .header-cross { display: none; }
-      .header-title { font-size: 2rem; }
-      .detail-tabs { justify-content: flex-start; }
-      .detail-tab { padding: 0.7rem 1rem; font-size: 0.65rem; }
-      .detail-tab-content { padding: 1.2rem; }
-      .colors-grid { grid-template-columns: 1fr; }
-      .sacraments-timeline { grid-template-columns: 1fr; }
-      .detail-header-content { padding: 1rem 1.2rem; }
-      .detail-footer { flex-direction: column; align-items: flex-start; }
-      .detail-quote { text-align: left; }
-      .detail-header-symbol { display: none; }
-      .mini-wheel { width: 56px; height: 56px; bottom: 16px; right: 16px; }
-      .mini-wheel svg { width: 44px; height: 44px; }
-    }
-
-    @media (max-width: 480px) {
-      .legend-bar { gap: 0.3rem 0.6rem; padding: 0.6rem 1rem; }
-      .legend-item { font-size: 0.65rem; }
-      .today-banner { padding: 0.8rem 1rem; }
-    }
-
-    /* ── ACCESSIBILITY ── */
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
-        animation-duration: 0.01ms !important;
-        transition-duration: 0.01ms !important;
-      }
-    }
-
-    .season-arc:focus-visible {
-      outline: 3px solid var(--gold);
-      outline-offset: 2px;
-    }
-
-    /* ── KEYBOARD HINT ── */
-    .keyboard-hint {
-      text-align: center;
-      font-family: var(--font-body);
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      margin-top: 0.5rem;
-      opacity: 0.7;
-    }
-
-    .keyboard-hint kbd {
-      display: inline-block;
-      background: var(--bg-warm);
-      border: 1px solid var(--border);
-      border-radius: 3px;
-      padding: 0.1rem 0.4rem;
-      font-family: inherit;
-      font-size: 0.75rem;
-      margin: 0 0.15rem;
-      box-shadow: 0 1px 0 var(--border);
-    }
+/* ══════════════════════════════════════════════════════════════
+   CALENDÁRIO LITÚRGICO — CSS
+   Visual fiel à imagem de referência
+   Roda centralizada · Semanas clicáveis · Estilo clássico
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── RESET ── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* ── CUSTOM PROPERTIES ── */
+:root {
+  /* Cores litúrgicas — fiéis à imagem */
+  --c-advento:        #c9bce0;   /* roxo claro/lilás */
+  --c-advento-dark:   #a896c4;
+  --c-gaudete:        #f0c8d8;   /* rosa (3º Advento) */
+  --c-natal:          #ffffff;   /* branco */
+  --c-natal-stroke:   #d4c5a0;
+  --c-comum:          #4a9b3f;   /* verde vibrante */
+  --c-comum-dark:     #357a2c;
+  --c-comum-light:    #6bb85e;
+  --c-quaresma:       #b8a8d4;   /* roxo Quaresma (um pouco mais saturado) */
+  --c-quaresma-dark:  #9888b8;
+  --c-laetare:        #f0c8d8;   /* rosa (4º Quaresma) */
+  --c-triduo:         #a01825;   /* vermelho escuro */
+  --c-triduo-dark:    #7a0f1a;
+  --c-pascoa:         #ffffff;   /* branco */
+  --c-pentecostes:    #c8202d;   /* vermelho vibrante */
+
+  /* UI palette */
+  --bg-page:          #f5f1e8;
+  --bg-page-2:        #ebe5d4;
+  --bg-card:          #ffffff;
+  --text-primary:     #2a2218;
+  --text-secondary:   #4a3e2c;
+  --text-muted:       #8a7a60;
+  --text-on-color:    #1a1410;
+
+  /* Linhas / bordas da roda (preto fino como na imagem) */
+  --line-thin:        #2a2218;
+  --line-medium:      #1a1410;
+  --line-ring:        #6b6358;
+
+  /* Centro dourado */
+  --gold:             #b8891a;
+  --gold-light:       #d4a942;
+  --gold-dark:        #7a5a0e;
+
+  /* Tipografia */
+  --font-display:     'Cinzel', 'Trajan Pro', 'Palatino Linotype', serif;
+  --font-body:        'Cormorant Garamond', 'Georgia', serif;
+  --font-text:        'Crimson Pro', 'Georgia', serif;
+  --font-wheel:       'Arial', 'Helvetica', sans-serif;  /* fonte sem serifa como na imagem */
+
+  /* Espaçamento e raios */
+  --radius:           8px;
+  --radius-lg:        14px;
+  --transition:       0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-fast:  0.2s ease;
+
+  /* Sombras */
+  --shadow-sm:        0 1px 3px rgba(0,0,0,0.08);
+  --shadow-md:        0 4px 12px rgba(0,0,0,0.1);
+  --shadow-lg:        0 10px 30px rgba(0,0,0,0.15);
+}
+
+/* ── BASE ── */
+body {
+  background-color: var(--bg-page);
+  background-image:
+    radial-gradient(ellipse at top, rgba(255,255,255,0.5) 0%, transparent 60%),
+    radial-gradient(ellipse at bottom, rgba(184,137,26,0.04) 0%, transparent 60%);
+  color: var(--text-primary);
+  font-family: var(--font-text);
+  font-size: 17px;
+  line-height: 1.7;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Textura sutil de papel */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.6;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   HEADER
+   ══════════════════════════════════════════════════════════════ */
+
+.site-header {
+  text-align: center;
+  padding: 2.5rem 1.5rem 1.5rem;
+  position: relative;
+}
+
+.site-header::after {
+  content: '';
+  display: block;
+  width: 120px;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--gold), transparent);
+  margin: 1.2rem auto 0;
+}
+
+.header-subtitle {
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  font-weight: 400;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--gold-dark);
+  margin-bottom: 0.6rem;
+}
+
+.header-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+.header-tagline {
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: 1rem;
+  color: var(--text-muted);
+  margin-top: 0.4rem;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   MAIN CONTAINER
+   ══════════════════════════════════════════════════════════════ */
+
+.main-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 1.5rem 4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   WHEEL — CENTRALIZADA E DOMINANTE
+   ══════════════════════════════════════════════════════════════ */
+
+.wheel-section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem 0 2rem;
+}
+
+.wheel-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 850px;
+  aspect-ratio: 1 / 1;
+  margin: 0 auto;
+  filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.12));
+  animation: wheel-fade-in 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes wheel-fade-in {
+  from { opacity: 0; transform: scale(0.92); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+#liturgical-wheel {
+  width: 100%;
+  height: 100%;
+  display: block;
+  cursor: default;
+  overflow: visible;
+}
+
+/* ── ELEMENTOS SVG DA RODA ── */
+
+/* Anel de datas (mais externo) */
+.date-cell {
+  fill: transparent;
+  stroke: var(--line-thin);
+  stroke-width: 0.6;
+  transition: fill var(--transition-fast);
+}
+.date-cell:hover {
+  fill: rgba(184, 137, 26, 0.08);
+}
+
+.date-label {
+  font-family: var(--font-wheel);
+  font-size: 11px;
+  font-weight: 400;
+  fill: var(--text-primary);
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Anel de tempos litúrgicos (médio) */
+.season-cell {
+  stroke: var(--line-medium);
+  stroke-width: 0.8;
+  transition: filter var(--transition-fast), opacity var(--transition-fast);
+}
+
+.season-label {
+  font-family: var(--font-wheel);
+  font-size: 12px;
+  font-weight: 700;
+  fill: var(--text-primary);
+  pointer-events: none;
+  user-select: none;
+  letter-spacing: 0.5px;
+}
+
+/* Anel de semanas (interno — CLICÁVEL) */
+.week-cell {
+  stroke: var(--line-medium);
+  stroke-width: 0.6;
+  cursor: pointer;
+  transition: filter var(--transition-fast), opacity var(--transition-fast);
+}
+
+.week-cell:hover {
+  filter: brightness(1.15) saturate(1.1);
+  stroke-width: 1.2;
+  stroke: var(--gold-dark);
+}
+
+.week-cell.active {
+  filter: brightness(1.2) saturate(1.2);
+  stroke: var(--gold);
+  stroke-width: 1.8;
+}
+
+.week-cell.dimmed {
+  opacity: 0.4;
+}
+
+.week-cell:focus {
+  outline: none;
+  filter: brightness(1.2);
+  stroke: var(--gold);
+  stroke-width: 2;
+}
+
+.week-cell:focus-visible {
+  stroke: var(--gold);
+  stroke-width: 2.5;
+}
+
+.week-label {
+  font-family: var(--font-wheel);
+  font-size: 10px;
+  font-weight: 500;
+  fill: var(--text-primary);
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Rótulos especiais (Cristo Rei, Cinzas, Ramos, Pentecostes, Páscoa) */
+.week-label.special {
+  font-weight: 700;
+  fill: var(--text-on-color);
+}
+
+.week-label.on-red {
+  fill: #ffffff;
+}
+
+/* Rótulos de período (Tempo Comum em arco) */
+.season-arc-label {
+  font-family: var(--font-wheel);
+  font-size: 13px;
+  font-weight: 700;
+  fill: var(--text-primary);
+  letter-spacing: 1px;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Anel guia (linha tracejada interna - "início do ano litúrgico") */
+.guide-ring {
+  fill: none;
+  stroke: var(--line-ring);
+  stroke-width: 1;
+  stroke-dasharray: 4, 3;
+  opacity: 0.6;
+}
+
+/* Anel externo (borda principal) */
+.outer-ring {
+  fill: none;
+  stroke: var(--line-medium);
+  stroke-width: 1.2;
+}
+
+/* Linhas divisórias (spokes) */
+.spoke {
+  stroke: var(--line-thin);
+  stroke-width: 0.6;
+}
+
+.spoke.major {
+  stroke: var(--line-medium);
+  stroke-width: 1;
+}
+
+/* Anotação "início do ano litúrgico" com seta */
+.start-annotation {
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: 11px;
+  fill: var(--text-secondary);
+  pointer-events: none;
+}
+
+.start-arrow {
+  fill: none;
+  stroke: var(--text-secondary);
+  stroke-width: 1;
+  stroke-dasharray: 3, 2;
+  marker-end: url(#arrow-marker);
+}
+
+/* ── INDICADOR "HOJE" ── */
+.today-marker {
+  fill: var(--gold);
+  stroke: #fff;
+  stroke-width: 1.5;
+  filter: drop-shadow(0 0 6px rgba(184, 137, 26, 0.6));
+}
+
+.today-pulse {
+  fill: var(--gold);
+  opacity: 0.4;
+  animation: today-pulse 2s ease-in-out infinite;
+  transform-origin: center;
+}
+
+@keyframes today-pulse {
+  0%, 100% { opacity: 0.4; r: 6; }
+  50%      { opacity: 0;   r: 14; }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   CENTRO — CORDEIRO PASCAL
+   ══════════════════════════════════════════════════════════════ */
+
+.center-cross-bg {
+  fill: url(#gold-grad);
+  stroke: var(--gold-dark);
+  stroke-width: 2;
+}
+
+.center-cross-decoration {
+  fill: none;
+  stroke: var(--gold-dark);
+  stroke-width: 1.5;
+}
+
+.center-circle {
+  fill: url(#gold-grad);
+  stroke: var(--gold-dark);
+  stroke-width: 2.5;
+}
+
+.center-circle-inner {
+  fill: none;
+  stroke: var(--gold-light);
+  stroke-width: 1;
+  opacity: 0.6;
+}
+
+.center-lamb {
+  fill: #faf5e8;
+  stroke: var(--gold-dark);
+  stroke-width: 0.8;
+}
+
+.center-letter {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 700;
+  fill: var(--gold-dark);
+  text-anchor: middle;
+  dominant-baseline: central;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   TOOLTIP
+   ══════════════════════════════════════════════════════════════ */
+
+.tooltip {
+  position: absolute;
+  background: linear-gradient(135deg, rgba(26, 20, 16, 0.97) 0%, rgba(40, 32, 22, 0.97) 100%);
+  color: #f5f0e0;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  padding: 0.7rem 1rem;
+  border-radius: 8px;
+  pointer-events: none;
+  opacity: 0;
+  transform: translate(-50%, -125%);
+  transition: opacity 0.18s ease, transform 0.18s ease;
+  z-index: 1000;
+  border: 1px solid rgba(184, 137, 26, 0.4);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  white-space: nowrap;
+  max-width: 280px;
+}
+
+.tooltip.visible {
+  opacity: 1;
+  transform: translate(-50%, -135%);
+}
+
+.tooltip-title {
+  font-family: var(--font-display);
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--gold-light);
+  margin-bottom: 0.15rem;
+}
+
+.tooltip-subtitle {
+  font-style: italic;
+  font-size: 0.78rem;
+  color: rgba(245, 240, 224, 0.75);
+}
+
+.tooltip-bar {
+  width: 100%;
+  height: 3px;
+  border-radius: 2px;
+  margin-top: 0.5rem;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   LEGENDA
+   ══════════════════════════════════════════════════════════════ */
+
+.legend-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.4rem;
+  justify-content: center;
+  padding: 0.9rem 1.5rem;
+  background: var(--bg-card);
+  border: 1px solid rgba(0,0,0,0.08);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  margin-top: 1.5rem;
+  max-width: 720px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  transition: all var(--transition);
+}
+
+.legend-item:hover {
+  color: var(--text-primary);
+  background: var(--bg-page-2);
+}
+
+.legend-item.active {
+  color: var(--text-primary);
+  background: var(--bg-page-2);
+  box-shadow: inset 0 -2px 0 var(--gold);
+}
+
+.legend-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  box-shadow: 0 0 0 1px rgba(0,0,0,0.15);
+}
+
+.legend-dot.bordered {
+  border: 1px solid var(--text-secondary);
+}
+
+/* ══════════════════════════════════════════════════════════════
+   PAINEL DE DETALHES (abaixo da roda — vazio por enquanto)
+   ══════════════════════════════════════════════════════════════ */
+
+.detail-panel {
+  width: 100%;
+  max-width: 720px;
+  margin: 2.5rem auto 0;
+  min-height: 140px;
+  background: var(--bg-card);
+  border: 1px solid rgba(0,0,0,0.08);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+  transition: all var(--transition);
+}
+
+.detail-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  padding: 2.5rem 2rem;
+  text-align: center;
+  color: var(--text-muted);
+  min-height: 140px;
+}
+
+.placeholder-icon {
+  font-size: 1.5rem;
+  color: var(--gold-light);
+  opacity: 0.7;
+  letter-spacing: 0.3em;
+}
+
+.detail-placeholder p {
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: 1rem;
+  max-width: 420px;
+  line-height: 1.6;
+}
+
+/* Detail card quando uma semana é selecionada */
+.detail-card {
+  animation: detail-in 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes detail-in {
+  from { opacity: 0; transform: translateY(15px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.detail-header {
+  display: flex;
+  align-items: stretch;
+}
+
+.detail-color-bar {
+  width: 6px;
+  flex-shrink: 0;
+}
+
+.detail-header-content {
+  flex: 1;
+  padding: 1.4rem 1.8rem 1.2rem;
+}
+
+.detail-eyebrow {
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 0.3rem;
+}
+
+.detail-title {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.15;
+  color: var(--text-primary);
+  margin-bottom: 0.3rem;
+}
+
+.detail-meta {
+  display: flex;
+  gap: 1.2rem;
+  flex-wrap: wrap;
+  margin-top: 0.6rem;
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  color: var(--text-secondary);
+}
+
+.detail-meta-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.detail-meta-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+  box-shadow: 0 0 0 1px rgba(0,0,0,0.15);
+}
+
+/* ══════════════════════════════════════════════════════════════
+   FOOTER
+   ══════════════════════════════════════════════════════════════ */
+
+.site-footer {
+  text-align: center;
+  padding: 2rem 1rem 1.5rem;
+  border-top: 1px solid rgba(0,0,0,0.06);
+  margin-top: 3rem;
+}
+
+.footer-ornament {
+  font-family: var(--font-display);
+  color: var(--gold);
+  letter-spacing: 0.5em;
+  font-size: 0.95rem;
+  margin-bottom: 0.5rem;
+}
+
+.footer-text {
+  font-family: var(--font-body);
+  font-style: italic;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+}
+
+.footer-small {
+  font-family: var(--font-display);
+  font-size: 0.66rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-top: 0.4rem;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   RESPONSIVO
+   ══════════════════════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+  .header-title { font-size: 1.7rem; }
+  .wheel-wrapper { max-width: 95vw; }
+  .date-label { font-size: 9px; }
+  .week-label { font-size: 8px; }
+  .season-label { font-size: 10px; }
+  .legend-bar { gap: 0.3rem 0.8rem; padding: 0.7rem 1rem; }
+  .legend-item { font-size: 0.65rem; }
+  .detail-header-content { padding: 1rem 1.2rem; }
+  .detail-title { font-size: 1.25rem; }
+}
+
+@media (max-width: 480px) {
+  .main-container { padding: 0 0.6rem 3rem; }
+  .date-label { font-size: 7.5px; }
+  .week-label { font-size: 7px; }
+  .season-label { font-size: 8.5px; }
+  .center-letter { font-size: 16px; }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   ACESSIBILIDADE
+   ══════════════════════════════════════════════════════════════ */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Sr only para leitores de tela */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
