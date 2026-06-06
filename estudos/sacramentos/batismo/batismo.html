@@ -2040,64 +2040,135 @@ footer {
 </footer>
 
 <script>
-// Índice
-function toggleIndice() {
-  document.getElementById('indiceMenu').classList.toggle('aberto');
-}
-document.querySelectorAll('.indice-menu a').forEach(link => {
-  link.addEventListener('click', () => {
-    document.getElementById('indiceMenu').classList.remove('aberto');
-  });
-});
+  // ========================================
+  // VARIÁVEIS GLOBAIS
+  // ========================================
+  const btnIndice = document.getElementById('btnIndice');
+  const indiceMenu = document.getElementById('indiceMenu');
+  const navPrincipal = document.getElementById('navPrincipal');
 
-// FAQ
-function toggleFaq(el) {
-  const item   = el.closest('.faq-item');
-  const resp   = item.querySelector('.faq-resposta');
-  const seta   = item.querySelector('.faq-seta');
-  const aberta = resp.classList.contains('aberta');
-
-  document.querySelectorAll('.faq-resposta').forEach(r => r.classList.remove('aberta'));
-  document.querySelectorAll('.faq-seta').forEach(s => s.classList.remove('aberta'));
-
-  if (!aberta) {
-    resp.classList.add('aberta');
-    seta.classList.add('aberta');
+  // ========================================
+  // ABRIR / FECHAR ÍNDICE
+  // ========================================
+  function toggleIndice() {
+    btnIndice.classList.toggle('aberto');
+    indiceMenu.classList.toggle('aberto');
   }
-}
 
-// Scroll suave com offset
-document.querySelectorAll('a[href^="#"]').forEach(link => {
-  link.addEventListener('click', function(e) {
-    const id = this.getAttribute('href').slice(1);
-    const el = document.getElementById(id);
-    if (el) {
-      e.preventDefault();
-      const offset = 70;
-      const top = el.getBoundingClientRect().top + window.scrollY - offset;
-      window.scrollTo({ top, behavior: 'smooth' });
+  // Fechar ao clicar em um link do índice
+  document.querySelectorAll('.indice-menu a').forEach(link => {
+    link.addEventListener('click', () => {
+      btnIndice.classList.remove('aberto');
+      indiceMenu.classList.remove('aberto');
+    });
+  });
+
+  // Fechar ao clicar fora do menu
+  document.addEventListener('click', (e) => {
+    if (!indiceMenu.contains(e.target) && !btnIndice.contains(e.target)) {
+      btnIndice.classList.remove('aberto');
+      indiceMenu.classList.remove('aberto');
     }
   });
-});
 
-// Animação de entrada
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.style.opacity = '1';
-      entry.target.style.transform = 'translateY(0)';
+  // Fechar com tecla ESC
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      btnIndice.classList.remove('aberto');
+      indiceMenu.classList.remove('aberto');
     }
   });
-}, { threshold: 0.08 });
 
-document.querySelectorAll(
-  '.card-teologia, .biblia-card, .efeito-card, .santo-card, .passo, .timeline-item'
-).forEach(el => {
-  el.style.opacity = '0';
-  el.style.transform = 'translateY(20px)';
-  el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-  observer.observe(el);
-});
+  // ========================================
+  // FAQ — Abre/Fecha respostas
+  // ========================================
+  function toggleFaq(el) {
+    const item   = el.closest('.faq-item');
+    const resp   = item.querySelector('.faq-resposta');
+    const seta   = item.querySelector('.faq-seta');
+    const aberta = resp.classList.contains('aberta');
+
+    // Fecha todas
+    document.querySelectorAll('.faq-resposta').forEach(r => r.classList.remove('aberta'));
+    document.querySelectorAll('.faq-seta').forEach(s => s.classList.remove('aberta'));
+
+    // Abre a clicada (se estava fechada)
+    if (!aberta) {
+      resp.classList.add('aberta');
+      seta.classList.add('aberta');
+    }
+  }
+
+  // ========================================
+  // SCROLL SUAVE com offset (compensa nav fixa)
+  // ========================================
+  document.querySelectorAll('a[href^="#"]').forEach(link => {
+    link.addEventListener('click', function(e) {
+      const id = this.getAttribute('href').slice(1);
+      const el = document.getElementById(id);
+      if (el) {
+        e.preventDefault();
+        const offset = 80;
+        const top = el.getBoundingClientRect().top + window.scrollY - offset;
+        window.scrollTo({ top, behavior: 'smooth' });
+      }
+    });
+  });
+
+  // ========================================
+  // ANIMAÇÃO DE ENTRADA AO SCROLL
+  // ========================================
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.08 });
+
+  document.querySelectorAll(
+    '.card-teologia, .biblia-card, .efeito-card, .santo-card, .passo, .timeline-item, .tipo-card, .fonte-item'
+  ).forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(20px)';
+    el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+    observer.observe(el);
+  });
+
+  // ========================================
+  // AUTO-HIDE DA NAVBAR
+  // (esconde ao rolar pra baixo, mostra ao rolar pra cima)
+  // ========================================
+  let ultimoScroll = 0;
+  const limiarScroll = 80;
+
+  window.addEventListener('scroll', () => {
+    const scrollAtual = window.pageYOffset || document.documentElement.scrollTop;
+
+    // Se o índice estiver aberto, não esconde
+    if (indiceMenu.classList.contains('aberto')) {
+      ultimoScroll = scrollAtual;
+      return;
+    }
+
+    // No topo da página, sempre mostra
+    if (scrollAtual <= limiarScroll) {
+      navPrincipal.classList.remove('escondida');
+      ultimoScroll = scrollAtual;
+      return;
+    }
+
+    if (scrollAtual > ultimoScroll) {
+      // Rolando pra BAIXO → esconde
+      navPrincipal.classList.add('escondida');
+    } else {
+      // Rolando pra CIMA → mostra
+      navPrincipal.classList.remove('escondida');
+    }
+
+    ultimoScroll = scrollAtual;
+  }, { passive: true });
 </script>
 </body>
 </html>
