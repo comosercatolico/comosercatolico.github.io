@@ -222,160 +222,221 @@
         50% { transform: translateX(-50%) translateY(15px); }
     }
 
-    /* ===== NAVIGATION ===== */
-   /* ===== NAVIGATION (ÍNDICE RECOLHÍVEL) ===== */
-nav {
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    background: linear-gradient(135deg, var(--wine-dark), var(--wine));
-    box-shadow: 0 4px 20px var(--shadow-strong);
-    border-bottom: 2px solid var(--gold);
-}
+    /* ============================================
+       NAVEGAÇÃO (Voltar + Índice na mesma barra)
+       AUTO-HIDE ao rolar
+       ============================================ */
+    nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        background: linear-gradient(135deg, var(--wine-dark), var(--wine));
+        box-shadow: 0 4px 20px var(--shadow-strong);
+        border-bottom: 2px solid var(--gold);
 
-.nav-container {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
+        /* Auto-hide */
+        transform: translateY(0);
+        transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
 
-/* BOTÃO ÍNDICE - sempre visível e centralizado */
-.nav-toggle {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
-    background: linear-gradient(135deg, var(--wine), var(--wine-dark));
-    border: 2px solid var(--gold);
-    color: var(--gold);
-    font-family: 'Cinzel', serif;
-    font-size: 1rem;
-    font-weight: 600;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    padding: 12px 40px;
-    cursor: pointer;
-    border-radius: 50px;
-    margin: 15px auto;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-    position: relative;
-    min-width: 220px;
-}
+    nav.escondida {
+        transform: translateY(-100%);
+    }
 
-.nav-toggle:hover {
-    background: linear-gradient(135deg, var(--gold-dark), var(--gold));
-    color: var(--white);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(201,168,76,0.4);
-}
+    .nav-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
 
-.nav-toggle-icon {
-    font-size: 1.2rem;
-    line-height: 1;
-}
+    /* Linha superior: Voltar (esquerda) + Índice (centro) */
+    .nav-topo {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 12px 24px;
+        gap: 1rem;
+    }
 
-.nav-toggle-text {
-    line-height: 1;
-}
-
-.nav-toggle-arrow {
-    font-size: 0.7rem;
-    transition: transform 0.4s ease;
-    line-height: 1;
-}
-
-.nav-toggle.active .nav-toggle-arrow {
-    transform: rotate(180deg);
-}
-
-/* MENU - escondido por padrão */
-.nav-menu {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    width: 100%;
-    max-height: 0;
-    overflow: hidden;
-    opacity: 0;
-    transition: max-height 0.5s ease, opacity 0.4s ease, padding 0.3s ease;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    background: rgba(0,0,0,0.15);
-}
-
-.nav-menu.active {
-    max-height: 600px;
-    opacity: 1;
-    padding: 15px 10px;
-    border-top: 1px solid rgba(201,168,76,0.3);
-}
-
-.nav-menu li {
-    margin: 0;
-    list-style: none;
-}
-
-.nav-menu a {
-    display: block;
-    padding: 12px 16px;
-    color: var(--gold-light);
-    text-decoration: none;
-    font-family: 'Cinzel', serif;
-    font-size: 0.78rem;
-    font-weight: 600;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    transition: all 0.3s ease;
-    border-radius: 6px;
-    margin: 3px;
-    white-space: nowrap;
-    border: 1px solid transparent;
-}
-
-.nav-menu a:hover,
-.nav-menu a.active-link {
-    color: var(--white);
-    background: rgba(201,168,76,0.18);
-    border-color: rgba(201,168,76,0.4);
-    transform: translateY(-1px);
-}
-
-/* ===== RESPONSIVE NAV ===== */
-@media (max-width: 768px) {
-    .nav-toggle {
-        font-size: 0.9rem;
-        padding: 10px 30px;
+    /* ============================================
+       BOTÃO VOLTAR (mesmo estilo do Índice)
+       ============================================ */
+    .btn-voltar {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        background: linear-gradient(135deg, var(--wine), var(--wine-dark));
+        border: 2px solid var(--gold);
+        color: var(--gold);
+        font-family: 'Cinzel', serif;
+        font-size: 0.85rem;
+        font-weight: 600;
         letter-spacing: 2px;
-        min-width: 180px;
+        text-transform: uppercase;
+        padding: 10px 22px;
+        cursor: pointer;
+        border-radius: 50px;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        text-decoration: none;
+        white-space: nowrap;
+    }
+
+    .btn-voltar:hover {
+        background: linear-gradient(135deg, var(--gold-dark), var(--gold));
+        color: var(--white);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(201,168,76,0.4);
+    }
+
+    /* ============================================
+       BOTÃO ÍNDICE
+       ============================================ */
+    .nav-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        background: linear-gradient(135deg, var(--wine), var(--wine-dark));
+        border: 2px solid var(--gold);
+        color: var(--gold);
+        font-family: 'Cinzel', serif;
+        font-size: 1rem;
+        font-weight: 600;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        padding: 12px 40px;
+        cursor: pointer;
+        border-radius: 50px;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        position: relative;
+        min-width: 220px;
+    }
+
+    .nav-toggle:hover {
+        background: linear-gradient(135deg, var(--gold-dark), var(--gold));
+        color: var(--white);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(201,168,76,0.4);
+    }
+
+    .nav-toggle-icon { font-size: 1.2rem; line-height: 1; }
+    .nav-toggle-text { line-height: 1; }
+    .nav-toggle-arrow {
+        font-size: 0.7rem;
+        transition: transform 0.4s ease;
+        line-height: 1;
+    }
+    .nav-toggle.active .nav-toggle-arrow {
+        transform: rotate(180deg);
+    }
+
+    /* ============================================
+       MENU - escondido por padrão
+       ============================================ */
+    .nav-menu {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        width: 100%;
+        max-height: 0;
+        overflow: hidden;
+        opacity: 0;
+        transition: max-height 0.5s ease, opacity 0.4s ease, padding 0.3s ease;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        background: rgba(0,0,0,0.15);
     }
 
     .nav-menu.active {
-        max-height: 800px;
-        flex-direction: column;
-        padding: 10px 5px;
+        max-height: 600px;
+        opacity: 1;
+        padding: 15px 10px;
+        border-top: 1px solid rgba(201,168,76,0.3);
     }
+
+    .nav-menu li { margin: 0; list-style: none; }
 
     .nav-menu a {
-        padding: 10px 20px;
-        font-size: 0.75rem;
-        text-align: center;
-        width: 100%;
-        margin: 2px 0;
+        display: block;
+        padding: 12px 16px;
+        color: var(--gold-light);
+        text-decoration: none;
+        font-family: 'Cinzel', serif;
+        font-size: 0.78rem;
+        font-weight: 600;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        transition: all 0.3s ease;
+        border-radius: 6px;
+        margin: 3px;
+        white-space: nowrap;
+        border: 1px solid transparent;
     }
-}
 
-@media (max-width: 480px) {
-    .nav-toggle {
-        font-size: 0.85rem;
-        padding: 10px 25px;
-        min-width: 160px;
+    .nav-menu a:hover,
+    .nav-menu a.active-link {
+        color: var(--white);
+        background: rgba(201,168,76,0.18);
+        border-color: rgba(201,168,76,0.4);
+        transform: translateY(-1px);
     }
-}
+
+    /* ============================================
+       RESPONSIVE NAV
+       ============================================ */
+    @media (max-width: 768px) {
+        .nav-topo {
+            padding: 10px 14px;
+            gap: 0.5rem;
+        }
+        .btn-voltar {
+            font-size: 0.75rem;
+            padding: 8px 16px;
+            letter-spacing: 1px;
+        }
+        .nav-toggle {
+            font-size: 0.85rem;
+            padding: 10px 22px;
+            letter-spacing: 2px;
+            min-width: auto;
+        }
+        .nav-menu.active {
+            max-height: 800px;
+            flex-direction: column;
+            padding: 10px 5px;
+        }
+        .nav-menu a {
+            padding: 10px 20px;
+            font-size: 0.75rem;
+            text-align: center;
+            width: 100%;
+            margin: 2px 0;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .btn-voltar-texto { display: none; }
+        .btn-voltar { padding: 8px 12px; }
+        .nav-toggle {
+            font-size: 0.78rem;
+            padding: 9px 18px;
+            gap: 8px;
+        }
+        .nav-toggle-text {
+            font-size: 0.78rem;
+        }
+    }
+
     /* ===== MAIN ===== */
     main {
         max-width: 1200px;
@@ -387,11 +448,10 @@ nav {
     section {
         padding: 4rem 0;
         border-bottom: 1px solid rgba(201,168,76,0.2);
+        scroll-margin-top: 100px;
     }
 
-    section:last-child {
-        border-bottom: none;
-    }
+    section:last-child { border-bottom: none; }
 
     .section-header {
         text-align: center;
@@ -460,14 +520,8 @@ nav {
         line-height: 1.9;
     }
 
-    strong {
-        color: var(--wine);
-    }
-
-    em {
-        color: var(--gold-dark);
-        font-style: italic;
-    }
+    strong { color: var(--wine); }
+    em { color: var(--gold-dark); font-style: italic; }
 
     /* ===== SPECIAL BOXES ===== */
     .highlight-box {
@@ -479,10 +533,7 @@ nav {
         box-shadow: 0 4px 15px rgba(0,0,0,0.05);
     }
 
-    .highlight-box h4 {
-        color: var(--gold-dark);
-        margin-top: 0;
-    }
+    .highlight-box h4 { color: var(--gold-dark); margin-top: 0; }
 
     .scripture-box {
         background: linear-gradient(135deg, rgba(107,15,26,0.05), rgba(107,15,26,0.1));
@@ -532,11 +583,7 @@ nav {
         box-shadow: 0 4px 20px rgba(201,168,76,0.15);
     }
 
-    .miracle-box h4 {
-        color: var(--gold-dark);
-        margin-top: 0;
-        text-align: center;
-    }
+    .miracle-box h4 { color: var(--gold-dark); margin-top: 0; text-align: center; }
 
     .info-box {
         background: linear-gradient(135deg, #E8EAF6, #C5CAE9);
@@ -546,10 +593,7 @@ nav {
         border-radius: 0 12px 12px 0;
     }
 
-    .info-box h4 {
-        color: #283593;
-        margin-top: 0;
-    }
+    .info-box h4 { color: #283593; margin-top: 0; }
 
     .curiosity-box {
         background: linear-gradient(135deg, #E8F5E9, #C8E6C9);
@@ -559,10 +603,7 @@ nav {
         border-radius: 0 12px 12px 0;
     }
 
-    .curiosity-box h4 {
-        color: #2E7D32;
-        margin-top: 0;
-    }
+    .curiosity-box h4 { color: #2E7D32; margin-top: 0; }
 
     /* ===== STATS ROW ===== */
     .stats-row {
@@ -577,11 +618,7 @@ nav {
         border: 1px solid rgba(201,168,76,0.2);
     }
 
-    .stat-item {
-        text-align: center;
-        padding: 1rem 1.5rem;
-        min-width: 140px;
-    }
+    .stat-item { text-align: center; padding: 1rem 1.5rem; min-width: 140px; }
 
     .stat-number {
         font-family: 'Cinzel', serif;
@@ -624,23 +661,9 @@ nav {
         border-color: var(--gold);
     }
 
-    .card-icon {
-        font-size: 2.5rem;
-        margin-bottom: 1rem;
-        display: block;
-    }
-
-    .card h4 {
-        color: var(--wine);
-        margin-top: 0;
-    }
-
-    .card p {
-        font-size: 0.98rem;
-        color: var(--text-medium);
-        text-align: left;
-        margin-bottom: 0;
-    }
+    .card-icon { font-size: 2.5rem; margin-bottom: 1rem; display: block; }
+    .card h4 { color: var(--wine); margin-top: 0; }
+    .card p { font-size: 0.98rem; color: var(--text-medium); text-align: left; margin-bottom: 0; }
 
     /* ===== TIMELINE ===== */
     .timeline {
@@ -666,9 +689,7 @@ nav {
         align-items: flex-start;
     }
 
-    .timeline-item:nth-child(odd) {
-        flex-direction: row-reverse;
-    }
+    .timeline-item:nth-child(odd) { flex-direction: row-reverse; }
 
     .timeline-content {
         width: 45%;
@@ -685,13 +706,8 @@ nav {
         box-shadow: 0 6px 20px var(--shadow-strong);
     }
 
-    .timeline-item:nth-child(odd) .timeline-content {
-        margin-right: 5%;
-    }
-
-    .timeline-item:nth-child(even) .timeline-content {
-        margin-left: 5%;
-    }
+    .timeline-item:nth-child(odd) .timeline-content { margin-right: 5%; }
+    .timeline-item:nth-child(even) .timeline-content { margin-left: 5%; }
 
     .timeline-dot {
         position: absolute;
@@ -713,11 +729,7 @@ nav {
         margin-bottom: 0.4rem;
     }
 
-    .timeline-content h4 {
-        margin-top: 0;
-        margin-bottom: 0.5rem;
-    }
-
+    .timeline-content h4 { margin-top: 0; margin-bottom: 0.5rem; }
     .timeline-content p {
         font-size: 0.95rem;
         text-align: left;
@@ -744,12 +756,7 @@ nav {
         margin-bottom: 1.5rem;
     }
 
-    .hymn-text {
-        text-align: center;
-        font-style: italic;
-        font-size: 1.1rem;
-        line-height: 2;
-    }
+    .hymn-text { text-align: center; font-style: italic; font-size: 1.1rem; line-height: 2; }
 
     .hymn-text .latin {
         color: var(--gold);
@@ -782,15 +789,9 @@ nav {
         box-shadow: 0 4px 15px var(--shadow);
     }
 
-    table {
-        width: 100%;
-        border-collapse: collapse;
-        background: var(--white);
-    }
+    table { width: 100%; border-collapse: collapse; background: var(--white); }
 
-    thead {
-        background: linear-gradient(135deg, var(--wine), var(--wine-dark));
-    }
+    thead { background: linear-gradient(135deg, var(--wine), var(--wine-dark)); }
 
     th {
         font-family: 'Cinzel', serif;
@@ -808,13 +809,8 @@ nav {
         color: var(--text-medium);
     }
 
-    tr:nth-child(even) td {
-        background: rgba(201,168,76,0.04);
-    }
-
-    tr:hover td {
-        background: rgba(201,168,76,0.09);
-    }
+    tr:nth-child(even) td { background: rgba(201,168,76,0.04); }
+    tr:hover td { background: rgba(201,168,76,0.09); }
 
     /* ===== WORLD GRID ===== */
     .world-grid {
@@ -856,11 +852,7 @@ nav {
         font-weight: 600;
     }
 
-    .country-local-name {
-        color: rgba(255,255,255,0.7);
-        font-size: 0.85rem;
-        font-style: italic;
-    }
+    .country-local-name { color: rgba(255,255,255,0.7); font-size: 0.85rem; font-style: italic; }
 
     .country-body { padding: 1.5rem; }
 
@@ -872,11 +864,7 @@ nav {
     }
 
     /* ===== FAQ ===== */
-    .faq-container {
-        display: grid;
-        gap: 1rem;
-        margin: 2rem 0;
-    }
+    .faq-container { display: grid; gap: 1rem; margin: 2rem 0; }
 
     .faq-item {
         background: var(--white);
@@ -887,9 +875,7 @@ nav {
         transition: border-color 0.3s ease;
     }
 
-    .faq-item:hover {
-        border-color: rgba(201,168,76,0.4);
-    }
+    .faq-item:hover { border-color: rgba(201,168,76,0.4); }
 
     .faq-question {
         width: 100%;
@@ -922,9 +908,7 @@ nav {
         display: inline-block;
     }
 
-    .faq-arrow.rotated {
-        transform: rotate(180deg);
-    }
+    .faq-arrow.rotated { transform: rotate(180deg); }
 
     .faq-answer {
         max-height: 0;
@@ -934,9 +918,7 @@ nav {
         background: rgba(253,248,238,0.6);
     }
 
-    .faq-answer.open {
-        padding: 1.5rem 2rem;
-    }
+    .faq-answer.open { padding: 1.5rem 2rem; }
 
     .faq-answer p {
         font-size: 1rem;
@@ -947,15 +929,8 @@ nav {
 
     .faq-answer p:last-child { margin-bottom: 0; }
 
-    .faq-answer ul {
-        padding-left: 1.5rem;
-        color: var(--text-medium);
-    }
-
-    .faq-answer li {
-        font-size: 1rem;
-        margin-bottom: 0.5rem;
-    }
+    .faq-answer ul { padding-left: 1.5rem; color: var(--text-medium); }
+    .faq-answer li { font-size: 1rem; margin-bottom: 0.5rem; }
 
     /* ===== PRAYER CARDS ===== */
     .prayer-card {
@@ -1006,12 +981,7 @@ nav {
         margin: 0 auto;
     }
 
-    .prayer-text p {
-        text-align: center;
-        font-size: 1.1rem;
-        margin-bottom: 1rem;
-    }
-
+    .prayer-text p { text-align: center; font-size: 1.1rem; margin-bottom: 1rem; }
     .prayer-text p:last-child { margin-bottom: 0; }
 
     /* ===== CURIOSITIES GRID ===== */
@@ -1077,11 +1047,7 @@ nav {
     }
 
     /* ===== DOCUMENT LIST ===== */
-    .doc-list {
-        display: grid;
-        gap: 1.5rem;
-        margin: 2rem 0;
-    }
+    .doc-list { display: grid; gap: 1.5rem; margin: 2rem 0; }
 
     .doc-item {
         display: flex;
@@ -1114,25 +1080,9 @@ nav {
         line-height: 1.4;
     }
 
-    .doc-info h4 {
-        margin-top: 0;
-        margin-bottom: 0.2rem;
-        color: var(--wine);
-    }
-
-    .doc-author {
-        font-size: 0.85rem;
-        color: var(--text-light);
-        font-style: italic;
-        margin-bottom: 0.5rem !important;
-    }
-
-    .doc-info p {
-        font-size: 0.95rem;
-        margin-bottom: 0;
-        text-align: left;
-        color: var(--text-medium);
-    }
+    .doc-info h4 { margin-top: 0; margin-bottom: 0.2rem; color: var(--wine); }
+    .doc-author { font-size: 0.85rem; color: var(--text-light); font-style: italic; margin-bottom: 0.5rem !important; }
+    .doc-info p { font-size: 0.95rem; margin-bottom: 0; text-align: left; color: var(--text-medium); }
 
     /* ===== TAPETE GALLERY ===== */
     .tapete-gallery {
@@ -1170,13 +1120,7 @@ nav {
     }
 
     .tapete-info { padding: 1.5rem; }
-
-    .tapete-info h4 {
-        margin-top: 0;
-        color: var(--wine);
-        font-size: 1rem;
-    }
-
+    .tapete-info h4 { margin-top: 0; color: var(--wine); font-size: 1rem; }
     .tapete-info p {
         font-size: 0.92rem;
         text-align: left;
@@ -1209,12 +1153,7 @@ nav {
         box-shadow: 0 6px 20px var(--shadow-strong);
     }
 
-    .symbol-icon {
-        font-size: 3rem;
-        margin-bottom: 0.8rem;
-        display: block;
-    }
-
+    .symbol-icon { font-size: 3rem; margin-bottom: 0.8rem; display: block; }
     .symbol-name {
         font-family: 'Cinzel', serif;
         font-weight: 600;
@@ -1222,13 +1161,7 @@ nav {
         margin-bottom: 0.5rem;
         font-size: 0.95rem;
     }
-
-    .symbol-meaning {
-        font-size: 0.88rem;
-        color: var(--text-light);
-        font-style: italic;
-        line-height: 1.6;
-    }
+    .symbol-meaning { font-size: 0.88rem; color: var(--text-light); font-style: italic; line-height: 1.6; }
 
     /* ===== BLOCKQUOTE ===== */
     blockquote {
@@ -1266,12 +1199,7 @@ nav {
     }
 
     /* ===== STEPS ===== */
-    .steps {
-        display: grid;
-        gap: 1.2rem;
-        margin: 2rem 0;
-        counter-reset: step;
-    }
+    .steps { display: grid; gap: 1.2rem; margin: 2rem 0; counter-reset: step; }
 
     .step {
         display: flex;
@@ -1376,10 +1304,7 @@ nav {
         box-shadow: 0 4px 15px var(--shadow-strong);
     }
 
-    .back-to-top.visible {
-        opacity: 1;
-        visibility: visible;
-    }
+    .back-to-top.visible { opacity: 1; visibility: visible; }
 
     .back-to-top:hover {
         background: var(--gold);
@@ -1468,14 +1393,9 @@ nav {
         padding: 4px 8px;
     }
 
-    .footer-links a:hover {
-        color: var(--gold);
-    }
+    .footer-links a:hover { color: var(--gold); }
 
-    .footer-latin {
-        margin: 2rem auto;
-        max-width: 500px;
-    }
+    .footer-latin { margin: 2rem auto; max-width: 500px; }
 
     .footer-latin p {
         font-style: italic;
@@ -1520,36 +1440,11 @@ nav {
 
     /* ===== RESPONSIVE ===== */
     @media (max-width: 900px) {
-        .world-grid {
-            grid-template-columns: 1fr;
-        }
+        .world-grid { grid-template-columns: 1fr; }
     }
 
     @media (max-width: 768px) {
-        .nav-toggle {
-            display: block;
-        }
-
-        .nav-menu {
-            display: none;
-            flex-direction: column;
-            width: 100%;
-        }
-
-        .nav-menu.active {
-            display: flex;
-        }
-
-        .nav-menu a {
-            padding: 12px 20px;
-            border-bottom: 1px solid rgba(201,168,76,0.1);
-            border-right: none;
-            width: 100%;
-        }
-
-        .timeline::before {
-            left: 16px;
-        }
+        .timeline::before { left: 16px; }
 
         .timeline-item,
         .timeline-item:nth-child(odd) {
@@ -1564,27 +1459,12 @@ nav {
             margin: 0;
         }
 
-        .timeline-dot {
-            left: 16px;
-            top: 10px;
-        }
+        .timeline-dot { left: 16px; top: 10px; }
 
-        .two-columns {
-            grid-template-columns: 1fr;
-            gap: 1.5rem;
-        }
-
-        .card-grid {
-            grid-template-columns: 1fr;
-        }
-
-        .symbols-grid {
-            grid-template-columns: repeat(2, 1fr);
-        }
-
-        .curiosities-grid {
-            grid-template-columns: 1fr;
-        }
+        .two-columns { grid-template-columns: 1fr; gap: 1.5rem; }
+        .card-grid { grid-template-columns: 1fr; }
+        .symbols-grid { grid-template-columns: repeat(2, 1fr); }
+        .curiosities-grid { grid-template-columns: 1fr; }
 
         .header-icon { font-size: 70px; }
 
@@ -1597,41 +1477,24 @@ nav {
 
         p { text-align: left; }
 
-        .faq-question {
-            font-size: 0.92rem;
-            padding: 1.2rem 1.5rem;
-        }
-
+        .faq-question { font-size: 0.92rem; padding: 1.2rem 1.5rem; }
         .prayer-card { padding: 2rem 1.5rem; }
-
         blockquote { padding: 1.5rem 1.5rem 1.5rem 2rem; }
-
         .doc-item { flex-direction: column; gap: 0.8rem; }
-
         .stats-row { gap: 1rem; }
     }
 
     @media (max-width: 480px) {
-        .symbols-grid {
-            grid-template-columns: 1fr;
-        }
+        .symbols-grid { grid-template-columns: 1fr; }
 
         header { min-height: 90vh; }
-
         .header-icon { font-size: 60px; }
-
         header h1 { font-size: 2rem; }
 
         .hymn-container { padding: 1.5rem 1rem; }
-
-        .tapete-gallery {
-            grid-template-columns: 1fr;
-        }
-
+        .tapete-gallery { grid-template-columns: 1fr; }
         .footer-title { font-size: 1.5rem; }
-
         .stat-number { font-size: 2rem; }
-
         .curiosity-number { font-size: 2rem; }
 
         .back-to-top {
@@ -1641,82 +1504,45 @@ nav {
             height: 48px;
         }
     }
-    .btn-voltar {
-  position: fixed;
-  top: 20px;
-  left: 20px;
-  z-index: 9999;
-
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-
-  padding: 8px 18px;
-
-  background: transparent;
-  color: #c9a84c;
-  border: 1px solid #c9a84c;
-  border-radius: 4px;
-
-  font-family: 'Cinzel', 'Georgia', serif;
-  font-size: 0.78em;
-  font-weight: 600;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  text-decoration: none;
-
-  transition: background 0.3s, color 0.3s, box-shadow 0.3s;
-}
-
-.btn-voltar:hover {
-  background: #c9a84c;
-  color: #3a0a0a;
-  box-shadow: 0 0 16px rgba(201, 168, 76, 0.4);
-}
 </style>
 </head>
 <body>
-    
-<!-- BOTÃO VOLTAR -->
-<a href="../estudos.html" class="btn-voltar">
-  &#8592; Voltar
-</a>
-    <!-- LOADING SCREEN -->
-    <div id="loading">
-        <div class="loading-content">
-            <div class="loading-host">☩</div>
-            <div class="loading-text">CORPUS CHRISTI</div>
-        </div>
+ <!-- LOADING SCREEN -->
+<div id="loading">
+    <div class="loading-content">
+        <div class="loading-host">☩</div>
+        <div class="loading-text">CORPUS CHRISTI</div>
     </div>
+</div>
 
-    <!-- PROGRESS BAR -->
-    <div class="progress-bar" id="progressBar"></div>
+<!-- PROGRESS BAR -->
+<div class="progress-bar" id="progressBar"></div>
 
-    <!-- HEADER -->
-    <header id="top">
-        <div class="header-bg-pattern"></div>
-        <div class="header-rays"></div>
-        <div class="header-content">
-            <div class="header-cross">✦ ✦ ✦</div>
-            <div class="header-icon">🍞</div>
-            <h1>Corpus Christi</h1>
-            <div class="header-subtitle">Solenidade do Santíssimo Corpo e Sangue de Cristo</div>
-            <div class="header-latin">"Hoc est enim Corpus meum" — "Isto é o meu Corpo"</div>
-            <div class="header-divider"></div>
+<!-- ============================= -->
+<!-- NAVEGAÇÃO (Voltar + Índice juntos) -->
+<!-- ============================= -->
+<nav id="navPrincipal">
+    <div class="nav-container">
+
+        <!-- Linha superior: Voltar (esq) + Índice (centro/dir) -->
+        <div class="nav-topo">
+
+            <!-- BOTÃO VOLTAR -->
+            <a href="../estudos.html" class="btn-voltar" title="Voltar aos Estudos">
+                <span>&#8592;</span>
+                <span class="btn-voltar-texto">Voltar</span>
+            </a>
+
+            <!-- BOTÃO ÍNDICE -->
+            <button class="nav-toggle" onclick="toggleMenu()" id="navToggleBtn" aria-label="Abrir índice">
+                <span class="nav-toggle-icon">📖</span>
+                <span class="nav-toggle-text">Índice</span>
+                <span class="nav-toggle-arrow">▼</span>
+            </button>
 
         </div>
-        <div class="scroll-indicator" onclick="document.getElementById('intro').scrollIntoView()">▼</div>
-    </header>
 
-    <!-- NAVIGATION -->
-   <!-- NAVIGATION -->
-<nav>
-    <div class="nav-container">
-        <button class="nav-toggle" onclick="toggleMenu()" id="navToggleBtn">
-            <span class="nav-toggle-icon">📖</span>
-            <span class="nav-toggle-text">Índice</span>
-            <span class="nav-toggle-arrow">▼</span>
-        </button>
+        <!-- MENU DROPDOWN -->
         <ul class="nav-menu" id="navMenu">
             <li><a href="#intro">Introdução</a></li>
             <li><a href="#historia">História</a></li>
@@ -1740,6 +1566,21 @@ nav {
         </ul>
     </div>
 </nav>
+
+<!-- HEADER -->
+<header id="top">
+    <div class="header-bg-pattern"></div>
+    <div class="header-rays"></div>
+    <div class="header-content">
+        <div class="header-cross">✦ ✦ ✦</div>
+        <div class="header-icon">🍞</div>
+        <h1>Corpus Christi</h1>
+        <div class="header-subtitle">Solenidade do Santíssimo Corpo e Sangue de Cristo</div>
+        <div class="header-latin">"Hoc est enim Corpus meum" — "Isto é o meu Corpo"</div>
+        <div class="header-divider"></div>
+    </div>
+    <div class="scroll-indicator" onclick="document.getElementById('intro').scrollIntoView()">▼</div>
+</header>
 
     <!-- MAIN CONTENT -->
     <main>
@@ -3830,134 +3671,170 @@ nav {
     <!-- BACK TO TOP BUTTON -->
     <a href="#top" class="back-to-top" id="backToTop" title="Voltar ao topo">☩</a>
 
-    <script>
-        // ==================== LOADING SCREEN ====================
-        window.addEventListener('load', function () {
+<script>
+    // ==================== LOADING SCREEN ====================
+    window.addEventListener('load', function () {
+        setTimeout(function () {
+            document.getElementById('loading').style.opacity = '0';
             setTimeout(function () {
-                document.getElementById('loading').style.opacity = '0';
-                setTimeout(function () {
-                    document.getElementById('loading').style.display = 'none';
-                }, 600);
-            }, 1800);
+                document.getElementById('loading').style.display = 'none';
+            }, 600);
+        }, 1800);
+    });
+
+    // ==================== VARIÁVEIS GLOBAIS ====================
+    const navPrincipal = document.getElementById('navPrincipal');
+    const navMenu = document.getElementById('navMenu');
+    const navToggleBtn = document.getElementById('navToggleBtn');
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-menu a');
+    const backToTop = document.getElementById('backToTop');
+    const progressBar = document.getElementById('progressBar');
+
+    // Variáveis do auto-hide
+    let ultimoScroll = 0;
+    const limiarScroll = 80;
+
+    // ==================== MENU TOGGLE (ÍNDICE) ====================
+    function toggleMenu() {
+        navMenu.classList.toggle('active');
+        navToggleBtn.classList.toggle('active');
+
+        // Atualiza o texto do botão
+        const text = navToggleBtn.querySelector('.nav-toggle-text');
+        if (navMenu.classList.contains('active')) {
+            text.textContent = 'Fechar Índice';
+        } else {
+            text.textContent = 'Índice';
+        }
+    }
+
+    // Fechar menu ao clicar em link
+    document.querySelectorAll('.nav-menu a').forEach(function (link) {
+        link.addEventListener('click', function () {
+            navMenu.classList.remove('active');
+            navToggleBtn.classList.remove('active');
+            navToggleBtn.querySelector('.nav-toggle-text').textContent = 'Índice';
+        });
+    });
+
+    // Fechar menu ao clicar fora dele
+    document.addEventListener('click', function (event) {
+        const nav = document.querySelector('nav');
+        if (!nav.contains(event.target) && navMenu.classList.contains('active')) {
+            navMenu.classList.remove('active');
+            navToggleBtn.classList.remove('active');
+            navToggleBtn.querySelector('.nav-toggle-text').textContent = 'Índice';
+        }
+    });
+
+    // Fechar com ESC
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && navMenu.classList.contains('active')) {
+            navMenu.classList.remove('active');
+            navToggleBtn.classList.remove('active');
+            navToggleBtn.querySelector('.nav-toggle-text').textContent = 'Índice';
+        }
+    });
+
+    // ==================== FAQ ====================
+    function toggleFaq(button) {
+        const answer = button.nextElementSibling;
+        const arrow = button.querySelector('.faq-arrow');
+        const isOpen = answer.classList.contains('open');
+
+        // Fechar todos
+        document.querySelectorAll('.faq-answer').forEach(function (a) {
+            a.classList.remove('open');
+            a.style.maxHeight = null;
+        });
+        document.querySelectorAll('.faq-arrow').forEach(function (ar) {
+            ar.classList.remove('rotated');
+        });
+        document.querySelectorAll('.faq-question').forEach(function (q) {
+            q.classList.remove('active');
         });
 
-        // ==================== PROGRESS BAR ====================
-        window.addEventListener('scroll', function () {
-            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            const scrolled = (winScroll / height) * 100;
-            document.getElementById('progressBar').style.width = scrolled + '%';
+        // Abrir o clicado se estava fechado
+        if (!isOpen) {
+            answer.classList.add('open');
+            answer.style.maxHeight = answer.scrollHeight + 'px';
+            arrow.classList.add('rotated');
+            button.classList.add('active');
+        }
+    }
 
-            // Back to top button
-            const backToTop = document.getElementById('backToTop');
-            if (winScroll > 400) {
+    // ==================== FADE IN ao SCROLL ====================
+    const observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, { threshold: 0.08 });
+
+    document.querySelectorAll('.fade-in').forEach(function (el) {
+        observer.observe(el);
+    });
+
+    // ==================== SCROLL: tudo em um único listener ====================
+    window.addEventListener('scroll', function () {
+        const scrollAtual = window.pageYOffset || document.documentElement.scrollTop;
+
+        // ----- PROGRESS BAR -----
+        const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const scrolled = (scrollAtual / height) * 100;
+        if (progressBar) progressBar.style.width = scrolled + '%';
+
+        // ----- BACK TO TOP -----
+        if (backToTop) {
+            if (scrollAtual > 400) {
                 backToTop.classList.add('visible');
             } else {
                 backToTop.classList.remove('visible');
             }
-        });
-
-        // ==================== MOBILE MENU ====================
-       // ==================== MENU TOGGLE (ÍNDICE) ====================
-function toggleMenu() {
-    const menu = document.getElementById('navMenu');
-    const btn = document.getElementById('navToggleBtn');
-    menu.classList.toggle('active');
-    btn.classList.toggle('active');
-    
-    // Atualiza o texto do botão
-    const text = btn.querySelector('.nav-toggle-text');
-    if (menu.classList.contains('active')) {
-        text.textContent = 'Fechar Índice';
-    } else {
-        text.textContent = 'Índice';
-    }
-}
-
-// Fechar menu ao clicar em link
-document.querySelectorAll('.nav-menu a').forEach(function (link) {
-    link.addEventListener('click', function () {
-        const menu = document.getElementById('navMenu');
-        const btn = document.getElementById('navToggleBtn');
-        menu.classList.remove('active');
-        btn.classList.remove('active');
-        btn.querySelector('.nav-toggle-text').textContent = 'Índice';
-    });
-});
-
-// Fechar menu ao clicar fora dele
-document.addEventListener('click', function(event) {
-    const nav = document.querySelector('nav');
-    const menu = document.getElementById('navMenu');
-    const btn = document.getElementById('navToggleBtn');
-    
-    if (!nav.contains(event.target) && menu.classList.contains('active')) {
-        menu.classList.remove('active');
-        btn.classList.remove('active');
-        btn.querySelector('.nav-toggle-text').textContent = 'Índice';
-    }
-});
-
-        // ==================== FAQ ====================
-        function toggleFaq(button) {
-            const answer = button.nextElementSibling;
-            const arrow = button.querySelector('.faq-arrow');
-            const isOpen = answer.classList.contains('open');
-
-            // Fechar todos
-            document.querySelectorAll('.faq-answer').forEach(function (a) {
-                a.classList.remove('open');
-                a.style.maxHeight = null;
-            });
-            document.querySelectorAll('.faq-arrow').forEach(function (ar) {
-                ar.classList.remove('rotated');
-            });
-            document.querySelectorAll('.faq-question').forEach(function (q) {
-                q.classList.remove('active');
-            });
-
-            // Abrir o clicado se estava fechado
-            if (!isOpen) {
-                answer.classList.add('open');
-                answer.style.maxHeight = answer.scrollHeight + 'px';
-                arrow.classList.add('rotated');
-                button.classList.add('active');
-            }
         }
 
-        // ==================== FADE IN on SCROLL ====================
-        const observer = new IntersectionObserver(function (entries) {
-            entries.forEach(function (entry) {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, { threshold: 0.08 });
-
-        document.querySelectorAll('.fade-in').forEach(function (el) {
-            observer.observe(el);
+        // ----- ACTIVE NAV LINK -----
+        let current = '';
+        sections.forEach(function (section) {
+            const sectionTop = section.offsetTop - 120;
+            if (scrollAtual >= sectionTop) {
+                current = section.getAttribute('id');
+            }
+        });
+        navLinks.forEach(function (link) {
+            link.classList.remove('active-link');
+            if (link.getAttribute('href') === '#' + current) {
+                link.classList.add('active-link');
+            }
         });
 
-        // ==================== ACTIVE NAV LINK ====================
-        const sections = document.querySelectorAll('section[id]');
-        const navLinks = document.querySelectorAll('.nav-menu a');
+        // ----- AUTO-HIDE NAVBAR -----
+        // Não esconde se o menu estiver aberto
+        if (navMenu.classList.contains('active')) {
+            ultimoScroll = scrollAtual;
+            return;
+        }
 
-        window.addEventListener('scroll', function () {
-            let current = '';
-            sections.forEach(function (section) {
-                const sectionTop = section.offsetTop - 120;
-                if (window.scrollY >= sectionTop) {
-                    current = section.getAttribute('id');
-                }
-            });
-            navLinks.forEach(function (link) {
-                link.classList.remove('active-link');
-                if (link.getAttribute('href') === '#' + current) {
-                    link.classList.add('active-link');
-                }
-            });
-        });
-    </script>
+        // No topo sempre mostra
+        if (scrollAtual <= limiarScroll) {
+            navPrincipal.classList.remove('escondida');
+            ultimoScroll = scrollAtual;
+            return;
+        }
+
+        if (scrollAtual > ultimoScroll) {
+            // Rolando pra BAIXO → esconde
+            navPrincipal.classList.add('escondida');
+        } else {
+            // Rolando pra CIMA → mostra
+            navPrincipal.classList.remove('escondida');
+        }
+
+        ultimoScroll = scrollAtual;
+    }, { passive: true });
+</script>
 
 </body>
 </html>
