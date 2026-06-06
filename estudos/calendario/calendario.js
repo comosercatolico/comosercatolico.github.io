@@ -1,786 +1,891 @@
-   'use strict';
+/* ══════════════════════════════════════════════════════════════
+   CALENDÁRIO LITÚRGICO — JS
+   Constrói a roda dinamicamente e gerencia interações
+   ══════════════════════════════════════════════════════════════ */
 
-    /* ── CONSTANTS ── */
-    const CX = 450, CY = 450;
-    const R_OUTER = 420;
-    const R_DATE = 398;
-    const R_WEEK = 370;
-    const R_WEEK_IN = 270;
-    const R_SEASON = 255;
-    const R_SEASON_IN = 205;
-    const HUB_R = 188;
+'use strict';
 
-    /* ── SEASONS DATA ── */
-    const SEASONS = [
-      {
-        id: 'advento', label: 'Advento', latin: 'Adventus Domini',
-        color: '#6b3fa0', colorLight: '#9b6fcf', textColor: '#fff',
-        gradient: 'url(#grad-advento)',
-        startDeg: 0, spanDeg: 28, weeks: 4,
-        liturgicalColor: 'Roxo / Violeta', badgeColor: '#6b3fa0',
-        symbol: '🕯️',
-        content: {
-          historia: 'O Advento é o ponto de partida do ano litúrgico, a grande espera do Messias. Com origem nas tradições do século IV na Gália e na Espanha, foi inicialmente um tempo de jejum de 40 dias antes do Natal (chamado "Quadragesima Sancti Martini"). Roma adotou o Advento de apenas 4 semanas por volta do século VI, sob o pontificado de São Gregório Magno. Etimologicamente, "Adventus" (chegada) traduz o grego "Parousía" — a vinda gloriosa do Senhor.',
-          espiritualidade: 'O Advento cultiva a tríplice dimensão da espera cristã: a lembrança histórica do nascimento do Verbo em Belém; a presença interior de Cristo na alma pela graça; e a expectativa escatológica de Sua vinda na glória. Os quatro domingos evocam os milênios de anseio de Israel pelo Redentor. A Igreja reza intensamente com os "Ó Antífonos" — sete clamores solenes da semana antes do Natal.',
-          personagens: 'São João Batista, a Virgem Maria, o profeta Isaías e os Patriarcas bíblicos são as figuras centrais. A liturgia medita especialmente no "Precursor" que preparou os caminhos do Senhor e na Imaculada que carregou a Palavra feita carne.',
-          praticas: 'Coroa do Advento com quatro velas (três roxas, uma rosa), Calendário do Advento, Rorate Caeli (Missa votiva da Virgem ao amanhecer), Novena do Natal, confissão e preparação espiritual. No III Domingo — "Gaudete" — a cor festiva rosa pode ser usada.',
-          quote: '"Vinde, Senhor, não tardes." — Antífona de Advento',
-          dates: 'Final de novembro até 24 de dezembro',
-        }
-      },
-      {
-        id: 'natal', label: 'Natal', latin: 'Tempus Nativitatis',
-        color: '#c9a84c', colorLight: '#e8cc88', textColor: '#1a150d',
-        gradient: 'url(#grad-natal)',
-        startDeg: 28, spanDeg: 22, weeks: 3,
-        liturgicalColor: 'Branco / Dourado', badgeColor: '#c9a84c',
-        symbol: '⭐',
-        content: {
-          historia: 'A festa do Natal — celebração do nascimento de Jesus Cristo — é atestada em Roma desde 336 d.C. Em 25 de dezembro, data possivelmente escolhida por seu alinhamento com o solstício de inverno romano (Natalis Solis Invicti), a Igreja proclama que o verdadeiro "Sol de Justiça" surgiu para o mundo. O Tempo de Natal se estende do 25 de dezembro ao Domingo do Batismo do Senhor.',
-          espiritualidade: 'O mistério da Encarnação — Deus tornando-se homem no seio da Virgem — está no coração do Natal. A contemplação do Menino na manjedoura convida à kênosis: a grandeza de Deus que se faz pequeno por amor à humanidade. A Epifania celebra a universalidade da salvação, revelada aos Magos como representantes das nações pagãs.',
-          personagens: 'O Menino Jesus, a Virgem Maria e São José, os Magos do Oriente, os Pastores de Belém e os Santos Inocentes (28 de dezembro) são as figuras contempladas neste tempo.',
-          praticas: 'Presépio, Missa da Meia-Noite (In nocte), Missa da Aurora (In aurora) e Missa do Dia (In die), Adoração ao Santíssimo, procissão da Epifania, bênção da casa com giz (K+M+B).',
-          quote: '"O Verbo se fez carne e habitou entre nós." — Jo 1, 14',
-          dates: '25 de dezembro até o Batismo do Senhor',
-        }
-      },
-      {
-        id: 'comum-pre', label: 'Tempo Comum I', latin: 'Per Annum',
-        color: '#2e7d4f', colorLight: '#5aaa78', textColor: '#fff',
-        gradient: 'url(#grad-comum)',
-        startDeg: 50, spanDeg: 38, weeks: 6,
-        liturgicalColor: 'Verde', badgeColor: '#2e7d4f', isCommon: true,
-        symbol: '🌿',
-        content: {
-          historia: 'O Tempo Comum ("Tempus per Annum") é o maior período do ano litúrgico, dividido em dois blocos. A denominação "comum" refere-se ao calendário "numerado" — as semanas são contadas ordinalmente. Reformado pelo Missal Romano de 1969 (Vaticano II).',
-          espiritualidade: 'Tempo de crescimento e amadurecimento na fé. A Igreja percorre continuamente os evangelhos sinóticos, contemplando os ensinamentos, milagres e gestos de misericórdia de Cristo. É o tempo das bem-aventuranças vividas no cotidiano.',
-          personagens: 'Os Santos do calendário universal e local marcam este período com sua rica variedade: mártires, confessores, doutores, virgens, religiosos e leigos.',
-          praticas: 'Leitura contínua das Epístolas e dos Evangelhos, Lectio Divina, devoções marianas (Maio e Outubro), Festas de Santos, Liturgia das Horas.',
-          quote: '"Crescei na graça e no conhecimento de Nosso Senhor." — 2 Pd 3, 18',
-          dates: 'Após o Batismo do Senhor até a Quarta-feira de Cinzas',
-        }
-      },
-      {
-        id: 'quaresma', label: 'Quaresma', latin: 'Quadragesima',
-        color: '#7a5080', colorLight: '#c9a4bc', textColor: '#fff',
-        gradient: 'url(#grad-quaresma)',
-        startDeg: 88, spanDeg: 40, weeks: 6,
-        liturgicalColor: 'Roxo / Violeta', badgeColor: '#7a5080',
-        symbol: '✝',
-        content: {
-          historia: 'A Quaresma remonta ao século IV como período final de preparação dos catecúmenos para o Batismo na Vigília Pascal. São Leão Magno a teologizou como "décima parte do ano" consagrada a Deus. Os 40 dias evocam Moisés no Sinai, Elias no deserto e os 40 dias de Cristo no deserto.',
-          espiritualidade: 'A tradição quaresmal conjuga três pilares: oração, jejum e esmola. A Quaresma é uma "grande páscoa" interior: o cristão percorre com Cristo o caminho da cruz, morrendo ao pecado para ressuscitar à graça.',
-          personagens: 'Cristo tentado no deserto (I Dom.), a Transfiguração (II Dom.), a Samaritana, o Cego de nascença e Lázaro (domingos do Ano A) dominam a meditação quaresmal.',
-          praticas: 'Imposição das Cinzas, Via Sacra, abstinência e jejum, confissão, RICA, retiros, adoração noturna. Rosa é a cor no IV Domingo (Laetare).',
-          quote: '"Convertei-vos a mim de todo o coração." — Jl 2, 12',
-          dates: 'Quarta-feira de Cinzas até a Quinta-feira Santa',
-        }
-      },
-      {
-        id: 'triduo', label: 'Tríduo Pascal', latin: 'Triduum Paschale',
-        color: '#9b1a2a', colorLight: '#c44050', textColor: '#fff',
-        gradient: 'url(#grad-triduo)',
-        startDeg: 128, spanDeg: 12, weeks: 1,
-        liturgicalColor: 'Vermelho / Branco', badgeColor: '#9b1a2a',
-        symbol: '🕆',
-        content: {
-          historia: 'O Tríduo Pascal — Quinta-feira Santa à tarde até Domingo de Páscoa — é o ápice absoluto do ano litúrgico. Popularizado por Santo Ambrósio e Santo Agostinho. Celebra o único Mistério Pascal: Paixão, Morte, Sepultura e Ressurreição de Cristo.',
-          espiritualidade: 'A "passagem" do Senhor da morte à vida. A Quinta-feira Santa revela o amor até o fim. A Sexta contempla o Servo sofredor. O Sábado é o silêncio sepulcral. A Vigília Pascal é "a mãe de todas as vigílias" (Sto. Agostinho).',
-          personagens: 'Cristo no centro absoluto. Maria Mãe das Dores junto à Cruz. São João Apóstolo. Maria Madalena, primeira testemunha da Ressurreição.',
-          praticas: 'Missa In Cena Domini (lavagem dos pés), Ação Litúrgica da Paixão (Adoração da Cruz), Vigília Pascal com Exsultet, bênção do fogo, Pregão Pascal, Liturgia Batismal.',
-          quote: '"Eis o madeiro da Cruz em que esteve suspenso o Salvador do mundo." — Antífona',
-          dates: 'Quinta-feira Santa até Domingo de Páscoa',
-        }
-      },
-      {
-        id: 'pascoa', label: 'Tempo Pascal', latin: 'Tempus Paschale',
-        color: '#b8891a', colorLight: '#e8cc88', textColor: '#fff',
-        gradient: 'url(#grad-pascoa)',
-        startDeg: 140, spanDeg: 70, weeks: 7,
-        liturgicalColor: 'Branco / Dourado', badgeColor: '#b8891a',
-        symbol: '☀',
-        content: {
-          historia: 'O Tempo Pascal celebra durante 50 dias a Ressurreição de Cristo, culminando em Pentecostes. Nos primeiros séculos, os cristãos celebravam a Páscoa como uma única festa de 50 dias — o "Grande Domingo". O domingo de Páscoa é a "festa das festas" (Sto. Agostinho).',
-          espiritualidade: 'O Ressuscitado está vivo e presente. Os aparecimentos do Ressuscitado revelam a continuidade e a transformação glorificada do Corpo de Cristo. Pentecostes efunde o Espírito prometido, "alma" da Igreja.',
-          personagens: 'O Ressuscitado, Maria Madalena ("Apostola Apostolorum"), os Onze, Tomé, os discípulos de Emaús, o Espírito Santo no Cenáculo.',
-          praticas: '"Aleluia" em todas as orações. Círio Pascal aceso. Oitava de Páscoa. Divina Misericórdia (II Dom. Pascal). Rogações antes da Ascensão.',
-          quote: '"Aleluia! Cristo ressuscitou! Ressuscitou de verdade, aleluia!" — Aclamação',
-          dates: 'Domingo de Páscoa até Pentecostes (50 dias)',
-        }
-      },
-      {
-        id: 'pentecostes-solenidades', label: 'Solenidades', latin: 'Post Pentecosten',
-        color: '#5c4009', colorLight: '#8b6914', textColor: '#fff',
-        gradient: 'url(#grad-solenidades)',
-        startDeg: 210, spanDeg: 22, weeks: 3,
-        liturgicalColor: 'Vermelho / Branco / Verde', badgeColor: '#5c4009',
-        symbol: '🔥',
-        content: {
-          historia: 'Após Pentecostes, a Igreja celebra três solenidades: a Santíssima Trindade, Corpus Christi (estabelecida em 1264 pelo papa Urbano IV, com liturgia de Sto. Tomás de Aquino) e o Sagrado Coração de Jesus.',
-          espiritualidade: 'Este período revela o fruto do Mistério Pascal: o Espírito manifesta o rosto trinitário de Deus e alimenta a Igreja com o Corpo eucarístico de Cristo. A procissão de Corpus Christi é ato de fé pública.',
-          personagens: 'Santa Juliana de Liège, Beata Eva de Liège, Santa Marguerite-Marie Alacoque, São João Eudes.',
-          praticas: 'Procissão de Corpus Christi, adoração eucarística, Bênção com o Santíssimo, Hora Santa, Novena do Sagrado Coração.',
-          quote: '"Quantas vezes repetirdes isto, o fareis em memória de mim." — 1 Cor 11, 25',
-          dates: 'Semana de Pentecostes até final de junho',
-        }
-      },
-      {
-        id: 'comum-pos', label: 'Tempo Comum II', latin: 'Per Annum',
-        color: '#2e7d4f', colorLight: '#5aaa78', textColor: '#fff',
-        gradient: 'url(#grad-comum)',
-        startDeg: 232, spanDeg: 113, weeks: 28,
-        liturgicalColor: 'Verde', badgeColor: '#2e7d4f', isCommon: true,
-        symbol: '🌿',
-        content: {
-          historia: 'O segundo bloco do Tempo Comum é o mais longo do ano, percorrendo verão, outono e parte do inverno até Cristo Rei. As semanas (até a 34ª) continuam a leitura semicontínua dos evangelhos sinóticos.',
-          espiritualidade: 'Período da "pedagogia da cotidianidade": encontrar Cristo no trabalho, na família, na solidariedade. A liturgia convida ao crescimento nas virtudes teologais e cardeais.',
-          personagens: 'São João Maria Vianney, Santa Teresa de Calcutá, São Francisco de Assis, Todos os Santos (1/11), Todos os Fiéis Defuntos (2/11) — calendário particularmente rico.',
-          praticas: 'Missas dominicais com leitura contínua, Liturgia das Horas, Rosário (outubro), Visitas ao cemitério (novembro), Festas de padroeiros.',
-          quote: '"Sede perfeitos como o vosso Pai celeste é perfeito." — Mt 5, 48',
-          dates: 'Final de junho até a Solenidade de Cristo Rei',
-        }
-      },
-      {
-        id: 'cristo-rei', label: 'Cristo Rei', latin: 'Christus Rex',
-        color: '#8b6914', colorLight: '#c9a84c', textColor: '#fff',
-        gradient: 'url(#grad-cristorei)',
-        startDeg: 345, spanDeg: 15, weeks: 1,
-        liturgicalColor: 'Branco / Dourado', badgeColor: '#8b6914',
-        symbol: '👑',
-        content: {
-          historia: 'Instituída por Pio XI em 1925 (enc. Quas Primas) como resposta ao laicismo. O Vaticano II deslocou-a para o último domingo do ano litúrgico (XXXIV Semana), conferindo tom escatológico acentuado.',
-          espiritualidade: 'Cristo Rei não é monarca temporal, mas o Servo Sofredor que reina pela cruz. O Evangelho do julgamento final (Mt 25) revela o critério: a caridade com os pobres, doentes, presos.',
-          personagens: 'Cristo Pantocrator e Juiz escatológico, Pilatos, o Bom Ladrão que recebe o paraíso. Os profetas que anunciaram o reinado eterno.',
-          praticas: 'Missa solene de encerramento do Ano, meditação escatológica sobre o Julgamento Final e as Novíssimas (morte, julgamento, inferno, glória).',
-          quote: '"Meu reino não é deste mundo." — Jo 18, 36',
-          dates: 'Último Domingo do Tempo Comum (final de novembro)',
-        }
-      },
-    ];
+/* ══════════════════════════════════════════════════════════════
+   CONSTANTES GEOMÉTRICAS
+   ══════════════════════════════════════════════════════════════ */
 
-    /* ── HELPERS ── */
-    function degToRad(d) { return (d - 90) * Math.PI / 180; }
+const CX = 500;
+const CY = 500;
 
-    function polarToXY(cx, cy, r, deg) {
-      const rad = degToRad(deg);
-      return { x: cx + r * Math.cos(rad), y: cy + r * Math.sin(rad) };
+// Raios dos anéis (do externo ao interno)
+const R_OUTER       = 490;   // borda externa
+const R_DATE_OUT    = 488;   // borda externa do anel de datas
+const R_DATE_IN     = 430;   // borda interna do anel de datas
+const R_SEASON_OUT  = 428;   // borda externa do anel de tempos
+const R_SEASON_IN   = 395;   // borda interna do anel de tempos
+const R_WEEK_OUT    = 393;   // borda externa do anel de semanas
+const R_WEEK_IN     = 195;   // borda interna do anel de semanas (toca o centro)
+const R_GUIDE       = 200;   // anel guia tracejado
+const R_CENTER      = 185;   // raio do emblema central
+
+/* ══════════════════════════════════════════════════════════════
+   DADOS DO CALENDÁRIO LITÚRGICO
+   Genérico — sem ano específico
+   Total: 52 semanas distribuídas em 360°
+   ══════════════════════════════════════════════════════════════ */
+
+// Cores litúrgicas (mesmas variáveis do CSS)
+const COLORS = {
+  advento:    '#c9bce0',
+  adventoDk:  '#a896c4',
+  gaudete:    '#f0c8d8',  // rosa
+  natal:      '#ffffff',
+  natalStk:   '#d4c5a0',
+  comum:      '#4a9b3f',
+  comumDk:    '#357a2c',
+  comumLt:    '#6bb85e',
+  quaresma:   '#b8a8d4',
+  quaresmaDk: '#9888b8',
+  laetare:    '#f0c8d8',  // rosa
+  triduo:     '#a01825',
+  triduoDk:   '#7a0f1a',
+  pascoa:     '#ffffff',
+  pentecostes:'#c8202d',
+};
+
+/* ─── TEMPOS LITÚRGICOS (anel médio) ─── */
+// Cada tempo ocupa um arco que agrupa várias semanas
+const SEASONS = [
+  { id: 'advento',  label: 'Advento',      color: COLORS.advento,    textColor: '#2a2218', weekCount: 4 },
+  { id: 'natal',    label: 'Natal',        color: COLORS.natal,      textColor: '#2a2218', weekCount: 4 },  // Natal, Sagrada Família, Mãe de Deus, Epifania, Batismo do Senhor
+  { id: 'comum1',   label: 'Tempo Comum',  color: COLORS.comum,      textColor: '#ffffff', weekCount: 6 },
+  { id: 'quaresma', label: 'Quaresma',     color: COLORS.quaresma,   textColor: '#2a2218', weekCount: 7 },  // Cinzas + 5 semanas + Ramos
+  { id: 'triduo',   label: 'Tríduo Pascal',color: COLORS.triduo,     textColor: '#ffffff', weekCount: 1 },
+  { id: 'pascoa',   label: 'Páscoa',       color: COLORS.pascoa,     textColor: '#2a2218', weekCount: 8 },  // Páscoa, 2ª-6ª, Ascensão, 7ª
+  { id: 'pentecostes', label: 'Pentecostes', color: COLORS.pentecostes, textColor: '#ffffff', weekCount: 1 },
+  { id: 'comum2',   label: 'Tempo Comum',  color: COLORS.comum,      textColor: '#ffffff', weekCount: 23 }, // 12ª até 34ª (Cristo Rei)
+];
+
+/* ─── SEMANAS (anel interno — TODAS CLICÁVEIS) ─── */
+// Cada semana tem: id único, label, tempo a que pertence, cor opcional (sobrescreve a do tempo)
+const WEEKS = [
+  // ADVENTO (4 semanas)
+  { id: 'adv-1', label: '1ª semana',         season: 'advento',  color: COLORS.advento },
+  { id: 'adv-2', label: '2ª semana',         season: 'advento',  color: COLORS.advento },
+  { id: 'adv-3', label: '3ª semana',         season: 'advento',  color: COLORS.gaudete }, // Gaudete (rosa)
+  { id: 'adv-4', label: '4ª semana',         season: 'advento',  color: COLORS.advento },
+
+  // NATAL (5 marcadores)
+  { id: 'nat-1', label: 'Natal',             season: 'natal',    color: COLORS.natal, special: true },
+  { id: 'nat-2', label: 'Sagrada Família',   season: 'natal',    color: COLORS.natal },
+  { id: 'nat-3', label: 'Mãe de Deus',       season: 'natal',    color: COLORS.natal },
+  { id: 'nat-4', label: 'Epifania do Senhor',season: 'natal',    color: COLORS.natal },
+  { id: 'nat-5', label: 'Batismo do Senhor', season: 'natal',    color: COLORS.natal },
+
+  // TEMPO COMUM I (5 semanas + reticências)
+  { id: 'tc1-1', label: '1ª semana',         season: 'comum1',   color: COLORS.comum, textColor: '#fff' },
+  { id: 'tc1-2', label: '2ª semana',         season: 'comum1',   color: COLORS.comum, textColor: '#fff' },
+  { id: 'tc1-3', label: '3ª semana',         season: 'comum1',   color: COLORS.comum, textColor: '#fff' },
+  { id: 'tc1-4', label: '4ª semana',         season: 'comum1',   color: COLORS.comum, textColor: '#fff' },
+  { id: 'tc1-5', label: '5ª semana',         season: 'comum1',   color: COLORS.comum, textColor: '#fff' },
+  { id: 'tc1-6', label: '…',                 season: 'comum1',   color: COLORS.comum, textColor: '#fff' },
+
+  // QUARESMA (Cinzas + 5 semanas + Ramos)
+  { id: 'qua-0', label: '4ª feira de Cinzas',season: 'quaresma', color: COLORS.quaresma, special: true },
+  { id: 'qua-1', label: '1ª semana',         season: 'quaresma', color: COLORS.quaresma },
+  { id: 'qua-2', label: '2ª semana',         season: 'quaresma', color: COLORS.quaresma },
+  { id: 'qua-3', label: '3ª semana',         season: 'quaresma', color: COLORS.quaresma },
+  { id: 'qua-4', label: '4ª semana',         season: 'quaresma', color: COLORS.laetare }, // Laetare (rosa)
+  { id: 'qua-5', label: '5ª semana',         season: 'quaresma', color: COLORS.quaresma },
+  { id: 'qua-6', label: 'Domingo de Ramos',  season: 'quaresma', color: COLORS.triduo, textColor: '#fff', special: true },
+
+  // TRÍDUO PASCAL
+  { id: 'tri-1', label: '5ª feira Santa',    season: 'triduo',   color: COLORS.triduo, textColor: '#fff', special: true },
+  { id: 'tri-2', label: '6ª feira Santa',    season: 'triduo',   color: COLORS.triduo, textColor: '#fff', special: true },
+
+  // PÁSCOA (8 marcadores)
+  { id: 'pas-1', label: 'Páscoa',            season: 'pascoa',   color: COLORS.pascoa, special: true },
+  { id: 'pas-2', label: '2ª semana',         season: 'pascoa',   color: COLORS.pascoa },
+  { id: 'pas-3', label: '3ª semana',         season: 'pascoa',   color: COLORS.pascoa },
+  { id: 'pas-4', label: '4ª semana',         season: 'pascoa',   color: COLORS.pascoa },
+  { id: 'pas-5', label: '5ª semana',         season: 'pascoa',   color: COLORS.pascoa },
+  { id: 'pas-6', label: '6ª semana',         season: 'pascoa',   color: COLORS.pascoa },
+  { id: 'pas-7', label: 'Ascensão do Senhor',season: 'pascoa',   color: COLORS.pascoa, special: true },
+  { id: 'pas-8', label: '7ª semana',         season: 'pascoa',   color: COLORS.pascoa },
+
+  // PENTECOSTES
+  { id: 'pen-1', label: 'Pentecostes',       season: 'pentecostes', color: COLORS.pentecostes, textColor: '#fff', special: true },
+
+  // TEMPO COMUM II (12ª até 34ª = Cristo Rei) — 23 entradas
+  { id: 'tc2-x', label: '…',                 season: 'comum2',   color: COLORS.comum, textColor: '#fff' },
+  { id: 'tc2-cc',label: 'Corpus Christi',    season: 'comum2',   color: COLORS.comum, textColor: '#fff', special: true },
+  { id: 'tc2-ss',label: 'Ssma Trindade',     season: 'comum2',   color: COLORS.comum, textColor: '#fff', special: true },
+  { id: 'tc2-12',label: '12ª semana',        season: 'comum2',   color: COLORS.comum, textColor: '#fff' },
+  { id: 'tc2-13',label: '13ª semana',        season: 'comum2',   color: COLORS.comum, textColor: '#fff' },
+  { id: 'tc2-14',label: '14ª semana',        season: 'comum2',   color: COLORS.comum, textColor: '#fff' },
+  { id: 'tc2-15',label: '15ª semana',        season: 'comum2',   color: COLORS.comum, textColor: '#fff' },
+  { id: 'tc2-16',label: '16ª semana',        season: 'comum2',   color: COLORS.comum, textColor: '#fff' },
+  { id: 'tc2-17',label: '17ª semana',        season: 'comum2',   color: COLORS.comum, textColor: '#fff' },
+  { id: 'tc2-18',label: '18ª semana',        season: 'comum2',   color: COLORS.comum, textColor: '#fff' },
+  { id: 'tc2-19',label: '19ª semana',        season: 'comum2',   color: COLORS.comum, textColor: '#fff' },
+  { id: 'tc2-20',label: '20ª semana',        season: 'comum2',   color: COLORS.comum, textColor: '#fff' },
+  { id: 'tc2-21',label: '21ª semana',        season: 'comum2',   color: COLORS.comum, textColor: '#fff' },
+  { id: 'tc2-22',label: '22ª semana',        season: 'comum2',   color: COLORS.comum, textColor: '#fff' },
+  { id: 'tc2-23',label: '23ª semana',        season: 'comum2',   color: COLORS.comum, textColor: '#fff' },
+  { id: 'tc2-24',label: '24ª semana',        season: 'comum2',   color: COLORS.comum, textColor: '#fff' },
+  { id: 'tc2-25',label: '25ª semana',        season: 'comum2',   color: COLORS.comum, textColor: '#fff' },
+  { id: 'tc2-26',label: '26ª semana',        season: 'comum2',   color: COLORS.comum, textColor: '#fff' },
+  { id: 'tc2-27',label: '27ª semana',        season: 'comum2',   color: COLORS.comum, textColor: '#fff' },
+  { id: 'tc2-28',label: '28ª semana',        season: 'comum2',   color: COLORS.comum, textColor: '#fff' },
+  { id: 'tc2-29',label: '29ª semana',        season: 'comum2',   color: COLORS.comum, textColor: '#fff' },
+  { id: 'tc2-30',label: '30ª semana',        season: 'comum2',   color: COLORS.comum, textColor: '#fff' },
+  { id: 'tc2-31',label: '31ª semana',        season: 'comum2',   color: COLORS.comum, textColor: '#fff' },
+  { id: 'tc2-32',label: '32ª semana',        season: 'comum2',   color: COLORS.comum, textColor: '#fff' },
+  { id: 'tc2-33',label: '33ª semana',        season: 'comum2',   color: COLORS.comum, textColor: '#fff' },
+  { id: 'tc2-cr',label: 'Cristo Rei',        season: 'comum2',   color: COLORS.comum, textColor: '#fff', special: true },
+];
+
+/* ─── DATAS (anel externo — apenas referência visual, genérico) ─── */
+// 52 marcadores de data — um por semana
+// Distribuídos a partir do 1º Domingo do Advento (≈ final de Novembro)
+const DATES = [
+  '29/11', '6/12', '13/12', '20/12',        // Advento
+  '25/12', '27/12', '1/1', '3/1', '10/1',   // Natal
+  '17/1', '24/1', '31/1', '7/2', '14/2', '21/2',  // Comum I
+  '28/2', '6/3', '13/3', '20/3', '27/3', '3/4',   // Quaresma
+  '10/4', '17/4',                            // Tríduo + início Páscoa
+  '24/4', '1/5', '8/5', '15/5', '22/5', '29/5',  // Páscoa
+  '5/6', '12/6', '19/6', '26/6',             // Pentecostes + início Comum II
+  '3/7', '10/7', '17/7', '24/7', '31/7',
+  '7/8', '14/8', '21/8', '28/8',
+  '4/9', '11/9', '18/9', '25/9',
+  '2/10', '9/10', '16/10', '23/10', '30/10',
+  '6/11', '13/11', '20/11', '27/11',         // Cristo Rei + retorno ao Advento
+];
+
+/* ══════════════════════════════════════════════════════════════
+   FUNÇÕES UTILITÁRIAS
+   ══════════════════════════════════════════════════════════════ */
+
+/**
+ * Converte ângulo em graus (0° no topo, sentido horário) para coordenadas
+ */
+function polarToXY(cx, cy, r, deg) {
+  const rad = (deg - 90) * Math.PI / 180;
+  return {
+    x: cx + r * Math.cos(rad),
+    y: cy + r * Math.sin(rad),
+  };
+}
+
+/**
+ * Gera o path SVG de uma fatia de anel (donut slice)
+ */
+function arcSlice(cx, cy, rOuter, rInner, startDeg, endDeg) {
+  const s1 = polarToXY(cx, cy, rOuter, startDeg);
+  const e1 = polarToXY(cx, cy, rOuter, endDeg);
+  const s2 = polarToXY(cx, cy, rInner, endDeg);
+  const e2 = polarToXY(cx, cy, rInner, startDeg);
+  const largeArc = (endDeg - startDeg) > 180 ? 1 : 0;
+
+  return [
+    `M ${s1.x} ${s1.y}`,
+    `A ${rOuter} ${rOuter} 0 ${largeArc} 1 ${e1.x} ${e1.y}`,
+    `L ${s2.x} ${s2.y}`,
+    `A ${rInner} ${rInner} 0 ${largeArc} 0 ${e2.x} ${e2.y}`,
+    'Z',
+  ].join(' ');
+}
+
+/**
+ * Cria elemento SVG com atributos
+ */
+function svgEl(tag, attrs = {}) {
+  const el = document.createElementNS('http://www.w3.org/2000/svg', tag);
+  for (const [k, v] of Object.entries(attrs)) {
+    el.setAttribute(k, v);
+  }
+  return el;
+}
+
+/**
+ * Calcula a rotação ideal para um texto radial
+ * Garante que o texto sempre seja legível (não fica de cabeça para baixo)
+ */
+function getRadialRotation(deg) {
+  // Se o ângulo está na metade inferior (90°-270°), gira 180°
+  if (deg > 90 && deg < 270) {
+    return deg + 180;
+  }
+  return deg;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   CONSTRUÇÃO DA RODA
+   ══════════════════════════════════════════════════════════════ */
+
+const TOTAL_WEEKS = WEEKS.length;
+const DEG_PER_WEEK = 360 / TOTAL_WEEKS;
+
+/**
+ * Constrói o anel externo de datas (52 células)
+ */
+function buildDateRing() {
+  const layer = document.getElementById('layer-dates');
+  const labelLayer = document.getElementById('layer-date-labels');
+
+  const totalDates = DATES.length;
+  const degPerDate = 360 / totalDates;
+
+  for (let i = 0; i < totalDates; i++) {
+    const startDeg = i * degPerDate;
+    const endDeg = startDeg + degPerDate;
+    const midDeg = (startDeg + endDeg) / 2;
+
+    // Célula
+    const cell = svgEl('path', {
+      d: arcSlice(CX, CY, R_DATE_OUT, R_DATE_IN, startDeg, endDeg),
+      class: 'date-cell',
+    });
+    layer.appendChild(cell);
+
+    // Label da data — radial, perpendicular ao raio (texto "deitado")
+    const labelR = (R_DATE_OUT + R_DATE_IN) / 2;
+    const pos = polarToXY(CX, CY, labelR, midDeg);
+    const rotation = getRadialRotation(midDeg);
+
+    const label = svgEl('text', {
+      x: pos.x,
+      y: pos.y,
+      class: 'date-label',
+      'text-anchor': 'middle',
+      'dominant-baseline': 'central',
+      transform: `rotate(${rotation - 90}, ${pos.x}, ${pos.y})`,
+    });
+    label.textContent = DATES[i];
+    labelLayer.appendChild(label);
+  }
+}
+
+/**
+ * Constrói o anel médio de tempos litúrgicos
+ */
+function buildSeasonRing() {
+  const layer = document.getElementById('layer-seasons');
+  const labelLayer = document.getElementById('layer-season-labels');
+
+  let currentDeg = 0;
+
+  for (const season of SEASONS) {
+    const spanDeg = season.weekCount * DEG_PER_WEEK;
+    const startDeg = currentDeg;
+    const endDeg = currentDeg + spanDeg;
+    const midDeg = (startDeg + endDeg) / 2;
+
+    // Fatia do tempo litúrgico
+    const slice = svgEl('path', {
+      d: arcSlice(CX, CY, R_SEASON_OUT, R_SEASON_IN, startDeg, endDeg),
+      fill: season.color,
+      class: 'season-cell',
+      'data-season': season.id,
+    });
+    layer.appendChild(slice);
+
+    // Label do tempo — perpendicular ao raio (lendo no sentido radial)
+    const labelR = (R_SEASON_OUT + R_SEASON_IN) / 2;
+    const pos = polarToXY(CX, CY, labelR, midDeg);
+
+    // Para spans largos, usa textPath em arco. Para pequenos, usa texto reto.
+    if (spanDeg > 30) {
+      // Texto curvado ao longo do arco
+      buildCurvedText(labelLayer, season.label, labelR, midDeg, season.textColor, 'season-label');
+    } else {
+      // Texto radial (perpendicular)
+      const rotation = getRadialRotation(midDeg);
+      const label = svgEl('text', {
+        x: pos.x,
+        y: pos.y,
+        class: 'season-label',
+        fill: season.textColor,
+        'text-anchor': 'middle',
+        'dominant-baseline': 'central',
+        transform: `rotate(${rotation - 90}, ${pos.x}, ${pos.y})`,
+      });
+      label.textContent = season.label;
+      labelLayer.appendChild(label);
     }
 
-    function arcPath(cx, cy, r1, r2, startDeg, endDeg) {
-      const s1 = polarToXY(cx, cy, r1, startDeg);
-      const e1 = polarToXY(cx, cy, r1, endDeg);
-      const s2 = polarToXY(cx, cy, r2, endDeg);
-      const e2 = polarToXY(cx, cy, r2, startDeg);
-      const large = (endDeg - startDeg) > 180 ? 1 : 0;
-      return [
-        `M ${s1.x} ${s1.y}`,
-        `A ${r1} ${r1} 0 ${large} 1 ${e1.x} ${e1.y}`,
-        `L ${s2.x} ${s2.y}`,
-        `A ${r2} ${r2} 0 ${large} 0 ${e2.x} ${e2.y}`,
-        'Z'
-      ].join(' ');
+    currentDeg = endDeg;
+  }
+}
+
+/**
+ * Constrói texto curvado ao longo de um arco (para tempos longos como "Tempo Comum")
+ */
+function buildCurvedText(layer, text, radius, midDeg, color, className) {
+  const defs = document.querySelector('#liturgical-wheel defs');
+  const pathId = `arc-text-${Math.random().toString(36).slice(2, 9)}`;
+
+  // Verifica se o texto deve ser desenhado "de cabeça para baixo" no topo ou normal embaixo
+  // Para textos no topo (entre -90° e 90°), arco no sentido horário, texto vira de cabeça para baixo
+  // Solução: para esses casos, usa um arco "invertido" (raio interno) com texto correto
+  const isBottom = midDeg > 90 && midDeg < 270;
+  const arcRadius = isBottom ? radius - 8 : radius + 8;
+  const sweep = isBottom ? 1 : 1; // sempre horário
+
+  // Define um arco amplo para o texto seguir
+  const arcSpan = 40; // graus de cada lado do mid
+  const startDeg = midDeg - arcSpan;
+  const endDeg = midDeg + arcSpan;
+
+  let pathD;
+  if (isBottom) {
+    // No fundo: arco invertido (sentido anti-horário) para o texto ficar de pé
+    const s = polarToXY(CX, CY, arcRadius, endDeg);
+    const e = polarToXY(CX, CY, arcRadius, startDeg);
+    pathD = `M ${s.x} ${s.y} A ${arcRadius} ${arcRadius} 0 0 0 ${e.x} ${e.y}`;
+  } else {
+    // No topo: arco normal (sentido horário)
+    const s = polarToXY(CX, CY, arcRadius, startDeg);
+    const e = polarToXY(CX, CY, arcRadius, endDeg);
+    pathD = `M ${s.x} ${s.y} A ${arcRadius} ${arcRadius} 0 0 1 ${e.x} ${e.y}`;
+  }
+
+  const path = svgEl('path', { id: pathId, d: pathD, fill: 'none' });
+  defs.appendChild(path);
+
+  const text = svgEl('text', { class: className, fill: color });
+  const textPath = svgEl('textPath', {
+    href: `#${pathId}`,
+    startOffset: '50%',
+    'text-anchor': 'middle',
+  });
+  textPath.textContent = text;
+  text.appendChild(textPath);
+  layer.appendChild(text);
+}
+
+/**
+ * Constrói o anel interno de semanas (CLICÁVEIS)
+ */
+function buildWeekRing() {
+  const layer = document.getElementById('layer-weeks');
+  const labelLayer = document.getElementById('layer-week-labels');
+
+  WEEKS.forEach((week, i) => {
+    const startDeg = i * DEG_PER_WEEK;
+    const endDeg = startDeg + DEG_PER_WEEK;
+    const midDeg = (startDeg + endDeg) / 2;
+
+    // Célula clicável
+    const cell = svgEl('path', {
+      d: arcSlice(CX, CY, R_WEEK_OUT, R_WEEK_IN, startDeg, endDeg),
+      fill: week.color,
+      class: 'week-cell',
+      'data-week-id': week.id,
+      'data-season': week.season,
+      'data-week-index': i,
+      tabindex: '0',
+      role: 'button',
+      'aria-label': `${week.label}, ${getSeasonLabel(week.season)}`,
+    });
+    layer.appendChild(cell);
+
+    // Label da semana — radial (texto perpendicular ao raio, lendo de dentro para fora)
+    const labelR = (R_WEEK_OUT + R_WEEK_IN) / 2;
+    const pos = polarToXY(CX, CY, labelR, midDeg);
+
+    // Rotação para texto radial: na metade superior, texto aponta "para fora"
+    // Na metade inferior, gira 180° para manter legibilidade
+    const isBottom = midDeg > 90 && midDeg < 270;
+    const rotation = isBottom ? midDeg + 90 : midDeg - 90;
+
+    const textColor = week.textColor || '#2a2218';
+    const labelClass = week.special
+      ? `week-label special ${week.textColor === '#fff' ? 'on-red' : ''}`
+      : 'week-label';
+
+    const label = svgEl('text', {
+      x: pos.x,
+      y: pos.y,
+      class: labelClass,
+      fill: textColor,
+      'text-anchor': 'middle',
+      'dominant-baseline': 'central',
+      transform: `rotate(${rotation}, ${pos.x}, ${pos.y})`,
+    });
+    label.textContent = week.label;
+    labelLayer.appendChild(label);
+  });
+}
+
+/**
+ * Constrói as linhas divisórias (spokes) entre datas e semanas
+ */
+function buildSpokes() {
+  const layer = document.getElementById('layer-spokes');
+
+  // Spokes entre cada semana (interno)
+  for (let i = 0; i < TOTAL_WEEKS; i++) {
+    const deg = i * DEG_PER_WEEK;
+    const outer = polarToXY(CX, CY, R_DATE_OUT, deg);
+    const inner = polarToXY(CX, CY, R_WEEK_IN, deg);
+
+    const line = svgEl('line', {
+      x1: outer.x, y1: outer.y,
+      x2: inner.x, y2: inner.y,
+      class: 'spoke',
+    });
+    layer.appendChild(line);
+  }
+
+  // Spokes maiores nas transições entre tempos litúrgicos
+  let currentDeg = 0;
+  for (const season of SEASONS) {
+    const outer = polarToXY(CX, CY, R_DATE_OUT, currentDeg);
+    const inner = polarToXY(CX, CY, R_WEEK_IN, currentDeg);
+
+    const line = svgEl('line', {
+      x1: outer.x, y1: outer.y,
+      x2: inner.x, y2: inner.y,
+      class: 'spoke major',
+    });
+    layer.appendChild(line);
+
+    currentDeg += season.weekCount * DEG_PER_WEEK;
+  }
+}
+
+/**
+ * Constrói o anel guia tracejado (separa semanas do centro)
+ */
+function buildGuideRing() {
+  const layer = document.getElementById('layer-guide');
+
+  const guide = svgEl('circle', {
+    cx: CX, cy: CY, r: R_GUIDE,
+    class: 'guide-ring',
+  });
+  layer.appendChild(guide);
+}
+
+/**
+ * Constrói a anotação "início do ano litúrgico" com seta
+ */
+function buildAnnotation() {
+  const layer = document.getElementById('layer-annotation');
+
+  // Posição do texto (acima e à esquerda do topo da roda)
+  const textX = 380;
+  const textY = 180;
+
+  const text = svgEl('text', {
+    x: textX,
+    y: textY,
+    class: 'start-annotation',
+    'text-anchor': 'end',
+  });
+  text.textContent = 'início do ano litúrgico';
+  layer.appendChild(text);
+
+  // Seta apontando do texto para o início do Advento (topo da roda)
+  const startPoint = polarToXY(CX, CY, R_DATE_OUT + 5, 0);
+
+  const arrow = svgEl('path', {
+    d: `M ${textX + 5} ${textY + 3} Q ${textX + 60} ${textY + 10}, ${startPoint.x - 5} ${startPoint.y - 5}`,
+    class: 'start-arrow',
+  });
+  layer.appendChild(arrow);
+}
+
+/**
+ * Indicador "HOJE" — posicionado em uma semana aleatória por enquanto
+ * (na versão genérica, sem datas reais, usamos a semana atual aproximada)
+ */
+function buildTodayMarker() {
+  const layer = document.getElementById('layer-today');
+
+  // Calcula aproximadamente em qual semana estamos hoje
+  // Por enquanto, fixo na "1ª semana do Advento" como exemplo
+  const todayWeekIndex = getTodayWeekIndex();
+  const deg = (todayWeekIndex + 0.5) * DEG_PER_WEEK;
+
+  const markerPos = polarToXY(CX, CY, R_DATE_OUT + 18, deg);
+
+  // Círculo pulsante
+  const pulse = svgEl('circle', {
+    cx: markerPos.x, cy: markerPos.y, r: 6,
+    class: 'today-pulse',
+  });
+  layer.appendChild(pulse);
+
+  // Marcador sólido
+  const marker = svgEl('circle', {
+    cx: markerPos.x, cy: markerPos.y, r: 6,
+    class: 'today-marker',
+  });
+  layer.appendChild(marker);
+
+  // Label "HOJE"
+  const labelPos = polarToXY(CX, CY, R_DATE_OUT + 38, deg);
+  const rotation = getRadialRotation(deg);
+  const label = svgEl('text', {
+    x: labelPos.x, y: labelPos.y,
+    'text-anchor': 'middle',
+    'dominant-baseline': 'central',
+    transform: `rotate(${rotation - 90}, ${labelPos.x}, ${labelPos.y})`,
+    'font-family': 'Cinzel, serif',
+    'font-size': '9',
+    'font-weight': '700',
+    'letter-spacing': '2',
+    fill: '#b8891a',
+  });
+  label.textContent = 'HOJE';
+  layer.appendChild(label);
+}
+
+/**
+ * Calcula aproximadamente a semana atual no ano litúrgico (genérico)
+ */
+function getTodayWeekIndex() {
+  const today = new Date();
+  const month = today.getMonth(); // 0-11
+  const day = today.getDate();
+
+  // Mapeamento aproximado: cada mês ≈ certas semanas
+  // Início do Advento: ~ final de novembro
+  // 52 semanas começam em ~29/11
+  const yearStart = new Date(today.getFullYear(), 10, 29); // 29 de novembro
+  let diffMs = today - yearStart;
+  if (diffMs < 0) {
+    // ainda no ano litúrgico anterior
+    diffMs += 365 * 24 * 60 * 60 * 1000;
+  }
+  const weekIndex = Math.floor(diffMs / (7 * 24 * 60 * 60 * 1000));
+  return Math.min(Math.max(weekIndex, 0), TOTAL_WEEKS - 1);
+}
+
+/**
+ * Helper: retorna o label do tempo litúrgico pelo id
+ */
+function getSeasonLabel(seasonId) {
+  const s = SEASONS.find(ss => ss.id === seasonId);
+  return s ? s.label : '';
+}
+
+/* ══════════════════════════════════════════════════════════════
+   INTERATIVIDADE
+   ══════════════════════════════════════════════════════════════ */
+
+let activeWeekId = null;
+
+/**
+ * Lida com clique em uma semana
+ */
+function handleWeekClick(weekId) {
+  const week = WEEKS.find(w => w.id === weekId);
+  if (!week) return;
+
+  // Toggle: se clicar na mesma, deseleciona
+  if (activeWeekId === weekId) {
+    clearActive();
+    return;
+  }
+
+  // Limpa estados anteriores
+  document.querySelectorAll('.week-cell').forEach(cell => {
+    cell.classList.remove('active');
+    cell.classList.add('dimmed');
+  });
+
+  // Marca a célula ativa
+  const cell = document.querySelector(`.week-cell[data-week-id="${weekId}"]`);
+  if (cell) {
+    cell.classList.add('active');
+    cell.classList.remove('dimmed');
+  }
+
+  activeWeekId = weekId;
+  showWeekDetail(week);
+}
+
+/**
+ * Lida com clique em um tempo litúrgico (anel médio)
+ */
+function handleSeasonClick(seasonId) {
+  // Destaca todas as semanas daquele tempo
+  document.querySelectorAll('.week-cell').forEach(cell => {
+    if (cell.dataset.season === seasonId) {
+      cell.classList.remove('dimmed');
+      cell.classList.add('active');
+    } else {
+      cell.classList.add('dimmed');
+      cell.classList.remove('active');
     }
+  });
 
-    function createSVGEl(tag, attrs) {
-      const el = document.createElementNS('http://www.w3.org/2000/svg', tag);
-      for (const [k, v] of Object.entries(attrs)) el.setAttribute(k, v);
-      return el;
-    }
+  activeWeekId = null;
+  showSeasonDetail(seasonId);
+}
 
-    /* ── DETERMINE TODAY'S SEASON ── */
-    function getTodaySeason() {
-      const now = new Date();
-      const month = now.getMonth(); // 0-indexed
-      const day = now.getDate();
+/**
+ * Limpa seleção
+ */
+function clearActive() {
+  document.querySelectorAll('.week-cell').forEach(cell => {
+    cell.classList.remove('active', 'dimmed');
+  });
+  document.querySelectorAll('.legend-item').forEach(li => {
+    li.classList.remove('active');
+  });
+  activeWeekId = null;
+  resetDetailPanel();
+}
 
-      // Approximate liturgical season based on date
-      // This is simplified — real calculation depends on Easter date
-      if (month === 11 && day >= 27) return 'advento';
-      if (month === 0 && day <= 5) return 'natal';
-      if (month === 11 && day < 27 && day >= 20) return 'cristo-rei';
-      if (month === 0 && day <= 12) return 'natal';
-      if (month === 0 || (month === 1 && day < 14)) return 'comum-pre';
-      if ((month === 1 && day >= 14) || (month === 2 && day < 25)) return 'quaresma';
-      if (month === 2 && day >= 25 && day <= 31) return 'triduo';
-      if (month === 3 && day <= 3) return 'triduo';
-      if ((month === 3 && day >= 4) || (month === 4 && day <= 19)) return 'pascoa';
-      if (month === 4 && day >= 20 && day <= 31) return 'pentecostes-solenidades';
-      if (month === 5 && day <= 15) return 'pentecostes-solenidades';
-      return 'comum-pos';
-    }
+/**
+ * Reset do painel de detalhes
+ */
+function resetDetailPanel() {
+  const inner = document.getElementById('detail-inner');
+  inner.innerHTML = `
+    <div class="detail-placeholder">
+      <div class="placeholder-icon">✦ ✦ ✦</div>
+      <p>Clique em uma semana ou tempo litúrgico para ver detalhes</p>
+    </div>
+  `;
+}
 
-    function getTodayDegree() {
-      const season = getTodaySeason();
-      const s = SEASONS.find(ss => ss.id === season);
-      if (!s) return 180;
-      return s.startDeg + s.spanDeg / 2;
-    }
+/**
+ * Mostra detalhes de uma semana no painel
+ */
+function showWeekDetail(week) {
+  const season = SEASONS.find(s => s.id === week.season);
+  const inner = document.getElementById('detail-inner');
 
-    /* ── BUILD WHEEL ── */
-    function buildWheel() {
-      const arcsG = document.getElementById('season-arcs');
-      const labelsG = document.getElementById('season-labels');
-      const spokesG = document.getElementById('spokes');
-      const dateG = document.getElementById('date-labels');
-      const weekG = document.getElementById('week-labels');
-
-      SEASONS.forEach((season, idx) => {
-        const midDeg = season.startDeg + season.spanDeg / 2;
-        const endDeg = season.startDeg + season.spanDeg;
-
-        // ── OUTER COLOR RING ──
-        const outerArc = createSVGEl('path', {
-          d: arcPath(CX, CY, R_OUTER, R_DATE, season.startDeg, endDeg),
-          fill: season.color,
-          opacity: '0.7',
-          class: 'outer-ring-seg',
-        });
-        arcsG.appendChild(outerArc);
-
-        // ── SEASON ARC ──
-        const arc = createSVGEl('path', {
-          d: arcPath(CX, CY, R_SEASON, R_SEASON_IN, season.startDeg, endDeg),
-          fill: season.gradient || season.color,
-          stroke: 'rgba(255,255,255,0.2)',
-          'stroke-width': '1',
-          class: 'season-arc',
-          tabindex: '0',
-          role: 'button',
-          'aria-label': season.label,
-          'data-season': season.id,
-          style: `animation-delay: ${idx * 80}ms`,
-        });
-        arcsG.appendChild(arc);
-
-        // Highlight overlay for season arc
-        const highlight = createSVGEl('path', {
-          d: arcPath(CX, CY, R_SEASON, R_SEASON - 15, season.startDeg, endDeg),
-          fill: 'rgba(255,255,255,0.1)',
-          'pointer-events': 'none',
-        });
-        arcsG.appendChild(highlight);
-
-        // ── WEEK SEGMENTS ──
-        if (season.weeks >= 1) {
-          const weekSpan = season.spanDeg / season.weeks;
-          for (let w = 0; w < season.weeks; w++) {
-            const wStart = season.startDeg + w * weekSpan;
-            const wEnd = wStart + weekSpan;
-            const wMid = (wStart + wEnd) / 2;
-
-            const shade = w % 2 === 0 ? 'rgba(255,255,255,0.04)' : 'rgba(0,0,0,0.06)';
-            const wseg = createSVGEl('path', {
-              d: arcPath(CX, CY, R_WEEK, R_WEEK_IN, wStart, wEnd),
-              fill: shade,
-              stroke: 'rgba(255,255,255,0.12)',
-              'stroke-width': '0.5',
-              class: 'week-seg',
-              'data-season': season.id,
-              'data-week': w + 1,
-            });
-            arcsG.appendChild(wseg);
-
-            // Week background color (tinted)
-            const weekBg = createSVGEl('path', {
-              d: arcPath(CX, CY, R_WEEK, R_WEEK_IN, wStart, wEnd),
-              fill: season.color,
-              opacity: '0.15',
-              'pointer-events': 'none',
-            });
-            arcsG.insertBefore(weekBg, wseg);
-
-            // Week label
-            if (weekSpan > 4) {
-              const rLabel = (R_WEEK + R_WEEK_IN) / 2;
-              const lPos = polarToXY(CX, CY, rLabel, wMid);
-              const lAngle = wMid > 180 ? wMid - 270 : wMid - 90;
-
-              const wLabel = createSVGEl('text', {
-                x: lPos.x, y: lPos.y,
-                transform: `rotate(${lAngle},${lPos.x},${lPos.y})`,
-                'text-anchor': 'middle',
-                'dominant-baseline': 'central',
-                class: 'wheel-week-label',
-                'data-season': season.id,
-              });
-              wLabel.textContent = season.weeks > 1 ? `${w + 1}ª` : '';
-              weekG.appendChild(wLabel);
-            }
-
-            // Spoke
-            const sp = polarToXY(CX, CY, R_WEEK, wStart);
-            const ep = polarToXY(CX, CY, R_WEEK_IN, wStart);
-            spokesG.appendChild(createSVGEl('line', {
-              x1: sp.x, y1: sp.y, x2: ep.x, y2: ep.y
-            }));
-          }
-        }
-
-        // ── SEASON LABEL ──
-        const labelR = (R_SEASON + R_SEASON_IN) / 2;
-        const lPos = polarToXY(CX, CY, labelR, midDeg);
-        const baseAngle = midDeg - 90;
-        const lAngle = midDeg > 180 ? baseAngle + 180 : baseAngle;
-
-        const ltext = createSVGEl('text', {
-          x: lPos.x, y: lPos.y,
-          transform: `rotate(${lAngle},${lPos.x},${lPos.y})`,
-          'text-anchor': 'middle',
-          'dominant-baseline': 'central',
-          class: 'wheel-season-label',
-          fill: season.textColor,
-        });
-
-        if (season.spanDeg >= 35) {
-          const parts = season.label.split(' ');
-          const t1 = createSVGEl('tspan', {
-            x: lPos.x, dy: '-6', 'text-anchor': 'middle'
-          });
-          t1.textContent = parts[0];
-          const t2 = createSVGEl('tspan', {
-            x: lPos.x, dy: '12', 'text-anchor': 'middle',
-            'font-size': '8.5', 'font-style': 'italic', 'font-weight': '400',
-            'font-family': 'Cormorant Garamond, serif'
-          });
-          t2.textContent = parts.length > 1 ? parts.slice(1).join(' ') : season.latin;
-          ltext.appendChild(t1);
-          ltext.appendChild(t2);
-        } else if (season.spanDeg >= 15) {
-          ltext.textContent = season.label;
-        } else {
-          ltext.setAttribute('font-size', '9');
-          ltext.textContent = season.label;
-        }
-        labelsG.appendChild(ltext);
-
-        // Main spoke
-        const spMain = polarToXY(CX, CY, R_OUTER, season.startDeg);
-        const epMain = polarToXY(CX, CY, R_SEASON_IN, season.startDeg);
-        spokesG.appendChild(createSVGEl('line', {
-          x1: spMain.x, y1: spMain.y, x2: epMain.x, y2: epMain.y,
-          'stroke-width': '1'
-        }));
-      });
-
-      // ── DATE LABELS ──
-      const dates = [
-        { deg: 0, label: '1º Dom. Advento' },
-        { deg: 28, label: '25 Dez — Natal' },
-        { deg: 50, label: 'Batismo do Senhor' },
-        { deg: 88, label: 'Quarta de Cinzas' },
-        { deg: 128, label: 'Quinta-Feira Santa' },
-        { deg: 140, label: 'Páscoa' },
-        { deg: 210, label: 'Pentecostes' },
-        { deg: 232, label: 'Tempo Comum' },
-        { deg: 345, label: 'Cristo Rei' },
-      ];
-
-      dates.forEach(d => {
-        const rDate = (R_OUTER + R_DATE) / 2 + 2;
-        const pos = polarToXY(CX, CY, rDate, d.deg + 2);
-        const baseAngle = d.deg + 2 - 90;
-        const angle = (d.deg + 2) > 180 ? baseAngle + 180 : baseAngle;
-        const anchor = (d.deg + 2) > 180 ? 'end' : 'start';
-
-        const txt = createSVGEl('text', {
-          x: pos.x, y: pos.y,
-          transform: `rotate(${angle},${pos.x},${pos.y})`,
-          class: 'wheel-date-label',
-          'text-anchor': anchor,
-          'dominant-baseline': 'central',
-        });
-        txt.textContent = d.label;
-        dateG.appendChild(txt);
-      });
-
-      // ── TODAY INDICATOR ──
-      const todayDeg = getTodayDegree();
-      const todayG = document.getElementById('today-indicator');
-
-      const todayOuter = polarToXY(CX, CY, R_OUTER + 8, todayDeg);
-      const todayInner = polarToXY(CX, CY, R_SEASON_IN - 5, todayDeg);
-
-      // Glowing line
-      const todayLine = createSVGEl('line', {
-        x1: todayOuter.x, y1: todayOuter.y,
-        x2: todayInner.x, y2: todayInner.y,
-        stroke: '#d4a820', 'stroke-width': '2.5',
-        opacity: '0.8', 'stroke-linecap': 'round',
-      });
-      todayG.appendChild(todayLine);
-
-      // Pulsing dot
-      const todayDot = polarToXY(CX, CY, R_OUTER + 14, todayDeg);
-      const dotOuter = createSVGEl('circle', {
-        cx: todayDot.x, cy: todayDot.y, r: '8',
-        fill: 'none', stroke: '#d4a820', 'stroke-width': '1.5',
-        opacity: '0.5',
-      });
-      const animR = createSVGEl('animate', {
-        attributeName: 'r', values: '6;12;6',
-        dur: '2s', repeatCount: 'indefinite'
-      });
-      const animOp = createSVGEl('animate', {
-        attributeName: 'opacity', values: '0.6;0.1;0.6',
-        dur: '2s', repeatCount: 'indefinite'
-      });
-      dotOuter.appendChild(animR);
-      dotOuter.appendChild(animOp);
-      todayG.appendChild(dotOuter);
-
-      const dotInner = createSVGEl('circle', {
-        cx: todayDot.x, cy: todayDot.y, r: '4',
-        fill: '#d4a820', stroke: '#fff', 'stroke-width': '1.5',
-      });
-      todayG.appendChild(dotInner);
-
-      // "HOJE" label
-      const todayLabelPos = polarToXY(CX, CY, R_OUTER + 28, todayDeg);
-      const todayLabelAngle = todayDeg > 180 ? todayDeg - 270 : todayDeg - 90;
-      const todayLabel = createSVGEl('text', {
-        x: todayLabelPos.x, y: todayLabelPos.y,
-        transform: `rotate(${todayLabelAngle},${todayLabelPos.x},${todayLabelPos.y})`,
-        'text-anchor': 'middle', 'dominant-baseline': 'central',
-        'font-family': 'Cinzel, serif', 'font-size': '7',
-        'font-weight': '700', fill: '#d4a820',
-        'letter-spacing': '2',
-      });
-      todayLabel.textContent = 'HOJE';
-      todayG.appendChild(todayLabel);
-
-      // ── START ARROW ──
-      const arrowG = document.getElementById('start-arrow');
-      const arrowTip = polarToXY(CX, CY, R_OUTER - 4, 0);
-      const arrowL = polarToXY(CX, CY, R_OUTER + 10, -3);
-      const arrowR = polarToXY(CX, CY, R_OUTER + 10, 3);
-      const tri = createSVGEl('polygon', {
-        points: `${arrowTip.x},${arrowTip.y} ${arrowL.x},${arrowL.y} ${arrowR.x},${arrowR.y}`,
-        fill: '#6b3fa0', opacity: '0.85',
-      });
-      arrowG.appendChild(tri);
-
-      const startLabel = polarToXY(CX, CY, R_OUTER + 24, 0);
-      const sLabel = createSVGEl('text', {
-        x: startLabel.x, y: startLabel.y,
-        'text-anchor': 'middle', 'dominant-baseline': 'central',
-        'font-family': 'Cinzel, serif', 'font-size': '6',
-        fill: '#6b3fa0', 'font-weight': '600', 'letter-spacing': '1.5',
-      });
-      sLabel.textContent = 'INÍCIO';
-      arrowG.appendChild(sLabel);
-    }
-
-    /* ── BUILD MINI WHEEL ── */
-    function buildMiniWheel() {
-      const svg = document.getElementById('mini-wheel-svg');
-      const cx = 50, cy = 50;
-      const r1 = 44, r2 = 28;
-
-      SEASONS.forEach(season => {
-        const endDeg = season.startDeg + season.spanDeg;
-        const s1 = polarToXY(cx, cy, r1, season.startDeg);
-        const e1 = polarToXY(cx, cy, r1, endDeg);
-        const s2 = polarToXY(cx, cy, r2, endDeg);
-        const e2 = polarToXY(cx, cy, r2, season.startDeg);
-        const large = season.spanDeg > 180 ? 1 : 0;
-        const d = [
-          `M ${s1.x} ${s1.y}`,
-          `A ${r1} ${r1} 0 ${large} 1 ${e1.x} ${e1.y}`,
-          `L ${s2.x} ${s2.y}`,
-          `A ${r2} ${r2} 0 ${large} 0 ${e2.x} ${e2.y}`,
-          'Z'
-        ].join(' ');
-        const p = createSVGEl('path', {
-          d, fill: season.color, opacity: activeId === season.id ? '1' : '0.6',
-        });
-        svg.appendChild(p);
-      });
-
-      // Center
-      const c = createSVGEl('circle', {
-        cx, cy, r: '26', fill: '#c9a84c',
-      });
-      svg.appendChild(c);
-      const cross = createSVGEl('text', {
-        x: cx, y: cy + 3, 'text-anchor': 'middle',
-        'font-size': '16', fill: '#fff', 'font-family': 'serif',
-      });
-      cross.textContent = '✟';
-      svg.appendChild(cross);
-    }
-
-    /* ── DETAIL PANEL ── */
-    function showDetail(seasonId) {
-      const season = SEASONS.find(s => s.id === seasonId);
-      if (!season) return;
-
-      const panel = document.getElementById('detail-inner');
-      const c = season.content;
-      const color = season.color;
-
-      panel.innerHTML = `
-        <div class="detail-card" data-season="${season.id}">
-          <div class="detail-header">
-            <div class="detail-color-bar" style="background:${color}"></div>
-            <div class="detail-header-content">
-              <p class="detail-season-label">Tempo Litúrgico</p>
-              <h2 class="detail-title" style="color:${color}">${season.label}</h2>
-              <p class="detail-latin">${season.latin}</p>
-            </div>
-            <div class="detail-header-symbol" style="color:${color}">${season.symbol || '✦'}</div>
-          </div>
-
-          <div class="detail-tabs" role="tablist">
-            <button class="detail-tab active" data-tab="historia" role="tab">História</button>
-            <button class="detail-tab" data-tab="espirit" role="tab">Espiritualidade</button>
-            <button class="detail-tab" data-tab="figuras" role="tab">Figuras</button>
-            <button class="detail-tab" data-tab="praticas" role="tab">Práticas</button>
-          </div>
-
-          <div class="detail-tab-content active" data-tab-content="historia">
-            <h4>História & Origem</h4>
-            <p>${c.historia}</p>
-          </div>
-
-          <div class="detail-tab-content" data-tab-content="espirit">
-            <h4>Espiritualidade</h4>
-            <p>${c.espiritualidade}</p>
-          </div>
-
-          <div class="detail-tab-content" data-tab-content="figuras">
-            <h4>Personagens & Figuras Centrais</h4>
-            <p>${c.personagens}</p>
-          </div>
-
-          <div class="detail-tab-content" data-tab-content="praticas">
-            <h4>Práticas Litúrgicas</h4>
-            <p>${c.praticas}</p>
-          </div>
-
-          <div class="detail-footer">
-            <span class="detail-badge" style="color:${color};border-color:${color};background:${color}15">
-              🎨 ${season.liturgicalColor}
+  inner.innerHTML = `
+    <div class="detail-card">
+      <div class="detail-header">
+        <div class="detail-color-bar" style="background: ${week.color}; ${week.color === '#ffffff' ? 'border-right: 1px solid #d4c5a0;' : ''}"></div>
+        <div class="detail-header-content">
+          <p class="detail-eyebrow">${season ? season.label : 'Tempo Litúrgico'}</p>
+          <h2 class="detail-title">${week.label}</h2>
+          <div class="detail-meta">
+            <span class="detail-meta-item">
+              <span class="detail-meta-dot" style="background: ${week.color}"></span>
+              Cor: ${getColorName(week.color)}
             </span>
-            <span class="detail-badge" style="color:var(--text-secondary);border-color:var(--border);background:var(--bg-warm)">
-              📅 ${c.dates}
-            </span>
-            <p class="detail-quote">${c.quote}</p>
+            ${week.special ? `<span class="detail-meta-item">✦ Celebração especial</span>` : ''}
           </div>
         </div>
-      `;
+      </div>
+    </div>
+  `;
+}
 
-      // Attach tab events
-      panel.querySelectorAll('.detail-tab').forEach(tab => {
-        tab.addEventListener('click', () => {
-          panel.querySelectorAll('.detail-tab').forEach(t => t.classList.remove('active'));
-          panel.querySelectorAll('.detail-tab-content').forEach(tc => tc.classList.remove('active'));
-          tab.classList.add('active');
-          const target = tab.dataset.tab;
-          panel.querySelector(`[data-tab-content="${target}"]`).classList.add('active');
-        });
-      });
+/**
+ * Mostra detalhes de um tempo litúrgico
+ */
+function showSeasonDetail(seasonId) {
+  const season = SEASONS.find(s => s.id === seasonId);
+  if (!season) return;
 
-      document.getElementById('detail-panel').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  const weeksInSeason = WEEKS.filter(w => w.season === seasonId);
+  const inner = document.getElementById('detail-inner');
+
+  inner.innerHTML = `
+    <div class="detail-card">
+      <div class="detail-header">
+        <div class="detail-color-bar" style="background: ${season.color}; ${season.color === '#ffffff' ? 'border-right: 1px solid #d4c5a0;' : ''}"></div>
+        <div class="detail-header-content">
+          <p class="detail-eyebrow">Tempo Litúrgico</p>
+          <h2 class="detail-title">${season.label}</h2>
+          <div class="detail-meta">
+            <span class="detail-meta-item">
+              <span class="detail-meta-dot" style="background: ${season.color}"></span>
+              Cor: ${getColorName(season.color)}
+            </span>
+            <span class="detail-meta-item">📅 ${weeksInSeason.length} ${weeksInSeason.length === 1 ? 'semana/marcador' : 'semanas/marcadores'}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+/**
+ * Nome legível da cor
+ */
+function getColorName(hex) {
+  const map = {
+    [COLORS.advento]:    'Roxo (Advento)',
+    [COLORS.gaudete]:    'Rosa (Gaudete/Laetare)',
+    [COLORS.natal]:      'Branco',
+    [COLORS.comum]:      'Verde',
+    [COLORS.quaresma]:   'Roxo (Quaresma)',
+    [COLORS.triduo]:     'Vermelho escuro',
+    [COLORS.pentecostes]:'Vermelho',
+  };
+  return map[hex] || 'Litúrgica';
+}
+
+/* ══════════════════════════════════════════════════════════════
+   TOOLTIP
+   ══════════════════════════════════════════════════════════════ */
+
+const tooltip = document.getElementById('tooltip');
+const tooltipTitle = document.getElementById('tooltip-title');
+const tooltipSubtitle = document.getElementById('tooltip-subtitle');
+const tooltipBar = document.getElementById('tooltip-bar');
+
+function showTooltip(week, x, y) {
+  const season = SEASONS.find(s => s.id === week.season);
+  tooltipTitle.textContent = week.label;
+  tooltipSubtitle.textContent = season ? season.label : '';
+  tooltipBar.style.background = week.color;
+  tooltip.style.left = x + 'px';
+  tooltip.style.top = y + 'px';
+  tooltip.classList.add('visible');
+}
+
+function hideTooltip() {
+  tooltip.classList.remove('visible');
+}
+
+/* ══════════════════════════════════════════════════════════════
+   EVENT LISTENERS
+   ══════════════════════════════════════════════════════════════ */
+
+function attachEvents() {
+  const wheel = document.getElementById('liturgical-wheel');
+  const wrapper = document.querySelector('.wheel-wrapper');
+
+  // Clique em semana
+  wheel.addEventListener('click', (e) => {
+    const cell = e.target.closest('.week-cell');
+    if (cell) {
+      handleWeekClick(cell.dataset.weekId);
+      return;
     }
 
-    /* ── INTERACTION ── */
-    let activeId = null;
-    let seasonOrder = SEASONS.map(s => s.id);
+    const seasonCell = e.target.closest('.season-cell');
+    if (seasonCell) {
+      handleSeasonClick(seasonCell.dataset.season);
+    }
+  });
 
-    function handleSeasonClick(seasonId) {
-      // Toggle highlight
-      document.querySelectorAll('.season-arc').forEach(el => {
-        el.classList.remove('active', 'dimmed');
-      });
-      document.querySelectorAll('.week-seg').forEach(el => {
-        el.classList.remove('dimmed');
-      });
+  // Hover em semana → tooltip
+  wheel.addEventListener('mousemove', (e) => {
+    const cell = e.target.closest('.week-cell');
+    if (!cell) {
+      hideTooltip();
+      return;
+    }
+    const week = WEEKS.find(w => w.id === cell.dataset.weekId);
+    if (!week) return;
 
-      if (activeId === seasonId) {
-        activeId = null;
-        document.getElementById('detail-inner').innerHTML = `
-          <div class="detail-placeholder">
-            <div class="placeholder-icon">✟</div>
-            <p>Clique em um tempo litúrgico na roda para conhecer sua história, simbolismo e espiritualidade</p>
-          </div>`;
-        document.querySelectorAll('.legend-item').forEach(li => li.classList.remove('active'));
-        updateMiniWheel();
+    const rect = wrapper.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    showTooltip(week, x, y);
+  });
+
+  wheel.addEventListener('mouseleave', hideTooltip);
+
+  // Teclado: Enter/Espaço em célula com foco
+  wheel.addEventListener('keydown', (e) => {
+    if (e.key !== 'Enter' && e.key !== ' ') return;
+    const active = document.activeElement;
+    if (active && active.classList.contains('week-cell')) {
+      e.preventDefault();
+      handleWeekClick(active.dataset.weekId);
+    }
+  });
+
+  // Escape para limpar seleção
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') clearActive();
+  });
+
+  // Setas para navegar entre semanas
+  document.addEventListener('keydown', (e) => {
+    if (!['ArrowLeft', 'ArrowRight'].includes(e.key)) return;
+    if (!activeWeekId) return;
+
+    e.preventDefault();
+    const currentIdx = WEEKS.findIndex(w => w.id === activeWeekId);
+    const dir = e.key === 'ArrowRight' ? 1 : -1;
+    const nextIdx = (currentIdx + dir + WEEKS.length) % WEEKS.length;
+    handleWeekClick(WEEKS[nextIdx].id);
+  });
+
+  // Legenda → filtra/destaca
+  document.querySelectorAll('.legend-item').forEach(item => {
+    item.addEventListener('click', () => {
+      const seasonKey = item.dataset.season;
+      const isActive = item.classList.contains('active');
+
+      // Limpa estados
+      document.querySelectorAll('.legend-item').forEach(li => li.classList.remove('active'));
+
+      if (isActive) {
+        clearActive();
         return;
       }
 
-      activeId = seasonId;
+      item.classList.add('active');
 
-      // Highlight active, dim others
-      document.querySelectorAll('.season-arc').forEach(el => {
-        if (el.dataset.season === seasonId) {
-          el.classList.add('active');
+      // Mapeia chave da legenda para tempos da roda
+      const seasonMap = {
+        advento: ['advento'],
+        natal: ['natal'],
+        comum: ['comum1', 'comum2'],
+        quaresma: ['quaresma'],
+        triduo: ['triduo'],
+        pascoa: ['pascoa', 'pentecostes'],
+        rosa: [], // tratamento especial: destaca células rosas
+      };
+
+      const targets = seasonMap[seasonKey] || [];
+
+      document.querySelectorAll('.week-cell').forEach(cell => {
+        const week = WEEKS.find(w => w.id === cell.dataset.weekId);
+        let match = false;
+
+        if (seasonKey === 'rosa') {
+          match = week && week.color === COLORS.gaudete;
         } else {
-          el.classList.add('dimmed');
+          match = targets.includes(cell.dataset.season);
+        }
+
+        if (match) {
+          cell.classList.remove('dimmed');
+          cell.classList.add('active');
+        } else {
+          cell.classList.add('dimmed');
+          cell.classList.remove('active');
         }
       });
 
-      document.querySelectorAll('.week-seg').forEach(el => {
-        if (el.dataset.season !== seasonId) {
-          el.classList.add('dimmed');
-        }
-      });
+      activeWeekId = null;
 
-      // Legend
-      document.querySelectorAll('.legend-item').forEach(li => li.classList.remove('active'));
-      document.querySelectorAll(`.legend-item[data-season="${seasonId}"]`).forEach(li => li.classList.add('active'));
-      // Handle "comum" legend for both common periods
-      if (seasonId === 'comum-pre' || seasonId === 'comum-pos') {
-        document.querySelectorAll('.legend-item[data-season="comum"]').forEach(li => li.classList.add('active'));
+      // Mostra info do tempo no painel (apenas se 1 tempo)
+      if (targets.length === 1) {
+        showSeasonDetail(targets[0]);
       }
-
-      showDetail(seasonId);
-      updateMiniWheel();
-    }
-
-    function updateMiniWheel() {
-      const svg = document.getElementById('mini-wheel-svg');
-      svg.innerHTML = '';
-      buildMiniWheel();
-    }
-
-    /* Tooltip */
-    const tooltip = document.getElementById('tooltip');
-    function showTooltip(seasonId, x, y) {
-      const s = SEASONS.find(ss => ss.id === seasonId);
-      if (!s) return;
-
-      tooltip.innerHTML = `
-        <div class="tooltip-title">${s.label}</div>
-        <div class="tooltip-latin">${s.latin}</div>
-        <div class="tooltip-color-bar" style="background:${s.color}"></div>
-      `;
-      tooltip.style.left = x + 'px';
-      tooltip.style.top = y + 'px';
-      tooltip.classList.add('visible');
-    }
-
-    function hideTooltip() {
-      tooltip.classList.remove('visible');
-    }
-
-    function attachEvents() {
-      const wheel = document.getElementById('liturgical-wheel');
-
-      wheel.addEventListener('click', e => {
-        const target = e.target.closest('[data-season]');
-        if (!target) return;
-        handleSeasonClick(target.dataset.season);
-      });
-
-      wheel.addEventListener('mousemove', e => {
-        const target = e.target.closest('[data-season]');
-        if (!target) { hideTooltip(); return; }
-        const rect = wheel.closest('.wheel-wrapper').getBoundingClientRect();
-        const wx = e.clientX - rect.left;
-        const wy = e.clientY - rect.top;
-        showTooltip(target.dataset.season, wx, wy);
-      });
-
-      wheel.addEventListener('mouseleave', hideTooltip);
-
-      // Keyboard navigation
-      document.addEventListener('keydown', e => {
-        if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
-          e.preventDefault();
-          const dir = e.key === 'ArrowRight' ? 1 : -1;
-          const currentIdx = activeId ? seasonOrder.indexOf(activeId) : -1;
-          const nextIdx = (currentIdx + dir + seasonOrder.length) % seasonOrder.length;
-          handleSeasonClick(seasonOrder[nextIdx]);
-        }
-        if (e.key === 'Escape' && activeId) {
-          handleSeasonClick(activeId); // deselect
-        }
-        if ((e.key === 'Enter' || e.key === ' ') && document.activeElement.classList.contains('season-arc')) {
-          handleSeasonClick(document.activeElement.dataset.season);
-        }
-      });
-
-      // Legend clicks
-      document.querySelectorAll('.legend-item').forEach(li => {
-        li.addEventListener('click', () => {
-          const sid = li.dataset.season;
-          const map = {
-            advento: 'advento', natal: 'natal', quaresma: 'quaresma',
-            triduo: 'triduo', pascoa: 'pascoa',
-            comum: activeId === 'comum-pre' ? 'comum-pos' : 'comum-pre',
-          };
-          handleSeasonClick(map[sid] || sid);
-        });
-      });
-
-      // Mini wheel
-      const miniWheel = document.getElementById('mini-wheel');
-      miniWheel.addEventListener('click', () => {
-        document.querySelector('.calendar-section').scrollIntoView({ behavior: 'smooth' });
-      });
-
-      // Show/hide mini wheel on scroll
-      const wheelWrapper = document.querySelector('.wheel-wrapper');
-      const observer = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-          miniWheel.classList.toggle('visible', !entry.isIntersecting);
-        });
-      }, { threshold: 0.3 });
-      observer.observe(wheelWrapper);
-    }
-
-    /* ── TODAY BANNER ── */
-    function initTodayBanner() {
-      const todaySeason = getTodaySeason();
-      const s = SEASONS.find(ss => ss.id === todaySeason);
-      if (!s) return;
-
-      const banner = document.getElementById('today-banner');
-      const now = new Date();
-      const dateStr = now.toLocaleDateString('pt-BR', {
-        weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
-      });
-
-      banner.innerHTML = `
-        <p class="today-label">Hoje na Liturgia</p>
-        <p class="today-season">
-          <span class="today-color-dot" style="background:${s.color};color:${s.color}"></span>
-          ${s.label}
-        </p>
-        <p class="today-date">${dateStr}</p>
-      `;
-
-      banner.style.cursor = 'pointer';
-      banner.addEventListener('click', () => {
-        handleSeasonClick(todaySeason);
-      });
-    }
-
-    /* ── SCROLL REVEAL ── */
-    function initReveal() {
-      const els = document.querySelectorAll('.color-card, .sac-item, .intro-verse');
-      els.forEach((el, i) => {
-        el.classList.add('reveal');
-        el.style.transitionDelay = `${i * 60}ms`;
-      });
-
-      const obs = new IntersectionObserver(entries => {
-        entries.forEach(e => {
-          if (e.isIntersecting) {
-            e.target.classList.add('revealed');
-            obs.unobserve(e.target);
-          }
-        });
-      }, { threshold: 0.1 });
-
-      els.forEach(el => obs.observe(el));
-    }
-
-    /* ── INIT ── */
-    document.addEventListener('DOMContentLoaded', () => {
-      buildWheel();
-      buildMiniWheel();
-      attachEvents();
-      initTodayBanner();
-      initReveal();
     });
+  });
+}
+
+/* ══════════════════════════════════════════════════════════════
+   INICIALIZAÇÃO
+   ══════════════════════════════════════════════════════════════ */
+
+function init() {
+  buildDateRing();
+  buildSeasonRing();
+  buildWeekRing();
+  buildSpokes();
+  buildGuideRing();
+  buildAnnotation();
+  buildTodayMarker();
+  attachEvents();
+
+  console.log(`✦ Calendário Litúrgico carregado · ${TOTAL_WEEKS} semanas · ${SEASONS.length} tempos`);
+}
+
+document.addEventListener('DOMContentLoaded', init);
