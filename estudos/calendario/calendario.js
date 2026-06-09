@@ -205,30 +205,40 @@ function monthDayToLiturgicalDay(month, day) {
  * Encontra a célula da roda mais próxima da data de hoje.
  * Procura a DATE cujo "dia litúrgico" está mais próximo (e não no futuro distante).
  */
+/**
+ * Encontra a célula da roda mais próxima da data de hoje.
+ * Lógica: procura a célula cuja data já passou e está mais próxima de hoje.
+ */
 function getTodayWeekIndex() {
   const today = new Date();
   const todayMonth = today.getMonth() + 1;
   const todayDay = today.getDate();
   const todayLitDay = monthDayToLiturgicalDay(todayMonth, todayDay);
 
-  let bestIdx = 0;
-  let bestDiff = Infinity;
+  // Calcula o "dia litúrgico" de cada célula
+  const cellDays = DATES.map(d => {
+    const [day, month] = d.split('/').map(n => parseInt(n, 10));
+    return monthDayToLiturgicalDay(month, day);
+  });
 
-  for (let i = 0; i < DATES.length; i++) {
-    const [dayStr, monthStr] = DATES[i].split('/');
-    const cellDay = parseInt(dayStr, 10);
-    const cellMonth = parseInt(monthStr, 10);
-    const cellLitDay = monthDayToLiturgicalDay(cellMonth, cellDay);
+  // Encontra a célula mais recente cujo dia <= hoje
+  let bestIdx = -1;
+  let bestDay = -1;
 
-    // Diferença: positivo = célula já passou ou é hoje
-    const diff = todayLitDay - cellLitDay;
-
-    // Queremos a célula mais recente que já passou (diff entre 0 e 6 dias)
-    if (diff >= 0 && diff < bestDiff) {
-      bestDiff = diff;
+  for (let i = 0; i < cellDays.length; i++) {
+    if (cellDays[i] <= todayLitDay && cellDays[i] > bestDay) {
+      bestDay = cellDays[i];
       bestIdx = i;
     }
   }
+
+  // Se nenhuma célula passou ainda (caso raro), pega a primeira
+  if (bestIdx === -1) bestIdx = 0;
+
+  console.log(
+    `📅 Hoje: ${todayDay}/${todayMonth} (dia litúrgico ${todayLitDay})\n` +
+    `🎯 Célula: ${bestIdx} (${DATES[bestIdx]}) → ${WEEKS[bestIdx]?.label}`
+  );
 
   return bestIdx;
 }
